@@ -41,7 +41,7 @@ class Information extends \Admin\Controllers\BaseController
 
     public function delete()
     {
-        $json = array();
+        $json = [];
 
         $this->informations = new \Admin\Models\Catalog\Informations();
    
@@ -82,13 +82,13 @@ class Information extends \Admin\Controllers\BaseController
         $results = $this->informations->getInformations($filter_data);
 
         foreach ($results as $result) {
-            $data['informations'][] = array(
+            $data['informations'][] = [
                 'information_id'    => $result['information_id'],
                 'title'      => $result['title'],
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'edit'       => base_url('index.php/catalog/information/edit?user_token=' . $this->session->get('user_token') . '&information_id=' . $result['information_id']),
                 'delete'     => base_url('index.php/catalog/information/delete?user_token=' . $this->session->get('user_token') . '&information_id=' . $result['information_id']),
-            );
+            ];
         }
 
         $data['add'] = base_url('index.php/catalog/information/add?user_token=' . $this->session->get('user_token'));
