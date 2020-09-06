@@ -68,7 +68,7 @@ class BaseController extends \CodeIgniter\Controller
         }
     }
     /**
-    @ return the Bid Open Days
+    @ return the Bid Remaining Days
     **/
     public function getOpenDays(string $start, string $end): string
     {
