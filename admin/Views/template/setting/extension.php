@@ -36,10 +36,7 @@
 </div>
 <link href="assets/vendor/DataTables/datatables.min.css" rel="stylesheet" type="text/css">
 <script src="assets/vendor/DataTables/datatables.min.js"></script>
- <script type="text/javascript">
-function format (d) {
-       return d.href;
-} 
+<script type="text/javascript">
 var table = $('#table-extension').DataTable({
 'ajax': {
 	'url': "index.php/setting/extension/getList?user_token=<?php echo $user_token;?>",
@@ -54,9 +51,14 @@ var table = $('#table-extension').DataTable({
 	   },
 	{ "data": "text" },
 	],
-	"order": [[1, 'asc']],
-	"processing": true
+	'order': [[1, 'asc']],
+	'processing': true,
+	'rowId': "code",
 });
+	
+    if ('<?php echo $type;?>') {
+        $(rowId).addClass('shown');
+    }
 
 // Add event listener for opening and closing details
 $('#table-extension tbody').on('click', 'td.details-control', function () {
@@ -69,7 +71,7 @@ $('#table-extension tbody').on('click', 'td.details-control', function () {
     }
     else {
     	$.ajax({
-	    	url: format(row.data()),
+	    	url: row.data().href,
 	    	dataType: 'html',
 	    	success: function(html) {
 	    		row.child(html).show();
@@ -96,7 +98,7 @@ $('#table-extension').on('click', '.btn-success', function(e) {
 
 		},
 		success: function(html) {
-	    		row.child(html).show();
+	    	row.child(html).show();
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
