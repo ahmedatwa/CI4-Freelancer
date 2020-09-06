@@ -55,15 +55,11 @@ var table = $('#table-extension').DataTable({
 	'processing': true,
 	'rowId': "code",
 });
-	
-    if ('<?php echo $type;?>') {
-        $(rowId).addClass('shown');
-    }
-
 // Add event listener for opening and closing details
 $('#table-extension tbody').on('click', 'td.details-control', function () {
-    window.tr = $(this).closest('tr');
+    var tr = $(this).closest('tr');
     window.row = table.row(tr);
+
 
     if (row.child.isShown()) {
         row.child.hide();
@@ -129,6 +125,6 @@ $('#table-extension').on('click', '.btn-danger, .btn-warning', function(e) {
 			}
 		});
 	}
-});		      
+});	
  </script>   
 <?php echo $footer; ?>
