@@ -1,0 +1,7 @@
+{
+	"require": {
+		"php": ">=5.3.7",
+		"pusher/pusher-php-server": "^4.1",
+		"twig/twig": "^3.0"
+	}
+}

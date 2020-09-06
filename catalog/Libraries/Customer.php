@@ -1,0 +1,109 @@
+<?php namespace Catalog\Libraries;
+
+class Customer
+{
+    protected $customer_id;
+    protected $customer_group_id;
+    protected $permission = array();
+    protected $customer_name;
+    protected $avatar;
+    protected $session;
+    protected $db;
+    
+
+    public function __construct()
+    {
+        $this->db = \Config\Database::connect();
+
+        $this->session = \Config\Services::session();
+
+        if ($this->session->get('customer_id')) {
+            $builder = $this->db->table($this->db->prefixTable('customer'));
+
+            $builder->where('customer_id', $this->session->get('customer_id'));
+            $builder->where('status', 1);
+            $row = $builder->get()->getRowArray();
+            if ($row) {
+                $this->customer_id       = $row['customer_id'];
+                $this->customer_group_id = $row['customer_group_id'];
+                $this->customer_name     = $row['username'];
+            } else {
+                $this->logout();
+            }
+        }
+    }
+
+    public function login($email, $password)
+    {
+        // From Table Users
+        $builder = $this->db->table($this->db->prefixTable('customer'));
+        $builder->select();
+        $builder->where('email', $email);
+        $builder->where('status', 1);
+        if ($builder->countAllResults()) {
+            $query = $builder->get();
+            $row = $query->getRow();
+            // Verify stored hash against DB password
+            if (password_verify($password, $row->password)) {
+                // The cost parameter can change over time as hardware improves
+                $options = array('cost' => 11);
+                // Check if a newer hashing algorithm is available
+                // or the cost has changed
+                if (password_needs_rehash($row->password, PASSWORD_BCRYPT, $options)) {
+                    // If so, create a new hash, and replace the old one
+                    $newHash = password_hash($password, PASSWORD_BCRYPT, $options);
+                }
+            } else {
+                return false;
+            }
+            $this->customer_id       = $row->customer_id;
+            $this->customer_group_id = $row->customer_group_id;
+            $this->customer_name     = $row->username;
+            // Build User Data Session Array
+            $customer_data = array(
+                'customer_id'       => $row->customer_id,
+                'customer_name'     => $row->username,
+                'customer_group_id' => $row->customer_group_id,
+                'isLogged'          => true,
+            );
+
+            $this->session->set($customer_data);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getCustomerId()
+    {
+       return $this->customer_id;
+    }
+
+    public function getCustomerName()
+    {
+        return $this->customer_name;
+    }
+
+    public function logout()
+    {
+        $this->customer_id = '';
+        $this->customer_name = '';
+        $this->customer_group_id = '';
+        $this->session->destroy();
+    }
+
+    public function isLogged()
+    {
+        return $this->customer_id;
+    }
+
+    public function getcustomerGroupId()
+    {
+        return $this->customer_group_id;
+    }
+
+
+
+    // _________________________________________________
+}
