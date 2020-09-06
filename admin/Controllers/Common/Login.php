@@ -26,9 +26,9 @@ class Login extends \Admin\Controllers\BaseController
 
         // user_token validation
         if (($this->session->get('user_token') &&  ! $this->request->getGet('user_token')) || ($this->request->getGet('user_token') &&  $this->session->get('user_token') && $this->request->getGet('user_token') != $this->session->get('user_token'))) {
-               $this->session->setFlashData('warning', lang('en.error.error_token'));
-               // double check and clear session
-               $this->user->logout();
+            $this->session->setFlashData('warning', lang('en.error.error_token'));
+            // double check and clear session
+            $this->user->logout();
         }
 
         if ($this->session->getFlashdata('warning')) {
@@ -98,9 +98,9 @@ class Login extends \Admin\Controllers\BaseController
             // Register Fail Login Event
             \CodeIgniter\Events\Events::trigger('login_attempts', $this->request->getPost('email'));
             $this->session->setFlashData('warning', lang('common/login.text_warning'));
-        } else {
-            return true;
+            return false;
         }
+        return true;
     }
 
     //--------------------------------------------------------------------
