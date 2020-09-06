@@ -56,15 +56,15 @@ class Header extends \Admin\Controllers\BaseController
 
         $projects_model = new \Admin\Models\Catalog\Projects();
 
-        $data['notifications'] = array();
+        $data['notifications'] = [];
         
-        $filter_data = array(
+        $filter_data = [
             'filter_date_added' => date("Y-m-d"),
             'sort_by'           => 'pd.name',
             'order_by'          => 'DESC',
             'start'             => 0,
             'limit'             => 5,
-        );
+        ];
 
         $data['notifications_total'] = $projects_model->getTotalProjects($filter_data);
         $results = $projects_model->getProjects($filter_data);
