@@ -12,17 +12,17 @@ class Dashboard extends \Admin\Controllers\BaseController
 
         $data['user_token'] = $this->session->get('user_token');
         
-        $data['breadcrumbs'] = array();
+        $data['breadcrumbs'] = [];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('common/dashboard?user_token=' . $this->session->get('user_token'))
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('common/dashboard.list.heading_dashboard'),
             'href' => base_url('common/dashboard?user_token=' . $this->session->get('user_token'))
-        );
+        ];
         
 
         // Check install directory exists
@@ -33,7 +33,7 @@ class Dashboard extends \Admin\Controllers\BaseController
         }
         
         // Dashboard Extensions
-        $dashboards = array();
+        $dashboards = [];
 
         $extensionsModel = new \Admin\Models\Setting\Extensions();
 
@@ -56,7 +56,7 @@ class Dashboard extends \Admin\Controllers\BaseController
             }
         }
         
-        $data['dashboards'] = array();
+        $data['dashboards'] = [];
         
         $sort_order = array();
 
