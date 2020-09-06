@@ -21,21 +21,21 @@ class Theme extends \Admin\Controllers\BaseController
             $usergroup_model->addPermission($this->user->getGroupId(), 'access', 'extension/theme/' . $this->request->getVar('extension'));
             $usergroup_model->addPermission($this->user->getGroupId(), 'modify', 'extension/theme/' . $this->request->getVar('extension'));
 
-            $this->session->setFlashdata('success', lang('setting/extension.list.text_success'));
+            $this->session->setFlashdata('success', lang('extension/extensions/theme.text_success'));
 		}
 
 		$this->getList();
 	}
 
 	public function uninstall() {
-        $this->document->setTitle(lang('setting/extension.list.heading_title'));
+        $this->document->setTitle(lang('extension/extensions/theme.list.heading_title'));
 
 		$extension_model = new \Admin\Models\Setting\Extensions();
 
 		if ($this->validateForm()) {
 			$extension_model->uninstall('theme', $this->request->getVar('extension'));
 
-            $this->session->setFlashdata('success', lang('setting/extension.list.text_success'));
+            $this->session->setFlashdata('success', lang('extension/extensions/theme.text_success'));
 		}
 		
 		$this->getList();

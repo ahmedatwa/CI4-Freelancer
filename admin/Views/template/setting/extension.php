@@ -40,7 +40,7 @@
 function format (d) {
        return d.href;
 } 
-var table = $('#table-extension').DataTable( {
+var table = $('#table-extension').DataTable({
 'ajax': {
 	'url': "index.php/setting/extension/getList?user_token=<?php echo $user_token;?>",
 	'dataSrc': '',
@@ -60,8 +60,8 @@ var table = $('#table-extension').DataTable( {
 
 // Add event listener for opening and closing details
 $('#table-extension tbody').on('click', 'td.details-control', function () {
-    var tr = $(this).closest('tr');
-    var row = table.row(tr);
+    window.tr = $(this).closest('tr');
+    window.row = table.row(tr);
 
     if (row.child.isShown()) {
         row.child.hide();
@@ -78,6 +78,55 @@ $('#table-extension tbody').on('click', 'td.details-control', function () {
         // Open this row
         tr.addClass('shown');
     }
-});       
+}); 
+// install
+$('#table-extension').on('click', '.btn-success', function(e) {
+	e.preventDefault();
+	
+	var element = this;
+
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'html',
+		beforeSend: function() {
+			$(element).html('<i class="fas fa-spinner fa-spin"></i> loading...');
+		},
+		complete: function() {
+			$(element).prop('disabled', false);
+
+		},
+		success: function(html) {
+	    		row.child(html).show();
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+// uninstall
+$('#table-extension').on('click', '.btn-danger, .btn-warning', function(e) {
+	e.preventDefault();
+	
+	if (confirm('<?php echo $text_confirm; ?>')) {
+		var element = this;
+		
+		$.ajax({
+			url: $(element).attr('href'),
+			dataType: 'html',
+			beforeSend: function() {
+				$(element).html('<i class="fas fa-spinner fa-spin"></i> loading...');
+			},
+			complete: function() {
+				$(element).prop('disabled', false);
+			},
+			success: function(html) {
+	    		row.child(html).show();
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});		      
  </script>   
 <?php echo $footer; ?>

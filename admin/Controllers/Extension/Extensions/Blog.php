@@ -6,7 +6,7 @@ class Blog extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->document->setTitle(lang('setting/extension.list.heading_title'));
+        $this->document->setTitle(lang('extension/extensions/blog.list.heading_title'));
 
         $this->extensions = new Extensions();
 
@@ -15,7 +15,7 @@ class Blog extends \Admin\Controllers\BaseController
 
     public function install()
     {
-        $this->document->setTitle(lang('setting/extension.list.heading_title'));
+        $this->document->setTitle(lang('extension/extensions/blog.list.heading_title'));
 
         $this->extensions = new Extensions();
 
@@ -37,7 +37,7 @@ class Blog extends \Admin\Controllers\BaseController
                 $blog_model->install();
             }
 
-            $this->session->setFlashdata('success', lang('setting/extension.list.text_success'));
+            $this->session->setFlashdata('success', lang('extension/extensions/blog.text_success'));
         }
 
         $this->getList();
@@ -57,7 +57,7 @@ class Blog extends \Admin\Controllers\BaseController
                 $blog_model->uninstall();
             }
 
-            $this->session->setFlashdata('success', lang('setting/extension.list.text_success'));
+            $this->session->setFlashdata('success', lang('extension/extensions/blog.text_success'));
         }
 
         $this->getList();

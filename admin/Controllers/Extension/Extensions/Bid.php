@@ -6,7 +6,7 @@ class Bid extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->document->setTitle(lang('setting/extension.list.heading_title'));
+        $this->document->setTitle(lang('extension/extensions/bid.list.heading_title'));
 
         $this->extensions = new Extensions();
 
@@ -15,7 +15,7 @@ class Bid extends \Admin\Controllers\BaseController
 
     public function install()
     {
-        $this->document->setTitle(lang('setting/extension.list.heading_title'));
+        $this->document->setTitle(lang('extension/extensions/bid.list.heading_title'));
 
         $this->extensions = new Extensions();
 
@@ -36,7 +36,7 @@ class Bid extends \Admin\Controllers\BaseController
                 $bids_model->install();
             }
 
-            $this->session->setFlashdata('success', lang('setting/extension.list.text_success'));
+            $this->session->setFlashdata('success', lang('extension/extensions/bid.text_success'));
         }
 
         $this->getList();
@@ -44,7 +44,7 @@ class Bid extends \Admin\Controllers\BaseController
 
     public function uninstall()
     {
-        $this->document->setTitle(lang('setting/extension.list.heading_title'));
+        $this->document->setTitle(lang('extension/extensions/bid.list.heading_title'));
 
         $this->extensions = new Extensions();
 
@@ -56,7 +56,7 @@ class Bid extends \Admin\Controllers\BaseController
                 $bids_model->uninstall();
             }
 
-            $this->session->setFlashdata('success', lang('setting/extension.list.text_success'));
+            $this->session->setFlashdata('success', lang('extension/extensions/bid.text_success'));
         }
 
         $this->getList();

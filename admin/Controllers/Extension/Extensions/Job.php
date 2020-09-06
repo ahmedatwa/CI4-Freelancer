@@ -6,7 +6,7 @@ class Job extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->document->setTitle(lang('setting/extension.list.heading_title'));
+        $this->document->setTitle(lang('extension/extensions/job.list.heading_title'));
 
         $this->extensions = new Extensions();
 
@@ -15,7 +15,7 @@ class Job extends \Admin\Controllers\BaseController
 
     public function install()
     {
-        $this->document->setTitle(lang('setting/extension.list.heading_title'));
+        $this->document->setTitle(lang('extension/extensions/job.list.heading_title'));
 
         $this->extensions = new Extensions();
 
@@ -36,7 +36,7 @@ class Job extends \Admin\Controllers\BaseController
                 $job_model->install();
             }
 
-            $this->session->setFlashdata('success', lang('setting/extension.list.text_success'));
+            $this->session->setFlashdata('success', lang('extension/extensions/job.text_success'));
         }
 
         $this->getList();
@@ -57,7 +57,7 @@ class Job extends \Admin\Controllers\BaseController
                 $job_model->uninstall();
             }
 
-            $this->session->setFlashdata('success', lang('setting/extension.list.text_success'));
+            $this->session->setFlashdata('success', lang('extension/extensions/job.text_success'));
         }
 
         $this->getList();

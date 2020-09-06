@@ -6,7 +6,7 @@ class Dashboard extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->document->setTitle(lang('setting/extension.list.heading_title'));
+        $this->document->setTitle(lang('extension/extensions/dashboard.list.heading_title'));
 
         $this->extensions = new Extensions();
 
@@ -15,7 +15,7 @@ class Dashboard extends \Admin\Controllers\BaseController
 
     public function install()
     {
-        $this->document->setTitle(lang('setting/extension.list.heading_title'));
+        $this->document->setTitle(lang('extension/extensions/dashboard.list.heading_title'));
 
         $this->extensions = new Extensions();
 
@@ -35,7 +35,7 @@ class Dashboard extends \Admin\Controllers\BaseController
             );
             $setting_model->editSetting('dashboard_' . $this->request->getVar('extension'), $dashboard_data);
 
-            $this->session->setFlashdata('success', lang('setting/extension.list.text_success'));
+            $this->session->setFlashdata('success', lang('extension/extensions/dashboard.text_success'));
         }
 
         $this->getList();
@@ -49,7 +49,7 @@ class Dashboard extends \Admin\Controllers\BaseController
 
         if ($this->validateForm()) {
             $this->extensions->uninstall('dashboard', $this->request->getVar('extension'));
-            $this->session->setFlashdata('success', lang('setting/extension.list.text_success'));
+            $this->session->setFlashdata('success', lang('extension/extensions/dashboard.text_success'));
         }
 
         $this->getList();

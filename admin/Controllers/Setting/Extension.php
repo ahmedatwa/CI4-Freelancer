@@ -64,6 +64,7 @@ class Extension extends \Admin\Controllers\BaseController
               ];
             }
         }
+
         return $this->response->setJSON($json);
     }
 
