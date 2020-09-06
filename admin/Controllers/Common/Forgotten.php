@@ -1,8 +1,8 @@
 <?php namespace Admin\Controllers\Common;
 
 class Forgotten extends \Admin\Controllers\BaseController
-{    
-    protected $users; 
+{
+    protected $users;
 
     public function index()
     {
@@ -15,7 +15,6 @@ class Forgotten extends \Admin\Controllers\BaseController
         }
 
         if (($this->request->getMethod(true) == 'POST') && $this->Rules()) {
-
             $users->editCode($this->request->getPost('email'), token('alpha', 40));
             
             $this->session->setFlashData('success', lang('common/forgotten.textSuccess'));
@@ -39,7 +38,7 @@ class Forgotten extends \Admin\Controllers\BaseController
         $data['action'] = base_url('index.php/common/forgotten');
         $data['cancel']  = base_url('index.php/common/login');
 
-        echo view ('common/forgotten', $data);
+        echo view('common/forgotten', $data);
     }
 
     protected function Rules()
@@ -48,14 +47,9 @@ class Forgotten extends \Admin\Controllers\BaseController
 
         if (! $this->validate([
             'email' => 'required|valid_email',
-        ]) || ! $users->getTotalUsersByEmail($this->request->getPost('email')) ) {
-
-                $this->session->setFlashData('error', lang ('common/forgotten.errorEmail'));
-
-        } else {
-            return true;
+        ]) || ! $users->getTotalUsersByEmail($this->request->getPost('email'))) {
+            $this->session->setFlashData('error', lang('common/forgotten.errorEmail'));
         }
+        return true;
     }
-
-
 } //------------------------------------------------
