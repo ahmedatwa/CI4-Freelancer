@@ -41,7 +41,7 @@ class Review extends \Admin\Controllers\BaseController
 
     public function delete()
     {
-        $json = array();
+        $json = [];
 
         $this->reviews = new \Admin\Models\Catalog\Reviews();
    
@@ -62,30 +62,30 @@ class Review extends \Admin\Controllers\BaseController
     protected function getList()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('catalog/review.list.heading_title'),
             'href' => base_url('index.php/catalog/review?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
         // Data
-        $filter_data = array(
+        $filter_data = [
             'start'    => 0,
             'order_by' => 'DESC',
             'sort_by'  => 'r.date_added',
             'limit'    => $this->registry->get('config_admin_limit')
         );
 
-        $data['reviews'] = array();
+        $data['reviews'] = [];
         $results = $this->reviews->getReviews($filter_data);
 
         foreach ($results as $result) {
-            $data['reviews'][] = array(
+            $data['reviews'][] = [
                 'review_id' => $result['review_id'],
                 'name'      => $result['name'],
                 'author'    => $result['author'],
@@ -93,7 +93,7 @@ class Review extends \Admin\Controllers\BaseController
                 'status'    => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'edit'      => base_url('index.php/catalog/review/edit?user_token=' . $this->session->get('user_token') . '&review_id=' . $result['review_id']),
                 'delete'    => base_url('index.php/catalog/review/delete?user_token=' . $this->session->get('user_token') . '&review_id=' . $result['review_id']),
-            );
+            ];
         }
 
         $data['add'] = base_url('index.php/catalog/review/add?user_token=' . $this->session->get('user_token'));
@@ -114,7 +114,7 @@ class Review extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
         $data['user_token'] = $this->request->getGet('user_token');
@@ -125,17 +125,17 @@ class Review extends \Admin\Controllers\BaseController
     protected function getForm()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
+        $data['breadcrumbs'] = [];
         
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('catalog/review.list.heading_title'),
             'href' => base_url('index.php/catalog/review/edit?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
         $data['text_form'] = !$this->request->getGet('review_id') ? lang('catalog/review.list.text_add') : lang('catalog/review.list.text_edit');
 
@@ -215,7 +215,7 @@ class Review extends \Admin\Controllers\BaseController
 
     public function autocomplete()
     {
-        $json = array();
+        $json = [];
 
         if ($this->request->getGet('project_id')) {
             $reviews = new \Admin\Models\Catalog\Reviews();
@@ -226,19 +226,19 @@ class Review extends \Admin\Controllers\BaseController
                 $filter_name = null;
             }
 
-            $filter_data = array(
+            $filter_data = [
                 'filter_name' => $filter_name,
                 'start' => 0,
                 'limit' => 5,
-            );
+            ];
 
             $results = $reviews->getReviews($filter_data);
 
             foreach ($results as $result) {
-                $json[] = array(
+                $json[] = [
                     'project_id' => $result['project_id'],
                     'name'       => $result['name']
-                );
+                ];
             }
         }
 
@@ -284,9 +284,8 @@ class Review extends \Admin\Controllers\BaseController
         if (!$this->user->hasPermission('modify', $this->getRoute())) {
             $this->session->setFlashdata('error_warning', lang('catalog/review.error_permission'));
             return false;
-        } else {
-            return true;
-        }
+        } 
+         return true;
     }
         
     //--------------------------------------------------------------------

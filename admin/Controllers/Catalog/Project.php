@@ -41,7 +41,7 @@ class Project extends \Admin\Controllers\BaseController
 
     public function delete()
     {
-        $json = array();
+        $json = [];
 
         $this->projects = new \Admin\Models\Catalog\Projects();
    
@@ -62,24 +62,24 @@ class Project extends \Admin\Controllers\BaseController
     protected function getList()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('catalog/project.list.heading_title'),
             'href' => base_url('index.php/catalog/project?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
         // Data
-        $filter_data = array(
+        $filter_data = [
             'start'    => 0,
             'limit'    => \Admin\Libraries\Registry::get('config_admin_limit'),
         );
 
-        $data['projects'] = array();
+        $data['projects'] = [];
         $results = $this->projects->getProjects($filter_data);
 
         foreach ($results as $result) {
@@ -89,7 +89,7 @@ class Project extends \Admin\Controllers\BaseController
                 $type = lang('catalog/project.list.text_per_hour');
             }
 
-            $data['projects'][] = array(
+            $data['projects'][] = [
                 'project_id' => $result['project_id'],
                 'name'       => $result['name'],
                 'freelancer' => $this->projects->getFreelancerByProjectId($result['project_id']),
@@ -120,7 +120,7 @@ class Project extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
         $this->document->output('catalog/project_list', $data);
@@ -129,17 +129,17 @@ class Project extends \Admin\Controllers\BaseController
     protected function getForm()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
+        $data['breadcrumbs'] = [];
         
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('catalog/project.list.heading_title'),
             'href' => base_url('index.php/catalog/project/edit?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
         $data['text_form'] = !$this->request->getGet('project_id') ? lang('catalog/project.list.text_add') : lang('catalog/project.list.text_edit');
 
@@ -168,7 +168,7 @@ class Project extends \Admin\Controllers\BaseController
         } elseif ($this->request->getGet('project_id')) {
             $data['project_description'] = $this->projects->getProjectDescription($this->request->getVar('project_id'));
         } else {
-            $data['project_description'] = array();
+            $data['project_description'] = [];
         }
 
         if ($this->request->getPost('sort_order')) {
@@ -272,9 +272,8 @@ class Project extends \Admin\Controllers\BaseController
         if (!$this->user->hasPermission('modify', $this->getRoute())) {
             $this->session->setFlashdata('error_warning', lang('catalog/project.error_permission'));
             return false;
-        } else {
-            return true;
-        }
+        } 
+        return true;
     }
         
     //--------------------------------------------------------------------
