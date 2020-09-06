@@ -43,22 +43,6 @@ class BaseController extends \CodeIgniter\Controller
         $this->registry = new \Admin\Libraries\Registry();
         $this->user     = new \Admin\Libraries\User();
     }
-
-
-    public function getBreadcrumbs()
-    {
-        $breadcrumbs = array();
-        $breadcrumbs[] = array(
-            'text' => lang('en-gb.textHome'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
-        );
-        $breadcrumbs[] = array(
-            'text' => lang(uri_string() . '.text_title'),
-            'href' => base_url('index.php/' . uri_string() . '/category?user_token=' . $this->request->getVar('user_token')),
-        );
-  
-        return $breadcrumbs;
-    }
     
     public function paginationInitilize($page, $limit, $total)
     {
