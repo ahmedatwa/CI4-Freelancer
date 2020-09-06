@@ -41,7 +41,7 @@ class Customer_group extends \Admin\Controllers\BaseController
 
     public function delete()
     {
-        $json = array();
+        $json = [];
 
         $this->customers_group = new \Admin\Models\Customer\Customers_group();
    
@@ -62,33 +62,33 @@ class Customer_group extends \Admin\Controllers\BaseController
     protected function getList()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('customer/customer_group.list.heading_title'),
             'href' => base_url('index.php/customer/customer_group?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
         // Data
-        $filter_data = array(
+        $filter_data = [
             'start' => 0,
             'limit' => $this->registry->get('config_admin_limit'),
-        );
+        ];
 
-        $data['customer_groups'] = array();
+        $data['customer_groups'] = [];
         $results = $this->customers_group->getCustomerGroups($filter_data);
 
         foreach ($results as $result) {
-            $data['customer_groups'][] = array(
+            $data['customer_groups'][] = [
                 'customer_group_id' => $result['customer_group_id'],
                 'name'              => $result['name'],
                 'sort_order'        => $result['sort_order'],
                 'edit'              => base_url('index.php/customer/customer_group/edit?user_token=' . $this->session->get('user_token') . '&customer_group_id=' . $result['customer_group_id']),
-            );
+            ];
         }
 
         $data['add'] = base_url('index.php/customer/customer_group/add?user_token=' . $this->session->get('user_token'));
@@ -109,7 +109,7 @@ class Customer_group extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
         $this->document->output('customer/customer_group_list', $data);
@@ -118,16 +118,16 @@ class Customer_group extends \Admin\Controllers\BaseController
     protected function getForm()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('customer/customer_group.list.heading_title'),
             'href' => base_url('index.php/customer/customer_group/save?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
         $data['text_form'] = !$this->request->getGet('customer_group_id') ? lang('customer/customer_group.list.text_add') : lang('customer/customer_group.list.text_edit');
 
@@ -154,7 +154,7 @@ class Customer_group extends \Admin\Controllers\BaseController
         } elseif ($this->request->getVar('customer_group_id')) {
             $data['customer_group_description'] = $this->customers_group->getCustomerGroupDescriptions($this->request->getVar('customer_group_id'));
         } else {
-            $data['customer_group_description'] = array();
+            $data['customer_group_description'] = [];
         }
         
         if ($this->request->getPost('sort_order')) {
@@ -166,8 +166,7 @@ class Customer_group extends \Admin\Controllers\BaseController
         }
 
         $languages = new \Admin\Models\Localisation\Languages();
-
-        $data['languages'] = $languages->findAll();
+        $data['languages'] = $languages->where('status', 1)->findAll();
 
 
         $this->document->output('customer/customer_group_form', $data);
