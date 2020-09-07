@@ -152,27 +152,32 @@ class Template
     }
 
     // Generating Final Template Output
-    public function output(string $view, array $data = [])
+    public function output(string $view, array $data)
     {
-        // if (config('App')->templateEngine == 'twig') {
-        //     // specify where to look for templates
-        //     $loader = new \Twig\Loader\FilesystemLoader(config('paths')->viewDirectory);
+        if (config('App')->templateEngine == 'twig') {
+            // specify where to look for templates
+            $loader = new \Twig\Loader\FilesystemLoader(config('paths')->viewDirectory);
 
-        //     // initialize Twig environment
-        //     $twig  = new \Twig\Environment($loader, [
-        //             'cache' => config('paths')->writableDirectory . '/cache/',
-        //     ]);
-        
-        //     $template = $twig->load(getSettingValue('config_theme') . '/' . $view . '.twig');
+            // initialize Twig environment
+            $config = [
+                'charset'     => 'utf-8',
+                'autoescape'  => false,
+                'debug'       => false,
+                'auto_reload' => true,
+                'cache'       => config('paths')->writableDirectory . '/cache/'
+            ];
 
-        //     $data['header'] = view_cell('\Catalog\Controllers\Common\Header::index');
-        //     $data['menu']   = view_cell('\Catalog\Controllers\Common\Menu::index');
-        //     $data['footer'] = view_cell('\Catalog\Controllers\Common\Footer::index');
+            $twig  = new \Twig\Environment($loader, $config);
 
-        //     echo $template->render($data);
-        // } else {
+            $data['header']      = view_cell('\Catalog\Controllers\Common\Header::index');
+            $data['menu']        = view_cell('\Catalog\Controllers\Common\Menu::index');
+            $data['column_left'] = view_cell('\Catalog\Controllers\Common\Column_left::index');
+            $data['footer']      = view_cell('\Catalog\Controllers\Common\Footer::index');
+
+            echo $twig->render(getSettingValue('config_theme') . '/' . $view . '.twig', $data);
+        } else {
             // Renderer
-            $viewLib = \Config\Services::renderer();
+            $renderer = \Config\Services::renderer();
             // Parts
             $data['header']      = view_cell('\Catalog\Controllers\Common\Header::index');
             $data['menu']        = view_cell('\Catalog\Controllers\Common\Menu::index');
@@ -182,8 +187,8 @@ class Template
             //$data['content_bottom'] = view_cell('\Catalog\Controllers\Common\Content_bottom::index');
             $data['footer'] = view_cell('\Catalog\Controllers\Common\Footer::index');
 
-            echo $viewLib->setData($data)->render(getSettingValue('config_theme') . '/' . $view);
-        // }
+            echo $renderer->setData($data)->render(getSettingValue('config_theme') . '/' . $view);
+        }
     }
 
     // --------------------------------------------------------------------------------------------------

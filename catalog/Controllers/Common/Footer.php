@@ -68,7 +68,6 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['blog']    = base_url('blog');
 
         if (getSettingValue('config_customer_online')) {
-
             $online_model = new \Catalog\Models\Tool\Online();
 
             if ($this->request->getIPAddress()) {
@@ -99,6 +98,7 @@ class Footer extends \Catalog\Controllers\BaseController
         }
 
         $data['scripts'] = $this->template->getScripts();
+
 
         return view('common/footer', $data);
     }

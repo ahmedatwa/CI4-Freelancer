@@ -67,22 +67,26 @@ if (! function_exists('getSeoUrlKeywordByQuery')) {
         return $seo_urls_model->getKeywordByQuery($query);
     }
 }
-// Alter the View function to extend it with theme name
+// Override the View function to extend it with theme name
 if (! function_exists('view')) {
     function view(string $name, array $data = [], array $options = [])
     {
-        // if (config('App')->templateEngine == 'twig') {
-        //     // specify where to look for templates
-        //     $loader = new \Twig\Loader\FilesystemLoader(config('paths')->viewDirectory);
+        if (config('App')->templateEngine == 'twig') {
+            // specify where to look for templates
+            $loader = new \Twig\Loader\FilesystemLoader(config('paths')->viewDirectory);
 
-        //     // initialize Twig environment
-        //     $twig  = new \Twig\Environment($loader, [
-        //       'cache' => config('paths')->writableDirectory . '/cache/',
-        //     ]);
-  
-        //     $template = $twig->load(getSettingValue('config_theme') . '/' . $name . '.twig');
-        //     echo $template->render($data);
-        // } else {
+            // initialize Twig environment
+            $config = [
+                'charset'     => 'utf-8',
+                'autoescape'  => false,
+                'debug'       => false,
+                'auto_reload' => true,
+                'cache'       => config('paths')->writableDirectory . '/cache/'
+            ];
+
+            $twig  = new \Twig\Environment($loader, $config);
+            return $twig->render(getSettingValue('config_theme') . '/' . $name . '.twig', $data);
+        } else {
             /**
              * @var CodeIgniter\View\View $renderer
              */
@@ -97,6 +101,6 @@ if (! function_exists('view')) {
 
             return $renderer->setData($data, 'raw')
                     ->render(getSettingValue('config_theme') . '/' . $name, $options, $saveData);
-        // }
+        }
     }
 }

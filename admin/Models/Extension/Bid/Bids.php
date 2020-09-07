@@ -101,13 +101,13 @@ class Bids extends \CodeIgniter\Model
 
       $forge->addField($fields);
       $forge->addPrimaryKey('bid_id');
-      $forge->createTable('bids');
+      $forge->createTable('bids', true);
     }
 
     public function uninstall()
     {
         $forge = \Config\Database::forge();
-        $forge->dropTable('bids',TRUE);
+        $forge->dropTable('bids',true);
 
     }
 

@@ -76,7 +76,7 @@ $('#table-extension tbody').on('click', 'td.details-control', function () {
         // Open this row
         tr.addClass('shown');
     }
-}); 
+});
 // install
 $('#table-extension').on('click', '.btn-success', function(e) {
 	e.preventDefault();

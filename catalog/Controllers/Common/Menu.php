@@ -2,10 +2,8 @@
 
 class Menu extends \Catalog\Controllers\BaseController
 {
-
     public function index()
     {
-
         $data['text_menu']        = lang('common/menu.text_menu');
         $data['text_login']       = lang('common/menu.text_login');
         $data['text_register']    = lang('common/menu.text_register');
@@ -20,7 +18,7 @@ class Menu extends \Catalog\Controllers\BaseController
 
         $blog = $extensions_model->getExtensions('blog');
 
-        // Menu 
+        // Menu
         $data['menus'][] = [
             'id'       => 'menu-home',
             'name'     => lang('common/menu.text_home'),
@@ -36,17 +34,17 @@ class Menu extends \Catalog\Controllers\BaseController
             'href'     => base_url('project/category'),
             'children' => [],
         ];
-        if ($blog) {
-        $data['menus'][] = [
+        if (getSettingValue('blog_status')) {
+            $data['menus'][] = [
             'id'       => 'menu-blog',
-            'name'     => lang('common/menu.blog'),
+            'name'     => lang('extension/blog/blog.heading_title'),
             'icon'     => '',
-            'href'     => base_url('extensions/blog'),
+            'href'     => base_url('blog'),
             'children' => [],
         ];
-    }
+        }
 
-       // Links 
+        // Links
         $data['home']      = base_url('/');
         $data['register']  = base_url('common/register');
         $data['action']    = base_url('common/login');
@@ -63,7 +61,7 @@ class Menu extends \Catalog\Controllers\BaseController
         $data['image']    = '';
 
 
-        return view ('common/menu', $data);
+        return view('common/menu', $data);
     }
 
 

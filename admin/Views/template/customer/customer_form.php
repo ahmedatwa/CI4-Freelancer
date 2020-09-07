@@ -40,6 +40,8 @@
           <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true"><?php echo $tab_general; ?></a></li>
           <li class="nav-item" role="presentation">
             <a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false"><?php echo $tab_reviews; ?></a></li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" id="wallet-tab" data-toggle="tab" href="#wallet" role="tab" aria-controls="wallet" aria-selected="false"><?php echo $tab_wallet; ?></a></li>
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active mt-3" id="general" role="tabpanel" aria-labelledby="general-tab">
@@ -138,6 +140,9 @@
             </fieldset>
           </div>
           <div class="tab-pane fade mt-3" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+           <div id="review-content"></div>
+         </div>
+          <div class="tab-pane fade mt-3" id="wallet" role="tabpanel" aria-labelledby="wallet-tab">
            <div id="review-content"></div>
          </div>
        </div><!-- tab Content -->

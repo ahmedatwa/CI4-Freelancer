@@ -4,15 +4,16 @@ class Wallet extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->wallets = new \Admin\Models\Extension\Wallet\Wallets();
-
         $this->document->setTitle(lang('extension/wallet/wallet.list.heading_title'));
 
-        $this->getList();
-    }
+        $setting_model = new \Admin\Models\Setting\Settings();
 
-    protected function getList()
-    {
+        if (($this->request->getMethod() == 'post') ) {
+                $setting_model->editSetting('extension_wallet', $this->request->getPost());
+
+            return redirect()->to(base_url('index.php/setting/extension?user_token=' . $this->session->get('user_token')))
+                             ->with('success', lang('extension/wallet/wallet.text_success'));
+        }
 
         // Breadcrumbs
         $data['breadcrumbs'] = [];
@@ -31,28 +32,7 @@ class Wallet extends \Admin\Controllers\BaseController
             'href' => base_url('index.php/extension/wallet/post?user_token=' . $this->session->get('user_token')),
         ];
 
-        // Data
-        $filter_data = [
-            'start' => 0,
-            'limit' => $this->registry->get('config_admin_limit'),
-         ];
-        $data['wallets'] = [];
-        $results = $this->wallets->getWallets($filter_data);
-
-        foreach ($results as $result) {
-            $data['wallets'][] = [
-                'wallet_id'     => $result['wallet_id'],
-                'name'       => $result['name'],
-                'freelancer' => $result['freelancer'],
-                'open'       => $this->getOpenDays($result['date_start'], $result['date_end']),
-                'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'edit'       => base_url('index.php/extension/wallet/post/save?user_token=' . $this->session->get('user_token') . '&wallet_id=' . $result['wallet_id']),
-                'delete'     => base_url('index.php/extension/wallet/post/delete?user_token=' . $this->session->get('user_token') . '&wallet_id=' . $result['wallet_id']),
-            ];
-        }
-
-        $data['add'] = base_url('index.php/extension/wallet/post/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/extension/wallet/post/delete?user_token=' . $this->session->get('user_token'));
+        $data['action'] = base_url('index.php/extension/wallet/wallet?user_token=' . $this->session->get('user_token'));
         $data['cancel'] = base_url('index.php/setting/extension?user_token=' . $this->session->get('user_token') . '&type=wallet');
 
         if ($this->session->getFlashdata('success')) {
@@ -67,14 +47,26 @@ class Wallet extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        if ($this->request->getPost('selected')) {
-            $data['selected'] = (array) $this->request->getPost('selected');
+        if ($this->request->getPost('extension_wallet_status')) {
+            $data['extension_wallet_status'] = $this->request->getPost('extension_wallet_status');
+        } elseif (!empty($this->registry->get('extension_wallet_status'))) {
+            $data['extension_wallet_status'] = $this->registry->get('extension_wallet_status');
         } else {
-            $data['selected'] = [];
+            $data['extension_wallet_status'] = '';
         }
 
-        $this->document->output('extension/wallet/wallet_list', $data);
+        $this->document->output('extension/wallet/wallet_form', $data);
     }
+
+    protected function validateForm()
+    {
+        if (!$this->user->hasPermission('modify', 'extension/wallet/wallet')) {
+            $this->session->setFlashdata('error_warning', lang('extension/wallet/wallet.error_permission'));
+            return false;
+        }
+        return true;
+    }
+
         
     //--------------------------------------------------------------------
 }

@@ -26,12 +26,9 @@
             <form class="form-horizontal" enctype="multipart/form-data" id="form-location">
                 <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
                 <div class="table-responsive">
-                <table id="table-location" class="table table-striped table-bordered">
+                <table id="table-bid" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th width="1%" class="no-sort"><input type="checkbox"
-                            onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
-                        </th>
                         <th width="60%"><?php echo $column_name; ?></th>
                         <th><?php echo $column_freelancer; ?></th>
                         <th><?php echo $column_open; ?></th>
@@ -40,20 +37,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($bids) { ?>
                         <?php foreach ($bids as $bid) { ?>
                             <tr>
-                                <th scope="row">
-                                    <?php if (in_array($bid['bid_id'], $selected)) { ?>
-                                        <input type="checkbox" name="selected[]"
-                                        value="<?php echo $bid['bid_id']; ?>"
-                                        checked="checked" />
-                                    <?php } else { ?>
-                                        <input type="checkbox" name="selected[]"
-                                        value="<?php echo $bid['bid_id']; ?>" />
-                                    <?php } ?>
-                                </div>
-                            </th>
                             <td><?php echo $bid['name']; ?></td>
                             <td><?php echo $bid['freelancer']; ?></td>
                             <td><?php echo $bid['open']; ?></td>
@@ -64,11 +49,6 @@
                                     class="far fa-edit"></i></a></td>
                                 </tr>
                             <?php } ?>
-                        <?php } else { ?>
-                            <tr>
-                                <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
-                            </tr>
-                        <?php } ?>
                     </tbody>
                 </table>
             </div>
@@ -81,7 +61,7 @@
 <script src="assets/vendor/DataTables/datatables.min.js"></script>
 <!-- // DataTables -->
 <script type="text/javascript">
-var table = $('#table-location').DataTable({
+var table = $('#table-bid').DataTable({
     "dom": 'lrtp',
     "order":[[ 1, "asc" ]],
     "lengthMenu": [15, 20, 25, 30]

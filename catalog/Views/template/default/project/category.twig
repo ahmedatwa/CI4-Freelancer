@@ -1,5 +1,4 @@
-<?php echo $header;?><?php echo $menu;?>
-<?php echo $column_left;?>
+{{ header }} {{ menu }}{{ column_left }}
 <main class="bg_color">
 		<div class="filters_full">
 		    <div class="container clearfix">
@@ -115,16 +114,15 @@
 			</div>
 			<!-- /page_header -->
 	    <div class="row">
-	    	<?php if ($categories) { ?>
-	    	<?php foreach ($categories as $category) { ?>
+	    	{% for category in categories %}
 	        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
 	            <div class="strip">
 	                <figure>
 	                    <a href="#0" class="wish_bt"><i class="icon_heart"></i></a>
-	                    <img src="<?php echo $category['image']; ?>" class="img-fluid lazy" alt="">
-	                    <a href="<?php echo $category['href']; ?>" class="strip_info">
+	                    <img src="{{ category.image }}" class="img-fluid lazy" alt="">
+	                    <a href="{{ category.href }}" class="strip_info">
 	                        <div class="item_title">
-	                            <h3><?php echo $category['name']; ?></h3>
+	                            <h3>{{ category.name }}</h3>
 	                            <small>Pediatrician, Psychologist ...</small>
 	                        </div>
 	                    </a>
@@ -140,8 +138,7 @@
 	            </div>
 	        </div>
 	        <!-- /strip grid -->
-	        <?php } ?>
-	    <?php } ?>
+	     {% endfor %}
 	    </div>
 	    <!-- /row -->
       <?php echo $pager->links(); ?>
@@ -149,4 +146,4 @@
 	<!-- /container -->	
 	</main>
 	<!-- /main -->
-<?php echo $footer;?>
+{{ footer }}

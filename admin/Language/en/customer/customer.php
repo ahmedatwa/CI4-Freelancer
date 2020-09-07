@@ -31,8 +31,8 @@ return [
 'text_employer'             => 'Employer',
 'text_freelancer'           => 'Freelancer',
 // tabs 
-'tab_general' => 'General',
 'tab_reviews' => 'Reviews',
+'tab_wallet' => 'Wallet',
 // Column
 'column_name'               => 'Name',
 'column_email'              => 'E-Mail',
