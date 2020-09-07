@@ -77,7 +77,7 @@ class Project extends \Admin\Controllers\BaseController
         $filter_data = [
             'start'    => 0,
             'limit'    => \Admin\Libraries\Registry::get('config_admin_limit'),
-        );
+        ];
 
         $data['projects'] = [];
         $results = $this->projects->getProjects($filter_data);
@@ -99,7 +99,7 @@ class Project extends \Admin\Controllers\BaseController
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'edit'       => base_url('index.php/catalog/project/edit?user_token=' . $this->session->get('user_token') . '&project_id=' . $result['project_id']),
                 'delete'     => base_url('index.php/catalog/project/delete?user_token=' . $this->session->get('user_token') . '&project_id=' . $result['project_id']),
-            );
+            ];
         }
 
         $data['add'] = base_url('index.php/catalog/project/add?user_token=' . $this->session->get('user_token'));

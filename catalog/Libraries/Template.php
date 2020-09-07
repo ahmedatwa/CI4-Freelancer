@@ -147,7 +147,7 @@ class Template
         if (isset(self::$scripts[$postion])) {
             return self::$scripts[$postion];
         } else {
-            return array();
+            return [];
         }
     }
 
@@ -157,10 +157,8 @@ class Template
         if (config('App')->templateEngine == 'twig') {
             // specify where to look for templates
             $loader = new \Twig\Loader\FilesystemLoader(config('paths')->viewDirectory);
-
             // initialize Twig environment
             $config = [
-                'charset'     => 'utf-8',
                 'autoescape'  => false,
                 'debug'       => false,
                 'auto_reload' => true,

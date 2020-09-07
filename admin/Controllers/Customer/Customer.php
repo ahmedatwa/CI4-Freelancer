@@ -240,7 +240,7 @@ class Customer extends \Admin\Controllers\BaseController
 
     public function review()
     {
-        $this->customers = new \Admin\Models\Customer\Customers();
+        $customers_model = new \Admin\Models\Customer\Customers();
 
         $data['column_project']  = lang('catalog/review.list.column_project');
         $data['column_employer'] = lang('catalog/review.list.column_employer');
@@ -256,7 +256,7 @@ class Customer extends \Admin\Controllers\BaseController
         ];
 
         $data['reviews'] = [];
-        $results = $this->customers->getReviews($filter_data);
+        $results = $customers_model->getReviews($filter_data);
 
         foreach ($results as $result) {
             $data['reviews'][] = [
@@ -272,6 +272,39 @@ class Customer extends \Admin\Controllers\BaseController
         }
         
         return view('customer/customer_review', $data);
+    }
+
+    public function wallet()
+    {
+        if ($this->request->getGet('customer_id')) {
+            $customer_id = $this->request->getGet('customer_id');
+        } else {
+            $customer_id = 0;
+        }
+
+        $wallet_model = new \Admin\Models\Extension\Wallet\Wallets();
+
+        $data['column_customer'] = lang('extension/wallet/wallet.list.column_customer');
+        $data['column_total']    = lang('extension/wallet/wallet.list.column_total');
+        $data['column_status']   = lang('extension/wallet/wallet..list.column_status');
+        $data['column_action']   = lang('en.list.column_action');
+
+        $filter_data = [
+            'customer_id' => $customer_id,
+        ];
+
+        $data['wallets'] = [];
+        $results = $wallet_model->getCustomerWallet($filter_data);
+
+        foreach ($results as $result) {
+            $data['wallets'][] = [
+                'customer' => $result['customer'],
+                'total'    => $result['total'],
+                'status'   => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+            ];
+        }
+        
+        return view('customer/customer_wallet', $data);
     }
 
     public function autocomplete()
@@ -298,7 +331,7 @@ class Customer extends \Admin\Controllers\BaseController
             foreach ($results as $result) {
                 $json[] = [
                     'customer_id' => $result['customer_id'],
-                    'name' => $result['name']
+                    'name'        => $result['name']
                 ];
             }
         }

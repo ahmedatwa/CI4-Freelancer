@@ -143,7 +143,7 @@
            <div id="review-content"></div>
          </div>
           <div class="tab-pane fade mt-3" id="wallet" role="tabpanel" aria-labelledby="wallet-tab">
-           <div id="review-content"></div>
+           <div id="wallet-content"></div>
          </div>
        </div><!-- tab Content -->
      </form>
@@ -153,5 +153,6 @@
 </div>
 <script type="text/javascript">
   $('#review-content').load("index.php/customer/customer/review?user_token=<?php echo $user_token;?>");
+  $('#wallet-content').load("index.php/customer/customer/wallet?user_token=<?php echo $user_token;?>&customer_id=<?php echo $customer_id; ?>");
 </script>
 <?php echo $footer; ?>

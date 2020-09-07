@@ -4,7 +4,7 @@ class Customer
 {
     protected $customer_id;
     protected $customer_group_id;
-    protected $permission = array();
+    protected $permission = [];
     protected $customer_name;
     protected $avatar;
     protected $session;
@@ -60,12 +60,12 @@ class Customer
             $this->customer_group_id = $row->customer_group_id;
             $this->customer_name     = $row->username;
             // Build User Data Session Array
-            $customer_data = array(
+            $customer_data = [
                 'customer_id'       => $row->customer_id,
                 'customer_name'     => $row->username,
                 'customer_group_id' => $row->customer_group_id,
                 'isLogged'          => true,
-            );
+            ];
 
             $this->session->set($customer_data);
 
