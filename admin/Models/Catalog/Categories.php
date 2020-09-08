@@ -145,7 +145,7 @@ class Categories extends Model
         $project_to_category = $this->db->table('project_to_category');
         $project_to_category->delete(['category_id' => $category_id]);
         $seo_url = $this->db->table('seo_url');
-        $seo_url->delete(['query' => 'category_id' . $category_id]);
+        $seo_url->delete(['query' => 'category_id=' . $category_id]);
     }
 
     public function getCategory($category_id)

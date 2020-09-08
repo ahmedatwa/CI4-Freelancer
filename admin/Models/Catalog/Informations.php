@@ -185,6 +185,9 @@ class Informations extends \CodeIgniter\Model
         //  information_description
         $builderDescription = $this->db->table('information_description');
         $builderDescription->delete(['information_id' => $information_id]);
+        //  seo_url
+        $builderDescription = $this->db->table('seo_url');
+        $builderDescription->delete(['query' => 'information_id=' . $information_id]);
     }
 
     // -----------------------------------------------------------------
