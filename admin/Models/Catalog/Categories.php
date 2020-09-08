@@ -36,7 +36,6 @@ class Categories extends Model
         }
     }
 
-
     public function addCategory($data)
     {
         $builder = $this->db->table('category');
@@ -63,7 +62,7 @@ class Categories extends Model
         // category_description
         $description_builder = $this->db->table('category_description');
         foreach ($data['category_description'] as $language_id => $value) {
-            $category_description_data = array(
+            $category_description_data = [
                     'category_id'      => $category_id,
                     'language_id'      => $language_id,
                     'name'             => $value['name'],
@@ -71,25 +70,18 @@ class Categories extends Model
                     'meta_title'       => $value['meta_title'],
                     'meta_description' => $value['meta_description'],
                     'meta_keyword'     => $value['meta_keyword'],
-            );
+            ];
             $description_builder->insert($category_description_data);
-        }
-        // Seo Url
-        if (isset($data['seo_url'])) {
+            //  Seo Urls
             $seo_url = $this->db->table('seo_url');
-            foreach ($data['seo_url'] as $language_id => $keyword) {
-                if (!empty($keyword)) {
-                    $category_seo_url_data = array(
-                            'site_id'     => 0,
-                            'language_id' => $language_id,
-                            'query'       => 'category_id=' . $category_id,
-                            'keyword'     => $keyword,
-                        );
-                    $seo_url->insert($category_seo_url_data);
-                }
-            }
+            $seo_url_data = [
+                    'site_id'     => 0,
+                    'language_id' => $language_id,
+                    'query'       => 'category_id=' . $category_id,
+                    'keyword'     => generateSeoUrl($value['name']),
+                ];
+            $seo_url->insert($seo_url_data);
         }
-        
         return $category_id;
     }
 
@@ -101,7 +93,6 @@ class Categories extends Model
             'parent_id'  => $data['parent_id'],
             'top'        => $data['top'] ?? 0,
             'sort_order' => $data['sort_order'],
-            //'column'     => $data['column'],
             'status'     => $data['status'],
         );
         
@@ -120,7 +111,7 @@ class Categories extends Model
         if (isset($data['category_description'])) {
             $description_builder->delete(['category_id' => $category_id]);
             foreach ($data['category_description'] as $language_id => $value) {
-                $category_description_data = array(
+                $category_description_data = [
                     'category_id'      => $category_id,
                     'language_id'      => $language_id,
                     'name'             => $value['name'],
@@ -128,25 +119,17 @@ class Categories extends Model
                     'meta_title'       => $value['meta_title'],
                     'meta_description' => $value['meta_description'],
                     'meta_keyword'     => $value['meta_keyword'],
-                );
-                
+                ];
                 $description_builder->insert($category_description_data);
-            }
-        }
-
-        // Seo Url
-        if (isset($data['seo_url'])) {
-            $seo_url = $this->db->table('seo_url');
-            foreach ($data['seo_url'] as $language_id => $keyword) {
-                if (!empty($keyword)) {
-                    $category_seo_url_data = array(
-                            'site_id'     => 0,
-                            'language_id' => $language_id,
-                            'query'       => 'category_id=' . $category_id,
-                            'keyword'     => $keyword,
-                        );
-                    $seo_url->insert($category_seo_url_data);
-                }
+                //  Seo Urls
+                $seo_url = $this->db->table('seo_url');
+                $seo_url_data = [
+                        'site_id'     => 0,
+                        'language_id' => $language_id,
+                        'query'       => 'category_id=' . $category_id,
+                        'keyword'     => generateSeoUrl($value['name']),
+                    ];
+                $seo_url->insert($seo_url_data);
             }
         }
     }
@@ -207,22 +190,19 @@ class Categories extends Model
 
     public function getCategoryDescriptions($category_id)
     {
-        $category_description_data = array();
+        $category_description_data = [];
 
         $builder = $this->db->table('category_description');
-
         $builder->select()->where('category_id', $category_id);
-
         $query = $builder->get();
-
         foreach ($query->getResultArray() as $result) {
-            $category_description_data[$result['language_id']] = array(
+            $category_description_data[$result['language_id']] = [
                 'name'             => $result['name'],
                 'meta_title'       => $result['meta_title'],
                 'meta_description' => $result['meta_description'],
                 'meta_keyword'     => $result['meta_keyword'],
                 'description'      => $result['description']
-            );
+            ];
         }
 
         return $category_description_data;

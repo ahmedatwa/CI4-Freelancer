@@ -8,8 +8,8 @@ class Category extends \Catalog\Controllers\BaseController
         
         $categories_model = new \Catalog\Models\Catalog\Categories();
 
-        if ($this->request->getVar('category_id')) {
-            $category_id = $this->request->getVar('category_id');
+        if ($this->request->getGet('category_id')) {
+            $category_id = $this->request->getGet('category_id');
         } else {
             $category_id = null;
         }
