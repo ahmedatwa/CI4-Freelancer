@@ -1,4 +1,4 @@
-<?php echo $header;?><?php echo $menu;?>
+{{ header }}{{ menu }}
 <main class="bg_color">
 		<div class="filters_full">
 		    <div class="container clearfix">
@@ -114,15 +114,14 @@
 			</div>
 			<!-- /page_header -->
 	    <div class="row">
-	    	<?php if ($posts) { ?>
-	    	<?php foreach ($posts as $post) { ?>
+	    	{% for post in posts %}
 	        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
 	            <div class="strip">
 	                <figure>
 	                    <a href="#0" class="wish_bt"><i class="icon_heart"></i></a>
 	                    <a href="<?php echo $post['href']; ?>" class="strip_info">
 	                        <div class="item_title">
-	                            <h3><?php echo $post['title']; ?></h3>
+	                            <h3>{{ post.title }}</h3>
 	                            <small>Pediatrician, Psychologist ...</small>
 	                        </div>
 	                    </a>
@@ -138,12 +137,10 @@
 	            </div>
 	        </div>
 	        <!-- /strip grid -->
-	        <?php } ?>
-	    <?php } ?>
+	       {% endfor %}
 	    </div>
 	    <!-- /row -->
 	</div>
 	<!-- /container -->	
 	</main>
-	<!-- /main -->
-<?php echo $footer;?>
+{{ footer }}

@@ -4,7 +4,6 @@ class Information extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-
         $informations = new \Catalog\Models\Catalog\Informations();
 
         $data['breadcrumbs'] = [];

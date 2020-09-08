@@ -114,7 +114,7 @@ class Informations extends Model
         if (isset($data['information_description'])) {
             $information_description_table = $this->db->table('information_description');
             foreach ($data['information_description'] as $language_id => $information_description) {
-                $information_description_data = array(
+                $information_description_data = [
                     'information_id'   => $information_id,
                     'language_id'      => $language_id,
                     'title'            => $information_description['title'],
@@ -122,23 +122,18 @@ class Informations extends Model
                     'meta_title'       => $information_description['meta_title'],
                     'meta_description' => $information_description['meta_description'],
                     'meta_keyword'     => $information_description['meta_keyword'],
-                );
+                ];
+
                 $information_description_table->insert($information_description_data);
-            }
-        }
-        // Seo Url
-        if (isset($data['seo_url'])) {
-            $seo_url = $this->db->table('seo_url');
-            foreach ($data['seo_url'] as $language_id => $keyword) {
-                if (!empty($keyword)) {
-                    $seo_url_data = array(
-                            'site_id'     => 0,
-                            'language_id' => $language_id,
-                            'query'       => 'information_id=' . $information_id,
-                            'keyword'     => $keyword,
-                        );
-                    $seo_url->insert($seo_url_data);
-                }
+                //  Seo Urls
+                $seo_url = $this->db->table('seo_url');
+                $seo_url_data = [
+                        'site_id'     => 0,
+                        'language_id' => $language_id,
+                        'query'       => 'information_id=' . $information_id,
+                        'keyword'     => generateSeoUrl($information_description['title']),
+                    ];
+                $seo_url->insert($seo_url_data);
             }
         }
     }
@@ -146,10 +141,10 @@ class Informations extends Model
     public function editInformation($information_id, $data)
     {
         $builder = $this->db->table($this->table);
-        $information_data = array(
+        $information_data = [
             'sort_order' => $data['sort_order'],
-            'status' => $data['status'],
-        );
+            'status'     => $data['status'],
+        ];
         
         $builder->set('date_modified', 'NOW()', false);
         $builder->where('information_id', $information_id);
@@ -160,31 +155,27 @@ class Informations extends Model
             $information_description_table = $this->db->table('information_description');
             $information_description_table->delete(['information_id' => $information_id]);
             foreach ($data['information_description'] as $language_id => $information_description) {
-                $information_description_data = array(
+                $information_description_data = [
                     'information_id'   => $information_id,
                     'language_id'      => $language_id,
                     'title'            => $information_description['title'],
+                    'slug'             => generateSeoUrl($information_description['title']),
                     'description'      => $information_description['description'],
                     'meta_title'       => $information_description['meta_title'],
                     'meta_description' => $information_description['meta_description'],
                     'meta_keyword'     => $information_description['meta_keyword'],
-                );
+                ];
                 $information_description_table->insert($information_description_data);
-            }
-        }
-        // Seo Url
-        if (isset($data['seo_url'])) {
-            $seo_url = $this->db->table('seo_url');
-            foreach ($data['seo_url'] as $language_id => $keyword) {
-                if (!empty($keyword)) {
-                    $seo_url_data = array(
-                            'site_id'     => 0,
-                            'language_id' => $language_id,
-                            'query'       => 'information_id=' . $information_id,
-                            'keyword'     => $keyword,
-                        );
-                    $seo_url->insert($seo_url_data);
-                }
+                //  Seo Urls
+                $seo_url = $this->db->table('seo_url');
+                $seo_url->delete(['information_id' => $information_id]);
+                $seo_url_data = [
+                        'site_id'     => 0,
+                        'language_id' => $language_id,
+                        'query'       => 'information_id=' . $information_id,
+                        'keyword'     => generateSeoUrl($information_description['title']),
+                    ];
+                $seo_url->insert($seo_url_data);
             }
         }
     }
@@ -193,13 +184,10 @@ class Informations extends Model
     {
         $builder = $this->db->table($this->table);
         $builder->delete(['information_id' => $information_id]);
-
-        $builderDescription = $this->db->table($this->table);
+        //  information_description
+        $builderDescription = $this->db->table('information_description');
         $builderDescription->delete(['information_id' => $information_id]);
     }
-
-
-
 
     // -----------------------------------------------------------------
 }

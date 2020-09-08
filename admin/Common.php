@@ -160,3 +160,11 @@ if (! function_exists('resizeImage')) {
         return config('App')->httpCatalog . 'images/' . $image_new;
     }
 }
+
+if (! function_exists('generateSeoUrl')) {
+    function generateSeoUrl(string $string)
+    {
+        helper('text');
+        return url_title(convert_accented_characters($string), '-', true);
+    }
+}

@@ -179,16 +179,6 @@ class Information extends \Admin\Controllers\BaseController
             $data['status'] = 1;
         }
 
-        // Seo Urls
-        $seo_url = new \Admin\Models\Design\Seo_urls();
-        if ($this->request->getPost('seo_url')) {
-            $data['seo_url'] = $this->request->getPost('seo_url');
-        } elseif ($this->request->getGet('information_id')) {
-            $data['seo_url'] = $seo_url->getKeywordByQuery('information_id=' . $this->request->getGet('information_id'));
-        } else {
-            $data['seo_url'] = [];
-        }
-
         $this->document->output('catalog/information_form', $data);
     }
 

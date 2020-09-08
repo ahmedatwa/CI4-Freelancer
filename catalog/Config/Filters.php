@@ -10,6 +10,7 @@ class Filters extends BaseConfig
 		'csrf'     => \CodeIgniter\Filters\CSRF::class,
 		'toolbar'  => \CodeIgniter\Filters\DebugToolbar::class,
 		'honeypot' => \CodeIgniter\Filters\Honeypot::class,
+		'seo_url'  => \Catalog\Filters\Seo_url::class,
 	];
 
 	// Always applied before every request
@@ -17,10 +18,11 @@ class Filters extends BaseConfig
 		'before' => [
 			'csrf',
 		    'honeypot',
+		    'seo_url',
 		],
 		'after'  => [
 			'toolbar',
-			'honeypot'
+			'honeypot',
 		],
 	];
 

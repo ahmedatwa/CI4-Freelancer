@@ -20,7 +20,7 @@ class Informations extends Model
 	public function getInformations(int $limit, int $start = 0)
     {
 		$builder = $this->db->table('information');
-        $builder->select('information.information_id, information_description.title, information.sort_order, information.status');
+        $builder->select();
         $builder->join('information_description', 'information_description.information_id = information.information_id', 'left');
         $builder->where('information_description.language_id', getSettingValue('config_language_id'));
         $builder->limit($limit, $start);
@@ -46,24 +46,22 @@ class Informations extends Model
     {
 		$builder = $this->db->table('information_description');
 
-		$information_description_data = array();
+		$information_description_data = [];
 		
         $builder->select();
         $builder->where('information_id', $information_id);
         $query = $this->db->get();
         foreach ($query->getResultArray() as $result) {
-            $information_description_data[$result['language_id']] = array(
+            $information_description_data[$result['language_id']] = [
                 'title'            => $result['title'],
                 'description'      => $result['description'],
                 'meta_title'       => $result['meta_title'],
                 'meta_description' => $result['meta_description'],
                 'meta_keyword'     => $result['meta_keyword'],
-            );
+            ];
         }
         return $information_description_data;
 	}
 	
-
-
     // -----------------------------------------------------------------
 }

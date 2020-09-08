@@ -1,10 +1,14 @@
 <?php namespace Catalog\Controllers\Common;
 
+use \Catalog\Models\Design\Seo_urls;
+
 class Footer extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        $data['informations'] = array();
+        $data['informations'] = [];
+
+        $seo_urls = new Seo_urls();
         
         $informations = new \Catalog\Models\Catalog\Informations();
 
@@ -12,12 +16,12 @@ class Footer extends \Catalog\Controllers\BaseController
             $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'name'           => $result['title'],
-                'href'           => base_url('information/information?information_id=' . $result['information_id']),//base_url(getSeoUrlKeywordByQuery('information_id=' . $result['information_id'])),
+                'href'           => base_url('information/' . $seo_urls->getKeywordByQuery('information_id=' . $result['information_id'])),
             ];
         }
 
         // Categories
-        $data['categories'] = array();
+        $data['categories'] = [];
         $categories_model = new \Catalog\Models\catalog\Categories();
 
         $filter_data = [
@@ -31,37 +35,37 @@ class Footer extends \Catalog\Controllers\BaseController
             $data['categories'][] = [
             'category_id' => $result['category_id'],
             'name'        => $result['name'],
-            'href'        => base_url('project/category?category_id=' . $result['category_id']),//base_url('project/category/' . getSeoUrlKeywordByQuery('category_id=' . $result['category_id'])),
+            'href'        => base_url('project/category/' . $seo_urls->getKeywordByQuery('category_id=' . $result['category_id'])),
             ];
         }
 
-        $data['text_quick_links'] = lang('common/footer.text_quick_links');
-        $data['text_categories']  = lang('common/footer.text_categories');
-        $data['text_in_touch']    = lang('common/footer.text_in_touch');
-        $data['text_terms']       = lang('common/footer.text_terms');
-        $data['text_privacy']     = lang('common/footer.text_privacy');
-        $data['text_sitemap']     = lang('common/footer.text_sitemap');
-        $data['text_account']     = lang('common/footer.text_account');
-        $data['text_newsletter']  = lang('common/footer.text_newsletter');
-        $data['text_contact']     = lang('common/footer.text_contact');
-        $data['text_email']       = lang('common/footer.text_email');
-        $data['text_footer']      = lang('common/footer.text_footer');
-        $data['text_blog']        = lang('common/footer.text_blog');
-        $data['text_facebook']    = lang('common/footer.text_facebook');
-        $data['text_google']      = lang('common/footer.text_google');
-        $data['text_linkedin']    = lang('common/footer.text_linkedin');
-        $data['text_forgotton']   = lang('common/footer.text_forgotton');
-        $data['text_no_account']  = lang('common/footer.text_no_account');
-        $data['text_login']       = lang('common/footer.text_login');
-        $data['text_register']    = lang('common/footer.text_register');
+        // $data['text_quick_links'] = lang('common/footer.text_quick_links');
+        // $data['text_categories']  = lang('common/footer.text_categories');
+        // $data['text_in_touch']    = lang('common/footer.text_in_touch');
+        // $data['text_terms']       = lang('common/footer.text_terms');
+        // $data['text_privacy']     = lang('common/footer.text_privacy');
+        // $data['text_sitemap']     = lang('common/footer.text_sitemap');
+        // $data['text_account']     = lang('common/footer.text_account');
+        // $data['text_newsletter']  = lang('common/footer.text_newsletter');
+        // $data['text_contact']     = lang('common/footer.text_contact');
+        // $data['text_email']       = lang('common/footer.text_email');
+        // $data['text_footer']      = lang('common/footer.text_footer');
+        // $data['text_blog']        = lang('common/footer.text_blog');
+        // $data['text_facebook']    = lang('common/footer.text_facebook');
+        // $data['text_google']      = lang('common/footer.text_google');
+        // $data['text_linkedin']    = lang('common/footer.text_linkedin');
+        // $data['text_forgotton']   = lang('common/footer.text_forgotton');
+        // $data['text_no_account']  = lang('common/footer.text_no_account');
+        // $data['text_login']       = lang('common/footer.text_login');
+        // $data['text_register']    = lang('common/footer.text_register');
 
 
-        $data['entry_email']    = lang('common/footer.entry_email');
-        $data['entry_password'] = lang('common/footer.entry_password');
-        $data['entry_confirm']  = lang('common/footer.entry_confirm');
+        // $data['entry_email']    = lang('common/footer.entry_email');
+        // $data['entry_password'] = lang('common/footer.entry_password');
+        // $data['entry_confirm']  = lang('common/footer.entry_confirm');
 
-        $data['button_login']    = lang('common/footer.button_login');
-        $data['button_register'] = lang('common/footer.button_register');
+        // $data['button_login']    = lang('common/footer.button_login');
+        // $data['button_register'] = lang('common/footer.button_register');
 
 
         $data['contact'] = base_url('information/contact');

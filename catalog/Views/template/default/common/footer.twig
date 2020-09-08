@@ -7,24 +7,24 @@
 						<ul>
 						<li><a href="<?php echo $blog; ?>"><?php echo $text_blog; ?></a></li>	
 						<li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>	
-						<?php if ($informations) { ?>
-						<?php foreach ($informations as $information) { ?>
-							<li><a href="<?php echo $information['href']; ?>"><?php echo $information['name']; ?></a></li>
-						<?php } ?>
-						<?php } ?>
+						{% if informations %}
+						{% for information in informations %}
+							<li><a href="{{ information.href }}">{{ information.name }}</a></li>
+						{% endfor %}
+						{% endif %}
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<h3 data-target="#collapse_2"><?php echo $text_categories; ?></h3>
 					<div class="collapse dont-collapse-sm links" id="collapse_2">
-					<?php if ($categories) { ?>
+					{% if categories %}
 						<ul>
-						<?php foreach ($categories as $category) { ?>
-							<li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
-						<?php } ?>	
+						{% for category in categories %}
+							<li><a href="{{ category.href }}">{{ category.name }}</a></li>
+						{% endfor %}	
 						</ul>
-						<?php } ?>	
+					{% endif %}
 					</div>
 				</div>
 				<div class="col-lg-3 offset-lg-3 col-md-6">

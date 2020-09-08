@@ -51,22 +51,6 @@ if (! function_exists('img_url')) {
         return base_url('catalog/' . getSettingValue('config_theme').'/img/' . $image);
     }
 }
-
-if (! function_exists('getSeoUrlIdbyKeyword')) {
-    function getSeoUrlIdbyKeyword($keyword)
-    {
-        $seo_urls_model = new \Catalog\Models\Design\Seo_urls();
-        return $seo_urls_model->getIdByKeyword($keyword);
-    }
-}
-
-if (! function_exists('getSeoUrlKeywordByQuery')) {
-    function getSeoUrlKeywordByQuery($query)
-    {
-        $seo_urls_model = new \Catalog\Models\Design\Seo_urls();
-        return $seo_urls_model->getKeywordByQuery($query);
-    }
-}
 // Override the View function to extend it with theme name
 if (! function_exists('view')) {
     function view(string $name, array $data = [], array $options = [])
