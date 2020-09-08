@@ -1,8 +1,6 @@
 <?php namespace Admin\Models\Catalog;
 
-use CodeIgniter\Model;
-
-class Informations extends Model
+class Informations extends \CodeIgniter\Model
 {
     protected $table          = 'information';
     protected $primaryKey     = 'information_id';
@@ -80,19 +78,19 @@ class Informations extends Model
     {
         $builder = $this->db->table('information_description');
 
-        $information_description_data = array();
+        $information_description_data = [];
         
         $builder->select();
         $builder->where('information_id', $information_id);
         $query = $builder->get();
         foreach ($query->getResultArray() as $result) {
-            $information_description_data[$result['language_id']] = array(
+            $information_description_data[$result['language_id']] = [
                 'title'            => $result['title'],
                 'description'      => $result['description'],
                 'meta_title'       => $result['meta_title'],
                 'meta_description' => $result['meta_description'],
                 'meta_keyword'     => $result['meta_keyword'],
-            );
+            ];
         }
         return $information_description_data;
     }
@@ -100,10 +98,10 @@ class Informations extends Model
     public function addInformation($data)
     {
         $builder = $this->db->table($this->table);
-        $information_data = array(
+        $information_data = [
             'sort_order' => $data['sort_order'],
-            'status' => $data['status'],
-        );
+            'status'     => $data['status'],
+        ];
 
         $builder->set('date_added', 'NOW()', false);
         $builder->set('date_modified', 'NOW()', false);
