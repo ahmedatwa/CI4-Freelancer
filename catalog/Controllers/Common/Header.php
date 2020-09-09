@@ -11,7 +11,7 @@ class Header extends \Catalog\Controllers\BaseController
         $data['styles']      = $this->template->getStyles();
         $data['lang']        = $this->locale;
         $data['direction']   = lang($this->locale .'.direction');
-
+        
         $data['base'] = slash_item('baseURL');
 
         $uri = new \CodeIgniter\HTTP\URI((string)current_url(true));

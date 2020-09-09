@@ -11,23 +11,18 @@ class Localization implements FilterInterface
     {
         $language_model = new Language();
 
-        $registry = new \Catalog\Libraries\Registry();
-
         $supportedLocales = $request->config->supportedLocales;
 
         if (sizeof($supportedLocales) > 1) {
 
-            // /$seqments = $request->uri->getSegments();
-
             $language = $language_model->getLanguageByCode($request->getLocale());
 
             if ($language['language_id'] && $request->getLocale()) {
-                $registry->set('config_language_id', $language['language_id']);
+
+                service('registry')->set('config_language_id', $language['language_id']);
             } else {
-                $registry->set('config_language_id', $language_model->getLanguages($request->config->defaultLocale));
+                service('registry')->set('config_language_id', $language_model->getLanguages($request->config->defaultLocale));
             }
-
-
             if ($request->uri->getTotalSegments() > 0 && !in_array($request->uri->getSegment(1), $supportedLocales)) {
                 return redirect($request->config->defaultLocale);
             }
@@ -39,5 +34,6 @@ class Localization implements FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response)
     {
         // Do something here
+
     }
 }

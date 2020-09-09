@@ -71,7 +71,7 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['contact'] = base_url('information/contact');
         $data['blog']    = base_url('blog');
 
-        if ($this->registry->get('config_customer_online')) {
+        if (service('registry')->get('config_customer_online')) {
             $online_model = new \Catalog\Models\Tool\Online();
 
             if ($this->request->getIPAddress()) {

@@ -28,12 +28,12 @@ class Services extends CoreServices
     //     return new \App\Libraries\Customer();
     // }
 
-    // // Template Library
-    // public static function template($getShared = true)
-    // {
-    //     if ($getShared) {
-    //         return static::getSharedInstance('template');
-    //     }
-    //     return new \App\Libraries\Template();
-    // }
+    // Template Library
+    public static function registry($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('registry');
+        }
+        return new \Catalog\Libraries\Registry();
+    }
 }

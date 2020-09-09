@@ -58,7 +58,7 @@ if (! function_exists('view')) {
             ];
 
             $twig  = new \Twig\Environment($loader, $config);
-            return $twig->render(\Catalog\Libraries\Registry::get('config_theme') . '/' . $name . '.twig', $data);
+            return $twig->render(service('registry')->get('config_theme') . '/' . $name . '.twig', $data);
         } else {
             /**
              * @var CodeIgniter\View\View $renderer
@@ -73,7 +73,7 @@ if (! function_exists('view')) {
             }
 
             return $renderer->setData($data, 'raw')
-                    ->render(\Catalog\Libraries\Registry::get('config_theme') . '/' . $name, $options, $saveData);
+                    ->render(service('registry')->get('config_theme') . '/' . $name, $options, $saveData);
         }
     }
 }

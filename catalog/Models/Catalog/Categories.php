@@ -21,7 +21,7 @@ class Categories extends \CodeIgniter\Model
         $builder = $this->db->table('category');
         $builder->select('category_description.category_id, category_description.name, category.sort_order, category.status');
         $builder->join('category_description', 'category.category_id = category_description.category_id', 'left');
-        $builder->where('category_description.language_id', \Catalog\Libraries\Registry::get('config_language_id'));
+        $builder->where('category_description.language_id', service('registry')->get('config_language_id'));
 
         if (isset($data['category_id'])) {
             $builder->where('category.parent_id', $data['category_id']);
@@ -58,15 +58,15 @@ class Categories extends \CodeIgniter\Model
         $builder = $this->db->table('category');
         $builder->distinct('category.category_id, cd.name, category.sort_order, category.status');
         $builder->join('category_description', 'category_description.category_id = category.category_id', 'left');
-        $builder->where('category_description.language_id', \Catalog\Libraries\Registry::get('config_language_id'));
+        $builder->where('category_description.language_id', service('registry')->get('config_language_id'));
         $builder->where('category.parent_id', $category_id);
         $builder->where('category.parent_id !=', 0);
         $query = $builder->get();
         foreach ($query->getResultArray() as $result) {
-            $children[] = array(
+            $children[] = [
                 'name'        => $result['name'],
                 'category_id' => $result['category_id']
-            );
+            ];
          return $children;
         }
 
