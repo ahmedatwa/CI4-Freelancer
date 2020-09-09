@@ -123,6 +123,7 @@ class Categories extends Model
                 $description_builder->insert($category_description_data);
                 //  Seo Urls
                 $seo_url = $this->db->table('seo_url');
+                $seo_url->delete(['category_id' => $category_id]);
                 $seo_url_data = [
                         'site_id'     => 0,
                         'language_id' => $language_id,

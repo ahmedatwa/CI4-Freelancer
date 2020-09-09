@@ -185,16 +185,6 @@ class Category extends \Admin\Controllers\BaseController
             $data['parent_id'] = '';
         }
 
-        // Seo Urls
-        $seo_url = new \Admin\Models\Design\Seo_urls();
-        if ($this->request->getPost('seo_url')) {
-            $data['seo_url'] = $this->request->getPost('seo_url');
-        } elseif ($this->request->getGet('category_id')) {
-            $data['seo_url'] = $seo_url->getKeywordByQuery('category_id=' . $this->request->getGet('category_id'));
-        } else {
-            $data['seo_url'] = [];
-        }
-
         if ($this->request->getPost('status')) {
             $data['status'] = $this->request->getPost('status');
         } elseif (!empty($category_info)) {

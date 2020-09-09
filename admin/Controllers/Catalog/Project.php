@@ -225,16 +225,6 @@ class Project extends \Admin\Controllers\BaseController
             $data['employer_id'] = 0;
         }
 
-        // Seo Urls
-        $seo_url = new \Admin\Models\Design\Seo_urls();
-        if ($this->request->getPost('seo_url')) {
-            $data['seo_url'] = $this->request->getPost('seo_url');
-        } elseif ($this->request->getGet('project_id')) {
-            $data['seo_url'] = $seo_url->getKeywordByQuery('project_id=' . $this->request->getGet('project_id'));
-        } else {
-            $data['seo_url'] = [];
-        }
-
         $languages = new \Admin\Models\Localisation\Languages();
         $data['languages'] = $languages->where('status', 1)->findAll();
         

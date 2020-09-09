@@ -82,19 +82,19 @@ class Projects extends \CodeIgniter\Model
     {
         $builder = $this->db->table('project_description');
 
-        $project_description_data = array();
+        $project_description_data = [];
         
         $builder->select();
         $builder->where('project_id', $project_id);
         $query = $builder->get();
         foreach ($query->getResultArray() as $result) {
-            $project_description_data[$result['language_id']] = array(
+            $project_description_data[$result['language_id']] = [
                 'name'             => $result['name'],
                 'description'      => $result['description'],
                 'meta_title'       => $result['meta_title'],
                 'meta_description' => $result['meta_description'],
                 'meta_keyword'     => $result['meta_keyword'],
-            );
+            ];
         }
         return $project_description_data;
     }
@@ -120,7 +120,7 @@ class Projects extends \CodeIgniter\Model
         if (isset($data['project_description'])) {
             $project_description_table = $this->db->table('project_description');
             foreach ($data['project_description'] as $language_id => $project_description) {
-                $project_description = array(
+                $project_description = [
                     'project_id'       => $project_id,
                     'language_id'      => $language_id,
                     'name'             => $project_description['name'],
@@ -128,23 +128,18 @@ class Projects extends \CodeIgniter\Model
                     'meta_title'       => $project_description['meta_title'],
                     'meta_description' => $project_description['meta_description'],
                     'meta_keyword'     => $project_description['meta_keyword'],
-                );
+                ];
                 $project_description_table->insert($project_description);
-            }
-        }
-        // Seo Url
-        if (isset($data['seo_url'])) {
-            $seo_url = $this->db->table('seo_url');
-            foreach ($data['seo_url'] as $language_id => $keyword) {
-                if (!empty($keyword)) {
-                    $seo_url_data = array(
-                            'site_id'     => 0,
-                            'language_id' => $language_id,
-                            'query'       => 'project_id=' . $project_id,
-                            'keyword'     => $keyword,
-                        );
-                    $seo_url->insert($seo_url_data);
-                }
+                //  Seo Urls
+                $seo_url = $this->db->table('seo_url');
+                $seo_url->delete(['project_id' => $project_id]);
+                $seo_url_data = [
+                        'site_id'     => 0,
+                        'language_id' => $language_id,
+                        'query'       => 'project_id=' . $project_id,
+                        'keyword'     => generateSeoUrl($information_description['name']),
+                    ];
+                $seo_url->insert($seo_url_data);
             }
         }
     }
@@ -169,7 +164,7 @@ class Projects extends \CodeIgniter\Model
             $project_description_table = $this->db->table('project_description');
             $project_description_table->delete(['project_id' => $project_id]);
             foreach ($data['project_description'] as $language_id => $project_description) {
-                $project_description_data = array(
+                $project_description_data = [
                     'project_id'       => $project_id,
                     'language_id'      => $language_id,
                     'name'             => $project_description['name'],
@@ -177,23 +172,19 @@ class Projects extends \CodeIgniter\Model
                     'meta_title'       => $project_description['meta_title'],
                     'meta_description' => $project_description['meta_description'],
                     'meta_keyword'     => $project_description['meta_keyword'],
-                );
+                ];
                 $project_description_table->insert($project_description_data);
-            }
-        }
-        // Seo Url
-        if (isset($data['seo_url'])) {
-            $seo_url = $this->db->table('seo_url');
-            foreach ($data['seo_url'] as $language_id => $keyword) {
-                if (!empty($keyword)) {
-                    $seo_url_data = array(
-                            'site_id'     => 0,
-                            'language_id' => $language_id,
-                            'query'       => 'project_id=' . $project_id,
-                            'keyword'     => $keyword,
-                        );
-                    $seo_url->insert($seo_url_data);
-                }
+                //  Seo Urls
+                $seo_url = $this->db->table('seo_url');
+                $seo_url->delete(['information_id' => $information_id]);
+                $seo_url_data = [
+                        'site_id'     => 0,
+                        'language_id' => $language_id,
+                        'query'       => 'project_id=' . $project_id,
+                        'keyword'     => generateSeoUrl($information_description['name']),
+                    ];
+                $seo_url->insert($seo_url_data);
+
             }
         }
     }
@@ -203,8 +194,12 @@ class Projects extends \CodeIgniter\Model
         $builder = $this->db->table($this->table);
         $builder->delete(['project_id' => $project_id]);
 
-        $builderDescription = $this->db->table($this->table);
+        $builderDescription = $this->db->table('project_description');
         $builderDescription->delete(['project_id' => $project_id]);
+        //  seo_url
+        $builderDescription = $this->db->table('seo_url');
+        $builderDescription->delete(['query' => 'project_id=' . $project_id]);
+
     }
 
     public function getTotalProjects($data = array())
