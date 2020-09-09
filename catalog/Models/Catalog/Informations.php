@@ -20,7 +20,7 @@ class Informations extends \CodeIgniter\Model
 		$builder = $this->db->table('information');
         $builder->select();
         $builder->join('information_description', 'information_description.information_id = information.information_id', 'left');
-        $builder->where('information_description.language_id', \Catalog\Libraries\Registry::get('config_language_id'));
+        $builder->where('information_description.language_id', service('registry')->get('config_language_id'));
         $builder->limit($limit, $start);
 
         $query = $builder->get();
@@ -35,7 +35,7 @@ class Informations extends \CodeIgniter\Model
         $builder->select();
         $builder->join('information_description', 'information.information_id = information_description.information_id', 'left');
         $builder->where('information.information_id', $information_id);
-        $builder->where('information_description.language_id', \Catalog\Libraries\Registry::get('config_language_id'));
+        $builder->where('information_description.language_id', service('registry')->get('config_language_id'));
         $query = $builder->get();
         return $query->getRowArray();
     }

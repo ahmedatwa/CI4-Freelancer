@@ -1,8 +1,6 @@
 <?php namespace Catalog\Models\Account;
 
-use CodeIgniter\Model;
-
-class Customers extends Model
+class Customers extends \CodeIgniter\Model
 {
     protected $table          = 'customer';
     protected $primaryKey     = 'customer_id';

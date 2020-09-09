@@ -24,7 +24,7 @@ class Localization implements FilterInterface
                 service('registry')->set('config_language_id', $language_model->getLanguages($request->config->defaultLocale));
             }
             if ($request->uri->getTotalSegments() > 0 && !in_array($request->uri->getSegment(1), $supportedLocales)) {
-                return redirect($request->config->defaultLocale);
+                //return redirect($request->config->defaultLocale);
             }
         }
     }

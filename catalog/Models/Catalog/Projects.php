@@ -38,7 +38,7 @@ class Projects extends \CodeIgniter\Model
         $builder->join('freelancer f', 'p.freelancer_id = f.freelancer_id', 'left');
         $builder->where('e.employer_id !=', 0);
         $builder->where('f.freelancer_id !=', 0);
-        $builder->where('pd.language_id', \Catalog\Libraries\Registry::get('config_language_id'));
+        $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
         if (!empty($data['filter_date_added'])) {
             $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
