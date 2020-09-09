@@ -33,7 +33,7 @@ $routes->set404Override(function () {
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/{locale}', 'Common/Home::index');
+$routes->get('/', 'Common/Home::index');
 // Information
 $routes->get('{locale}/information/(:any)', 'Information\Information::index');
 // Project
@@ -42,8 +42,8 @@ $routes->group('{locale}/project', function ($routes) {
     $routes->add('category/(:any)', 'Project\Category::index');
 });
 // Blog
-$routes->add('{locale}/blog', 'Extension\Blog\Blog::index');
-$routes->add('{locale}/blog/post', 'Extension\Blog\Blog::post');
+$routes->get('{locale}/blog', 'Extension\Blog\Blog::index');
+$routes->get('{locale}/blog/post', 'Extension\Blog\Blog::post');
      
 /**
  * --------------------------------------------------------------------

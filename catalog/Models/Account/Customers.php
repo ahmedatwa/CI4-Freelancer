@@ -34,12 +34,12 @@ class Customers extends Model
     public function addCustomer($data)
     {
         $builder = $this->db->table($this->table);
-        $customer_data = array(
+        $customer_data = [
             'email'             => $data['email'],
             'password'          => password_hash($data['password'], PASSWORD_BCRYPT),
             'customer_group_id' => 1,
             'status'            => 1,
-        );
+        ];
 
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($customer_data);
@@ -58,11 +58,11 @@ class Customers extends Model
             $builder->set('date_modified', 'NOW()', false);
             $builder->update();
         } else {
-            $data = array(
+            $data = [
                 'email'      => $email,
                 'ip'         => $ipAddress,
                 'total'      => '1',
-            );
+            ];
             $builder->set('date_added', 'NOW()', false);
             $builder->set($data);
             $builder->insert($data);

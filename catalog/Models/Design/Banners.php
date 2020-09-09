@@ -1,8 +1,6 @@
 <?php namespace Catalog\Models\Design;
 
-use CodeIgniter\Model;
-
-class Banners extends Model
+class Banners extends \CodeIgniter\Model
 {
     public function getBanner($banner_id)
     {

@@ -41,6 +41,8 @@ class BaseController extends \CodeIgniter\Controller
         $this->template = new \Catalog\Libraries\Template();
         $this->customer = new \Catalog\Libraries\Customer();
         $this->session  = \Config\Services::session();
+        $this->locale   = $this->request->getLocale();
+
     }
 
     public function resize(string $filename, int $width = 0, int $height = 0)

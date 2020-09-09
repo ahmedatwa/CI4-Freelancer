@@ -1,8 +1,6 @@
 <?php namespace Catalog\Models\Catalog;
 
-use CodeIgniter\Model;
-
-class Informations extends Model
+class Informations extends \CodeIgniter\Model
 {
     protected $table          = 'information';
     protected $primaryKey     = 'information_id';
@@ -22,7 +20,7 @@ class Informations extends Model
 		$builder = $this->db->table('information');
         $builder->select();
         $builder->join('information_description', 'information_description.information_id = information.information_id', 'left');
-        $builder->where('information_description.language_id', getSettingValue('config_language_id'));
+        $builder->where('information_description.language_id', \Catalog\Libraries\Registry::get('config_language_id'));
         $builder->limit($limit, $start);
 
         $query = $builder->get();
@@ -37,7 +35,7 @@ class Informations extends Model
         $builder->select();
         $builder->join('information_description', 'information.information_id = information_description.information_id', 'left');
         $builder->where('information.information_id', $information_id);
-        $builder->where('information_description.language_id', getSettingValue('config_language_id'));
+        $builder->where('information_description.language_id', \Catalog\Libraries\Registry::get('config_language_id'));
         $query = $builder->get();
         return $query->getRowArray();
     }

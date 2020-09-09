@@ -1,8 +1,6 @@
 <?php namespace Catalog\Models\Catalog;
 
-use CodeIgniter\Model;
-
-class Categories extends Model
+class Categories extends \CodeIgniter\Model
 {
     protected $table          = 'category';
     protected $primaryKey     = 'category_id';
@@ -23,7 +21,7 @@ class Categories extends Model
         $builder = $this->db->table('category');
         $builder->select('category_description.category_id, category_description.name, category.sort_order, category.status');
         $builder->join('category_description', 'category.category_id = category_description.category_id', 'left');
-        $builder->where('category_description.language_id', getSettingValue('config_language_id'));
+        $builder->where('category_description.language_id', \Catalog\Libraries\Registry::get('config_language_id'));
 
         if (isset($data['category_id'])) {
             $builder->where('category.parent_id', $data['category_id']);
@@ -60,7 +58,7 @@ class Categories extends Model
         $builder = $this->db->table('category');
         $builder->distinct('category.category_id, cd.name, category.sort_order, category.status');
         $builder->join('category_description', 'category_description.category_id = category.category_id', 'left');
-        $builder->where('category_description.language_id', getSettingValue('config_language_id'));
+        $builder->where('category_description.language_id', \Catalog\Libraries\Registry::get('config_language_id'));
         $builder->where('category.parent_id', $category_id);
         $builder->where('category.parent_id !=', 0);
         $query = $builder->get();

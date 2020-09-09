@@ -1,10 +1,14 @@
 <?php namespace Catalog\Controllers\Information;
 
+use \Catalog\Models\Design\Seo_urls;
+
 class Information extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
         $informations = new \Catalog\Models\Catalog\Informations();
+
+        $seo_urls = new Seo_urls();
 
         $data['breadcrumbs'] = [];
 
@@ -28,7 +32,7 @@ class Information extends \Catalog\Controllers\BaseController
 
             $data['breadcrumbs'][] = [
                 'text' => $information_info['title'],
-                'href' => base_url('information/information?information_id=' .  $information_id)
+                'href' => base_url('information/' . $seo_urls->getKeywordByQuery('information_id=' . $information_id)),
             ];
 
             $data['heading_title'] = $information_info['title'];

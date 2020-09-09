@@ -10,6 +10,7 @@ class Header extends \Admin\Controllers\BaseController
         $data['keywords']    = $this->document->getKeywords();
         $data['links']       = $this->document->getLinks();
         $data['styles']      = $this->document->getStyles();
+
         
         $data['admin_panel_title'] = lang('common/header.admin_panel_title');
         $data['text_logout']       = lang('common/header.text_logout');

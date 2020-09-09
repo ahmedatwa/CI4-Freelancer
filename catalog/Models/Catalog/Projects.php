@@ -1,8 +1,6 @@
 <?php namespace Catalog\Models\Catalog;
 
-use CodeIgniter\Model;
-
-class Projects extends Model
+class Projects extends \CodeIgniter\Model
 {
     protected $table          = 'project';
     protected $primaryKey     = 'project_id';
@@ -35,12 +33,12 @@ class Projects extends Model
     {
         $builder = $this->db->table('project p');
         $builder->select('p.project_id, pd.name AS name, p.status, p.date_added, p.price, CONCAT(e.firstname, " ",e.lastname) AS employer, CONCAT(f.firstname, " ",f.lastname) AS freelancer, p.type');
-        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'LEFT');
+        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('employer e', 'p.employer_id = e.employer_id', 'LEFT');
-        $builder->join('freelancer f', 'p.freelancer_id = f.freelancer_id', 'LEFT');
+        $builder->join('freelancer f', 'p.freelancer_id = f.freelancer_id', 'left');
         $builder->where('e.employer_id !=', 0);
         $builder->where('f.freelancer_id !=', 0);
-        $builder->where('pd.language_id', getSettingValue('config_language_id'));
+        $builder->where('pd.language_id', \Catalog\Libraries\Registry::get('config_language_id'));
        
         if (!empty($data['filter_date_added'])) {
             $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
@@ -65,9 +63,6 @@ class Projects extends Model
         $query = $builder->get();
         return $query->getResultArray();
     }
-
-    
-
 
 
     // -----------------------------------------------------------------

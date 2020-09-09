@@ -9,6 +9,8 @@ class Header extends \Catalog\Controllers\BaseController
         $data['keywords']    = $this->template->getKeywords();
         $data['links']       = $this->template->getLinks();
         $data['styles']      = $this->template->getStyles();
+        $data['lang']        = $this->locale;
+        $data['direction']   = lang($this->locale .'.direction');
 
         $data['base'] = slash_item('baseURL');
 
