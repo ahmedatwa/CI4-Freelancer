@@ -41,48 +41,6 @@ class BaseController extends \CodeIgniter\Controller
         $this->template = new \Catalog\Libraries\Template();
         $this->customer = new \Catalog\Libraries\Customer();
         $this->session  = \Config\Services::session();
-
-       // $this->url->addrewrite($this);
-        
-
-        // if ($this->request->uri->getPath()) {
-        //     $parts = explode('/', $this->request->uri->getPath());
-
-        //     // remove any empty arrays from trailing
-        //     if (strlen(end($parts)) == 0) {
-        //         array_pop($parts);
-        //     }
-
-        //     foreach ($parts as $part) {
-
-        //             $db = \Config\Database::connect();
-        //             $builder = $db->table('seo_url');
-        //             $builder->select();
-        //             $builder->where('keyword', $part)->where('site_id', 0);
-        //             $query = $builder->get();
-        //             $row = $query->getRowArray();
-
-        //             $url = explode('=', $row['query']);
-
-        //             if ($url[0] == 'information_id') {
-        //                 $this->request->setGlobal('get', [$url[0] => $url[1]]);
-        //             }
-
-        //             //var_dump($this->request->fetchGlobal('get'));
-
-        //             if ($url[0] == 'category_id') {
-        //                 $this->request->setGlobal('get', [$url[0] => $url[1]]);
-        //             }
-
-
-        //          if ($row['query']  ) {
-
-        //                // $this->request->setGlobal('get', ['path' => $row['path']]);
-        //             }
-
-        //     }
-        // }
-
     }
 
     public function resize(string $filename, int $width = 0, int $height = 0)
@@ -130,63 +88,8 @@ class BaseController extends \CodeIgniter\Controller
                 copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
             }
         }
-            return base_url() . '/images/' . $image_new;
+        return base_url() . '/images/' . $image_new;
     }
-
-//     public function rewrite($link)
-//     {
-//         $url_info = parse_url(str_replace('&amp;', '&',  (string) $link));
-
-//         $url = '';
-
-//         $data = [];
-
-//         if (isset($url_info['path']) && isset($url_info['query'])) {
-//                array_push($data, $url_info['path'], $url_info['query']);
-//         }
-
-//         if (!empty($data)) {
-
-//             if ($data[0]) {
-//                 $vars =  explode('=', $data[1]);
-
-//                 $this->request->setGlobal('get', [$vars[0] => $vars[1]]);
-
-//                 if (($data[0] == '/information/information' && substr($data[1], 0, strpos($data[1], '=')) == 'information_id') || ($data[0] == '/project/category' && substr($data[1], 0, strpos($data[1], '=')) == 'category_id')) {
-                    
-
-//                     $db = \Config\Database::connect();
-//                     $builder = $db->table('seo_url');
-//                     $builder->select();
-//                     $builder->where('query', $data[1])->where('site_id', 0)->where('language_id', 1);
-//                     $query = $builder->get();
-//                     $row = $query->getRowArray();
-//                     $url = $row['keyword'];
-//                 }
-//             }
-//          }
-
-//         if ($url) {
-//            // var_dump($url);
-  
-//         unset($data['path']);
-
-//         $config = \CodeIgniter\Config\Services::request()->config;
-
-//         // If baseUrl does not have a trailing slash it won't resolve
-//         // correctly for users hosting in a subfolder.
-//         $baseUrl = ! empty($config->baseURL) && $config->baseURL !== '/'
-//             ? rtrim($config->baseURL, '/ ') . '/'
-//             : $config->baseURL;
-
-//         unset($config);
-//         return $baseUrl . (string) $url;
-
-
-
-        
-//     }
-// }
 
     // -----------------------------------------------------------------
 }
