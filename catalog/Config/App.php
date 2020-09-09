@@ -77,7 +77,7 @@ class App extends BaseConfig
 	| If false, no automatic detection will be performed.
 	|
 	*/
-	public $negotiateLocale = false;
+	public $negotiateLocale = true;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -89,7 +89,7 @@ class App extends BaseConfig
 	| found, the first locale will be used.
 	|
 	*/
-	public $supportedLocales = ['en'];
+	public $supportedLocales = ['en', 'ar'];
 
 	/*
 	|--------------------------------------------------------------------------
