@@ -40,6 +40,7 @@ class BaseController extends \CodeIgniter\Controller
         // E.g.:
         $this->template = new \Catalog\Libraries\Template();
         $this->customer = new \Catalog\Libraries\Customer();
+        $this->registry = new \Catalog\Libraries\Registry();
         $this->session  = \Config\Services::session();
         $this->locale   = $this->request->getLocale();
 

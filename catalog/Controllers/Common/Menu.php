@@ -34,7 +34,7 @@ class Menu extends \Catalog\Controllers\BaseController
             'href'     => base_url('project/category'),
             'children' => [],
         ];
-        if (getSettingValue('blog_status')) {
+        if ($this->registry->get('blog_status')) {
             $data['menus'][] = [
             'id'       => 'menu-blog',
             'name'     => lang('extension/blog/blog.heading_title'),

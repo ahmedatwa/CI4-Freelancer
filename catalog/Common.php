@@ -15,17 +15,6 @@
  */
 use Config\Services;
 
-    /***
-    // fetch the setting vars when needed instead of loading model in controllers
-    @ return string
-    */
-if (! function_exists('getSettingValue')) {
-    function getSettingValue(string $key = '')
-    {
-        $setting = new \Catalog\Models\Setting\Settings();
-        return $setting->getSettingValue($key);
-    }
-}
  /**
  * Short Date Format
  *
@@ -48,7 +37,7 @@ if (!function_exists('DateShortFormat')) {
 if (! function_exists('img_url')) {
     function img_url(string $image)
     {
-        return base_url('catalog/' . getSettingValue('config_theme').'/img/' . $image);
+        return base_url('catalog/' . \Catalog\Libraries\Registry::get('config_theme').'/img/' . $image);
     }
 }
 // Override the View function to extend it with theme name
@@ -69,7 +58,7 @@ if (! function_exists('view')) {
             ];
 
             $twig  = new \Twig\Environment($loader, $config);
-            return $twig->render(getSettingValue('config_theme') . '/' . $name . '.twig', $data);
+            return $twig->render(\Catalog\Libraries\Registry::get('config_theme') . '/' . $name . '.twig', $data);
         } else {
             /**
              * @var CodeIgniter\View\View $renderer
@@ -84,7 +73,7 @@ if (! function_exists('view')) {
             }
 
             return $renderer->setData($data, 'raw')
-                    ->render(getSettingValue('config_theme') . '/' . $name, $options, $saveData);
+                    ->render(\Catalog\Libraries\Registry::get('config_theme') . '/' . $name, $options, $saveData);
         }
     }
 }
