@@ -29,13 +29,13 @@ class Category extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => $category_info['name'],
-            'href' => base_url('project/category?category_id=' . $category_id),
+            'href' => route_to('category', getKeywordByQuery('category_id=' . $category_id)),
         ];
     
         $filter_data = [
             'category_id' => $category_id,
             'start'       => 0,
-            'limit'       => getSettingValue('config_admin_limit'),
+            'limit'       => $this->registry->get('config_admin_limit'),
         ];
 
         $data['categories'] = [];
@@ -53,9 +53,9 @@ class Category extends \Catalog\Controllers\BaseController
             $data['categories'][] = [
                 'category_id' => $result['category_id'],
                 'name'        => $result['name'],
-                'children'    => base_url('project/category?category_id=' . $result['category_id']),
+                'children'    => route_to('project', getKeywordByQuery('category_id=' . $result['category_id'])),
                 'image'       => $image,
-                'href'        => base_url('project/category?category_id=' . $result['category_id']),
+                'href'        => route_to('category', getKeywordByQuery('category_id=' . $result['category_id'])),
             ];
         }
 

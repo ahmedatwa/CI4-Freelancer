@@ -31,7 +31,7 @@ class Menu extends \Catalog\Controllers\BaseController
             'id'       => 'menu-jobs',
             'name'     => lang('common/menu.text_jobs'),
             'icon'     => '',
-            'href'     => base_url('project/category'),
+            'href'     => route_to('project/category'),
             'children' => [],
         ];
         if (service('registry')->get('blog_status')) {

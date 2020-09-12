@@ -40,6 +40,14 @@ if (! function_exists('img_url')) {
         return base_url('catalog/' . \Catalog\Libraries\Registry::get('config_theme').'/img/' . $image);
     }
 }
+if (! function_exists('getKeywordByQuery'))
+{
+    function getKeywordByQuery($keyword)
+    {
+        $seo_urls = new \Catalog\Models\Design\Seo_urls;
+        return $seo_urls->getKeywordByQuery($keyword);
+    }
+}
 // Override the View function to extend it with theme name
 if (! function_exists('view')) {
     function view(string $name, array $data = [], array $options = [])

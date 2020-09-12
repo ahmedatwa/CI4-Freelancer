@@ -35,15 +35,15 @@ $routes->set404Override(function () {
 // route since we don't have to scan directories.
 $routes->get('/', 'Common/Home::index');
 // Information
-$routes->get('{locale}/information/(:any)', 'Information\Information::index');
+$routes->add('{locale}/information/(:any)', 'Information\Information::index', ['as' => 'information']);
 // Project
 $routes->group('{locale}/project', function ($routes) {
-    $routes->add('category', 'Project\Category::index');
-    $routes->add('category/(:any)', 'Project\Category::index');
+    $routes->add('categories', 'Project\Category::index', ['as' => 'project/category']);
+    $routes->add('category/(:num)', 'Project\Category::index/$1', ['as' => 'project/category']);
 });
 // Blog
-$routes->get('{locale}/blog', 'Extension\Blog\Blog::index');
-$routes->get('{locale}/blog/post', 'Extension\Blog\Blog::post');
+$routes->add('{locale}/blog', 'Extension\Blog\Blog::index', ['as' => 'blog']);
+$routes->get('{locale}/blog/post', 'Extension\Blog\Blog::post', ['as' => 'blog/post']);
      
 /**
  * --------------------------------------------------------------------

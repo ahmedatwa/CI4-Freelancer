@@ -31,15 +31,10 @@ Events::on('pre_system', function () {
     }
 
     // Fetch Events from DB
-    $db = \Config\Database::connect();
-
-    $builder = $db->table($db->prefixTable('event'));
-    $builder->select('code, action, priority, status')
-            ->where('status', 1);
-    $query = $builder->get();
-    foreach ($query->getResultArray() as $result) {
-
-        if ((substr($result['action'], 0, 6) == 'Admin\\') && $result['status']) {
+    $events_model = new \Admin\Models\Setting\Events();
+    $results = $events_model->where(['status' => 1])->findAll();
+    foreach ($results as $result) {
+        if ((substr($result['action'], 0, 6) == 'Admin\\')) {
             if ($result['priority'] != 0) {
                 Events::on($result['code'], $result['action'], $result['priority']);
             } else {

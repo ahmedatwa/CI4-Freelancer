@@ -5,9 +5,9 @@ class Home extends \Catalog\Controllers\BaseController
 	public function index()
 	{
 
-		$this->template->setTitle(getSettingValue('config_meta_title'));
-		$this->template->setDescription(getSettingValue('config_meta_description'));
-		$this->template->setKeywords(getSettingValue('config_meta_keyword'));
+		$this->template->setTitle(service('registry')->get('config_meta_title'));
+		$this->template->setDescription(service('registry')->get('config_meta_description'));
+		$this->template->setKeywords(service('registry')->get('config_meta_keyword'));
 
 		$data['text_login'] = lang('common/home.text_title');
 

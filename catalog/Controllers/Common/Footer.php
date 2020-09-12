@@ -1,14 +1,10 @@
 <?php namespace Catalog\Controllers\Common;
 
-use \Catalog\Models\Design\Seo_urls;
-
 class Footer extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
         $data['informations'] = [];
-
-        $seo_urls = new Seo_urls();
         
         $informations = new \Catalog\Models\Catalog\Informations();
 
@@ -16,7 +12,7 @@ class Footer extends \Catalog\Controllers\BaseController
             $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'name'           => $result['title'],
-                'href'           => base_url('information/' . $seo_urls->getKeywordByQuery('information_id=' . $result['information_id'])),
+                'href'           => route_to('information', getKeywordByQuery('information_id=' . $result['information_id'])),
             ];
         }
 
@@ -35,7 +31,7 @@ class Footer extends \Catalog\Controllers\BaseController
             $data['categories'][] = [
             'category_id' => $result['category_id'],
             'name'        => $result['name'],
-            'href'        => base_url('project/category/' . $seo_urls->getKeywordByQuery('category_id=' . $result['category_id'])),
+            'href'        => route_to('project/category', getKeywordByQuery('category_id=' . $result['category_id'])),
             ];
         }
 
@@ -68,8 +64,8 @@ class Footer extends \Catalog\Controllers\BaseController
         // $data['button_register'] = lang('common/footer.button_register');
 
 
-        $data['contact'] = base_url('information/contact');
-        $data['blog']    = base_url('blog');
+        $data['contact'] = route_to('information/contact');
+        $data['blog']    = route_to('blog');
 
         if (service('registry')->get('config_customer_online')) {
             $online_model = new \Catalog\Models\Tool\Online();

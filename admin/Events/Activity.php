@@ -1,4 +1,4 @@
-<?php namespace Admin\Controllers\Events;
+<?php namespace Admin\Events;
 
 class Activity
 {

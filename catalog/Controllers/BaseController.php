@@ -42,6 +42,7 @@ class BaseController extends \CodeIgniter\Controller
         $this->customer = new \Catalog\Libraries\Customer();
         $this->session  = \Config\Services::session();
         $this->locale   = $this->request->getLocale();
+        $this->registry = service('registry');
 
     }
 
