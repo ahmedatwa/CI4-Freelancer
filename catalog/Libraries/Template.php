@@ -172,7 +172,7 @@ class Template
             $data['column_left'] = view_cell('\Catalog\Controllers\Common\Column_left::index');
             $data['footer']      = view_cell('\Catalog\Controllers\Common\Footer::index');
 
-            echo $twig->render(\Catalog\Libraries\Registry::get('config_theme') . '/' . $view . '.twig', $data);
+            echo $twig->render(service('registry')->get('config_theme') . '/' . $view . '.twig', $data);
         } else {
             // Renderer
             $renderer = \Config\Services::renderer();
@@ -185,7 +185,7 @@ class Template
             //$data['content_bottom'] = view_cell('\Catalog\Controllers\Common\Content_bottom::index');
             $data['footer'] = view_cell('\Catalog\Controllers\Common\Footer::index');
 
-            echo $renderer->setData($data)->render(\Catalog\Libraries\Registry::get('config_theme') . '/' . $view);
+            echo $renderer->setData($data)->render(service('registry')->get('config_theme') . '/' . $view);
         }
     }
 

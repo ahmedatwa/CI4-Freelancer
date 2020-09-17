@@ -4,12 +4,6 @@ class Menu extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        $data['text_menu']        = lang('common/menu.text_menu');
-        $data['text_login']       = lang('common/menu.text_login');
-        $data['text_register']    = lang('common/menu.text_register');
-        $data['button_logout']    = lang('common/menu.button_logout');
-        $data['button_messages']  = lang('common/menu.button_messages');
-        $data['button_dashboard'] = lang('common/menu.button_dashboard');
 
         // Extensions
         $extensions_model = new \Catalog\Models\Setting\Extensions();
@@ -23,42 +17,35 @@ class Menu extends \Catalog\Controllers\BaseController
             'id'       => 'menu-home',
             'name'     => lang('common/menu.text_home'),
             'icon'     => '',
-            'href'     => base_url('/'),
+            'href'     => base_url(),
             'children' => [],
         ];
 
         $data['menus'][] = [
-            'id'       => 'menu-jobs',
-            'name'     => lang('common/menu.text_jobs'),
+            'id'       => 'menu-project',
+            'name'     => lang('common/menu.text_project'),
             'icon'     => '',
             'href'     => route_to('project/category'),
             'children' => [],
         ];
-        if (service('registry')->get('blog_status')) {
-            $data['menus'][] = [
-            'id'       => 'menu-blog',
-            'name'     => lang('extension/blog/blog.heading_title'),
+        $data['menus'][] = [
+            'id'       => 'menu-employer',
+            'name'     => lang('common/menu.text_employer'),
             'icon'     => '',
-            'href'     => base_url('blog'),
+            'href'     => route_to('project/category'),
             'children' => [],
         ];
-        }
+        // if ($this->registry->get('blog_status')) {
+        //     $data['menus'][] = [
+        //     'id'       => 'menu-blog',
+        //     'name'     => lang('extension/blog/blog.heading_title'),
+        //     'icon'     => '',
+        //     'href'     => base_url('blog'),
+        //     'children' => [],
+        // ];
+        // }
 
         // Links
-        $data['home']      = base_url('/');
-        $data['register']  = base_url('common/register');
-        $data['action']    = base_url('common/login');
-        $data['forgotton'] = base_url('common/forgotten');
-        $data['logout']    = base_url('common/logout');
-
-        $data['button_logout']    = lang('common/menu.button_logout');
-        $data['button_dashboard'] = lang('common/menu.button_dashboard');
-        $data['button_messages']  = lang('common/menu.button_messages');
-
-
-        $data['isLogged'] = $this->customer->isLogged();
-        $data['username'] = $this->customer->getcustomerName();
-        $data['image']    = '';
 
 
         return view('common/menu', $data);

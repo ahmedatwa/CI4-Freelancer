@@ -86,6 +86,12 @@
 												<input class="form-control" type="text" id="input-meta-keyword" name="project_description[<?php echo $language['language_id']; ?>][meta_keyword]" value="<?php echo $project_description[$language['language_id']]['meta_keyword'] ?? ''; ?>" data-toggle="tagsinput">
 											</div>
 										</div>
+										<div class="form-group row">
+											<label for="input-tags" class="col-md-2 col-form-label"><?php echo $entry_tags; ?></label>
+											<div class="col-md-10">
+												<input class="form-control" type="text" id="input-tags" name="project_description[<?php echo $language['language_id']; ?>][tags]" value="<?php echo $project_description[$language['language_id']]['tags'] ?? ''; ?>" data-toggle="tagsinput">
+											</div>
+										</div>
 									</div>
 								<?php } ?>
 							</div><!-- tab content Language -->

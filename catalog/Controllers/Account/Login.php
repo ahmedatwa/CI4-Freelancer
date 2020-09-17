@@ -1,29 +1,40 @@
 <?php namespace Catalog\Controllers\Account;
 
-use Catalog\Controllers\BaseController;
-use Catalog\Models\Account\Customers;
+use Catalog\Models\Account\CustomerModel;
 
-class Login extends BaseController
+class Login extends \Catalog\Controllers\BaseController
 {
-    protected $customers;
-
     public function index()
     {
-        $this->customers = new Customers();
+        $this->template->setTitle(lang('account/login.heading_title'));
 
-        $json = array();
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
+            'text' => lang($this->locale . '.text_home'),
+            'href' => base_url(),
+        ];
 
-        if (($this->request->getMethod() == 'post') && $this->validationRules()) {
+        $data['breadcrumbs'][] = [
+            'text' => lang('account/login.heading_title'),
+            'href' => route_to('login'),
+        ];
+
+        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             if ($this->request->getPost('redirect')) {
-                $json['redirect'] = $this->request->getPost('redirect');
+                $data['redirect'] = $this->request->getPost('redirect');
             } else {
-                $json['redirect'] = base_url('/');
+                $data['redirect'] = base_url();
             }
-        } else {
-            $json['error_warning'] = $this->session->getFlashdata('error_warning');
-            $json['validator'] = $this->validator->getErrors();
         }
-    
+
+        $data['heading_title']  = lang('account/login.heading_title');
+        $data['text_login']     = lang('account/login.text_login');
+        $data['text_forgotten'] = lang('account/login.text_forgotten');
+        $data['text_register']  = sprintf(lang('account/login.text_register'), route_to('account/login'));
+        $data['entry_email']    = lang('account/login.entry_email');
+        $data['entry_password'] = lang('account/login.entry_password');
+
+
         if ($this->request->getPost('email')) {
             $data['email'] = $this->request->getPost('email');
         } else {
@@ -37,14 +48,23 @@ class Login extends BaseController
         }
 
         if ($this->request->getVar('redirect')) {
-            $data['redirect'] = base_url('index.php/' . $this->request->getVar('redirect'));
+            $data['redirect'] = base_url($this->request->getVar('redirect'));
         } else {
             $data['redirect'] = '';
         }
-        return $this->response->setJSON($json);
+
+        if ($this->session->getFlashdata('error_warning')) {
+            $data['error_warning'] = $this->session->getFlashdata('error_warning');
+        } else {
+            $data['error_warning'] = '';
+        }
+
+        $data['action'] = base_url('account/login');
+
+        $this->template->output('account/login', $data);
     }
 
-    protected function validationRules()
+    protected function validateForm()
     {
         // Fields Validation Rules
         if (! $this->validate([
@@ -54,21 +74,22 @@ class Login extends BaseController
         {
             $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
         }
-        
-        // Check how many login attempts have been made.
-        $login_info = $this->customers->getLoginAttempts($this->request->getPost('email'));
 
-        if ($login_info && ($login_info['total'] >= getSettingItem('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+        $customerModel = new CustomerModel();
+        // Check how many login attempts have been made.
+        $login_info = $customerModel->getLoginAttempts($this->request->getPost('email'));
+
+        if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
             $this->session->setFlashData('error_warning', lang('account/login.error_attempts'));
             return false;
         }
         
         if ( !$this->customer->login($this->request->getPost('email'), $this->request->getPost('password'))) {
                  $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
-                 $this->customers->addLoginAttempt($this->request->getPost('email'), $this->request->getIPAddress());
+                 $customerModel->addLoginAttempt($this->request->getPost('email'), $this->request->getIPAddress());
                  return false;
         } else {
-                 $this->customers->deleteLoginAttempts($this->request->getPost('email'));
+                 $customerModel->deleteLoginAttempts($this->request->getPost('email'));
         }
 
         return true;

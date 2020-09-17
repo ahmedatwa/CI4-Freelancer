@@ -11,14 +11,14 @@ class Footer extends \Catalog\Controllers\BaseController
         foreach ($informations->getInformations(4) as $result) {
             $data['informations'][] = [
                 'information_id' => $result['information_id'],
-                'name'           => $result['title'],
+                'title'          => $result['title'],
                 'href'           => route_to('information', getKeywordByQuery('information_id=' . $result['information_id'])),
             ];
         }
 
         // Categories
         $data['categories'] = [];
-        $categories_model = new \Catalog\Models\catalog\Categories();
+        $categoryModel = new \Catalog\Models\catalog\CategoryModel();
 
         $filter_data = [
             'start'         => 0,
@@ -26,7 +26,7 @@ class Footer extends \Catalog\Controllers\BaseController
             'parent_id'     => 0,
         ];
 
-        $results = $categories_model->getCategories($filter_data);
+        $results = $categoryModel->getCategories($filter_data);
         foreach ($results as $result) {
             $data['categories'][] = [
             'category_id' => $result['category_id'],
@@ -35,34 +35,17 @@ class Footer extends \Catalog\Controllers\BaseController
             ];
         }
 
-        // $data['text_quick_links'] = lang('common/footer.text_quick_links');
-        // $data['text_categories']  = lang('common/footer.text_categories');
-        // $data['text_in_touch']    = lang('common/footer.text_in_touch');
-        // $data['text_terms']       = lang('common/footer.text_terms');
-        // $data['text_privacy']     = lang('common/footer.text_privacy');
-        // $data['text_sitemap']     = lang('common/footer.text_sitemap');
-        // $data['text_account']     = lang('common/footer.text_account');
-        // $data['text_newsletter']  = lang('common/footer.text_newsletter');
-        // $data['text_contact']     = lang('common/footer.text_contact');
-        // $data['text_email']       = lang('common/footer.text_email');
-        // $data['text_footer']      = lang('common/footer.text_footer');
-        // $data['text_blog']        = lang('common/footer.text_blog');
-        // $data['text_facebook']    = lang('common/footer.text_facebook');
-        // $data['text_google']      = lang('common/footer.text_google');
-        // $data['text_linkedin']    = lang('common/footer.text_linkedin');
-        // $data['text_forgotton']   = lang('common/footer.text_forgotton');
-        // $data['text_no_account']  = lang('common/footer.text_no_account');
-        // $data['text_login']       = lang('common/footer.text_login');
-        // $data['text_register']    = lang('common/footer.text_register');
-
-
-        // $data['entry_email']    = lang('common/footer.entry_email');
-        // $data['entry_password'] = lang('common/footer.entry_password');
-        // $data['entry_confirm']  = lang('common/footer.entry_confirm');
-
-        // $data['button_login']    = lang('common/footer.button_login');
-        // $data['button_register'] = lang('common/footer.button_register');
-
+        $data['text_links']             = lang('common/footer.text_links');
+        $data['text_for_candidates']    = lang('common/footer.text_for_candidates');
+        $data['text_for_employer']      = lang('common/footer.text_for_employer');
+        $data['text_browse_jobs']       = lang('common/footer.text_browse_jobs');
+        $data['text_browse_candidates'] = lang('common/footer.text_browse_candidates');
+        $data['text_post_job']          = lang('common/footer.text_post_job');
+        $data['text_post_project']      = lang('common/footer.text_post_project');
+        $data['text_footer']            = lang('common/footer.text_footer');
+        $data['text_newsletter']        = lang('common/footer.text_newsletter');
+        $data['help_newsletter']        = lang('common/footer.help_newsletter');
+        $data['entry_email']            = lang('common/footer.entry_email');
 
         $data['contact'] = route_to('information/contact');
         $data['blog']    = route_to('blog');

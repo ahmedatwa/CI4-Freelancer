@@ -1,34 +1,31 @@
-//-------------------- Base Colors --------------------//
-$body-color: 					#fff;
-$body-text-color:               #444;
-$heading-color:                 #222;
+/* -------------------------------------------------------------- */
+/* Default Colors
+----------------------------------------------------------------- */
+$primary-color: 							#2a41e8;
+$body-font-color:							#666;
+$body-heading-color:						#333;
 
-$color-1: 						#FF3A65;
-$color-2: 						#1f2f6a;
-$color-3: 						#e3ecf8;
-$color-4: 						#121921;
-$color-5: 						#FFC107;
 
-$block-reveal-color-1: 			$color-2;
+/* -------------------------------------------------------------- */
+/* Typography
+----------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&subset=latin-ext');
 
-$border-color-2: 			    #ededed;
-$border-color-3: 			    #d2d8dd;
-$border-color-4: 			    #ccc;
-$border-color-5: 			    #c8c8c8;
+$primary-font: 								"Nunito", sans-serif;
+$body-font-size: 							16px;
+$body-line-height: 							27px;
+$body-sub-line-height: 						26px;
 
-//-------------------- Line Height Variables --------------------//
-$line-height-base:              1.5;
-$line-height-large:           	1.8;
-$line-height-none:           	1;
+$homepage-heading-font-size: 				26px;
+$single-page-heading-font-size: 			20px;
+$listing-heading-font-size: 				18px;
 
-//-------------------- Font Families --------------------//
-$font-main: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
+$global-border-radius:						4px;
 
-//-------------------- Font Sizes --------------------//
-$font-size-base:                0.875rem;
 
-//-------------------- Responsive sizes -------------------- //
-$large-device-width: 1199px; // Large devices (desktops, less than 1200px)
-$medium-device-width: 991px; // Medium devices (tablets, less than 992px)
-$small-device-width: 767px;	// Small devices (landscape phones, less than 768px)
-$extra-small-device-width: 575px;	// Extra small devices (portrait phones, less than 576px)
+/* -------------------------------------------------------------- */
+/* Header Settings for Desktop Devices
+----------------------------------------------------------------- */
+$header-height: 							82px;
+$navigation-top-offset: 					22px;
+$logo-height: 								42px;

@@ -2,7 +2,7 @@
 
 use Admin\Models\Setting\Extensions;
 
-class Job extends \Admin\Controllers\BaseController
+class Job extends \Catalog\Controllers\BaseController
 {
     public function index()
     {

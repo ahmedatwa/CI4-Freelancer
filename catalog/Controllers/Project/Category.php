@@ -1,12 +1,14 @@
 <?php namespace Catalog\Controllers\Project;
 
+use \Catalog\Models\Catalog\CategoryModel;
+
 class Category extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        $this->template->setTitle(lang('category/category.list.heading_title'));
+        $this->template->setTitle(lang('category/category.heading_title'));
         
-        $categories_model = new \Catalog\Models\Catalog\Categories();
+        $categoryModel = new CategoryModel();
 
         if ($this->request->getGet('category_id')) {
             $category_id = $this->request->getGet('category_id');
@@ -14,7 +16,7 @@ class Category extends \Catalog\Controllers\BaseController
             $category_id = null;
         }
 
-        $category_info = $categories_model->getCategory($category_id);
+        $category_info = $categoryModel->getCategory($category_id);
 
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -29,7 +31,7 @@ class Category extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => $category_info['name'],
-            'href' => route_to('category', getKeywordByQuery('category_id=' . $category_id)),
+            'href' => route_to('category', $category_id),
         ];
     
         $filter_data = [
@@ -40,9 +42,9 @@ class Category extends \Catalog\Controllers\BaseController
 
         $data['categories'] = [];
 
-        $results = $categories_model->getCategories($filter_data);
+        $results = $categoryModel->getCategories($filter_data);
 
-        $data['total_categories'] = $categories_model->getTotalCategories();
+        $data['total_categories'] = $categoryModel->getTotalCategories();
         
         foreach ($results as $result) {
             if (!empty($data['image'])) {
@@ -59,8 +61,8 @@ class Category extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $paginate = $categories_model->paginate(10);
-        $data['pager'] = $categories_model->pager;
+        $paginate = $categoryModel->paginate(10);
+        $data['pager'] = $categoryModel->pager;
 
 
         $this->template->output('project/category', $data);

@@ -10,7 +10,7 @@ class Localization implements FilterInterface
 {
     public function before(RequestInterface $request)
     {
-        var_dump(Services::language()->getLocale());
+
         $language_model = new Language();
         $registry = service('registry');
 

@@ -274,7 +274,7 @@ class App extends BaseConfig
 	|--------------------------------------------------------------------------
 	*/
 
-	public $templateEngine = 'twig';
+	public $templateEngine = '';
 
 
 }

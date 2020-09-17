@@ -240,7 +240,7 @@ class Project extends \Admin\Controllers\BaseController
                     'rules' => 'required|min_length[3]|max_length[64]'
                 ],
                 "project_description.{$language_id}.description" => [
-                    'label' => 'Meta Description',
+                    'label' => 'Project Description',
                     'rules' => 'required|min_length[3]'
                 ],
                 ])) {

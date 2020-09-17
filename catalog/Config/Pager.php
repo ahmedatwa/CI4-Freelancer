@@ -18,9 +18,10 @@ class Pager extends BaseConfig
 	|
 	*/
 	public $templates = [
-		'default_full'   => 'App\Views\template\default\pagers\foundation_full',
+		//'default_full'   => 'App\Views\template\default\pagers\foundation_full',
 		'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
 		'default_head'   => 'CodeIgniter\Pager\Views\default_head',
+		'default_full'   => 'Catalog\Views\template\default\common\pager',
 	];
 
 	/*

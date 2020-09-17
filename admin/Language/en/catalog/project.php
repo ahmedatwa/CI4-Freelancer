@@ -33,6 +33,7 @@ return [
 	'entry_image'            => 'Image',
 	'entry_employer'         => 'Employer',
 	'entry_freelancer'       => 'Freelancer',
+	'entry_tags'             => 'Project Tags',
 	// Tabs
 	'tab_bid'                => 'Bids',
    ],

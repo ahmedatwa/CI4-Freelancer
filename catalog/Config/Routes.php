@@ -35,16 +35,29 @@ $routes->set404Override(function () {
 // route since we don't have to scan directories.
 $routes->get('/', 'Common/Home::index');
 // Information
-$routes->add('{locale}/information/(:any)', 'Information\Information::index', ['as' => 'information']);
+$routes->add('information/(:any)', 'Information\Information::index', ['as' => 'information']);
 // Project
-$routes->group('{locale}/project', function ($routes) {
-    $routes->add('categories', 'Project\Category::index', ['as' => 'project/category']);
-    $routes->add('category/(:num)', 'Project\Category::index/$1', ['as' => 'project/category']);
-});
+// $routes->group('project', function ($routes) {
+//     $routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
+//     $routes->add('category/(:any)', 'Project\Category::index/$1', ['as' => 'category']);
+// });
+$routes->add('projects', 'Project\Project::index');
+$routes->add('project/(:any)', 'Project\Project::getProject/$1', ['as' => 'project']);
+
+
+// $routes->add('jobs', 'Extension\Job\Job::index', ['as' => 'jobs']);
+// $routes->add('job/(:any)', 'Extension\Job\Job::getJob/$1', ['as' => 'job']);
+
 // Blog
-$routes->add('{locale}/blog', 'Extension\Blog\Blog::index', ['as' => 'blog']);
-$routes->get('{locale}/blog/post', 'Extension\Blog\Blog::post', ['as' => 'blog/post']);
-     
+$routes->add('blog', 'Extension\Blog\Blog::index', ['as' => 'blog']);
+$routes->add('blog/post', 'Extension\Blog\Blog::post', ['as' => 'blog/post']);
+
+$routes->group('account', function ($routes) {
+    $routes->add('login', 'Account\Login::index');
+    $routes->add('forgotton', 'Account\forgotton::index', ['as' => 'forgotton']);
+    $routes->add('register', 'Account\register::index');
+});
+  
 /**
  * --------------------------------------------------------------------
  * Additional Routing

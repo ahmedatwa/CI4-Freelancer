@@ -40,14 +40,31 @@ if (! function_exists('img_url')) {
         return base_url('catalog/' . \Catalog\Libraries\Registry::get('config_theme').'/img/' . $image);
     }
 }
+
+if (! function_exists('formError')) {
+    function formError(string $name)
+    {
+        $validation =  \Config\Services::validation();
+        if ($validation->hasError($name)) {
+            return "<span class='text-danger'>" . $validation->getError(esc($name)) . "</span>";
+        }
+    }
+}
+
 if (! function_exists('getKeywordByQuery'))
 {
     function getKeywordByQuery($keyword)
     {
         $seo_urls = new \Catalog\Models\Design\Seo_urls;
-        return $seo_urls->getKeywordByQuery($keyword);
+        $segment = $seo_urls->getKeywordByQuery($keyword);
+        if ($segment) {
+            return $segment;
+        } else {
+            return null;
+        }
     }
 }
+
 // Override the View function to extend it with theme name
 if (! function_exists('view')) {
     function view(string $name, array $data = [], array $options = [])
