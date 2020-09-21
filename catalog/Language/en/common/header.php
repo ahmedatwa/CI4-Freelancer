@@ -8,6 +8,8 @@ return [
 	'text_logout'   => 'Logout',
 	'text_login'    => 'Login',
 	'text_projects'  => 'Browse Projects',
+	'text_dashboard' => 'Dashboard',
+	'text_setting'   => 'Settings',
 
     // Buttons
 ];

@@ -7,11 +7,13 @@ class Logout extends BaseController
 
     public function index()
     {
-        if ($this->customer->isLogged()) {
-        	$this->customer->logout();
 
-        	$this->session->destroy();
-        }
+        $this->customer_id = '';
+        $this->customer_name = '';
+        $this->customer_group_id = '';
+        $this->isLogged = '';
+        $this->session->destroy();
+
         return redirect()->to('/');
     }
 

@@ -1,13 +1,10 @@
-<!-- Footer
-================================================== -->
+<!-- Footer -->
 <div id="footer">
-	
 	<!-- Footer Top Section -->
 	<div class="footer-top-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-xl-12">
-
 					<!-- Footer Rows Container -->
 					<div class="footer-rows-container">
 						
@@ -19,7 +16,6 @@
 								</div>
 							</div>
 						</div>
-						
 						<!-- Right Side -->
 						<div class="footer-rows-right">
 
@@ -57,9 +53,6 @@
 								<div class="footer-row-inner">
 									<select class="selectpicker language-switcher" data-selected-text-format="count" data-size="5">
 										<option selected>English</option>
-										<option>Français</option>
-										<option>Español</option>
-										<option>Deutsch</option>
 									</select>
 								</div>
 							</div>
@@ -72,21 +65,16 @@
 		</div>
 	</div>
 	<!-- Footer Top Section / End -->
-
 	<!-- Footer Middle Section -->
 	<div class="footer-middle-section">
 		<div class="container">
 			<div class="row">
-
 				<!-- Links -->
 				<div class="col-xl-2 col-lg-2 col-md-3">
 					<div class="footer-links">
-						<h3><?php echo $text_for_candidates; ?></h3>
+						<h3><?php echo $text_for_freelancers; ?></h3>
 						<ul>
-							<li><a href="#"><span><?php echo $text_browse_jobs; ?></span></a></li>
-							<li><a href="#"><span>Add Resume</span></a></li>
-							<li><a href="#"><span>Job Alerts</span></a></li>
-							<li><a href="#"><span>My Bookmarks</span></a></li>
+							<li><a href="<?php echo $projects; ?>"><span><?php echo $text_browse_projects; ?></span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -96,9 +84,9 @@
 					<div class="footer-links">
 						<h3><?php echo $text_for_employer; ?></h3>
 						<ul>
-							<li><a href="#"><span><?php echo $text_browse_candidates; ?></span></a></li>
-							<li><a href="#"><span><?php echo $text_post_job; ?></span></a></li>
-							<li><a href="#"><span><?php echo $text_post_project; ?></span></a></li>
+							<li><a href="<?php echo $freelancers; ?>"><span><?php echo $text_browse_freelancers; ?></span></a></li>
+							<li><a href="<?php echo $add_job; ?>"><span><?php echo $text_post_job; ?></span></a></li>
+							<li><a href="<?php echo $add_project; ?>"><span><?php echo $text_post_project; ?></span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -108,20 +96,9 @@
 					<div class="footer-links">
 						<h3><?php echo $text_links; ?></h3>
 						<ul>
-						<?php foreach ($informations as $information) { ?>
-							<li><a href="<?php echo $information['href']; ?>"><span><?php echo $information['title']; ?></span></a></li>
-						<?php } ?>	
-						</ul>
-					</div>
-				</div>
-
-				<!-- Links -->
-				<div class="col-xl-2 col-lg-2 col-md-3">
-					<div class="footer-links">
-						<h3>Account</h3>
-						<ul>
-							<li><a href="#"><span>Log In</span></a></li>
-							<li><a href="#"><span>My Account</span></a></li>
+							<?php foreach ($informations as $information) { ?>
+								<li><a href="<?php echo $information['href']; ?>"><span><?php echo $information['title']; ?></span></a></li>
+							<?php } ?>	
 						</ul>
 					</div>
 				</div>
@@ -157,20 +134,6 @@
 
 </div>
 <!-- Wrapper / End -->
-<!-- Scripts
-================================================== -->
-<script src="catalog/default/javascript/jquery-3.3.1.min.js"></script>
-<script src="catalog/default/javascript/jquery-migrate-3.0.0.min.js"></script>
-<script src="catalog/default/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-<script src="catalog/default/javascript/mmenu.min.js"></script>
-<script src="catalog/default/javascript/simplebar.min.js"></script>
-<script src="catalog/default/javascript/bootstrap-slider.min.js"></script>
-<script src="catalog/default/javascript/snackbar.js"></script>
-<script src="catalog/default/javascript/clipboard.min.js"></script>
-<script src="catalog/default/javascript/counterup.min.js"></script>
-<script src="catalog/default/javascript/magnific-popup.min.js"></script>
-<script src="catalog/default/javascript/slick.min.js"></script>
-<script src="catalog/default/javascript/custom.js"></script>
 
 <!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
 <script>

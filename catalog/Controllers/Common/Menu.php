@@ -6,11 +6,11 @@ class Menu extends \Catalog\Controllers\BaseController
     {
 
         // Extensions
-        $extensions_model = new \Catalog\Models\Setting\Extensions();
+        $extensionModel = new \Catalog\Models\Setting\ExtensionModel();
 
         $data['blog'] = [];
 
-        $blog = $extensions_model->getExtensions('blog');
+        $blog = $extensionModel->getExtensions('blog');
 
         // Menu
         $data['menus'][] = [

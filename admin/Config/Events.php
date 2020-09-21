@@ -30,18 +30,18 @@ Events::on('pre_system', function () {
         });
     }
 
-    // Fetch Events from DB
-    $events_model = new \Admin\Models\Setting\Events();
-    $results = $events_model->where(['status' => 1])->findAll();
-    foreach ($results as $result) {
-        if ((substr($result['action'], 0, 6) == 'Admin\\')) {
-            if ($result['priority'] != 0) {
-                Events::on($result['code'], $result['action'], $result['priority']);
-            } else {
-                Events::on($result['code'], $result['action']);
-            }
+// Fetch Events from DB
+$events_model = new \Admin\Models\Setting\Events();
+$results = $events_model->where(['status' => 1])->findAll();
+foreach ($results as $result) {
+    if ((substr($result['action'], 0, 6) == 'Admin\\')) {
+        if ($result['priority'] != 0) {
+            Events::on($result['code'], $result['action'], $result['priority']);
+        } else {
+            Events::on($result['code'], $result['action']);
         }
     }
+}
 
     /*
      * --------------------------------------------------------------------

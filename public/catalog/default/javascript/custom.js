@@ -4,13 +4,32 @@
 
 $(document).ready(function(){
 	
-	// Highlight any found errors
-    $('.text-danger').each(function() {
-        var element = $(this).prev();
-        if (element.hasClass('input-text')) {
-            element.addClass('is-invalid');
-        }
-    });
+// Search 
+$('#search-container button').on('click', function() {
+
+    var url = 'common/search';
+    
+    var search = $('#search-container #intro-keywords').val();
+    if (search) {
+        url += '?keyword=' + encodeURIComponent(search);
+    }
+    ``
+    location = url;
+});
+
+$('#search-container #intro-keywords').on('keydown', function(e) {
+
+	if (e.keyCode == 13) {
+	    $('#search-container button').trigger('click');
+	}
+});
+// Highlight any found errors
+$('.text-danger').each(function() {
+    var element = $(this).prev();
+    if (element.hasClass('input-text')) {
+        element.addClass('is-invalid');
+    }
+});
 
 	/*--------------------------------------------------*/
 	/*  Mobile Menu - mmenu.js
@@ -964,6 +983,8 @@ $(document).ready(function(){
    });
 
 
+
+
 	/*----------------------------------------------------*/
 	/*  Inline CSS replacement for backgrounds
 	/*----------------------------------------------------*/
@@ -1266,21 +1287,6 @@ $(document).ready(function(){
 		});
 	});
 
-	$('.popup-with-zoom-anim').magnificPopup({
-		 type: 'inline',
-
-		 fixedContentPos: false,
-		 fixedBgPos: true,
-
-		 overflowY: 'auto',
-
-		 closeBtnInside: true,
-		 preloader: false,
-
-		 midClick: true,
-		 removalDelay: 300,
-		 mainClass: 'my-mfp-zoom-in'
-	});
 
 	$('.mfp-image').magnificPopup({
 		 type: 'image',

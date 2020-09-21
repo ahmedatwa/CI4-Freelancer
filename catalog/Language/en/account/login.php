@@ -11,4 +11,6 @@ return [
     // Entry
     'entry_email'                  => 'E-Mail Address',
     'entry_password'               => 'Password',
+    // Button
+    'button_login' => 'Login',
 ];

@@ -1,20 +1,21 @@
 <?php namespace Catalog\Controllers\Information;
 
 use \Catalog\Models\Design\Seo_urls;
+use \Catalog\Models\Catalog\Informations;
 
 class Information extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        $informations = new \Catalog\Models\Catalog\Informations();
+        $informations = new Informations();
 
         $seo_urls = new Seo_urls();
 
         $data['breadcrumbs'] = [];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('text_home'),
-            'href' => base_url('common/home')
+            'text' => lang($this->locale .'.text_home'),
+            'href' => base_url('/')
         ];
 
         if ($this->request->getGet('information_id')) {
@@ -38,8 +39,6 @@ class Information extends \Catalog\Controllers\BaseController
             $data['heading_title'] = $information_info['title'];
 
             $data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
-
-            $data['continue'] = base_url('/');
 
             $this->template->output('information/information', $data);
         } else {

@@ -111,25 +111,25 @@ class Informations extends \CodeIgniter\Model
         // information_description Query
         if (isset($data['information_description'])) {
             $information_description_table = $this->db->table('information_description');
-            foreach ($data['information_description'] as $language_id => $information_description) {
+            $seo_url = $this->db->table('seo_url');
+            foreach ($data['information_description'] as $language_id => $value) {
                 $information_description_data = [
                     'information_id'   => $information_id,
                     'language_id'      => $language_id,
-                    'title'            => $information_description['title'],
-                    'description'      => $information_description['description'],
-                    'meta_title'       => $information_description['meta_title'],
-                    'meta_description' => $information_description['meta_description'],
-                    'meta_keyword'     => $information_description['meta_keyword'],
+                    'title'            => $value['title'],
+                    'description'      => $value['description'],
+                    'meta_title'       => $value['meta_title'],
+                    'meta_description' => $value['meta_description'],
+                    'meta_keyword'     => $value['meta_keyword'],
                 ];
 
                 $information_description_table->insert($information_description_data);
                 //  Seo Urls
-                $seo_url = $this->db->table('seo_url');
                 $seo_url_data = [
                         'site_id'     => 0,
                         'language_id' => $language_id,
                         'query'       => 'information_id=' . $information_id,
-                        'keyword'     => generateSeoUrl($information_description['title']),
+                        'keyword'     => generateSeoUrl($value['title']),
                     ];
                 $seo_url->insert($seo_url_data);
             }
@@ -152,26 +152,25 @@ class Informations extends \CodeIgniter\Model
         if (isset($data['information_description'])) {
             $information_description_table = $this->db->table('information_description');
             $information_description_table->delete(['information_id' => $information_id]);
-            foreach ($data['information_description'] as $language_id => $information_description) {
+            $seo_url = $this->db->table('seo_url');
+            $seo_url->delete(['query=' => 'information_id=' . $information_id]);
+            foreach ($data['information_description'] as $language_id => $value) {
                 $information_description_data = [
                     'information_id'   => $information_id,
                     'language_id'      => $language_id,
-                    'title'            => $information_description['title'],
-                    'slug'             => generateSeoUrl($information_description['title']),
-                    'description'      => $information_description['description'],
-                    'meta_title'       => $information_description['meta_title'],
-                    'meta_description' => $information_description['meta_description'],
-                    'meta_keyword'     => $information_description['meta_keyword'],
+                    'title'            => $value['title'],
+                    'description'      => $value['description'],
+                    'meta_title'       => $value['meta_title'],
+                    'meta_description' => $value['meta_description'],
+                    'meta_keyword'     => $value['meta_keyword'],
                 ];
                 $information_description_table->insert($information_description_data);
                 //  Seo Urls
-                $seo_url = $this->db->table('seo_url');
-                $seo_url->delete(['information_id' => $information_id]);
                 $seo_url_data = [
                         'site_id'     => 0,
                         'language_id' => $language_id,
                         'query'       => 'information_id=' . $information_id,
-                        'keyword'     => generateSeoUrl($information_description['title']),
+                        'keyword'     => generateSeoUrl($value['title']),
                     ];
                 $seo_url->insert($seo_url_data);
             }
@@ -186,8 +185,8 @@ class Informations extends \CodeIgniter\Model
         $builderDescription = $this->db->table('information_description');
         $builderDescription->delete(['information_id' => $information_id]);
         //  seo_url
-        $builderDescription = $this->db->table('seo_url');
-        $builderDescription->delete(['query' => 'information_id=' . $information_id]);
+        $seo_url = $this->db->table('seo_url');
+        $seo_url->delete(['query' => 'information_id=' . $information_id]);
     }
 
     // -----------------------------------------------------------------

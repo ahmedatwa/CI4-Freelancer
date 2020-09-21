@@ -1,4 +1,4 @@
-<?php namespace App\Filters;
+<?php namespace Admin\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;

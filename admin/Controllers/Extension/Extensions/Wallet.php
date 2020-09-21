@@ -90,7 +90,7 @@ class Wallet extends \Admin\Controllers\BaseController
         
         helper('filesystem');
 
-        $files = directory_map(APPPATH . 'Controllers/Extension/wallet', 1);
+        $files = directory_map(APPPATH . 'Controllers/Extension/Wallet', 1);
 
         if ($files) {
             foreach ($files as $file) {

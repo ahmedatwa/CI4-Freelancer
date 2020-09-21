@@ -61,6 +61,7 @@ class Categories extends Model
 
         // category_description
         $description_builder = $this->db->table('category_description');
+        $seo_url = $this->db->table('seo_url');
         foreach ($data['category_description'] as $language_id => $value) {
             $category_description_data = [
                     'category_id'      => $category_id,
@@ -73,7 +74,6 @@ class Categories extends Model
             ];
             $description_builder->insert($category_description_data);
             //  Seo Urls
-            $seo_url = $this->db->table('seo_url');
             $seo_url_data = [
                     'site_id'     => 0,
                     'language_id' => $language_id,
@@ -110,6 +110,8 @@ class Categories extends Model
         $description_builder = $this->db->table('category_description');
         if (isset($data['category_description'])) {
             $description_builder->delete(['category_id' => $category_id]);
+            $seo_url = $this->db->table('seo_url');
+            $seo_url->delete(['query=' => 'category_id=' . $category_id]);
             foreach ($data['category_description'] as $language_id => $value) {
                 $category_description_data = [
                     'category_id'      => $category_id,
@@ -122,8 +124,6 @@ class Categories extends Model
                 ];
                 $description_builder->insert($category_description_data);
                 //  Seo Urls
-                $seo_url = $this->db->table('seo_url');
-                $seo_url->delete(['category_id' => $category_id]);
                 $seo_url_data = [
                         'site_id'     => 0,
                         'language_id' => $language_id,

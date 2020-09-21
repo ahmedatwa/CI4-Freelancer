@@ -28,8 +28,7 @@ class Blog extends \Admin\Controllers\BaseController
             $user_group_model->addPermission($this->user->getGroupId(), 'modify', 'extension/blog/' . $this->request->getVar('extension'));
 
             $setting_model = new \Admin\Models\Setting\Settings();
-            $status = ['blog_status' => 1];
-            $setting_model->editSetting('extension', $status);
+            $setting_model->editSetting('extension', ['extension_blog_status' => 1]);
 
             // Call install Method is exists
             $blog_model = new \Admin\Models\Extension\Blog\Blogs();
@@ -90,7 +89,7 @@ class Blog extends \Admin\Controllers\BaseController
         
         helper('filesystem');
 
-        $files = directory_map(APPPATH . 'Controllers/Extension/blog', 1);
+        $files = directory_map(APPPATH . 'Controllers/Extension/Blog', 1);
 
         if ($files) {
             foreach ($files as $file) {

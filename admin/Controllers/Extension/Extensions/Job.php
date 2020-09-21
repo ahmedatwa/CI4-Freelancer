@@ -91,7 +91,7 @@ class Job extends \Admin\Controllers\BaseController
         
         helper('filesystem');
 
-        $files = directory_map(APPPATH . 'Controllers/Extension/job', 1);
+        $files = directory_map(APPPATH . 'Controllers/Extension/Job', 1);
 
         if ($files) {
             foreach ($files as $file) {

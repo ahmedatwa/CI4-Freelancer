@@ -11,12 +11,12 @@ class Extension extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('setting/extension.list.heading_title'),
-            'href' => base_url('index.php/setting/extension?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/setting/extension?user_token=' . $this->request->getVar('user_token')),
         ];
 
         if ($this->request->getVar('type')) {
@@ -52,18 +52,18 @@ class Extension extends \Admin\Controllers\BaseController
 
         foreach ($extensionFiles as $file) {
             $basename = basename($file, '.php');
-            
-            if ($this->user->hasPermission('access', 'extension/extensions/' . strtolower($basename))) {
+
+            //if ($this->user->hasPermission('access', 'extension/extensions/' . strtolower($basename))) {
 
                 $files = directory_map(APPPATH . 'Controllers/Extension/' . $basename);
 
                 $json[] = [
                 'code' => strtolower($basename),
                 'text' => lang('extension/extensions/'. strtolower($basename) .'.list.heading_title') . ' (' . count($files) . ')',
-                'href' => base_url('index.php/extension/extensions/' . strtolower($basename) . '?user_token=' . $this->session->get('user_token'))
+                'href' => base_url('index.php/extension/extensions/' . strtolower($basename) . '?user_token=' . $this->request->getVar('user_token'))
               ];
             }
-        }
+        //}
 
         return $this->response->setJSON($json);
     }

@@ -27,8 +27,8 @@ class Bid extends \Admin\Controllers\BaseController
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extension/bid/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extension/bid/' . $this->request->getVar('extension'));
 
-            $setting_model = new \Admin\Models\Setting\Settings();
-            $setting_model->editSetting('extension', ['project_bid_status' => 1]);
+            $settingModel = new \Admin\Models\Setting\Settings();
+            $settingModel->editSetting('extension', ['extension_project_bid_status' => 1]);
 
             // Call install Method is exists
             $bids_model = new \Admin\Models\Extension\Bid\Bids();
@@ -89,7 +89,7 @@ class Bid extends \Admin\Controllers\BaseController
         
         helper('filesystem');
 
-        $files = directory_map(APPPATH . 'Controllers/Extension/bid', 1);
+        $files = directory_map(APPPATH . 'Controllers/Extension/Bid', 1);
 
         if ($files) {
             foreach ($files as $file) {
@@ -97,7 +97,7 @@ class Bid extends \Admin\Controllers\BaseController
                 
                 $data['extensions'][] = array(
                     'name'       => lang('extension/bid/' . strtolower($basename) . '.list.heading_title'),
-                    'status'     => ($this->registry->get('project_bid_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                    'status'     => ($this->registry->get('extension_project_bid_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'install'    => base_url('index.php/extension/extensions/bid/install?user_token=' . $this->session->get('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/extensions/bid/uninstall?user_token=' . $this->session->get('user_token') . '&extension=' . strtolower($basename)),
                     'installed'  => in_array(strtolower($basename), $installedExtensions),

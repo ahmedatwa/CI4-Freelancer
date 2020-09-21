@@ -172,20 +172,19 @@ class Document
 
         if ($total_segments != 1) {
 
-            $last = $loader->locateFile($uri->getSegment(4), 'Controllers/' .$uri->getSegment(2) . '/' . $uri->getSegment(3));
+            $controller = $loader->locateFile(ucfirst($uri->getSegment(4)), 'Controllers/' . ucfirst($uri->getSegment(2)) . '/' . ucfirst($uri->getSegment(3)));
             // for named routes controller name must be the same folder name
-            if ($last) {
+            if ($controller) {
                 $route = $uri->getSegment(2) . '/' . $uri->getSegment(3)  . '/' . $uri->getSegment(4);
             } else {
                 $route = $uri->getSegment(2) . '/' . $uri->getSegment(3);
             }
-
             if ($route) {
                 // Check if Lang File Exists
                 static $route_language_path = '';
 
-                $default_path = $loader->locateFile($route, 'Language/' . config('App')->defaultLocale ?? 'en');
-                $modules_path = $loader->locateFile($route, 'Modules/Language/' . config('App')->defaultLocale ?? 'en');
+                $default_path = $loader->locateFile($route, 'Language/en/');
+                $modules_path = $loader->locateFile($route, 'Modules/Language/en/');
 
                 // throw exception error if not found
                 if ($default_path) {

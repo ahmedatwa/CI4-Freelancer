@@ -1,227 +1,147 @@
-<?php echo $header; ?><?php echo $menu; ?>
-<section class="search-wrapper">
-    <div class="search-area2 bgimage">
-        <div class="bg_image_holder">
-            <img src="images/search.jpg" alt="">
+<?php echo $header; ?> 
+<div class="container margin-top-90">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4">
+            <div class="sidebar-container">
+                <!-- Keywords -->
+                <div class="sidebar-widget">
+                    <h3>Keywords</h3>
+                    <div class="keywords-container">
+                        <div class="keyword-input-container">
+                            <input type="text" class="keyword-input" placeholder="e.g. task title"/>
+                            <button class="keyword-input-button ripple-effect"><i class="icon-material-outline-add"></i></button>
+                        </div>
+                        <div class="keywords-list"><!-- keywords go here --></div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+                <!-- Budget -->
+                <div class="sidebar-widget">
+                    <h3>Fixed Price</h3>
+                    <div class="margin-top-55"></div>
+
+                    <!-- Range Slider -->
+                    <input class="range-slider" type="text" value="" data-slider-currency="$" data-slider-min="10" data-slider-max="2500" data-slider-step="25" data-slider-value="[10,2500]"/>
+                </div>
+                <!-- Tags -->
+                <div class="sidebar-widget">
+                    <h3>Skills</h3>
+
+                    <div class="tags-container">
+                        <div class="tag">
+                            <input type="checkbox" id="tag1"/>
+                            <label for="tag1">front-end dev</label>
+                        </div>
+                        <div class="tag">
+                            <input type="checkbox" id="tag2"/>
+                            <label for="tag2">angular</label>
+                        </div>
+                        <div class="tag">
+                            <input type="checkbox" id="tag3"/>
+                            <label for="tag3">react</label>
+                        </div>
+                        <div class="tag">
+                            <input type="checkbox" id="tag4"/>
+                            <label for="tag4">vue js</label>
+                        </div>
+                        <div class="tag">
+                            <input type="checkbox" id="tag5"/>
+                            <label for="tag5">web apps</label>
+                        </div>
+                        <div class="tag">
+                            <input type="checkbox" id="tag6"/>
+                            <label for="tag6">design</label>
+                        </div>
+                        <div class="tag">
+                            <input type="checkbox" id="tag7"/>
+                            <label for="tag7">wordpress</label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <!-- More Skills -->
+                    <div class="keywords-container margin-top-20">
+                        <div class="keyword-input-container">
+                            <input type="text" class="keyword-input" placeholder="add more skills"/>
+                            <button class="keyword-input-button ripple-effect"><i class="icon-material-outline-add"></i></button>
+                        </div>
+                        <div class="keywords-list"><!-- keywords go here --></div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
         </div>
-        <div class="container content_above">
+        <div class="col-xl-9 col-lg-8 content-left-offset">
+         <h3 class="page-title">Search Results</h3>
+
+        <div class="notify-box margin-top-15">
+                <div class="switch-container">
+                    <label class="switch"><input type="checkbox"><span class="switch-button"></span><span class="switch-text">Turn on email alerts for this search</span></label>
+                </div>
+                <div class="sort-by">
+                    <span>Sort by:</span>
+                    <select class="selectpicker hide-tick" onchange="location = this.value;">
+                       <?php foreach ($sorts as $sort) { ?> 
+                       <?php if ($sort['value']== $sort_by  . '-' . $order_by) { ?>
+                        <option value="<?php echo $sort['href']; ?>" selected><?php echo $sort['text']; ?></option>
+                    <?php } else { ?>
+                        <option value="<?php echo $sort['href']; ?>"><?php echo $sort['text']; ?></option>  
+                    <?php } ?>
+                    <?php } ?>      
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Tasks Container -->
+            <div class="tasks-list-container compact-list margin-top-35">
+                <!-- Task -->
+                <?php foreach ($projects as $project) { ?>
+                    <a href="<?php echo $project['href']; ?>" class="task-listing">
+                        <!-- Job Listing Details -->
+                        <div class="task-listing-details">
+                            <!-- Details -->
+                            <div class="task-listing-description">
+                                <h3 class="task-listing-title"><?php echo $project['name']; ?></h3>
+                                <ul class="task-icons">
+                                    <li><i class="icon-material-outline-access-time"></i> <?php echo $project['date_added']; ?></li>
+                                </ul>
+                                <p class="task-listing-text"><?php echo $project['description']; ?></p>
+                                <?php if ($project['tags']) { ?>
+                                    <div class="task-tags">
+                                        <?php foreach ($project['tags'] as $tag) { ?>
+                                            <span><?php echo $tag; ?></span>
+                                        <?php } ?>  
+                                    </div>
+                                <?php } ?>  
+                            </div>
+                        </div>
+                        <div class="task-listing-bid">
+                            <div class="task-listing-bid-inner">
+                                <div class="task-offers">
+                                    <strong><?php echo $project['budget']; ?></strong>
+                                    <span>Fixed Price</span>
+                                </div>
+                                <span class="button button-sliding-icon ripple-effect">Bid Now <i class="icon-material-outline-arrow-right-alt"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                <?php } ?>
+                <!-- ./Task END-->
+            </div>
+            <!-- Tasks Container / End -->
+
+            <!-- Pagination -->
+            <div class="clearfix"></div>
             <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <div class="search">
-                        <div class="search__title">
-                            <h3>
-                                <?php echo $heading_title; ?>
-                            </h3>
-                        </div>
-                        <div class="search__field">
-                            <div class="field-wrapper">
-                                <input class="relative-field rounded" type="text" name="search"
-                                    placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>">
-                                <button class="btn btn--round btn-primary" type="button"
-                                    id="button-search"><?php echo $button_search; ?></button>
-                            </div>
-                        </div>
-                        <div class="breadcrumb">
-                            <ul>
-                                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                                <li>
-                                    <a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-                                </li>
-                                <?php } ?>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="col-md-12">
+                    <?php echo $pagination; ?>
                 </div>
             </div>
+            <!-- Pagination / End -->
+
         </div>
     </div>
-</section>
-<div class="filter-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="filter-bar">
-                    <div class="filter__option filter--dropdown">
-                        <a href="#" id="drop1" class="dropdown-trigger dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false"><?php echo $text_categories; ?>
-                            <span class="lnr lnr-chevron-down"></span>
-                        </a>
-                        <ul class="custom_dropdown custom_drop2 dropdown-menu" aria-labelledby="drop1">
-                            <?php foreach ($categories as $category) { ?>
-                            <li>
-                                <a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?>
-                                    <span><?php echo $category['total']; ?></span>
-                                </a>
-                            </li>
-                            <?php } ?>
-                        </ul>
-                    </div>
-                    <div class="filter__option filter--dropdown filter--range">
-                        <a href="#" id="drop3" class="dropdown-trigger dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Price Range
-                            <span class="lnr lnr-chevron-down"></span>
-                        </a>
-                        <div class="custom_dropdown dropdown-menu" aria-labelledby="drop3">
-                            <div class="range-slider price-range"></div>
-
-                            <div class="price-ranges">
-                                <span class="from rounded">$30</span>
-                                <span class="to rounded">$300</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end /.filter__option -->
-                    <div class="filter__option filter--select">
-                        <div class="select-wrap">
-                            <select id="input-sort" class="form-control" onchange="location = this.value;">
-                                <?php foreach ($sorts as $sort) { ?>
-                                <?php if ($sort['value']== $sort_by  . '-' . $order_by) { ?>
-                                <option value="<?php echo $sort['href']; ?>" selected="selected">
-                                    <?php echo $sort['text']; ?></option>
-                                <?php } else { ?>
-                                <option value="<?php echo $sort['href']; ?>">
-                                    <?php echo $sort['text']; ?></option>
-                                <?php } ?>
-                                <?php } ?>
-                            </select>
-                            <span class="lnr lnr-chevron-down"></span>
-                        </div>
-                    </div>
-                    <!-- end /.filter__option -->
-                    <div class="filter__option filter--select">
-                        <div class="select-wrap">
-                            <select id="input-limit" class="form-control" onchange="location = this.value;">
-                                <?php foreach ($limits as $limits) { ?>
-                                <?php if ($limits['value'] == $limit) { ?>
-                                <option value="<?php echo $limits['href']; ?>" selected="selected">
-                                    <?php echo $limits['text']; ?></option>
-                                <?php } else { ?>
-                                <option value="<?php echo $limits['href']; ?>"><?php echo $limits['text']; ?>
-                                </option>
-                                <?php } ?>
-                                <?php } ?>
-                            </select>
-                            <span class="lnr lnr-chevron-down"></span>
-                        </div>
-                    </div>
-                    <!-- end /.filter__option -->
-                    <div class="filter__option filter--layout">
-                        <a href="#" id="grid" data-toggle="tooltip" data-placement="top"
-                            title="<?php echo $text_grid; ?>">
-                            <div class="svg-icon">
-                                <img class="svg" src="<?php echo img_url('svg/grid.svg'); ?>">
-                            </div>
-                        </a>
-                        <a href="#" id="list" data-toggle="tooltip" data-placement="top"
-                            title="<?php echo $text_list; ?>">
-                            <div class="svg-icon">
-                                <img class="svg" src="<?php echo img_url('svg/list.svg'); ?>">
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<section class="products">
-    <div class="container">
-        <div class="row">
-            <?php if ($services) { ?>
-            <?php foreach ($services as $service) { ?>
-            <div class="col-lg-4 col-md-6">
-                <!-- start .single-product -->
-                <div class="product product--card">
-                    <div class="product__thumbnail">
-                        <img src="<?php echo $service['image']; ?>" alt="Product Image">
-                        <div class="prod_btn">
-                            <a href="<?php echo $service['href']; ?>"
-                                class="transparent btn--sm btn--round"><?php echo $button_more_info; ?></a>
-                        </div>
-                        <!-- end /.prod_btn -->
-                    </div>
-                    <!-- end /.product__thumbnail -->
-                    <div class="product-desc">
-                        <a href="<?php echo $service['href']; ?>" class="product_title">
-                            <h4><?php echo $service['name']; ?></h4>
-                        </a>
-                        <ul class="titlebtm">
-                            <li>
-                                <img class="auth-img" src="<?php echo $service['seller_img']; ?>" alt="author image">
-                                <p>
-                                    <a href="#"><?php echo $service['seller']; ?></a>
-                                </p>
-                            </li>
-                            <li class="product_cat">
-                                <a href="#">
-                                    <span class="lnr lnr-book"></span><?php echo $service['category']; ?></a>
-                            </li>
-                        </ul>
-                        <p><?php echo $service['description']; ?></p>
-                    </div>
-                    <!-- end /.product-desc -->
-                    <div class="product-purchase">
-                        <div class="price_love">
-                            <span><?php echo $service['price']; ?></span>
-                        </div>
-                    </div>
-                    <!-- end /.product-purchase -->
-                </div>
-                <!-- end /.single-product -->
-            </div>
-            <!-- end /.col-md-4 -->
-            <?php } ?>
-            <?php } else { ?>
-            <div class="col-lg-12 text-center">
-                <div class="shortcode_modules">
-                    <div class="modules__content typog">
-                        <p><?php echo $text_empty; ?></p>
-                        <a class="btn btn-lg btn--icon btn--round" href="<?php echo base_url('service/category'); ?>" role="button">
-                            <span class="lnr lnr-bullhorn"></span><?php echo $text_categories; ?></a>
-                    </div>
-                </div>
-            </div>
-            <?php } ?>
-        </div>
-        <!-- end /.row -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="pagination-area pull-right">
-                    <?php echo strlen($pagination) ? $pagination : ''; ?>
-                </div>
-            </div>
-        </div>
-        <!-- end /.row -->
-    </div>
-    <!-- end /.container -->
-</section>
-<?php echo $content_bottom; ?><?php echo $footer; ?>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#list').click(function(event) {
-        event.preventDefault();
-        $('.product').removeClass('product--card product--card-small');
-        $('.product_card_container').removeClass('row');
-        $('.product_card_mian_wrapper').removeClass('col-lg-4 col-md-6');
-        $('.product').addClass('product--list product--list-small');
-    });
-    $('#grid').click(function(event) {
-        event.preventDefault();
-        $('.product').removeClass('product--list product--list-small');
-        $('.product').addClass('product--card product--card-small');
-        $('.product_card_container').addClass('row');
-        $('.product_card_mian_wrapper').addClass('col-lg-4 col-md-6');
-    });
-});
-</script>
-<script type="text/javascript">
-$('input[name=\'filter[]\']').on('click', function() {
-    filter = [];
-
-    $('input[name^=\'filter\']:checked').each(function(element) {
-        filter.push(this.value);
-    });
-
-    location = '<?php echo $action; ?>&filter=' + filter.join(',');
-});
-</script>
+</div><?php echo $footer; ?>

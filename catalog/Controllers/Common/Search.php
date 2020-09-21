@@ -1,152 +1,146 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
+<?php namespace Catalog\Controllers\Common;
 
-class Search extends MY_Controller
+use \Catalog\Models\Catalog\ProjectModel; 
+
+class Search extends \Catalog\Controllers\BaseController
 {
-
     public function index()
     {
-        $this->lang->load('common/search');
 
-        if (!empty($this->input->get('search'))) {
-            $search = $this->input->get('search');
+        $projectModel = new ProjectModel();
+
+        if ($this->request->getVar('keyword')) {
+            $filter_keyword = $this->request->getVar('keyword');
         } else {
-            $search = '';
+            $filter_keyword = '';
         }
 
-        if ($this->input->get('filter')) {
-            $filter = explode(',', $this->input->get('filter'));
+        if ($this->request->getVar('filter')) {
+            $filter = explode(',', $this->request->getVar('filter'));
         } else {
-            $filter = array();
+            $filter = [];
         }
         
-        if ($this->input->get('filter_price')) {
-            $filter_price = explode(',', $this->input->get('filter_price'));
+        if ($this->request->getVar('filter_price')) {
+            $filter_price = explode(',', $this->request->getVar('filter_price'));
         } else {
-            $filter_price = array();
+            $filter_price = [];
         }
 
-        if ($this->input->get('sort_by')) {
-            $sort_by = $this->input->get('sort_by');
+        if ($this->request->getVar('sort_by')) {
+            $sortBy = $this->request->getVar('sort_by');
         } else {
-            $sort_by = 's.price';
+            $sortBy = 'p.date_added';
         }
 
-        if ($this->input->get('order_by')) {
-            $order_by = $this->input->get('order_by');
+        if ($this->request->getVar('order_by')) {
+            $orderBy = $this->request->getVar('order_by');
         } else {
-            $order_by = 'ASC';
+            $orderBy = 'DESC';
         }
 
-        if ($this->input->get('limit')) {
-            $limit = $this->input->get('limit');
+        if ($this->request->getVar('limit')) {
+            $limit = $this->request->getVar('limit');
         } else {
             $limit = 20;
         }
 
-        if ($this->input->get('page')) {
-            $page = $this->input->get('page');
+        if ($this->request->getVar('page')) {
+            $page = $this->request->getVar('page');
         } else {
             $page = 1;
         }
 
         $filter_data = array(
-            'search'       => $search,
-            'filter'       => $filter,
+            'filter_keyword'=> $filter_keyword,
+            'filter' => $filter,
             'filter_price' => $filter_price,
-            'sort_by'      => $sort_by,
-            'order_by'     => $order_by,
+            'sort_by'      => $sortBy,
+            'order_by'     => $orderBy,
             'limit'        => $limit,
             'start'        => ($page - 1) * $limit,
         );
 
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
-            'text' => $this->lang->line('text_home'),
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
+            'text' => lang('common/search.text_home'),
             'href' => base_url(),
-        );
-        $data['breadcrumbs'][] = array(
-            'text' => $this->lang->line('text_search'),
-            'href' => base_url('common/search?search='.$this->input->get('search')),
-        );
+        ];
+        $data['breadcrumbs'][] = [
+            'text' => lang('common/search.text_search'),
+            'href' => base_url('common/search?keyword=' . $this->request->getVar('keyword')),
+        ];
 
-        if ($order_by == 'DESC') {
-            $order_by = '&order_by=ASC';
+        if ($orderBy == 'DESC') {
+            $orderBy = '&order_by=ASC';
         } else {
-            $order_by = '&order_by=DESC';
+            $orderBy = '&order_by=DESC';
         }
 
         $url = '';
 
-        if ($this->input->get('limit')) {
-            $url .= '&limit=' . $this->input->get('limit');
+        if ($this->request->getVar('limit')) {
+            $url .= '&limit=' . $this->request->getVar('limit');
         }
 
-        if ($this->input->get('sort_by')) {
-            $url .= '&sort_by=' . $this->input->get('sort_by');
+        if ($this->request->getVar('sort_by')) {
+            $url .= '&sort_by=' . $this->request->getVar('sort_by');
         }
 
-        if ($this->input->get('order_by')) {
-            $url .= '&order_by=' . $this->input->get('order_by');
+        if ($this->request->getVar('order_by')) {
+            $url .= '&order_by=' . $this->request->getVar('order_by');
         }
 
+        $data['projects'] = [];        
+        $results = $projectModel->getProjects($filter_data);
+        $projects_total = $projectModel->getTotalProjects();
 
-        // Category Services
-        $this->load->model('service/services');
-        $data['services'] = array();
-        $results = $this->services->get_services($filter_data);
-        $total_services = $this->services->get_total_services();
-        
         foreach ($results as $result) {
-            if ($result['image']) {
-                $image = thumb($result['image'], 361, 230);
-            } else {
-                $image = img_url('p4.jpg');
-            }
-        
-            $data['services'][]= array(
-                'service_id'  => $result['service_id'],
-                'name'        => $result['service'],
-                'seller'      => $result['seller'],
-                'image'       => $image,
-                'category'    => $this->services->get_category_by_serviceId($result['service_id']),
-                'seller_img'  => img_url('auth.jpg'),
-                'rating'      => $result['rating'],
-                'price'       => currency_format($result['price']),
-                'description' => substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 200),
-                'href'        => base_url('service/service?service_id='.$result['service_id'] . $url),
-             );
+            $data['projects'][] = [  
+                'project_id'  => $result['project_id'],
+                'name'        => $result['name'],
+                'description' => substr($result['description'], 0, 100) . '...',
+                'tags'        => ($result['tags']) ? explode(',', $result['tags']) : '',
+                'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
+                'type'        => ($result['status'] == 1) ? lang('project/project.list.text_fixed_price') : lang('project/project.list.text_per_hour'),
+                'date_added'  => $this->dateDifference($result['date_added']),
+                'href'        => route_to('project', getKeywordByQuery('project_id=' . $result['project_id'])),
+            ];
         }
 
+        $data['sorts'] = [];
 
-        $data['sorts'] = array();
+        $data['sorts'][] = [
+            'text'  => lang('common/search.text_newest'),
+            'value' => 'p.date_added-ASC',
+            'href'  => route_to('projects') . $this->request->getVar('category_id') . '&sort_by=s.price&order_by=ASC' . $url)
+        ];
 
-        $data['sorts'][] = array(
-            'text'  => $this->lang->line('text_price_asc'),
-            'value' => 's.price-ASC',
-            'href'  => base_url('service/category?category_id=' . $this->input->get('category_id') . '&sort_by=s.price&order_by=ASC' . $url)
-        );
-
-        $data['sorts'][] = array(
-            'text'  => $this->lang->line('text_price_desc'),
+        $data['sorts'][] = [
+            'text'  => lang('common/search.text_lowest'),
             'value' => 's.price-DESC',
-            'href'  => base_url('service/category?category_id=' . $this->input->get('category_id') . '&sort_by=s.price&order_by=DESC' .$url)
-        );
+            'href'  => base_url('service/category?category_id=' . $this->request->getVar('category_id') . '&sort_by=s.price&order_by=DESC' .$url)
+        ];
 
-        $data['sort_date_added'] = base_url('service/category?category_id=' . $this->input->get('category_id') . $url. '&sort_by=s.date_added'. $order_by);
+        $data['sorts'][] = [
+            'text'  => lang('common/search.text_highest'),
+            'value' => 's.price-DESC',
+            'href'  => base_url('service/category?category_id=' . $this->request->getVar('category_id') . '&sort_by=s.price&order_by=DESC' .$url)
+        ];
+
 
 
         $url = '';
 
-        if ($this->input->get('sort_by')) {
-            $url .= '&sort_by=' . $this->input->get('sort_by');
+        if ($this->request->getVar('sort_by')) {
+            $url .= '&sort_by=' . $this->request->getVar('sort_by');
         }
 
-        if ($this->input->get('order_by')) {
-            $url .= '&order_by=' . $this->input->get('order_by');
+        if ($this->request->getVar('order_by')) {
+            $url .= '&order_by=' . $this->request->getVar('order_by');
         }
 
-        $data['limits'] = array();
+        $data['limits'] = [];
 
         $limits = array_unique(array(20, 25, 50, 75, 100));
 
@@ -154,102 +148,55 @@ class Search extends MY_Controller
 
         foreach ($limits as $value) {
             $data['limits'][] = array(
-                'text'  => sprintf($this->lang->line('text_per_page'), $value),
+                'text'  => sprintf(lang('common/search.text_per_page'), $value),
                 'value' => $value,
-                'href'  => base_url('service/category?category_id=' . $this->input->get('category_id') . $url . '&limit=' . $value)
+                'href'  => base_url('service/category?category_id=' . $this->request->getVar('category_id') . $url . '&limit=' . $value)
             );
         }
 
+        $data['skills'] = [];
 
-        $url = '';
+        $projectModel->get
 
+        $data['heading_title']    = lang('common/search.heading_title');
+        $data['text_price']       = lang('common/search.text_price');
+        $data['text_sort']        = lang('common/search.text_sort');
+        $data['text_default']     = lang('common/search.text_default');
+        $data['text_name_asc']    = lang('common/search.text_name_asc');
+        $data['text_name_desc']   = lang('common/search.text_name_desc');
+        $data['text_price_asc']   = lang('common/search.text_price_asc');
+        $data['text_price_desc']  = lang('common/search.text_price_desc');
+        $data['text_rating_asc']  = lang('common/search.text_rating_asc');
+        $data['text_rating_desc'] = lang('common/search.text_rating_desc');
+        $data['text_limit']       = lang('common/search.text_limit');
+        $data['text_grid']        = lang('common/search.text_grid');
+        $data['text_list']        = lang('common/search.text_list');
+        $data['text_new']         = lang('common/search.text_new');
+        $data['text_recent']      = lang('common/search.text_recent');
+        $data['text_featured']    = lang('common/search.text_featured');
+        $data['text_search']      = lang('common/search.text_search');
+        $data['text_categories']  = lang('common/search.text_categories');
+        $data['text_empty']       = lang('common/search.text_empty');
 
-        if ($this->input->get('limit')) {
-            $url .= '&limit=' . $this->input->get('limit');
-        }
-
-        if ($this->input->get('sort_by')) {
-            $url .= '&sort_by=' . $this->input->get('sort_by');
-        }
-
-        if ($this->input->get('order_by')) {
-            $url .= '&order_by=' . $this->input->get('order_by');
-        }
-
-        $data['heading_title']    = $this->lang->line('heading_title');
-        $data['text_price']       = $this->lang->line('text_price');
-        $data['text_sort']        = $this->lang->line('text_sort');
-        $data['text_default']     = $this->lang->line('text_default');
-        $data['text_name_asc']    = $this->lang->line('text_name_asc');
-        $data['text_name_desc']   = $this->lang->line('text_name_desc');
-        $data['text_price_asc']   = $this->lang->line('text_price_asc');
-        $data['text_price_desc']  = $this->lang->line('text_price_desc');
-        $data['text_rating_asc']  = $this->lang->line('text_rating_asc');
-        $data['text_rating_desc'] = $this->lang->line('text_rating_desc');
-        $data['text_limit']       = $this->lang->line('text_limit');
-        $data['text_grid']        = $this->lang->line('text_grid');
-        $data['text_list']        = $this->lang->line('text_list');
-        $data['text_new']         = $this->lang->line('text_new');
-        $data['text_recent']      = $this->lang->line('text_recent');
-        $data['text_featured']    = $this->lang->line('text_featured');
-        $data['text_search']      = $this->lang->line('text_search');
-        $data['text_categories']  = $this->lang->line('text_categories');
-        $data['text_empty']       = $this->lang->line('text_empty');
-
-        $data['button_cart']      = $this->lang->line('button_cart');
-        $data['button_list']      = $this->lang->line('button_list');
-        $data['button_search']    = $this->lang->line('button_search');
-        $data['button_grid']      = $this->lang->line('button_grid');
-        $data['button_more_info'] = $this->lang->line('button_more_info');
-
-
-        $this->load->model('service/categories');
-        $categories = $this->categories->get_main_categories();
-        $data['categories'] = array();
-        foreach ($categories as $category) {
-            $data['categories'][] = array(
-                'name'  => $category['name'],
-                'id'    => '?category_id=' . $category['category_id'],
-                'total' => $this->categories->get_category_total($category['category_id']),
-                'href'  => base_url('index.php/service/category?category_id=' . $category['category_id']),
-            );
-        }
-
-        $url = '';
-
-
-        if ($this->input->get('limit')) {
-            $url .= '&limit=' . $this->input->get('limit');
-        }
-  
-        if ($this->input->get('sort_by')) {
-            $url .= '&sort_by=' . $this->input->get('sort_by');
-        }
-  
-        if ($this->input->get('order_by')) {
-            $url .= '&order_by=' . $this->input->get('order_by');
-        }
-  
-        $config['base_url'] = base_url('service/category?search' . $this->input->get('serach'));
-        $config['total_rows'] = $total_services;
-        $config['per_page'] = $limit;
-        $this->pagination->initialize($config);
-        $data['pagination'] = $this->pagination->create_links();
-
-        $data['text_pagination'] = sprintf($this->lang->line('text_pagination'), ($total_services) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total_services - $limit)) ? $total_services : ((($page - 1) * $limit) + $limit), $total_services, ceil($total_services / $limit));
-
+        $data['button_cart']      = lang('common/search.button_cart');
+        $data['button_list']      = lang('common/search.button_list');
+        $data['button_search']    = lang('common/search.button_search');
+        $data['button_grid']      = lang('common/search.button_grid');
+        $data['button_more_info'] = lang('common/search.button_more_info');    
         
         $data['filter']   = $filter;
-        $data['search']   = $search;
-        $data['sort_by']  = $sort_by;
-        $data['order_by'] = $order_by;
+        $data['filter_keyword']   = $filter_keyword;
+        $data['sort_by']  = $sortBy;
+        $data['order_by'] = $orderBy;
         $data['limit']    = $limit;
         $data['page']     = $page;
 
         
-        $data['content_bottom'] = Modules::run('content_bottom');
+        // Pagination
+        $pager = \Config\Services::pager();
+        $data['pagination'] = $pager->makeLinks($page, $limit, $projects_total);
 
 
-        $this->theme->render('common/search', $data);
+        $this->template->output('common/search', $data);
     }
 }

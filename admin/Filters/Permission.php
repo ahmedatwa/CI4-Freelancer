@@ -18,10 +18,10 @@ class Permission implements FilterInterface
         $user = new \Admin\Libraries\User();
         $loader = Services::locator(true);
 
-        $last = $loader->locateFile($request->uri->getSegment(3), 'Controllers/'. $request->uri->getSegment(1) . '/' . $request->uri->getSegment(2));
+        $controller = $loader->locateFile(ucfirst($request->uri->getSegment(3)), 'Controllers/'. ucfirst($request->uri->getSegment(1)) . '/' . ucfirst($request->uri->getSegment(2)));
 
         // get Correct Routes
-        if ($last) {
+        if ($controller) {
             $route = $request->uri->getSegment(1) . '/' . $request->uri->getSegment(2) . '/' . $request->uri->getSegment(3);
         } else {
             $route = $request->uri->getSegment(1) . '/' . $request->uri->getSegment(2);

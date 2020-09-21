@@ -21,7 +21,7 @@ $routes->setTranslateURIDashes(false);
 $routes->setAutoRoute(true);
 // Will display a custom view
 $routes->set404Override(function () {
-    echo view('errors/not_found.php');
+    echo view_cell('\Catalog\Controllers\Error\Not_found::index');
 });
 
 
@@ -35,14 +35,18 @@ $routes->set404Override(function () {
 // route since we don't have to scan directories.
 $routes->get('/', 'Common/Home::index');
 // Information
-$routes->add('information/(:any)', 'Information\Information::index', ['as' => 'information']);
+$routes->add('information/(:any)', 'Information\Information::index/$1', ['as' => 'information']);
 // Project
 // $routes->group('project', function ($routes) {
 //     $routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
 //     $routes->add('category/(:any)', 'Project\Category::index/$1', ['as' => 'category']);
 // });
-$routes->add('projects', 'Project\Project::index');
-$routes->add('project/(:any)', 'Project\Project::getProject/$1', ['as' => 'project']);
+$routes->group('projects', function ($routes) {
+    $routes->add('/', 'Project\Project::index');
+    $routes->add('project/(:any)', 'Project\Project::getProject/$1', ['as' => 'project']);  
+    $routes->add('autocomplete', 'Project\Project::autocomplete');  
+});
+//$routes->add('projects', 'Project\Project::index');
 
 
 // $routes->add('jobs', 'Extension\Job\Job::index', ['as' => 'jobs']);
@@ -54,7 +58,10 @@ $routes->add('blog/post', 'Extension\Blog\Blog::post', ['as' => 'blog/post']);
 
 $routes->group('account', function ($routes) {
     $routes->add('login', 'Account\Login::index');
-    $routes->add('forgotton', 'Account\forgotton::index', ['as' => 'forgotton']);
+    $routes->add('logout', 'Account\Logout::index');
+    $routes->add('setting', 'Account\Setting::index');
+    $routes->add('dashboard', 'Account\Dashboard::index');
+    $routes->add('forgotton', 'Account\forgotton::index');
     $routes->add('register', 'Account\register::index');
 });
   

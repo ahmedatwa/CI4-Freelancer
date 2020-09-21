@@ -43,7 +43,6 @@ class BaseController extends \CodeIgniter\Controller
         $this->session  = \Config\Services::session();
         $this->locale   = $this->request->getLocale();
         $this->registry = service('registry');
-
     }
 
     public function resize(string $filename, int $width = 0, int $height = 0)
@@ -92,6 +91,29 @@ class BaseController extends \CodeIgniter\Controller
             }
         }
         return base_url() . '/images/' . $image_new;
+    }
+
+    public function currencyFormat(float $num)
+    {
+        helper('number');
+        return number_to_currency($num, $this->registry->get('config_currency'), $this->locale);
+    }
+
+    public function dateDifference(string $added, string $end = null)
+    {
+        $time  = new \CodeIgniter\I18n\Time;
+
+        if (!$end) {
+           $date = $time::parse($added);
+           return $date->humanize();
+        }
+
+        $date_added = $time::parse($added);
+        $date_end   = $time::parse($end);
+
+        $diff = $date_added->difference($date_end);
+
+        return 'Open - ' . $diff->getDays() . ' Days left'; 
     }
 
     // -----------------------------------------------------------------

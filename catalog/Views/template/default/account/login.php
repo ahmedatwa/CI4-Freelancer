@@ -46,7 +46,7 @@
 						<?php echo formError('password'); ?>
 					</div>
 					<a href="#" class="forgot-password"><?php echo $text_forgotten; ?></a>
-					<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit"><?php echo $text_login; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
+					<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit"><?php echo $button_login; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
 				</form>
 				<!-- Social Login -->
 				<div class="social-login-separator"><span>or</span></div>

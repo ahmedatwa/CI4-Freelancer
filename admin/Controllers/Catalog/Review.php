@@ -79,7 +79,7 @@ class Review extends \Admin\Controllers\BaseController
             'order_by' => 'DESC',
             'sort_by'  => 'r.date_added',
             'limit'    => $this->registry->get('config_admin_limit')
-        );
+        ];
 
         $data['reviews'] = [];
         $results = $this->reviews->getReviews($filter_data);

@@ -18,7 +18,7 @@ class Footer extends \Catalog\Controllers\BaseController
 
         // Categories
         $data['categories'] = [];
-        $categoryModel = new \Catalog\Models\catalog\CategoryModel();
+        $categoryModel = new \Catalog\Models\Catalog\CategoryModel();
 
         $filter_data = [
             'start'         => 0,
@@ -35,22 +35,26 @@ class Footer extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['text_links']             = lang('common/footer.text_links');
-        $data['text_for_candidates']    = lang('common/footer.text_for_candidates');
-        $data['text_for_employer']      = lang('common/footer.text_for_employer');
-        $data['text_browse_jobs']       = lang('common/footer.text_browse_jobs');
-        $data['text_browse_candidates'] = lang('common/footer.text_browse_candidates');
-        $data['text_post_job']          = lang('common/footer.text_post_job');
-        $data['text_post_project']      = lang('common/footer.text_post_project');
-        $data['text_footer']            = lang('common/footer.text_footer');
-        $data['text_newsletter']        = lang('common/footer.text_newsletter');
-        $data['help_newsletter']        = lang('common/footer.help_newsletter');
-        $data['entry_email']            = lang('common/footer.entry_email');
+        $data['text_links']              = lang('common/footer.text_links');
+        $data['text_for_freelancers']    = lang('common/footer.text_for_freelancers');
+        $data['text_for_employer']       = lang('common/footer.text_for_employer');
+        $data['text_browse_projects']    = lang('common/footer.text_browse_projects');
+        $data['text_browse_freelancers'] = lang('common/footer.text_browse_freelancers');
+        $data['text_post_job']           = lang('common/footer.text_post_job');
+        $data['text_post_project']       = lang('common/footer.text_post_project');
+        $data['text_footer']             = lang('common/footer.text_footer');
+        $data['text_newsletter']         = lang('common/footer.text_newsletter');
+        $data['help_newsletter']         = lang('common/footer.help_newsletter');
+        $data['entry_email']             = lang('common/footer.entry_email');
 
-        $data['contact'] = route_to('information/contact');
-        $data['blog']    = route_to('blog');
+        $data['contact']     = route_to('information/contact');
+        $data['blog']        = route_to('blog');
+        $data['freelancers'] = route_to('freelancers');
+        $data['projects']    = route_to('projects');
+        $data['add_project'] = route_to('project/add');
+        $data['add_job']     = route_to('add_job');
 
-        if (service('registry')->get('config_customer_online')) {
+        if ($this->registry->get('config_customer_online')) {
             $online_model = new \Catalog\Models\Tool\Online();
 
             if ($this->request->getIPAddress()) {

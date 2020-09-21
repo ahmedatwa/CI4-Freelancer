@@ -20,19 +20,20 @@ class Login extends \Catalog\Controllers\BaseController
         ];
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            if ($this->request->getPost('redirect')) {
-                $data['redirect'] = $this->request->getPost('redirect');
+            if (previous_url()) {
+                redirect()->to(previous_url());
             } else {
-                $data['redirect'] = base_url();
+                redirect('account/dashboard');
             }
         }
 
         $data['heading_title']  = lang('account/login.heading_title');
         $data['text_login']     = lang('account/login.text_login');
         $data['text_forgotten'] = lang('account/login.text_forgotten');
-        $data['text_register']  = sprintf(lang('account/login.text_register'), route_to('account/login'));
+        $data['text_register']  = sprintf(lang('account/login.text_register'), route_to('account/register'));
         $data['entry_email']    = lang('account/login.entry_email');
         $data['entry_password'] = lang('account/login.entry_password');
+        $data['button_login']   = lang('account/login.button_login');
 
 
         if ($this->request->getPost('email')) {
@@ -89,7 +90,7 @@ class Login extends \Catalog\Controllers\BaseController
                  $customerModel->addLoginAttempt($this->request->getPost('email'), $this->request->getIPAddress());
                  return false;
         } else {
-                 $customerModel->deleteLoginAttempts($this->request->getPost('email'));
+                $customerModel->deleteLoginAttempts($this->request->getPost('email'));
         }
 
         return true;

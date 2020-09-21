@@ -22,12 +22,15 @@ class Register extends \Catalog\Controllers\BaseController
         $customerModel = new CustomerModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $customer_id = $customerModel->addCustomer($this->request->getPost());
+
+        $customer_id = $customerModel->addCustomer($this->request->getPost());
 
             // Clear any previous login attempts for unregistered accounts.
             $customerModel->deleteLoginAttempts($this->request->getPost('email'));
-
-            $this->customer->login($this->request->getPost('email'), $this->request->getPost('password'));
+            //$this->customer->login($this->request->getPost('email'), $this->request->getPost('password'));
+            helper('text');
+            $customerModel->editCode($this->request->getPost('email'), random_string('alnum', 10));
+            $this->session->setFlashdata('success', lang('account/register.text_success'));
         }
 
         $data['entry_email']     = lang('account/register.entry_email');
@@ -81,13 +84,14 @@ class Register extends \Catalog\Controllers\BaseController
             'email' => [
                 'rules' => 'required|valid_email|is_unique[customer.email]',
                 'errors' => [
-                    'is_unique' => 'Email is already registered please try to login'
+                    'is_unique' => 'Warning: E-Mail Address is already registered!'
                 ],
             ],
             'password' => 'required|min_length[4]',
             'confirm'  => 'required_with[password]|matches[password]',
             ])) {
             $this->session->setFlashData('error_warning', lang('account/register.text_warning'));
+            return false;
         }
         return true;
     }

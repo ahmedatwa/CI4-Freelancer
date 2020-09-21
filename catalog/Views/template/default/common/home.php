@@ -1,18 +1,19 @@
 <?php echo $header; ?>
 <!-- Intro Banner-->
 <!-- add class "disable-gradient" to enable consistent background overlay -->
-<div class="intro-banner" data-background-image="images/home-background.jpg">
+<div class="intro-banner dark-overlay big-padding">
+	
+	<!-- Transparent Header Spacer -->
+	<div class="transparent-header-spacer"></div>
+
 	<div class="container">
 		
 		<!-- Intro Headline -->
 		<div class="row">
 			<div class="col-md-12">
-				<div class="banner-headline">
-					<h3>
-						<strong>Hire experts or be hired for any job, any time.</strong>
-						<br>
-						<span>Thousands of small businesses use <strong class="color">Hireo</strong> to turn their ideas into reality.</span>
-					</h3>
+				<div class="banner-headline-alt">
+					<h3>Don't Just Dream, Do</h3>
+					<span>Find the best jobs in the digital industry</span>
 				</div>
 			</div>
 		</div>
@@ -20,16 +21,15 @@
 		<!-- Search Bar -->
 		<div class="row">
 			<div class="col-md-12">
-				<div class="intro-banner-search-form margin-top-95">
+				<div class="intro-banner-search-form margin-top-95" id="search-container">
 					<!-- Search Field -->
 					<div class="intro-search-field">
 						<label for ="intro-keywords" class="field-title ripple-effect">What job you want?</label>
-						<input id="intro-keywords" type="text" placeholder="Job Title or Keywords">
+						<input id="intro-keywords" type="text" placeholder="Job Title or Keywords" name="search">
 					</div>
-
 					<!-- Button -->
 					<div class="intro-search-button">
-						<button class="button ripple-effect" onclick="window.location.href='jobs-list-layout-full-page-map.html'">Search</button>
+						<button class="button ripple-effect" type="button" id="button-search">Search</button>
 					</div>
 				</div>
 			</div>
@@ -54,10 +54,17 @@
 				</ul>
 			</div>
 		</div>
-
 	</div>
-</div>
+	<!-- Video Container -->
+	<div class="video-container" data-background-image="catalog/default/video/intro.png">
+		<video loop autoplay muted>
+			<source src="catalog/default/video/intro.mp4" type="video/mp4">
+			<source src="catalog/default/video/intro.webm" type="video/webm">
+			<source src="catalog/default/video/intro.ogv" type="video/ogv">
+		</video>
+	</div>
 
+</div>
 <!-- Content -->
 <!-- Category Boxes -->
 <div class="section margin-top-65">
@@ -284,8 +291,6 @@
 							<span class="list-apply-button ripple-effect">Apply Now</span>
 						</div>
 					</a>
-					
-
 					<!-- Job Listing -->
 					<a href="single-job-page.html" class="job-listing with-apply-button">
 
@@ -342,7 +347,6 @@
 									</ul>
 								</div>
 							</div>
-
 							<!-- Apply Button -->
 							<span class="list-apply-button ripple-effect">Apply Now</span>
 						</div>
@@ -350,17 +354,11 @@
 
 				</div>
 				<!-- Jobs Container / End -->
-
 			</div>
 		</div>
 	</div>
 </div>
 <!-- Featured Jobs / End -->
-
-
-
-
-
 <!-- Highest Rated Freelancers -->
 <div class="section gray padding-top-65 padding-bottom-70 full-width-carousel-fix">
 	<div class="container">

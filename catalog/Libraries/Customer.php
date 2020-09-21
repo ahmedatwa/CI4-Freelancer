@@ -4,9 +4,10 @@ class Customer
 {
     protected $customer_id;
     protected $customer_group_id;
-    protected $permission = [];
     protected $customer_name;
-    protected $avatar;
+    protected $customer_image;
+    protected $customer_username;
+    protected $permission = [];
     protected $session;
     protected $db;
     
@@ -26,7 +27,9 @@ class Customer
             if ($row) {
                 $this->customer_id       = $row['customer_id'];
                 $this->customer_group_id = $row['customer_group_id'];
-                $this->customer_name     = $row['username'];
+                $this->customer_name     = $row['firstname'] . ' ' . $row['lastname'];
+                $this->customer_username = $row['username'];
+                $this->customer_image    = $row['image'];
             } else {
                 $this->logout();
             }
@@ -58,7 +61,9 @@ class Customer
             }
             $this->customer_id       = $row->customer_id;
             $this->customer_group_id = $row->customer_group_id;
-            $this->customer_name     = $row->username;
+            $this->customer_name     = $row->firstname . ' ' . $row->lastname;
+            $this->customer_username = $row->username;
+            $this->customer_image    = $row->image;
             // Build User Data Session Array
             $customer_data = [
                 'customer_id'       => $row->customer_id,
@@ -85,6 +90,11 @@ class Customer
         return $this->customer_name;
     }
 
+    public function getCustomerUserName()
+    {
+        return $this->customer_username;
+    }
+
     public function logout()
     {
         $this->customer_id = '';
@@ -101,6 +111,11 @@ class Customer
     public function getcustomerGroupId()
     {
         return $this->customer_group_id;
+    }
+
+    public function getcustomerImage()
+    {
+        return $this->customer_image;
     }
 
 

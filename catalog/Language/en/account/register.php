@@ -13,6 +13,7 @@ return [
     'entry_email'       => 'E-Mail',
     'entry_password'    => 'Password',
     'entry_confirm'     => 'Password Confirm',
+    'entry_confirm'     => 'Password Confirm',
     // Button
     'button_register'   => 'Register',
 ];
