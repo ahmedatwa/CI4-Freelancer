@@ -1,5 +1,4 @@
 <?php
-
 // Valid PHP Version?
 $minPHPVersion = '7.2';
 if (phpversion() < $minPHPVersion)
@@ -13,7 +12,7 @@ define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 //var_dump(FCPATH);
 // Location of the Paths config file.
 // This is the line that might need to be changed, depending on your folder structure.
-$pathsPath = realpath('/Applications/XAMPP/xamppfiles/htdocs/ci4.localhost/admin/Config/Paths.php');
+$pathsPath = realpath(FCPATH . '/../../admin/Config/Paths.php');
 // ^^^ Change this if you move your application folder
 /*
  *---------------------------------------------------------------

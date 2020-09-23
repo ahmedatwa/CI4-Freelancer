@@ -4,7 +4,6 @@ class Extension extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-
         $this->document->setTitle(lang('setting/extension.list.heading_title'));
 
         // Breadcrumbs
@@ -20,10 +19,10 @@ class Extension extends \Admin\Controllers\BaseController
         ];
 
         if ($this->request->getVar('type')) {
-			$data['type'] = $this->request->getVar('type');
-		} else {
-			$data['type'] = '';
-		}
+            $data['type'] = $this->request->getVar('type');
+        } else {
+            $data['type'] = '';
+        }
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -37,37 +36,28 @@ class Extension extends \Admin\Controllers\BaseController
             $data['warning'] = '';
         }
 
-        $data['user_token'] = $this->request->getVar('user_token');
+        helper('filesystem');
+
+        $data['categories'] = [];
+
+        $files = directory_map(APPPATH . 'Controllers/Extension', 1);
+
+        foreach ($files as $file) {
+            $basename = basename($file, '.php');
+
+            if ($this->user->hasPermission('access', 'extension/' . strtolower($basename))) {
+                $children = directory_map(APPPATH . 'Extensions/Controllers/' . ucfirst($basename), 1);
+
+                $data['categories'][] = [
+                'code' => strtolower($basename),
+                'text' => lang('extension/'. strtolower($basename) .'.list.heading_title') . ' (' . count($children) . ')',
+                'href' => base_url('index.php/extension/' . strtolower($basename) . '?user_token=' . $this->request->getVar('user_token'))
+              ];
+            }
+        }
 
         $this->document->output('setting/extension', $data);
     }
-
-    public function getList()
-    {
-        $json = [];
-        // Data
-        helper('filesystem');
-
-        $extensionFiles = directory_map(APPPATH . 'Controllers/Extension/Extensions', 1);
-
-        foreach ($extensionFiles as $file) {
-            $basename = basename($file, '.php');
-
-            //if ($this->user->hasPermission('access', 'extension/extensions/' . strtolower($basename))) {
-
-                $files = directory_map(APPPATH . 'Controllers/Extension/' . $basename);
-
-                $json[] = [
-                'code' => strtolower($basename),
-                'text' => lang('extension/extensions/'. strtolower($basename) .'.list.heading_title') . ' (' . count($files) . ')',
-                'href' => base_url('index.php/extension/extensions/' . strtolower($basename) . '?user_token=' . $this->request->getVar('user_token'))
-              ];
-            }
-        //}
-
-        return $this->response->setJSON($json);
-    }
-
         
     //--------------------------------------------------------------------
 }

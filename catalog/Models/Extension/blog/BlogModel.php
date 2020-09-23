@@ -55,6 +55,27 @@ class BlogModel extends \CodeIgniter\Model
         return $query->getRowArray();
     }
 
-
+    public function getFeaturedPosts(int $limit,  int $start = 0)
+    {
+        $builder = $this->db->table('blog_post');
+        $builder->select('*, blog_category.name AS category');
+        $builder->join('blog_category', 'blog_category.category_id = blog_post.category_id', 'left');
+        $builder->where('featured', 1);
+        $builder->orderBy('blog_post.title', 'DESC');
+        $builder->limit($limit, $start);
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+    public function getTrendingPosts(int $limit, int $start = 0)
+    {
+        $builder = $this->db->table('blog_post');
+        $builder->select('*, blog_category.name AS category');
+        $builder->join('blog_category', 'blog_category.category_id = blog_post.category_id', 'left');
+        $builder->where('trending', 1);
+        $builder->orderBy('blog_post.title', 'DESC');
+        $builder->limit($limit, $start);
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
     // ----------------------------------------------------
 }

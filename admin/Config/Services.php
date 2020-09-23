@@ -20,13 +20,13 @@ require_once SYSTEMPATH . 'Config/Services.php';
 class Services extends CoreServices
 {
 
-	//    public static function registry($getShared = true)
-	//    {
-	//        if ($getShared)
-	//        {
-	//            return static::getSharedInstance('Registry');
-	//        }
+	   public static function registry($getShared = true)
+	   {
+	       if ($getShared)
+	       {
+	           return static::getSharedInstance('Registry');
+	       }
 	
-	//        return new \Admin\Libraries\Registry();
-	//    }
+	       return new \Admin\Libraries\Registry();
+	   }
 }

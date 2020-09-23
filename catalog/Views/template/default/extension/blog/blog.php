@@ -1,146 +1,170 @@
-{{ header }}{{ menu }}
-<main class="bg_color">
-		<div class="filters_full">
-		    <div class="container clearfix">
-		        <div class="sort_select">
-		            <select name="sort" id="sort">
-		                <option value="popularity" selected="selected">Sort by Popularity</option>
-		                <option value="rating">Sort by Average rating</option>
-		                <option value="date">Sort by newness</option>
-		            </select>
-		        </div>
-		        <a href="#collapseFilters" data-toggle="collapse" class="btn_filters"><i class="icon_adjust-vert"></i><span>Filters</span></a>
-		        <a class="btn_map mobile btn_filters" data-toggle="collapse" href="#collapseMap"><i class="icon_pin_alt"></i></a>
-		        <div class="search_bar_list">
-				    <input type="text" class="form-control" placeholder="Search again...">
-				</div>
-				<a class="btn_search_mobile btn_filters" data-toggle="collapse" href="#collapseSearch"><i class="icon_search"></i></a>
-		    </div>
-		    <div class="collapse filters_2" id="collapseFilters">
-		    <div class="container margin_detail">
-		        <div class="row">
-		            <div class="col-md-4">
-		                <div class="filter_type">
-		                    <h6>Rating</h6>
-		                    <ul>
-		                        <li>
-		                            <label class="container_check">Superb 9+ <small>06</small>
-		                                <input type="checkbox">
-		                                <span class="checkmark"></span>
-		                            </label>
-		                        </li>
-		                        <li>
-		                            <label class="container_check">Very Good 8+ <small>12</small>
-		                                <input type="checkbox">
-		                                <span class="checkmark"></span>
-		                            </label>
-		                        </li>
-		                        <li>
-		                            <label class="container_check">Good 7+ <small>17</small>
-		                                <input type="checkbox">
-		                                <span class="checkmark"></span>
-		                            </label>
-		                        </li>
-		                        <li>
-		                            <label class="container_check">Pleasant 6+ <small>43</small>
-		                                <input type="checkbox">
-		                                <span class="checkmark"></span>
-		                            </label>
-		                        </li>
-		                    </ul>
-		                </div>
-		            </div>
-		            <div class="col-md-4">
-		            	 <div class="filter_type">
-		                    <h6>Availability</h6>
-		                    <ul>
-		                        <li>
-		                            <label class="container_check">Apointment <small>12</small>
-		                                <input type="checkbox">
-		                                <span class="checkmark"></span>
-		                            </label>
-		                        </li>
-		                        <li>
-		                            <label class="container_check">Chat <small>24</small>
-		                                <input type="checkbox">
-		                                <span class="checkmark"></span>
-		                            </label>
-		                        </li>
-		                        <li>
-		                            <label class="container_check">Video Call <small>23</small>
-		                                <input type="checkbox">
-		                                <span class="checkmark"></span>
-		                            </label>
-		                        </li>
-		                    </ul>
-		                </div>
-		            </div>
-		            <div class="col-md-4">
-		                <div class="filter_type">
-		                    <h6>Price</h6>
-		                    <div class="range_input">Price range from 0 to <span></span>$</div>
-		                    <div><input type="range" min="10" max="100" step="10" value="30" data-orientation="horizontal"></div>
-		                </div>
-		            </div>
-		        </div>
-		        <!-- /row -->
-		    </div>
-		</div>
-		<!-- /filters -->
-		<div class="collapse" id="collapseSearch">
-		    <div class="search_bar_list">
-		        <input type="text" class="form-control" placeholder="Search again...">
-		    </div>
-		</div>
-		<!-- /collapseSearch -->
-		</div>
-		<!-- /filters_full -->
+<?php echo $header; ?>
+<!-- Content
+================================================== -->
+<div id="titlebar" class="white margin-bottom-30">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2><?php echo $heading_title; ?></h2>
+				<span><?php echo $text_featured; ?></span>
 
-		<div class="collapse" id="collapseMap">
-			<div id="map" class="map"></div>
-		</div>
-		<!-- /Map -->
-
-		<div class="container margin_30_40">
-			<div class="page_header">
-			    <div class="breadcrumbs">
-			        <ul>
-			        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-			            <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-			        <?php } ?>    
-			        </ul>
-			    </div>
-			    <h1><?php //echo $text_jobs; ?></h1><span>: <?php //echo $total_jobs; ?> <?php //echo $text_found; ?></span>
+				<!-- Breadcrumbs -->
+				<nav id="breadcrumbs" class="dark">
+					<ul>
+						<?php foreach ($breadcrumbs as $breadcrumb) { ?>
+						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+						<?php } ?>
+					</ul>
+				</nav>
 			</div>
-			<!-- /page_header -->
-	    <div class="row">
-	    	{% for post in posts %}
-	        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-	            <div class="strip">
-	                <figure>
-	                    <a href="#0" class="wish_bt"><i class="icon_heart"></i></a>
-	                    <a href="<?php echo $post['href']; ?>" class="strip_info">
-	                        <div class="item_title">
-	                            <h3>{{ post.title }}</h3>
-	                            <small>Pediatrician, Psychologist ...</small>
-	                        </div>
-	                    </a>
-	                </figure>
-	                <ul>
-	                	<li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="bottom" title="Available Appointment"><i class="icon-users"></i></a></li>
-	                    <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="bottom" title="Available Chat"><i class="icon-chat"></i></a></li>
-	                    <li><a href="#0" class="tooltip-1" data-toggle="tooltip" data-placement="bottom" title="Available Video Call"><i class="icon-videocam"></i></a></li>
-	                    <li>
-	                        <div class="score"><span><em><?php //echo $job['rating']; ?> Reviews</em></span><strong>8.9</strong></div>
-	                    </li>
-	                </ul>
-	            </div>
-	        </div>
-	        <!-- /strip grid -->
-	       {% endfor %}
-	    </div>
-	    <!-- /row -->
+		</div>
 	</div>
-	<!-- /container -->	
-	</main>
-{{ footer }}
+</div>
+
+<!-- Recent Blog Posts -->
+<div class="section white padding-top-0 padding-bottom-60 full-width-carousel-fix">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="blog-carousel">
+					<?php foreach ($featured as $value) { ?>
+					<a href="<?php echo $value['href']; ?>" class="blog-compact-item-container">
+						<div class="blog-compact-item">
+							<img src="<?php echo $value['image']; ?>" alt="">
+							<span class="blog-item-tag">Tips</span>
+							<div class="blog-compact-item-content">
+								<ul class="blog-post-tags">
+									<li><?php echo $value['date_added']; ?></li>
+								</ul>
+								<h3><?php echo $value['title']; ?></h3>
+								<p><?php echo $value['body']; ?></p>
+							</div>
+						</div>
+					</a>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Recent Blog Posts / End -->
+<!-- Section -->
+<div class="section gray">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-8 col-lg-8">
+				<!-- Section Headline -->
+				<div class="section-headline margin-top-60 margin-bottom-35">
+					<h4><?php echo $text_recent; ?></h4>
+				</div>
+				<!-- Blog Post -->
+				<?php foreach ($posts as $post) { ?>
+				<a href="<?php echo $post['href']; ?>" class="blog-post">
+					<!-- Blog Post Thumbnail -->
+					<div class="blog-post-thumbnail">
+						<div class="blog-post-thumbnail-inner">
+							<span class="blog-item-tag">Tips</span>
+							<img src="<?php echo $post['image']; ?>" alt="">
+						</div>
+					</div>
+					<!-- Blog Post Content -->
+					<div class="blog-post-content">
+						<span class="blog-post-date"><?php echo $post['date_added']; ?></span>
+						<h3><?php echo $post['title']; ?></h3>
+						<p><?php echo $post['body']; ?></p>
+					</div>
+					<!-- Icon -->
+					<div class="entry-icon"></div>
+				</a>
+				<?php } ?>
+				<!-- Pagination -->
+				<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-md-12">
+						<!-- Pagination -->
+						<div class="pagination-container margin-top-10 margin-bottom-20">
+							<nav class="pagination">
+								<ul>
+									<li><a href="#" class="current-page ripple-effect">1</a></li>
+									<li><a href="#" class="ripple-effect">2</a></li>
+									<li><a href="#" class="ripple-effect">3</a></li>
+									<li class="pagination-arrow"><a href="#" class="ripple-effect"><i class="icon-material-outline-keyboard-arrow-right"></i></a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<!-- Pagination / End -->
+			</div>
+			<div class="col-xl-4 col-lg-4 content-left-offset">
+				<div class="sidebar-container margin-top-65">
+					
+					<!-- Location -->
+					<div class="sidebar-widget margin-bottom-40">
+						<div class="input-with-icon">
+							<input id="autocomplete-input" type="text" placeholder="Search">
+							<i class="icon-material-outline-search"></i>
+						</div>
+					</div>
+
+					<!-- Widget -->
+					<div class="sidebar-widget">
+
+						<h3><?php echo $text_trending; ?></h3>
+						<ul class="widget-tabs">
+							<!-- Post #3 -->
+							<?php foreach ($trending as $value) { ?>
+							<li>
+								<a href="<?php echo $value['href']; ?>" class="widget-content">
+									<img src="<?php echo $value['image']; ?>" alt="">
+									<div class="widget-text">
+										<h5><?php echo $value['title']; ?></h5>
+										<span><?php echo $value['date_added']; ?></span>
+									</div>
+								</a>
+							</li>
+							<?php } ?>
+						</ul>
+
+					</div>
+					<!-- Widget / End-->
+					<!-- Widget -->
+					<div class="sidebar-widget">
+						<h3>Social Profiles</h3>
+						<div class="freelancer-socials margin-top-25">
+							<ul>
+								<li><a href="#" title="Dribbble" data-tippy-placement="top"><i class="icon-brand-dribbble"></i></a></li>
+								<li><a href="#" title="Twitter" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>
+								<li><a href="#" title="Behance" data-tippy-placement="top"><i class="icon-brand-behance"></i></a></li>
+								<li><a href="#" title="GitHub" data-tippy-placement="top"><i class="icon-brand-github"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- Widget -->
+					<div class="sidebar-widget">
+						<h3>Tags</h3>
+						<div class="task-tags">
+							<a href="#"><span>employer</span></a>
+							<a href="#"><span>recruiting</span></a>
+							<a href="#"><span>work</span></a>
+							<a href="#"><span>salary</span></a>
+							<a href="#"><span>tips</span></a>
+							<a href="#"><span>income</span></a>
+							<a href="#"><span>application</span></a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Spacer -->
+	<div class="padding-top-40"></div>
+	<!-- Spacer -->
+
+</div>
+<!-- Section / End -->
+<?php echo $footer; ?>

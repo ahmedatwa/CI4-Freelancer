@@ -76,7 +76,7 @@ class Header extends \Admin\Controllers\BaseController
             ];
         }
 
-        return view('common/header', $data, ['cache' => 60]);
+        return view('common/header', $data);
     }
 
     //--------------------------------------------------------------------

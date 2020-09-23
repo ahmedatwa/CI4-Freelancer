@@ -17,30 +17,35 @@ class Permission implements FilterInterface
         $session = \Config\Services::session();
         $user = new \Admin\Libraries\User();
         $loader = Services::locator(true);
+        $totalSegments = $request->uri->getTotalSegments();
 
-        $controller = $loader->locateFile(ucfirst($request->uri->getSegment(3)), 'Controllers/'. ucfirst($request->uri->getSegment(1)) . '/' . ucfirst($request->uri->getSegment(2)));
-
+        if ($totalSegments > 2) {
+            $controller = $loader->locateFile(ucfirst($request->uri->getSegment(4)), ucfirst($request->uri->getSegment(2)) . '/Controllers/' . ucfirst($request->uri->getSegment(3)));
+        } else {
+            $controller = '';
+        }
+        
         // get Correct Routes
         if ($controller) {
             $route = $request->uri->getSegment(1) . '/' . $request->uri->getSegment(2) . '/' . $request->uri->getSegment(3);
         } else {
             $route = $request->uri->getSegment(1) . '/' . $request->uri->getSegment(2);
         }
-
+        var_dump($controller);
         if (! $route) {
             throw new \Exception("Error: Route couldn't be found");
         }
 
         // Ignore Some Pages for Token Check
         if ($route) {
-            $ignore = array(
+            $ignore = [
             'common/dashboard',
             'common/login',
             'common/logout',
             'common/forgotten',
             'error/not_found',
             'error/permission'
-        );
+        ];
 
 
             // redirect if not logged in or token expired
@@ -56,11 +61,11 @@ class Permission implements FilterInterface
         }
 
         // Check Access Permission
-        if ($route) {
-            if (!in_array($route, $ignore) && !$user->hasPermission('access', rtrim($route, '/'))) {
-                return redirect()->to(base_url('index.php/error/permission?user_token='.$session->get('user_token')));
-            }
-        }
+        // if ($route) {
+        //     if (!in_array($route, $ignore) && !$user->hasPermission('access', rtrim($route, '/'))) {
+        //         return redirect()->to(base_url('index.php/error/permission?user_token='.$session->get('user_token')));
+        //     }
+        // }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response)

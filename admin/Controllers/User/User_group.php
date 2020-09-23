@@ -41,7 +41,7 @@ class User_group extends \Admin\Controllers\BaseController
 
     public function delete()
     {
-        $json = array();
+        $json = [];
 
         $this->users_group = new \Admin\Models\User\Users_group();
    
@@ -62,29 +62,29 @@ class User_group extends \Admin\Controllers\BaseController
     protected function getList()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('user/user_group.list.heading_title'),
             'href' => base_url('index.php/user/user_group?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
         // Data
-        $data['user_groups'] = array();
+        $data['user_groups'] = [];
         $results = $this->users_group->findAll($this->registry->get('config_admin_limit'));
 
         foreach ($results as $result) {
-            $data['user_groups'][] = array(
+            $data['user_groups'][] = [
                 'user_group_id'    => $result['user_group_id'],
                 'name'      => $result['name'],
                 'date_added' => DateShortFormat($result['date_added']),
                 'edit'       => base_url('index.php/user/user_group/edit?user_token=' . $this->session->get('user_token') . '&user_group_id=' . $result['user_group_id']),
                 'delete'     => base_url('index.php/user/user_group/delete?user_token=' . $this->session->get('user_token') . '&user_group_id=' . $result['user_group_id']),
-            );
+            ];
         }
 
         $data['add'] = base_url('index.php/user/user_group/add?user_token=' . $this->session->get('user_token'));
@@ -105,10 +105,10 @@ class User_group extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
-        $data['user_token'] = $this->request->getGet('user_token');
+        $data['user_token'] = $this->request->getVar('user_token');
 
         $this->document->output('user/user_group_list', $data);
     }
@@ -116,16 +116,16 @@ class User_group extends \Admin\Controllers\BaseController
     protected function getForm()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('user/user_group.list.heading_title'),
             'href' => base_url('index.php/user/user_group/save?user_token=' . $this->session->get('user_token')),
-        );
+        ];
 
         $data['text_form'] = !$this->request->getGet('user_group_id') ? lang('user/user_group.list.text_add') : lang('user/user_group.list.text_edit');
 
@@ -155,7 +155,7 @@ class User_group extends \Admin\Controllers\BaseController
             $data['name'] = '';
         }
 
-        $ignore = array(
+        $ignore = [
             'common/column_left',
             'common/dashboard',
             'common/footer',
@@ -166,18 +166,19 @@ class User_group extends \Admin\Controllers\BaseController
             'error/not_found',
             'error/permission',
             'basecontroller'
-        );
+        ];
 
-        $data['permissions'] = array();
+        $data['permissions'] = [];
 
-        $files = array();
+        $files = [];
 
         helper('filesystem');
 
         $default = get_filenames(APPPATH . 'Controllers/', true, false);
         $modules = get_filenames(APPPATH . 'Modules/Controllers/', true, false);
+        $extensions = get_filenames(APPPATH . 'Extensions/Controllers/', true, false);
 
-        $map = array_merge($default, $modules);
+        $map = array_merge($default, $modules, $extensions);
 
         foreach ($map as $file) {
                 $controller = str_replace('controllers/', '', str_replace('modules/', '', substr(strtolower($file), strlen(APPPATH))));

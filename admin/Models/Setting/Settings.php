@@ -7,9 +7,6 @@ class Settings extends \CodeIgniter\Model
     protected $returnType     = 'array';
     protected $allowedFields  = ['site_id', 'code', 'name', 'setting', 'serialized'];
     protected $useTimestamps  = true;
-    protected $useSoftDeletes = false;
-    // User Activity Events
-    //protected $afterInsert = ['afterInsertEvent'];
     protected $afterUpdate = ['afterUpdateEvent'];
 
     protected function afterUpdateEvent(array $data)
@@ -55,7 +52,7 @@ class Settings extends \CodeIgniter\Model
                     'setting'    => $setting,
                     'serialized' => $serialized,
                 ];
-                $builder->insert($setting_data);
+                $builder->insert($setting_data, true);
             }
         }
     }

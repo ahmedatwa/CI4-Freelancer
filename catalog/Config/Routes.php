@@ -36,25 +36,21 @@ $routes->set404Override(function () {
 $routes->get('/', 'Common/Home::index');
 // Information
 $routes->add('information/(:any)', 'Information\Information::index/$1', ['as' => 'information']);
-// Project
-// $routes->group('project', function ($routes) {
-//     $routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
-//     $routes->add('category/(:any)', 'Project\Category::index/$1', ['as' => 'category']);
-// });
+// Projects
 $routes->group('projects', function ($routes) {
     $routes->add('/', 'Project\Project::index');
     $routes->add('project/(:any)', 'Project\Project::getProject/$1', ['as' => 'project']);  
     $routes->add('autocomplete', 'Project\Project::autocomplete');  
 });
-//$routes->add('projects', 'Project\Project::index');
-
 
 // $routes->add('jobs', 'Extension\Job\Job::index', ['as' => 'jobs']);
 // $routes->add('job/(:any)', 'Extension\Job\Job::getJob/$1', ['as' => 'job']);
 
 // Blog
-$routes->add('blog', 'Extension\Blog\Blog::index', ['as' => 'blog']);
-$routes->add('blog/post', 'Extension\Blog\Blog::post', ['as' => 'blog/post']);
+$routes->group('blog', function ($routes) {
+    $routes->add('/', 'Extension\Blog\Blog::index', ['as' => 'blog']);
+    $routes->add('blog/(:any)', 'Extension\Blog\Blog::post/$1', ['as' => 'blog/post']);
+});
 
 $routes->group('account', function ($routes) {
     $routes->add('login', 'Account\Login::index');

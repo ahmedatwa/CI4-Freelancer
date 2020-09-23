@@ -32,7 +32,7 @@ class Footer extends \Catalog\Controllers\BaseController
             'category_id' => $result['category_id'],
             'name'        => $result['name'],
             'href'        => route_to('project/category', getKeywordByQuery('category_id=' . $result['category_id'])),
-            ];
+         ];
         }
 
         $data['text_links']              = lang('common/footer.text_links');

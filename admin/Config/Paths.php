@@ -20,7 +20,7 @@ class Paths
 	 * Include the path if the folder is not in the same directory
 	 * as this file.
 	 */
-	public $systemDirectory = '/Applications/XAMPP/xamppfiles/htdocs/ci4.localhost/system';
+	public $systemDirectory = __DIR__ . '/../../system';
 	/*
 	 *---------------------------------------------------------------
 	 * APPLICATION FOLDER NAME
@@ -34,8 +34,7 @@ class Paths
 	 *
 	 * NO TRAILING SLASH!
 	 */
-	public $appDirectory = '/Applications/XAMPP/xamppfiles/htdocs/ci4.localhost/admin';
-
+	public $appDirectory = __DIR__  . '/../../admin';
 	/*
 	 * ---------------------------------------------------------------
 	 * WRITABLE DIRECTORY NAME
@@ -47,7 +46,7 @@ class Paths
 	 * for maximum security, keeping it out of the app and/or
 	 * system directories.
 	 */
-	public $writableDirectory = '/Applications/XAMPP/xamppfiles/htdocs/ci4.localhost/storage';
+	public $writableDirectory = __DIR__ . '/../../storage';
 
 	/*
 	 * ---------------------------------------------------------------
@@ -68,5 +67,5 @@ class Paths
 	 * default this is in `app/Views`. This value
 	 * is used when no value is provided to `Services::renderer()`.
 	 */
-	public $viewDirectory = '/Applications/XAMPP/xamppfiles/htdocs/ci4.localhost/admin/Views/template/';
+	public $viewDirectory = __DIR__ . '/../../admin/Views/template/';
 }

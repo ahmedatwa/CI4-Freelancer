@@ -35,7 +35,7 @@ class Paths
 	 *
 	 * NO TRAILING SLASH!
 	 */
-	public $appDirectory = __DIR__ . '/..';
+	public $appDirectory = __DIR__ . '/../../catalog';
 
 	/*
 	 * ---------------------------------------------------------------
@@ -69,5 +69,5 @@ class Paths
 	 * default this is in `app/Views`. This value
 	 * is used when no value is provided to `Services::renderer()`.
 	 */
-	public $viewDirectory = __DIR__ . '/../Views/template';
+	public $viewDirectory = __DIR__ . '/../../catalog/Views/template';
 }

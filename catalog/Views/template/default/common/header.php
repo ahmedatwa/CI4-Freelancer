@@ -49,6 +49,7 @@
                         <li><a href="<?php echo $home; ?>" class="current"><?php echo $text_home; ?></a></li>
                         <li><a href="<?php echo $jobs; ?>"><?php echo $text_jobs; ?></a></li>
                         <li><a href="<?php echo $projects; ?>"> <?php echo $text_projects; ?></a></li>
+                        <li><a href="<?php echo $blog; ?>"> <?php echo $text_blog; ?></a></li>
                     </ul>
                 </nav>
                 <div class="clearfix"></div>

@@ -40,7 +40,7 @@ class BaseController extends \CodeIgniter\Controller
         // E.g.:
         $this->session  = \Config\Services::session();
         $this->document = new \Admin\Libraries\Document();
-        $this->registry = new \Admin\Libraries\Registry();
+        $this->registry = service('registry');
         $this->user     = new \Admin\Libraries\User();
     }
     

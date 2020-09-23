@@ -43,6 +43,15 @@ class Header extends \Catalog\Controllers\BaseController
         $data['projects']  = route_to('projects');
         $data['jobs']      = route_to('jobs');
 
+        if ($this->registry->get('blog_extension_status')) {
+            $data['text_blog'] = lang('common/header.text_blog');
+            $data['blog'] = route_to('blog');
+        } else {
+            $data['text_blog'] = '';
+            $data['blog'] = '';
+
+        }
+
         $data['logged'] = $this->customer->isLogged();
         $data['username'] = $this->customer->getCustomerName();
 

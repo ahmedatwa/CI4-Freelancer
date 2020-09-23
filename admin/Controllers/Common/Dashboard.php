@@ -42,23 +42,23 @@ class Dashboard extends \Admin\Controllers\BaseController
     
         // Add all the modules which have multiple settings for each module
         foreach ($extensions as $code) {
-            if (\Admin\Libraries\Registry::get('dashboard_' . $code . '_status') && $this->user->hasPermission('access', 'extension/dashboard/' . $code)) {
+            if ($this->registry->get('dashboard_' . $code . '_status') && $this->user->hasPermission('access', 'extension/dashboard/' . $code)) {
                 $controller = ucfirst($code);
                 // Loading controller Method
-                $output = view_cell("Admin\Controllers\Extension\Dashboard\\{$controller}::dashboard");
+                //$output = view_cell("Admin\Controllers\Extension\Dashboard\\{$controller}::dashboard");
 
-                $dashboards[] = array(
+                $dashboards[] = [
                         'code'       => $code,
-                        'width'      => \Admin\Libraries\Registry::get('dashboard_' . $code . '_width'),
-                        'sort_order' => \Admin\Libraries\Registry::get('dashboard_' . $code . '_sort_order'),
-                        'output'     => $output,
-                    );
+                        'width'      => $this->registry->get('dashboard_' . $code . '_width'),
+                        'sort_order' => $this->registry->get('dashboard_' . $code . '_sort_order'),
+                        'output'     => '',//$output,
+                ];
             }
         }
         
         $data['dashboards'] = [];
         
-        $sort_order = array();
+        $sort_order = [];
 
         foreach ($dashboards as $key => $value) {
             $sort_order[$key] = $value['sort_order'];

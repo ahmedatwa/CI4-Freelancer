@@ -31,21 +31,27 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Common/Login::index');
-// Modules
-$routes->group('blog', ['namespace' => 'Modules\Controllers'], function($routes)
+// Extenstions
+$routes->group('extensions', ['namespace' => 'Extensions\Controllers'], function($routes)
 {
-    $routes->add('post', 'Blog\Post::index');
-    $routes->add('post/add', 'Blog\Post::add');
-    $routes->add('post/edit', 'Blog\Post::edit');
-    $routes->add('post/delete', 'Blog\Post::delete');
-});
-$routes->group('job', ['namespace' => 'Modules\Controllers'], function($routes)
-{
+    $routes->add('bid/bid', 'Bid\Bid::index');
+    $routes->add('dashboard/activity', 'Dashboard\Activity::index');
+    $routes->add('dashboard/online', 'Dashboard\Online::index');
     $routes->add('job', 'Job\Job::index');
     $routes->add('job/add', 'Job\Job::add');
     $routes->add('job/edit', 'Job\Job::edit');
     $routes->add('job/delete', 'Job\Job::delete');
+    $routes->add('theme/basic', 'Theme\Basic::delete');
+    $routes->add('wallet/wallet', 'Wallet\Wallet::delete');
+    // Blog
+    $routes->add('blog/post', 'Blog\Post::index');
+    $routes->add('blog/post/add', 'Blog\Post::add');
+    $routes->add('blog/post/edit', 'Blog\Post::edit');
+    $routes->add('blog/post/delete', 'Blog\Post::delete');
+
 });
+
+
 
 
 /**
