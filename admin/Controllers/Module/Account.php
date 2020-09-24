@@ -4,7 +4,7 @@ class Account extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->document->setTitle(lang('module/account.list.heading_title'));
+        $this->document->setTitle(lang('account.list.heading_title'));
 
         $setting_model = new \Admin\Models\Setting\Settings();
 

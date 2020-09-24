@@ -13106,7 +13106,7 @@ a.attachment-box:hover i {
 }
 
 .dashboard-sidebar {
-    flex: 0 0 280px;
+    flex: 0 0 221px;
     background-color: #fff;
     position: relative;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
@@ -13281,7 +13281,7 @@ a.dashboard-responsive-nav-trigger { display: none; }
 .dashboard-nav ul li ul li {
 	background-color: transparent;
 	border: none;
-	padding-left: 63px;
+	padding-left: 40px;
 	position: relative;
 	margin: 0;
 }

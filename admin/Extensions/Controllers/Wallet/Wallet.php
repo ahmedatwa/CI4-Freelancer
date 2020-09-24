@@ -1,10 +1,10 @@
-<?php namespace Admin\Controllers\Extension\Wallet;
+<?php namespace Extensions\Controllers\Wallet;
 
 class Wallet extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->document->setTitle(lang('extension/wallet/wallet.list.heading_title'));
+        $this->document->setTitle(lang('wallet/wallet.list.heading_title'));
 
         $setting_model = new \Admin\Models\Setting\Settings();
 

@@ -102,3 +102,18 @@ if (! function_exists('view')) {
         }
     }
 }
+/** 
+@ return string 
+@ var date string 
+@ return the Days Left for the project to be closed 
+**/
+if (! function_exists('getDaysLeft')) {
+    function getDaysLeft(string $date)
+    {
+        $time = new CodeIgniter\I18n\Time();
+
+        $now = $time::now();
+        $diff = $now->difference($time::parse($date));
+        return $diff->humanize();
+    }
+}

@@ -35,14 +35,17 @@ $routes->get('/', 'Common/Login::index');
 $routes->group('extensions', ['namespace' => 'Extensions\Controllers'], function($routes)
 {
     $routes->add('bid/bid', 'Bid\Bid::index');
+
     $routes->add('dashboard/activity', 'Dashboard\Activity::index');
     $routes->add('dashboard/online', 'Dashboard\Online::index');
+    
     $routes->add('job', 'Job\Job::index');
     $routes->add('job/add', 'Job\Job::add');
     $routes->add('job/edit', 'Job\Job::edit');
     $routes->add('job/delete', 'Job\Job::delete');
-    $routes->add('theme/basic', 'Theme\Basic::delete');
-    $routes->add('wallet/wallet', 'Wallet\Wallet::delete');
+    
+    $routes->add('theme/basic', 'Theme\Basic::index');
+    $routes->add('wallet/wallet', 'Wallet\Wallet::index');
     // Blog
     $routes->add('blog/post', 'Blog\Post::index');
     $routes->add('blog/post/add', 'Blog\Post::add');

@@ -43,7 +43,7 @@ class Bid extends \Catalog\Controllers\BaseController
             $data['bids'][] = [
                 'bid_id'     => $result['bid_id'],
                 'freelancer' => $result['freelancer'],
-                'quote'      => $this->currencyFormat($result['quote']),
+                'price'      => $this->currencyFormat($result['price']),
                 'delivery'   => $result['delivery'] . ' ' . lang($this->locale . '.text_days'),
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'profile'    => route_to('customer_profile', $result['customer_id']),
@@ -75,16 +75,8 @@ class Bid extends \Catalog\Controllers\BaseController
             if ($this->request->getPost('project_id') || $this->request->getPost('freelancer_id')) {
                 $bidModel = new \Catalog\Models\Extension\Bid\BidModel();
 
-                $data = [
-                'project_id'    => $this->request->getPost('project_id'),
-                'freelancer_id' => $this->request->getPost('freelancer_id'),
-                'quote'         => $this->request->getPost('quote'),
-                'delivery'      => $this->request->getPost('delivery'),
-                'status' => 1,
-               ];
-
                 if (($this->request->getMethod() == 'post')) {
-                    $bidModel->insert($data);
+                    $bidModel->insert($this->request->getPost());
                     $json['success'] = lang('project/project.text_success');
                 }
             }

@@ -1,13 +1,11 @@
 <?php echo $header; ?>
-<!-- Content
-================================================== -->
+<!-- Content -->
 <div id="titlebar" class="white margin-bottom-30">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<h2><?php echo $heading_title; ?></h2>
 				<span><?php echo $text_featured; ?></span>
-
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs" class="dark">
 					<ul>
@@ -20,7 +18,6 @@
 		</div>
 	</div>
 </div>
-
 <!-- Recent Blog Posts -->
 <div class="section white padding-top-0 padding-bottom-60 full-width-carousel-fix">
 	<div class="container">
@@ -63,7 +60,7 @@
 					<!-- Blog Post Thumbnail -->
 					<div class="blog-post-thumbnail">
 						<div class="blog-post-thumbnail-inner">
-							<span class="blog-item-tag">Tips</span>
+							<!-- <span class="blog-item-tag">Tips</span> -->
 							<img src="<?php echo $post['image']; ?>" alt="">
 						</div>
 					</div>
@@ -98,7 +95,6 @@
 			</div>
 			<div class="col-xl-4 col-lg-4 content-left-offset">
 				<div class="sidebar-container margin-top-65">
-					
 					<!-- Location -->
 					<div class="sidebar-widget margin-bottom-40">
 						<div class="input-with-icon">
@@ -106,10 +102,8 @@
 							<i class="icon-material-outline-search"></i>
 						</div>
 					</div>
-
 					<!-- Widget -->
 					<div class="sidebar-widget">
-
 						<h3><?php echo $text_trending; ?></h3>
 						<ul class="widget-tabs">
 							<!-- Post #3 -->
@@ -125,12 +119,11 @@
 							</li>
 							<?php } ?>
 						</ul>
-
 					</div>
 					<!-- Widget / End-->
 					<!-- Widget -->
 					<div class="sidebar-widget">
-						<h3>Social Profiles</h3>
+						<h3><?php echo $text_social; ?></h3>
 						<div class="freelancer-socials margin-top-25">
 							<ul>
 								<li><a href="#" title="Dribbble" data-tippy-placement="top"><i class="icon-brand-dribbble"></i></a></li>
@@ -140,9 +133,8 @@
 							</ul>
 						</div>
 					</div>
-
 					<!-- Widget -->
-					<div class="sidebar-widget">
+					<!-- <div class="sidebar-widget">
 						<h3>Tags</h3>
 						<div class="task-tags">
 							<a href="#"><span>employer</span></a>
@@ -153,18 +145,14 @@
 							<a href="#"><span>income</span></a>
 							<a href="#"><span>application</span></a>
 						</div>
-					</div>
-
+					</div> -->
 				</div>
 			</div>
-
 		</div>
 	</div>
-
 	<!-- Spacer -->
 	<div class="padding-top-40"></div>
 	<!-- Spacer -->
-
 </div>
 <!-- Section / End -->
 <?php echo $footer; ?>

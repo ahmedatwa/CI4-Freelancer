@@ -12,7 +12,7 @@ class BidModel extends \CodeIgniter\Model
     public function getBids(array $data =[])
     {
         $builder = $this->db->table('bids b');
-        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, b.quote, b.date_added, b.date_modified, b.bid_id, b.status, pd.name, b.delivery');
+        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, b.price, b.date_added, b.bid_id, b.status, pd.name, b.delivery');
         $builder->join('customer c', 'b.freelancer_id = c.customer_id', 'left');
         $builder->join('project_description pd', 'b.project_id = pd.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
@@ -55,13 +55,13 @@ class BidModel extends \CodeIgniter\Model
                 'type' =>'INT',
                 'constraint' => 11,
         ],
-        'quote' => [
-                'type' => 'TEXT',
-                'null' => true,
+        'price' => [
+                'type' => 'DECIMAL',
+                'constraint' => 15,4,
         ],
         'delivery' => [
-                'type' => 'INT',
-                'constraint' => 11,
+                'type' => 'TINYINT',
+                'constraint' => 1,
         ],
         'status' => [
                 'type' => 'TINYINT',
@@ -70,21 +70,17 @@ class BidModel extends \CodeIgniter\Model
         'date_added' => [
                 'type'  => 'DATETIME',
         ],
-        'date_modified' => [
-                'type' => 'DATETIME',
-        ],
       ];
 
-      $forge->addField($fields);
-      $forge->addPrimaryKey('bid_id');
-      $forge->createTable('bids', true);
+        $forge->addField($fields);
+        $forge->addPrimaryKey('bid_id');
+        $forge->createTable('bids', true);
     }
 
     public function uninstall()
     {
         $forge = \Config\Database::forge();
-        $forge->dropTable('bids',true);
-
+        $forge->dropTable('bids', true);
     }
 
 

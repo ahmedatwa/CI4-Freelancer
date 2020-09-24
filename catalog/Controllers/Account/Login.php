@@ -21,9 +21,9 @@ class Login extends \Catalog\Controllers\BaseController
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             if (previous_url()) {
-                redirect()->to(previous_url());
+                return redirect()->to(previous_url());
             } else {
-                redirect('account/dashboard');
+                return redirect()->to(route_to('account/dashboard'));
             }
         }
 

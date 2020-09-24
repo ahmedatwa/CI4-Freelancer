@@ -77,5 +77,39 @@ class BlogModel extends \CodeIgniter\Model
         $query = $builder->get();
         return $query->getResultArray();
     }
+
+    public function getCommentsByPostId($post_id, $limit, $start=0)
+    {
+        $builder = $this->db->table('blog_post_to_commet'); 
+        $builder->select();
+        $builder->where(['post_id' => $post_id, 'status' => 1]);
+        $builder->orderBy('name', 'DESC');
+        $builder->limit($limit, $start);
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
+    public function getTotalCommentsByPostId($post_id)
+    {
+        $builder = $this->db->table('blog_post_to_commet');
+        $builder->selectCount('post_id', 'total');
+        $builder->where(['post_id' => $post_id, 'status' => 1]);
+        $query = $builder->get()->getRowArray();
+        return $query['total'];
+    }
+
+    public function insertComment($data)
+    {
+        $builder = $this->db->table('blog_post_to_commet');
+        $data = [
+            'post_id' => $data['post_id'],
+            'name'    => $data['name'],
+            'email'   => $data['email'],
+            'comment' => $data['comment'],
+            'status'  => 0,
+        ];
+        $builder->set('date_added', 'NOW()', false);
+        $builder->insert($data);
+    }
     // ----------------------------------------------------
 }

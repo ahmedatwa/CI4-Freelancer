@@ -49,16 +49,25 @@ $routes->group('projects', function ($routes) {
 // Blog
 $routes->group('blog', function ($routes) {
     $routes->add('/', 'Extension\Blog\Blog::index', ['as' => 'blog']);
-    $routes->add('blog/(:any)', 'Extension\Blog\Blog::post/$1', ['as' => 'blog/post']);
+    $routes->add('post/(:any)', 'Extension\Blog\Blog::getPost/$1', ['as' => 'blog/post']);
 });
 
 $routes->group('account', function ($routes) {
     $routes->add('login', 'Account\Login::index');
     $routes->add('logout', 'Account\Logout::index');
     $routes->add('setting', 'Account\Setting::index');
+    $routes->add('review', 'Account\Review::index');
     $routes->add('dashboard', 'Account\Dashboard::index');
-    $routes->add('forgotton', 'Account\forgotton::index');
-    $routes->add('register', 'Account\register::index');
+    $routes->add('forgotton', 'Account\Forgotton::index');
+    $routes->add('register', 'Account\Register::index');
+    // Manage Dashboard
+    $routes->group('manage', function($routes)
+    {
+        $routes->add('projects', 'Account\Manage::getList');
+        $routes->add('bidders', 'Account\Manage::getBidders');
+        $routes->add('bids', 'Account\Manage::getActiveBids');
+        $routes->add('add', 'Account\Manage::addProject');
+    });
 });
   
 /**

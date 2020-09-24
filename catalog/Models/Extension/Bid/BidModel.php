@@ -25,7 +25,7 @@ class BidModel extends \CodeIgniter\Model
     public function getBids(array $data =[])
     {
         $builder = $this->db->table('bids b');
-        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, b.quote, b.bid_id, b.status, b.delivery, c.image, c.customer_id, c.image, b.freelancer_id');
+        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, b.price, b.bid_id, b.status, b.delivery, c.image, c.customer_id, c.image, b.freelancer_id');
         $builder->join('customer c', 'b.freelancer_id = c.customer_id', 'left');
         $builder->join('project_description pd', 'b.project_id = pd.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
@@ -69,7 +69,20 @@ class BidModel extends \CodeIgniter\Model
         }
 
         return $builder->countAllResults();
-   
+    }
+
+    public function addBid($data)
+    {
+        $builder = $this->db->table('bids');
+        $data = [
+            'project_id'    => $data['project_id']
+            'freelancer_id' => $data['freelancer_id']
+            'price'         => $data['price']
+            'delivery'      => $data['delivery']
+            'status'        => 1
+        ];
+        $builder->set('date_added', 'NOW()', false);
+        $builder->insert();
     }
 
 

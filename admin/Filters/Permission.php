@@ -9,7 +9,7 @@ class Permission implements FilterInterface
 {
     public function before(RequestInterface $request)
     {
-        // Override Login Page
+        // Override / Page
         if (current_url() == slash_item('baseURL')) {
             return;
         }
@@ -17,27 +17,29 @@ class Permission implements FilterInterface
         $session = \Config\Services::session();
         $user = new \Admin\Libraries\User();
         $loader = Services::locator(true);
-        $totalSegments = $request->uri->getTotalSegments();
 
-        if ($totalSegments > 2) {
-            $controller = $loader->locateFile(ucfirst($request->uri->getSegment(4)), ucfirst($request->uri->getSegment(2)) . '/Controllers/' . ucfirst($request->uri->getSegment(3)));
+        $segments = $request->uri->getSegments();
+
+        if (in_array('extensions', $segments)) {
+            $controller = $loader->locateFile(ucfirst(end($segments)), ucfirst($request->uri->getSegment(1)) . '/Controllers/' . ucfirst($request->uri->getSegment(2)));
         } else {
-            $controller = '';
+            $controller = $loader->locateFile(ucfirst($request->uri->getSegment(2)), 'Controllers/' . ucfirst($request->uri->getSegment(1)));
         }
-        
+
         // get Correct Routes
-        if ($controller) {
-            $route = $request->uri->getSegment(1) . '/' . $request->uri->getSegment(2) . '/' . $request->uri->getSegment(3);
+        if ($controller && in_array('extensions', $segments)) {
+            $route = rtrim($request->uri->getSegment(1) . '/' . $request->uri->getSegment(2) . '/' . $request->uri->getSegment(3), '/');
         } else {
-            $route = $request->uri->getSegment(1) . '/' . $request->uri->getSegment(2);
+            $route = rtrim($request->uri->getSegment(1) . '/' . $request->uri->getSegment(2), '/');
         }
-        var_dump($controller);
+
         if (! $route) {
             throw new \Exception("Error: Route couldn't be found");
         }
 
         // Ignore Some Pages for Token Check
         if ($route) {
+
             $ignore = [
             'common/dashboard',
             'common/login',
@@ -45,14 +47,13 @@ class Permission implements FilterInterface
             'common/forgotten',
             'error/not_found',
             'error/permission'
-        ];
+           ];
 
-
-            // redirect if not logged in or token expired
-            if (!in_array($route, $ignore) && (! $user->isLogged() || ! $session->get('user_token') || ! $request->getVar('user_token') || ($session->get('user_token') != $request->getVar('user_token')))) {
-                return redirect()->to(base_url('index.php/common/login?redirect=' . $route))
-                                 ->with('error', lang('en.error.error_token'));
-            }
+        // redirect if not logged in or token expired
+        if (!in_array($route, $ignore) && (! $user->isLogged() || ! $session->get('user_token') || ! $request->getVar('user_token') || ($session->get('user_token') != $request->getVar('user_token')))) {
+            return redirect()->to(base_url('index.php/common/login?redirect=' . $route))
+                             ->with('error', lang('en.error.error_token'));
+         }
         } else {
             if (! $request->getVar('user_token') || ! $session->get('user_token') || ($request->getVar('user_token') != $session->get('user_token'))) {
                 return redirect()->to(base_url('index.php/common/login?redirect=' . $route))
@@ -61,11 +62,11 @@ class Permission implements FilterInterface
         }
 
         // Check Access Permission
-        // if ($route) {
-        //     if (!in_array($route, $ignore) && !$user->hasPermission('access', rtrim($route, '/'))) {
-        //         return redirect()->to(base_url('index.php/error/permission?user_token='.$session->get('user_token')));
-        //     }
-        // }
+        if ($route) {
+            if (!in_array($route, $ignore) && !$user->hasPermission('access', rtrim($route, '/'))) {
+                return redirect()->to(base_url('index.php/error/permission?user_token='.$session->get('user_token')));
+            }
+        }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response)
