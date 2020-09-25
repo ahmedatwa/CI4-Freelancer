@@ -41,7 +41,7 @@ They could be designed for Admin or Catalog.
 > > <pre><code>$extensionModel = new \Catalog\Models\Setting\ExtensionModel();
 > > $blog = $extensionModel->getExtensions('blog');</code></pre>
 - ![#c5f015] one last Step, you might encounter issues with getting the lang vars, so you have to alter the Config/Routes.php with the extension route following the same rules in the file.`#c5f015`
-- ![#c5f015 test `#c5f015`
+- ![#c5f015] test `#c5f015`
 
 
 >
