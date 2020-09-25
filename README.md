@@ -8,7 +8,7 @@ A Quick Way to earn Money.
 The System could be expanded with no limitations.
 Code is usable, which means that it will serve your needs to create any Webtool/Site.
 
-### Before we kick off Please respect the MVC Framework to create new extensions. ######
+### Before we kick off Please respect the MVC Framework and don't alter the core files. ######
 
 ## Server Requirements ##
 * PHP version 7.2 or newer with the *intl* extension and *mbstring* extension installed.
