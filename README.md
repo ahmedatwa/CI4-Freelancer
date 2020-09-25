@@ -40,7 +40,9 @@ They could be designed for Admin or Catalog.
 > > 7. to call the extension in Catalog, create your MVC files in Catalog\Controllers\Extensions.
 > > <pre><code>$extensionModel = new \Catalog\Models\Setting\ExtensionModel();
 > > $blog = $extensionModel->getExtensions('blog');</code></pre>
-> > <color>one last Step, you might encounter issues with getting the lang vars, so you have to alter the Config/Routes.php with the extension route following the same rules in the file.</color>
+- ![#c5f015] one last Step, you might encounter issues with getting the lang vars, so you have to alter the Config/Routes.php with the extension route following the same rules in the file.`#c5f015`
+
+
 >
 *****
 ##### Modules Development for both Catalog:
