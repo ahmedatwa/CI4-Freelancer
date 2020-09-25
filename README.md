@@ -2,7 +2,7 @@
 Thanks to [Codeigniter 4](https://codeigniter.com) Team who made all of this possible. 
 [User Guide](https://codeigniter.com/user_guide/index.html) could be found here as your first resource.
 
-## Description
+## Description ##
 Freelancer Platform to help people find paid quick, paid Jobs in no time.
 A Quick Way to earn Money.
 The System could be expanded with no limitations.
@@ -10,14 +10,14 @@ Code is usable, which means that it will serve your needs to create any Webtool/
 
 ### Before we kick off Please respect the MVC Framework to create new extensions. ######
 
-### Server Requirements
+## Server Requirements ##
 * PHP version 7.2 or newer with the *intl* extension and *mbstring* extension installed.
 * MySQL (5.1+) via the MySQLi driver
 * PostgreSQL via the Postgre driver
 * SQLite3 via the SQLite3 driver
 * For CURLRequest, you will need libcurl
  
-#### For Developers.
+#### For Developers. ####
 ##### Extensions Development for both Admin/Catalog:
 Extensions are helper files that extend the core funcionality of the system.
 They could be designed for Admin or Catalog.
