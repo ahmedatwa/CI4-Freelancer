@@ -18,7 +18,7 @@ Code is usable, which means that it will serve your needs to create any Webtool/
 * For CURLRequest, you will need libcurl
  
 #### For Developers. ####
-##### Extensions Development for both Admin/Catalog:
+- Extensions Development for both Admin/Catalog:
 Extensions are helper files that extend the core funcionality of the system.
 They could be designed for Admin or Catalog.
 > 1. start from the Admin\Controllers\Extension.
@@ -47,7 +47,7 @@ They could be designed for Admin or Catalog.
 ```
 >
 *****
-##### Modules Development for both Catalog:
+- Modules Development for both Catalog:
 Modules Are created to extend the Theme layout like adding information boxes to Layout parts 
 After creating a module it must be assigned to template layout from design menu otherwise they won't be visiable to frontend
 > 1. Modules unlike Extensions, they require less work.
