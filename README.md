@@ -41,7 +41,8 @@ They could be designed for Admin or Catalog.
 > <pre><code>$extensionModel = new \Catalog\Models\Setting\ExtensionModel();
 > $blog = $extensionModel->getExtensions('blog');</code></pre>
 ```diff
-+ one last Step, you might encounter issues with getting the lang vars, so you have to alter the Config/Routes.php with the extension route following the same rules in the file.
+- Important Note, you might encounter issues with lang vars, since no lang data vars are needed in controller, 
+therfore you have to alter the Config/Routes.php with the extension route following the same rules in the file.
 ```
 >
 *****
