@@ -32,8 +32,8 @@ A Quick Way to earn Money.
 > > 7. after finishing the primary extension files, head over to Admin\Extensions and create child extensions to serve the extension purpose, you will find examples there for a good start.
 > > 8. once children created with the same flow head over to the Admin Panel menu and install the extension.
 > > 10. to call the extension in Catalog, create your MVC files in Catalog\Controllers\Extensions.
-<pre><code>$extensionModel = new \Catalog\Models\Setting\ExtensionModel();
-$blog = $extensionModel->getExtensions('blog');</code></pre>
+> > <pre><code>$extensionModel = new \Catalog\Models\Setting\ExtensionModel();
+> > $blog = $extensionModel->getExtensions('blog');</code></pre>
 >
 *****
 
