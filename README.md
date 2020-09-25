@@ -47,17 +47,13 @@ They could be designed for Admin or Catalog.
 ##### Modules Development for both Catalog:
 Modules Are created to extend the Theme layout like adding information boxes to Layout parts 
 After creating a module it must be assigned to template layout from design menu otherwise they won't be visiable to frontend
->
-> > 1. Modules unlike Extensions, they require less work.
-> > 2. start from the Admin\Controllers\Modules.
-> > 3. create your first controller, a good start will be checking Account.php.
-> > 4. put lang/view files and view file in their respective location.
-> > 5. install your module from Extensions Module 
-> > 10. Assign the Module to Layout from Design->layout and the Module will be called automatically in their respective layout
->
+> 1. Modules unlike Extensions, they require less work.
+> 2. start from the Admin\Controllers\Modules.
+> 3. create your first controller, a good start will be checking Account.php.
+> 4. put lang/view files and view file in their respective location.
+> 5. install your module from Extensions Module 
+> 10. Assign the Module to Layout from Design->layout and the Module will be called automatically in their respective layout
 *****
 
 
-<div class="footer">
-        &copy; 2020 A0twa
-</div>
+<div class="footer">&copy; 2020 A0twa</div>
