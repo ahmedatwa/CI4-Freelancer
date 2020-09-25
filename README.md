@@ -20,12 +20,12 @@ A Quick Way to earn Money.
 > > 4. you may follow the same hirarchy for the already installed extension for EX: wallet.php.
 > > 5. put lang/view files and view file in their respective location.
 > > 6. if you want to alter DB with new Tables use forge class, check Admin\Models\Extension/BidModel.php.
-<pre><code>$forge = \Config\Database::forge();
-  $fields = [
-    'bid_id' => [
-      'type'  => 'INT',
-      'constraint'     => '11',
-    ],
+> > <pre><code>$forge = \Config\Database::forge();
+> >  $fields = [
+> >    'bid_id' => [
+> >      'type'  => 'INT',
+> >      'constraint'     => '11',
+> >    ],
 $forge->addField($fields);
 $forge->addPrimaryKey('bid_id');
 $forge->createTable('bids', true);</code></pre>
