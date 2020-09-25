@@ -1,5 +1,6 @@
 # YallaFreelancer Platform 
-Thanks to [Codeigniter 4](https://codeigniter.com/user_guide/index.html) Team who made all of this possible. 
+Thanks to [Codeigniter 4](https://codeigniter.com) Team who made all of this possible. 
+[User Guide](https://codeigniter.com/user_guide/index.html) could be found here as your first resource.
 
 ## Description
 Freelancer Platform to help people find paid quick, paid Jobs in no time.
