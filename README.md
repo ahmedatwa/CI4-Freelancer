@@ -52,7 +52,7 @@ After creating a module it must be assigned to template layout from design menu 
 > 3. create your first controller, a good start will be checking Account.php.
 > 4. put lang/view files and view file in their respective location.
 > 5. install your module from Extensions Module 
-> 10. Assign the Module to Layout from Design->layout and the Module will be called automatically in their respective layout
+> 10. Assign the Module to Layout from Design->layout and the Module will be called automatically from their respective layout
 *****
 
 
