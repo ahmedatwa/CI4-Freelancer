@@ -55,7 +55,7 @@ class BidModel extends \CodeIgniter\Model
                 'type' =>'INT',
                 'constraint' => 11,
         ],
-        'price' => [
+        'quote' => [
                 'type' => 'DECIMAL',
                 'constraint' => 15,4,
         ],
@@ -74,13 +74,13 @@ class BidModel extends \CodeIgniter\Model
 
         $forge->addField($fields);
         $forge->addPrimaryKey('bid_id');
-        $forge->createTable('bids', true);
+        $forge->createTable('project_bids', true);
     }
 
     public function uninstall()
     {
         $forge = \Config\Database::forge();
-        $forge->dropTable('bids', true);
+        $forge->dropTable('project_bids', true);
     }
 
 

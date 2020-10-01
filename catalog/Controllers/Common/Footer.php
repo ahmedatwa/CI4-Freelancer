@@ -7,12 +7,13 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['informations'] = [];
         
         $informations = new \Catalog\Models\Catalog\Informations();
+        $seo_url = service('seo_url');
 
         foreach ($informations->getInformations(4) as $result) {
             $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
-                'href'           => route_to('information', getKeywordByQuery('information_id=' . $result['information_id'])),
+                'href'           => route_to('information', $seo_url->getKeywordByQuery('information_id=' . $result['information_id'])),
             ];
         }
 
@@ -31,7 +32,7 @@ class Footer extends \Catalog\Controllers\BaseController
             $data['categories'][] = [
             'category_id' => $result['category_id'],
             'name'        => $result['name'],
-            'href'        => route_to('project/category', getKeywordByQuery('category_id=' . $result['category_id'])),
+            'href'        => route_to('project/category', $seo_url->getKeywordByQuery('category_id=' . $result['category_id'])),
          ];
         }
 

@@ -4,7 +4,7 @@ class Project_status extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->project_statuseses = new \Admin\Models\Localisation\project_statuses();
+        $this->project_statuseses = new \Admin\Models\Localisation\Project_statuses();
 
         $this->document->setTitle(lang('localisation/project_status.list.heading_title'));
 
@@ -15,7 +15,7 @@ class Project_status extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('localisation/project_status.list.text_add'));
 
-        $this->project_statuseses = new \Admin\Models\Localisation\project_statuses();
+        $this->project_statuseses = new \Admin\Models\Localisation\Project_statuses();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $this->project_statuseses->addProjectStatus($this->request->getPost());
@@ -29,7 +29,7 @@ class Project_status extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('localisation/project_status.list.text_edit'));
 
-        $this->project_statuseses = new \Admin\Models\Localisation\project_statuses();
+        $this->project_statuseses = new \Admin\Models\Localisation\Project_statuses();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $this->project_statuseses->editProjectStatus($this->request->getVar('project_status_id'), $this->request->getPost());
@@ -43,7 +43,7 @@ class Project_status extends \Admin\Controllers\BaseController
     {
         $json = array();
 
-        $this->project_statuseses = new \Admin\Models\Localisation\project_statuses();
+        $this->project_statuseses = new \Admin\Models\Localisation\Project_statuses();
    
         $this->document->setTitle(lang('localisation/project_status.list.heading_title'));
 

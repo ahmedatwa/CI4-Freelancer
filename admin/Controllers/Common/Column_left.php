@@ -182,12 +182,12 @@ class Column_left extends \Admin\Controllers\BaseController
             'href'         => base_url('index.php/tool/log?user_token=' . $this->session->get('user_token')),
             'children'     => [],
         ];
-        $tools[] = [
-            'id'           => 'menu-tools',
-            'name'         => lang('common/column_left.text_translation'),
-            'href'         => base_url('index.php/tool/translation?user_token=' . $this->session->get('user_token')),
-            'children'     => [],
-        ];
+        // $tools[] = [
+        //     'id'           => 'menu-tools',
+        //     'name'         => lang('common/column_left.text_translation'),
+        //     'href'         => base_url('index.php/tool/translation?user_token=' . $this->session->get('user_token')),
+        //     'children'     => [],
+        // ];
         $system[] = [
             'id'       => 'menu-tools',
             'name'     => lang('common/column_left.text_tools'),

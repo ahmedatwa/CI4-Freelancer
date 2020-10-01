@@ -4,8 +4,8 @@ use CodeIgniter\Model;
 
 class Reviews extends Model
 {
-    protected $table          = 'review';
-    protected $primaryKey     = 'review_id';
+    protected $table          = 'project_review';
+    protected $primaryKey     = 'project_review_id';
     protected $returnType     = 'array';
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
@@ -42,10 +42,10 @@ class Reviews extends Model
 
     public function getReviews(array $data = [])
     {        
-        $builder = $this->db->table('review r');
-        $builder->select('r.review_id, r.rating, r.status, r.date_added, r.author, pd.name, r.project_id');
-        $builder->join('project_description pd', 'r.project_id = pd.project_id', 'LEFT');
-        $builder->where('pd.language_id', \Admin\Libraries\Registry::get('config_language_id'));
+        $builder = $this->db->table('project_review pr');
+        $builder->select('pr.project_review_id as review_id, pr.rating, pr.status, pr.date_added, pr.author, pd.name, pr.project_id');
+        $builder->join('project_description pd', 'pr.project_id = pd.project_id', 'LEFT');
+        $builder->where('pd.language_id', service('Registry')->get('config_language_id'));
        
         if (!empty($data['filter_date_added'])) {
             $builder->where('p.date_added', $data['filter_date_added']);
@@ -81,8 +81,8 @@ class Reviews extends Model
 
     public function getReview($review_id)
     {
-        $builder = $this->db->table('review r');
-        $builder->join('project_description pd', 'r.project_id = pd.project_id', 'left');
+        $builder = $this->db->table('project_review pr');
+        $builder->join('project_description pd', 'pr.project_id = pd.project_id', 'left');
         $builder->select();
         $query = $builder->get();
         return $query->getRowArray();

@@ -99,6 +99,16 @@ class BaseController extends \CodeIgniter\Controller
         return number_to_currency($num, $this->registry->get('config_currency'), $this->locale);
     }
 
+    public function dateAfter(string $date_end)
+    {
+        $time  = new \CodeIgniter\I18n\Time;
+
+        $time1 = $time::now();
+        $time2 = $time::parse($date_end);
+
+        return $time1->isAfter($time2);
+
+    }
     public function dateDifference(string $added, string $end = null)
     {
         $time  = new \CodeIgniter\I18n\Time;

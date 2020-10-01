@@ -7,7 +7,8 @@ class Seo_urls extends \CodeIgniter\Model
         $builder = $this->db->table('seo_url');
         $builder->where('keyword', $keyword);
         $builder->where('language_id', service('registry')->get('config_language_id'));
-        $row = $builder->get()->getRowArray();
+        $row = $builder->get()
+                       ->getRowArray();
         if ($row) {
              return $row['query'];
          } else {

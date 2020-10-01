@@ -51,27 +51,50 @@ class CategoryModel extends \CodeIgniter\Model
         return $query->getResultArray();
     }
 
-    public function getCategoryChildren($category_id)
+    public function getCategoriesByProjectId($project_id)
     {
-        $children = array();
-
-        $builder = $this->db->table('category');
-        $builder->distinct('category.category_id, cd.name, category.sort_order, category.status');
-        $builder->join('category_description', 'category_description.category_id = category.category_id', 'left');
-        $builder->where('category_description.language_id', service('registry')->get('config_language_id'));
-        $builder->where('category.parent_id', $category_id);
-        $builder->where('category.parent_id !=', 0);
+        $builder = $this->db->table('project_to_category p2c');
+        $builder->select('name');
+        $builder->join('category_description cd', 'p2c.category_id = cd.category_id', 'left');
+        $builder->where('p2c.project_id', $project_id);
         $query = $builder->get();
-        foreach ($query->getResultArray() as $result) {
-            $children[] = [
-                'name'        => $result['name'],
-                'category_id' => $result['category_id']
-            ];
-         return $children;
-        }
+        return $query->getResultArray();
+         
+    }
+
+    public function getCategoryByProjectId($project_id)
+    {
+        $builder = $this->db->table('project_to_category p2c');
+        $builder->select('name');
+        $builder->join('category_description cd', 'p2c.category_id = cd.category_id', 'left');
+        $builder->where('p2c.project_id', $project_id);
+        $query = $builder->get()
+                         ->getRowArray();
+        return $query['name'];                 
+         
+    }
+
+    // public function getCategoryChildren($category_id)
+    // {
+    //     $children = array();
+
+    //     $builder = $this->db->table('category');
+    //     $builder->distinct('category.category_id, cd.name, category.sort_order, category.status');
+    //     $builder->join('category_description', 'category_description.category_id = category.category_id', 'left');
+    //     $builder->where('category_description.language_id', service('registry')->get('config_language_id'));
+    //     $builder->where('category.parent_id', $category_id);
+    //     $builder->where('category.parent_id !=', 0);
+    //     $query = $builder->get();
+    //     foreach ($query->getResultArray() as $result) {
+    //         $children[] = [
+    //             'name'        => $result['name'],
+    //             'category_id' => $result['category_id']
+    //         ];
+    //      return $children;
+    //     }
 
    
-    }
+    // }
 
     public function getTotalCategories()
     {

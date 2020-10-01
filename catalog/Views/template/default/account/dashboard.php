@@ -1,63 +1,19 @@
-<?php echo $header; ?>
-<!-- Dashboard Container -->
-<div class="dashboard-container">
-	<!-- Dashboard Sidebar-->
-	<div class="dashboard-sidebar">
-		<div class="dashboard-sidebar-inner" data-simplebar>
-			<div class="dashboard-nav-container">
-				<!-- Responsive Navigation Trigger -->
-				<a href="#" class="dashboard-responsive-nav-trigger">
-					<span class="hamburger hamburger--collapse" >
-						<span class="hamburger-box">
-							<span class="hamburger-inner"></span>
-						</span>
-					</span>
-					<span class="trigger-title"><?php echo $text_dashboard; ?></span>
-				</a>
-				
-				<!-- Navigation -->
-				<div class="dashboard-nav">
-					<div class="dashboard-nav-inner">
-						<?php foreach ($menus as $menu) { ?>
-						<ul data-submenu-title="<?php echo $menu['name']; ?>">
-							<?php foreach ($menu['children'] as $child) { ?>
-							<?php if (!empty($child['children'])) { ?>	
-							<li><a href="#"><i class="icon-material-outline-assignment"></i> <?php echo $child['name']; ?></a>
-								<ul>
-								<?php foreach ($child['children'] as $sibling) { ?>
-									<li><a href="<?php echo $sibling['href']; ?>"><i class="<?php echo $sibling['icon']; ?>"></i> <?php echo $sibling['name']; ?></a></li>
-								<?php } ?>	
-								</ul>	
-							</li>
-							<?php } else { ?>	
-							<li class="<?php echo $child['class']; ?>"><a href="<?php echo $child['href']; ?>"><i class="<?php echo $child['icon']; ?>"></i> <?php echo $child['name']; ?></a></li>
-						   <?php } ?>
-						   <?php } ?>
-						</ul>
-					<?php } ?>			
-					</div>
-				</div>
-				<!-- Navigation / End -->
-			</div>
+<?php echo $header; ?><?php echo $dashboard_menu; ?>
+<!-- Dashboard Content -->
+<div class="dashboard-content-container container margin-top-40">
+	<div class="dashboard-content-inner" >
+		<!-- Dashboard Headline -->
+		<div class="dashboard-headline">
+			<h3><?php echo $heading_title; ?></h3>
+			<!-- Breadcrumbs -->
+			<nav id="breadcrumbs" class="dark">
+				<ul>
+					<?php foreach ($breadcrumbs as $breadcrumb) { ?>
+						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+					<?php } ?>
+				</ul>
+			</nav>
 		</div>
-	</div>
-	<!-- Dashboard Sidebar / End -->
-	<!-- Dashboard Content -->
-	<div class="dashboard-content-container" data-simplebar>
-		<div class="dashboard-content-inner" >
-			<!-- Dashboard Headline -->
-			<div class="dashboard-headline">
-				<h3>Howdy, Tom!</h3>
-				<span>We are glad to see you again!</span>
-				<!-- Breadcrumbs -->
-				<nav id="breadcrumbs" class="dark">
-					<ul>
-						<li><a href="#">Home</a></li>
-						<li>Dashboard</li>
-					</ul>
-				</nav>
-			</div>
-	
 			<!-- Fun Facts Container -->
 			<div class="fun-facts-container">
 				<div class="fun-fact" data-fun-fact-color="#36bd78">
@@ -176,3 +132,6 @@
 					</div>
 				</div>
 			</div>
+			</div>
+			</div>
+			<?php echo $footer; ?>

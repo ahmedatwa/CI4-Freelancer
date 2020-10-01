@@ -43,7 +43,7 @@ class Bid extends \Catalog\Controllers\BaseController
             $data['bids'][] = [
                 'bid_id'     => $result['bid_id'],
                 'freelancer' => $result['freelancer'],
-                'price'      => $this->currencyFormat($result['price']),
+                'quote'      => $this->currencyFormat($result['quote']),
                 'delivery'   => $result['delivery'] . ' ' . lang($this->locale . '.text_days'),
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'profile'    => route_to('customer_profile', $result['customer_id']),

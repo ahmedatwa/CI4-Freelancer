@@ -8,6 +8,7 @@ class Seo_url implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
+        
         $data = [];
 
         $segments = explode('/', uri_string());
@@ -15,9 +16,10 @@ class Seo_url implements FilterInterface
         $slug = end($segments);
 
         if ($slug) {
-            $seo_urls_model = new \Catalog\Models\Design\Seo_urls();
-            
-            $query = (string) $seo_urls_model->getQueryByKeyword($slug);
+
+            $seoUrl = service('seo_url');
+
+            $query = $seoUrl->getQueryByKeyword($slug);
 
             parse_str($query, $data);
 

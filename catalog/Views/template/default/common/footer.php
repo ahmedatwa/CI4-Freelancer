@@ -7,7 +7,6 @@
 				<div class="col-xl-12">
 					<!-- Footer Rows Container -->
 					<div class="footer-rows-container">
-						
 						<!-- Left Side -->
 						<div class="footer-rows-left">
 							<div class="footer-row">
@@ -70,7 +69,7 @@
 		<div class="container">
 			<div class="row">
 				<!-- Links -->
-				<div class="col-xl-2 col-lg-2 col-md-3">
+				<div class="col-md-2">
 					<div class="footer-links">
 						<h3><?php echo $text_for_freelancers; ?></h3>
 						<ul>
@@ -80,7 +79,7 @@
 				</div>
 
 				<!-- Links -->
-				<div class="col-xl-2 col-lg-2 col-md-3">
+				<div class="col-md-2">
 					<div class="footer-links">
 						<h3><?php echo $text_for_employer; ?></h3>
 						<ul>
@@ -92,7 +91,7 @@
 				</div>
 
 				<!-- Links -->
-				<div class="col-xl-2 col-lg-2 col-md-3">
+				<div class="col-md-2">
 					<div class="footer-links">
 						<h3><?php echo $text_links; ?></h3>
 						<ul>
@@ -104,7 +103,7 @@
 				</div>
 
 				<!-- Newsletter -->
-				<div class="col-xl-4 col-lg-4 col-md-12">
+				<div class="col-md-6">
 					<h3><i class="icon-feather-mail"></i> <?php echo $text_newsletter; ?></h3>
 					<p><?php echo $help_newsletter; ?></p>
 					<form action="#" method="get" class="newsletter">
@@ -132,8 +131,6 @@
 </div>
 <!-- Footer / End -->
 
-</div>
-<!-- Wrapper / End -->
 
 <!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
 <script>

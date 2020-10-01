@@ -2,7 +2,7 @@
 
 class BidModel extends \CodeIgniter\Model
 {
-    protected $table          = 'bids';
+    protected $table          = 'project_bids';
     protected $primaryKey     = 'bid_id';
     protected $returnType     = 'array';
     protected $allowedFields = ['project_id', 'freelancer_id', 'quote', 'delivery', 'status'];
@@ -24,8 +24,8 @@ class BidModel extends \CodeIgniter\Model
 
     public function getBids(array $data =[])
     {
-        $builder = $this->db->table('bids b');
-        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, b.price, b.bid_id, b.status, b.delivery, c.image, c.customer_id, c.image, b.freelancer_id');
+        $builder = $this->db->table('project_bids b');
+        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, c.email, b.quote, b.bid_id, b.status, b.delivery, c.image, c.customer_id, c.image, b.freelancer_id');
         $builder->join('customer c', 'b.freelancer_id = c.customer_id', 'left');
         $builder->join('project_description pd', 'b.project_id = pd.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
@@ -55,7 +55,7 @@ class BidModel extends \CodeIgniter\Model
 
     public function getTotalBids()
     {
-        $builder = $this->db->table('bids b');
+        $builder = $this->db->table('project_bids b');
         $builder->join('project_description pd', 'b.project_id = pd.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
 
@@ -71,14 +71,21 @@ class BidModel extends \CodeIgniter\Model
         return $builder->countAllResults();
     }
 
+     public function getTotalBidsByProjectId($project_id)
+    {
+        $builder = $this->db->table('project_bids');
+        $builder->where('project_id', $project_id);
+        return $builder->countAllResults();
+    }
+
     public function addBid($data)
     {
-        $builder = $this->db->table('bids');
+        $builder = $this->db->table('project_bids');
         $data = [
-            'project_id'    => $data['project_id']
-            'freelancer_id' => $data['freelancer_id']
-            'price'         => $data['price']
-            'delivery'      => $data['delivery']
+            'project_id'    => $data['project_id'],
+            'freelancer_id' => $data['freelancer_id'],
+            'quote'         => $data['quote'],
+            'delivery'      => $data['delivery'],
             'status'        => 1
         ];
         $builder->set('date_added', 'NOW()', false);

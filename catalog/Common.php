@@ -22,16 +22,16 @@ use Config\Services;
  * @throws Exception If something interesting cannot hCatalogen
  * @return string
  **/
-if (!function_exists('DateShortFormat')) {
-    function DateShortFormat(string $date)
-    {
-        if (!$date) {
-            throw new \Exception("Date is missing in function!");
-        }
-        $fmt = date_create($date);
-        return date_format($fmt, lang(config('Catalog')->defaultLocale . '.date_format_short'));
-    }
-}
+// if (!function_exists('DateShortFormat')) {
+//     function DateShortFormat(string $date)
+//     {
+//         if (!$date) {
+//             throw new \Exception("Date is missing in function!");
+//         }
+//         $fmt = date_create($date);
+//         return date_format($fmt, lang(config('Catalog')->defaultLocale . '.date_format_short'));
+//     }
+// }
 
 
 if (! function_exists('img_url')) {
@@ -51,19 +51,18 @@ if (! function_exists('formError')) {
     }
 }
 
-if (! function_exists('getKeywordByQuery'))
-{
-    function getKeywordByQuery($keyword)
-    {
-        $seo_urls = new \Catalog\Models\Design\Seo_urls;
-        $segment = $seo_urls->getKeywordByQuery($keyword);
-        if ($segment) {
-            return $segment;
-        } else {
-            return null;
-        }
-    }
-}
+// if (! function_exists('getKeywordByQuery')) {
+//     function getKeywordByQuery($keyword)
+//     {
+//         $seo_urls = new \Catalog\Models\Design\Seo_urls;
+//         $segment = $seo_urls->getKeywordByQuery($keyword);
+//         if ($segment) {
+//             return $segment;
+//         } else {
+//             return null;
+//         }
+//     }
+// }
 
 // Override the View function to extend it with theme name
 if (! function_exists('view')) {
@@ -102,10 +101,10 @@ if (! function_exists('view')) {
         }
     }
 }
-/** 
-@ return string 
-@ var date string 
-@ return the Days Left for the project to be closed 
+/**
+@ return string
+@ var date string
+@ return the Days Left for the project to be closed
 **/
 if (! function_exists('getDaysLeft')) {
     function getDaysLeft(string $date)
@@ -115,5 +114,34 @@ if (! function_exists('getDaysLeft')) {
         $now = $time::now();
         $diff = $now->difference($time::parse($date));
         return $diff->humanize();
+    }
+}
+
+// Graduation Year
+if (!function_exists('seller_graduation_year')) {
+    function seller_graduation_year()
+    {
+        $json = [];
+        $cur_year = date('Y');
+        $years = range($cur_year, $cur_year-50);
+
+        foreach ($years as $year) {
+            $json[] = [
+               'id' => $year,
+               'text' => $year
+           ];
+        }
+        return $json;
+    }
+}
+
+// Countires
+if (!function_exists('seller_countries_list')) {
+    function seller_countries_list()
+    {
+        $countries = ['Algeria', 'Bahrain', 'Egypt', 'Iraq', 'Jordan', 'Kuwait', 'Lebanon', 'Libya', 'Morocco', 'Oman', 'Palestine', 'Qatar', 'Saudi Arabia', 'Sudan', 'Syria', 'Tunisia', 'United Arab Emirates', 'Yemen'];
+        
+        sort($countries);
+        return $countries;
     }
 }

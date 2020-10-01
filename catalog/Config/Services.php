@@ -36,4 +36,15 @@ class Services extends CoreServices
         }
         return new \Catalog\Libraries\Registry();
     }
+    // SEO
+       public static function seo_url($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('seo_url');
+        }
+        return new \Catalog\Models\Design\Seo_urls;
+    }
+
+
+    // ------------------------------------
 }

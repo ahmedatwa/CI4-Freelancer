@@ -113,19 +113,6 @@
 								</div>
 							</div> 
 							<div class="form-group row">
-								<label for="input-seo-url" class="col-md-2 col-form-label"><?php echo $entry_seo_url; ?></label>
-								<div class="col-md-10">
-									<?php foreach ($languages as $language) { ?>
-										<div class="input-group mb-1">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="basic-addon1"><?php echo $language['code']; ?></span>
-											</div>
-											<input class="form-control" type="text" id="input-seo-url-<?php echo $language['language_id']; ?>" name="seo_url[<?php echo $language['language_id']; ?>][keyword]" value="<?php echo $seo_url[$language['language_id']]['keyword'] ?? ''; ?>" onkeyup="generateSeo(<?php echo $language['language_id']; ?>)">
-										</div>
-									<?php } ?>		
-								</div>
-							</div>
-							<div class="form-group row">
 								<label for="input-sort-order" class="col-md-2 col-form-label"><?php echo $entry_sort_order; ?></label>
 								<div class="col-md-10">
 									<input class="form-control" type="text" id="input-sort-order" name="sort_order" value="<?php echo $sort_order; ?>">
@@ -219,12 +206,5 @@ $('select[name=\'employer_id\']').select2({
 </script>
 <script type="text/javascript">
 	$('#language a:first').tab('show');
-</script>
-<script type="text/javascript">
-function generateSeo(language_id){
-	var input = $("#input-name-" + language_id).val().trim();
-	var keyword = input.replace(/[\W_]+/g,"-").toLowerCase();
-	$("#input-seo-url-" + language_id).val(keyword);
-}
 </script>
 <?php echo $footer; ?>

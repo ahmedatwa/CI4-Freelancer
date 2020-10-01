@@ -1,4 +1,4 @@
-<div class="pagination-container margin-top-60 margin-bottom-60" aria-label="<?= lang('Pager.pageNavigation') ?>">
+<div class="pagination-container margin-top-30 margin-bottom-10 padding-right-60 padding-left-60" aria-label="<?= lang('Pager.pageNavigation') ?>">
     <nav class="pagination">
         <ul>
             <?php if ($pager->hasPreviousPage()) : ?>

@@ -16,21 +16,18 @@ class Login extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/login.heading_title'),
-            'href' => route_to('login'),
+            'href' => base_url('account/login'),
         ];
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            if (previous_url()) {
-                return redirect()->to(previous_url());
-            } else {
-                return redirect()->to(route_to('account/dashboard'));
+                return redirect()->to(base_url('account/dashboard'));
             }
-        }
+        
 
         $data['heading_title']  = lang('account/login.heading_title');
         $data['text_login']     = lang('account/login.text_login');
         $data['text_forgotten'] = lang('account/login.text_forgotten');
-        $data['text_register']  = sprintf(lang('account/login.text_register'), route_to('account/register'));
+        $data['text_register']  = sprintf(lang('account/login.text_register'), base_url('account/register'));
         $data['entry_email']    = lang('account/login.entry_email');
         $data['entry_password'] = lang('account/login.entry_password');
         $data['button_login']   = lang('account/login.button_login');

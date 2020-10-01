@@ -9,7 +9,7 @@ $('#search-container button').on('click', function() {
 
     var url = 'common/search';
     
-    var search = $('#search-container #intro-keywords').val();
+    var search = $('#search-container #search-input').val();
     if (search) {
         url += '?keyword=' + encodeURIComponent(search);
     }
@@ -17,7 +17,7 @@ $('#search-container button').on('click', function() {
     location = url;
 });
 
-$('#search-container #intro-keywords').on('keydown', function(e) {
+$('#search-container #search-input').on('keydown', function(e) {
 
 	if (e.keyCode == 13) {
 	    $('#search-container button').trigger('click');
@@ -73,64 +73,64 @@ $('.text-danger').each(function() {
 	/*--------------------------------------------------*/
 	/*  Sticky Header
 	/*--------------------------------------------------*/
-	function stickyHeader() {
+	// function stickyHeader() {
 
-		$(window).on('scroll load', function() {
+	// 	$(window).on('scroll load', function() {
 
-			if($(window).width() < '1099') { 
-				$("#header-container").removeClass("cloned");
-			}
+	// 		if($(window).width() < '1099') { 
+	// 			$("#header-container").removeClass("cloned");
+	// 		}
 			
-			if($(window).width() > '1099') {
+	// 		if($(window).width() > '1099') {
 
-				// CSS adjustment
-				$("#header-container").css({
-					position: 'fixed',
-				});
+	// 			// CSS adjustment
+	// 			$("#header-container").css({
+	// 				position: 'fixed',
+	// 			});
 		
-				var headerOffset = $("#header-container").height();
+	// 			var headerOffset = $("#header-container").height();
 
-				if($(window).scrollTop() >= headerOffset){
-					$("#header-container").addClass('cloned');
-					$(".wrapper-with-transparent-header #header-container").addClass('cloned').removeClass("transparent-header unsticky");
-				} else {
-					$("#header-container").removeClass("cloned");
-					$(".wrapper-with-transparent-header #header-container").addClass('transparent-header unsticky').removeClass("cloned");
-				}
+	// 			if($(window).scrollTop() >= headerOffset){
+	// 				$("#header-container").addClass('cloned');
+	// 				$(".wrapper-with-transparent-header #header-container").addClass('cloned').removeClass("transparent-header unsticky");
+	// 			} else {
+	// 				$("#header-container").removeClass("cloned");
+	// 				$(".wrapper-with-transparent-header #header-container").addClass('transparent-header unsticky').removeClass("cloned");
+	// 			}
 
-				// Sticky Logo
-				var transparentLogo = $('#header-container #logo img').attr('data-transparent-logo');
-				var stickyLogo = $('#header-container #logo img').attr('data-sticky-logo');
+	// 			// Sticky Logo
+	// 			var transparentLogo = $('#header-container #logo img').attr('data-transparent-logo');
+	// 			var stickyLogo = $('#header-container #logo img').attr('data-sticky-logo');
 
-				if( $('.wrapper-with-transparent-header #header-container').hasClass('cloned')) {
-					$("#header-container.cloned #logo img").attr("src", stickyLogo);
-				} 
+	// 			if( $('.wrapper-with-transparent-header #header-container').hasClass('cloned')) {
+	// 				$("#header-container.cloned #logo img").attr("src", stickyLogo);
+	// 			} 
 
-				if( $('.wrapper-with-transparent-header #header-container').hasClass('transparent-header')) {
-					$("#header-container #logo img").attr("src", transparentLogo);
-				} 
+	// 			if( $('.wrapper-with-transparent-header #header-container').hasClass('transparent-header')) {
+	// 				$("#header-container #logo img").attr("src", transparentLogo);
+	// 			} 
 
-				$(window).on('load resize', function() {
-				    var headerOffset = $("#header-container").height();
-				    $("#wrapper").css({'padding-top': headerOffset});
-				});
-			}
-		});
-	}
+	// 			$(window).on('load resize', function() {
+	// 			    var headerOffset = $("#header-container").height();
+	// 			    $("#wrapper").css({'padding-top': headerOffset});
+	// 			});
+	// 		}
+	// 	});
+	// }
 
-	// Sticky Header Init
-	stickyHeader();
+	// // Sticky Header Init
+	// stickyHeader();
 
 
 	/*--------------------------------------------------*/
 	/*  Transparent Header Spacer Adjustment
 	/*--------------------------------------------------*/
-	$(window).on('load resize', function() {
-		var transparentHeaderHeight = $('.transparent-header').outerHeight();
-		$('.transparent-header-spacer').css({
-			height: transparentHeaderHeight,
-		});
-	});
+	// $(window).on('load resize', function() {
+	// 	var transparentHeaderHeight = $('.transparent-header').outerHeight();
+	// 	$('.transparent-header-spacer').css({
+	// 		height: transparentHeaderHeight,
+	// 	});
+	// });
 
 
 	/*----------------------------------------------------*/
@@ -303,74 +303,74 @@ $('.text-danger').each(function() {
 	/*--------------------------------------------------*/
 
 	// Wrapper Height (window height - header height)
-	function wrapperHeight() {
-		var headerHeight = $("#header-container").outerHeight();
-		var windowHeight = $(window).outerHeight() - headerHeight;
-		$('.full-page-content-container, .dashboard-content-container, .dashboard-sidebar-inner, .dashboard-container, .full-page-container').css({ height: windowHeight });
-		$('.dashboard-content-inner').css({ 'min-height': windowHeight });
-	}
+	// function wrapperHeight() {
+	// 	var headerHeight = $("#header-container").outerHeight();
+	// 	var windowHeight = $(window).outerHeight() - headerHeight;
+	// 	$('.full-page-content-container, .dashboard-content-container, .dashboard-sidebar-inner, .dashboard-container, .full-page-container').css({ height: windowHeight });
+	// 	$('.dashboard-content-inner').css({ 'min-height': windowHeight });
+	// }
 
 	// Enabling Scrollbar
-	function fullPageScrollbar() {
-		$(".full-page-sidebar-inner, .dashboard-sidebar-inner").each(function() {
+	// function fullPageScrollbar() {
+	// 	$(".full-page-sidebar-inner, .dashboard-sidebar-inner").each(function() {
 
-			var headerHeight = $("#header-container").outerHeight();
-			var windowHeight = $(window).outerHeight() - headerHeight;
-			var sidebarContainerHeight = $(this).find(".sidebar-container, .dashboard-nav-container").outerHeight();
+	// 		var headerHeight = $("#header-container").outerHeight();
+	// 		var windowHeight = $(window).outerHeight() - headerHeight;
+	// 		var sidebarContainerHeight = $(this).find(".sidebar-container, .dashboard-nav-container").outerHeight();
 
-			// Enables scrollbar if sidebar is higher than wrapper
-			if (sidebarContainerHeight > windowHeight) {
-				$(this).css({ height: windowHeight });
+	// 		// Enables scrollbar if sidebar is higher than wrapper
+	// 		if (sidebarContainerHeight > windowHeight) {
+	// 			$(this).css({ height: windowHeight });
 		
-			} else {
-				$(this).find('.simplebar-track').hide();
-			}
-		});
-	}
+	// 		} else {
+	// 			$(this).find('.simplebar-track').hide();
+	// 		}
+	// 	});
+	// }
 
 	// Init
-	$(window).on('load resize', function() {
-		wrapperHeight();
-		fullPageScrollbar();
-	});
+	// $(window).on('load resize', function() {
+	// 	wrapperHeight();
+	// 	fullPageScrollbar();
+	// });
 
 	// Sliding Sidebar 
-	$('.enable-filters-button').on('click', function(){
-		$('.full-page-sidebar').toggleClass("enabled-sidebar");
-		$(this).toggleClass("active");
-		$('.filter-button-tooltip').removeClass('tooltip-visible');
-	});
+	// $('.enable-filters-button').on('click', function(){
+	// 	$('.full-page-sidebar').toggleClass("enabled-sidebar");
+	// 	$(this).toggleClass("active");
+	// 	$('.filter-button-tooltip').removeClass('tooltip-visible');
+	// });
 
 	/*  Enable Filters Button Tooltip */
-	$(window).on('load', function() {
-		$('.filter-button-tooltip').css({
-			left: $('.enable-filters-button').outerWidth() + 48
-		})
-		.addClass('tooltip-visible');
-	});
+	// $(window).on('load', function() {
+	// 	$('.filter-button-tooltip').css({
+	// 		left: $('.enable-filters-button').outerWidth() + 48
+	// 	})
+	// 	.addClass('tooltip-visible');
+	// });
 
 	// Avatar Switcher
-	function avatarSwitcher() {
-	    var readURL = function(input) {
-	        if (input.files && input.files[0]) {
-	            var reader = new FileReader();
+	// function avatarSwitcher() {
+	//     var readURL = function(input) {
+	//         if (input.files && input.files[0]) {
+	//             var reader = new FileReader();
 
-	            reader.onload = function (e) {
-	                $('.profile-pic').attr('src', e.target.result);
-	            };
+	//             reader.onload = function (e) {
+	//                 $('.profile-pic').attr('src', e.target.result);
+	//             };
 	    
-	            reader.readAsDataURL(input.files[0]);
-	        }
-	    };
+	//             reader.readAsDataURL(input.files[0]);
+	//         }
+	//     };
 	   
-	    $(".file-upload").on('change', function(){
-	        readURL(this);
-	    });
+	//     $(".file-upload").on('change', function(){
+	//         readURL(this);
+	//     });
 	    
-	    $(".upload-button").on('click', function() {
-	       $(".file-upload").click();
-	    });
-	} avatarSwitcher();
+	//     $(".upload-button").on('click', function() {
+	//        $(".file-upload").click();
+	//     });
+	// } avatarSwitcher();
 
 
 	/*----------------------------------------------------*/
@@ -496,60 +496,60 @@ $('.text-danger').each(function() {
 	/*--------------------------------------------------*/
 	/*  Star Rating
 	/*--------------------------------------------------*/
-	function starRating(ratingElem) {
+	// function starRating(ratingElem) {
 
-		$(ratingElem).each(function() {
+	// 	$(ratingElem).each(function() {
 
-			var dataRating = $(this).attr('data-rating');
+	// 		var dataRating = $(this).attr('data-rating');
 
-			// Rating Stars Output
-			function starsOutput(firstStar, secondStar, thirdStar, fourthStar, fifthStar) {
-				return(''+
-					'<span class="'+firstStar+'"></span>'+
-					'<span class="'+secondStar+'"></span>'+
-					'<span class="'+thirdStar+'"></span>'+
-					'<span class="'+fourthStar+'"></span>'+
-					'<span class="'+fifthStar+'"></span>');
-			}
+	// 		// Rating Stars Output
+	// 		function starsOutput(firstStar, secondStar, thirdStar, fourthStar, fifthStar) {
+	// 			return(''+
+	// 				'<span class="'+firstStar+'"></span>'+
+	// 				'<span class="'+secondStar+'"></span>'+
+	// 				'<span class="'+thirdStar+'"></span>'+
+	// 				'<span class="'+fourthStar+'"></span>'+
+	// 				'<span class="'+fifthStar+'"></span>');
+	// 		}
 
-			var fiveStars = starsOutput('star','star','star','star','star');
+	// 		var fiveStars = starsOutput('star','star','star','star','star');
 
-			var fourHalfStars = starsOutput('star','star','star','star','star half');
-			var fourStars = starsOutput('star','star','star','star','star empty');
+	// 		var fourHalfStars = starsOutput('star','star','star','star','star half');
+	// 		var fourStars = starsOutput('star','star','star','star','star empty');
 
-			var threeHalfStars = starsOutput('star','star','star','star half','star empty');
-			var threeStars = starsOutput('star','star','star','star empty','star empty');
+	// 		var threeHalfStars = starsOutput('star','star','star','star half','star empty');
+	// 		var threeStars = starsOutput('star','star','star','star empty','star empty');
 
-			var twoHalfStars = starsOutput('star','star','star half','star empty','star empty');
-			var twoStars = starsOutput('star','star','star empty','star empty','star empty');
+	// 		var twoHalfStars = starsOutput('star','star','star half','star empty','star empty');
+	// 		var twoStars = starsOutput('star','star','star empty','star empty','star empty');
 
-			var oneHalfStar = starsOutput('star','star half','star empty','star empty','star empty');
-			var oneStar = starsOutput('star','star empty','star empty','star empty','star empty');
+	// 		var oneHalfStar = starsOutput('star','star half','star empty','star empty','star empty');
+	// 		var oneStar = starsOutput('star','star empty','star empty','star empty','star empty');
 
-			// Rules
-	        if (dataRating >= 4.75) {
-	            $(this).append(fiveStars);
-	        } else if (dataRating >= 4.25) {
-	            $(this).append(fourHalfStars);
-	        } else if (dataRating >= 3.75) {
-	            $(this).append(fourStars);
-	        } else if (dataRating >= 3.25) {
-	            $(this).append(threeHalfStars);
-	        } else if (dataRating >= 2.75) {
-	            $(this).append(threeStars);
-	        } else if (dataRating >= 2.25) {
-	            $(this).append(twoHalfStars);
-	        } else if (dataRating >= 1.75) {
-	            $(this).append(twoStars);
-	        } else if (dataRating >= 1.25) {
-	            $(this).append(oneHalfStar);
-	        } else if (dataRating < 1.25) {
-	            $(this).append(oneStar);
-	        }
+	// 		// Rules
+	//         if (dataRating >= 4.75) {
+	//             $(this).append(fiveStars);
+	//         } else if (dataRating >= 4.25) {
+	//             $(this).append(fourHalfStars);
+	//         } else if (dataRating >= 3.75) {
+	//             $(this).append(fourStars);
+	//         } else if (dataRating >= 3.25) {
+	//             $(this).append(threeHalfStars);
+	//         } else if (dataRating >= 2.75) {
+	//             $(this).append(threeStars);
+	//         } else if (dataRating >= 2.25) {
+	//             $(this).append(twoHalfStars);
+	//         } else if (dataRating >= 1.75) {
+	//             $(this).append(twoStars);
+	//         } else if (dataRating >= 1.25) {
+	//             $(this).append(oneHalfStar);
+	//         } else if (dataRating < 1.25) {
+	//             $(this).append(oneStar);
+	//         }
 
-		});
+	// 	});
 
-	} starRating('.star-rating');
+	// } starRating('.star-rating');
 
 
 	/*--------------------------------------------------*/
@@ -593,26 +593,9 @@ $('.text-danger').each(function() {
 
 
 	/*--------------------------------------------------*/
-	/*  Tippy JS 
+	/*  tooltip JS 
 	/*--------------------------------------------------*/
-    /* global tippy */
-	tippy('[data-tippy-placement]', {
-		delay: 100,
-		arrow: true,
-		arrowType: 'sharp',
-		size: 'regular',
-		duration: 200,
-
-		// 'shift-toward', 'fade', 'scale', 'perspective'
-		animation: 'shift-away',
-
-		animateFill: true,
-		theme: 'dark',
-
-		// How far the tooltip is from its reference element in pixels 
-		distance: 10,
-
-	});
+    $('[data-toggle=\'tooltip\']').tooltip();
 
 
 	/*----------------------------------------------------*/
@@ -816,15 +799,16 @@ $('.text-danger').each(function() {
 	/*--------------------------------------------------*/
 	/*  Keywords
 	/*--------------------------------------------------*/
-	$(".keywords-container").each(function() {
+	$("#keywords-container").each(function() {
 
-		var keywordInput = $(this).find(".keyword-input");
+		var keywordInput = $(this).find("#keyword-input");
 		var keywordsList = $(this).find(".keywords-list");
 
 		// adding keyword
 		function addKeyword() {
-			var $newKeyword = $("<span class='keyword'><span class='keyword-remove'></span><span class='keyword-text'>"+ keywordInput.val() +"</span></span>");
+			var $newKeyword = $("<input type='text' name='project_description[<?php echo service('registry')->get('config_language_id)'][meta_keyword][]' value='"+ keywordInput.val() +"' name='' class='keyword' ><span class='keyword-remove'></span><span class='keyword-text'>"+ keywordInput.val() +"</span></span>");
 			keywordsList.append($newKeyword).trigger('resizeContainer');
+			$(".keywords-list #who").push(keywordInput.val());
 			keywordInput.val("");
 		}
 
@@ -836,7 +820,7 @@ $('.text-danger').each(function() {
 		});
 
 		// add via button
-		$('.keyword-input-button').on('click', function(){ 
+		$('#keyword-input-button').on('click', function(){ 
 			if((keywordInput.val()!=="")){
 				addKeyword();
 			}
@@ -1017,21 +1001,6 @@ $('.text-danger').each(function() {
 
         if(photoBox !== undefined) {
             $(this).css('background-image', 'url('+photoBoxBG+')');
-        }
-	});
-
-
-	/*----------------------------------------------------*/
-	/*  Share URL and Buttons
-	/*----------------------------------------------------*/
-  /* global ClipboardJS */
-	$('.copy-url input').val(window.location.href);
-	new ClipboardJS('.copy-url-button');
-
-	$(".share-buttons-icons a").each(function() {
-		var buttonBG = $(this).attr("data-button-color");
-        if(buttonBG !== undefined) {
-        	$(this).css('background-color',buttonBG);
         }
 	});
 

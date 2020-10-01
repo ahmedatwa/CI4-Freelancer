@@ -15,15 +15,15 @@ class Header extends \Catalog\Controllers\BaseController
         
         $data['base'] = slash_item('baseURL');
 
-        $data['text_home']      = lang('common/header.text_home');
-        $data['text_logout']    = lang('common/header.text_logout');
-        $data['text_login']     = lang('common/header.text_login');
-        $data['text_register']  = lang('common/header.text_register');
-        $data['text_jobs']      = lang('common/header.text_jobs');
-        $data['text_projects']  = lang('common/header.text_projects');
-        $data['text_dashboard'] = lang('common/header.text_dashboard');
-        $data['text_setting']   = lang('common/header.text_setting');
-        $data['text_logout']    = lang('common/header.text_logout');
+        $data['text_home']        = lang('common/header.text_home');
+        $data['text_logout']      = lang('common/header.text_logout');
+        $data['text_login']       = lang('common/header.text_login');
+        $data['text_register']    = lang('common/header.text_register');
+        $data['text_how_it_works']        = lang('common/header.text_how_it_works');
+        $data['text_projects']    = lang('common/header.text_projects');
+        $data['text_dashboard']   = lang('common/header.text_dashboard');
+        $data['text_setting']     = lang('common/header.text_setting');
+        $data['text_add_project'] = lang('common/header.text_add_project');
 
         $data['config_name'] = $this->registry->get('config_name');
 
@@ -33,15 +33,16 @@ class Header extends \Catalog\Controllers\BaseController
             $data['logo'] = '';
         }
         
-        $data['home']      = base_url();
-        $data['register']  = route_to('account/register');
-        $data['login']     = route_to('account/login');
-        $data['forgotton'] = route_to('account/forgotten');
-        $data['logout']    = route_to('account/logout');
-        $data['setting']   = route_to('account/setting');
-        $data['dashboard'] = route_to('account/dashboard');
-        $data['projects']  = route_to('projects');
-        $data['jobs']      = route_to('jobs');
+        $data['home']        = base_url();
+        $data['register']    = base_url('account/register');
+        $data['login']       = base_url('account/login');
+        $data['forgotton']   = base_url('account/forgotten');
+        $data['logout']      = base_url('account/logout');
+        $data['setting']     = base_url('account/dashboard/setting?cid=' . $this->customer->getCustomerId());
+        $data['dashboard']   = base_url('account/dashboard?cid=' . $this->customer->getCustomerId());
+        $data['projects']    = base_url('project/category');
+        $data['add_project'] = base_url('project/project/add');
+        $data['how_it_works'] = route_to('information', 'how-it-works');
 
         if ($this->registry->get('blog_extension_status')) {
             $data['text_blog'] = lang('common/header.text_blog');
