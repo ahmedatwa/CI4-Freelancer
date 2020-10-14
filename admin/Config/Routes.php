@@ -30,7 +30,10 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+//$routes->add('from', 'to', ['subdomain' => 'admin']);
+
 $routes->get('/', 'Common/Login::index');
+
 // Extenstions
 $routes->group('extensions', ['namespace' => 'Extensions\Controllers'], function($routes)
 {
@@ -43,9 +46,10 @@ $routes->group('extensions', ['namespace' => 'Extensions\Controllers'], function
     $routes->add('job/add', 'Job\Job::add');
     $routes->add('job/edit', 'Job\Job::edit');
     $routes->add('job/delete', 'Job\Job::delete');
-    
-    $routes->add('theme/basic', 'Theme\Basic::index');
+    // Wallet
     $routes->add('wallet/wallet', 'Wallet\Wallet::index');
+    // Themes
+    $routes->add('theme/basic', 'Theme\Basic::index');
     // Blog
     $routes->add('blog/post', 'Blog\Post::index');
     $routes->add('blog/post/add', 'Blog\Post::add');

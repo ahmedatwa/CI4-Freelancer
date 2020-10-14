@@ -4,14 +4,14 @@ use Config\Services;
 
 class Document
 {
-    protected static $ttl = 0 ;
+    protected $ttl = false;
     // Meta
-    protected static $title;
-    protected static $description;
-    protected static $keywords;
-    protected static $links = array();
-    protected static $styles = array();
-    protected static $scripts = array();
+    protected $title;
+    protected $description;
+    protected $keywords;
+    protected $links = [];
+    protected $styles = [];
+    protected $scripts = [];
 
 
 
@@ -27,7 +27,7 @@ class Document
      */
     public function setTitle(string $title)
     {
-        self::$title = $title;
+        $this->title = $title;
     }
     /**
      *
@@ -36,7 +36,8 @@ class Document
      */
     public function getTitle()
     {
-        return (string) self::$title;
+        return $this->title;
+        var_dump($this->title);
     }
 
     /**
@@ -46,7 +47,7 @@ class Document
      */
     public function setDescription(string $description)
     {
-        self::$description = $description;
+        $this->description = $description;
     }
 
     /**
@@ -58,7 +59,7 @@ class Document
      */
     public function getDescription()
     {
-        return self::$description;
+        return $this->description;
     }
 
     /**
@@ -68,7 +69,7 @@ class Document
      */
     public function setKeywords($keywords)
     {
-        self::$keywords = $keywords;
+        $this->keywords = $keywords;
     }
 
     /**
@@ -78,7 +79,7 @@ class Document
      */
     public function getKeywords()
     {
-        return self::$keywords;
+        return $this->keywords;
     }
     
     /**
@@ -89,7 +90,7 @@ class Document
      */
     public function addLink($href, $rel)
     {
-        self::$links[$href] = array(
+        $this->links[$href] = array(
             'href' => $href,
             'rel'  => $rel
         );
@@ -102,7 +103,7 @@ class Document
      */
     public function getLinks()
     {
-        return self::$links;
+        return $this->links;
     }
 
     /**
@@ -114,7 +115,7 @@ class Document
      */
     public function addStyle($href, $rel = 'stylesheet', $media = 'screen')
     {
-        self::$styles[$href] = array(
+        $this->styles[$href] = array(
             'href'  => $href,
             'rel'   => $rel,
             'media' => $media
@@ -128,7 +129,7 @@ class Document
      */
     public function getStyles()
     {
-        return self::$styles;
+        return $this->styles;
     }
     /**
      *
@@ -138,7 +139,7 @@ class Document
      */
     public function addScript($src, $postion = 'footer')
     {
-        self::$scripts[$postion][$src] = $src;
+        $this->scripts[$postion][$src] = $src;
     }
     /**
      *
@@ -149,10 +150,10 @@ class Document
      */
     public function getScripts($postion = 'footer')
     {
-        if (isset(self::$scripts[$postion])) {
-            return self::$scripts[$postion];
+        if (isset($this->scripts[$postion])) {
+            return $this->scripts[$postion];
         } else {
-            return array();
+            return [];
         }
     }
                 
@@ -160,50 +161,55 @@ class Document
     /**
     * @return array
     */
-    protected function getLanguage(): array
-    {
-        $language = [];
+    // protected function getLanguage(): array
+    // {
+    //     $route = '';
 
-        $loader = Services::locator(true);
-        // Getting the Current Url Segment
-        $uri = new \CodeIgniter\HTTP\URI((string) current_url(true));
+    //     $language = [];
 
-        $totalSegments = $uri->getTotalSegments();
+    //     $langArray = [];
 
-        if ($totalSegments > 3) {
-            // Determine if the Last Segment is a Class or Method
-            $controllerFile = $loader->locateFile(ucfirst($uri->getSegment(4)), ucfirst($uri->getSegment(2)) . '/Controllers/' . ucfirst($uri->getSegment(3)));
-            
-            if ($controllerFile) {
-                $route = $uri->getSegment(3)  . '/' . $uri->getSegment(4);
-            } else {
-                $route = $uri->getSegment(2)  . '/' . $uri->getSegment(3);
-            }
-        } else {
-            $route = $uri->getSegment(2)  . '/' . $uri->getSegment(3);
-        }
+    //     $loader = Services::locator(true);
+    //     // Getting the Current Url Segment
+    //     $uri = new \CodeIgniter\HTTP\URI((string) current_url(true));
 
-        if ($route) {
-            $langArray = lang($route . '.list');
-        }
-        // Combining the Master Language File if Exists
-        $localeLangFile = $loader->locateFile(config('App')->defaultLocale ?? 'en', 'Language/' . config('App')->defaultLocale ?? 'en');
+    //     $totalSegments = $uri->getTotalSegments();
 
-        if ($localeLangFile) {
-            $primaryLang = lang('en.list');
-        } else {
-            $primaryLang = [];
-        }
+    //     if ($totalSegments > 3) {
+    //         // Determine if the Last Segment is a Class or Method
+    //         $controllerFile = $loader->locateFile(ucfirst($uri->getSegment(4)), ucfirst($uri->getSegment(2)) . '/Controllers/' . ucfirst($uri->getSegment(3)));
+    //         if ($controllerFile) {
+    //             $route = $uri->getSegment(3)  . '/' . $uri->getSegment(4);
+    //         } else {
+    //             $route = $uri->getSegment(2)  . '/' . $uri->getSegment(3);
+    //         }
+    //     } elseif ($totalSegments == 2) {
+    //         $route = $uri->getSegment(1)  . '/' . $uri->getSegment(2);
+    //     }
 
-        // escape if .list lang not found
-        if (! is_array($langArray)) {
-            $language = $primaryLang;
-        } else {
-            $language = array_merge($primaryLang, $langArray);
-        }
-        // }
-        return $language;
-    }
+    //     if ($route) {
+    //         $langArray = lang($route . '.list');
+    //     }
+
+    //     // Combining the Master Language File if Exists
+    //     $localeLangFile = $loader->locateFile(config('App')->defaultLocale ?? 'en', 'Language/' . config('App')->defaultLocale ?? 'en');
+
+    //     if ($localeLangFile) {
+    //         $primaryLang = lang('en.list');
+    //     } else {
+    //         $primaryLang = [];
+    //     }
+
+    //     // escape if .list lang not found
+    //     if (! is_array($langArray)) {
+    //         $language = $primaryLang;
+    //     } else {
+    //         $language = array_merge($primaryLang, $langArray);
+    //     }
+       
+
+    //     return $language;
+    // }
 
     //  Final Template Output
     public function output(string $view, array $data = [])
@@ -211,16 +217,19 @@ class Document
         // Renderer
         $renderer = \Config\Services::renderer();
 
-        $options = [];
+        $options = [
+            'cache' => 60,
+            'saveData' => false,
+        ];
         // Merge Language Data
-        if (is_array($this->getLanguage())) {
-            $data = array_merge($this->getLanguage(), $data);
-        }
+        // if (is_array($this->getLanguage())) {
+        //     $data = array_merge($this->getLanguage(), $data);
+        // }
 
         // Parts
-        $data['header']      = view_cell('\Admin\Controllers\Common\Header::index', null, 900);
-        $data['column_left'] = view_cell('\Admin\Controllers\Common\Column_left::index', null, 900);
-        $data['footer']      = view_cell('\Admin\Controllers\Common\Footer::index', null, 900);
+        $data['header']      = view_cell('\Admin\Controllers\Common\Header::index', null, $this->ttl);
+        $data['column_left'] = view_cell('\Admin\Controllers\Common\Column_left::index', null, $this->ttl);
+        $data['footer']      = view_cell('\Admin\Controllers\Common\Footer::index', null, $this->ttl);
 
         echo $renderer->setData($data)->render($view, $options);
     }
@@ -231,14 +240,14 @@ class Document
         // Renderer
         $renderer = \Config\Services::renderer();
         // Merge Language Data
-        if (is_array($this->getLanguage())) {
-            $data = array_merge($this->getLanguage(), $data);
-        }
+        // if (is_array($this->getLanguage())) {
+        //     $data = array_merge($this->getLanguage(), $data);
+        // }
 
         // Parts
-        $data['header']      = view_cell('\Admin\Controllers\Common\Header::index', null, 900);
-        $data['column_left'] = view_cell('\Admin\Controllers\Common\Column_left::index', null, 900);
-        $data['footer']      = view_cell('\Admin\Controllers\Common\Footer::index', null, 900);
+        $data['header']      = view_cell('\Admin\Controllers\Common\Header::index', null, $this->ttl);
+        $data['column_left'] = view_cell('\Admin\Controllers\Common\Column_left::index', null, $this->ttl);
+        $data['footer']      = view_cell('\Admin\Controllers\Common\Footer::index', null, $this->ttl);
 
         echo $renderer->setData($data)->render($type . '\Views\template\\' . $view);
     }

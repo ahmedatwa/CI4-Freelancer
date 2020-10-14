@@ -2,8 +2,8 @@
         
 return [
     'text_dashboard'       => 'Dashboard',
-    'text_messages'        => 'Messages',
-    'text_reviews'         => 'Reviews',
+    'text_messages'        => 'Inbox',
+    'text_reviews'         => 'Feedback',
     'text_settings'        => 'Settings',
     'text_logout'          => 'Logout',
     'text_projects'        => 'Projects',

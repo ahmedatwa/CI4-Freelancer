@@ -1,18 +1,18 @@
 <?php echo $header; ?><?php echo $dashboard_menu ;?>
 <!-- Dashboard Content -->
-<div class="dashboard-content-container container margin-top-40">
+<div class="dashboard-content-container container margin-top-40 rounded shadow-box">
 	<div class="dashboard-content-inner" >
 		<!-- Dashboard Headline -->
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>
 			<!-- Breadcrumbs -->
-			<nav id="breadcrumbs" class="dark">
+			<!-- <nav id="breadcrumbs" class="dark">
 				<ul>
-					<?php foreach ($breadcrumbs as $breadcrumb) { ?>
-						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-					<?php } ?>
+					<?php //foreach ($breadcrumbs as $breadcrumb) { ?>
+						<li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
+					<?php //} ?>
 				</ul>
-			</nav>
+			</nav> -->
 		</div>
 		<!-- Row -->
 		<div class="row">
@@ -83,7 +83,7 @@
 													<span class="bidding-detail"><?php echo $text_hourly_rate; ?></span>
 													<!-- Slider -->
 													<div class="bidding-value margin-bottom-10">EGP<span id="biddingVal"></span></div>
-													<input class="bidding-slider" type="text" value="" data-slider-handle="custom" data-slider-currency="EGP" data-slider-min="5" data-slider-max="150" data-slider-value="35" data-slider-step="1" data-slider-tooltip="hide" />
+													<input name="rate" class="bidding-slider" type="text" value="" data-slider-handle="custom" data-slider-currency="EGP" data-slider-min="5" data-slider-max="150" data-slider-value="35" data-slider-step="1" data-slider-tooltip="hide" />
 												</div>
 											</div>
 										</div>
@@ -336,48 +336,36 @@
 								<div class="accordion-body__contents">
 									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="skills_csrf_token" />
 									<input type="hidden" name="freelancer_id" value="<?php echo $customer_id; ?>" />
+									<input type="hidden" name="category_id" value="" />
 									<div class="form-row">
-										<div class="form-group col-md-6">
-											<label for="input-filter_skill"><?php echo $entry_skill; ?></label>
-											<input name="skill_id" type="hidden">
-											<input type="text" class="form-control" id="input-filter-skill" name="filter_skill" placeholder="<?php echo $text_add_skill; ?>" value="">
-											<small id="skill_error" class="form-text text-muted"></small>
+										<label for="input-filter_skill"><?php echo $entry_skill; ?></label>
+										<div class="input-group mb-3">
+											<input type="text" class="form-control" id="input-filter-skill" name="filter_category" placeholder="<?php echo $text_add_skill; ?>" value="">
+											<div class="input-group-append">
+												<button class="btn btn-primary" type="button" id="button-add-skill"><i class="icon-material-outline-add"></i></button>
+											</div>
+											
 										</div>
-										<div class="form-group col-md-6">
-											<label for="input-skill-level"><?php echo $entry_skill_level; ?></label>
-												<select id="input-skill-level" class="form-control" name="skill_level">
-													<option value=""><?php echo $text_select; ?></option>
-													<option value="beginner"><?php echo $text_beginner; ?></option>
-													<option value="intermediate"><?php echo $text_intermediate; ?>
-												</option>
-												<option value="expert"><?php echo $text_expert; ?></option>
-											</select>
-										<small id="skill_level_error" class="form-text text-muted"></small>
+										<small id="category_error" class="form-text text-muted"></small>
 									</div>
-									<div class="col-md-12">
-										<button class="button ripple-effect float-right" id="add-skill" data-loading-text="<?php echo $text_loading; ?>"
-											type="button"><i class="icon-material-outline-add"></i> <?php echo $button_add;?></button>  
-										</div>
-									</div> 
 									<hr />         
 									<div id="skills-list"></div>    
 								</div>
 							</div>
-								</div>
-									
-							</div>
 						</div>
+
 					</div>
-				</div> <!--row-->
+				</div>
 			</div>
-		</div>
-		
+		</div> <!--row-->
+	</div>
+</div>
 <!-- Certifications START -->
 <script type="text/javascript">
 $('#add-certificate').on('click', function(){
 	event.preventDefault();
     $.ajax({
-        url: 'account/certificates/add',
+        url: 'account/setting/addCertificate',
         type: 'post',
         dataType: 'json',
         data: $('#certificates input[name=\'name\'], #certificates select[name=\'certificate_year\'], #certificates #csrf_token, #certificates input[name=\'freelancer_id\']'),
@@ -397,7 +385,7 @@ $('#add-certificate').on('click', function(){
                 $('#error_certificate_year').append('<span class="text-danger">' + json['error_year'] + '</span>');
             }
             if (json['success']) {
-                $('#certificates-list').load('account/certificates');
+                $('#certificates-list').load('account/setting/getCertificates');
 
                 $('#certificates-list').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
             }
@@ -415,13 +403,13 @@ $('#certificates-list').on('click', '.pagination a', function(e) {
     $('#certificates-list').fadeIn('slow');
 });
 // load the Certificates List Table 
-$('#certificates-list').load('account/certificates');
+$('#certificates-list').load('account/setting/getCertificates');
 //  Certificates Delete Button 
 $('#certificates-list').on('click', 'button[id^=\'button-delete-certificate\']', function() {
     if (confirm('<?php echo $text_sure; ?>')) {
         var node = this;
         $.ajax({
-            url: 'account/certificates/delete?certificate_id=' + $(node).val(),
+            url: 'account/setting/deleteCertificate?certificate_id=' + $(node).val(),
             method : 'POST',
             dataType: 'json',
             beforeSend: function() {
@@ -438,7 +426,7 @@ $('#certificates-list').on('click', 'button[id^=\'button-delete-certificate\']',
                 }
 
                 if (json['success']) {
-                    $('#certificates-list').load('account/certificates');
+                    $('#certificates-list').load('account/setting/getCertificates');
                     $('#certificates-list').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
             },
@@ -455,7 +443,7 @@ $('#certificates-list').on('click', 'button[id^=\'button-delete-certificate\']',
 $('input[name=\'filter_university\']').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'account/education/university?filter_university=' + encodeURIComponent(request.term),
+            url: 'account/setting/universitiesAutocomplete?filter_university=' + encodeURIComponent(request.term),
             dataType : 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -479,7 +467,7 @@ $('input[name=\'filter_university\']').autocomplete({
 $('input[name=\'filter_major\']').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'account/education/major?filter_major=' + encodeURIComponent(request.term),
+            url: 'account/setting/majorsAutocomplete?filter_major=' + encodeURIComponent(request.term),
             dataType : 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -501,7 +489,7 @@ $('input[name=\'filter_major\']').autocomplete({
 $('#add-education').on('click', function(){
 	 event.preventDefault();
     $.ajax({
-        url: 'account/education/add',
+        url: 'account/setting/addEducation',
         type: 'post',
         dataType: 'json',
         data: $('#educationAccordion input[name=\'education_country\'], #educationAccordion select[name=\'major_title\'], #educationAccordion input[name=\'major_id\'], #educationAccordion select[name=\'major_year\'], #educationAccordion input[type=\'hidden\']'),
@@ -523,7 +511,7 @@ $('#add-education').on('click', function(){
             }
 
             if (json['success']) {
-                $('#educations-list').load('account/education');
+                $('#educations-list').load('account/setting/getEducation');
                 $('#educations-list').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
             }
         },
@@ -540,13 +528,13 @@ $('#educations-list').on('click', '.pagination a', function(e) {
     $('#educations-list').fadeIn('slow');
 });
 // load the Educations List Table 
-$('#educations-list').load('account/education');
+$('#educations-list').load('account/setting/getEducation');
 //  Educations Delete Button 
 $('#educations-list').on('click', 'button[id^=\'button-delete-education\']', function() {
     if (confirm('<?php echo $text_sure; ?>')) {
         var node = this;
         $.ajax({
-            url: 'account/education/delete?education_id=' + $(node).val(),
+            url: 'account/setting/deleteEducation?education_id=' + $(node).val(),
             dataType: 'json',
             beforeSend: function() {
                 $(node).button('loading');
@@ -563,7 +551,7 @@ $('#educations-list').on('click', 'button[id^=\'button-delete-education\']', fun
                 }
 
                 if (json['success']) {
-                    $('#educations-list').load('account/education');
+                    $('#educations-list').load('account/setting/getEducation');
                     $('#educations-list').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
             },
@@ -580,7 +568,7 @@ $('#educations-list').on('click', 'button[id^=\'button-delete-education\']', fun
 $('input[name=\'filter_language\']').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'account/language/autocomplete?filter_language=' + encodeURIComponent(request.term),
+            url: 'account/setting/languagesAutocomplete?filter_language=' + encodeURIComponent(request.term),
             dataType : 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -601,7 +589,7 @@ $('input[name=\'filter_language\']').autocomplete({
 
 $('#add-language').on('click', function(){
     $.ajax({
-        url: 'account/language/add',
+        url: 'account/setting/addLanguage',
         type: 'post',
         dataType: 'json',
         data: $('#languageAccordion select[name=\'language_level\'], #languageAccordion input[type=\'hidden\']'),
@@ -622,7 +610,7 @@ $('#add-language').on('click', function(){
             }
 
             if (json['success']) {
-                $('#languages-list').load('account/language');
+                $('#languages-list').load('account/setting/getLanguages');
                 $('#languages-list').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
             }
         },
@@ -639,13 +627,13 @@ $('#languages-list').on('click', '.pagination a', function(e) {
     $('#languages-list').fadeIn('slow');
 });
 // load the Languages List Table 
-$('#languages-list').load('account/language');
+$('#languages-list').load('account/setting/getLanguages');
 //  Languages Delete Button 
 $('#languages-list').on('click', 'button[id^=\'button-delete-language\']', function() {
     if (confirm('<?php echo $text_sure; ?>')) {
         var node = this;
         $.ajax({
-            url: 'account/language/delete?language_id=' + $(node).val(),
+            url: 'account/setting/deleteLanguage?language_id=' + $(node).val(),
             dataType: 'json',
             beforeSend: function() {
                 $(node).button('loading');
@@ -661,7 +649,7 @@ $('#languages-list').on('click', 'button[id^=\'button-delete-language\']', funct
                 }
 
                 if (json['success']) {
-                    $('#languages-list').load('account/language');
+                    $('#languages-list').load('account/setting/getLanguages');
                     $('#languages-list').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +json['success'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
             },
@@ -675,16 +663,16 @@ $('#languages-list').on('click', 'button[id^=\'button-delete-language\']', funct
 <!-- languages End -->
 <!-- Skills Start -->
 <script type="text/javascript">
-$('input[name=\'filter_skill\']').autocomplete({
+$('input[name=\'filter_category\']').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'account/skill/autocomplete?filter_skill=' + encodeURIComponent(request.term),
+            url: 'project/category/autocomplete?filter_category=' + encodeURIComponent(request.term),
             dataType : 'json',
             success: function(json) {
                 response($.map(json, function(item) {
                     return {
-                        label: item['text'],
-                        value: item['skill_id'],
+                        label: item['name'],
+                        value: item['category_id'],
                     }
                 }));
             }
@@ -692,17 +680,17 @@ $('input[name=\'filter_skill\']').autocomplete({
     },
     'select': function(event, ui) {
         event.preventDefault();
-        $('input[name=\'skill_id\']').val(ui.item.value);
-        $('input[name=\'filter_skill\']').val(ui.item.label);
+        $('input[name=\'category_id\']').val(ui.item.value);
+        $('input[name=\'filter_category\']').val(ui.item.label);
     }
 });
-$('#add-skill').on('click', function(){
+$('#button-add-skill').on('click', function(){
 	 event.preventDefault();
     $.ajax({
-        url: 'account/skill/add',
+        url: 'account/setting/addSkill',
         type: 'post',
         dataType: 'json',
-        data: $('#skillsAccordion input[type=\'hidden\'], #skillsAccordion select[name=\'skill_level\']'),
+        data: $('#skillsAccordion input[type=\'hidden\']'),
         beforeSend: function() {
             $('#add-skill').button('loading');
         },
@@ -714,13 +702,12 @@ $('#add-skill').on('click', function(){
             $('.text-danger').remove();
 
             if (json['error']) {
-                $('#skills-card').before('<div class="alert alert-warning"><span class="alert_icon lnr lnr-warning"></span> ' + json['error'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                $('#skill_error').append('<span class="text-danger">' + json['error_skill'] + '</span>');
-                $('#skill_level_error').append('<span class="text-danger">' + json['error_level'] + '</span>');
+                //$('#skills-list').before('<div class="alert alert-warning"><span class="alert_icon lnr lnr-warning"></span> ' + json['error'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#category_error').append('<span class="text-danger">' + json['error_category'] + '</span>');
             }
 
             if (json['success']) {
-                $('#skills-list').load('account/skill');
+                $('#skills-list').load('account/setting/getSkills');
                 $('#skills-list').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
             }
         },
@@ -737,13 +724,13 @@ $('#skills-list').on('click', '.pagination a', function(e) {
     $('#skills-list').fadeIn('slow');
 });
 // load the Skills List Table 
-$('#skills-list').load('account/skill');
+$('#skills-list').load('account/setting/getSkills');
 //  Skills Delete Button 
 $('#skills-list').on('click', 'button[id^=\'button-delete-skill\']', function() {
     if (confirm('<?php echo $text_sure; ?>')) {
         var node = this;
         $.ajax({
-            url: 'account/skill/delete?skill_id=' + $(node).val(),
+            url: 'account/setting/deleteSkill?category_id=' + $(node).val(),
             dataType: 'json',
             beforeSend: function() {
                 $(node).button('loading');
@@ -760,7 +747,7 @@ $('#skills-list').on('click', 'button[id^=\'button-delete-skill\']', function() 
                 }
 
                 if (json['success']) {
-                    $('#skills-list').load('account/skill');
+                    $('#skills-list').load('account/setting/GetSkills');
                     $('#skills-list').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
             },

@@ -214,7 +214,7 @@ class Filemanager extends \Admin\Controllers\BaseController
 
     public function folder()
     {
-        $json = array();
+        $json = [];
 
         // Check user has permission
         if (!$this->user->hasPermission('modify', $this->getRoute())) {

@@ -5,7 +5,7 @@ use CodeIgniter\Model;
 class Project_statuses extends Model
 {
     protected $table          = 'project_status';
-    protected $primaryKey     = 'project_status_id';
+    protected $primaryKey     = 'status_id';
     protected $returnType     = 'array';
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;

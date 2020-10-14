@@ -16,7 +16,7 @@ class Register extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/register.heading_title'),
-            'href' => route_to('register'),
+            'href' => route_to('register') ?? base_url('account/register'),
         ];
 
         $customerModel = new CustomerModel();
@@ -27,9 +27,8 @@ class Register extends \Catalog\Controllers\BaseController
 
             // Clear any previous login attempts for unregistered accounts.
             $customerModel->deleteLoginAttempts($this->request->getPost('email'));
-            //$this->customer->login($this->request->getPost('email'), $this->request->getPost('password'));
-            helper('text');
-            $customerModel->editCode($this->request->getPost('email'), random_string('alnum', 10));
+            //helper('text');
+            //$customerModel->editCode($this->request->getPost('email'), random_string('alnum', 40));
             $this->session->setFlashdata('success', lang('account/register.text_success'));
         }
 
@@ -37,7 +36,7 @@ class Register extends \Catalog\Controllers\BaseController
         $data['entry_password']  = lang('account/register.entry_password');
         $data['entry_confirm']   = lang('account/register.entry_confirm');
         $data['heading_title']   = lang('account/register.heading_title');
-        $data['text_login']      = sprintf(lang('account/register.text_login'), route_to('account/login'));
+        $data['text_login']      = sprintf(lang('account/register.text_login'), base_url('account/login'));
         $data['text_register']   = lang('account/register.text_register');
         $data['button_register'] = lang('account/register.button_register');
 

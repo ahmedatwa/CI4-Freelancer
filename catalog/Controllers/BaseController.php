@@ -96,7 +96,7 @@ class BaseController extends \CodeIgniter\Controller
     public function currencyFormat(float $num)
     {
         helper('number');
-        return number_to_currency($num, $this->registry->get('config_currency'), $this->locale);
+        return number_to_currency($num, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale);
     }
 
     public function dateAfter(string $date_end)
@@ -107,23 +107,45 @@ class BaseController extends \CodeIgniter\Controller
         $time2 = $time::parse($date_end);
 
         return $time1->isAfter($time2);
-
     }
-    public function dateDifference(string $added, string $end = null)
+
+    public function dateModify(string $data_added, int $num)
     {
         $time  = new \CodeIgniter\I18n\Time;
 
-        if (!$end) {
-           $date = $time::parse($added);
+        $time = $time::parse($data_added);
+        $time->subDays($num);
+        return $time->toDateTimeString();
+    }
+
+    public function dateDifference(string $date_added, int $runtime = null)
+    {
+        $time  = new \CodeIgniter\I18n\Time;
+
+        if (!$runtime) {
+           $date = $time::parse($date_added);
            return $date->humanize();
         }
 
-        $date_added = $time::parse($added);
-        $date_end   = $time::parse($end);
+        $time = $time::parse($date_added);
+        $endDate = $time->addDays($runtime)->toDateTimeString();
 
-        $diff = $date_added->difference($date_end);
+        $oldDate = $time::parse($date_added);
+        
+        $diff = $oldDate->difference($endDate);
 
-        return 'Open - ' . $diff->getDays() . ' Days left'; 
+        return $diff->getDays(); 
+    }
+
+    public function addDays(string $date_added, string $runtime)
+    {
+        $timeLib  = new \CodeIgniter\I18n\Time;
+        $time = $timeLib::parse($date_added);
+
+        $sub = $time->addDays($runtime);
+
+        return $sub->toDateString();   
+
     }
 
     // -----------------------------------------------------------------

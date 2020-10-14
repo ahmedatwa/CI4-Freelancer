@@ -10,6 +10,7 @@
     'text_footer'             => '© ' . Date('Y') . ' <strong>' . service('registry')->get('config_name') .'</strong>. All Rights Reserved.',
     'text_newsletter'         => 'Sign Up For a Newsletter',
     'help_newsletter'         => 'Weekly breaking news, analysis and cutting edge advices on job searching.', 
+    'text_project_added'      => '%s, $s.', 
     // Entry
     'entry_email'             => 'E-Mail Address',    
     ];

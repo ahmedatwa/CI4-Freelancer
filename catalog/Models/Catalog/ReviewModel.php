@@ -24,6 +24,15 @@ class ReviewModel extends \CodeIgniter\Model
         return round($query['total']);
     }
 
+    public function getFreelancerReview($freelancer_id)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->select('*, AVG(rating)');
+        $builder->where(['freelancer_id' => $freelancer_id, 'status' => 1]);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
+
     // public function getFreelancerReviews($data = [])
     // {
     //     $builder = $this->db->table('review r');

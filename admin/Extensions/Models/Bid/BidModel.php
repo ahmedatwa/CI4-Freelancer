@@ -2,7 +2,7 @@
 
 class BidModel extends \CodeIgniter\Model
 {
-    protected $table          = 'bids';
+    protected $table          = 'project_bids';
     protected $primaryKey     = 'bid_id';
     protected $returnType     = 'array';
     // should use for keep data record create timestamp
@@ -11,16 +11,16 @@ class BidModel extends \CodeIgniter\Model
 
     public function getBids(array $data =[])
     {
-        $builder = $this->db->table('bids b');
-        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, b.price, b.date_added, b.bid_id, b.status, pd.name, b.delivery');
-        $builder->join('customer c', 'b.freelancer_id = c.customer_id', 'left');
-        $builder->join('project_description pd', 'b.project_id = pd.project_id', 'left');
+        $builder = $this->db->table('project_bids pb');
+        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, pb.quote, pb.date_added, pb.bid_id, pb.status, pd.name, pb.delivery');
+        $builder->join('customer c', 'pb.freelancer_id = c.customer_id', 'left');
+        $builder->join('project_description pd', 'pb.project_id = pd.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
-            $builder->orderBy('b.date_added', 'DESC');
+            $builder->orderBy('pb.date_added', 'DESC');
         } else {
-            $builder->orderBy('b.date_added', 'ASC');
+            $builder->orderBy('pb.date_added', 'ASC');
         }
 
         if (isset($data['start']) || isset($data['limit'])) {

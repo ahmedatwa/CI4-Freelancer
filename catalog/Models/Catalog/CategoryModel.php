@@ -22,13 +22,14 @@ class CategoryModel extends \CodeIgniter\Model
         $builder->select('category_description.category_id, category_description.name, category.sort_order, category.status');
         $builder->join('category_description', 'category.category_id = category_description.category_id', 'left');
         $builder->where('category_description.language_id', service('registry')->get('config_language_id'));
+        $builder->where('category.status !=', '0');
 
         if (isset($data['category_id'])) {
             $builder->where('category.parent_id', $data['category_id']);
         }
 
-        if (isset($data['parent_id'])) {
-            $builder->where('category.parent_id', $data['parent_id']);
+        if (isset($data['filter_name'])) {
+            $builder->like('category_description.name', $data['filter_name'], 'both');
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
@@ -74,27 +75,12 @@ class CategoryModel extends \CodeIgniter\Model
          
     }
 
-    // public function getCategoryChildren($category_id)
-    // {
-    //     $children = array();
-
-    //     $builder = $this->db->table('category');
-    //     $builder->distinct('category.category_id, cd.name, category.sort_order, category.status');
-    //     $builder->join('category_description', 'category_description.category_id = category.category_id', 'left');
-    //     $builder->where('category_description.language_id', service('registry')->get('config_language_id'));
-    //     $builder->where('category.parent_id', $category_id);
-    //     $builder->where('category.parent_id !=', 0);
-    //     $query = $builder->get();
-    //     foreach ($query->getResultArray() as $result) {
-    //         $children[] = [
-    //             'name'        => $result['name'],
-    //             'category_id' => $result['category_id']
-    //         ];
-    //      return $children;
-    //     }
-
-   
-    // }
+    public function getTotalProjectsByCategoryId($category_id)
+    {
+        $builder = $this->db->table('project_to_category');
+        $builder->where('category_id', $category_id);
+        return $builder->countAllResults();
+    }
 
     public function getTotalCategories()
     {

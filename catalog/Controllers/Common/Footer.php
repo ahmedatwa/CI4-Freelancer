@@ -10,10 +10,13 @@ class Footer extends \Catalog\Controllers\BaseController
         $seo_url = service('seo_url');
 
         foreach ($informations->getInformations(4) as $result) {
-            $data['informations'][] = [
+
+            $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
+
+               $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
-                'href'           => route_to('information', $seo_url->getKeywordByQuery('information_id=' . $result['information_id'])),
+                'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/information?fid=' . $result['information_id']),
             ];
         }
 
@@ -29,10 +32,11 @@ class Footer extends \Catalog\Controllers\BaseController
 
         $results = $categoryModel->getCategories($filter_data);
         foreach ($results as $result) {
+            $keyword = $seo_url->getKeywordByQuery('category_id=' . $result['category_id']);
             $data['categories'][] = [
             'category_id' => $result['category_id'],
             'name'        => $result['name'],
-            'href'        => route_to('project/category', $seo_url->getKeywordByQuery('category_id=' . $result['category_id'])),
+            'href'        => ($keyword) ? route_to('categories', $keyword) : base_url('project/category?gid=' . $result['category_id']),
          ];
         }
 
@@ -48,12 +52,22 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['help_newsletter']         = lang('common/footer.help_newsletter');
         $data['entry_email']             = lang('common/footer.entry_email');
 
-        $data['contact']     = route_to('information/contact');
-        $data['blog']        = route_to('blog');
-        $data['freelancers'] = route_to('freelancers');
-        $data['projects']    = route_to('projects');
-        $data['add_project'] = route_to('project/add');
-        $data['add_job']     = route_to('add_job');
+        $data['contact']     = base_url('information/contact');
+        $data['blog']        = base_url('blog');
+        $data['freelancers'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');
+        $data['projects']    = base_url('project/category');
+        $data['add_project'] = base_url('project/project/add');
+        $data['add_job']     = base_url('add_job');
+
+        $data['project_added'] = $this->session->getFlashdata('project_added');
+
+        $data['config_name'] = $this->registry->get('config_name');
+        
+        if (is_file(DIR_IMAGE . $this->registry->get('config_logo'))) {
+            $data['logo'] = base_url() . '/images/' . $this->registry->get('config_logo');
+        } else {
+            $data['logo'] = '';
+        }
 
         if ($this->registry->get('config_customer_online')) {
             $online_model = new \Catalog\Models\Tool\Online();
@@ -87,6 +101,9 @@ class Footer extends \Catalog\Controllers\BaseController
 
         $data['scripts'] = $this->template->getScripts();
 
+        $data['new_project_alert'] = $this->session->getFlashdata('new_project_add');
+
+        $data['currency'] = view_cell('\Catalog\Controllers\Common\Currency::index');
 
         return view('common/footer', $data);
     }

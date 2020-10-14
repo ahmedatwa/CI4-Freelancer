@@ -9,8 +9,6 @@ return [
 'text_skills'         => 'Skills',
 'text_languages'      => 'Languages',
 'text_state'          => 'Project State',
-'text_fixed_price'    => 'Fixed Price',
-'text_per_hour'       => 'Hourly Rate',
 'text_about'          => 'About the Employer',
 'text_attachments'    => 'Attachments',
 'text_success'        => 'Success: Bid has been placed successfully!',
@@ -20,6 +18,8 @@ return [
 'text_search_keyword' => 'Search Keyword',
 'text_all_open_closed' => 'All open and closed projects',
 'text_all_open' => 'All open projects',
+'text_min' => 'Budget Min',
+'text_max' => 'Budget Max',
 // button
 'button_search'       => 'Search',
 'button_bid_now' => 'Bid Now',

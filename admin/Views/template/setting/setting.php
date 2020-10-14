@@ -179,13 +179,27 @@
 			<div class="col-sm-10">
 				<select name="config_project_status_id" class="form-control">
 				<?php foreach($project_statuses as $project_status) { ?>
-				<?php if ($project_status['project_status_id'] == $config_project_status_id) { ?>
-					<option value="<?php echo $project_status['project_status_id']; ?>" selected><?php echo $project_status['name']; ?></option>	
+				<?php if ($project_status['status_id'] == $config_project_status_id) { ?>
+					<option value="<?php echo $project_status['status_id']; ?>" selected><?php echo $project_status['name']; ?></option>	
 				<?php } else { ?>
-					<option value="<?php echo $project_status['project_status_id']; ?>"><?php echo $project_status['name']; ?></option>	
+					<option value="<?php echo $project_status['status_id']; ?>"><?php echo $project_status['name']; ?></option>	
 				<?php } ?>
 				<?php } ?>
 					</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 control-label" for="input-project-status"><?php echo $entry_project_status; ?> </label>
+			<div class="col-sm-10">
+				<select name="config_project_completed_status" class="form-control">
+					<?php foreach($project_statuses as $project_status) { ?>
+						<?php if ($project_status['status_id'] == $config_project_completed_status) { ?>
+							<option value="<?php echo $project_status['status_id']; ?>" selected><?php echo $project_status['name']; ?></option>	
+						<?php } else { ?>
+							<option value="<?php echo $project_status['status_id']; ?>"><?php echo $project_status['name']; ?></option>	
+						<?php } ?>
+					<?php } ?>
+				</select>
 			</div>
 		</div>
 		<fieldset>

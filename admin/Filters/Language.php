@@ -7,74 +7,73 @@ use Config\Services;
 
 class Language implements FilterInterface
 {
+    protected $LangData = [];
 
     public function before(RequestInterface $request)
     {
+        
         $view = \Config\Services::renderer();
-
-        $language = [];
-        static $route = '';
         $loader = Services::locator(true);
         // Getting the Current Url Segment
         $uri = new \CodeIgniter\HTTP\URI((string) current_url(true));
 
-        $total_segments = $uri->getTotalSegments();
+        $language = [];
 
-        if ($total_segments != 1) {
-            $last = $loader->locateFile($uri->getSegment(4), 'Controllers/' .$uri->getSegment(2) . '/' . $uri->getSegment(3));
-            // for named routes controller name must be the same folder name
-            if ($last) {
-                $route = $uri->getSegment(2) . '/' . $uri->getSegment(3)  . '/' . $uri->getSegment(4);
-            } else {
-                $route = $uri->getSegment(2) . '/' . $uri->getSegment(3);
-            }
+        $route = '';
 
-            if ($route) {
-                // Check if Lang File Exists
-                static $route_language_path = '';
+        $parts = $uri->getSegments();
 
-                $default_path = $loader->locateFile($route, 'Language/' . config('App')->defaultLocale);
-                $modules_path = $loader->locateFile($route, 'Modules/Language/' . config('App')->defaultLocale);
-
-                // throw exception error if not found
-                if ($default_path) {
-                    $route_language_path = $default_path;
-                } else {
-                    $route_language_path = $modules_path;
-                }
-
-                if (! $route_language_path) {
-                    throw new \Exception("Language File couldn't be found!");
-                }
-
-                $route_language = lang($route . '.list');
-
-                // Combining the Master Language File if Exists
-
-                $master_language_path = $loader->locateFile('en', 'Language/' . config('App')->defaultLocale);
-
-                if (! file_exists($master_language_path)) {
-                    $master_language = array();
-                } else {
-                    $master_language = lang('en.list');
-                }
-                // escape if .list lang not found
-                if (! is_array($route_language)) {
-                    $language = $master_language;
-                } else {
-                    $language = array_merge($master_language, $route_language);
-                }
-            } else {
-                // Silet Segment unreachable Error
-                $uri->setSilent();
-            }
+        if (isset($parts[0]) && ($parts[0] == 'extensions')) {
+             unset($parts[0]);
         }
 
-        $view->setData($language);
+        // check if the last string is a method
+        $methods = ['install', 'uninstall', 'add', 'edit', 'delete'];
+
+        $last = end($parts);
+        
+        if (in_array($last, $methods)) {
+            array_pop($parts);
+        }
+
+        $route = implode('/', $parts);
+        
+        if ($route) {
+
+            $routeLang = [];
+
+            $routeLang = lang($route . '.list');
+
+            // Combining the Master Language File if Exists
+
+            $primaryLangPath = $loader->locateFile('en', 'Language/' . config('App')->defaultLocale);
+
+            $primaryLang = [];
+
+            if ($primaryLangPath) {
+                $primaryLang = lang(config('App')->defaultLocale . '.list');
+            }
+           
+            $language = array_merge($primaryLang, (array)$routeLang);
+           }
+           $data = [];
+           
+          
+          $this->LangData = $view->setData($language);
+          
+         
+        //   foreach ($this->LangData as $key => $value)
+        //   {
+        //      var_dump($route . '.' . $key); 
+        //       lang($route . '.' . $key);
+        //   }
+          
     }
 
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    public function after(RequestInterface $request, ResponseInterface $response)
     {
+        //var_dump($request);
+        //return $this->LangData;
     }
 
     // ----------------------------------------------------

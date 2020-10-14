@@ -63,6 +63,7 @@ return [
     'entry_language_level'    => 'Language Level',
     'entry_skill' => 'Skills Name',
     'entry_skill_level'    => 'Skill Level',
+    'entry_hourly_rate'    => 'Hourly Rate',
     // column
     'column_name'            => 'Name',
     'column_year'            => 'Year',

@@ -4,6 +4,17 @@ use \Catalog\Models\Extension\Blog\BlogModel;
 
 class Blog extends \Catalog\Controllers\BaseController
 {
+    public function view()
+    {
+
+      $this->template->setTitle(lang('extension/blog/blog.heading_title'));
+
+      $blogMdel = new BlogModel();
+
+      $this->getPost();
+
+    }
+
     public function index()
     {
         $this->template->setTitle(lang('extension/blog/blog.heading_title'));
@@ -20,24 +31,59 @@ class Blog extends \Catalog\Controllers\BaseController
             'href' => route_to('blog'),
         ];
 
+        if ($this->request->getVar('sort_by')) {
+            $sort_by = $this->request->getVar('sort_by');
+        } else {
+            $sort_by = 'b.date_added';
+        }
+       
+        if ($this->request->getVar('order_by')) {
+            $order_by = $this->request->getVar('order_by');
+        } else {
+            $order_by = 'DESC';
+        }
+
+        if ($this->request->getVar('limit')) {
+            $limit = $this->request->getVar('limit');
+        } else {
+            $limit = 20;
+        }
+
+        if ($this->request->getVar('page')) {
+            $page = $this->request->getVar('page');
+        } else {
+            $page = 1;
+        }
+
         $filter_data = [
-            'start'   => 0,
-            'limit'   => 20
+            'sort_by'    => $sort_by,
+            'order_by'   => $order_by,
+            'limit'      => $limit,
+            'start'      => ($page - 1) * $limit,
         ];
 
         $data['posts'] = [];
 
         $blogMdel = new BlogModel();
         $results = $blogMdel->getPosts($filter_data);
+        $total = $blogMdel->getTotalPosts();
 
         helper('text');
+        $seo_url = service('seo_url');
 
         foreach ($results as $result) {
+            $keyword = $seo_url->getKeywordByQuery('post_id=' . $result['post_id']);
+            if ($result['image']) {
+                $image = $this->resize($result['image'], 260, 270);
+            } else {
+                $image = $this->resize('no_image.jpg', 260, 270);
+            }
+
             $data['posts'][] = [
                 'title' => $result['title'],
-                'image' => $this->resize($result['image'], 260, 270),
+                'image' => $image,
                 'body'  => word_limiter($result['body'], 80),
-                'href'  => route_to('blog/post', getKeywordByQuery('post_id=' . $result['post_id'])),
+                'href'  => ($keyword) ? route_to('blog/post', $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
                 'date_added' => $this->dateDifference($result['date_added']),
             ];
         }
@@ -45,11 +91,12 @@ class Blog extends \Catalog\Controllers\BaseController
         $data['featured'] = [];
         $featured = $blogMdel->getFeaturedPosts(10);
         foreach ($featured as $result) {
+            $keyword = $seo_url->getKeywordByQuery('post_id=' . $result['post_id']);
             $data['featured'][] = [
                 'title' => $result['title'],
                 'image' => $this->resize($result['image'], 374, 460),
                 'body'  => word_limiter($result['body'], 20),
-                'href'  => route_to('blog/post', getKeywordByQuery('post_id=' . $result['post_id'])),
+                'href'  => ($keyword) ? route_to('blog/post', $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
                 'date_added' => $this->dateDifference($result['date_added']),
             ];
         }
@@ -57,11 +104,12 @@ class Blog extends \Catalog\Controllers\BaseController
         $data['trending'] = [];
         $trending = $blogMdel->getTrendingPosts(3);
         foreach ($trending as $result) {
+            $keyword = $seo_url->getKeywordByQuery('post_id=' . $result['post_id']);
             $data['trending'][] = [
                 'title' => $result['title'],
                 'image' => $this->resize($result['image'], 358, 142),
                 'body'  => word_limiter($result['body'], 10),
-                'href'  => route_to('blog/post', getKeywordByQuery('post_id=' . $result['post_id'])),
+                'href'  => ($keyword) ? route_to('blog/post', $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
                 'date_added' => $this->dateDifference($result['date_added']),
             ];
         }
@@ -72,6 +120,10 @@ class Blog extends \Catalog\Controllers\BaseController
         $data['text_trending'] = lang('extension/blog/blog.text_trending');
         $data['text_social']   = lang('extension/blog/blog.text_social');
 
+        // Pagination
+        $pager = \Config\Services::pager();
+        $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
+
         $this->template->output('extension/blog/blog', $data);
     }
 
@@ -80,12 +132,15 @@ class Blog extends \Catalog\Controllers\BaseController
     {
         if ($this->request->getGet('post_id')) {
             $post_id = $this->request->getGet('post_id');
+        } elseif($this->request->getVar('post_id')) {
+            $post_id = $this->request->getVar('post_id');
         } else {
-            $post_id = null;
+            $post_id = 0;
         }
 
         $blogMdel = new BlogModel();
         $post_info = $blogMdel->getPost($post_id);
+        $seo_url = service('seo_url');
 
         // Breadcrumbs
         $data['breadcrumbs'] = [];
@@ -110,7 +165,7 @@ class Blog extends \Catalog\Controllers\BaseController
             $data['body']       = $post_info['body'];
             $data['date_added'] = $post_info['date_added'];
             $data['image']      = $post_info['image'];
-            $data['post_id']    = $this->request->getGet('post_id');
+            $data['post_id']    = $post_info['post_id'];
         } else {
             $data['title']      = '';
             $data['category']   = '';
@@ -142,10 +197,11 @@ class Blog extends \Catalog\Controllers\BaseController
         $data['trending'] = [];
         $trending = $blogMdel->getTrendingPosts(3);
         foreach ($trending as $result) {
+            $keyword = $seo_url->getKeywordByQuery('post_id=' . $result['post_id']);
             $data['trending'][] = [
                 'title'      => $result['title'],
                 'image' => $this->resize($result['image'], 358, 142),
-                'href'       => route_to('blog/post', getKeywordByQuery('post_id=' . $result['post_id'])),
+                'href'  => ($keyword) ? route_to('blog/post', $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
                 'date_added' => $this->dateDifference($result['date_added']),
             ];
         }

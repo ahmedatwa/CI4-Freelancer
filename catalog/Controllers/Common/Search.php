@@ -51,7 +51,7 @@ class Search extends \Catalog\Controllers\BaseController
             $page = 1;
         }
 
-        $filter_data = array(
+        $filter_data = [
             'filter_keyword'=> $filter_keyword,
             'filter' => $filter,
             'filter_price' => $filter_price,
@@ -59,7 +59,7 @@ class Search extends \Catalog\Controllers\BaseController
             'order_by'     => $orderBy,
             'limit'        => $limit,
             'start'        => ($page - 1) * $limit,
-        );
+        ];
 
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -113,19 +113,19 @@ class Search extends \Catalog\Controllers\BaseController
         $data['sorts'][] = [
             'text'  => lang('common/search.text_newest'),
             'value' => 'p.date_added-ASC',
-            'href'  => route_to('projects') . $this->request->getVar('category_id') . '&sort_by=s.price&order_by=ASC' . $url)
+            'href'  => base_url('project/category?gid=' . $this->request->getVar('category_id') . '&sort_by=s.price&order_by=ASC' . $url)
         ];
 
         $data['sorts'][] = [
             'text'  => lang('common/search.text_lowest'),
             'value' => 's.price-DESC',
-            'href'  => base_url('service/category?category_id=' . $this->request->getVar('category_id') . '&sort_by=s.price&order_by=DESC' .$url)
+            'href'  => base_url('project/category?gid=' . $this->request->getVar('category_id') . '&sort_by=s.price&order_by=DESC' .$url)
         ];
 
         $data['sorts'][] = [
             'text'  => lang('common/search.text_highest'),
             'value' => 's.price-DESC',
-            'href'  => base_url('service/category?category_id=' . $this->request->getVar('category_id') . '&sort_by=s.price&order_by=DESC' .$url)
+            'href'  => base_url('project/category?gid=' . $this->request->getVar('category_id') . '&sort_by=s.price&order_by=DESC' .$url)
         ];
 
 
@@ -147,16 +147,16 @@ class Search extends \Catalog\Controllers\BaseController
         sort($limits);
 
         foreach ($limits as $value) {
-            $data['limits'][] = array(
+            $data['limits'][] = [
                 'text'  => sprintf(lang('common/search.text_per_page'), $value),
                 'value' => $value,
                 'href'  => base_url('service/category?category_id=' . $this->request->getVar('category_id') . $url . '&limit=' . $value)
-            );
+            ];
         }
 
         $data['skills'] = [];
 
-        $projectModel->get
+        //$projectModel->get
 
         $data['heading_title']    = lang('common/search.heading_title');
         $data['text_price']       = lang('common/search.text_price');

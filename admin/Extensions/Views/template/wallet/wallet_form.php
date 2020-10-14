@@ -29,8 +29,8 @@
                 <div class="form-group row">
                   <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
                   <div class="col-sm-10">
-                    <select name="extension_wallet_status" id="input-status" class="form-control">
-                      <?php if ($extension_wallet_status) { ?>
+                    <select name="wallet_extension_status" id="input-status" class="form-control">
+                      <?php if ($wallet_extension_status) { ?>
                         <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                         <option value="0"><?php echo $text_disabled; ?></option>
                     <?php } else { ?>

@@ -19,7 +19,6 @@ class Header extends \Catalog\Controllers\BaseController
         $data['text_logout']      = lang('common/header.text_logout');
         $data['text_login']       = lang('common/header.text_login');
         $data['text_register']    = lang('common/header.text_register');
-        $data['text_how_it_works']        = lang('common/header.text_how_it_works');
         $data['text_projects']    = lang('common/header.text_projects');
         $data['text_dashboard']   = lang('common/header.text_dashboard');
         $data['text_setting']     = lang('common/header.text_setting');
@@ -42,7 +41,22 @@ class Header extends \Catalog\Controllers\BaseController
         $data['dashboard']   = base_url('account/dashboard?cid=' . $this->customer->getCustomerId());
         $data['projects']    = base_url('project/category');
         $data['add_project'] = base_url('project/project/add');
-        $data['how_it_works'] = route_to('information', 'how-it-works');
+
+        $data['informations'] = [];
+        
+        $informations = new \Catalog\Models\Catalog\Informations();
+        $seo_url = service('seo_url');
+
+        foreach ($informations->getInformations(4) as $result) {
+            if ($result['bottom'] == 0) {
+            $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
+            $data['informations'][] = [
+                'information_id' => $result['information_id'],
+                'title'          => $result['title'],
+                'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/Information?fid=' . $result['information_id']),
+            ];
+        }
+    }
 
         if ($this->registry->get('blog_extension_status')) {
             $data['text_blog'] = lang('common/header.text_blog');

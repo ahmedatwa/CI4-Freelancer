@@ -80,7 +80,7 @@ class BlogModel extends \CodeIgniter\Model
 
     public function getCommentsByPostId($post_id, $limit, $start=0)
     {
-        $builder = $this->db->table('blog_post_to_commet'); 
+        $builder = $this->db->table('blog_post_to_comment'); 
         $builder->select();
         $builder->where(['post_id' => $post_id, 'status' => 1]);
         $builder->orderBy('name', 'DESC');
@@ -91,7 +91,7 @@ class BlogModel extends \CodeIgniter\Model
 
     public function getTotalCommentsByPostId($post_id)
     {
-        $builder = $this->db->table('blog_post_to_commet');
+        $builder = $this->db->table('blog_post_to_comment');
         $builder->selectCount('post_id', 'total');
         $builder->where(['post_id' => $post_id, 'status' => 1]);
         $query = $builder->get()->getRowArray();
@@ -111,5 +111,12 @@ class BlogModel extends \CodeIgniter\Model
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($data);
     }
+
+    public function getTotalPosts()
+    {
+      $builder = $this->db->table('blog_post');
+      return $builder->countAll();
+    }
+
     // ----------------------------------------------------
 }

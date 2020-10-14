@@ -1,25 +1,28 @@
 <?php echo $header; ?>
-<!-- Content -->
-<div id="titlebar" class="white margin-bottom-30">
+<div id="titlebar" class="p-4">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<h2><?php echo $heading_title; ?></h2>
-				<span><?php echo $text_featured; ?></span>
-				<!-- Breadcrumbs -->
-				<nav id="breadcrumbs" class="dark">
-					<ul>
-						<?php foreach ($breadcrumbs as $breadcrumb) { ?>
-						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-						<?php } ?>
-					</ul>
-				</nav>
 			</div>
 		</div>
 	</div>
 </div>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<nav id="breadcrumbs">
+				<ul>
+					<?php foreach ($breadcrumbs as $breadcrumb) { ?>
+						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+					<?php } ?>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>	
 <!-- Recent Blog Posts -->
-<div class="section white padding-top-0 padding-bottom-60 full-width-carousel-fix">
+<div class="section gray padding-top-20 padding-bottom-60 full-width-carousel-fix">
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-12">
@@ -46,12 +49,12 @@
 </div>
 <!-- Recent Blog Posts / End -->
 <!-- Section -->
-<div class="section gray">
+<div class="section shadow-sm p-3 mb-5 bg-white rounded">
 	<div class="container">
 		<div class="row">
-			<div class="col-xl-8 col-lg-8">
+			<div class="col-8 section shadow p-3 mb-5 bg-white rounded">
 				<!-- Section Headline -->
-				<div class="section-headline margin-top-60 margin-bottom-35">
+				<div class="section-headline margin-top-20 margin-bottom-35">
 					<h4><?php echo $text_recent; ?></h4>
 				</div>
 				<!-- Blog Post -->
@@ -76,32 +79,11 @@
 				<?php } ?>
 				<!-- Pagination -->
 				<div class="clearfix"></div>
-				<div class="row">
-					<div class="col-md-12">
-						<!-- Pagination -->
-						<div class="pagination-container margin-top-10 margin-bottom-20">
-							<nav class="pagination">
-								<ul>
-									<li><a href="#" class="current-page ripple-effect">1</a></li>
-									<li><a href="#" class="ripple-effect">2</a></li>
-									<li><a href="#" class="ripple-effect">3</a></li>
-									<li class="pagination-arrow"><a href="#" class="ripple-effect"><i class="icon-material-outline-keyboard-arrow-right"></i></a></li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-				</div>
+				<?php echo $pagination; ?>
 				<!-- Pagination / End -->
 			</div>
-			<div class="col-xl-4 col-lg-4 content-left-offset">
-				<div class="sidebar-container margin-top-65">
-					<!-- Location -->
-					<div class="sidebar-widget margin-bottom-40">
-						<div class="input-with-icon">
-							<input id="autocomplete-input" type="text" placeholder="Search">
-							<i class="icon-material-outline-search"></i>
-						</div>
-					</div>
+			<div class="col">
+				<div class="sidebar-container">
 					<!-- Widget -->
 					<div class="sidebar-widget">
 						<h3><?php echo $text_trending; ?></h3>

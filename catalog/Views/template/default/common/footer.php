@@ -11,34 +11,33 @@
 						<div class="footer-rows-left">
 							<div class="footer-row">
 								<div class="footer-row-inner footer-logo">
-									<img src="images/logo2.png" alt="">
+									<img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>">
 								</div>
 							</div>
 						</div>
 						<!-- Right Side -->
 						<div class="footer-rows-right">
-
 							<!-- Social Icons -->
 							<div class="footer-row">
 								<div class="footer-row-inner">
 									<ul class="footer-social-links">
 										<li>
-											<a href="#" title="Facebook" data-tippy-placement="bottom" data-tippy-theme="light">
+											<a href="#" data-toggle="tooltip" title="Facebook" data-placement="bottom">
 												<i class="icon-brand-facebook-f"></i>
 											</a>
 										</li>
 										<li>
-											<a href="#" title="Twitter" data-tippy-placement="bottom" data-tippy-theme="light">
+											<a href="#" data-toggle="tooltip" title="Twitter" data-placement="bottom">
 												<i class="icon-brand-twitter"></i>
 											</a>
 										</li>
 										<li>
-											<a href="#" title="Google Plus" data-tippy-placement="bottom" data-tippy-theme="light">
+											<a href="#" data-toggle="tooltip" title="Google Plus" data-placement="bottom">
 												<i class="icon-brand-google-plus-g"></i>
 											</a>
 										</li>
 										<li>
-											<a href="#" title="LinkedIn" data-tippy-placement="bottom" data-tippy-theme="light">
+											<a href="#" data-toggle="tooltip" title="LinkedIn" data-placement="bottom">
 												<i class="icon-brand-linkedin-in"></i>
 											</a>
 										</li>
@@ -47,16 +46,19 @@
 								</div>
 							</div>
 							
-							<!-- Language Switcher -->
 							<div class="footer-row">
-								<div class="footer-row-inner">
-									<select class="selectpicker language-switcher" data-selected-text-format="count" data-size="5">
+								<div class="footer-row-inner language-switcher">
+									<select class="custom-select">
 										<option selected>English</option>
 									</select>
 								</div>
 							</div>
+							<div class="footer-row">
+							<div class="footer-row-inner language-switcher">
+							<?php echo $currency; ?>
 						</div>
-
+					   </div>
+						</div>
 					</div>
 					<!-- Footer Rows Container / End -->
 				</div>
@@ -69,7 +71,7 @@
 		<div class="container">
 			<div class="row">
 				<!-- Links -->
-				<div class="col-md-2">
+				<div class="col-md-4">
 					<div class="footer-links">
 						<h3><?php echo $text_for_freelancers; ?></h3>
 						<ul>
@@ -79,19 +81,18 @@
 				</div>
 
 				<!-- Links -->
-				<div class="col-md-2">
+				<div class="col-md-4">
 					<div class="footer-links">
 						<h3><?php echo $text_for_employer; ?></h3>
 						<ul>
 							<li><a href="<?php echo $freelancers; ?>"><span><?php echo $text_browse_freelancers; ?></span></a></li>
-							<li><a href="<?php echo $add_job; ?>"><span><?php echo $text_post_job; ?></span></a></li>
 							<li><a href="<?php echo $add_project; ?>"><span><?php echo $text_post_project; ?></span></a></li>
 						</ul>
 					</div>
 				</div>
 
 				<!-- Links -->
-				<div class="col-md-2">
+				<div class="col-md-4">
 					<div class="footer-links">
 						<h3><?php echo $text_links; ?></h3>
 						<ul>
@@ -101,21 +102,10 @@
 						</ul>
 					</div>
 				</div>
-
-				<!-- Newsletter -->
-				<div class="col-md-6">
-					<h3><i class="icon-feather-mail"></i> <?php echo $text_newsletter; ?></h3>
-					<p><?php echo $help_newsletter; ?></p>
-					<form action="#" method="get" class="newsletter">
-						<input type="text" name="fname" placeholder="<?php echo $entry_email; ?>">
-						<button type="submit"><i class="icon-feather-arrow-right"></i></button>
-					</form>
-				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Footer Middle Section / End -->
-	
 	<!-- Footer Copyrights -->
 	<div class="footer-bottom-section">
 		<div class="container">
@@ -127,25 +117,59 @@
 		</div>
 	</div>
 	<!-- Footer Copyrights / End -->
-
 </div>
 <!-- Footer / End -->
-
-
-<!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
-<script>
-// Snackbar for user status switcher
-$('#snackbar-user-status label').click(function() { 
-	Snackbar.show({
-		text: 'Your status has been changed!',
-		pos: 'bottom-center',
-		showAction: false,
-		actionText: "Dismiss",
-		duration: 3000,
-		textColor: '#fff',
-		backgroundColor: '#383838'
-	}); 
-}); 
+<?php if ($new_project_alert) { ?>
+<script type="text/javascript">
+$(document).ready(function() {
+$.notify({
+	// options
+	icon: 'glyphicon glyphicon-warning-sign',
+	title: 'Bootstrap notify',
+	message: 'test',
+	url: 'https://github.com/mouse0270/bootstrap-notify',
+	target: '_blank'
+},{
+	// settings
+	element: 'body',
+	position: null,
+	type: "info",
+	allow_dismiss: true,
+	newest_on_top: false,
+	showProgressbar: false,
+	placement: {
+		from: "top",
+		align: "right"
+	},
+	offset: 20,
+	spacing: 10,
+	z_index: 1031,
+	delay: 5000,
+	timer: 1000,
+	url_target: '_blank',
+	mouse_over: null,
+	animate: {
+		enter: 'animated fadeInDown',
+		exit: 'animated fadeOutUp'
+	},
+	onShow: null,
+	onShown: null,
+	onClose: null,
+	onClosed: null,
+	icon_type: 'class',
+	template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+		'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+		'<span data-notify="icon"></span> ' +
+		'<span data-notify="title">{1}</span> ' +
+		'<span data-notify="message">{2}</span>' +
+		'<div class="progress" data-notify="progressbar">' +
+			'<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+		'</div>' +
+		'<a href="{3}" target="{4}" data-notify="url"></a>' +
+	'</div>' 
+});
+});
 </script>
+<?php } ?>
 </body>
 </html>

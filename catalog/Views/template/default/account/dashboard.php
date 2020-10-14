@@ -6,7 +6,7 @@
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>
 			<!-- Breadcrumbs -->
-			<nav id="breadcrumbs" class="dark">
+			<nav id="breadcrumbs" class="">
 				<ul>
 					<?php foreach ($breadcrumbs as $breadcrumb) { ?>
 						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>

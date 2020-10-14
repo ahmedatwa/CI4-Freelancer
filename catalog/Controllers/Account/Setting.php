@@ -4,6 +4,21 @@ use Catalog\Models\Account\CustomerModel;
 
 class Setting extends \Catalog\Controllers\BaseController
 {
+    public function edit()
+    {
+        $this->template->setTitle(lang('account/setting.heading_title'));
+
+        $customerModel = new CustomerModel();
+
+        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
+            $this->categories->editCategory($this->customer->getCustomerID(), $this->request->getPost());
+            return redirect()->to(route_to('account/setting', $this->customer->getCustomerUserName()))
+                             ->with('success', lang('catalog/category.text_success'));
+        }
+
+        $this->index();
+    }
+
     public function index()
     {
         $this->template->setTitle(lang('account/setting.heading_title'));
@@ -82,6 +97,14 @@ class Setting extends \Catalog\Controllers\BaseController
             $data['tagline'] = '';
         }
 
+        if ($this->request->getPost('rate')) {
+            $data['rate'] = $this->request->getPost('rate');
+        } elseif (!empty($customer_info['rate'])) {
+            $data['rate'] = $customer_info['rate'];
+        } else {
+            $data['rate'] = 0;
+        }
+
         if ($this->request->getPost('passowrd')) {
             $data['passowrd'] = $this->request->getPost('passowrd');
         } else {
@@ -156,6 +179,7 @@ class Setting extends \Catalog\Controllers\BaseController
         $data['entry_current_password'] = lang('account/setting.entry_current_password');
         $data['entry_password']         = lang('account/setting.entry_password');
         $data['entry_confirm']          = lang('account/setting.entry_confirm');
+        $data['entry_hourly_rate']          = lang('account/setting.entry_hourly_rate');
         
        
         $data['button_submit'] = lang('account/setting.button_submit');
@@ -234,28 +258,13 @@ class Setting extends \Catalog\Controllers\BaseController
         $this->template->output('account/setting', $data);
     }
 
-    public function edit()
-    {
-        $this->template->setTitle(lang('account/setting.heading_title'));
-
-        $customerModel = new CustomerModel();
-
-        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->categories->editCategory($this->customer->getCustomerID(), $this->request->getPost());
-            return redirect()->to(route_to('account/setting', $this->customer->getCustomerUserName()))
-                             ->with('success', lang('catalog/category.text_success'));
-        }
-
-        $this->index();
-    }
-
     // Certificates
     public function addCertificate()
     {
         $json = [];
 
-        if ($this->customer->getCustomerID()) {
-            $freelancer_id = $this->customer->getCustomerID();
+        if ($this->request->getVar('cid')) {
+            $freelancer_id = $this->request->getVar('cid');
         } else {
             $freelancer_id = 0;
         }
@@ -389,8 +398,8 @@ class Setting extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->customer->getCustomerID()) {
-            $freelancer_id = $this->customer->getCustomerID();
+        if ($this->request->getVar('cid')) {
+            $freelancer_id = $this->request->getVar('cid');
         } else {
             $freelancer_id = 0;
         }
@@ -576,31 +585,6 @@ class Setting extends \Catalog\Controllers\BaseController
     }
 
     //  Skills
-    public function skillsAutocomplete()
-    {
-        $json = [];
-
-        if ($this->request->getVar('project_skill')) {
-            $filter_data = [
-                'limit'             => 5,
-                'start'             => 0,
-                'filter_skill'      => $this->request->getVar('project_skill')
-            ];
-            $customerModel = new CustomerModel();
-
-            $skills = $customerModel->getSkills($filter_data);
-
-            foreach ($skills as $skill) {
-                $json[] = [
-                    'skill_id' => $skill['skill_id'],
-                    'text' => $skill['text'],
-                ];
-            }
-
-            return $this->response->setJSON($json);
-        }
-    }
-
     public function addSkill()
     {
         $json = [];
@@ -608,16 +592,16 @@ class Setting extends \Catalog\Controllers\BaseController
             $customerModel = new CustomerModel();
 
             if (! $this->validate([
-                    'skill_id'      => "required",
-                    'skill_level'   => "required",
+                    'category_id'      => ['label' => 'Skill', 'rules' => 'required'],
              ])) {
                 $json['error'] = lang('account/setting.error_data');
-                $json['error_skill'] = $this->validator->getError('skill_id');
-                $json['error_level'] = $this->validator->getError('skill_level');
+                $json['error_category'] = $this->validator->getError('category_id');
             }
 
+            if (!$json) {
             $customerModel->addCustomrSkill($this->request->getPost());
             $json['success'] = sprintf(lang('account/setting.text_success_edu'), lang('account/setting.text_skills'));
+            }
         }
 
         return $this->response->setJSON($json);
@@ -643,13 +627,12 @@ class Setting extends \Catalog\Controllers\BaseController
         $data['button_delete'] = lang('account/setting.button_delete');
 
         $results = $customerModel->getCustomerSkills($this->customer->getCustomerID(), ($page - 1) * 5, 5);
-        $total = $customerModel->getTotalSkillsByCustomerID($this->request->getVar('seller_id'));
+        $total = $customerModel->getTotalSkillsByCustomerID($this->customer->getCustomerID());
 
         foreach ($results as $result) {
             $data['skills'][] = [
                 'skill_id' => $result['skill_id'],
                 'name' => $result['name'],
-                'level' => $result['level'],
             ];
         }
 
@@ -664,10 +647,10 @@ class Setting extends \Catalog\Controllers\BaseController
     public function deleteSkill()
     {
         $json = [];
-        if ($this->customer->getCustomerID()) {
+        if ($this->request->getVar('cid') && $this->request->getMethod() == 'post') {
             $customerModel = new CustomerModel();
-            if ($this->request->getVar('skill_id')) {
-                $customerModel->deleteCustomerSkill($this->request->getVar('skill_id'));
+            if ($this->request->getVar('category_id')) {
+                $customerModel->deleteCustomerSkill($this->request->getVar('category_id'));
                 $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Skills');
             }
             return $this->response->setJSON($json);

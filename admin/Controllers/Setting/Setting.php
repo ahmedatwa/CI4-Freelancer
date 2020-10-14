@@ -90,7 +90,7 @@ class Setting extends \Admin\Controllers\BaseController
 
         foreach ($extensions as $code) {
             $data['themes'][] = [
-                'text'  => lang('extension/theme/' . $code . '.list.heading_title'),
+                'text'  => lang('theme/' . $code . '.list.heading_title'),
                 'value' => str_replace('_theme', '', $code),
             ];
         }
@@ -202,6 +202,14 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_project_status_id'] = $setting_info['config_project_status_id'];
         } else {
             $data['config_project_status_id'] = '';
+        }
+
+        if ($this->request->getPost('config_project_completed_status')) {
+            $data['config_project_status_id'] = $this->request->getPost('config_project_completed_status');
+        } elseif (!empty($setting_info['config_project_completed_status'])) {
+            $data['config_project_completed_status'] = $setting_info['config_project_completed_status'];
+        } else {
+            $data['config_project_completed_status'] = '';
         }
 
         if ($this->request->getPost('config_logo')) {

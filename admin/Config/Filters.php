@@ -11,7 +11,7 @@ class Filters extends BaseConfig
         'toolbar'    => \CodeIgniter\Filters\DebugToolbar::class,
         'honeypot'   => \CodeIgniter\Filters\Honeypot::class,
         'permission' => \Admin\Filters\Permission::class,
-        //'lang'       => \App\Filters\Language::class,
+        'language'   => \Admin\Filters\Language::class,
 
     ];
 
@@ -19,12 +19,13 @@ class Filters extends BaseConfig
     public $globals = [
         'before' => [
              'permission',
-             //'lang',
+             'language',
             //'honeypot'
               'csrf' => ['except' => ['common/filemanager/[a-z]+']],
         ],
         'after'  => [
             'toolbar',
+            'language',
             //'honeypot'
         ],
     ];

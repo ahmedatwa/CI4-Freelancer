@@ -16,12 +16,32 @@ class Login extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/login.heading_title'),
-            'href' => base_url('account/login'),
+            'href' => route_to('login') ?? base_url('account/login'),
         ];
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-                return redirect()->to(base_url('account/dashboard'));
-            }
+            // Trigger Pusher Online Event
+            $options = [
+                'cluster' => 'eu',
+                'useTLS' => true
+            ];
+
+            $pusher = new \Pusher\Pusher(
+                'b4093000fa8e8cab989a',
+                'fb4bfd2d78aac168d918',
+                '1047280',
+                $options
+            );
+
+            $data['message'] = [
+                'customer_id' => $this->customer->getCustomerId(),
+                'username' => $this->customer->getCustomerUserName()
+            ];
+
+            $pusher->trigger('chat-channel', 'online-event', $data);
+              
+            return redirect()->to(base_url('account/dashboard?cid=' . $this->session->get('customer_id')));
+        }
         
 
         $data['heading_title']  = lang('account/login.heading_title');
@@ -58,6 +78,7 @@ class Login extends \Catalog\Controllers\BaseController
         }
 
         $data['action'] = base_url('account/login');
+        $data['forgotton'] = base_url('account/forgotten');
 
         $this->template->output('account/login', $data);
     }
@@ -68,8 +89,7 @@ class Login extends \Catalog\Controllers\BaseController
         if (! $this->validate([
             'email'    => 'required|valid_email',
             'password' => 'required|min_length[4]',
-        ])) 
-        {
+        ])) {
             $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
         }
 
@@ -82,12 +102,12 @@ class Login extends \Catalog\Controllers\BaseController
             return false;
         }
         
-        if ( !$this->customer->login($this->request->getPost('email'), $this->request->getPost('password'))) {
-                 $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
-                 $customerModel->addLoginAttempt($this->request->getPost('email'), $this->request->getIPAddress());
-                 return false;
+        if (!$this->customer->login($this->request->getPost('email'), $this->request->getPost('password'))) {
+            $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
+            $customerModel->addLoginAttempt($this->request->getPost('email'), $this->request->getIPAddress());
+            return false;
         } else {
-                $customerModel->deleteLoginAttempts($this->request->getPost('email'));
+            $customerModel->deleteLoginAttempts($this->request->getPost('email'));
         }
 
         return true;

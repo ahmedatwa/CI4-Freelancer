@@ -7,6 +7,14 @@ class Dashboard extends \Catalog\Controllers\BaseController
     public function index()
     {
         $this->template->setTitle(lang('account/dashboard.heading_title'));
+        
+        if($this->request->getVar('cid')) {
+            $customer_id = $this->request->getVar('cid');
+        } elseif($this->customer->getCustomerId()) {
+            $customer_id = $this->customer->getCustomerId();
+        } else {
+            $customer_id = 0;
+        }
 
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -16,13 +24,13 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/dashboard.heading_title'),
-            'href' => route_to('account/dashboard?customer_id=' . $this->customer->getCustomerId()),
+            'href' => route_to('account/dashboard?customer_id=' . $customer_id),
         ];
 
         $customerModel = new CustomerModel();
 
-        if ($this->customer->getCustomerId()) {
-            $customer_info = $customerModel->getCustomer($this->customer->getCustomerId());
+        if ($customer_id) {
+            $customer_info = $customerModel->getCustomer($customer_id);
         }
 
         $data['text_dashboard']  = lang('account/dashboard.text_dashboard');

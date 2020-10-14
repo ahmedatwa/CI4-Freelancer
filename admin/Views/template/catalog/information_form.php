@@ -1,4 +1,4 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+w<?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
 	<!-- Page Header Begin -->
 	<div class="page-header">

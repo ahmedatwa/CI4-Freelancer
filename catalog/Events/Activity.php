@@ -65,15 +65,58 @@ class Activity
             'username'    => (string) $username,
         ];
 
-        $activityModel->addActivity('customer_register', $data);
+        $activityModel->addActivity('customer_register_activity', $data);
     }
-   
+    
+    // Catalog\Model\Account\CustomerModel\editCode
+    public static function forgottenMail(string $email, string $code)
+    {
+        $config = \Config\Services::email();
 
+        $data['text_greeting'] = sprintf(lang('account/forgotten.text_greeting'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_change']   = lang('account/forgotten.text_change');
+        $data['text_ip']       = lang('account/forgotten.text_ip');
+        
+        $data['reset'] = str_replace('&amp;', '&', base_url('account/reset?code=' . $code));
 
+        $request = \Config\Services::request();
 
+        $data['ip'] = $request->getIPAddress();
 
+        $config->setFrom(service('registry')->get('config_email'));
 
+        $config->setTo($email);
 
+        $config->setSubject(html_entity_decode(sprintf(lang('account/forgotten.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        $config->setMessage(view('mail/forgotten', $data));
 
-    // -----------------------------
+        $config->send();
+    }
+
+    // Catalog\Model\Account\CustomerModel\editCode
+    public static function RegisterMail(string $email, string $code)
+    {
+        $config = \Config\Services::email();
+
+        $data['text_greeting'] = sprintf(lang('account/forgotten.text_greeting'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_change']   = lang('account/forgotten.text_change');
+        $data['text_ip']       = lang('account/forgotten.text_ip');
+        
+        $data['reset'] = str_replace('&amp;', '&', base_url('account/reset?code=' . $code));
+
+        $request = \Config\Services::request();
+
+        $data['ip'] = $request->getIPAddress();
+
+        $config->setFrom(service('registry')->get('config_email'));
+
+        $config->setTo($email);
+
+        $config->setSubject(html_entity_decode(sprintf(lang('account/forgotten.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        $config->setMessage(view('mail/forgotten', $data));
+
+        $config->send();
+    }
+
+    // --------------------------------------------------
 }

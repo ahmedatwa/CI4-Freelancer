@@ -1,119 +1,123 @@
 <?php echo $header; ?>
-<section class="hero-area">
-	<div class="dashboard_menu_area">
-		<div class="container-fluid">
-			<div class="row justify-content-center">
-				<div class="col-md-5 text-left">
-					<h1 class="page-title"><?php echo $text_projects; ?></h1>
+<div id="titlebar" class="p-4">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2><?php echo $heading_title; ?></h2>
+				<div class="float-right">
+					<a href="<?php echo $add_project; ?>" class="button rounded"><?php echo $button_hire; ?></a>
+					<a href="<?php echo $login; ?>" class="button dark text-white"><?php echo $button_work; ?></a>
 				</div>
-				<div class="col-md-5 text-right">
-					<button type="button" class="btn btn-warning rounded"><?php echo $button_hire; ?></button>
-					<button type="button" class="btn btn-outline-primary text-white"><?php echo $button_work; ?></button>
-				</div>	
 			</div>
 		</div>
 	</div>
-</section>
-<div class="content-wrapper">	
-	<section>
-		<div class="breadcrumb">
-			<ul>
-				<?php foreach ($breadcrumbs as $breadcrumb) { ?>
-					<li>
-						<a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-					</li>
-				<?php } ?>
-			</ul>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<nav id="breadcrumbs">
+				<ul>
+					<?php foreach ($breadcrumbs as $breadcrumb) { ?>
+						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+					<?php } ?>
+				</ul>
+			</nav>
 		</div>
-	</section>	
-	<div class="container-fluid margin-top-40">
-		<div id="search-container">
-			<div class="input-group mb-3">
-				<input type="text" class="form-control form-control-lg" placeholder="<?php echo $text_search_keyword; ?>" id="search-input">
-				<div class="input-group-append">
-					<button class="btn btn-primary ripple-effect button-sliding-icon" type="button"><i class="fas fa-search fa-lg"></i> <?php echo $button_search; ?> </button>
-				</div>
-			</div>
-		</div>
+	</div>
+</div>	
+<div class="section mb-5 bg-white margin-top-30">		
+	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
-				<div class="sidebar-container p-3">
+			<div class="col">
+				<div class="sidebar-container">
 					<p><?php echo $text_sidebar; ?></p>
-					<!-- Keywords -->
-					<div class="sidebar-widget mt-4">
-						<h3><?php echo $text_type; ?></h3>
+					<div class="dropdown-divider"></div>
+					<div class="sidebar-widget">
+						<h3><?php echo $text_type; ?></h3> 
+						<?php foreach ($types as $type) { ?>
+						<?php if(in_array($type['value'], $filter_type) ) { ?>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+							<input class="form-check-input" type="checkbox" value="<?php echo $type['value']; ?>" name="filter_type[]" checked>
 							<label class="form-check-label" for="defaultCheck1">
-								<?php echo $text_fixed_price; ?>
+								<?php echo $type['text']; ?>
 							</label>
 						</div>
+					<?php } else { ?>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+							<input class="form-check-input" type="checkbox" value="<?php echo $type['value']; ?>" name="filter_type[]">
 							<label class="form-check-label" for="defaultCheck1">
-								<?php echo $text_per_hour; ?>
+								<?php echo $type['text']; ?>
 							</label>
 						</div>
+					<?php } ?>	
+					<?php } ?>	
 					</div>
+					<div class="dropdown-divider"></div>
 					<!-- Budget -->
 					<div class="sidebar-widget">
 						<h3><?php echo $text_budget; ?></h3>
-						<div class="form-group">
-							<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-							<div id="slider-range"></div>
-						</div>
+						 <div class="form-row">
+					    <div class="col">
+					      <input type="text" class="form-control" placeholder="Min" id="min" value="<?php echo $filter_min; ?>" name="filter_budget">
+					    </div>
+					    <div class="col">
+					      <input type="text" class="form-control" placeholder="Max" id="max" value="<?php echo $filter_max; ?>" name="filter_budget">
+					    </div>
+					  </div>
 					</div>
+					<div class="dropdown-divider"></div>
 					<!-- Tags -->
+					<div class="keywords-list"></div>
 					<div class="sidebar-widget">
 						<h3><?php echo $text_skills; ?></h3>
-						<!-- More Skills -->
-						<div class="keywords-list">
-							<?php foreach ($categories as $category) { ?>
-								<div class="form-check">
-									<input class="form-check-input" name="categories" type="checkbox" value="<?php echo $category['category_id']; ?>">
-									<label class="form-check-label" for="defaultCheck1">
-										<?php echo $category['name']; ?>
-									</label>
-								</div>
-							<?php } ?>
-						</div>
 						<div class="keywords-container margin-top-20">
 							<div class="input-group keyword-input-container">
-								<input type="text" class="form-control keyword-input" name="filter_category" placeholder="add more skills">
-								<div class="input-group-append">
-									<button class="btn btn-outline-primary" type="button"><i class="fas fa-plus"></i></button>
-								</div>
+								<select class="form-control" name="filter_category[]" data-width="100%" multiple="multiple">
+									<?php foreach($categories as $category) { ?>
+									<?php if (in_array($category['category_id'], $filter_skills)) { ?>
+										<option value="<?php echo $category['category_id']; ?>" selected><?php echo $category['name']; ?></option>
+										<?php } else { ?>
+										<option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+										<?php } ?>
+										<?php } ?>
+									</select>
 							</div>
 						</div>
 					</div>
+					
+					<div class="dropdown-divider"></div>
 					<div class="sidebar-widget">
 						<h3><?php echo $text_state; ?></h3>
-
+						<?php foreach ($states as $state) { ?>
+						<?php if($state['value'] == $filter_state)  { ?>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="exampleRadios" value="option1" checked>
+							<input class="form-check-input" type="radio" value="<?php echo $state['value']; ?>" name="filter_state[]" checked>
 							<label class="form-check-label" for="exampleRadios1">
-								<?php echo $text_all_open; ?>
+								<?php echo $state['text']; ?>
 							</label>
 						</div>
+					<?php } else { ?>
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="exampleRadios" value="option1" checked>
+							<input class="form-check-input" type="radio" value="<?php echo $state['value']; ?>" name="filter_state[]">
 							<label class="form-check-label" for="exampleRadios1">
-								<?php echo $text_all_open_closed; ?>
+								<?php echo $state['text']; ?>
 							</label>
 						</div>
+					<?php } ?>	
+					<?php } ?>	
 					</div>
 				</div>
 			</div>
-			<div class="col-md-9">
+			<div class="col-sm-12 col-md-9 mb-4">
 				<!-- Tasks Container -->
-				<div class="tasks-list-container compact-list ">
+				<div class="tasks-list-container compact-list shadow mb-5 bg-white rounded">
 					<div class="notify-box">
-						<p class="float-left ml-3"><?php echo $text_found ;?></p>
+						<h3 class="float-left m-3"><?php echo $text_found ;?></h3>
 						<div class="col-md-3 float-right">
 							<div class="form-group">
-								<select class="form-control" onchange="location = this.value;">
+								<select class="custom-select" onchange="location = this.value;">
 									<?php foreach ($sorts as $sort) { ?> 
-										<?php if ($sort['value']== $sort_by  . '-' . $order_by) { ?>
+										<?php if ($sort['value'] == $sort_by  . '-' . $order_by) { ?>
 											<option value="<?php echo $sort['href']; ?>" selected><?php echo $sort['text']; ?></option>
 										<?php } else { ?>
 											<option value="<?php echo $sort['href']; ?>"><?php echo $sort['text']; ?></option>  
@@ -127,9 +131,7 @@
 					<!-- Task -->
 					<?php foreach ($projects as $project) { ?>
 						<a href="<?php echo $project['href']; ?>" class="task-listing">
-							<!-- Job Listing Details -->
 							<div class="task-listing-details">
-								<!-- Details -->
 								<div class="task-listing-description">
 									<h3 class="task-listing-title"><?php echo $project['name']; ?></h3>
 									<ul class="task-icons">
@@ -161,57 +163,94 @@
 				<!-- Tasks Container / End -->
 				<!-- Pagination -->
 				<div class="clearfix"></div>
-				<div class="row">
-					<div class="col-md-12">
+					<div class="col-12">
 						<?php echo $pagination; ?>
 					</div>
-				</div>
 				<!-- Pagination / End -->
 			</div>
 		</div>
 		</div>
 		</div> <!---- content-wrapper ---->
+<link href="catalog/default/vendor/select2/customSelectionAdapter/css/select2.customSelectionAdapter.min.css">		
+<script src="catalog/default/vendor/select2/customSelectionAdapter/js/select2.customSelectionAdapter.min.js"></script>
+
 <script type="text/javascript">
+var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
 // Skills
-$('input[name=\'filter_category\']').autocomplete({
-	'source': function(request, response) {
-		$.ajax({
-			url: 'project/category/autocomplete?filter_category=' + encodeURIComponent(request.term),
-			dataType : 'json',
-			success: function(json) {
-				response($.map(json, function(item) {
-					return {
-						label: item['university'],
-						value: item['university_id'],
-						country: item['country']
-					}
-				}));
-			}
-		});
+
+$('select[name^=\'filter_category\']').select2({
+ajax: {
+	url: "project/category/autocomplete",
+	dataType: 'json',
+	delay: 250,
+	data: function (params) {
+		return {
+			filter_category: params.term,
+		};
 	},
-	'select': function(event, ui) {
-		event.preventDefault();
-		$('input[name=\'filter_university\']').val(ui.item.label);
-		$('input[name=\'university_id\']').val(ui.item.value);
-		$('input[name=\'education_country\']').val(ui.item.country);
-	}
+	processResults: function (data, params) {
+		var results = $.map(data, function (item) {
+			item.id = item.category_id;
+			item.text = item.name;
+			return item;
+		});
+		return {
+			results: results,
+		};
+	},
+	cache: true
+},
+theme: 'bootstrap4',
+placeholder: '<?php echo $text_select;?>',
+allowClear: true,
+minimumResultsForSearch: 5,
+selectionAdapter: CustomSelectionAdapter,
+selectionContainer: $('.keywords-list'),
+
+});
+$("select[name^=\'filter_category\']").on("select2:select", function (e) { 
+  var select_val = $(e.currentTarget).val();
+  location = '<?php echo $action_skills; ?>&skills=' +  select_val.join('_');
+  
 });
 </script>	
-<script>
-	$( function() {
-		$( "#slider-range" ).slider({
-			range: true,
-			min: 10,
-			max: 1000,
-			values: [ 75, 300 ],
-			slide: function( event, ui ) {
-				$( "#amount" ).val( "EGP" + ui.values[ 0 ] + " - EGP" + ui.values[ 1 ] );
-			}
-		});
-		$( "#amount" ).val( "EGP " + $( "#slider-range" ).slider( "values", 0 ) +
-			" - EGP " + $( "#slider-range" ).slider( "values", 1 ) );
-	} );
-</script>	
+<!-- // Filters -->
+<script type="text/javascript">
+$('input[name^=\'filter_state\']').on('click', function() {
 
+    var filter = [];
+    
+    $('input[name^=\'filter_state\']:checked').each(function(element) {
+        filter.push(this.value);
+    });
+    
+    location = '<?php echo $action_state; ?>&state=' + filter.join('_');
+});    
+$('input[name^=\'filter_type\']').on('click', function() {
 
+       var filter = [];
+    
+    $('input[name^=\'filter_type\']:checked').each(function(element) {
+        filter.push(this.value);
+    });
+    
+    location = '<?php echo $action_type; ?>&type=' + filter.join('_');
+});    
+</script>
+<!-- // Filter Budget -->
+<script type="text/javascript">
+$('input[name=\'filter_budget\']').on('keyup', function(e) {	
+	
+	var filter = [];
+
+	$('input[name=\'filter_budget\']').each(function(element) {
+	    if ($(this).val() != '') {
+            filter.push($(this).attr('id') + '=' + $(this).val());
+	    }
+    });
+
+console.log(filter);
+   location = '<?php echo $action_price; ?>&' + filter.join('&');
+});    
+</script>
 <?php echo $footer; ?>

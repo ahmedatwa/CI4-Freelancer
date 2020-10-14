@@ -8,23 +8,9 @@ class CustomerModel extends \CodeIgniter\Model
     protected $allowedFields  = ['customer_group_id', 'email', 'password'];
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
-    // Password Hashing Events
-    protected $beforeInsert = ['hashPassword'];
-    protected $beforeUpdate = ['hashPassword'];
     // should use for keep data record create timestamp
     protected $createdField = 'date_added';
     protected $updatedField = 'date_modified';
-
-
-    protected function hashPassword(array $data)
-    {
-        if (isset($data['data']['password']) && !empty($data['data']['password'])) {
-            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
-        } else {
-            unset($data['data']['password']);
-        }
-        return $data;
-    }
 
     public function addCustomer($data)
     {
@@ -34,12 +20,71 @@ class CustomerModel extends \CodeIgniter\Model
             'email'             => $data['email'],
             'password'          => password_hash($data['password'], PASSWORD_BCRYPT),
             'customer_group_id' => 1,
-            'status'            => 0,
+            'status'            => 1,
         ];
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($customer_data);
-        \CodeIgniter\Events\Events::trigger('customer_register', $this->db->insertID(), explode('@', $data['email'])[0]);
-        //\CodeIgniter\Events\Events::trigger('mail_customer_add', $data['email']);
+        \CodeIgniter\Events\Events::trigger('customer_register_activity', $this->db->insertID(), explode('@', $data['email'])[0]);
+        //\CodeIgniter\Events\Events::trigger('mail_register', $data['email']);
+    }
+
+    public function getCustomers(array $data = [])
+    {
+        $builder = $this->db->table('customer c');
+        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS name, c.about, c.tag_line, c.image, c.customer_id, c.rate, c.online');
+        $builder->join('customer_to_category c2c', 'c.customer_id = c2c.freelancer_id', 'left');
+
+        if (isset($data['filter_freelancer'])) {
+            //$builder->where('about IS NOT', $data['filter_freelancer']);
+            $builder->where('c.rate >', $data['filter_freelancer']);
+        }
+
+        if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
+            $builder->whereIn('c2c.category_id', $data['filter_skills']);
+        }
+
+       
+        if (isset($data['filter_rate'])) {
+            switch ($data['filter_rate']) {
+                case '10': 
+                   $builder->where('c.rate <=', 10);
+                   break;
+                case '10_20': 
+                   $builder->where('c.rate >=', 10)->where('c.rate <=', 20);
+                   break;
+                case '20_30': 
+                   $builder->where('c.rate >=', 20)->where('c.rate <=', 30);
+                   break;
+                case '30_40': 
+                   $builder->where('c.rate >=', 30)->where('c.rate <=', 40);
+                   break;
+                case '40': 
+                   $builder->where('c.rate >=', 40);
+                   break;
+            }
+        }
+
+        if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
+            $builder->orderBy('c.date_added', 'DESC');
+        } else {
+            $builder->orderBy('c.date_added', 'ASC');
+        }
+
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
+            $builder->limit($data['limit'], $data['start']);
+        }
+
+        //echo $builder->getCompiledSelect();
+        $builder->groupBy('c.customer_id');
+
+        $query = $builder->get();
+        return $query->getResultArray();
     }
 
     public function getCustomer($customer_id)
@@ -50,13 +95,35 @@ class CustomerModel extends \CodeIgniter\Model
         return $query->getRowArray();
     }
 
-    public function editCode($email, $code)
+    public function getTotalCustomers($data = [])
     {
-        $builder = $this->db->table($this->table);
-        $builder->where('email', $email);
-        $builder->set('code', $code);
-        $builder->update();
+        $builder = $this->db->table('customer');
+        $builder->select();
+        
+
+        if (!empty($data['filter_freelancer'])) {
+            $builder->OrWhere('about IS NOT', $data['filter_freelancer']);
+        }
+
+        if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
+            $builder->orderBy('date_added', 'DESC');
+        } else {
+            $builder->orderBy('date_added', 'ASC');
+        }
+
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
+            $builder->limit($data['limit'], $data['start']);
+        }
+
+        return $builder->countAllResults();
     }
+
 
     // Login Attempts
     public function addLoginAttempt($email, $ipAddress)
@@ -169,9 +236,9 @@ class CustomerModel extends \CodeIgniter\Model
             $limit = 20;
         }
 
-        $builder->select('m.text AS major, u.text AS university, s2e.freelancer_id, s2e.country, s2e.title, s2e.year, s2e.education_id');
+        $builder->select('um.text AS major, u.text AS university, s2e.freelancer_id, s2e.country, s2e.title, s2e.year, s2e.education_id');
         $builder->join('university u', 'u.university_id = s2e.university_id', 'LEFT');
-        $builder->join('majors m', 'm.major_id = s2e.major_id', 'LEFT');
+        $builder->join('university_majors um', 'um.major_id = s2e.major_id', 'LEFT');
         $builder->where('s2e.freelancer_id', $freelancer_id);
         $builder->orderBy('s2e.date_added', 'DESC');
         $builder->limit($limit, $start);
@@ -218,7 +285,7 @@ class CustomerModel extends \CodeIgniter\Model
 
     public function getMajors($data = [])
     {
-        $builder = $this->db->table('majors');
+        $builder = $this->db->table('university_majors');
         $builder->select();
 
         if (isset($data['filter_major'])) {
@@ -239,46 +306,24 @@ class CustomerModel extends \CodeIgniter\Model
         return $query->getResultArray();
     }
 
-    // ------ Skills ------ //
-    public function getSkills($data = [])
-    {
-        $builder = $this->db->table('skills');
-        $builder->select();
-
-         if (isset($data['filter_skill'])) {
-            $builder->like('text', $data['filter_skill'], 'after');
-        }
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-            $builder->limit($data['limit'], $data['start']);
-        }
-
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
+    // ------ Skills ------ Categories//
 
     public function addCustomrSkill($data)
     {
-        $builder = $this->db->table('customer_to_skill');
+        $builder = $this->db->table('customer_to_category');
         $data = [
-          'skill_id'      => $data['skill_id'],
+          'category_id'      => $data['category_id'],
           'freelancer_id' => $data['freelancer_id'],
-          'level'         => $data['skill_level']
         ];
-
-        $builder->set('date_added', 'NOW()', FALSE);
+        $builder->delete(['category_id' => $data['category_id']]);
+        $builder->set('date_added', 'NOW()', false);
         $builder->insert($data);
     }
 
-    public function getCustomerSkills($freelancer_id, $start = 0, $limit = 20)
+    public function getCustomerSkills($customer_id, $start = 0, $limit = 20)
     {
-        $builder = $this->db->table('customer_to_skill s2s');
+        $builder = $this->db->table('customer_to_category c2c');
+
         if ($start < 0) {
             $start = 0;
         }
@@ -287,10 +332,11 @@ class CustomerModel extends \CodeIgniter\Model
             $limit = 20;
         }
 
-        $builder->select('s.text as name, s2s.level, s2s.freelancer_id, s2s.skill_id');
-        $builder->join('skills s', 's.skill_id = s2s.skill_id', 'left');
-        $builder->where('s2s.freelancer_id', $freelancer_id);
-        $builder->orderBy('s.text', 'DESC');
+        $builder->select('cd.name, c2c.freelancer_id, c2c.category_id as skill_id');
+        $builder->join('category_description cd', 'c2c.category_id = cd.category_id', 'left');
+        $builder->where('c2c.freelancer_id', $customer_id);
+        $builder->where('cd.language_id', service('registry')->get('config_language_id'));
+        $builder->orderBy('cd.name', 'DESC');
         $builder->limit($limit, $start);
         $query = $builder->get();
         return $query->getResultArray();
@@ -298,24 +344,24 @@ class CustomerModel extends \CodeIgniter\Model
 
     public function getTotalSkillsByCustomerID($freelancer_id)
     {
-        $builder = $this->db->table('customer_to_skill');
+        $builder = $this->db->table('customer_to_category');
         $builder->where('freelancer_id', $freelancer_id);
         return $builder->countAllResults();
     }
     
-    public function deleteCustomerSkill($skill_id)
+    public function deleteCustomerSkill($category_id)
     {
-         $builder = $this->db->table('customer_to_skill');
-         $builder->delete(['skill_id' => $skill_id]);
+        $builder = $this->db->table('customer_to_category');
+        $builder->delete(['category_id' => $category_id]);
     }
     
-     // ------ Languages ------ //
+    // ------ Languages ------ //
     public function getLanguages($data = [])
     {
         $builder = $this->db->table('languages');
         $builder->select();
 
-         if (isset($data['filter_language'])) {
+        if (isset($data['filter_language'])) {
             $builder->like('text', $data['filter_language'], 'after');
         }
 
@@ -342,7 +388,7 @@ class CustomerModel extends \CodeIgniter\Model
           'level'       => $data['language_level'],
           
         ];
-        $builder->set('date_added', 'NOW()', FALSE);
+        $builder->set('date_added', 'NOW()', false);
         $builder->insert($data);
     }
 
@@ -378,6 +424,36 @@ class CustomerModel extends \CodeIgniter\Model
         $builder = $this->db->table('customer_to_language');
         $builder->delete(['language_id' => $language_id]);
     }
+
+    public function updateViewed(int $customer_id)
+    {
+        $builder = $this->db->table('customer');
+        $builder->where('customer_id', $customer_id);
+        $builder->set('viewed', 'viewed+1', false);
+        $builder->update();
+    }
+
+    // Forgotten Password
+    public function editCode($email, $code)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->where('email', $email);
+        $builder->set('code', $code);
+        $builder->update();
+        // trigger forgotton email event
+        \CodeIgniter\Events\Events::trigger('mail_forgotten', $email, $code);
+    }
+
+    public function getTotalCustomersByEmail($email)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->selectCount('*', 'total');
+        $builder->where('email', $email);
+        $query = $builder->get();
+        $row = $query->getRowArray();
+        return $row['total'];
+    }
+    
 
     // -----------------------------------------------------------------
 }

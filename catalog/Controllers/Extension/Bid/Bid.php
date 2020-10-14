@@ -1,15 +1,17 @@
 <?php namespace Catalog\Controllers\Extension\Bid;
 
+use \Catalog\Models\Extension\Bid\BidModel;
+
 class Bid extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        $bidModel = new \Catalog\Models\Extension\Bid\BidModel();
+        $bidModel = new BidModel();
 
         $data['heading_title'] = lang('extension/bid/bid.heading_title');
 
-        if ($this->request->getVar('project_id')) {
-            $project_id = $this->request->getVar('project_id');
+        if ($this->request->getVar('pid')) {
+            $project_id = $this->request->getVar('pid');
         } else {
             $project_id = 0;
         }
@@ -37,8 +39,9 @@ class Bid extends \Catalog\Controllers\BaseController
         $data['bids'] = [];
 
         $results = $bidModel->getBids($filter_data);
-        $bids_total = $bidModel->getTotalBids($filter_data);
+        $total = $bidModel->getTotalBids($filter_data);
         $reviewModel = new \Catalog\Models\Catalog\ReviewModel();
+        
         foreach ($results as $result) {
             $data['bids'][] = [
                 'bid_id'     => $result['bid_id'],
@@ -54,7 +57,7 @@ class Bid extends \Catalog\Controllers\BaseController
 
         // Pagination
         $pager = \Config\Services::pager();
-        $data['pagination'] = $pager->makeLinks($page, $limit, $bids_total);
+        $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
 
         return view('extension/bid/bid', $data);
     }
@@ -63,17 +66,25 @@ class Bid extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->request->getPost('employer_id') == $this->request->getPost('freelancer_id')) {
-            $json['error'] = lang('project/project.text_error_bid');
+        if (!$this->customer->isLogged()) {
+            $json['redirect'] = route_to('account/login') ?? base_url('account/login');
         }
 
-        if (!$this->customer->isLogged()) {
-            $json['error'] = sprintf(lang('project/project.text_login_error'), route_to('account/login'));
+        if ($this->request->getPost('employer_id') == $this->request->getPost('freelancer_id')) {
+            $json['no_allawed'] = lang('project/project.text_error_bid');
+        }
+
+        if (! $this->validate([
+            'quote'         => "required",
+            'delivery_time' => ['label' => 'Delivery Time', 'rules' => 'required|numeric']
+        ])) 
+        {
+            $json['error'] = $this->validator->getErrors();
         }
 
         if (!$json) {
             if ($this->request->getPost('project_id') || $this->request->getPost('freelancer_id')) {
-                $bidModel = new \Catalog\Models\Extension\Bid\BidModel();
+                $bidModel = new BidModel();
 
                 if (($this->request->getMethod() == 'post')) {
                     $bidModel->insert($this->request->getPost());
@@ -81,7 +92,6 @@ class Bid extends \Catalog\Controllers\BaseController
                 }
             }
         }
-
 
         return $this->response->setJSON($json);
     }

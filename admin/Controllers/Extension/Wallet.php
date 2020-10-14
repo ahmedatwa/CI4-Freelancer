@@ -29,7 +29,7 @@ class Wallet extends \Admin\Controllers\BaseController
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/wallet/' . $this->request->getVar('extension'));
 
             $settingModel = new \Admin\Models\Setting\Settings();
-            $settingModel->editSetting('customer_wallet', ['customer_wallet_status' => 1]);
+            $settingModel->editSetting('wallet_extension', ['wallet_extension_status' => 1]);
 
             // Call install Method is exists
             $walletModel = new \Extensions\Models\wallet\walletModel();
@@ -100,7 +100,7 @@ class Wallet extends \Admin\Controllers\BaseController
                 
                 $data['extensions'][] = [
                     'name'       => lang('wallet/' . strtolower($basename) . '.list.heading_title'),
-                    'status'     => ($this->registry->get('customer_wallet')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                    'status'     => ($this->registry->get('wallet_extension_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'install'    => base_url('index.php/extension/wallet/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/wallet/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'installed'  => in_array(strtolower($basename), $installedExtensions),

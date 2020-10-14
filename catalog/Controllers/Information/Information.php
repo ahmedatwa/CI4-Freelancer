@@ -1,6 +1,5 @@
 <?php namespace Catalog\Controllers\Information;
 
-use \Catalog\Models\Design\Seo_urls;
 use \Catalog\Models\Catalog\Informations;
 
 class Information extends \Catalog\Controllers\BaseController
@@ -9,7 +8,7 @@ class Information extends \Catalog\Controllers\BaseController
     {
         $informations = new Informations();
 
-        $seo_urls = new Seo_urls();
+        $seo_url = service('seo_url');
 
         $data['breadcrumbs'] = [];
 
@@ -18,11 +17,13 @@ class Information extends \Catalog\Controllers\BaseController
             'href' => base_url('/')
         ];
 
-        if ($this->request->getGet('information_id')) {
-            $information_id = (int) $this->request->getGet('information_id');
+        if ($this->request->getVar('fid')) {
+            $information_id = $this->request->getVar('fid');
+        } elseif($this->request->getGet('information_id')) {
+            $information_id = $this->request->getGet('information_id');
         } else {
             $information_id = 0;
-        }
+        }    
 
         $information_info = $informations->getInformation($information_id);
 
@@ -31,9 +32,11 @@ class Information extends \Catalog\Controllers\BaseController
             $this->template->setDescription($information_info['meta_description']);
             $this->template->setKeywords($information_info['meta_keyword']);
 
+            $keyword = $seo_url->getKeywordByQuery('information_id=' . $information_id);
+
             $data['breadcrumbs'][] = [
                 'text' => $information_info['title'],
-                'href' => base_url('information/' . $seo_urls->getKeywordByQuery('information_id=' . $information_id)),
+                'href' => ($keyword) ? route_to('information/', $keyword) : base_url('information/Information?fid=' . $information_id),
             ];
 
             $data['heading_title'] = $information_info['title'];

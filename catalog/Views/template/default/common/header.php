@@ -5,32 +5,42 @@
 <base href="<?php echo $base; ?>">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="catalog/default/stylesheet/style.css">
 <link rel="stylesheet" href="catalog/default/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="catalog/default/stylesheet/style.css">
 <link rel="stylesheet" href="catalog/default/vendor/fontawesome-free/css/all.min.css">
 <link rel="stylesheet" href="catalog/default/javascript/jquery-ui/jquery-ui.css">
-<link rel="stylesheet" href="catalog/default/stylesheet/colors/blue.css">
+<!-- Animate -->
+<link href="catalog/default/vendor/animate/animate.min.css" rel="stylesheet" type="text/css">
+<!-- Select2 -->
+<link href="catalog/default/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+<link href="catalog/default/vendor/select2/css/select2-bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="catalog/default/stylesheet/colors/red.css">
 <?php foreach ($styles as $style) { ?>
 <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
 
 <!-- Scripts -->
 <script src="catalog/default/javascript/jquery-3.5.1.min.js"></script>
-<script src="catalog/default/javascript/jquery-ui/jquery-ui.min.js"></script>
+<script src="catalog/default/javascript/jquery-ui/jquery-ui.js"></script>
 <script src="catalog/default/javascript/moment.js"></script>
 <script src="catalog/default/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="catalog/default/vendor/bootstrap-slider/dist/bootstrap-slider.min.js"></script> 
+
 <script src="catalog/default/javascript/mmenu.min.js"></script>
 <script src="catalog/default/javascript/simplebar.min.js"></script>
-<script src="catalog/default/javascript/snackbar.js"></script>
+<!-- Notify JS -->
+<script src="catalog/default/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="catalog/default/javascript/counterup.min.js"></script>
 <script src="catalog/default/javascript/magnific-popup.min.js"></script>
 <script src="catalog/default/javascript/slick.min.js"></script>
+<script src="catalog/default/vendor/select2/js/select2.min.js"></script> 
+
 <script src="catalog/default/javascript/custom.js"></script>
 <?php foreach ($scripts as $script) { ?>
 <script src="<?php echo $script; ?>" type="text/javascript"></script>
 <?php } ?>
 </head>
-<body>
+<body class="grey">
 <div id="wrapper">
 <!-- Header Container-->
 <header id="header-container" class="fullwidth transparent">
@@ -46,7 +56,9 @@
                 <!-- Main Navigation -->
                 <nav id="navigation" class="">
                     <ul id="responsive">
-                        <li><a href="<?php echo $how_it_works; ?>"><?php echo $text_how_it_works; ?></a></li>
+                        <?php foreach ($informations as $information) { ?>
+                        <li><a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
+                        <?php }  ?>
                         <li><a href="<?php echo $projects; ?>"> <?php echo $text_projects; ?></a></li>
                         <li><a href="<?php echo $blog; ?>"> <?php echo $text_blog; ?></a></li>
                     </ul>
@@ -61,7 +73,8 @@
                 <?php if ($logged) { ?>
                     <div class="header-notifications user-menu">
                         <div class="header-notifications-trigger">
-                            <a href="#"><div class="user-avatar status-online"><img src="<?php echo $image; ?>" alt=""></div></a>
+                            <a href="#"><div class="user-avatar status-online"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>">
+                            </div><small> <?php echo $username; ?> </small></a>
                         </div>
                         <div class="header-notifications-dropdown">
                             <div class="user-status">
@@ -89,12 +102,14 @@
                    
                  <?php } else { ?>   
                 <div class="header-widget">
-                    <a href="<?php echo $login; ?>" class="btn btn-link log-in-button margin-left-100"><?php echo $text_login; ?></a>
-                    <a href="<?php echo $register; ?>" class="btn btn-link log-in-button"><?php echo $text_register; ?></a>
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a href="<?php echo $login; ?>" class="btn btn-link margin-left-100 log-in-button"><?php echo $text_login; ?></a></li>
+                        <li class="nav-item d-none d-sm-block"><a href="<?php echo $register; ?>" class="btn btn-link log-in-button"><?php echo $text_register; ?></a></li>
+                    </ul>
                 </div> 
                 <?php } ?>
                  <div class="header-widget d-none d-sm-block">
-                    <a href="<?php echo $add_project; ?>" class="add-project btn btn-primary ripple-effect rounded"><?php echo $text_add_project; ?></a>
+                    <a href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a>
                 </div> 
                 <!-- Mobile Navigation Button -->
                 <span class="mmenu-trigger">

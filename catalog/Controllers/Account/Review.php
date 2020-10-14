@@ -82,20 +82,21 @@ class Review extends \Catalog\Controllers\BaseController
         $data['projects'] = [];
         
         $results = $projectModel->getProjectAward($filter_data);
+        $customerModel = new \Catalog\Models\Account\CustomerModel();
         //$total = $reviewModel->getTotalReviews();
 
         foreach ($results as $result) {
+            $employer = $customerModel->getCustomer($result['employer_id']);
+            $freelancer = $customerModel->getCustomer($result['freelancer_id']);
             $data['projects'][] = [
                 'project_id'  => $result['project_id'],
                 'name'        => $result['name'],
-                'status'      => $result['status'],
-                'employer'    => $result['employer_id'],
-                'freelancer'  => $result['freelancer_id'],
+                'status'      => $result['status_name'],
+                'employer'    => $employer['firstname'] . $employer['lastname'],
+                'freelancer'  => $freelancer['firstname'] . $freelancer['lastname'],
                 'edit' => ''
             ];
         }
-
-        //var_dump($data['reviews']);
 
 
         $data['heading_title']     = lang('account/review.heading_title');
@@ -104,10 +105,7 @@ class Review extends \Catalog\Controllers\BaseController
         $data['column_status']     = lang('account/review.column_status');
         $data['column_action']     = lang('account/review.column_action');
         $data['column_freelancer'] = lang('account/review.column_freelancer');
-        $data['button_edit']                  = lang('account/review.button_edit');
-        $data['']                  = lang('account/review.heading_title');
-        $data['']                  = lang('account/review.heading_title');
-        $data['']                  = lang('account/review.heading_title');
+        $data['button_edit']       = lang('en.button_edit');
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 

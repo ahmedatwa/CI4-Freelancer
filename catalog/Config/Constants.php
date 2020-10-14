@@ -82,4 +82,4 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest auto
 |--------------------------------------------------------------------------
 |
 */
-defined('DIR_IMAGE') || define('DIR_IMAGE', ROOTPATH . 'public/images/');
+defined('DIR_IMAGE') || define('DIR_IMAGE', ROOTPATH . 'public_html/images/');

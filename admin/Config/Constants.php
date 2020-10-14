@@ -80,4 +80,4 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest auto
 // Custom 
 defined('PANEL_NAME') || define('PANEL_NAME', 'CI4 Admin Panel');
 defined('VERSION') || define('VERSION', '1.0');
-defined('DIR_IMAGE') || define('DIR_IMAGE', ROOTPATH . 'public/images/');
+defined('DIR_IMAGE') || define('DIR_IMAGE', ROOTPATH . 'public_html/images/');
