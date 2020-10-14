@@ -1,15 +1,11 @@
 <?php echo $header; ?>
-<div id="titlebar" class="p-4">
+<div class="jumbotron jumbotron-fluid">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h2><?php echo $heading_title; ?></h2>
+				<h2 class="display-5"><?php echo $heading_title; ?></h2>
 				<div class="float-right">
 					<a href="<?php echo $add_project; ?>" class="button rounded"><?php echo $button_hire; ?></a>
 					<a href="<?php echo $login; ?>" class="button dark text-white"><?php echo $button_work; ?></a>
 				</div>
-			</div>
-		</div>
 	</div>
 </div>
 <div class="container">
@@ -30,7 +26,7 @@
 		<div class="row">
 			<div class="col">
 				<div class="sidebar-container">
-					<p><?php echo $text_sidebar; ?></p>
+					<p><i class="fas fa-filter"></i> <?php echo $text_sidebar; ?></p>
 					<div class="dropdown-divider"></div>
 					<div class="sidebar-widget">
 						<h3><?php echo $text_type; ?></h3> 
@@ -112,7 +108,7 @@
 				<!-- Tasks Container -->
 				<div class="tasks-list-container compact-list shadow mb-5 bg-white rounded">
 					<div class="notify-box">
-						<h3 class="float-left m-3"><?php echo $text_found ;?></h3>
+						<h3 class="float-left m-2"><?php echo $text_found ;?></h3>
 						<div class="col-md-3 float-right">
 							<div class="form-group">
 								<select class="custom-select" onchange="location = this.value;">

@@ -1064,7 +1064,7 @@ body #navigation ul ul ul { margin-top: 0; }
 
 #wrapper.wrapper-with-transparent-header #header .right-side { background-color: transparent; }
 #header { transition: background 0.3s; }
-#wrapper { padding-top: 82px; }
+#wrapper { padding-top: 70px; }
 #wrapper.wrapper-with-transparent-header { padding-top: 0 !important;}
 
 @media (max-width: 1099px) {
@@ -2359,7 +2359,7 @@ body #backtotop a {
 ------------------------------------- */
 .notify-box {
 	min-height: 59px;
-	padding-top: 5px;
+	padding-top: 10px;
 	border-bottom: 1px solid #e9ecef; 
 }
 
@@ -7282,7 +7282,6 @@ input:checked + .switch-button:before {
 /* Field Row Styles */
 .intro-search-field {
 	padding: 10px 12px;
-	border-right: 1px solid #e4e4e4;
 	flex: 1;
     align-items: center;
     display: flex;

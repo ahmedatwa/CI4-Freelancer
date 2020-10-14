@@ -4,7 +4,7 @@ return [
 // Text
 'text_projects'       => 'Browse All Projects',
 'text_found'          => '{0, number} Projects Found',
-'text_sidebar'        => 'My recent searches',
+'text_sidebar'        => 'Filters',
 'text_type'           => 'Type',
 'text_skills'         => 'Skills',
 'text_languages'      => 'Languages',

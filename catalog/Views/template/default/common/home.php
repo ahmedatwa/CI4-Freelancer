@@ -258,7 +258,7 @@
 </div>
 <!-- Highest Rated Freelancers / End-->
 <!-- Photo Section -->
-<div class="photo-section" data-background-image="images/section-background.jpg">
+<div class="photo-section" data-background-image="catalog/default/images/section-background.jpg">
 
 	<!-- Infobox -->
 	<div class="text-content white-font">
