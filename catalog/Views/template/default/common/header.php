@@ -28,7 +28,7 @@
 
     <script src="catalog/default/vendor/mmenu-js/mmenu.js"></script>
     <script src="catalog/default/javascript/simplebar.min.js"></script>
-    <script src="catalog/default/javascript/slick.min.js"></script>
+    <script src="catalog/default/vendor/slick/slick.min.js"></script>
     <script src="catalog/default/javascript/magnific-popup.min.js"></script>
     <!-- Notify JS -->
     <script src="catalog/default/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>

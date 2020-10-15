@@ -55,14 +55,8 @@
 					<!-- Dashboard Box -->
 					<div class="dashboard-box main-box-in-row">
 						<div class="headline">
-							<h3><i class="icon-feather-bar-chart-2"></i> Your Profile Views</h3>
-							<div class="sort-by">
-								<select class="selectpicker hide-tick">
-									<option>Last 6 Months</option>
-									<option>This Year</option>
-									<option>This Month</option>
-								</select>
-							</div>
+							<h3><i class="icon-feather-bar-chart-2"></i> MY Profile Views</h3>
+							<canvas id="myChart" width="400" height="200"></canvas>
 						</div>
 						<div class="content">
 							<!-- Chart -->
@@ -105,33 +99,74 @@
 					</div>
 				</div>
 				<!-- Dashboard Box -->
-				<div class="col-xl-6">
-					<div class="dashboard-box">
-						<div class="headline">
-							<h3><i class="icon-material-outline-assignment"></i> Orders</h3>
-						</div>
-						<div class="content">
-							<ul class="dashboard-box-list">
-								<li>
-									<div class="invoice-list-item">
-									<strong>Professional Plan</strong>
-										<ul>
-											<li><span class="unpaid">Unpaid</span></li>
-											<li>Order: #326</li>
-											<li>Date: 12/08/2018</li>
-										</ul>
-									</div>
-									<!-- Buttons -->
-									<div class="buttons-to-right">
-										<a href="pages-checkout-page.html" class="button">Finish Payment</a>
-									</div>
-								</li>
-		
+	<div class="col-xl-6">
+		<div class="dashboard-box">
+			<div class="headline">
+				<h3><i class="icon-material-outline-assignment"></i> Orders</h3>
+			</div>
+			<div class="content">
+				<ul class="dashboard-box-list">
+					<li>
+						<div class="invoice-list-item">
+						<strong>Professional Plan</strong>
+							<ul>
+								<li><span class="unpaid">Unpaid</span></li>
+								<li>Order: #326</li>
+								<li>Date: 12/08/2018</li>
 							</ul>
 						</div>
-					</div>
-				</div>
+						<!-- Buttons -->
+						<div class="buttons-to-right">
+							<a href="pages-checkout-page.html" class="button">Finish Payment</a>
+						</div>
+					</li>
+
+				</ul>
 			</div>
-			</div>
-			</div>
-			<?php echo $footer; ?>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+<link href="catalog/default/vendor/Chart.js/Chart.min.css" rel="stylesheet" type="text/css">
+<script src="catalog/default/vendor/Chart.js/Chart.min.js"></script>
+<script type="text/javascript">
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+<?php echo $footer; ?>
