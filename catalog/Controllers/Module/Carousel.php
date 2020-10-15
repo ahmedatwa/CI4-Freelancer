@@ -28,6 +28,6 @@ class Carousel extends \Catalog\Controllers\BaseController
         $data['module'] = $module++;
 
 
-        return view('extension/module/carousel', $data);
+        return view('module/carousel', $data);
     }
 }

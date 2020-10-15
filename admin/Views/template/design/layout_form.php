@@ -157,10 +157,11 @@ function addModule() {
 	
 	module_row++;
 
-    t.on( 'click', '#button-remove', function () {
+}
+
+ t.on('click', '#button-remove', function () {
       t.row( $(this).parents('tr')).remove().draw();
     });
 
-}
 </script>
 <?php echo $footer; ?>

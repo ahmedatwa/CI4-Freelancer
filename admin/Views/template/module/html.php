@@ -39,29 +39,15 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 control-label" for="input-banner"><?php echo $entry_banner; ?></label>
+          <label class="col-sm-2 control-label" for="input-title"><?php echo $entry_title; ?></label>
           <div class="col-sm-10">
-            <select name="banner_id" id="input-banner" class="form-control">
-              <?php foreach ($banners as $banner) { ?>
-              <?php if ($banner['banner_id'] == $banner_id) { ?>
-                <option value="<?php echo $banner['banner_id']; ?>" selected="selected"><?php echo $banner['name']; ?></option>
-              <?php } else { ?>
-                <option value="<?php echo $banner['banner_id']; ?>"><?php echo $banner['name']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select>
+            <input class="form-control" name="module_description[title]" value="<?php echo $module_description['title'] ?? ''; ?>">
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 control-label" for="input-width"><?php echo $entry_width; ?></label>
+          <label class="col-sm-2 control-label" for="input-module_description"><?php echo $entry_description; ?></label>
           <div class="col-sm-10">
-            <input class="form-control" name="width" value="<?php echo $width; ?>">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2 control-label" for="input-height"><?php echo $entry_height; ?></label>
-          <div class="col-sm-10">
-            <input class="form-control" name="height" value="<?php echo $height; ?>">
+            <textarea class="form-control" name="module_description[description]" data-toggle="summernote"><?php echo $module_description['description'] ?? ''; ?></textarea>
           </div>
         </div>
         <div class="form-group row">
@@ -83,4 +69,7 @@
   </div><!-- Card -->
 </div><!-- container-fluid -->
 </div>
+<script src="assets/vendor/summernote/summernote-bs4.js"></script> 
+<script src="assets/vendor/summernote/image-manager.js"></script> 
+<link href="assets/vendor/summernote/summernote-bs4.css" rel="stylesheet">
 <?php echo $footer; ?>

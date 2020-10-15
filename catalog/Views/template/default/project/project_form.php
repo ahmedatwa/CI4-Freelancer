@@ -1,20 +1,16 @@
 <?php echo $header; ?>
-<div id="titlebar" class="margin-bottom-30 p-4">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h3 class=""><?php echo $text_tell_us; ?></h3><br />
-				<small><?php echo $text_sub; ?></small>
-			</div>
-		</div>
-	</div>
+<div class="jumbotron">
+	<div class="container-fluid">
+		<h3 class="display-5"><?php echo $text_tell_us; ?></h3><br />
+		<p class="lead"><?php echo $text_sub; ?></p>
 </div>
-<div class="section gray padding-bottom-60 full-width-carousel-fix">
+</div>
+<div class="section padding-bottom-60 full-width-carousel-fix">
 <div class="container">	
 		<div class="row justify-content-center">
 			<!-- Dashboard Box -->
 			<div class="col-md-12">
-				<div class="add-project-box margin-top-30 rounded">
+				<div class="add-project-box margin-top-30 shadow p-3 mb-5 bg-white rounded">
 					<!-- Headline -->
 					<div class="headline mb-2">
 						<h3 class=""><i class="icon-feather-folder-plus"></i> <?php echo $text_form; ?></h3>

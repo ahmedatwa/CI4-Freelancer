@@ -50,7 +50,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('project/project.text_projects'),
-            'href' => route_to('projects'),
+            'href' => route_to('projects') ? route_to('projects') : base_url('project/category'),
         ];
 
         $data['breadcrumbs'][] = [
@@ -70,7 +70,7 @@ class Project extends \Catalog\Controllers\BaseController
         }
 
         $data['logged']          = $this->customer->isLogged();
-        $data['config_currency'] = $this->registry->get('config_currency');
+        $data['config_currency'] = $this->session->get('currency') ?? $this->registry->get('config_currency');
         $data['register']        = route_to('register') ?? base_url('acocunt/register');
         $data['add_project']     = base_url('project/project/add');
         
@@ -262,7 +262,7 @@ class Project extends \Catalog\Controllers\BaseController
 
 
         $data['language_id'] = $this->registry->get('config_language_id');
-        $data['config_currency'] = $this->registry->get('config_currency');
+        $data['config_currency'] = $this->session->get('currency') ?? $this->registry->get('config_currency');
 
         $this->template->output('project/project_form', $data);
     }

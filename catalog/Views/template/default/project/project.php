@@ -39,7 +39,7 @@
 		</div>
 	</div>
 </div>		
-<div class="container">
+<div class="container-fluid">
 	<div class="row">
 		<div class="col-12">
 			<nav id="breadcrumbs">
@@ -51,12 +51,10 @@
 			</nav>
 		</div>
 	</div>
-</div>
-<div class="container">
 		<!-- Page Content-->
 			<div class="row justify-content-md-center">
 				<!-- Content -->
-				<div class="col-sm-12 col-md-9 mb-4 shadow rounded bg-white">
+				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow rounded bg-white">
 					<!-- Description -->
 					<div class="single-page-section">
 						<p><?php echo $description; ?></p>
@@ -101,8 +99,8 @@
 				</div>
 				<!-- Sidebar -->
 				<div class="col">
-					<div class="sidebar-container ">
-						<div class="countdown green"><?php echo $days_left; ?></div>
+					<div class="sidebar-container shadow-sm p-3 mb-5 bg-white rounded">
+						<div class="countdown green mb-4"><?php echo $days_left; ?></div>
 						<div class="sidebar-widget">
 							<div class="bidding-widget text-white text-center">
 							 <a href="<?php echo $add_project; ?>" class="button full-width ripple-effect button-sliding-icon">Post a project like this <i class="fas fa-long-arrow-alt-right"></i></a>

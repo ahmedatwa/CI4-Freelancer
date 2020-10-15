@@ -1,16 +1,16 @@
 <?php namespace Admin\Controllers\Module;
 
-class Carousel extends \Admin\Controllers\BaseController
+class Html extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->document->setTitle(lang('module/carousel.list.heading_title'));
+        $this->document->setTitle(lang('module/html.list.heading_title'));
 
         $modules = new \Admin\Models\Setting\Modules();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             if (! $this->request->getVar('module_id')) {
-                $modules->addModule('carousel', $this->request->getPost());
+                $modules->addModule('html', $this->request->getPost());
             } else {
                 $modules->editModule($this->request->getVar('module_id'), $this->request->getPost());
             }
@@ -33,26 +33,26 @@ class Carousel extends \Admin\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('module/carousel.list.text_extension'),
+            'text' => lang('module/html.list.text_extension'),
             'href' => base_url('index.php/setting/module?user_token=' . $this->request->getVar('user_token'))
         ];
 
         if (!isset($this->request->get['module_id'])) {
             $data['breadcrumbs'][] = [
-                'text' => lang('module/carousel.list.heading_title'),
-                'href' => base_url('index.php/module/carousel?user_token=' . $this->request->getVar('user_token'))
+                'text' => lang('module/html.list.heading_title'),
+                'href' => base_url('index.php/module/html?user_token=' . $this->request->getVar('user_token'))
             ];
         } else {
             $data['breadcrumbs'][] = [
                 'text' => lang('heading_title'),
-                'href' => base_url('index.php/module/carousel?user_token=' . $this->request->getVar('user_token') . '&module_id=' . $this->request->getVar('module_id'))
+                'href' => base_url('index.php/module/html?user_token=' . $this->request->getVar('user_token') . '&module_id=' . $this->request->getVar('module_id'))
             ];
         }
 
         if (! $this->request->getVar('module_id')) {
-            $data['action'] = base_url('index.php/module/carousel?user_token=' . $this->request->getVar('user_token'));
+            $data['action'] = base_url('index.php/module/html?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/module/carousel?user_token=' . $this->request->getVar('user_token') . '&module_id=' . $this->request->getVar('module_id'));
+            $data['action'] = base_url('index.php/module/html?user_token=' . $this->request->getVar('user_token') . '&module_id=' . $this->request->getVar('module_id'));
         }
 
         $data['cancel'] = base_url('index.php/setting/module?user_token=' . $this->request->getVar('user_token'));
@@ -69,28 +69,12 @@ class Carousel extends \Admin\Controllers\BaseController
             $data['name'] = '';
         }
 
-        if ($this->request->getPost('banner_id')) {
-            $data['banner_id'] = $this->request->getPost('banner_id');
+        if ($this->request->getPost('module_description')) {
+            $data['module_description'] = $this->request->getPost('module_description');
         } elseif (!empty($module_info)) {
-            $data['banner_id'] = $module_info['banner_id'];
+            $data['module_description'] = $module_info['module_description'];
         } else {
-            $data['banner_id'] = '';
-        }
-
-        if ($this->request->getPost('width')) {
-            $data['width'] = $this->request->getPost('width');
-        } elseif (!empty($module_info)) {
-            $data['width'] = $module_info['width'];
-        } else {
-            $data['width'] = 130;
-        }
-
-        if ($this->request->getPost('height')) {
-            $data['height'] = $this->request->getPost('height');
-        } elseif (!empty($module_info)) {
-            $data['height'] = $module_info['height'];
-        } else {
-            $data['height'] = 100;
+            $data['module_description'] = [];
         }
 
         if ($this->request->getPost('status')) {
@@ -101,26 +85,20 @@ class Carousel extends \Admin\Controllers\BaseController
             $data['status'] = '';
         }
 
-        $banners_model = new \Admin\Models\Design\Banners();
-
-        $data['banners'] = $banners_model->getBanners();
-
-        $this->document->output('module/carousel', $data);
+        $this->document->output('module/html', $data);
     }
 
     protected function validateForm()
     {
         if (! $this->validate([
-                'name'   => 'required|min_length[3]',
-                'width'  => 'required|alpha_numeric',
-                'height' => 'required|alpha_numeric',
+                'name'   => 'required|min_length[3]|max_length[64]',
             ])) {
             $this->session->setFlashdata('error_warning', lang('en.error.error_form'));
             return false;
         }
 
-        if (!$this->user->hasPermission('modify', 'module/carousel')) {
-            $this->session->setFlashdata('error_warning', lang('module/carousel.error_permission'));
+        if (!$this->user->hasPermission('modify', 'module/html')) {
+            $this->session->setFlashdata('error_warning', lang('module/html.error_permission'));
             return false;
         }
         return true;

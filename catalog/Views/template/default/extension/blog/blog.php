@@ -75,7 +75,7 @@
 				<!-- Pagination / End -->
 			</div>
 			<div class="col">
-				<div class="sidebar-container margin-top-30">
+				<div class="sidebar-container">
 					<!-- Widget -->
 					<div class="sidebar-widget">
 						<h3><?php echo $text_trending; ?></h3>

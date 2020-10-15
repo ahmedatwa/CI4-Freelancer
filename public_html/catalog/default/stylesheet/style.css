@@ -2338,7 +2338,7 @@ body #backtotop a {
 /* ---------------------------------- */
 /* Sidebar Styles
 ------------------------------------- */
-.sidebar-container { margin-bottom: 40px; }
+.sidebar-container { margin-bottom: 40px; margin-top:35px;}
 .full-page-container .sidebar-container { margin-bottom: 0px; }
 
 /*.sidebar-widget input { margin-bottom: 0; }
@@ -2372,7 +2372,7 @@ body #backtotop a {
 	margin-right: 10px;
 }
 
-.sort-by .bootstrap-select {
+/*.sort-by .bootstrap-select {
 	position: relative;
 	right: 0;
 	top: 0;
@@ -2417,7 +2417,7 @@ body #backtotop a {
 }
 
 .sort-by .bootstrap-select.open:before { display: none; }
-
+*/
 .sort-by {
 	display: flex;
 	flex-wrap: wrap;
@@ -2440,7 +2440,7 @@ body #backtotop a {
 /* ---------------------------------- */
 /* Titlebar
 ------------------------------------- */
-#titlebar {
+/*#titlebar {
 	background-color: #f8f8f8;
 	position: relative;
 	padding: 70px 0;
@@ -2479,7 +2479,7 @@ body #backtotop a {
 	font-size: 30px;
 	line-height: 40px;
 	margin: 1px 0 3px 0;
-}
+}*/
 
 /* Breadcrumbs */
 #breadcrumbs {
