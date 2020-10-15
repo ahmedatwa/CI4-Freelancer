@@ -48,7 +48,8 @@
         <!-- Notifications DropDown-->
         <li class="nav-item">
         <div class="dropdown">
-          <a class="dropdown-toggle" href="#" role="button" id="mainDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo $image; ?>" alt="<?php echo $firstname . " " . $lastname; ?>" title="<?php echo $username; ?>" class="rounded" width="45" height="45" id="user-profile"> <?php echo $firstname . " " . $lastname; ?> <i class="fas fa-caret-down"></i></a>
+          <a class="dropdown-toggle" href="#" role="button" id="mainDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="<?php echo $image; ?>" alt="<?php echo $firstname . " " . $lastname; ?>" title="<?php echo $username; ?>" class="rounded" width="45" height="45" id="user-profile"> <?php echo $firstname . " " . $lastname; ?> <i class="fas fa-caret-down"></i></a>
           <div class="dropdown-menu" aria-labelledby="mainDropdown">
             <a class="dropdown-item" href="<?php echo $profile; ?>">
             <i class="fas fa-user-circle"></i> <?php echo $text_profile; ?></a>

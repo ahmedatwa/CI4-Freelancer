@@ -11,9 +11,6 @@ return [
     // Entry
     'entry_email'          => 'Email',
     'entry_password'       => 'Password',
-    'text_apply' => 'Apply Now',
-    'text_browse' => 'Browse All Jobs',
-    'text_featured' => 'Featured Jobs',
     'text_freelancers' => 'Highest Rated Freelancers',
     'text_all_freelancers' => 'Browse All Freelancers',
     'text_view_profile' => 'View Profile',

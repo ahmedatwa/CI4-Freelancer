@@ -8992,104 +8992,15 @@ transform: translateY(-18px);
 	margin-right: 20px;
 }
 
-/* Quantity Buttons for Booking Widget*/
-.qtyButtons {
-    display: flex;
-    margin: 0;
-    background: #fff;
-    border-radius: 4px;
-    box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.12);
-    height: 48px;
-    padding: 6px;
-}
-
-.qtyButtons.with-border {
-	border: 1px solid #e0e0e0;
-    box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.05)
-}
-
-.qtyButtons input {
-	outline: 0;
-	font-size: 16px;
-	font-weight: 600;
-	text-align: center;
-	width: 50px;
-	height: 36px;
-	color: #808080;
-	line-height: 36px;
-	margin: 0 !important;
-	padding: 0 5px;
-	border: none;
-	box-shadow: none;
-	display: inline-block;
-	flex-grow: 1;
-	box-shadow: none !important;
-}
-
-.qtyTitle {
-	font-size: 16px;
-	font-weight: 600;
-	line-height: 36px;
-	padding-right: 15px;
-	display: block;
-	flex: 1;
-}
-
-.qtyInc,
-.qtyDec {
-    width: 36px;
-    height: 36px;
-    line-height: 36px;
-    font-size: 18px;
-    background-color: #f0f0f0;
-    color: #808080;
-    display: inline-block;
-    text-align: center;
-    border-radius: 4px;
-    cursor: pointer;
-	font-family: "Feather-Icons";
-    flex: 1;
-	min-width: 36px;
-	max-width: 36px;
-	transition: 0.3s;
-}
-
-.qtyInc:before { content: "\e9b1"; }
-.qtyDec:before { content: "\e996"; }
-
-.qtyInc:hover,
-.qtyDec:hover {
-	background-color: #66676b;
-	color: #fff;
-}
-
-.qtyTotal {
-	background-color: #66676b;
-	border-radius: 50%;
-	color: #fff;
-	display: inline-block;
-	font-size: 11px;
-	font-weight: 600;
-	font-family: "Open Sans", sans-serif;
-	line-height: 18px;
-	text-align: center;
-	position: relative;
-	top: -2px;
-	left: 2px;
-	height: 18px;
-	width: 18px;
-}
 
 
 /* Media Queiers for Bidding Widget */
 @media (max-width: 1366px) {
-	.qtyInc, .qtyDec { min-width: 34px; max-width: 34px; }
 	.bidding-widget .bidding-inner { padding: 27px 32px; }
 	.bidding-widget .bidding-headline { padding: 20px 32px; }
 }
 
 @media (max-width: 1240px) {
-	.qtyInc, .qtyDec { min-width: 36px; max-width: 36px; }
 
 	.bidding-widget .bidding-fields .bidding-field {
 	    flex: auto;
@@ -14531,7 +14442,7 @@ ul.dashboard-box-list > li:hover {
 		color: #666;
 		font-size: 16px;
 		line-height: 27px;
-		background-color: #fff;
+		/*background-color: #fff;*/
 	}
 
 	body.gray { background-color: #fbfbfb; }
@@ -15335,4 +15246,9 @@ ul.dashboard-box-list > li:hover {
     pointer-events: none;        
     text-decoration: none;
     color: grey;
+}
+
+.nav-item.dropdown 
+{
+	list-style: none;
 }

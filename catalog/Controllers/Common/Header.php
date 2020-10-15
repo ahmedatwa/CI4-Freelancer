@@ -37,7 +37,7 @@ class Header extends \Catalog\Controllers\BaseController
         $data['login']       = base_url('account/login');
         $data['forgotton']   = base_url('account/forgotten');
         $data['logout']      = base_url('account/logout');
-        $data['setting']     = base_url('account/dashboard/setting?cid=' . $this->customer->getCustomerId());
+        $data['setting']     = base_url('account/setting?cid=' . $this->customer->getCustomerId());
         $data['dashboard']   = base_url('account/dashboard?cid=' . $this->customer->getCustomerId());
         $data['projects']    = base_url('project/category');
         $data['add_project'] = base_url('project/project/add');

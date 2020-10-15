@@ -30,6 +30,7 @@ class Column_left extends \Catalog\Controllers\BaseController
             $basename = ucfirst($part[0]);
 
             if (isset($part[0]) && $this->registry->get('module_' . $part[0] . '_status')) {
+                
                 $module_data = view_cell("Catalog\Controllers\Module\\{$basename}::index");
 
                 if ($module_data) {

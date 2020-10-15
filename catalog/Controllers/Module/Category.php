@@ -1,7 +1,7 @@
 <?php namespace Catalog\Controllers\Module;
 
 class Category extends \Catalog\Controllers\BaseController
-
+{
 	public function index() {
 
 		$data['heading_title'] = lang('module/account.heading_title');
