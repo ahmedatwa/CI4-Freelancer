@@ -7,23 +7,25 @@ class Content_top extends \Catalog\Controllers\BaseController
 
         if ($this->request->uri->getPath()) {
             $route = $this->request->uri->getPath();
-        } else {
-            $route = 'common/home';
-        }
+        } 
 
+        if (!$route || $route == '/') {
+             $route = 'common/home';
+        }
+            
         $moduleModel = new \Catalog\Models\Setting\Modules();
 
         $layoutModel = new \Catalog\Models\Design\Layouts();
 
         $data['modules'] = [];
 
-        $layout_id = $layoutModel->getLayout('common/home');
+        $layout_id = $layoutModel->getLayout($route);
 
         if (!$layout_id) {
             $layout_id = $this->registry->get('config_layout_id');
         }
 
-        $modules = $layoutModel->getLayoutModules($layout_id, $route);
+        $modules = $layoutModel->getLayoutModules($layout_id, 'content_top');
 
         foreach ($modules as $module) {
 

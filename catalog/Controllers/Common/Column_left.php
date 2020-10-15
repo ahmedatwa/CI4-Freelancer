@@ -6,8 +6,10 @@ class Column_left extends \Catalog\Controllers\BaseController
     {
         if ($this->request->uri->getPath()) {
             $route = $this->request->uri->getPath();
-        } else {
-            $route = 'common/home';
+        } 
+
+        if (!$route || $route == '/') {
+             $route = 'common/home';
         }
 
         $layout_model = new \Catalog\Models\Design\Layouts();
@@ -17,7 +19,7 @@ class Column_left extends \Catalog\Controllers\BaseController
         $layout_id = $layout_model->getLayout($route);
 
         if (!$layout_id) {
-            $layout_id = $this->registry->get('config_layout_id');
+             $layout_id = $this->registry->get('config_layout_id');
         }
 
         $data['modules'] = [];
