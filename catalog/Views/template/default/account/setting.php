@@ -6,13 +6,13 @@
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>
 			<!-- Breadcrumbs -->
-			<!-- <nav id="breadcrumbs" class="dark">
+			<nav id="breadcrumbs" class="">
 				<ul>
-					<?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-						<li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-					<?php //} ?>
+					<?php foreach ($breadcrumbs as $breadcrumb) { ?>
+						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+					<?php } ?>
 				</ul>
-			</nav> -->
+			</nav>
 		</div>
 		<!-- Row -->
 		<div class="row">
@@ -183,11 +183,12 @@
 						
 						 <!-- Certificates BEGIN -->
 						<div class="accordion" id="certificatesAccordion">
-							<div class="accordion-header" id="headingOne">
+							<div class="card-header" id="headingOne">
 								<h2 class="mb-0">
-									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#certificates" aria-expanded="true" aria-controls="collapseOne"><?php echo $tab_certificates; ?></button>
+									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#certificates" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-certificate"></i> <?php echo $tab_certificates; ?></button>
 								</h2>
-							</div>
+                            </div>
+                            <div class="card-body">
 							<div id="certificates" class="collapse" aria-labelledby="headingOne" data-parent="#certificatesAccordion">
 								<div class="accordion-body__contents">
 									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="csrf_token" />
@@ -220,14 +221,16 @@
 											<div id="certificates-list"></div>    
 										</div>
 									</div>
-									</div>
+                                    </div>
+                                </div>
 									<!-- Certificates END -->
 								<div class="accordion" id="educationAccordion">
-								<div class="accordion-header" id="headingTwo">
+								<div class="card-header" id="headingTwo">
 								<h2 class="mb-0">
-									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#education" aria-expanded="true" aria-controls="headingTwo"><?php echo $tab_education; ?></button>
+									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#education" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-university"></i> <?php echo $tab_education; ?></button>
 								</h2>
-							</div>	
+                            </div>	
+                            <div class="card-body">
 								<div id="education" class="collapse" aria-labelledby="headingTwo" data-parent="#educationAccordion">
 								<div class="accordion-body__contents">
 									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="csrf_token" />
@@ -280,15 +283,17 @@
 											<hr />         
 											<div id="educations-list"></div>    
 										</div>
-									</div>
+                                    </div>
+                                </div>
 								</div>
 			                <!-- Education EDD  -->
 			                <div class="accordion" id="languageAccordion">
-								<div class="accordion-header" id="headingTwo">
+								<div class="card-header" id="headingTwo">
 								<h2 class="mb-0">
-									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#language" aria-expanded="true" aria-controls="headingTwo"><?php echo $tab_languages; ?></button>
+									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#language" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-language"></i> <?php echo $tab_languages; ?></button>
 								</h2>
 							</div>	
+							<div class="card-body">
 			                <div id="language" class="collapse" aria-labelledby="headingTwo" data-parent="#languageAccordion">
 								<div class="accordion-body__contents">
 									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="csrf_token" />
@@ -325,13 +330,15 @@
 										</div>
 									</div>
 								</div>
+								</div>
 								<!-- Language EDD  -->
 								<div class="accordion" id="skillsAccordion">
-								<div class="accordion-header" id="headingTwo">
+								<div class="card-header" id="headingTwo">
 								<h2 class="mb-0">
-									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#skills" aria-expanded="true" aria-controls="headingTwo"><?php echo $tab_skill; ?></button>
+									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#skills" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-chalkboard-teacher"></i> <?php echo $tab_skill; ?></button>
 								</h2>
-							</div>	
+							</div>
+							<div class="card-body">
 							<div id="skills" class="collapse" aria-labelledby="headingTwo" data-parent="#skillsAccordion">
 								<div class="accordion-body__contents">
 									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="skills_csrf_token" />
@@ -353,7 +360,7 @@
 								</div>
 							</div>
 						</div>
-
+						</div>
 					</div>
 				</div>
 			</div>

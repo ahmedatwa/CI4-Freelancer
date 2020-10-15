@@ -433,6 +433,16 @@ class CustomerModel extends \CodeIgniter\Model
         $builder->update();
     }
 
+    public function getCustomerProfileView(int $customer_id)
+    {
+        $builder = $this->db->table('customer');
+        $builder->select('viewed');
+        $builder->where('customer_id', $customer_id);
+        $query = $builder->get();
+        $row = $query->getRowArray();
+        return $row['viewed'];
+    }
+
     // Forgotten Password
     public function editCode($email, $code)
     {

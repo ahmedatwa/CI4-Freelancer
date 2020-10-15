@@ -49,10 +49,11 @@
             <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white">
                 <a class="navbar-brand" href="<?php echo $home; ?>">
                     <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top" loading="lazy"></a>
+                    <?php if (! $logged) { ?>
                      <ul class="navbar-nav d-block d-sm-none">
                         <li class="nav-item"><a class="nav-link" href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
                     </ul>
-
+                    <?php } ?>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
