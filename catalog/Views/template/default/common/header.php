@@ -26,7 +26,7 @@
     <script src="catalog/default/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="catalog/default/vendor/bootstrap-slider/dist/bootstrap-slider.min.js"></script> 
 
-    <script src="catalog/default/vendor/mmenu-js/mmenu.min.js"></script>
+    <script src="catalog/default/vendor/mmenu-js/mmenu.js"></script>
     <script src="catalog/default/javascript/simplebar.min.js"></script>
     <script src="catalog/default/javascript/slick.min.js"></script>
     <script src="catalog/default/javascript/magnific-popup.min.js"></script>
@@ -34,6 +34,7 @@
     <script src="catalog/default/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
     <script src="catalog/default/javascript/jquery.counterup.min.js"></script>
     <script src="catalog/default/vendor/select2/js/select2.min.js"></script> 
+
     <script src="catalog/default/javascript/custom.js"></script>
 
     <?php foreach ($scripts as $script) { ?>
@@ -45,35 +46,49 @@
         <!-- Header Container-->
         <header id="header-container" class="fullwidth transparent">
             <!-- Header -->
-            <nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-5 bg-white">
+            <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white">
                 <a class="navbar-brand" href="<?php echo $home; ?>">
                     <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top" loading="lazy"></a>
+                     <ul class="navbar-nav d-block d-sm-none">
+                        <li class="nav-item"><a class="nav-link" href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
+                    </ul>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
-                        <?php foreach ($informations as $information) { ?>
-                             <li class="nav-item"><a class="nav-link" href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
-                        <?php }  ?>
-                         <li class="nav-item"><a class="nav-link" href="<?php echo $projects; ?>"> <?php echo $text_projects; ?></a></li>
-                         <li class="nav-item"><a class="nav-link" href="<?php echo $blog; ?>"> <?php echo $text_blog; ?></a></li>
-                        </ul>
+                            <?php foreach ($informations as $information) { ?>
+                               <li class="nav-item"><a class="nav-link" href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
+                           <?php }  ?>
+                           <li class="nav-item"><a class="nav-link" href="<?php echo $projects; ?>"> <?php echo $text_projects; ?></a></li>
+                           <li class="nav-item"><a class="nav-link" href="<?php echo $blog; ?>"> <?php echo $text_blog; ?></a></li>
+                       </ul>
+                       <?php if (! $logged) { ?>
+                       <ul class="navbar-nav">
+                           <li class="nav-item d-none d-md-block"><a class="nav-link" href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
+                           <li class="nav-item d-none d-md-block"><a class="nav-link" href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
+                       </ul>
+                       <?php } else { ?>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <?php echo $username; ?>
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="#">Action</a>
+                              <a class="dropdown-item" href="#">Another action</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#">Something else here</a>
+                          </div>
+                      </li>
+                     <?php } ?>
+                      <div class="header-widget d-none d-sm-block">
+                        <a href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a>
+                    </div> 
+                </div>
 
-                         <ul class="navbar-nav ">
-                             <li class="nav-item"><a class="nav-link" href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
-                             <li class="nav-item"><a class="nav-link" href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
-                         </ul>
-                         <div class="header-widget d-none d-sm-block">
-                            <a href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a>
-                        </div> 
-                    </div>
-                </nav>
-            </header>
-                <!-- Mobile Navigation Button -->
-                <span class="mmenu-trigger">
-                    <button class="hamburger hamburger--collapse" type="button">
-                        <span class="hamburger-box">
-                            <span class="hamburger-inner"></span>
-                        </span>
-                    </button>
-                </span>
+            </nav>
+        </header>
+                
 <!-- Header Container / End -->

@@ -1,14 +1,10 @@
 <?php echo $header; ?> 
-<div id="titlebar" class="p-4">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h2><?php echo $heading_title; ?></h2>
-			</div>
-		</div>
+<div class="jumbotron">
+	<div class="container-fluid">
+		<h2 class="display-5"><?php echo $heading_title; ?></h2>
 	</div>
 </div>
-<div class="container">
+<div class="container-fluid">
 	<div class="row">
 		<div class="col-12">
 			<nav id="breadcrumbs">
@@ -20,14 +16,12 @@
 			</nav>
 		</div>
 	</div>
-</div>	
-<div class="section p-3 mb-5 bg-white">		
-	<div class="container">
+	<div class="section mb-5 bg-white margin-top-30">		
 		<div class="row">
-		<div class="col">
-			<div class="sidebar-container">
-				<!-- Category -->
-				<div class="keywords-list"></div>
+			<div class="col">
+				<div class="sidebar-container">
+					<!-- Category -->
+					<div class="keywords-list"></div>
 					<div class="dropdown-divider"></div>
 					<div class="sidebar-widget">
 						<h3><?php echo $text_skills; ?></h3>
@@ -35,37 +29,37 @@
 							<div class="input-group keyword-input-container">
 								<select class="form-control" name="filter_category[]" data-width="100%" multiple="multiple">
 									<?php foreach($categories as $category) { ?>
-									<?php if (in_array($category['category_id'], $filter_skills)) { ?>
-										<option value="<?php echo $category['category_id']; ?>" selected><?php echo $category['name']; ?></option>
+										<?php if (in_array($category['category_id'], $filter_skills)) { ?>
+											<option value="<?php echo $category['category_id']; ?>" selected><?php echo $category['name']; ?></option>
 										<?php } else { ?>
-										<option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+											<option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
 										<?php } ?>
-										<?php } ?>
-									</select>
+									<?php } ?>
+								</select>
 								
 							</div>
 						</div>
 
 					</div>
-				<!-- Hourly Rate -->
-				<div class="sidebar-widget">
-					<h3><?php echo $text_hourly_rate; ?></h3>
-							<div class="form-group">
-								<select class="custom-select" onchange="location = this.value;">
-									<option><?php echo $text_select; ?></option>
-									<?php foreach ($rates as $rate) { ?> 
-										<?php if ($rate['value'] == $filter_rate) { ?>
-											<option value="<?php echo $rate['href']; ?>" selected><?php echo $rate['text']; ?></option>
-										<?php } else { ?>
-											<option value="<?php echo $rate['href']; ?>"><?php echo $rate['text']; ?></option>  
-										<?php } ?>
-									<?php } ?>      
-								</select>
+					<!-- Hourly Rate -->
+					<div class="sidebar-widget">
+						<h3><?php echo $text_hourly_rate; ?></h3>
+						<div class="form-group">
+							<select class="custom-select" onchange="location = this.value;">
+								<option><?php echo $text_select; ?></option>
+								<?php foreach ($rates as $rate) { ?> 
+									<?php if ($rate['value'] == $filter_rate) { ?>
+										<option value="<?php echo $rate['href']; ?>" selected><?php echo $rate['text']; ?></option>
+									<?php } else { ?>
+										<option value="<?php echo $rate['href']; ?>"><?php echo $rate['text']; ?></option>  
+									<?php } ?>
+								<?php } ?>      
+							</select>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-sm-12 col-md-9 mb-4">
+			<div class="col-sm-12 col-md-9 mb-4">
 			<!-- Freelancers List Container -->
 			<div class="freelancers-container freelancers-list-layout compact-list shadow p-3 mb-5 bg-white rounded">
 				<div class="notify-box">
@@ -76,7 +70,6 @@
 				<?php foreach ($freelancers as $freelancer) { ?>
 				<!--Freelancer -->
 				<div class="freelancer">
-
 					<!-- Overview -->
 					<div class="freelancer-overview">
 						<div class="freelancer-overview-inner">

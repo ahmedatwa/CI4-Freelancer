@@ -1,14 +1,10 @@
 <?php echo $header; ?>
-<div id="titlebar" class="p-4">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h2><?php echo $heading_title; ?></h2>
-			</div>
-		</div>
-	</div>
+<div class="jumbotron">
+	<div class="container-fluid">
+		<h2 class="display-5"><?php echo $heading_title; ?></h2>
 </div>
-<div class="container">
+</div>
+<div class="container-fluid">
 	<div class="row">
 		<div class="col-12">
 			<nav id="breadcrumbs">
@@ -20,10 +16,8 @@
 			</nav>
 		</div>
 	</div>
-</div>	
 <!-- Container -->
 <div class="section margin-top-30">
-<div class="container">
 	<div class="row">
 		<div class="col-xl-12 col-lg-12">
 			<section id="contact" class="margin-bottom-60">

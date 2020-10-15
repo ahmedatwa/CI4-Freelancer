@@ -1,30 +1,26 @@
 <?php echo $header; ?>
-<!-- Content -->
-<div id="titlebar" class="gradient">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h2><?php echo $text_post; ?></h2>
-				<!-- Breadcrumbs -->
-				<nav id="breadcrumbs" class="dark">
-					<ul>
-					<?php foreach ($breadcrumbs as $breadcrumb) { ?>
-						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-						<?php } ?>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</div>
+<div class="jumbotron">
+	<div class="container-fluid">
+		<h2 class="display-5"><?php echo $text_post; ?></h2>
 </div>
-<!-- Post Content -->
-<div class="container">
+</div>
+<div class="container-fluid">
+<div class="row">
+<div class="col-12">
+	<nav id="breadcrumbs">
+		<ul>
+			<?php foreach ($breadcrumbs as $breadcrumb) { ?>
+				<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+			<?php } ?>
+		</ul>
+	</nav>
+</div>
+</div>
 	<div class="row">	
 		<!-- Inner Content -->
-		<div class="col-xl-8 col-lg-8">
+			<div class="col-sm-12 col-md-9 mb-4">
 			<!-- Blog Post -->
 			<div class="blog-post single-post">
-
 				<!-- Blog Post Thumbnail -->
 				<div class="blog-post-thumbnail">
 					<div class="blog-post-thumbnail-inner">
@@ -40,9 +36,7 @@
 						<a href="#" class="blog-post-info"><?php echo $date_added; ?></a>
 						<!-- <a href="#"  class="blog-post-info">5 Comments</a> -->
 					</div>
-
 					<p><?php echo $body; ?></p>
-
 					<!-- Share Buttons -->
 					<div class="share-buttons margin-top-25">
 						<div class="share-buttons-trigger"><i class="icon-feather-share-2"></i></div>
@@ -57,106 +51,9 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
-			<!-- Blog Post Content / End -->
-			
-			<!-- Blog Nav -->
-			<ul id="posts-nav" class="margin-top-0 margin-bottom-40">
-				<li class="next-post">
-					<a href="#">
-						<span>Next Post</span>
-						<strong>16 Ridiculously Easy Ways to Find & Keep a Remote Job</strong>
-					</a>
-				</li>
-				<li class="prev-post">
-					<a href="#">
-						<span>Previous Post</span>
-						<strong>11 Tips to Help You Get New Clients Through Cold Calling</strong>
-					</a>
-				</li>
-			</ul>
-			
-			<!-- Related Posts -->
-			<!-- <div class="row"> -->
-				<!-- Headline -->
-				<!-- <div class="col-xl-12">
-					<h3 class="margin-top-40 margin-bottom-35">Related Posts</h3>
-				</div> -->
-				<!-- Blog Post Item -->
-				<!-- <div class="col-xl-6">
-					<a href="pages-blog-post.html" class="blog-compact-item-container">
-						<div class="blog-compact-item">
-							<img src="images/blog-02a.jpg" alt="">
-							<span class="blog-item-tag">Recruiting</span>
-							<div class="blog-compact-item-content">
-								<ul class="blog-post-tags">
-									<li>29 June 2018</li>
-								</ul>
-								<h3>How to "Woo" a Recruiter and Land Your Dream Job</h3>
-								<p>Appropriately empower dynamic leadership skills after business portals. Globally myocardinate interactive.</p>
-							</div>
-						</div>
-					</a>
-				</div>
-			</div> -->
-			<!-- Related Posts / End -->
-				
-			<!-- Comments -->
-			<div class="row">
-				<div class="col-xl-12">
-					<section class="comments">
-						<h3 class="margin-top-45 margin-bottom-0"><?php echo $text_comments; ?></h3>
-						<ul>
-						<?php foreach ($post_comments as $comment) { ?>
-							<li>
-								<div class="avatar"></div>
-								<div class="comment-content"><div class="arrow-comment"></div>
-									<div class="comment-by"><?php echo $comment['name']; ?><span class="date"><?php echo $comment['date_added']; ?></span>
-										<!-- <a href="#" class="reply"><i class="fa fa-reply"></i> Reply</a> -->
-									</div>
-									<p><?php echo $comment['text']; ?></p>
-								</div>
-							</li>
-						<?php } ?>
-						 </ul>
-
-					</section>
-				</div>
-			</div>
-			<!-- Comments / End -->
-			<!-- Leava a Comment -->
-			<div class="row">
-				<div class="col-xl-12">
-					<h3 class="margin-top-35 margin-bottom-30"><?php echo $text_add_comment; ?></h3>
-					<!-- Form -->
-					<form method="post" id="form-comment" >
-					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-					<input type="hidden" name="post_id" value="<?= $post_id ?>" />
-						<div class="row">
-							<div class="col-xl-6">
-								<div class="input-with-icon-left no-border">
-									<i class="icon-material-outline-account-circle"></i>
-									<input type="text" class="input-text" name="name" id="name" placeholder="<?php echo $entry_name; ?>"/>
-								</div>
-							</div>
-							<div class="col-xl-6">
-								<div class="input-with-icon-left no-border">
-									<i class="icon-material-baseline-mail-outline"></i>
-									<input type="text" class="input-text" name="email" id="input-email" placeholder="<?php echo $entry_email; ?>" required/>
-								</div>
-							</div>
-						</div>
-						<textarea  name="comment" cols="30" rows="5" placeholder="Comment"></textarea>
-					</form>
-					<!-- Button -->
-					<button class="button button-sliding-icon ripple-effect margin-bottom-40" type="button" id="add-comment"><?php echo $button_add; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
-				</div>
-			</div>
-			<!-- Leava a Comment / End -->
 		</div>
-		<!-- Inner Content / End -->
-		<div class="col-xl-4 col-lg-4 content-left-offset">
+		<div class="col">
 			<div class="sidebar-container">
 				<!-- Widget -->
 				<div class="sidebar-widget">
@@ -203,8 +100,90 @@
 				</div> -->
 			</div>
 		</div>
+		</div>
+			<!-- Blog Post Content / End -->
+			
+
+			
+			<!-- Related Posts -->
+			<!-- <div class="row"> -->
+				<!-- Headline -->
+				<!-- <div class="col-xl-12">
+					<h3 class="margin-top-40 margin-bottom-35">Related Posts</h3>
+				</div> -->
+				<!-- Blog Post Item -->
+				<!-- <div class="col-xl-6">
+					<a href="pages-blog-post.html" class="blog-compact-item-container">
+						<div class="blog-compact-item">
+							<img src="images/blog-02a.jpg" alt="">
+							<span class="blog-item-tag">Recruiting</span>
+							<div class="blog-compact-item-content">
+								<ul class="blog-post-tags">
+									<li>29 June 2018</li>
+								</ul>
+								<h3>How to "Woo" a Recruiter and Land Your Dream Job</h3>
+								<p>Appropriately empower dynamic leadership skills after business portals. Globally myocardinate interactive.</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div> -->
+			<!-- Related Posts / End -->
+				
+			<!-- Comments -->
+			<?php if ($post_comments) { ?>
+			<div class="row">
+				<div class="col-12">
+					<section class="comments">
+						<h3 class="margin-top-45 margin-bottom-0"><?php echo $text_comments; ?></h3>
+						<ul>
+						<?php foreach ($post_comments as $comment) { ?>
+							<li>
+								<div class="avatar"></div>
+								<div class="comment-content"><div class="arrow-comment"></div>
+									<div class="comment-by"><?php echo $comment['name']; ?><span class="date"><?php echo $comment['date_added']; ?></span>
+										<!-- <a href="#" class="reply"><i class="fa fa-reply"></i> Reply</a> -->
+									</div>
+									<p><?php echo $comment['text']; ?></p>
+								</div>
+							</li>
+						<?php } ?>
+						 </ul>
+
+					</section>
+				</div>
+			</div>
+			<?php } ?>
+			<!-- Comments / End -->
+			<!-- Leava a Comment -->
+			<div class="row">
+				<div class="col-6">
+					<h3 class="margin-top-35 margin-bottom-30"><?php echo $text_add_comment; ?></h3>
+					<!-- Form -->
+					<form method="post" id="form-comment" class="form-post-comment">
+					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+					<input type="hidden" name="post_id" value="<?= $post_id ?>" />
+						<div class="form-row">
+							<div class="input-group mb-3">
+							  <div class="input-group-prepend">
+							    <span class="input-group-text" id="basic-addon1"><i class="icon-material-outline-account-circle"></i></span>
+							  </div>
+								<input type="text" class="form-control" name="name" id="name" placeholder="<?php echo $entry_name; ?>"/>
+							</div>
+							<div class="input-group mb-3">
+							  <div class="input-group-prepend">
+							    <span class="input-group-text" id="basic-addon1"><i class="icon-material-baseline-mail-outline"></i></span>
+							  </div>
+								<input type="text" class="form-control" name="email" id="input-email" placeholder="<?php echo $entry_email; ?>" required/>
+							</div>
+							<textarea  name="comment" cols="30" rows="5" class="form-control" placeholder="Comment"></textarea>
+					  </div>
+					  <button class="button button-sliding-icon ripple-effect margin-bottom-40 margin-top-20" type="button" id="add-comment"><?php echo $button_add; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
+					</form>
+				</div>
+			</div>
+			<!-- Leava a Comment / End -->
 	</div>
-</div>
 <!-- Spacer -->
 <div class="padding-top-40"></div>
 <script type="text/javascript">

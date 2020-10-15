@@ -1,14 +1,10 @@
 <?php echo $header; ?>
-<div id="titlebar" class="p-4">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h2><?php echo $heading_title; ?></h2>
-			</div>
-		</div>
-	</div>
+<div class="jumbotron">
+	<div class="container-fluid">
+		<h2 class="display-5"><?php echo $heading_title; ?></h2>
 </div>
-<div class="container">
+</div>
+<div class="container-fluid">
 	<div class="row">
 		<div class="col-12">
 			<nav id="breadcrumbs">
@@ -20,10 +16,8 @@
 			</nav>
 		</div>
 	</div>
-</div>	
 <!-- Recent Blog Posts -->
-<div class="section gray padding-top-20 padding-bottom-60 full-width-carousel-fix">
-	<div class="container">
+<div class="section mb-5 bg-white margin-top-30">		
 		<div class="row">
 			<div class="col-xl-12">
 				<div class="blog-carousel">
@@ -45,14 +39,12 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </div>
 <!-- Recent Blog Posts / End -->
 <!-- Section -->
-<div class="section shadow-sm p-3 mb-5 bg-white rounded">
-	<div class="container">
+<div class="section mb-5 bg-white margin-top-30">		
 		<div class="row">
-			<div class="col-8 section shadow p-3 mb-5 bg-white rounded">
+			<div class="col-sm-12 col-md-9 mb-4">
 				<!-- Section Headline -->
 				<div class="section-headline margin-top-20 margin-bottom-35">
 					<h4><?php echo $text_recent; ?></h4>
@@ -83,7 +75,7 @@
 				<!-- Pagination / End -->
 			</div>
 			<div class="col">
-				<div class="sidebar-container">
+				<div class="sidebar-container margin-top-30">
 					<!-- Widget -->
 					<div class="sidebar-widget">
 						<h3><?php echo $text_trending; ?></h3>
@@ -131,10 +123,10 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	<!-- Spacer -->
 	<div class="padding-top-40"></div>
 	<!-- Spacer -->
+</div>
 </div>
 <!-- Section / End -->
 <?php echo $footer; ?>

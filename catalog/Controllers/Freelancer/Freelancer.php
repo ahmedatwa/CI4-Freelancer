@@ -226,6 +226,10 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         $customerModel = new CustomerModel();
 
+        if ($this->request->getVar('cid')) {
+            $customer_info = $customerModel->getCustomer($this->request->getVar('cid'));
+        } 
+
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang($this->locale . '.text_home'),
@@ -233,29 +237,14 @@ class Freelancer extends \Catalog\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('freelancer/freelancer.text_profile'),
-            'href' => route_to('account/profile', $this->customer->getCustomerUserName()),
+            'text' => lang('freelancer/freelancer.heading_title'),
+            'href' => base_url('freelancer/freelancer'),
         ];
 
-        $data['heading_title']    = lang('freelancer/freelancer.text_profile');
-        $data['text_about']       = lang('freelancer/freelancer.text_about');
-        $data['text_history']     = lang('freelancer/freelancer.text_history');
-        $data['text_social']      = lang('freelancer/freelancer.text_social');
-        $data['text_skills']      = lang('freelancer/freelancer.text_skills');
-        $data['text_languages']   = lang('freelancer/freelancer.text_languages');
-        $data['text_education']   = lang('freelancer/freelancer.text_education');
-        $data['text_cert']        = lang('freelancer/freelancer.text_cert');
-        $data['button_offer']     = lang('freelancer/freelancer.button_offer');
-        $data['text_message']     = lang('freelancer/freelancer.text_message');
-        $data['text_budget_min']  = lang('freelancer/freelancer.text_budget_min');
-        $data['button_hire']      = lang('freelancer/freelancer.button_hire');
-        $data['text_fixed_price'] = lang('en.text_fixed_price');
-        $data['text_per_hour']    = lang('en.text_per_hour');
-
-
-        if ($this->request->getVar('cid')) {
-            $customer_info = $customerModel->getCustomer($this->request->getVar('cid'));
-        } 
+        $data['breadcrumbs'][] = [
+            'text' => $customer_info['firstname'],
+            'href' => base_url('freelancer/freelancer'),
+        ];
 
         $reviewModel = new \Catalog\Models\Catalog\ReviewModel();
         $projectModel = new \Catalog\Models\Catalog\ProjectModel();
@@ -300,6 +289,21 @@ class Freelancer extends \Catalog\Controllers\BaseController
                 ];
             }
         }
+
+        $data['heading_title']    = lang('freelancer/freelancer.text_profile');
+        $data['text_about']       = lang('freelancer/freelancer.text_about');
+        $data['text_history']     = lang('freelancer/freelancer.text_history');
+        $data['text_social']      = lang('freelancer/freelancer.text_social');
+        $data['text_skills']      = lang('freelancer/freelancer.text_skills');
+        $data['text_languages']   = lang('freelancer/freelancer.text_languages');
+        $data['text_education']   = lang('freelancer/freelancer.text_education');
+        $data['text_cert']        = lang('freelancer/freelancer.text_cert');
+        $data['button_offer']     = lang('freelancer/freelancer.button_offer');
+        $data['text_message']     = lang('freelancer/freelancer.text_message');
+        $data['text_budget_min']  = lang('freelancer/freelancer.text_budget_min');
+        $data['button_hire']      = lang('freelancer/freelancer.button_hire');
+        $data['text_fixed_price'] = lang('en.text_fixed_price');
+        $data['text_per_hour']    = lang('en.text_per_hour');
 
         $projects_total = $projectModel->getTotalAwardsByFreelancerId($this->request->getVar('cid'));
         $limit = 5;

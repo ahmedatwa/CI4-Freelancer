@@ -34,10 +34,22 @@
 </div>
 </div>
 <!-- Page Content -->
-<div class="container">
+<div class="container-fluid">
+			<div class="row">
+		<div class="col-12">
+			<nav id="breadcrumbs">
+				<ul>
+					<?php foreach ($breadcrumbs as $breadcrumb) { ?>
+						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+					<?php } ?>
+				</ul>
+			</nav>
+		</div>
+	</div>
 <div class="row">
+
 	<!-- Content -->
-	<div class="col-9 bg-white shadow-sm p-3 mb-5 bg-white rounded">
+	<div class="col-sm-12 col-md-9 mb-4 shadow p-3 mb-5 bg-white rounded">
 		<!-- Page Content -->
 		<div class="single-page-section">
 			<h3 class="margin-bottom-25"><?php echo $text_about; ?></h3>
@@ -75,7 +87,7 @@
 	</div>
 	<!-- Sidebar -->
 	<div class="col">
-		<div class="sidebar-container shadow-sm p-3 mb-5 bg-white rounded">
+		<div class="sidebar-container">
 			<!-- Profile Overview -->
 			<div class="profile-overview">
 				<div class="overview-item"><strong><?php echo $rate; ?></strong><span>Hourly Rate</span></div>
@@ -156,7 +168,8 @@
 </div>
 <div class="row">
 	<!-- Boxed List -->
-	<div class="col-9 margin-top-30 boxed-list shadow-sm p-3 mb-5 bg-white rounded">
+	<?php if ($projects) { ?>
+	<div class="col-sm-12 col-md-9 mb-4 shadow p-3 mb-5 bg-white rounded">
 		<div class="boxed-list-headline">
 			<h3><i class="icon-material-outline-thumb-up"></i> <?php echo $text_history; ?></h3>
 		</div>
@@ -197,6 +210,7 @@
 			<!-- Pagination / End -->
 		</div>
 		<!-- Boxed List / End -->
+	<?php } ?>
 	</div>
 </div>
 <!-- Spacer -->

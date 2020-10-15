@@ -15318,3 +15318,21 @@ ul.dashboard-box-list > li:hover {
 	border: none;
 }
 
+@media (min-width: 1405px) {
+  .container-fluid{
+    width: 1300px;
+  }
+}
+
+.jumbotron {
+	background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+	padding: 3rem 2rem !important;
+	margin-bottom: 1rem;
+}
+
+#breadcrumbs li:last-child a{
+	cursor: default;
+    pointer-events: none;        
+    text-decoration: none;
+    color: grey;
+}

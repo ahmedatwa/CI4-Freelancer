@@ -1,28 +1,26 @@
 <?php echo $header; ?>
-<div class="jumbotron jumbotron-fluid">
-	<div class="container">
-				<h2 class="display-5"><?php echo $heading_title; ?></h2>
-				<div class="float-right">
-					<a href="<?php echo $add_project; ?>" class="button rounded"><?php echo $button_hire; ?></a>
-					<a href="<?php echo $login; ?>" class="button dark text-white"><?php echo $button_work; ?></a>
-				</div>
+<div class="jumbotron">
+	<div class="container-fluid">
+		<h2 class="display-5"><?php echo $heading_title; ?></h2>
+		<div class="text-right mt-4">
+			<a href="<?php echo $add_project; ?>" class="button rounded"><?php echo $button_hire; ?></a>
+			<a href="<?php echo $login; ?>" class="button dark text-white"><?php echo $button_work; ?></a>
+		</div>
+</div>
+</div>
+<div class="container-fluid">
+<div class="row">
+	<div class="col-12">
+		<nav id="breadcrumbs">
+			<ul>
+				<?php foreach ($breadcrumbs as $breadcrumb) { ?>
+					<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+				<?php } ?>
+			</ul>
+		</nav>
 	</div>
 </div>
-<div class="container">
-	<div class="row">
-		<div class="col-12">
-			<nav id="breadcrumbs">
-				<ul>
-					<?php foreach ($breadcrumbs as $breadcrumb) { ?>
-						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-					<?php } ?>
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>	
 <div class="section mb-5 bg-white margin-top-30">		
-	<div class="container">
 		<div class="row">
 			<div class="col">
 				<div class="sidebar-container">

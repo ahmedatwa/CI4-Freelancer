@@ -1,7 +1,7 @@
 <?php echo $header; ?><?php echo $dashboard_menu; ?>
 <!-- Dashboard Content -->
-<div class="dashboard-content-container container margin-top-40">
-	<div class="dashboard-content-inner" >
+<div class="dashboard-content-container container gray">
+	<div class="dashboard-content-inner">
 		<!-- Dashboard Headline -->
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>

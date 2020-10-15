@@ -6,7 +6,6 @@ class Blog extends \Catalog\Controllers\BaseController
 {
     public function view()
     {
-
       $this->template->setTitle(lang('extension/blog/blog.heading_title'));
 
       $blogMdel = new BlogModel();
@@ -76,7 +75,7 @@ class Blog extends \Catalog\Controllers\BaseController
             if ($result['image']) {
                 $image = $this->resize($result['image'], 260, 270);
             } else {
-                $image = $this->resize('no_image.jpg', 260, 270);
+                $image = $this->resize('catalog/no_image.jpg', 260, 270);
             }
 
             $data['posts'][] = [
@@ -164,7 +163,7 @@ class Blog extends \Catalog\Controllers\BaseController
             $data['category']   = $post_info['category'];
             $data['body']       = $post_info['body'];
             $data['date_added'] = $post_info['date_added'];
-            $data['image']      = $post_info['image'];
+            $data['image']      = ($post_info['image']) ? $this->resize($post_info['image'], 777, 380) : $this->resize('catalog/no_image.jpg', 777, 380);
             $data['post_id']    = $post_info['post_id'];
         } else {
             $data['title']      = '';
