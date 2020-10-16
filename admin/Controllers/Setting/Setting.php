@@ -10,7 +10,7 @@ class Setting extends \Admin\Controllers\BaseController
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $this->settings->editSetting('config', $this->request->getPost());
-            return redirect()->to(base_url('index.php/setting/setting?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/setting/setting?user_token=' . $this->request->getVar('user_token')))
                              ->with('success', lang('setting/setting.text_success'));
         }
         $this->getForm();
@@ -23,15 +23,15 @@ class Setting extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
             ];
         
         $data['breadcrumbs'][] = [
             'text' => lang('setting/setting.text_title'),
-            'href' => base_url('index.php/setting/setting?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/setting/setting?user_token=' . $this->request->getVar('user_token')),
             ];
         
-        $data['action'] = base_url('index.php/setting/setting?user_token=' . $this->session->get('user_token'));
+        $data['action'] = base_url('index.php/setting/setting?user_token=' . $this->request->getVar('user_token'));
         
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -91,7 +91,7 @@ class Setting extends \Admin\Controllers\BaseController
         foreach ($extensions as $code) {
             $data['themes'][] = [
                 'text'  => lang('theme/' . $code . '.list.heading_title'),
-                'value' => str_replace('_theme', '', $code),
+                'value' => ($code == 'basic') ? 'default' : $code,
             ];
         }
 
@@ -205,7 +205,7 @@ class Setting extends \Admin\Controllers\BaseController
         }
 
         if ($this->request->getPost('config_project_completed_status')) {
-            $data['config_project_status_id'] = $this->request->getPost('config_project_completed_status');
+            $data['config_project_completed_status'] = $this->request->getPost('config_project_completed_status');
         } elseif (!empty($setting_info['config_project_completed_status'])) {
             $data['config_project_completed_status'] = $setting_info['config_project_completed_status'];
         } else {
@@ -219,6 +219,46 @@ class Setting extends \Admin\Controllers\BaseController
         } else {
             $data['config_logo'] = '';
         }
+        // Social Networks
+        if ($this->request->getPost('config_facebook')) {
+            $data['config_facebook'] = $this->request->getPost('config_facebook');
+        } elseif (!empty($setting_info['config_facebook'])) {
+            $data['config_facebook'] = $setting_info['config_facebook'];
+        } else {
+            $data['config_facebook'] = '#';
+        }
+
+        if ($this->request->getPost('config_twitter')) {
+            $data['config_twitter'] = $this->request->getPost('config_twitter');
+        } elseif (!empty($setting_info['config_twitter'])) {
+            $data['config_twitter'] = $setting_info['config_twitter'];
+        } else {
+            $data['config_twitter'] = '#';
+        }
+
+        if ($this->request->getPost('config_pintrest')) {
+            $data['config_pintrest'] = $this->request->getPost('config_pintrest');
+        } elseif (!empty($setting_info['config_pintrest'])) {
+            $data['config_pintrest'] = $setting_info['config_pintrest'];
+        } else {
+            $data['config_pintrest'] = '#';
+        }
+
+        if ($this->request->getPost('config_linkedin')) {
+            $data['config_linkedin'] = $this->request->getPost('config_linkedin');
+        } elseif (!empty($setting_info['config_linkedin'])) {
+            $data['config_linkedin'] = $setting_info['config_linkedin'];
+        } else {
+            $data['config_linkedin'] = '#';
+        }
+
+        if ($this->request->getPost('config_instagram')) {
+            $data['config_instagram'] = $this->request->getPost('config_instagram');
+        } elseif (!empty($setting_info['config_instagram'])) {
+            $data['config_instagram'] = $setting_info['config_instagram'];
+        } else {
+            $data['config_instagram'] = '#';
+        }
 
 
         return $this->document->output('setting/setting', $data);
@@ -229,7 +269,7 @@ class Setting extends \Admin\Controllers\BaseController
         if (! $this->validate([
                 'config_meta_title' => [
                     'label' => 'Title',
-                    'rules' => 'required|min_length[3]|max_length[32]'
+                    'rules' => 'required|min_length[3]'
                 ],
                 'config_name' => [
                     'label' => 'Site Name',

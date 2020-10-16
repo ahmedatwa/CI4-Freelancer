@@ -40,24 +40,31 @@ class Footer extends \Catalog\Controllers\BaseController
          ];
         }
 
-        $data['text_links']              = lang('common/footer.text_links');
-        $data['text_for_freelancers']    = lang('common/footer.text_for_freelancers');
-        $data['text_for_employer']       = lang('common/footer.text_for_employer');
-        $data['text_browse_projects']    = lang('common/footer.text_browse_projects');
-        $data['text_browse_freelancers'] = lang('common/footer.text_browse_freelancers');
-        $data['text_post_job']           = lang('common/footer.text_post_job');
-        $data['text_post_project']       = lang('common/footer.text_post_project');
-        $data['text_footer']             = lang('common/footer.text_footer');
-        $data['text_newsletter']         = lang('common/footer.text_newsletter');
-        $data['help_newsletter']         = lang('common/footer.help_newsletter');
-        $data['entry_email']             = lang('common/footer.entry_email');
+        $data['text_terms']         = lang('common/footer.text_terms');
+        $data['text_freelancers']   = lang('common/footer.text_freelancers');
+        $data['text_categories']    = lang('common/footer.text_categories');
+        $data['text_projects']      = lang('common/footer.text_projects');
+        $data['text_freelancers']   = lang('common/footer.text_freelancers');
 
-        $data['contact']     = base_url('information/contact');
+
+        $data['text_footer']      = lang('common/footer.text_footer');
+        $data['text_newsletter']  = lang('common/footer.text_newsletter');
+        $data['help_newsletter']  = lang('common/footer.help_newsletter');
+        $data['entry_email']      = lang('common/footer.entry_email');
+
+        // Social
+        $data['facebook']      = $this->registry->get('config_facebook');
+        $data['twitter']       = $this->registry->get('config_twitter');
+        $data['pintrest']      = $this->registry->get('config_pintrest');
+        $data['linkedin']      = $this->registry->get('config_linkedin');
+        $data['instagram']     = $this->registry->get('config_instagram');
+
+        $data['contact']     = route_to('contact') ? route_to('contact') : base_url('information/contact');
         $data['blog']        = base_url('blog');
+        
         $data['freelancers'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');
-        $data['projects']    = base_url('project/category');
-        $data['add_project'] = base_url('project/project/add');
-        $data['add_job']     = base_url('add_job');
+        $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/category');
+        $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
 
         $data['project_added'] = $this->session->getFlashdata('project_added');
 

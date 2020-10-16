@@ -18,6 +18,7 @@ class Theme extends \Admin\Controllers\BaseController
         $extensionsModel = new Extensions();
 
         if ($this->validateForm()) {
+            
             $extensionsModel->install('theme', $this->request->getVar('extension'));
 
             $userGroupModel = new \Admin\Models\User\Users_group();
@@ -83,13 +84,14 @@ class Theme extends \Admin\Controllers\BaseController
             foreach ($files as $file) {
                 $basename = basename($file, '.php');
 
-                $data['extensions'][] = array(
+                $data['extensions'][] = [
                     'name'      => lang('theme/' . strtolower($basename) . '.list.heading_title'),
+                    'status'     => ($this->registry->get('theme_default_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'install'   => base_url('index.php/extension/theme/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall' => base_url('index.php/extension/theme/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'installed' => in_array(strtolower($basename), $installedExtensions),
                     'edit'      => base_url('index.php/extensions/theme/' . strtolower($basename) .'?user_token=' . $this->request->getVar('user_token')),
-                );
+                ];
             }
         }
 

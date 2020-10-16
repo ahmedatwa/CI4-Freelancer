@@ -15,7 +15,7 @@
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
-          <td class="text-left"><?php echo $column_name; ?></td>
+          <td class="text-left" width="50%"><?php echo $column_name; ?></td>
           <td class="text-left"><?php echo $column_status; ?></td>
           <td class="text-right"><?php echo $column_action; ?></td>
         </tr>
@@ -24,7 +24,8 @@
         <?php if ($extensions) { ?>
         <?php foreach ($extensions as $extension) { ?>
         <tr>
-          <td class="text-left" colspan="2"><b><?php echo $extension['name']; ?></b></td>
+          <td class="text-left"><b><?php echo $extension['name']; ?></b></td>
+          <td class="text-left"><b><?php echo $extension['status']; ?></b></td>
           <td class="text-right">
             <?php if ($extension['installed'])  { ?>
             <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>

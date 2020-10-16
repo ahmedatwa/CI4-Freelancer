@@ -19,7 +19,7 @@ class Post extends \Admin\Controllers\BaseController
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $this->blogs->addPost($this->request->getPost());
-            return redirect()->to(base_url('index.php/extensions/blog/post?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/extensions/blog/post?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('blog/post.text_success'));
         }
         $this->getForm();
@@ -33,7 +33,7 @@ class Post extends \Admin\Controllers\BaseController
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $this->blogs->editPost($this->request->getVar('post_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/extensions/blog/post?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/extensions/blog/post?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('blog/post.text_success'));
         }
         $this->getForm();
@@ -51,7 +51,7 @@ class Post extends \Admin\Controllers\BaseController
             foreach ($this->request->getPost('selected') as $post_id) {
                 $this->blogs->delete($post_id);
                 $json['success'] = lang('blog/post.text_success');
-                $json['redirect'] = 'index.php/extensions/blog/post?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/extensions/blog/post?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('blog/post.error_permission');
@@ -66,17 +66,17 @@ class Post extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = array(
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         );
 
         $data['breadcrumbs'][] = array(
             'text' => lang('setting/extension.list.heading_title'),
-            'href' => base_url('index.php/setting/extensions?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/setting/extensions?user_token=' . $this->request->getVar('user_token')),
         );
 
         $data['breadcrumbs'][] = array(
             'text' => lang('extension/blog/post.list.heading_title'),
-            'href' => base_url('index.php/extensions/blog/post?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/extensions/blog/post?user_token=' . $this->request->getVar('user_token')),
         );
 
         // Data
@@ -89,14 +89,14 @@ class Post extends \Admin\Controllers\BaseController
                 'title'      => $result['title'],
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'date_added' => DateShortFormat($result['date_added']),
-                'edit'       => base_url('index.php/extensions/blog/post/edit?user_token=' . $this->session->get('user_token') . '&post_id=' . $result['post_id']),
-                'delete'     => base_url('index.php/extensions/blog/post/delete?user_token=' . $this->session->get('user_token') . '&post_id=' . $result['post_id']),
+                'edit'       => base_url('index.php/extensions/blog/post/edit?user_token=' . $this->request->getVar('user_token') . '&post_id=' . $result['post_id']),
+                'delete'     => base_url('index.php/extensions/blog/post/delete?user_token=' . $this->request->getVar('user_token') . '&post_id=' . $result['post_id']),
             );
         }
 
-        $data['add'] = base_url('index.php/extensions/blog/post/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/extensions/blog/post/delete?user_token=' . $this->session->get('user_token'));
-        $data['cancel'] = base_url('index.php/setting/extension?user_token=' . $this->session->get('user_token') . '&type=blog');
+        $data['add'] = base_url('index.php/extensions/blog/post/add?user_token=' . $this->request->getVar('user_token'));
+        $data['delete'] = base_url('index.php/extensions/blog/post/delete?user_token=' . $this->request->getVar('user_token'));
+        $data['cancel'] = base_url('index.php/setting/extension?user_token=' . $this->request->getVar('user_token') . '&type=blog');
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -128,27 +128,27 @@ class Post extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('setting/extension.list.heading_title'),
-            'href' => base_url('index.php/setting/extensions?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/setting/extensions?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('blog/post.list.heading_title'),
-            'href' => base_url('index.php/extensions/blog/post/edit?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/extensions/blog/post/edit?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['text_form'] = !$this->request->getVar('post_id') ? lang('blog/post.list.text_add') : lang('blog/post.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/extensions/blog/post?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/extensions/blog/post?user_token=' . $this->request->getVar('user_token'));
 
         if (!$this->request->getVar('post_id')) {
-            $data['action'] = base_url('index.php/extensions/blog/post/add?user_token=' . $this->session->get('user_token'));
+            $data['action'] = base_url('index.php/extensions/blog/post/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/extensions/blog/post/edit?user_token=' . $this->session->get('user_token') . '&post_id=' . $this->request->getVar('post_id'));
+            $data['action'] = base_url('index.php/extensions/blog/post/edit?user_token=' . $this->request->getVar('user_token') . '&post_id=' . $this->request->getVar('post_id'));
         }
 
         if ($this->session->getFlashdata('success')) {

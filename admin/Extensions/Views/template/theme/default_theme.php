@@ -30,8 +30,6 @@
     <div class="card-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-theme" class="form-horizontal">
           <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-          <fieldset>
-            <legend><?php echo $text_general; ?></legend>
             <div class="form-group row">
               <label class="col-sm-2 control-label" for="input-directory"><span data-toggle="tooltip" title="<?php echo $help_directory; ?>"><?php echo $entry_directory; ?></span></label>
               <div class="col-sm-10">
@@ -43,6 +41,20 @@
                   <option value="<?php echo $directory; ?>"><?php echo $directory; ?></option>
                   <?php } ?>
                   <?php } ?>
+                </select>
+              </div>
+            </div>
+              <div class="form-group row">
+              <label class="col-sm-2 control-label" for="input-color"><?php echo $entry_color; ?></label>
+              <div class="col-sm-10">
+                <select name="theme_default_color" id="input-color" class="form-control">
+                  <?php foreach ($colors as $color) { ?>
+                   <?php if ($color == $theme_default_color) { ?>
+                  <option value="<?php echo $color; ?>" selected="selected"><?php echo str_replace('.css', '', $color); ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $color; ?>"><?php echo str_replace('.css', '', $color); ?></option>
+                  <?php } ?>
+                   <?php } ?>
                 </select>
               </div>
             </div>
@@ -60,7 +72,6 @@
                 </select>
               </div>
             </div>
-          </fieldset>
         </form>
     </div><!-- Card Body -->
   </div><!-- Card -->

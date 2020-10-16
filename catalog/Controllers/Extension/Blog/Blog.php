@@ -8,7 +8,7 @@ class Blog extends \Catalog\Controllers\BaseController
     {
       $this->template->setTitle(lang('extension/blog/blog.heading_title'));
 
-      $blogMdel = new BlogModel();
+      $blogModel = new BlogModel();
 
       $this->getPost();
 
@@ -63,9 +63,9 @@ class Blog extends \Catalog\Controllers\BaseController
 
         $data['posts'] = [];
 
-        $blogMdel = new BlogModel();
-        $results = $blogMdel->getPosts($filter_data);
-        $total = $blogMdel->getTotalPosts();
+        $blogModel = new BlogModel();
+        $results = $blogModel->getPosts($filter_data);
+        $total = $blogModel->getTotalPosts();
 
         helper('text');
         $seo_url = service('seo_url');
@@ -75,7 +75,7 @@ class Blog extends \Catalog\Controllers\BaseController
             if ($result['image']) {
                 $image = $this->resize($result['image'], 260, 270);
             } else {
-                $image = $this->resize('catalog/no_image.jpg', 260, 270);
+                $image = $this->resize('no_image.jpg', 260, 270);
             }
 
             $data['posts'][] = [
@@ -88,7 +88,7 @@ class Blog extends \Catalog\Controllers\BaseController
         }
 
         $data['featured'] = [];
-        $featured = $blogMdel->getFeaturedPosts(10);
+        $featured = $blogModel->getFeaturedPosts(10);
         foreach ($featured as $result) {
             $keyword = $seo_url->getKeywordByQuery('post_id=' . $result['post_id']);
             $data['featured'][] = [
@@ -101,7 +101,7 @@ class Blog extends \Catalog\Controllers\BaseController
         }
 
         $data['trending'] = [];
-        $trending = $blogMdel->getTrendingPosts(3);
+        $trending = $blogModel->getTrendingPosts(3);
         foreach ($trending as $result) {
             $keyword = $seo_url->getKeywordByQuery('post_id=' . $result['post_id']);
             $data['trending'][] = [
@@ -137,8 +137,8 @@ class Blog extends \Catalog\Controllers\BaseController
             $post_id = 0;
         }
 
-        $blogMdel = new BlogModel();
-        $post_info = $blogMdel->getPost($post_id);
+        $blogModel = new BlogModel();
+        $post_info = $blogModel->getPost($post_id);
         $seo_url = service('seo_url');
 
         // Breadcrumbs
@@ -150,7 +150,7 @@ class Blog extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('extension/blog/blog.heading_title'),
-            'href' => route_to('blog'),
+            'href' => route_to('blog') ? route_to('blog') : base_url('extension/blog/blog'),
         ];
 
         $data['breadcrumbs'][] = [
@@ -163,7 +163,7 @@ class Blog extends \Catalog\Controllers\BaseController
             $data['category']   = $post_info['category'];
             $data['body']       = $post_info['body'];
             $data['date_added'] = $post_info['date_added'];
-            $data['image']      = ($post_info['image']) ? $this->resize($post_info['image'], 777, 380) : $this->resize('catalog/no_image.jpg', 777, 380);
+            $data['image']      = ($post_info['image']) ? $this->resize($post_info['image'], 777, 380) : $this->resize('no_image.jpg', 777, 380);
             $data['post_id']    = $post_info['post_id'];
         } else {
             $data['title']      = '';
@@ -175,7 +175,7 @@ class Blog extends \Catalog\Controllers\BaseController
 
         $data['heading_title']    = lang('extension/blog/blog.heading_title');
         $data['text_post']        = lang('extension/blog/blog.text_post');
-        $data['text_comments']    = sprintf(lang('extension/blog/blog.text_comments'), $blogMdel->getTotalCommentsByPostId($post_id));
+        $data['text_comments']    = sprintf(lang('extension/blog/blog.text_comments'), $blogModel->getTotalCommentsByPostId($post_id));
         $data['text_add_comment'] = lang('extension/blog/blog.text_add_comment');
         $data['entry_email']      = lang('extension/blog/blog.entry_email');
         $data['entry_name']       = lang('extension/blog/blog.entry_name');
@@ -184,7 +184,7 @@ class Blog extends \Catalog\Controllers\BaseController
         $data['button_add']      = lang('extension/blog/blog.button_add');
 
         $data['post_comments'] = [];
-        $results = $blogMdel->getCommentsByPostId($post_id, 5);
+        $results = $blogModel->getCommentsByPostId($post_id, 5);
         foreach ($results as $result) {
             $data['post_comments'][] = [
                 'name'       => $result['name'],
@@ -194,12 +194,12 @@ class Blog extends \Catalog\Controllers\BaseController
         }
 
         $data['trending'] = [];
-        $trending = $blogMdel->getTrendingPosts(3);
+        $trending = $blogModel->getTrendingPosts(3);
         foreach ($trending as $result) {
             $keyword = $seo_url->getKeywordByQuery('post_id=' . $result['post_id']);
             $data['trending'][] = [
                 'title'      => $result['title'],
-                'image' => $this->resize($result['image'], 358, 142),
+                'image' => $this->resize($result['image'], 358, 142) ?? $this->resize('no_image.jpg', 358, 142),
                 'href'  => ($keyword) ? route_to('blog/post', $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
                 'date_added' => $this->dateDifference($result['date_added']),
             ];
@@ -212,8 +212,8 @@ class Blog extends \Catalog\Controllers\BaseController
         $json = [];
         if (!$json) {
             if ($this->request->getMethod() == 'post') {
-                $blogMdel = new BlogModel();
-                $blogMdel->insertComment($this->request->getPost());
+                $blogModel = new BlogModel();
+                $blogModel->insertComment($this->request->getPost());
                 $json['success'] = lang('extension/blog/blog.text_comment_success');
             }
         }

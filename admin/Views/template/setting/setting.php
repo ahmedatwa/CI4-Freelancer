@@ -33,8 +33,8 @@
 			<li class="nav-item" role="presentation"><a class="nav-link" id="nav-site-tab" data-toggle="tab" href="#nav-site" role="tab" aria-controls="nav-site" aria-selected="true"><?php echo $tab_site; ?> </a></li>
 			<li class="nav-item" role="presentation"><a class="nav-link" id="nav-local-tab" data-toggle="tab" href="#nav-local" role="tab" aria-controls="nav-local" aria-selected="true"><?php echo $tab_local; ?> </a></li>
 			<li class="nav-item" role="presentation"><a class="nav-link" id="nav-option-tab" data-toggle="tab" href="#nav-option" role="tab" aria-controls="nav-option" aria-selected="true"><?php echo $tab_option; ?> </a></li>
-<!-- 			<li class="nav-item" role="presentation"><a class="nav-link" id="nav-image-tab" data-toggle="tab" href="#nav-image" role="tab" aria-controls="nav-image" aria-selected="true"><?php //echo $tab_image; ?> </a></li>
- --><!-- 			 <li class="nav-item" role="presentation"><a class="nav-link" id="nav-server-tab" data-toggle="tab" href="#nav-server" role="tab" aria-controls="nav-server" aria-selected="true"><?php //echo $tab_server; ?> </a></li>
+			<li class="nav-item" role="presentation"><a class="nav-link" id="nav-social-tab" data-toggle="tab" href="#nav-social" role="tab" aria-controls="nav-social" aria-selected="true"><?php echo $tab_social; ?> </a></li>
+ 		 <!-- <li class="nav-item" role="presentation"><a class="nav-link" id="nav-server-tab" data-toggle="tab" href="#nav-server" role="tab" aria-controls="nav-server" aria-selected="true"><?php //echo $tab_server; ?> </a></li>
  -->			</ul>
 		<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" id="form-location" accept-charset="utf-8"> 
 		<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
@@ -232,9 +232,39 @@
 		<fieldset>
 		</div><!-- ./End tab_option -->
 		<!-- ./tab_image -->
-<!-- 		<div role="tabpanel" class="tab-pane fade mt-3" id="nav-image" aria-labelledby="nav-image-tab">
- 
-		</div> --><!-- ./End tab_image -->
+		<div role="tabpanel" class="tab-pane fade mt-3" id="nav-social" aria-labelledby="nav-social-tab">
+			<div class="form-group row">
+				<label for="facebook" class="col-sm-2 col-form-label"><?php echo $entry_facebook; ?></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="config_facebook" value="<?php echo $config_facebook; ?>">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="facebook" class="col-sm-2 col-form-label"><?php echo $entry_twitter; ?></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="config_twitter" value="<?php echo $config_twitter; ?>">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="facebook" class="col-sm-2 col-form-label"><?php echo $entry_pintrest; ?></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="config_pintrest" value="<?php echo $config_pintrest; ?>">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="facebook" class="col-sm-2 col-form-label"><?php echo $entry_linkedin; ?></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="config_linkedin" value="<?php echo $config_linkedin; ?>">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="facebook" class="col-sm-2 col-form-label"><?php echo $entry_instagram; ?></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="config_instagram" value="<?php echo $config_instagram; ?>">
+				</div>
+			</div>
+			
+		</div><!-- ./End tab_social -->
 		<!-- ./tab_server -->
 <!-- 		<div role="tabpanel" class="tab-pane fade" id="nav-server" aria-labelledby="nav-server-tab">
 			This is a tab_server Tab

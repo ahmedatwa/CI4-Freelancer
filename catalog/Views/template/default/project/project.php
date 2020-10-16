@@ -57,6 +57,7 @@
 				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow rounded bg-white">
 					<!-- Description -->
 					<div class="single-page-section">
+						<h3><?php echo $text_description; ?></h3>
 						<p><?php echo $description; ?></p>
 					</div>
 					<!-- Skills -->

@@ -37,21 +37,22 @@ $routes->set404Override(function () {
 $routes->get('/', 'Common/Home::index');
 // Information
 $routes->add('information/(:any)', 'Information\Information::index/$1', ['as' => 'information']);
-// Projects
+$routes->add('contact', 'Information\Contact::index');
 
 // Blog
 $routes->group('blog', function ($routes) {
     $routes->add('/', 'Extension\Blog\Blog::index', ['as' => 'blog']);
-    //$routes->add('post/(:any)', 'Extension\Blog\Blog::view/$1', ['as' => 'blog/post']);
+    $routes->add('view/(:any)', 'Extension\Blog\Blog::getPost/$1', ['as' => 'blog/post']);
 });
 
-//$routes->add('project/category', 'Project\Category::index', ['as' => 'projects']);
-// Blog
-//$routes->group('project', function ($routes) {
-   // $routes->add('/(:any)', 'Project\Project::index/$1', ['as' => 'project']);
-    //$routes->add('post/(:any)', 'Extension\Blog\Blog::view/$1', ['as' => 'blog/post']);
-//});
-
+// Account
+$routes->add('login', 'Account\Login::index');
+$routes->add('logout', 'Account\Logout::index');
+$routes->add('register', 'Account\Register::index');
+$routes->add('forgotten', 'Account\Forgotten::index');
+// projects
+$routes->add('projects', 'Project\Category::index');
+$routes->add('add-project', 'Project\Project::add');
 /**
  * --------------------------------------------------------------------
  * Additional Routing

@@ -27,7 +27,7 @@ return [
 'entry_image_cart'                 => 'Cart Image Size (W x H)',
 'entry_image_location'             => 'Image Size (W x H)',
 'entry_width'                      => 'Width',
-'entry_height'                     => 'Height',
+'entry_color'                      => 'Color Scheme',
 // Help
 'help_directory'                   => 'This field is only to enable older themes to be compatible with the new theme system. You can set the theme directory to use on the image size settings defined here.',
 'help_product_limit'               => 'Determines how many catalog items are shown per page (products, categories, etc)',

@@ -36,7 +36,7 @@ class Register extends \Catalog\Controllers\BaseController
         $data['entry_password']  = lang('account/register.entry_password');
         $data['entry_confirm']   = lang('account/register.entry_confirm');
         $data['heading_title']   = lang('account/register.heading_title');
-        $data['text_login']      = sprintf(lang('account/register.text_login'), base_url('account/login'));
+        $data['text_login']      = sprintf(lang('account/register.text_login'), route_to('login') ? route_to('login') : base_url('account/login'));
         $data['text_register']   = lang('account/register.text_register');
         $data['button_register'] = lang('account/register.button_register');
 

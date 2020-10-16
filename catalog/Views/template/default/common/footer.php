@@ -22,22 +22,22 @@
 								<div class="footer-row-inner">
 									<ul class="footer-social-links">
 										<li>
-											<a href="#" data-toggle="tooltip" title="Facebook" data-placement="bottom">
+											<a href="<?php echo $facebook; ?>" data-toggle="tooltip" title="Facebook" data-placement="bottom">
 												<i class="icon-brand-facebook-f"></i>
 											</a>
 										</li>
 										<li>
-											<a href="#" data-toggle="tooltip" title="Twitter" data-placement="bottom">
+											<a href="<?php echo $twitter; ?>" data-toggle="tooltip" title="Twitter" data-placement="bottom">
 												<i class="icon-brand-twitter"></i>
 											</a>
 										</li>
 										<li>
-											<a href="#" data-toggle="tooltip" title="Google Plus" data-placement="bottom">
-												<i class="icon-brand-google-plus-g"></i>
+											<a href="<?php echo $instagram; ?>" data-toggle="tooltip" title="Instagram" data-placement="bottom">
+												<i class="icon-brand-instagram"></i>
 											</a>
 										</li>
 										<li>
-											<a href="#" data-toggle="tooltip" title="LinkedIn" data-placement="bottom">
+											<a href="<?php echo $linkedin; ?>" data-toggle="tooltip" title="LinkedIn" data-placement="bottom">
 												<i class="icon-brand-linkedin-in"></i>
 											</a>
 										</li>
@@ -73,9 +73,12 @@
 				<!-- Links -->
 				<div class="col-md-4">
 					<div class="footer-links">
-						<h3><?php echo $text_for_freelancers; ?></h3>
+						<h3><?php echo $text_freelancers; ?></h3>
 						<ul>
-							<li><a href="<?php echo $projects; ?>"><span><?php echo $text_browse_projects; ?></span></a></li>
+							<li><a href="<?php //echo $categories; ?>"><span><?php //echo $text_categories; ?></span></a></li>
+							<li><a href="<?php echo $projects; ?>"><span><?php echo $text_projects; ?></span></a></li>
+							<li><a href="<?php echo $freelancers; ?>"><span><?php echo $text_freelancers; ?></span></a></li>
+							
 						</ul>
 					</div>
 				</div>
@@ -83,18 +86,7 @@
 				<!-- Links -->
 				<div class="col-md-4">
 					<div class="footer-links">
-						<h3><?php echo $text_for_employer; ?></h3>
-						<ul>
-							<li><a href="<?php echo $freelancers; ?>"><span><?php echo $text_browse_freelancers; ?></span></a></li>
-							<li><a href="<?php echo $add_project; ?>"><span><?php echo $text_post_project; ?></span></a></li>
-						</ul>
-					</div>
-				</div>
-
-				<!-- Links -->
-				<div class="col-md-4">
-					<div class="footer-links">
-						<h3><?php echo $text_links; ?></h3>
+						<h3><?php echo $text_terms; ?></h3>
 						<ul>
 							<?php foreach ($informations as $information) { ?>
 								<li><a href="<?php echo $information['href']; ?>"><span><?php echo $information['title']; ?></span></a></li>
@@ -117,6 +109,7 @@
 		</div>
 	</div>
 	<!-- Footer Copyrights / End -->
+</div>
 </div>
 <!-- Footer / End -->
 <?php if ($new_project_alert) { ?>

@@ -20,6 +20,7 @@ class Permission implements FilterInterface
 
         $segments = $request->uri->getSegments();
 
+
         if (in_array('extensions', $segments)) {
             $controller = $loader->locateFile(ucfirst(end($segments)), ucfirst($request->uri->getSegment(1)) . '/Controllers/' . ucfirst($request->uri->getSegment(2)));
         } else {
@@ -27,7 +28,7 @@ class Permission implements FilterInterface
         }
 
         // get Correct Routes
-        if ($controller && in_array('extensions', $segments)) {
+        if (in_array('extensions', $segments)) {
             $route = rtrim($request->uri->getSegment(1) . '/' . $request->uri->getSegment(2) . '/' . $request->uri->getSegment(3), '/');
         } else {
             $route = rtrim($request->uri->getSegment(1) . '/' . $request->uri->getSegment(2), '/');

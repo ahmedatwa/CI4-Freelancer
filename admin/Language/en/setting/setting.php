@@ -29,6 +29,7 @@ return [
     'tab_mail'                       => 'Mail',
     'tab_server'                     => 'Server',
     'tab_image'                      => 'Image',
+    'tab_social'                     => 'Social Networks',
     // Entry
     'entry_meta_title'               => 'Meta Title',
     'entry_meta_description'         => 'Meta Tag Description',
@@ -49,6 +50,11 @@ return [
     'entry_login_attempts'           => 'Max Login Attempts',
     'entry_project_status'           => 'Project status',
     'entry_logo'                     => 'Logo',
+    'entry_facebook' => 'Facebook', 
+    'entry_twitter' => 'Twitter',
+    'entry_pintrest' => 'Pintrest',
+    'entry_linkedin' => 'Linkedin',
+    'entry_instagram' => 'Instagram',
     // Help
     'help_user_activity'             => 'Allow system to track user activity',
     'help_admin_checkout_alert_mail' => 'Allow system to trigger alert mail to vendor upon order checkout.',

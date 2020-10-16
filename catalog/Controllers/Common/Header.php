@@ -33,14 +33,16 @@ class Header extends \Catalog\Controllers\BaseController
         }
         
         $data['home']        = base_url();
-        $data['register']    = base_url('account/register');
-        $data['login']       = base_url('account/login');
-        $data['forgotton']   = base_url('account/forgotten');
-        $data['logout']      = base_url('account/logout');
+        $data['register']    = route_to('register') ? route_to('register') : base_url('account/register');
+        $data['login']       = route_to('login') ? route_to('login') : base_url('account/login');
+        $data['forgotton']   = route_to('forgotten') ? route_to('forgotten') : base_url('account/forgotten');
+        $data['logout']      = route_to('logout') ? route_to('logout') : base_url('account/logout');
+
         $data['setting']     = base_url('account/setting?cid=' . $this->customer->getCustomerId());
         $data['dashboard']   = base_url('account/dashboard?cid=' . $this->customer->getCustomerId());
-        $data['projects']    = base_url('project/category');
-        $data['add_project'] = base_url('project/project/add');
+
+        $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/category');
+        $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
 
         $data['informations'] = [];
         
@@ -56,11 +58,12 @@ class Header extends \Catalog\Controllers\BaseController
                 'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/Information?fid=' . $result['information_id']),
             ];
         }
-    }
+    }   
 
+        // Blog
         if ($this->registry->get('blog_extension_status')) {
             $data['text_blog'] = lang('common/header.text_blog');
-            $data['blog'] = route_to('blog');
+            $data['blog'] = route_to('blog') ? route_to('blog') : base_url('extension/blog/blog');
         } else {
             $data['text_blog'] = '';
             $data['blog'] = '';
@@ -75,6 +78,8 @@ class Header extends \Catalog\Controllers\BaseController
         } else {
             $data['image'] = base_url()  . '/images/profile.png';
         }
+
+        $data['defaut_color_scheme'] = $this->registry->get('theme_default_color') ?? 'red.css';
 
 
         return view('common/header', $data);

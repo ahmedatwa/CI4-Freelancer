@@ -51,19 +51,6 @@ if (! function_exists('formError')) {
     }
 }
 
-// if (! function_exists('getKeywordByQuery')) {
-//     function getKeywordByQuery($keyword)
-//     {
-//         $seo_urls = new \Catalog\Models\Design\Seo_urls;
-//         $segment = $seo_urls->getKeywordByQuery($keyword);
-//         if ($segment) {
-//             return $segment;
-//         } else {
-//             return null;
-//         }
-//     }
-// }
-
 // Override the View function to extend it with theme name
 if (! function_exists('view')) {
     function view(string $name, array $data = [], array $options = [])
@@ -94,7 +81,7 @@ if (! function_exists('view')) {
             if (array_key_exists('saveData', $options)) {
                 $saveData = (bool) $options['saveData'];
                 unset($options['saveData']);
-            }
+            }   
 
             return $renderer->setData($data, 'raw')
                     ->render(service('registry')->get('config_theme') . '/' . $name, $options, $saveData);

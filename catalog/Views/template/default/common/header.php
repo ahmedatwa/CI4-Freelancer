@@ -14,7 +14,8 @@
     <!-- Select2 -->
     <link href="catalog/default/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="catalog/default/vendor/select2/css/select2-bootstrap4.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="catalog/default/stylesheet/colors/red.css">
+    <!-- Color Scheme -->
+    <link rel="stylesheet" href="catalog/default/stylesheet/colors/<?php echo $defaut_color_scheme; ?>">
     <?php foreach ($styles as $style) { ?>
         <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
     <?php } ?>
@@ -44,21 +45,18 @@
 <body class="grey">
     <div id="wrapper">
         <!-- Header Container-->
-        <header id="header-container" class="fullwidth transparent">
-            <!-- Header -->
-            <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white">
+           <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white ">
                 <a class="navbar-brand" href="<?php echo $home; ?>">
                     <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top" loading="lazy"></a>
-                    <?php if (! $logged) { ?>
-                     <ul class="navbar-nav d-block d-sm-none">
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
-                    </ul>
-                    <?php } ?>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <nav class="navbar navbar-light d-block d-sm-none">
+                      <?php if (! $logged) { ?>
+                        <span class="navbar-text">
+                          <a class="m-auto" href="<?php echo $login; ?>"><?php echo $text_login; ?></a>
+                          <a class="ml-3" href="<?php echo $login; ?>"><?php echo $text_register; ?></a>
+                        </span>
+                      <?php } ?>
+                    </nav>
+                    <div class="collapse navbar-collapse d-none d-md-block" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <?php foreach ($informations as $information) { ?>
                                <li class="nav-item"><a class="nav-link" href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
@@ -72,7 +70,7 @@
                            <li class="nav-item d-none d-md-block"><a class="nav-link" href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
                        </ul>
                        <?php } else { ?>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown dropdown-bubble">
                         <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" loading="lazy"> <?php echo $username; ?>   
                           </a>
                           <div class="dropdown-menu" aria-labelledby="headerLoginDropdown">
@@ -86,9 +84,7 @@
                       <div class="header-widget d-none d-sm-block">
                         <a href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a>
                     </div> 
-                </div>
-
-            </nav>
-        </header>
-                
+                     
+               
+            </nav>                
 <!-- Header Container / End -->

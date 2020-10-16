@@ -6,9 +6,9 @@ class Dashboard extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        if (! $this->customer->getCustomerId() && ! $this->customer->isLogged() ) {
-             return redirect()->to(base_url('account/login'));
-        }
+        // if (! $this->customer->getCustomerId() && ! $this->customer->isLogged() ) {
+        //      return redirect()->to(base_url('account/login'));
+        // }
 
         $this->template->setTitle(lang('account/dashboard.heading_title'));
         
