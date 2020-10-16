@@ -41,7 +41,7 @@ class Header extends \Catalog\Controllers\BaseController
         $data['setting']     = base_url('account/setting?cid=' . $this->customer->getCustomerId());
         $data['dashboard']   = base_url('account/dashboard?cid=' . $this->customer->getCustomerId());
 
-        $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/category');
+        $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/project');
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
 
         $data['informations'] = [];

@@ -2315,7 +2315,7 @@ body #backtotop a {
 /* ---------------------------------- */
 /* Sidebar Styles
 ------------------------------------- */
-.sidebar-container { margin-bottom: 40px; margin-top:35px;}
+.sidebar-container { margin-bottom: 40px;}
 .full-page-container .sidebar-container { margin-bottom: 0px; }
 
 /*.sidebar-widget input { margin-bottom: 0; }

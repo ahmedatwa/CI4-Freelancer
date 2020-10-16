@@ -51,7 +51,7 @@ $routes->add('logout', 'Account\Logout::index');
 $routes->add('register', 'Account\Register::index');
 $routes->add('forgotten', 'Account\Forgotten::index');
 // projects
-$routes->add('projects', 'Project\Category::index');
+$routes->add('projects', 'Project\Project::index');
 $routes->add('add-project', 'Project\Project::add');
 /**
  * --------------------------------------------------------------------

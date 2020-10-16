@@ -61,7 +61,6 @@
 					</div>
 					<div class="dropdown-divider"></div>
 					<!-- Tags -->
-					<div class="keywords-list"></div>
 					<div class="sidebar-widget">
 						<h3><?php echo $text_skills; ?></h3>
 						<div class="keywords-container margin-top-20">
@@ -78,7 +77,7 @@
 							</div>
 						</div>
 					</div>
-					
+					<div class="keywords-list mt-4"></div>
 					<div class="dropdown-divider"></div>
 					<div class="sidebar-widget">
 						<h3><?php echo $text_state; ?></h3>
@@ -123,6 +122,7 @@
 					</div>
 					<div class="clearfix"></div>
 					<!-- Task -->
+					<?php if ($projects) { ?>
 					<?php foreach ($projects as $project) { ?>
 						<a href="<?php echo $project['href']; ?>" class="task-listing">
 							<div class="task-listing-details">
@@ -153,6 +153,12 @@
 						</a>
 					<?php } ?>
 					<!-- ./Task END-->
+					<?php } else { ?>
+						<div class="col-12 text-center p-4">
+						<p class="p-4">No Projects Found !</p>
+						<a type="button" href="<?php echo $add_project; ?>" class="button">Add Project</a>
+					</div>
+			      <?php } ?>	
 				</div>
 				<!-- Tasks Container / End -->
 				<!-- Pagination -->
@@ -161,17 +167,16 @@
 						<?php echo $pagination; ?>
 					</div>
 				<!-- Pagination / End -->
+			
 			</div>
 		</div>
 		</div>
 		</div> <!---- content-wrapper ---->
 <link href="catalog/default/vendor/select2/customSelectionAdapter/css/select2.customSelectionAdapter.min.css">		
 <script src="catalog/default/vendor/select2/customSelectionAdapter/js/select2.customSelectionAdapter.min.js"></script>
-
 <script type="text/javascript">
 var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
 // Skills
-
 $('select[name^=\'filter_category\']').select2({
 ajax: {
 	url: "project/category/autocomplete",
@@ -201,11 +206,16 @@ minimumResultsForSearch: 5,
 selectionAdapter: CustomSelectionAdapter,
 selectionContainer: $('.keywords-list'),
 
-});
-$("select[name^=\'filter_category\']").on("select2:select", function (e) { 
-  var select_val = $(e.currentTarget).val();
-  location = '<?php echo $action_skills; ?>&skills=' +  select_val.join('_');
+}).on("select2:select", function (e) { 
+	var select_val = $(e.currentTarget).val();
+    //location = '<?php echo $action_skills; ?>&skills=' +  select_val.join('_');
   
+}).on('select2:unselect', function (e) {
+	  var select_val = $(e.currentTarget).val();
+	  location = '<?php echo $action_skills; ?>&skills=' +  select_val.join('_');
+
+}).on('select2:clear', function (e) {
+    location = '<?php echo $action_skills; ?>';
 });
 </script>	
 <!-- // Filters -->
@@ -220,6 +230,7 @@ $('input[name^=\'filter_state\']').on('click', function() {
     
     location = '<?php echo $action_state; ?>&state=' + filter.join('_');
 });    
+
 $('input[name^=\'filter_type\']').on('click', function() {
 
        var filter = [];
@@ -233,8 +244,8 @@ $('input[name^=\'filter_type\']').on('click', function() {
 </script>
 <!-- // Filter Budget -->
 <script type="text/javascript">
-$('input[name=\'filter_budget\']').on('keyup', function(e) {	
-	
+$('input[name=\'filter_budget\']').on('keydown', function(e) {	
+	console.log($(this).val());
 	var filter = [];
 
 	$('input[name=\'filter_budget\']').each(function(element) {
@@ -243,8 +254,8 @@ $('input[name=\'filter_budget\']').on('keyup', function(e) {
 	    }
     });
 
-console.log(filter);
-   location = '<?php echo $action_price; ?>&' + filter.join('&');
+   // location = '<?php echo $action_price; ?>&' + filter.join('&');
+
 });    
 </script>
 <?php echo $footer; ?>

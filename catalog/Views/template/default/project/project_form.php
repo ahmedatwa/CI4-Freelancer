@@ -114,7 +114,6 @@
 								<label for="date-end" class="col-sm-3 col-form-label"><?php echo $entry_run_time; ?><span data-toggle="tooltip" title="<?php echo $help_bidding_duration; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col-sm-9">
 									<input type="number" class="form-control" name="runtime" value="" min="3" max="30">
-									<?php echo formError("runtime"); ?>
 								</div>
 							</div>
 							<div class="padding-top-20 text-right padding-bottom-30">

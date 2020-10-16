@@ -149,8 +149,8 @@ class ProjectModel extends \CodeIgniter\Model
             $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
         }
 
-        if (isset($data['filter_keyword'])) {
-            $builder->where('pd.name', $data['filter_keyword']);
+        if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
+            $builder->whereIn('p2c.category_id', $data['filter_skills']);
         }
 
         // Budget Filter Min
@@ -197,6 +197,79 @@ class ProjectModel extends \CodeIgniter\Model
 
         $query = $builder->get();
         return $query->getResultArray();
+    }
+
+    public function getTotalProjects($data = [])
+    {
+        $builder = $this->db->table('project p');
+        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime');
+        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
+        $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
+        $builder->where('pd.language_id', service('registry')->get('config_language_id'));
+       
+        if (isset($data['filter_category_id'])) {
+            $builder->where('p2c.category_id', $data['filter_category_id']);
+        }
+
+        if (isset($data['employer_id'])) {
+            $builder->where('p.employer_id', $data['employer_id']);
+        }
+
+        if (isset($data['status_id'])) {
+            $builder->where('p.status_id', $data['status_id']);
+        }
+
+        if (isset($data['filter_date_added'])) {
+            $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
+        }
+
+        if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
+            $builder->whereIn('pd.name', $data['filter_skills']);
+        }
+
+        // Budget Filter Min
+        if (isset($data['filter_min']) && !empty($data['filter_min'])) {
+            $builder->where('p.budget_min >= ', $data['filter_min']);
+        }
+        // Budget Filter Max
+        if (isset($data['filter_max']) && !empty($data['filter_max'])) {
+            $builder->where('p.budget_min <= ', $data['filter_max']);
+        }
+        // Filter
+        if (isset($data['filter']) && !empty($data['filter'])) {
+            $builder->whereIn('p.type', (array) $data['filter']);
+            $builder->orWhereIn('p.status', str_replace('_', ',', $data['filter']));
+        }
+
+        $sortData = [
+            'p.budget_min',
+            'p.budget_max',
+            'p.date_added',
+        ];
+
+        if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
+            $data['order_by'] = 'DESC';
+        } else {
+            $data['order_by'] = 'ASC';
+        }
+
+        if (isset($data['sort_by']) && in_array('p.' . $data['sort_by'], $sortData)) {
+            $builder->orderBy($data['sort_by'], $data['order_by']);
+        } else {
+            $builder->orderBy('p.date_added', 'ASC');
+        }
+
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
+            $builder->limit($data['limit'], $data['start']);
+        }
+
+        return $builder->countAllResults();
     }
 
     public function getProjectDescription($project_id)
@@ -279,47 +352,6 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->where('project_id', $project_id);
         $query = $builder->get()->getRowArray();
         return round($query['total']);
-    }
-
-    public function getTotalProjects()
-    {
-        $builder = $this->db->table('project p');
-        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
-        $builder->where('pd.language_id', service('registry')->get('config_language_id'));
-       
-        if (!empty($data['filter_date_added'])) {
-            $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
-        }
-
-        $sortData = [
-            ''
-        ];
-
-        if (isset($data['orderBy']) && $data['orderBy'] == 'DESC') {
-            $data['orderBy'] = 'DESC';
-        } else {
-            $data['orderBy'] = 'ASC';
-        }
-
-        if (isset($data['sortBy']) && in_array($data['sortBy'], $sortData)) {
-            $builder->orderBy($data['sortBy'], $data['orderBy']);
-        } else {
-            $builder->orderBy('p.date_added', 'ASC');
-        }
-
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-
-            $builder->limit($data['limit'], $data['start']);
-        }
-
-        return $builder->countAllResults();
     }
 
     public function getProjectAward($data = [])

@@ -99,9 +99,11 @@
 					</div>
 				</div>
 				<!-- Sidebar -->
-				<div class="col">
+				<div class="col-3">
 					<div class="sidebar-container shadow-sm p-3 mb-5 bg-white rounded">
+						<?php if ($runtime) { ?>
 						<div class="countdown green mb-4"><?php echo $days_left; ?></div>
+					    <?php } ?>
 						<div class="sidebar-widget">
 							<div class="bidding-widget text-white text-center">
 							 <a href="<?php echo $add_project; ?>" class="button full-width ripple-effect button-sliding-icon">Post a project like this <i class="fas fa-long-arrow-alt-right"></i></a>

@@ -16,7 +16,7 @@ class Register extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/register.heading_title'),
-            'href' => route_to('register') ?? base_url('account/register'),
+            'href' => route_to('register') ? route_to('register') : base_url('account/register',
         ];
 
         $customerModel = new CustomerModel();
@@ -41,7 +41,7 @@ class Register extends \Catalog\Controllers\BaseController
         $data['button_register'] = lang('account/register.button_register');
 
 
-        $data['action'] = base_url('account/register');
+        $data['action'] = route_to('register') ? route_to('register') : base_url('account/register');
 
         if ($this->request->getPost('email')) {
             $data['email'] = $this->request->getPost('email');

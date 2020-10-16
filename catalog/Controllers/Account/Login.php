@@ -16,7 +16,7 @@ class Login extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/login.heading_title'),
-            'href' => route_to('login') ?? base_url('account/login'),
+            'href' => route_to('login') ? route_to('login') : base_url('account/login'),
         ];
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
@@ -40,7 +40,7 @@ class Login extends \Catalog\Controllers\BaseController
 
             $pusher->trigger('chat-channel', 'online-event', $data);
               
-            return redirect()->to(base_url('account/dashboard?cid=' . $this->session->get('customer_id')));
+            return redirect()->to(route_to('dashboard') ? route_to('dashboard') : base_url('account/dashboard'));
         }
         
 
@@ -77,7 +77,7 @@ class Login extends \Catalog\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        $data['action'] = base_url('account/login');
+        $data['action'] = route_to('login') ? route_to('login') : base_url('account/login');
         $data['forgotton'] = route_to('forgotten') ? route_to('forgotten') : base_url('account/forgotten');
 
         $this->template->output('account/login', $data);
