@@ -432,7 +432,6 @@ tr.shown td.details-control:before {
 /*Login*/
 #login {
     margin-top: 50px;
-    width: 45%;   
 }
 
 #login .card {

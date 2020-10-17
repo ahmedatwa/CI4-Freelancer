@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <div class="container">
   <div class="row align-items-center justify-content-center h-100">
-    <div id="login">
+    <div id="login" class="col-sm-12 col-md-6">
         <div class="card">
             <div class="card-header"><i class="fas fa-lock"></i> <?php echo $heading_title; ?></div>
             <div class="card-body p-3">
