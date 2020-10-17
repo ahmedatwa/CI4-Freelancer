@@ -11,7 +11,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         $customerModel = new CustomerModel();
 
-        $this->getProfile();
+        $this->profile();
     }
 
     public function index()
@@ -98,7 +98,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
                 'tag_line' => $result['tag_line'],
                 'rate'     => $this->currencyFormat($result['rate']),
                 'rating'   => $reviewModel->getAvgReviewByFreelancerId($result['customer_id']),
-                'href'     => (route_to('freelancer')) ? route_to('freelancer') : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
+                'href'     => (route_to('freelancer_profile', $result['customer_id'], $result['username'])) ? route_to('freelancer_profile', $result['customer_id'], $result['username']) : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
             ];
         }
 
@@ -220,14 +220,22 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
     }
 
-    protected function getProfile()
+    public function profile()
     {
         $this->template->setTitle(lang('freelancer/freelancer.text_profile'));
 
         $customerModel = new CustomerModel();
 
         if ($this->request->getVar('cid')) {
-            $customer_info = $customerModel->getCustomer($this->request->getVar('cid'));
+           $customer_id = $this->request->getVar('cid');
+        } elseif ($this->request->uri->getSegment(3)) {
+           $customer_id = $this->request->uri->getSegment(3);
+        } else {
+           $customer_id = 0;
+        }
+
+        if ($customer_id) {
+            $customer_info = $customerModel->getCustomer($customer_id);
         } 
 
         $data['breadcrumbs'] = [];
@@ -259,24 +267,24 @@ class Freelancer extends \Catalog\Controllers\BaseController
             $data['about']         = $customer_info['about'];
             $data['rate']          = $customer_info['rate'];
             $data['tag_line']      = $customer_info['tag_line'];
-            $data['rating']        = $reviewModel->getAvgReviewByFreelancerId($this->request->getVar('cid'));
-            $data['skills']        = $customerModel->getCustomerSkills($this->request->getVar('cid'));
-            $data['languages']     = $customerModel->getCustomerLanguages($this->request->getVar('cid'));
+            $data['rating']        = $reviewModel->getAvgReviewByFreelancerId($customer_id);
+            $data['skills']        = $customerModel->getCustomerSkills($customer_id);
+            $data['languages']     = $customerModel->getCustomerLanguages($customer_id);
 
-            $data['educations'] = $customerModel->getEducations($this->request->getVar('cid'));
-            $data['completed'] = $projectModel->getTotalAwardsByFreelancerId($this->request->getVar('cid'));
+            $data['educations'] = $customerModel->getEducations($customer_id);
+            $data['completed'] = $projectModel->getTotalAwardsByFreelancerId($customer_id);
 
             
-            $data['certificates'] = $customerModel->getCustomerCertificates($this->request->getVar('cid'));
+            $data['certificates'] = $customerModel->getCustomerCertificates($customer_id);
 
             
             $filter_data = [
-             'freelancer_id' => $this->request->getVar('cid'),
+             'freelancer_id' => $customer_id,
              'status'        => $this->registry->get('config_project_completed_status')
             ];
 
             $projects = $projectModel->getProjectAward($filter_data);
-            $reviews = $reviewModel->getFreelancerReview($this->request->getVar('cid'));
+            $reviews = $reviewModel->getFreelancerReview($customer_id);
 
             $data['projects'] = [];
             foreach ($projects as $project) {
@@ -305,7 +313,8 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $data['text_fixed_price'] = lang('en.text_fixed_price');
         $data['text_per_hour']    = lang('en.text_per_hour');
 
-        $projects_total = $projectModel->getTotalAwardsByFreelancerId($this->request->getVar('cid'));
+        $projects_total = $projectModel->getTotalAwardsByFreelancerId($customer_id);
+       
         $limit = 5;
         $page = 1;
 
@@ -315,7 +324,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $data['employer_id'] = $this->customer->getCustomerId();
 
 
-        $customerModel->updateViewed($this->request->getVar('cid'));
+        $customerModel->updateViewed($customer_id);
 
         $this->template->output('freelancer/freelancer_info', $data);
     }
@@ -326,9 +335,13 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         if ($this->request->getMethod() == 'post') {
 
-        $projectModel = new \Catalog\Models\Catalog\ProjectModel();
+        $messageModel = new \Catalog\Models\Account\MessageModel();
 
-        $projectModel->addProposal($this->request->getPost());
+        $messageModel->addMessage($this->request->getPost());
+
+        // Trigger Notification Event
+        \CodeIgniter\Events\Events::trigger('freelancer_message', $this->request->getPost('to_id'));
+
         $json['success'] = lang('freelancer/freelancer.text_success');
 
         }

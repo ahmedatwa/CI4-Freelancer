@@ -229,8 +229,8 @@
 			<div class="modal-body">
 				<form enctype="multipart/form-data" method="post" action="" id="form-hire" accept-charset="utf-8"> 
 					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-					<input type="hidden" name="employer_id" value="<?php echo $employer_id; ?>" />
-					<input type="hidden" name="freelancer_id" value="<?php echo $freelancer_id; ?>" />
+					<input type="hidden" name="from_id" value="<?php echo $employer_id; ?>" />
+					<input type="hidden" name="to_id" value="<?php echo $freelancer_id; ?>" />
 
 					<div class="form-group">
 						<label for="exampleInputEmail1"><i class="fas fa-comment"></i> <?php echo $text_message; ?></label>
@@ -267,6 +267,14 @@ $("#button-hire-me").on('click', function () {
 			url: 'freelancer/freelancer/hireMe?cid=<?php echo $employer_id; ?>',
 			dataType: 'json',
 			method: 'post',
+			beforeSend: function() {
+				$('.fas, .alert').remove();
+				$(this).prop("disabled", true);
+				$(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+			},
+			complete: function() {
+				$(this).html('<?php echo $button_hire; ?>');
+			},
 			data:$("#form-hire").serialize(),
 			success : function (json){
 				if (json['success']) {

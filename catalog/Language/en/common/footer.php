@@ -2,6 +2,7 @@
     return [
     'text_terms'         => 'About',
     'text_freelancers'   => 'Freelancers',
+    'text_freelancer'   => 'Freelancer',
     'text_categories'    => 'Categories',
     'text_projects'      => 'Projects',
     'text_local_jobs'    => 'Local Jobs',

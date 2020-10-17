@@ -153,14 +153,15 @@ class ProjectModel extends \CodeIgniter\Model
             $builder->whereIn('p2c.category_id', $data['filter_skills']);
         }
 
-        // Budget Filter Min
-        if (isset($data['filter_min']) && !empty($data['filter_min'])) {
-            $builder->where('p.budget_min >= ', $data['filter_min']);
+        // Budget Filter 
+        if (isset($data['filter_budget']) && !empty($data['filter_budget'])) {
+            
+            $parts  = explode('_', $data['filter_budget']);
+
+            $builder->where('p.budget_min >= ', $parts[0])
+                    ->where('p.budget_min <= ', $parts[1]);
         }
-        // Budget Filter Max
-        if (isset($data['filter_max']) && !empty($data['filter_max'])) {
-            $builder->where('p.budget_min <= ', $data['filter_max']);
-        }
+        
         // Filter
         if (isset($data['filter']) && !empty($data['filter'])) {
             $builder->whereIn('p.type', (array) $data['filter']);
@@ -467,23 +468,23 @@ class ProjectModel extends \CodeIgniter\Model
         return json_encode($config_data);
     }
 
-    // Hire Me Button
-    public function addProposal($data)
-    {
-        $builder = $this->db->table('project_proposal');
-        $proposal_data = [
-            'employer_id'   => $data['employer_id'],
-            'freelancer_id' => $data['freelancer_id'],
-            'budget_min'    => $data['budget_min'],
-            'type'          => $data['type'],
-            'delivery_time' => $data['delivery_time'],
-            'message'       => $data['message'],
-            'status'        => 1
-        ];
+    // // Hire Me Button
+    // public function addProposal($data)
+    // {
+    //     $builder = $this->db->table('project_proposal');
+    //     $proposal_data = [
+    //         'employer_id'   => $data['employer_id'],
+    //         'freelancer_id' => $data['freelancer_id'],
+    //         'budget_min'    => $data['budget_min'],
+    //         'type'          => $data['type'],
+    //         'delivery_time' => $data['delivery_time'],
+    //         'message'       => $data['message'],
+    //         'status'        => 1
+    //     ];
 
-        $builder->set('date_added', 'NOW()', false);
-        $builder->insert($proposal_data);
-    }
+    //     $builder->set('date_added', 'NOW()', false);
+    //     $builder->insert($proposal_data);
+    // }
 
     // -----------------------------------------------------------------
 }

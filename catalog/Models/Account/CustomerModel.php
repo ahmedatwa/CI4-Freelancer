@@ -31,7 +31,7 @@ class CustomerModel extends \CodeIgniter\Model
     public function getCustomers(array $data = [])
     {
         $builder = $this->db->table('customer c');
-        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS name, c.about, c.tag_line, c.image, c.customer_id, c.rate, c.online');
+        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS name, c.about, c.tag_line, c.image, c.customer_id, c.rate, c.online, c.username');
         $builder->join('customer_to_category c2c', 'c.customer_id = c2c.freelancer_id', 'left');
 
         if (isset($data['filter_freelancer'])) {

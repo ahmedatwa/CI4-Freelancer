@@ -175,11 +175,16 @@ minimumResultsForSearch: 5,
 selectionAdapter: CustomSelectionAdapter,
 selectionContainer: $('.keywords-list'),
 
-});
-$("select[name^=\'filter_category\']").on("select2:select", function (e) { 
-  var select_val = $(e.currentTarget).val();
-  location = '<?php echo $action_skills; ?>?skills=' +  select_val.join('_');
+}).on("select2:select", function (e) { 
+	var select_val = $(e.currentTarget).val();
+    location = '<?php echo $action_skills; ?>&skills=' +  select_val.join('_');
   
+}).on('select2:unselect', function (e) {
+	  var select_val = $(e.currentTarget).val();
+	  location = '<?php echo $action_skills; ?>&skills=' +  select_val.join('_');
+
+}).on('select2:clear', function (e) {
+    location = '<?php echo $action_skills; ?>';
 });
 </script>	
 <?php echo $footer; ?>

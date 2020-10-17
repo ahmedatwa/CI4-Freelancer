@@ -34,7 +34,7 @@ $routes->set404Override(function () {
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-$routes->get('/', 'Common/Home::index');
+$routes->add('/', 'Common/Home::index');
 // Information
 $routes->add('information/(:any)', 'Information\Information::index/$1', ['as' => 'information']);
 $routes->add('contact', 'Information\Contact::index');
@@ -43,6 +43,12 @@ $routes->add('contact', 'Information\Contact::index');
 $routes->group('blog', function ($routes) {
     $routes->add('/', 'Extension\Blog\Blog::index', ['as' => 'blog']);
     $routes->add('view/(:any)', 'Extension\Blog\Blog::getPost/$1', ['as' => 'blog/post']);
+});
+
+// Freelancers
+$routes->group('freelancers', function ($routes) {
+	$routes->add('/', 'Freelancer\Freelancer::index');
+	//$routes->add('u/(:num)/(:any)', 'Freelancer\Freelancer::view/$1/$2', ['as' => 'freelancer_profile']);
 });
 
 // Account

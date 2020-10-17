@@ -47,24 +47,18 @@ class Project extends \Catalog\Controllers\BaseController
             $filter_skills = [];
         }
 
-        if ($this->request->getVar('min')) {
-            $filter_min = $this->request->getVar('min');
+        if ($this->request->getVar('budget')) {
+            $filter_budget = $this->request->getVar('budget');
         } else {
-            $filter_min = null;
-        }
-
-        if ($this->request->getVar('max')) {
-            $filter_max = $this->request->getVar('max');
-        } else {
-            $filter_max = null;
+            $filter_budget = '5_2500';
         }
 
         if ($this->request->getVar('sort_by')) {
             $sort_by = $this->request->getVar('sort_by');
         } else {
             $sort_by = 'p.date_added';
-        }
-       
+        }   
+
         if ($this->request->getVar('order_by')) {
             $order_by = $this->request->getVar('order_by');
         } else {
@@ -87,8 +81,7 @@ class Project extends \Catalog\Controllers\BaseController
             'filter_category_id' => $filter_category_id,
             'filter_type'        => $filter_type,
             'filter_state'       => $filter_state, 
-            'filter_min'         => $filter_min,
-            'filter_max'         => $filter_max,
+            'filter_budget'      => $filter_budget,
             'filter_skills'      => $filter_skills,
             'sort_by'            => $sort_by,
             'order_by'           => $order_by,
@@ -135,6 +128,10 @@ class Project extends \Catalog\Controllers\BaseController
         if ($this->request->getVar('state')) {
             $url .= '&state=' . $this->request->getVar('state');
         }
+
+        if ($this->request->getVar('budget')) {
+            $url .= '&budget=' . $this->request->getVar('budget');
+        }
         
         $data['action_skills'] = $route . $url;
        
@@ -157,10 +154,13 @@ class Project extends \Catalog\Controllers\BaseController
             $url .= '&skills=' . $this->request->getVar('skills');
         }
 
+        if ($this->request->getVar('budget')) {
+            $url .= '&budget=' . $this->request->getVar('budget');
+        }
+
         $data['action_state'] = $route . $url;
 
          // Filter Type
-         
         $url = '';
 
         if ($this->request->getVar('order_by')) {
@@ -178,11 +178,36 @@ class Project extends \Catalog\Controllers\BaseController
         if ($this->request->getVar('skills')) {
             $url .= '&skills=' . $this->request->getVar('skills');
         }
+
+        if ($this->request->getVar('budget')) {
+            $url .= '&budget=' . $this->request->getVar('budget');
+        }
+
         $data['action_type'] = $route . $url;
     
         
-        // 
+        // budget
+        $url = '';
 
+        if ($this->request->getVar('order_by')) {
+            $url .= '&order_by=' . $this->request->getVar('order_by');
+        }
+
+        if ($this->request->getVar('sort_by')) {
+            $url .= '&sort_by=' . $this->request->getVar('sort_by');
+        }
+        
+        if ($this->request->getVar('state')) {
+            $url .= '&state=' . $this->request->getVar('state');
+        }
+        
+        if ($this->request->getVar('skills')) {
+            $url .= '&skills=' . $this->request->getVar('skills');
+        }
+
+        if ($this->request->getVar('type')) {
+            $url .= '&type=' . $this->request->getVar('type');
+        }
 
         $data['action_price'] =  $route . $url;
 
@@ -266,8 +291,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['filter_type']   = $filter_type;
         $data['filter_state']  = $filter_state;
-        $data['filter_min']    = $filter_min;
-        $data['filter_max']    = $filter_max;
+        $data['filter_budget'] = $filter_budget;
         $data['filter_skills'] = $filter_skills;
         $data['sort_by']       = $sort_by;
         $data['order_by']      = $order_by;

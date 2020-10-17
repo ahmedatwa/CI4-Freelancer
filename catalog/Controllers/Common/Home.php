@@ -12,16 +12,16 @@ class Home extends \Catalog\Controllers\BaseController
 
         $seoUrl = service('seo_url');
         
-		$data['text_login']           = lang('common/home.text_title');
-		$data['text_freelancers']     = lang('common/home.text_freelancers');
-		$data['text_all_freelancers'] = lang('common/home.text_all_freelancers');
-		$data['text_view_profile']    = lang('common/home.text_view_profile');
+    		$data['text_login']           = lang('common/home.text_title');
+    		$data['text_freelancers']     = lang('common/home.text_freelancers');
+    		$data['text_all_freelancers'] = lang('common/home.text_all_freelancers');
+    		$data['text_view_profile']    = lang('common/home.text_view_profile');
 
-        // Freelancers Block
+            // Freelancers Block
         $filter_data = [
-			'filter_freelancer' => 0,
-			'limit'             => 7,
-			'start'             => 0,
+    			'filter_freelancer' => 0,
+    			'limit'             => 7,
+    			'start'             => 0,
         ];
         
         $data['freelancers'] = [];
@@ -45,7 +45,7 @@ class Home extends \Catalog\Controllers\BaseController
                 'tag_line' => $result['tag_line'],
                 'rate'     => $this->currencyFormat($result['rate']),
                 'rating'   => $reviewModel->getAvgReviewByFreelancerId($result['customer_id']),
-                'href'     => (route_to('freelancer')) ? route_to('freelancer') : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
+                'href'     => (route_to('freelancer_profile')) ? route_to('freelancer_profile') : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
             ];
         }
 
@@ -72,8 +72,8 @@ class Home extends \Catalog\Controllers\BaseController
    //      }
 
 
-		$data['freelancers_all']    = base_url('freelancer/freelancer');
-		$data['register'] = base_url('account/register');
+    $data['freelancers_all'] = route_to('freelancer_profile') ? route_to('freelancer_profile') : base_url('freelancer/freelancer');
+    $data['register']        = route_to('register') ? route_to('register') : base_url('account/register');
 
 		$this->template->output('common/home', $data);
 

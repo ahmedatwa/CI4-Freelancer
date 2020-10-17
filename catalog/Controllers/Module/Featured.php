@@ -29,7 +29,7 @@ class Featured extends \Catalog\Controllers\BaseController
 				'name'        => $result['name'],
 				'type'        => ($result['type'] == 1) ? lang('en.text_fixed_price') : lang('en.text_per_hour'),
 				'date_added'  => $this->dateDifference($result['date_added']),
-				'href'        => (route_to('project')) ? route_to('project', $keyword) : base_url('project/project?pid=' . $result['project_id']),
+				'href'        => (route_to('project')) ? route_to('project', $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
 			];
         }
 
@@ -38,7 +38,7 @@ class Featured extends \Catalog\Controllers\BaseController
 		$data['text_apply']    = lang('module/featured..text_apply');
 
 
-		$data['projects_all']  = base_url('project/category');
+		$data['projects_all']  = route_to('projects') ? route_to('projects') : base_url('project/project');
 
 
         return view('module/featured', $data);

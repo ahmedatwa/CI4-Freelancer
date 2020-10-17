@@ -51,12 +51,7 @@
 					<div class="sidebar-widget">
 						<h3><?php echo $text_budget; ?></h3>
 						 <div class="form-row">
-					    <div class="col">
-					      <input type="text" class="form-control" placeholder="Min" id="min" value="<?php echo $filter_min; ?>" name="filter_budget">
-					    </div>
-					    <div class="col">
-					      <input type="text" class="form-control" placeholder="Max" id="max" value="<?php echo $filter_max; ?>" name="filter_budget">
-					    </div>
+					    <input class="range-slider" type="text" value="" data-provide="slider" data-slider-currency="$" data-slider-min="5" data-slider-max="2500" data-slider-step="5" data-slider-value="[<?php echo str_replace('_', ',', $filter_budget); ?>]" name="filter_budget"/>
 					  </div>
 					</div>
 					<div class="dropdown-divider"></div>
@@ -175,8 +170,8 @@
 <link href="catalog/default/vendor/select2/customSelectionAdapter/css/select2.customSelectionAdapter.min.css">		
 <script src="catalog/default/vendor/select2/customSelectionAdapter/js/select2.customSelectionAdapter.min.js"></script>
 <script type="text/javascript">
-var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
 // Skills
+var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
 $('select[name^=\'filter_category\']').select2({
 ajax: {
 	url: "project/category/autocomplete",
@@ -208,7 +203,7 @@ selectionContainer: $('.keywords-list'),
 
 }).on("select2:select", function (e) { 
 	var select_val = $(e.currentTarget).val();
-    //location = '<?php echo $action_skills; ?>&skills=' +  select_val.join('_');
+    location = '<?php echo $action_skills; ?>&skills=' +  select_val.join('_');
   
 }).on('select2:unselect', function (e) {
 	  var select_val = $(e.currentTarget).val();
@@ -217,6 +212,9 @@ selectionContainer: $('.keywords-list'),
 }).on('select2:clear', function (e) {
     location = '<?php echo $action_skills; ?>';
 });
+
+
+
 </script>	
 <!-- // Filters -->
 <script type="text/javascript">
@@ -244,18 +242,12 @@ $('input[name^=\'filter_type\']').on('click', function() {
 </script>
 <!-- // Filter Budget -->
 <script type="text/javascript">
-$('input[name=\'filter_budget\']').on('keydown', function(e) {	
-	console.log($(this).val());
-	var filter = [];
+var mySlider = $("input[name=\'filter_budget\']").slider();
 
-	$('input[name=\'filter_budget\']').each(function(element) {
-	    if ($(this).val() != '') {
-            filter.push($(this).attr('id') + '=' + $(this).val());
-	    }
-    });
+mySlider.on('slide', function(e){
+	var filter = e.value;
+	location = '<?php echo $action_price; ?>&budget=' + filter.join('_');
+});
 
-   // location = '<?php echo $action_price; ?>&' + filter.join('&');
-
-});    
 </script>
 <?php echo $footer; ?>

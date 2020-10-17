@@ -286,44 +286,44 @@ $(".btn-close, .screen-overlay").click(function(e){
 	/*  Bootstrap Range Slider
 	/*--------------------------------------------------*/
 
-	// Thousand Separator
-	function ThousandSeparator(nStr) {
-	    nStr += '';
-	    var x = nStr.split('.');
-	    var x1 = x[0];
-	    var x2 = x.length > 1 ? '.' + x[1] : '';
-	    var rgx = /(\d+)(\d{3})/;
-	    while (rgx.test(x1)) {
-	        x1 = x1.replace(rgx, '$1' + ',' + '$2');
-	    }
-	    return x1 + x2;
-	}
+	// // Thousand Separator
+	// function ThousandSeparator(nStr) {
+	//     nStr += '';
+	//     var x = nStr.split('.');
+	//     var x1 = x[0];
+	//     var x2 = x.length > 1 ? '.' + x[1] : '';
+	//     var rgx = /(\d+)(\d{3})/;
+	//     while (rgx.test(x1)) {
+	//         x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	//     }
+	//     return x1 + x2;
+	// }
 
-	// Bidding Slider Average Value
-	var avgValue = (parseInt($('.bidding-slider').attr("data-slider-min")) + parseInt($('.bidding-slider').attr("data-slider-max")))/2;
-	if ($('.bidding-slider').data("slider-value") === 'auto') {
-		$('.bidding-slider').attr({'data-slider-value': avgValue});
-	}
+	// // Bidding Slider Average Value
+	// var avgValue = (parseInt($('.bidding-slider').attr("data-slider-min")) + parseInt($('.bidding-slider').attr("data-slider-max")))/2;
+	// if ($('.bidding-slider').data("slider-value") === 'auto') {
+	// 	$('.bidding-slider').attr({'data-slider-value': avgValue});
+	// }
 
-	// Bidding Slider Init
-	$('.bidding-slider').slider();
+	// // Bidding Slider Init
+	// $('.bidding-slider').slider();
 
-	$(".bidding-slider").on("slide", function(slideEvt) {
-		$("#biddingVal").text(ThousandSeparator(parseInt(slideEvt.value)));
-	});
-	$("#biddingVal").text(ThousandSeparator(parseInt($('.bidding-slider').val())));
+	// $(".bidding-slider").on("slide", function(slideEvt) {
+	// 	$("#biddingVal").text(ThousandSeparator(parseInt(slideEvt.value)));
+	// });
+	// $("#biddingVal").text(ThousandSeparator(parseInt($('.bidding-slider').val())));
 
 
-	// Default Bootstrap Range Slider
-	var currencyAttr = $(".range-slider").attr('data-slider-currency');
+	// // Default Bootstrap Range Slider
+	// var currencyAttr = $(".range-slider").attr('data-slider-currency');
 	
-	$(".range-slider").slider({
-		formatter: function(value) {
-			return currencyAttr + ThousandSeparator(parseInt(value[0])) + " - " + currencyAttr + ThousandSeparator(parseInt(value[1]));
-		}
-	});
+	// $(".range-slider").slider({
+	// 	formatter: function(value) {
+	// 		return currencyAttr + ThousandSeparator(parseInt(value[0])) + " - " + currencyAttr + ThousandSeparator(parseInt(value[1]));
+	// 	}
+	// });
 	
-	$(".range-slider-single").slider();
+	// $(".range-slider-single").slider();
 
 
 	/*----------------------------------------------------*/

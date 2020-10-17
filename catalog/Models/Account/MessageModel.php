@@ -62,35 +62,36 @@ class MessageModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table($this->table);
         $data = [
-            'project_id'    => $data['project_id'],
+            'project_id'    => $data['project_id'] ?? 0,
             'from_id'       => $data['from_id'],
-            'from_username' => $data['from_username'],
+            'from_username' => $data['from_username'] ?? '',
             'to_id'         => $data['to_id'],
-            'to_username'   => $data['to_username'],
+            'to_username'   => $data['to_username'] ?? '',
             'message'       => $data['message'],
         ];
+
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($data);
 
     }
 
-    public function updateMessage($project_id, $data)
-    {
-        $builder = $this->db->table($this->table);
+    // public function updateMessage($project_id, $data)
+    // {
+    //     $builder = $this->db->table($this->table);
 
-        $data = [
-            'from_id'       => $data['from_id'],
-            'from_username' => $data['from_username'],
-            'to_id'         => $data['to_id'],
-            'to_username'   => $data['to_username'],
-            'message'       => $data['message'],
-            'date_modified' => $data['date_added'],
-        ];
-        $builder->where('project_id', $project_id);
-        //$builder->set('date_modified', 'NOW()', false);
-        $builder->update($data);
+    //     $data = [
+    //         'from_id'       => $data['from_id'],
+    //         'from_username' => $data['from_username'],
+    //         'to_id'         => $data['to_id'],
+    //         'to_username'   => $data['to_username'],
+    //         'message'       => $data['message'],
+    //         'date_modified' => $data['date_added'],
+    //     ];
+    //     $builder->where('project_id', $project_id);
+    //     //$builder->set('date_modified', 'NOW()', false);
+    //     $builder->update($data);
 
-    }
+    // }
     
     // -----------------------------------------------------------------
 }
