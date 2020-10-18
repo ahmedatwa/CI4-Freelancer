@@ -57,7 +57,7 @@ class Project extends \Catalog\Controllers\BaseController
             $sort_by = $this->request->getVar('sort_by');
         } else {
             $sort_by = 'p.date_added';
-        }   
+        }
 
         if ($this->request->getVar('order_by')) {
             $order_by = $this->request->getVar('order_by');
@@ -80,7 +80,7 @@ class Project extends \Catalog\Controllers\BaseController
         $filter_data = [
             'filter_category_id' => $filter_category_id,
             'filter_type'        => $filter_type,
-            'filter_state'       => $filter_state, 
+            'filter_state'       => $filter_state,
             'filter_budget'      => $filter_budget,
             'filter_skills'      => $filter_skills,
             'sort_by'            => $sort_by,
@@ -160,7 +160,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['action_state'] = $route . $url;
 
-         // Filter Type
+        // Filter Type
         $url = '';
 
         if ($this->request->getVar('order_by')) {
@@ -376,11 +376,11 @@ class Project extends \Catalog\Controllers\BaseController
             $data['description'] = $project_info['description'];
             $data['categories']  = $categoryModel->getCategoriesByProjectId($project_id);
             $data['viewed']      = $project_info['viewed'];
-            // Calculate the Bidding Time 
+            // Calculate the Bidding Time
             if ($project_info['runtime']) {
-               $data['days_left'] = lang('project/project.text_expire', [$this->dateDifference($project_info['date_added'], $project_info['runtime'])]);
-            }  else {
-               $data['days_left'] = '';
+                $data['days_left'] = lang('project/project.text_expire', [$this->dateDifference($project_info['date_added'], $project_info['runtime'])]);
+            } else {
+                $data['days_left'] = '';
             }
 
             $data['runtime'] = $project_info['runtime'];
@@ -419,8 +419,8 @@ class Project extends \Catalog\Controllers\BaseController
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $projectModel->addProject($this->request->getPost());
-            $this->session->setFlashdata('new_project_add', lang('project/project.text_success'));
-            return redirect()->to(base_url('project/project/add'))->with('success', lang('project/project.text_success'));
+            return redirect()->to(route_to('add-project') ? route_to('add-project') : base_url('project/project/add'))
+                             ->with('success', lang('project/project.text_success'));
         }
 
         $this->getForm();
@@ -446,7 +446,7 @@ class Project extends \Catalog\Controllers\BaseController
         ];
 
        
-        $data['action'] = base_url('project/project/add');
+        $data['action'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -490,7 +490,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['help_upload']           = lang('project/project.help_upload');
         $data['button_add']            = lang('en.button_add');
         
-        $data['button_save']         = !$this->request->getVar('project_id') ? lang('project/project.button_add') : lang('project/project.button_edit');
+        $data['button_save'] = !$this->request->getVar('project_id') ? lang('project/project.button_add') : lang('project/project.button_edit');
         
         if ($this->request->getVar('pid') && ($this->request->getMethod() != 'post')) {
             $project_info = $projectModel->getProject($this->request->getVar('project_id'));

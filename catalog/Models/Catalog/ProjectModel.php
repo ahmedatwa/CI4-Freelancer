@@ -12,7 +12,7 @@ class ProjectModel extends \CodeIgniter\Model
         $project_data = [
             'status_id'     => service('registry')->get('config_project_status_id'),
             'type'          => $data['type'],
-            'upload'        => $data['upload'],
+            //'upload'        => $data['upload'],
             'employer_id'   => $data['employer_id'],
             'budget_min'    => $data['budget_min'],
             'budget_max'    => $data['budget_max'],
@@ -41,6 +41,26 @@ class ProjectModel extends \CodeIgniter\Model
                     'meta_keyword'     => $value['meta_keyword'] ?? '',
                 ];
                 $project_description_table->insert($project_description);
+
+                // Trigger Pusher Notification event 
+                $options = ['cluster' => 'eu', 'useTLS' => true];
+
+                $pusher = new \Pusher\Pusher(
+                    'b4093000fa8e8cab989a',
+                    'fb4bfd2d78aac168d918',
+                    '1047280',
+                    $options
+                );
+
+                $pusher_data = [
+                    'name' => $value['name'],
+                    'budget' => $data['budget_min'] . ' - ' . $data['budget_max'],
+                    'href' => base_url('project/project/project?pid=' . $project_id),
+                ];
+
+             $event = $pusher->trigger('global-channel', 'new-project-event', $pusher_data);
+
+
                 //  Seo Urls
                 helper('text');
                 $seo_url->delete(['query' => 'project_id=' . $project_id]);

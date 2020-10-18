@@ -110,14 +110,14 @@ class Footer extends \Catalog\Controllers\BaseController
 
         $data['scripts'] = $this->template->getScripts();
 
-        $data['new_project_alert'] = $this->session->getFlashdata('new_project_add');
-
         $data['currency'] = view_cell('\Catalog\Controllers\Common\Currency::index');
 
         
 
         return view('common/footer', $data);
     }
+
+
 
 
     //--------------------------------------------------------------------

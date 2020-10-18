@@ -33,23 +33,23 @@ class Activity extends \Admin\Controllers\BaseController
         $data['activities'] = array();
 
         $total_activities = $this->activityModel->getTotalActivities();
-        $results          = $this->activityModel->getActivities();
+        $results = $this->activityModel->getActivities();
 
         foreach ($results as $result) {
-            $find = array(
+            $find = [
                 'user_id=',
                 'product_id=',
                 'new_user_id=',
                 'order_id=',
-            );
+            ];
 
-            $replace = array(
+            $replace = [
                 base_url('index.php/user/user/edit?user_token=' . $this->session->get('user_token') . '&user_id='),
                 base_url('index.php/user/user/edit?user_token=' . $this->session->get('user_token') . '&new_user_id='),
                 base_url('index.php/catalog/product/edit?user_token=' . $this->session->get('user_token') . '&product_id='),
                 base_url('index.php/sale/order/edit?user_token=' . $this->session->get('user_token') . '&order_id='),
 
-            );
+            ];
 
             $comment = vsprintf(lang('report/activity_log.text_' . $result['key']), unserialize($result['data']));
 
@@ -65,7 +65,7 @@ class Activity extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
         $data['delete'] = base_url('index.php/report/activity/delete?user_token=' . $this->session->get('user_token'));

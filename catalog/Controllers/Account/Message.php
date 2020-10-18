@@ -112,6 +112,7 @@ class Message extends \Catalog\Controllers\BaseController
             $messageModel->addMessage($data);
         
             $event = $pusher->trigger('chat-channel', 'my-event', $data);
+
         }
         return $this->response->setJSON($json);
     }

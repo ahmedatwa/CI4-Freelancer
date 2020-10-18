@@ -6,7 +6,7 @@
 	<div class="col-md-12">
 		<div class="single-page-header-inner">
 			<div class="left-side">
-				<div class="header-image freelancer-avatar"><img src="images/user-avatar-big-02.jpg" alt=""></div>
+				<div class="header-image freelancer-avatar"><img src="<?php echo $image; ?>" alt=""></div>
 				<div class="header-details">
 					<h3><?php echo $name; ?> <span><?php echo $tag_line; ?></span></h3>
 					<ul>
@@ -267,7 +267,7 @@ $("#button-hire-me").on('click', function () {
 			url: 'freelancer/freelancer/hireMe?cid=<?php echo $employer_id; ?>',
 			dataType: 'json',
 			method: 'post',
-			beforeSend: function() {
+			beforesend: function() {
 				$('.fas, .alert').remove();
 				$(this).prop("disabled", true);
 				$(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');

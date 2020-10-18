@@ -51,14 +51,14 @@ class Header extends \Catalog\Controllers\BaseController
 
         foreach ($informations->getInformations(4) as $result) {
             if ($result['bottom'] == 0) {
-            $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
-            $data['informations'][] = [
+                $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
+                $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
                 'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/Information?fid=' . $result['information_id']),
             ];
+            }
         }
-    }   
 
         // Blog
         if ($this->registry->get('blog_extension_status')) {
@@ -67,7 +67,6 @@ class Header extends \Catalog\Controllers\BaseController
         } else {
             $data['text_blog'] = '';
             $data['blog'] = '';
-
         }
 
         $data['logged'] = $this->customer->isLogged();
@@ -80,11 +79,48 @@ class Header extends \Catalog\Controllers\BaseController
         }
 
         $data['defaut_color_scheme'] = $this->registry->get('theme_default_color') ?? 'red.css';
+        $data['all_messages'] = route_to('account_messages') ? route_to('account_messages') : base_url('account/message');
 
+       
 
         return view('common/header', $data);
     }
 
+    public function getMessages()
+    {
+        $json = [];
+
+        if ($this->session->get('customer_id')) {
+
+        if ($this->request->getVar('view')) {
+           $viewed = $this->request->getVar('view');
+        } else {
+           $viewed = ''; 
+        }
+
+        $messageModel = new \Catalog\Models\Account\MessageModel();
+
+        $results = $messageModel->getMessageByCustomerId($viewed, $this->session->get('customer_id'));
+
+        helper('text');
+
+        foreach ($results as $result) {
+            $json[] = [
+                'customer_id' => $result['customer_id'],
+                'name'        => $result['name'],
+                'image'       => ($result['image']) ? $this->resize($result['image'], 42, 42) : $this->resize('catalog/avatar.jpg', 42, 42),
+                'message'     => word_limiter($result['message'], 10),
+                'date_added'  => $this->dateDifference($result['date_added']),
+                'count'       => $result['total'],
+                'href'        => base_url('account/message'),
+
+            ];
+        }
+            
+        }
+
+        return $this->response->setJSON($json);
+    }
 
     //--------------------------------------------------------------------
 }

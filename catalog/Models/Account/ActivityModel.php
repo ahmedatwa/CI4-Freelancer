@@ -1,7 +1,14 @@
 <?php namespace Catalog\Models\Account;
 
+
 class ActivityModel extends \CodeIgniter\Model
 {
+
+    protected $table      = 'customer_activity';
+    protected $primaryKey = 'customer_activity_id';
+    protected $returnType = 'array';
+
+
     public function addActivity($key, $data)
     {
         $builder = $this->db->table('customer_activity');
