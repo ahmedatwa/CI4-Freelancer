@@ -66,24 +66,21 @@ class Bid extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        if (!$this->customer->isLogged()) {
-            $json['redirect'] = route_to('account/login') ?? base_url('account/login');
-        }
-
         if ($this->request->getPost('employer_id') == $this->request->getPost('freelancer_id')) {
             $json['no_allawed'] = lang('project/project.text_error_bid');
         }
 
         if (! $this->validate([
             'quote'         => "required",
+            'description'   => "required",
             'delivery_time' => ['label' => 'Delivery Time', 'rules' => 'required|numeric']
-        ])) 
-        {
+        ])) {
             $json['error'] = $this->validator->getErrors();
         }
 
         if (!$json) {
             if ($this->request->getPost('project_id') || $this->request->getPost('freelancer_id')) {
+
                 $bidModel = new BidModel();
 
                 if (($this->request->getMethod() == 'post')) {

@@ -52,7 +52,7 @@
 		</div>
 	</div>
 		<!-- Page Content-->
-			<div class="row justify-content-md-center">
+			<div class="row">
 				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow rounded bg-white">
 					<div class="single-page-section">
 						<h3><?php echo $text_description; ?></h3>
@@ -71,7 +71,7 @@
 				</div>
 				<!-- Sidebar -->
 				<div class="col-sm-12 col-md-3">
-					<div class="sidebar-container shadow-sm p-3 mb-5 bg-white rounded">
+					<div class="sidebar-container p-3">
 						<?php if ($runtime) { ?>
 						<div class="countdown green mb-4"><?php echo $days_left; ?></div>
 					    <?php } ?>
@@ -130,7 +130,12 @@
 										</div>
 									</div>
 								</div>
+								
 							</div>
+							<div class="form-group">
+							    <label for="exampleFormControlTextarea1"><?php echo $text_describe; ?></label>
+							    <textarea class="form-control" id="input-description" name="description" rows="7" cols="10"></textarea>
+							  </div>
 						</form> 
 						<!-- Button -->
 					<button id="snackbar-place-bid" class="button ripple-effect move-on-hover full-width margin-top-30"><span><?php echo $button_bid; ?></span></button>
@@ -153,9 +158,6 @@ $("#snackbar-place-bid").on('click', function () {
 			$('.text-danger, .alert-danger').remove();
 		},
 		success: function(json) {
-			if (json['redirect']) {
-				location = json['redirect'];
-			}
 			
 			if (json['error']) {
                 for (i in json['error']) {

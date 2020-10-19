@@ -409,6 +409,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['text_bid']         = lang('project/project.text_bid');
         $data['text_rate']        = lang('project/project.text_rate');
         $data['text_bid_detail']  = lang('project/project.text_bid_detail');
+        $data['text_describe']  = lang('project/project.text_describe');
         $data['text_delivery']    = lang('project/project.text_delivery');
         $data['text_register']    = lang('common/header.text_register');
         $data['text_facebook']    = lang('en.text_facebook');

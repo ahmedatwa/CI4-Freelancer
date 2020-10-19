@@ -7,6 +7,7 @@
     'text_skills'          => 'Required Skills',
     'text_rate'            => 'Bid Amount',
     'text_delivery'        => 'This project will be delivered in',
+    'text_describe'        => 'Describe your proposal',
     'text_bid'             => 'Place a Bid on this Project',
     'text_bid_detail'      => 'Bid Details',
     'text_budget'          => 'Estimated Budget',
