@@ -9,7 +9,7 @@ return [
 'text_your_email' => 'Your E-Mail Address',
 'text_email'      => 'Enter the e-mail address associated with your account. Click submit to have a password reset link e-mailed to you.',
 'text_success'    => 'An email with a confirmation link has been sent your email address.',
-'text_login' => 'Login',
+'text_login'      => 'Login',
 
 // Entry
 'entry_email'     =>  'E-Mail Address',

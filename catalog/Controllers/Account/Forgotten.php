@@ -18,7 +18,7 @@ class Forgotten extends \Catalog\Controllers\BaseController
 
             $this->session->setFlashdata('success', lang('account/forgotten.text_success'));
 
-            return redirect()->to(base_url('account/login'));
+            return redirect()->to(route_to('account_login') ? route_to('account_login') : base_url('account/login'));
         }
 
         $data['breadcrumbs'] = [];
@@ -26,9 +26,10 @@ class Forgotten extends \Catalog\Controllers\BaseController
             'text' => lang('account/forgotten.text_home'),
             'href' => base_url(),
         ];
+
         $data['breadcrumbs'][] = [
             'text' => lang('account/forgotten.heading_title'),
-            'href' => route_to('account_fogotten') ? route_to('account_fogotten') : base_url('account/forgot'),
+            'href' => route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten'),
         ];
 
         if ($this->session->getFlashdata('error_warning')) {
@@ -36,6 +37,7 @@ class Forgotten extends \Catalog\Controllers\BaseController
         } else {
             $data['error_warning'] = '';
         }
+
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
         } else {
@@ -55,7 +57,7 @@ class Forgotten extends \Catalog\Controllers\BaseController
             $data['email'] = '';
         }
 
-        $data['action'] = route_to('account_fogotten') ? route_to('account_fogotten') : base_url('account/forgot');
+        $data['action'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
 
         $data['login'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
 
@@ -69,7 +71,7 @@ class Forgotten extends \Catalog\Controllers\BaseController
         
         if (! $this->validate([
               'email' => "required|valid_email",
-           ])  || !$customerModel->getTotalCustomersByEmail($this->request->getPost('email')) ) {
+           ])  || ! $customerModel->getTotalCustomersByEmail($this->request->getPost('email')) ) {
 
                 $this->session->setFlashData('error_warning', lang('account/forgotten.error_email'));
 

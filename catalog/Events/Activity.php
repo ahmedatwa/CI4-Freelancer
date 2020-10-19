@@ -73,9 +73,10 @@ class Activity
     {
         $config = \Config\Services::email();
 
-        $data['text_greeting'] = sprintf(lang('account/forgotten.text_greeting'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
-        $data['text_change']   = lang('account/forgotten.text_change');
-        $data['text_ip']       = lang('account/forgotten.text_ip');
+        $data['text_greeting'] = sprintf(lang('mail/forgotten.text_greeting'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_change']   = lang('mail/forgotten.text_change');
+        $data['text_ip']       = lang('mail/forgotten.text_ip');
+        $data['button_reset'] = lang('mail/forgotten.button_reset');
         
         $data['reset'] = str_replace('&amp;', '&', base_url('account/reset?code=' . $code));
 
@@ -87,7 +88,7 @@ class Activity
 
         $config->setTo($email);
 
-        $config->setSubject(html_entity_decode(sprintf(lang('account/forgotten.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        $config->setSubject(html_entity_decode(sprintf(lang('mail/forgotten.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
         $config->setMessage(view('mail/forgotten', $data));
 
         $config->send();

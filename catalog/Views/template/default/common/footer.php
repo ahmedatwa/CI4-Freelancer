@@ -22,22 +22,22 @@
 								<div class="footer-row-inner">
 									<ul class="footer-social-links">
 										<li>
-											<a href="<?php echo $facebook; ?>" data-toggle="tooltip" title="Facebook" data-placement="bottom">
+											<a href="<?php echo $facebook; ?>" target="_blank" data-toggle="tooltip" title="Facebook" data-placement="bottom">
 												<i class="icon-brand-facebook-f"></i>
 											</a>
 										</li>
 										<li>
-											<a href="<?php echo $twitter; ?>" data-toggle="tooltip" title="Twitter" data-placement="bottom">
+											<a href="<?php echo $twitter; ?>" target="_blank" data-toggle="tooltip" title="Twitter" data-placement="bottom">
 												<i class="icon-brand-twitter"></i>
 											</a>
 										</li>
 										<li>
-											<a href="<?php echo $instagram; ?>" data-toggle="tooltip" title="Instagram" data-placement="bottom">
+											<a href="<?php echo $instagram; ?>" target="_blank" data-toggle="tooltip" title="Instagram" data-placement="bottom">
 												<i class="icon-brand-instagram"></i>
 											</a>
 										</li>
 										<li>
-											<a href="<?php echo $linkedin; ?>" data-toggle="tooltip" title="LinkedIn" data-placement="bottom">
+											<a href="<?php echo $linkedin; ?>" target="_blank" data-toggle="tooltip" title="LinkedIn" data-placement="bottom">
 												<i class="icon-brand-linkedin-in"></i>
 											</a>
 										</li>

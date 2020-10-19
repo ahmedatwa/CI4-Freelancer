@@ -4,17 +4,16 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xl-5 offset-xl-3">
-			<div class="login-register-page rounded box-shadow">
+			<div class="login-register-page shadow p-3 mb-5 bg-white rounded">
 				<!-- Welcome Text -->
 				<div class="welcome-text">
 					<h3><?php echo $heading_title; ?></h3>
 				</div>
-				
 				<!-- Form -->
 				<form method="post" action="<?php echo $action; ?>" enctype="multipart/form-data" accept-charset="utf-8">
 				<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 				 <div class="form-group">
-					<div class="input-group is-invalid">
+					<div class="input-group">
 						<div class="input-group-prepend">
 					    <span class="input-group-text"><i class="icon-material-baseline-mail-outline"></i></span>
 					  </div>
@@ -25,7 +24,7 @@
 					<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit"><?php echo $button_reset; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
 				</form>
 				<p class="mt-3">
-				<a href="<?php echo $login; ?>" class="forgot-password text-secondary"><?php echo $text_login; ?></a>
+				<a href="<?php echo $login; ?>" class="forgot-password text-secondary"><i class="fas fa-long-arrow-alt-right"></i> <?php echo $text_login; ?></a>
 			    </p>
 			</div>
 		</div>

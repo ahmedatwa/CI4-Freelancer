@@ -1350,7 +1350,7 @@ em.mm-counter+a.mm-fullsubopen+span {
 /* Hamburger Icon */
 .hamburger {
     padding: 0;
-    top: 10px;
+    top: 15px;
     left: 12px;
     transform: scale(0.67);
     -moz-transform: scale(0.70) translateY(4px);
@@ -14436,9 +14436,6 @@ body.modal-open .mm-slideout{
 /*// Small devices (landscape phones, 576px and up)
 */
 @media (max-width: 575.98px) { 
-	.navbar-brand {
-		margin-left:7px;
-	}
  .navbar-brand img {
  	width: 100px;
  }	

@@ -49,7 +49,7 @@
   <div id="wrapper">
     <!-- Header Container-->
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white ">
-        <span class="mmenu-trigger">
+        <span class="mmenu-trigger mr-3">
           <button class="hamburger hamburger--collapse" type="button">
             <span class="hamburger-box">
               <span class="hamburger-inner"></span>
