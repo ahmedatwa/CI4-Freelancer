@@ -103,7 +103,7 @@ header.fullwidth .container {
 .header-widget {
 	display: inline-block;
 	height: 100%;
-	padding: 0 30px;
+	padding: 0px;
 	text-align: left;
 	float: left;
 }
@@ -1350,7 +1350,7 @@ em.mm-counter+a.mm-fullsubopen+span {
 /* Hamburger Icon */
 .hamburger {
     padding: 0;
-    top: 16px;
+    top: 10px;
     left: 12px;
     transform: scale(0.67);
     -moz-transform: scale(0.70) translateY(4px);
