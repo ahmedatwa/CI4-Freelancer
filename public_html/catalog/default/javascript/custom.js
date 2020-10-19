@@ -7,20 +7,20 @@ $(document).ready(function(){
 // Search 
 $('#search-container button').on('click', function() {
 
-    var url = 'common/search';
+	var url  = '/projects';
     
-    var search = $('#search-container #search-input').val();
+    var search = $('.intro-search-field input').val();
     if (search) {
         url += '?keyword=' + encodeURIComponent(search);
     }
-    ``
+    
     location = url;
 });
 
-$('#search-container #search-input').on('keydown', function(e) {
+$('.intro-search-field input').on('keydown', function(e) {
 
 	if (e.keyCode == 13) {
-	    $('#search-container button').trigger('click');
+	    $('.intro-search-field button').trigger('click');
 	}
 });
 

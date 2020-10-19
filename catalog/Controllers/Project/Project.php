@@ -53,6 +53,12 @@ class Project extends \Catalog\Controllers\BaseController
             $filter_budget = '5_2500';
         }
 
+        if ($this->request->getVar('keyword')) {
+            $filter_keyword = $this->request->getVar('keyword');
+        } else {
+            $filter_keyword = null;
+        }
+
         if ($this->request->getVar('sort_by')) {
             $sort_by = $this->request->getVar('sort_by');
         } else {
@@ -83,6 +89,7 @@ class Project extends \Catalog\Controllers\BaseController
             'filter_state'       => $filter_state,
             'filter_budget'      => $filter_budget,
             'filter_skills'      => $filter_skills,
+            'filter_keyword'     => $filter_keyword,
             'sort_by'            => $sort_by,
             'order_by'           => $order_by,
             'limit'              => $limit,

@@ -166,6 +166,10 @@ class ProjectModel extends \CodeIgniter\Model
             $builder->where('p.status_id', $data['status_id']);
         }
 
+        if (isset($data['filter_keyword']) && !empty($data['filter_keyword'])) {
+            $builder->like('pd.name', $data['filter_keyword'], 'after');
+        }
+
         if (isset($data['filter_date_added'])) {
             $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
         }
