@@ -73,12 +73,16 @@ class Activity
     {
         $config = \Config\Services::email();
 
-        $data['text_greeting'] = sprintf(lang('mail/forgotten.text_greeting'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
-        $data['text_change']   = lang('mail/forgotten.text_change');
-        $data['text_ip']       = lang('mail/forgotten.text_ip');
-        $data['button_reset'] = lang('mail/forgotten.button_reset');
+        $data['text_subject']     = sprintf(lang('mail/forgotten.text_greeting'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_welcome']     = lang('mail/forgotten.text_welcome');
+        $data['text_body']        = lang('mail/forgotten.text_body');
+        $data['text_body_append'] = lang('mail/forgotten.text_body_append');
+        $data['text_body_last']   = lang('mail/forgotten.text_body_last');
+        $data['config_name']      = service('registry')->get('config_name');
+        $data['config_address']   = service('registry')->get('config_address');
+        $data['button_reset']     = lang('mail/forgotten.button_reset');
         
-        $data['reset'] = str_replace('&amp;', '&', base_url('account/reset?code=' . $code));
+        $data['link'] = str_replace('&amp;', '&', base_url('account/reset?code=' . $code));
 
         $request = \Config\Services::request();
 
@@ -89,6 +93,7 @@ class Activity
         $config->setTo($email);
 
         $config->setSubject(html_entity_decode(sprintf(lang('mail/forgotten.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        
         $config->setMessage(view('mail/forgotten', $data));
 
         $config->send();

@@ -5,9 +5,10 @@
     'text_expire'          => '{0, number} Days Left',
     'text_description'     => 'Project Description',
     'text_skills'          => 'Required Skills',
-    'text_rate'            => 'Set your <strong>minimal rate</strong>',
-    'text_delivery'        => 'Set your <strong>delivery time</strong>',
-    'text_bid'             => 'Bid on this job!',
+    'text_rate'            => 'Bid Amount',
+    'text_delivery'        => 'This project will be delivered in',
+    'text_bid'             => 'Place a Bid on this Project',
+    'text_bid_detail'      => 'Bid Details',
     'text_budget'          => 'Estimated Budget',
     'text_projects'        => 'Projects',
     // Add From
@@ -63,7 +64,7 @@
 	'text_max' => 'Budget Max',
 	// button
 	'button_search'       => 'Search',
-	'button_bid_now' => 'Bid Now',
+	'button_bid'          => 'Place Bid',
 
     // help
     'help_bidding_duration'=> 'Specify the Number of Days to Allow of Bidding. Maximum days: 30',

@@ -454,6 +454,23 @@ class CustomerModel extends \CodeIgniter\Model
         \CodeIgniter\Events\Events::trigger('mail_forgotten', $email, $code);
     }
 
+    public function editPassword($email, $password) {
+        $builder = $this->db->table($this->table);
+        $builder->where('email', $email);
+        $builder->set('password', password_hash($password, PASSWORD_BCRYPT));
+        $builder->update();
+    }
+
+    public function getCustomerByCode($code) {
+        $builder = $this->db->table($this->table);
+        $builder->select('customer_id, firstname, lastname, email');
+        $builder->where('code', $code);
+        $builder->where('code !=', '');
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
+
+
     public function getTotalCustomersByEmail($email)
     {
         $builder = $this->db->table($this->table);

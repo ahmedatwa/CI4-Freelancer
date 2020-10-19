@@ -60,6 +60,7 @@ $routes->group('account', function ($routes) {
 	$routes->add('login', 'Account\Login::index', ['as' => 'account_login']);
 	$routes->add('register', 'Account\Register::index', ['as' => 'account_register']);
 	$routes->add('forgotten', 'Account\Forgotten::index', ['as' => 'account_forgotten']);
+	$routes->add('reset', 'Account\Reset::index', ['as' => 'account_reset']);
 	$routes->add('logout', 'Account\Logout::index', ['as' => 'account_logout']);
 });
 

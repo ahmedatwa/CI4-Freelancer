@@ -77,6 +77,12 @@ class Login extends \Catalog\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
+        if ($this->session->getFlashdata('success')) {
+            $data['success'] = $this->session->getFlashdata('success');
+        } else {
+            $data['success'] = '';
+        }
+
         $data['action'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
         $data['forgotton'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
 

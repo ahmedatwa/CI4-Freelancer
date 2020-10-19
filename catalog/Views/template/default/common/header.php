@@ -37,7 +37,6 @@
   <script src="catalog/default/vendor/select2/js/select2.min.js"></script> 
   <!-- Pusher -->
   <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-  <script src="catalog/default/javascript/button-inline-loader.js"></script>
 
   <script src="catalog/default/javascript/custom.js"></script>
 
@@ -150,7 +149,7 @@
   </div>
 </li>
 <?php } ?>
-<div class="header-widget d-none d-sm-block">
+<div class="header-widget d-none d-sm-block ml-3">
   <a href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a>
 </div> 
 </nav>  

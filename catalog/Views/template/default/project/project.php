@@ -53,14 +53,11 @@
 	</div>
 		<!-- Page Content-->
 			<div class="row justify-content-md-center">
-				<!-- Content -->
 				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow rounded bg-white">
-					<!-- Description -->
 					<div class="single-page-section">
 						<h3><?php echo $text_description; ?></h3>
 						<p><?php echo $description; ?></p>
 					</div>
-					<!-- Skills -->
 					<div class="single-page-section">
 						<h3><?php echo $text_skills; ?></h3>
 						<?php if ($categories) { ?>
@@ -71,35 +68,9 @@
 							</div>
 						<?php } ?>
 					</div>
-					<div class="single-page-section">
-						<div class="bidding-headline"><h3><?php echo $text_bid; ?></h3></div>
-						<form enctype="multipart/form-data" id="bidding-form" accept-charset="utf-8"> 
-							<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-							<input type="hidden" name="project_id" value="<?php echo $project_id; ?>" />
-							<input type="hidden" name="freelancer_id" value="<?php echo $freelancer_id; ?>" />
-							<input type="hidden" name="employer_id" value="<?php echo $employer_id; ?>" />
-							<div class="form-row">
-								<div class="form-group col-md-6">
-									<label for="inputEmail4"><?php echo $text_rate; ?></label>
-									<input type="number" class="form-control" id="input-quote" name="quote" min="5">
-								</div>
-								<div class="form-group col-md-6">
-									<label for="inputEmail4"><?php echo $text_delivery; ?></label>
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><?php echo $config_currency; ?></span>
-										</div>
-										<input class="form-control" type="text" id="input-delivery-time" name="delivery_time" value=""/>
-									</div>
-								</div>
-							</div>
-						</form> 
-						<!-- Button -->
-						<button id="snackbar-place-bid" class="button ripple-effect move-on-hover full-width margin-top-30"><span>Place a Bid</span></button>
-					</div>
 				</div>
 				<!-- Sidebar -->
-				<div class="col-3">
+				<div class="col-sm-12 col-md-3">
 					<div class="sidebar-container shadow-sm p-3 mb-5 bg-white rounded">
 						<?php if ($runtime) { ?>
 						<div class="countdown green mb-4"><?php echo $days_left; ?></div>
@@ -130,8 +101,43 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow rounded bg-white">
+				<div class="single-page-section">
+						<div class="bidding-headline"><h3><?php echo $text_bid; ?></h3>
+							<p class="mb-4"><?php echo $text_bid_detail; ?></p></div>
+						<form enctype="multipart/form-data" id="bidding-form" accept-charset="utf-8"> 
+							<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+							<input type="hidden" name="project_id" value="<?php echo $project_id; ?>" />
+							<input type="hidden" name="freelancer_id" value="<?php echo $freelancer_id; ?>" />
+							<input type="hidden" name="employer_id" value="<?php echo $employer_id; ?>" />
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="inputEmail4"><?php echo $text_rate; ?></label>
+									<div class="input-group">
+									<input class="form-control" type="text" id="input-delivery-time" name="delivery_time" value=""/>
+									<div class="input-group-append">
+								    <span class="input-group-text" id="basic-addon2"><?php echo $config_currency; ?></span>
+								  </div>
+								</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputEmail4"><?php echo $text_delivery; ?></label>
+									<div class="input-group">
+										<input type="number" class="form-control" id="input-quote" name="quote" min="5">
+										
+										<div class="input-group-prepend">
+											<span class="input-group-text">Days</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form> 
+						<!-- Button -->
+					<button id="snackbar-place-bid" class="button ripple-effect move-on-hover full-width margin-top-30"><span><?php echo $button_bid; ?></span></button>
+					</div>
+				</div>
 				<!-- Freelancers Bidding -->
-					<div class="col-9 shadow rounded bg-white margin-bottom-60 " id="bid-container"></div>
+			 <div class="col-sm-12 col-md-9 shadow rounded bg-white margin-bottom-60 " id="bid-container"></div>
 			</div>
 			</div>
 	</div> <!---- content-wrapper ---->

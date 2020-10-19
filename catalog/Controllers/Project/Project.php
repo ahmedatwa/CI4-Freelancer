@@ -408,11 +408,13 @@ class Project extends \Catalog\Controllers\BaseController
         $data['text_skills']      = lang('project/project.text_skills');
         $data['text_bid']         = lang('project/project.text_bid');
         $data['text_rate']        = lang('project/project.text_rate');
+        $data['text_bid_detail']  = lang('project/project.text_bid_detail');
         $data['text_delivery']    = lang('project/project.text_delivery');
         $data['text_register']    = lang('common/header.text_register');
         $data['text_facebook']    = lang('en.text_facebook');
         $data['text_twitter']     = lang('en.text_twitter');
         $data['text_gplus']       = lang('en.text_gplus');
+        $data['button_bid']       = lang('project/project.button_bid');
         
 
         $projectModel->updateViewed($project_id);
@@ -422,6 +424,10 @@ class Project extends \Catalog\Controllers\BaseController
     
     public function add()
     {
+        if (! $this->customer->isLogged()) {
+            return redirect()->to(route_to('account_login') ? route_to('account_login') : base_url('account/login'));
+        }
+
         $this->template->setTitle(lang('account/dashboard.heading_title'));
 
         $projectModel = new ProjectModel();
