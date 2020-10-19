@@ -106,6 +106,7 @@ class Review extends \Catalog\Controllers\BaseController
         $data['column_action']     = lang('account/review.column_action');
         $data['column_freelancer'] = lang('account/review.column_freelancer');
         $data['button_edit']       = lang('en.button_edit');
+        $data['text_no_results']   = lang('en.text_no_results');
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 

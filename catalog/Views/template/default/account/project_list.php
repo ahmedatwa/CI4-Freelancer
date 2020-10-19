@@ -162,7 +162,8 @@ $('#table-' + $(this).attr('id')).DataTable({
 	'responsive' : true,
 	"bDestroy": true
   });
- 
 });
+
+$('#employer li:first-child a').trigger('click') // Select first tab
 </script>	
 <?php echo $footer; ?>

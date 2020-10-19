@@ -9,7 +9,7 @@
     'text_delivery'        => 'This project will be delivered in',
     'text_describe'        => 'Describe your proposal',
     'text_bid'             => 'Place a Bid on this Project',
-    'text_bid_detail'      => 'Bid Details',
+    'text_bid_detail'      => 'Bid Details:',
     'text_budget'          => 'Estimated Budget',
     'text_projects'        => 'Projects',
     // Add From
@@ -66,6 +66,7 @@
 	// button
 	'button_search'       => 'Search',
 	'button_bid'          => 'Place Bid',
+    'button_bid_now'      => 'Bid Now',
 
     // help
     'help_bidding_duration'=> 'Specify the Number of Days to Allow of Bidding. Maximum days: 30',

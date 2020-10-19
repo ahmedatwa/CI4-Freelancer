@@ -735,7 +735,7 @@ body .transparent-header #navigation > ul ul li a { color: #aaa; }
 /* ---------------------------------- */
 /* mmenu.js - mobile menu
 ------------------------------------- */
-.mm-hidden { display: none!important }
+.mburger { display: none!important }
 
 .mm-wrapper {
     overflow-x: hidden;

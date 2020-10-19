@@ -71,7 +71,7 @@
 				</div>
 				<!-- Sidebar -->
 				<div class="col-sm-12 col-md-3">
-					<div class="sidebar-container p-3">
+					<div class="sidebar-container p-3 mb-5 bg-white">
 						<?php if ($runtime) { ?>
 						<div class="countdown green mb-4"><?php echo $days_left; ?></div>
 					    <?php } ?>
@@ -158,6 +158,10 @@ $("#snackbar-place-bid").on('click', function () {
 			$('.text-danger, .alert-danger').remove();
 		},
 		success: function(json) {
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
 			
 			if (json['error']) {
                 for (i in json['error']) {

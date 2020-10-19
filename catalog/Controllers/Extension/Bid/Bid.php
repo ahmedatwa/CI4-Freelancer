@@ -78,7 +78,13 @@ class Bid extends \Catalog\Controllers\BaseController
             $json['error'] = $this->validator->getErrors();
         }
 
+        if (! $this->customer->isLogged()) {
+            $json['redirect'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
+        }
+
+
         if (!$json) {
+            
             if ($this->request->getPost('project_id') || $this->request->getPost('freelancer_id')) {
 
                 $bidModel = new BidModel();

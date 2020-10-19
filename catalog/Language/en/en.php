@@ -28,6 +28,8 @@ return [
     'text_select'      => ' --- Please Select --- ',
     'text_fixed_price'    => 'Fixed Price',
     'text_per_hour'       => 'Hourly Rate',
+    'text_no_results'   => 'No Results !',
+
 
     // Button
     // Entry
@@ -40,6 +42,4 @@ return [
     'button_delete'    => 'Delete',
     'button_hire'      => 'I want to Hire',
     'button_work'      => 'I want to Work',
-     // Error
-    'error'            => [],
 ];

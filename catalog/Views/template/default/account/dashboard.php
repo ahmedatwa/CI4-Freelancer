@@ -6,14 +6,6 @@
 		<!-- Dashboard Headline -->
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>
-			<!-- Breadcrumbs -->
-			<nav id="breadcrumbs" class="">
-				<ul>
-					<?php foreach ($breadcrumbs as $breadcrumb) { ?>
-						<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-					<?php } ?>
-				</ul>
-			</nav>
 		</div>
 		<!-- Fun Facts Container -->
 		<div class="row">
@@ -70,5 +62,4 @@
 	</div>
 	</section>
 </div>
-
 <?php echo $footer; ?>

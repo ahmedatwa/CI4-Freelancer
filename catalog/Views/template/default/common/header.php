@@ -27,7 +27,11 @@
   <script src="catalog/default/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="catalog/default/vendor/bootstrap-slider/dist/bootstrap-slider.min.js"></script> 
 
-  <script src="catalog/default/javascript/mmenu.min.js"></script>
+  <!-- mmenu -->
+  <link href="catalog/default/vendor/mmenu/dist/mmenu.css" rel="stylesheet" type="text/css">
+  <link href="catalog/default/vendor/mmenu/mburger.css" rel="stylesheet" />
+  <script src="catalog/default/vendor/mmenu/dist/mmenu.js"></script>
+  <!-- simplebar -->
   <script src="catalog/default/javascript/simplebar.min.js"></script>
   <script src="catalog/default/vendor/slick/slick.min.js"></script>
   <script src="catalog/default/javascript/magnific-popup.min.js"></script>
@@ -47,26 +51,21 @@
 <body class="grey">
   <div id="wrapper">
     <!-- Header Container-->
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white ">
-        <span class="mmenu-trigger mr-3">
-          <button class="hamburger hamburger--collapse" type="button">
-            <span class="hamburger-box">
-              <span class="hamburger-inner"></span>
-            </span>
-          </button>
-        </span>
-      <a class="navbar-brand" href="<?php echo $home; ?>">
-        <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top" loading="lazy"></a>
+     
 
-        <nav class="navbar navbar-light d-block d-sm-none">
-          <?php if (! $logged) { ?>
-            <span class="navbar-text">
-              <a class="m-auto" href="<?php echo $login; ?>"><?php echo $text_login; ?></a>
-              <a class="ml-3" href="<?php echo $register; ?>"><?php echo $text_register; ?></a>
-            </span>
-          <?php } ?>
-        </nav>
-        <div class="collapse navbar-collapse" id="navigation">
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white">
+      <a class="mburger mburger--collapse mr-3 ml-0 mmenu-trigger" href="#main-nav">
+      <b></b>
+      <b></b>
+      <b></b>
+      </a>
+
+      <a class="navbar-brand mr-auto" href="<?php echo $home; ?>">
+        <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top">
+      </a>
+
+ 
+        <div class="" id="main-nav">
           <ul class="navbar-nav mr-auto">
             <?php foreach ($informations as $information) { ?>
              <li class="nav-item"><a class="nav-link" href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
@@ -126,9 +125,7 @@
 
            <div class="header-notifications-content">
             <div class="header-notifications-scroll text-center" id="message-list" data-simplebar></div>
-
      </div>
-
    </div>
  </div> 
 </li>
@@ -275,7 +272,19 @@ setInterval(function(){
 // });
 // });
  
-
+document.addEventListener(
+        "DOMContentLoaded", () => {
+            new Mmenu( "#main-nav", {
+               "extensions": [
+                  "pagedim-black",
+                  "position-left",
+                  "theme-dark"
+               ]
+            },{
+               pageNodetype: "#wrapper"
+            });
+        }
+    );
 
 
 </script>

@@ -5,14 +5,6 @@
 		<!-- Dashboard Headline -->
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>
-			<!-- Breadcrumbs -->
-			<!-- <nav id="breadcrumbs" class="dark">
-				<ul>
-					<?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-						<li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-					<?php //} ?>
-				</ul>
-			</nav> -->
 		</div>
 		<!-- Row -->
 		<div class="row">
@@ -48,7 +40,11 @@
 												<a href="<?php echo $project['edit']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>"><i class="far fa-edit"></i></a></td>
 											</tr>
 										<?php } ?>
-									<?php } ?>
+									<?php } else { ?>
+										<tr>
+											<td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+										</tr>
+									<?php } ?>	
 								</tbody>
 							</table>
 						</div>
@@ -75,7 +71,11 @@
 													<a href="<?php echo $project['edit']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>"><i class="far fa-edit"></i></a></td>
 												</tr>
 											<?php } ?>
-										<?php } ?>
+										<?php } else { ?>
+											<tr>
+												<td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+											</tr>
+										<?php } ?>	
 									</tbody>
 								</table>
 							</div>

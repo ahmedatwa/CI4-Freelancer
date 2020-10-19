@@ -62,6 +62,8 @@ $routes->group('account', function ($routes) {
 	$routes->add('forgotten', 'Account\Forgotten::index', ['as' => 'account_forgotten']);
 	$routes->add('reset', 'Account\Reset::index', ['as' => 'account_reset']);
 	$routes->add('logout', 'Account\Logout::index', ['as' => 'account_logout']);
+	$routes->add('project', 'Account\Project::index', ['as' => 'account_project']);
+
 });
 
 // projects
