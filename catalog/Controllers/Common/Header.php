@@ -33,13 +33,13 @@ class Header extends \Catalog\Controllers\BaseController
         }
         
         $data['home']        = base_url();
-        $data['register']    = route_to('register') ? route_to('register') : base_url('account/register');
-        $data['login']       = route_to('login') ? route_to('login') : base_url('account/login');
-        $data['forgotton']   = route_to('forgotten') ? route_to('forgotten') : base_url('account/forgotten');
-        $data['logout']      = route_to('logout') ? route_to('logout') : base_url('account/logout');
+        $data['register']    = route_to('account_register') ? route_to('account_register') : base_url('account/register');
+        $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
+        $data['forgotton']   = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
+        $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
 
-        $data['setting']     = base_url('account/setting?cid=' . $this->customer->getCustomerId());
-        $data['dashboard']   = base_url('account/dashboard?cid=' . $this->customer->getCustomerId());
+        $data['setting']     = route_to('account_setting') ? route_to('account_setting') : base_url('account/setting?cid=' . $this->customer->getCustomerId());
+        $data['dashboard']   = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard?cid=' . $this->customer->getCustomerId());
 
         $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/project');
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');

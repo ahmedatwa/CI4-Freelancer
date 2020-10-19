@@ -13,7 +13,7 @@ class Menu extends \Catalog\Controllers\BaseController
             'icon'  => 'icon-material-outline-menu',
             'class' => 'active',
             'name'  => lang('account/menu.text_dashboard'),
-            'href'  => base_url('account/dashboard'),
+            'href'  => route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'),
         ];
 
         $data['menus'][] = [
@@ -30,7 +30,7 @@ class Menu extends \Catalog\Controllers\BaseController
             'icon'     => 'icon-material-outline-question-answer',
             'class'    => '',
             'name'     => lang('account/menu.text_messages'),
-            'href'     => route_to('message') ? route_to('message') : base_url('account/message'),
+            'href'     => route_to('account_message') ? route_to('account_message') : base_url('account/message'),
             'children' => [],
         ];
 
@@ -39,7 +39,7 @@ class Menu extends \Catalog\Controllers\BaseController
             'icon'     => 'icon-material-outline-rate-review',
             'class'    => '',
             'name'     => lang('account/menu.text_reviews'),
-            'href'     => route_to('review') ? route_to('review') : base_url('account/review'),
+            'href'     => route_to('account_review') ? route_to('account_review') : base_url('account/review'),
             'children' => [],
         ];
 

@@ -16,7 +16,7 @@ class Register extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/register.heading_title'),
-            'href' => route_to('register') ? route_to('register') : base_url('account/register'),
+            'href' => route_to('account_register') ? route_to('account_register') : base_url('account/register'),
         ];
 
         $customerModel = new CustomerModel();
@@ -36,12 +36,12 @@ class Register extends \Catalog\Controllers\BaseController
         $data['entry_password']  = lang('account/register.entry_password');
         $data['entry_confirm']   = lang('account/register.entry_confirm');
         $data['heading_title']   = lang('account/register.heading_title');
-        $data['text_login']      = sprintf(lang('account/register.text_login'), route_to('login') ? route_to('login') : base_url('account/login'));
+        $data['text_login']      = sprintf(lang('account/register.text_login'), route_to('account_login') ? route_to('account_login') : base_url('account/login'));
         $data['text_register']   = lang('account/register.text_register');
         $data['button_register'] = lang('account/register.button_register');
 
 
-        $data['action'] = route_to('register') ? route_to('register') : base_url('account/register');
+        $data['action'] = route_to('account_register') ? route_to('account_register') : base_url('account/register');
 
         if ($this->request->getPost('email')) {
             $data['email'] = $this->request->getPost('email');

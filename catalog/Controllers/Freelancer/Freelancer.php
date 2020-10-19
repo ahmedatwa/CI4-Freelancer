@@ -98,7 +98,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
                 'tag_line' => $result['tag_line'],
                 'rate'     => $this->currencyFormat($result['rate']),
                 'rating'   => $reviewModel->getAvgReviewByFreelancerId($result['customer_id']),
-                'href'     => (route_to('freelancer_profile', $result['customer_id'], $result['username'])) ? route_to('freelancer_profile', $result['customer_id'], $result['username']) : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
+                'href'     => route_to('freelancer_profile', $result['customer_id'], $result['username']) ? route_to('freelancer_profile', $result['customer_id'], $result['username']) : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
             ];
         }
 
@@ -228,11 +228,12 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('cid')) {
            $customer_id = $this->request->getVar('cid');
-        } elseif ($this->request->uri->getSegment(3)) {
-           $customer_id = $this->request->uri->getSegment(3);
+        } elseif ($this->request->uri->getSegment(2)) {
+           $customer_id = substr($this->request->uri->getSegment(2), 1);
         } else {
            $customer_id = 0;
         }
+       
 
         if ($customer_id) {
             $customer_info = $customerModel->getCustomer($customer_id);

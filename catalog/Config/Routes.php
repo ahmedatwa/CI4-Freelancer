@@ -46,19 +46,27 @@ $routes->group('blog', function ($routes) {
 });
 
 // Freelancers
-$routes->group('freelancers', function ($routes) {
-	$routes->add('/', 'Freelancer\Freelancer::index');
-	//$routes->add('u/(:num)/(:any)', 'Freelancer\Freelancer::view/$1/$2', ['as' => 'freelancer_profile']);
-});
+	$routes->add('freelancers', 'Freelancer\Freelancer::index');
+	$routes->add('freelancer/u(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
+
+	//$routes->add('freelancer(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
 
 // Account
-$routes->add('login', 'Account\Login::index');
-$routes->add('logout', 'Account\Logout::index');
-$routes->add('register', 'Account\Register::index');
-$routes->add('forgotten', 'Account\Forgotten::index');
+$routes->group('account', function ($routes) {
+	$routes->add('dashboard', 'Account\Dashboard::index', ['as' => 'account_dashboard']);
+	$routes->add('setting', 'Account\Setting::index', ['as' => 'account_setting']);
+	$routes->add('message', 'Account\Message::index', ['as' => 'account_message']);
+	$routes->add('review', 'Account\Review::index', ['as' => 'account_review']);
+	$routes->add('login', 'Account\Login::index', ['as' => 'account_login']);
+	$routes->add('register', 'Account\Register::index', ['as' => 'account_register']);
+	$routes->add('forgotten', 'Account\Forgotten::index', ['as' => 'account_forgotten']);
+	$routes->add('logout', 'Account\Logout::index', ['as' => 'account_logout']);
+});
+
 // projects
-$routes->add('projects', 'Project\Project::index');
+$routes->add('project/(:any)', 'Project\Project::project/$1', ['as' => 'single_project']);
 $routes->add('add-project', 'Project\Project::add');
+$routes->add('projects', 'Project\Project::index', ['as' => 'projects']);
 /**
  * --------------------------------------------------------------------
  * Additional Routing

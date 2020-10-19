@@ -97,6 +97,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         foreach ($results as $result) {
             $keyword = $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']);
+
             $data['projects'][] = [
                 'project_id'  => $result['project_id'],
                 'name'        => $result['name'],
@@ -105,9 +106,10 @@ class Project extends \Catalog\Controllers\BaseController
                 'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
                 'type'        => ($result['type'] == 1) ? lang('en.text_fixed_price') : lang('en.text_per_hour'),
                 'date_added'  => $this->dateDifference($result['date_added']),
-                'href'        => (route_to('project')) ? route_to('project', $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
+                'href'        => ($keyword) ? route_to('single_project', $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
             ];
         }
+
 
         // Filter Skills
         $url = '';
@@ -287,7 +289,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['text_select']         = lang('en.text_select');
 
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
-        $data['login']       = route_to('login') ? route_to('login') : base_url('account/login');
+        $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
 
         $data['filter_type']   = $filter_type;
         $data['filter_state']  = $filter_state;
@@ -312,8 +314,8 @@ class Project extends \Catalog\Controllers\BaseController
         $categoryModel = new \Catalog\Models\Catalog\CategoryModel();
 
 
-        if ($this->request->uri->getSegment(2)) {
-            $keyword = $this->request->uri->getSegment(2);
+        if ($this->request->uri->getSegment(3)) {
+            $keyword = $this->request->uri->getSegment(3);
         } else {
             $keyword = '';
         }

@@ -150,10 +150,11 @@ class ProjectModel extends \CodeIgniter\Model
         $builder = $this->db->table('project p');
         $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
-        $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
+       // $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
         if (isset($data['filter_category_id'])) {
+            $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
             $builder->where('p2c.category_id', $data['filter_category_id']);
         }
 
@@ -216,6 +217,8 @@ class ProjectModel extends \CodeIgniter\Model
             $builder->limit($data['limit'], $data['start']);
         }
 
+        //$builder->groupBy('p.project_id');
+
         $query = $builder->get();
         return $query->getResultArray();
     }
@@ -225,10 +228,10 @@ class ProjectModel extends \CodeIgniter\Model
         $builder = $this->db->table('project p');
         $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
-        $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
         if (isset($data['filter_category_id'])) {
+            $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
             $builder->where('p2c.category_id', $data['filter_category_id']);
         }
 

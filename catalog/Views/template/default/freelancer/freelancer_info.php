@@ -267,7 +267,7 @@ $("#button-hire-me").on('click', function () {
 			url: 'freelancer/freelancer/hireMe?cid=<?php echo $employer_id; ?>',
 			dataType: 'json',
 			method: 'post',
-			beforesend: function() {
+			beforeSend: function() {
 				$('.fas, .alert').remove();
 				$(this).prop("disabled", true);
 				$(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');

@@ -28,7 +28,7 @@ class Forgotten extends \Catalog\Controllers\BaseController
         ];
         $data['breadcrumbs'][] = [
             'text' => lang('account/forgotten.heading_title'),
-            'href' => base_url('account/forgot'),
+            'href' => route_to('account_fogotten') ? route_to('account_fogotten') : base_url('account/forgot'),
         ];
 
         if ($this->session->getFlashdata('error_warning')) {
@@ -55,9 +55,9 @@ class Forgotten extends \Catalog\Controllers\BaseController
             $data['email'] = '';
         }
 
-        $data['action'] = base_url('account/forgotten');
+        $data['action'] = route_to('account_fogotten') ? route_to('account_fogotten') : base_url('account/forgot');
 
-        $data['login'] = base_url('account/login');
+        $data['login'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
 
         $this->template->output('account/forgotten', $data);
     }

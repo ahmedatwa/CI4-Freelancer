@@ -92,11 +92,14 @@ class MessageModel extends \CodeIgniter\Model
             $builder->set('seen', 1);
             $builder->where('to_id', $customer_id);
             $builder->update();
+
         }
 
-        $builder->select('*');
+        $builder->select();
         $builder->where(['to_id' => $customer_id, 'seen' => 0]);
+        $builder->orderBy('message_id', 'DESC');
         $query = $builder->get();
+
         foreach ($query->getResultArray() as $result) {
            $messages[] = [
             'customer_id' => $result['to_id'],

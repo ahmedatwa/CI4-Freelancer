@@ -171,6 +171,15 @@ class Information extends \Admin\Controllers\BaseController
             $data['sort_order'] = '';
         }
 
+        if ($this->request->getPost('bottom')) {
+            $data['bottom'] = $this->request->getPost('bottom');
+        } elseif (!empty($information_info)) {
+            $data['bottom'] = $information_info['bottom'];
+        } else {
+            $data['bottom'] = 0;
+        }
+
+
         if ($this->request->getPost('status')) {
             $data['status'] = $this->request->getPost('status');
         } elseif (!empty($information_info)) {

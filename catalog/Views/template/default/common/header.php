@@ -27,7 +27,7 @@
   <script src="catalog/default/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="catalog/default/vendor/bootstrap-slider/dist/bootstrap-slider.min.js"></script> 
 
-  <script src="catalog/default/vendor/mmenu-js/mmenu.js"></script>
+  <script src="catalog/default/javascript/mmenu.min.js"></script>
   <script src="catalog/default/javascript/simplebar.min.js"></script>
   <script src="catalog/default/vendor/slick/slick.min.js"></script>
   <script src="catalog/default/javascript/magnific-popup.min.js"></script>
@@ -48,7 +48,13 @@
   <div id="wrapper">
     <!-- Header Container-->
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white ">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <span class="mmenu-trigger">
+          <button class="hamburger hamburger--collapse" type="button">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button>
+        </span>
       <a class="navbar-brand" href="<?php echo $home; ?>">
         <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top" loading="lazy"></a>
 
@@ -56,11 +62,11 @@
           <?php if (! $logged) { ?>
             <span class="navbar-text">
               <a class="m-auto" href="<?php echo $login; ?>"><?php echo $text_login; ?></a>
-              <a class="ml-3" href="<?php echo $login; ?>"><?php echo $text_register; ?></a>
+              <a class="ml-3" href="<?php echo $register; ?>"><?php echo $text_register; ?></a>
             </span>
           <?php } ?>
         </nav>
-        <div class="collapse navbar-collapse" id="mainNav">
+        <div class="collapse navbar-collapse" id="navigation">
           <ul class="navbar-nav mr-auto">
             <?php foreach ($informations as $information) { ?>
              <li class="nav-item"><a class="nav-link" href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
@@ -114,17 +120,15 @@
            <!-- Dropdown -->
            <div class="header-notifications-dropdown">
              <div class="header-notifications-headline">
-              <h4>Messages</h4>
+              <h4 class="mr-4">Messages</h4>
+              <small class="ml-4"><a href="<?php echo $all_messages; ?>" class="btn btn-link">View All Messages</a></small>
            </div>
 
            <div class="header-notifications-content">
-            <div class="header-notifications-scroll" data-simplebar>
-             <ul id="message-list">
-            
-         </ul>
-       </div>
+            <div class="header-notifications-scroll text-center" id="message-list" data-simplebar></div>
+
      </div>
-     <a href="<?php echo $all_messages; ?>" class="header-notifications-button ripple-effect button-sliding-icon">View All Messages<i class="icon-material-outline-arrow-right-alt"></i></a>
+
    </div>
  </div> 
 </li>
@@ -134,15 +138,17 @@
 <?php } ?>
 
 </div>
+<?php if ($logged) { ?>
 <li class="nav-item dropdown dropdown-bubble">
   <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" loading="lazy"> <?php echo $username; ?></a>
   <div class="dropdown-menu" aria-labelledby="headerLoginDropdown">
     <a class="dropdown-item" href="<?php echo $dashboard; ?>"><i class="fas fa-tachometer-alt"></i> <?php echo $text_dashboard; ?></a>
     <a class="dropdown-item" href="<?php echo $setting; ?>"><i class="fas fa-toolbox"></i> <?php echo $text_setting; ?></a>
     <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="<?php echo $text_logout; ?>"><i class="fas fa-sign-out-alt"></i> <?php echo $text_logout; ?></a>
+    <a class="dropdown-item" href="<?php echo $logout; ?>"><i class="fas fa-sign-out-alt"></i> <?php echo $text_logout; ?></a>
   </div>
 </li>
+<?php } ?>
 <div class="header-widget d-none d-sm-block">
   <a href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a>
 </div> 
@@ -161,15 +167,15 @@ function load_unseen_notification(view = '') {
   dataType:"json",
   success:function(json) {
     if (json.length > 0) {
-    for (var i = 0; json.length > i; i++) {
 
+    for (var i = 0; json.length > i; i++) {
       if(json[i].count > 0) {
        $('#message-count').html('<span>' + json[i].count + '</span>');
      } else if(json[i].count == 0) {
        $('#message-count').hide();
      }
-
-     html = '<li class="notifications-not-read">';
+     html = '<ul>'
+     html += '<li class="notifications-not-read">';
      html += '<a href="' + json[i].href + '">';
      html += '<span class="notification-avatar status-online"><img src="'+json[i].image+'" alt=""></span>';
      html += '<div class="notification-text">';
@@ -179,13 +185,14 @@ function load_unseen_notification(view = '') {
      html += '</div>';
      html += '</a>';
      html += '</li>';
+     html += '</ul>';
 
-     $('#message-list').html(html);
+     $('#message-list').append(html);
      $('#message-count').show();
 
    }
  } else {
-    $('#message-list').html('<p class="text-center m-4"> No New Messages</p>');
+    $('#message-list').html('<span class="m-auto"><p class="text-center m-4"> No New Messages</p></span>');
  }
   }
  }); 
@@ -196,6 +203,7 @@ load_unseen_notification();
 // load new notifications
 $('.header-notifications-trigger').on('click', function(){
  $('#message-count').html('');
+ $('#message-list').html('');
  load_unseen_notification('yes');
 });
  

@@ -16,7 +16,7 @@ class Login extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/login.heading_title'),
-            'href' => route_to('login') ? route_to('login') : base_url('account/login'),
+            'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
         ];
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
@@ -47,7 +47,7 @@ class Login extends \Catalog\Controllers\BaseController
         $data['heading_title']  = lang('account/login.heading_title');
         $data['text_login']     = lang('account/login.text_login');
         $data['text_forgotten'] = lang('account/login.text_forgotten');
-        $data['text_register']  = sprintf(lang('account/login.text_register'), route_to('register') ? route_to('register') : base_url('account/register'));
+        $data['text_register']  = sprintf(lang('account/login.text_register'), route_to('acount_register') ? route_to('acount_register') : base_url('account/register'));
         $data['entry_email']    = lang('account/login.entry_email');
         $data['entry_password'] = lang('account/login.entry_password');
         $data['button_login']   = lang('account/login.button_login');
@@ -77,8 +77,8 @@ class Login extends \Catalog\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        $data['action'] = route_to('login') ? route_to('login') : base_url('account/login');
-        $data['forgotton'] = route_to('forgotten') ? route_to('forgotten') : base_url('account/forgotten');
+        $data['action'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
+        $data['forgotton'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
 
         $this->template->output('account/login', $data);
     }

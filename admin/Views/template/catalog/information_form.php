@@ -1,4 +1,4 @@
-w<?php echo $header; ?><?php echo $column_left; ?>
+<?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
 	<!-- Page Header Begin -->
 	<div class="page-header">
@@ -96,6 +96,30 @@ w<?php echo $header; ?><?php echo $column_left; ?>
 								<label for="input-sort-order" class="col-md-2 col-form-label"><?php echo $entry_sort_order; ?></label>
 								<div class="col-md-10">
 									<input class="form-control" type="text" id="input-sort-order" name="sort_order" value="<?php echo $sort_order; ?>">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_bottom; ?> </label>
+								<div class="col-sm-10">
+									<?php if ($bottom == 1)	 { ?>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="bottom" value="1" checked>
+											<label class="form-check-label" for="input-bottom"><?php echo $text_yes; ?></label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="bottom" value="0">
+											<label class="form-check-label" for="input-bottom"><?php echo $text_no; ?></label>
+										</div>
+									<?php } else { ?>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="bottom" value="1">
+											<label class="form-check-label" for="input-bottom"><?php echo $text_yes; ?></label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="bottom" value="0" checked>
+											<label class="form-check-label" for="input-bottom"><?php echo $text_no; ?></label>
+										</div>
+									<?php } ?>
 								</div>
 							</div>
 							<div class="form-group row">

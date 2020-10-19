@@ -45,7 +45,7 @@ class Home extends \Catalog\Controllers\BaseController
                 'tag_line' => $result['tag_line'],
                 'rate'     => $this->currencyFormat($result['rate']),
                 'rating'   => $reviewModel->getAvgReviewByFreelancerId($result['customer_id']),
-                'href'     => (route_to('freelancer_profile')) ? route_to('freelancer_profile') : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
+                'href'     => (route_to('freelancer_profile', $result['customer_id'], $result['name'])) ? route_to('freelancer_profile', $result['customer_id'], $result['name']) : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
             ];
         }
 
@@ -72,7 +72,7 @@ class Home extends \Catalog\Controllers\BaseController
    //      }
 
 
-    $data['freelancers_all'] = route_to('freelancer_profile') ? route_to('freelancer_profile') : base_url('freelancer/freelancer');
+    $data['freelancers_all'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');
     $data['register']        = route_to('register') ? route_to('register') : base_url('account/register');
 
 		$this->template->output('common/home', $data);

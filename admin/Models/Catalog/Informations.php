@@ -101,6 +101,7 @@ class Informations extends \CodeIgniter\Model
         $information_data = [
             'sort_order' => $data['sort_order'],
             'status'     => $data['status'],
+            'bottom'     => $data['bottom'],
         ];
 
         $builder->set('date_added', 'NOW()', false);
@@ -142,6 +143,8 @@ class Informations extends \CodeIgniter\Model
         $information_data = [
             'sort_order' => $data['sort_order'],
             'status'     => $data['status'],
+            'bottom'     => $data['bottom'],
+
         ];
         
         $builder->set('date_modified', 'NOW()', false);
