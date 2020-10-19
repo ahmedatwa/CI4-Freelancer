@@ -36,6 +36,110 @@ class Categories extends Model
         }
     }
 
+    public function editCategory($category_id, $data)
+    {
+        $builder = $this->db->table('category');
+
+        $category_data = [
+           'parent_id'  => $data['parent_id'] ?? 0,
+           'top'        => $data['top'] ?? 0,
+           'sort_order' => $data['sort_order'],
+           'status'     => $data['status'],
+        ];
+        
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->set($category_data);
+        $builder->where('category_id', $category_id);
+        $builder->update($category_data);
+
+        // category_description Query
+        if (isset($data['category_description'])) {
+            
+            $builder_description = $this->db->table('category_description');
+            $builder_description->delete(['category_id' => $category_id]);
+            $seo_url = $this->db->table('seo_url');
+            $seo_url->delete(['query' => 'category_id=' . $category_id]);
+
+            foreach ($data['category_description'] as $language_id => $category_description) {
+                $category_description_data = [
+                    'category_id'      => $category_id,
+                    'language_id'      => $language_id,
+                    'name'             => $category_description['name'],
+                    'description'      => $category_description['description'],
+                    'meta_title'       => $category_description['meta_title'],
+                    'meta_description' => $category_description['meta_description'],
+                    'meta_keyword'     => $category_description['meta_keyword'],
+                ];
+                $builder_description->set($category_description_data);
+                $builder_description->insert($category_description_data);
+                 //  Seo Urls
+                $seo_url_data = [
+                        'site_id'     => 0,
+                        'language_id' => $language_id,
+                        'query'       => 'category_id=' . $category_id,
+                        'keyword'     => generateSeoUrl($category_description['name']),
+                    ];
+                $seo_url->insert($seo_url_data);
+            }
+        }
+
+    }
+
+    public function addCategory($data)
+    {
+        $builder = $this->db->table('category');
+
+        $category_data = [
+           'parent_id'  => $data['parent_id'] ?? 0,
+           'top'        => $data['top'] ?? 0,
+           'sort_order' => $data['sort_order'],
+           'status'     => $data['status'],
+        ];
+
+        $builder->set('date_added', 'NOW()', false);
+        $builder->set($category_data);
+        $builder->insert($category_data);
+        // Get Last Inserted ID
+        $category_id = $this->db->insertID();
+        // category_description Query
+        if (isset($data['category_description'])) {
+            $builder_description = $this->db->table('category_description');
+            $seo_url = $this->db->table('seo_url');
+            $seo_url->delete(['query' => 'category_id=' . $category_id]);
+
+            foreach ($data['category_description'] as $language_id => $category_description) {
+                $category_description_data = [
+                    'category_id'      => $category_id,
+                    'language_id'      => $language_id,
+                    'name'             => $category_description['name'],
+                    'description'      => $category_description['description'],
+                    'meta_title'       => $category_description['meta_title'],
+                    'meta_description' => $category_description['meta_description'],
+                    'meta_keyword'     => $category_description['meta_keyword'],
+                ];
+                $builder_description->set($category_description_data);
+                $builder_description->insert($category_description_data);
+                //  Seo Urls
+                $seo_url_data = [
+                        'site_id'     => 0,
+                        'language_id' => $language_id,
+                        'query'       => 'category_id=' . $category_id,
+                        'keyword'     => generateSeoUrl($category_description['name']),
+                    ];
+                $seo_url->insert($seo_url_data);
+            }
+        }
+    }
+
+    public function deleteCategory($category_id)
+    {
+        $builder = $this->db->table('category');
+        $builder->delete(['category_id' => $category_id]);
+        $builder_description = $this->db->table('category_description');
+        $builder_description->delete(['category_id' => $category_id]);
+
+    }
+
 
     public function getCategory($category_id)
     {

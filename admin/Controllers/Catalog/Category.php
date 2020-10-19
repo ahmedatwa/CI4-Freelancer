@@ -1,10 +1,12 @@
 <?php namespace Admin\Controllers\Catalog;
 
+use \Admin\Models\Catalog\Categories;
+
 class Category extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->categories = new \Admin\Models\Catalog\Categories();
+        $this->categories = new Categories;
 
         $this->document->setTitle(lang('catalog/category.list.heading_title'));
 

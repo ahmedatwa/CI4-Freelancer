@@ -19,7 +19,7 @@ class CategoryModel extends \CodeIgniter\Model
     public function getCategories(array $data = [])
     {
         $builder = $this->db->table('category c');
-        $builder->select('cd.category_id, cd.name, c.sort_order, c.status');
+        $builder->select('cd.category_id, cd.name, c.sort_order, c.status, cd.description');
         $builder->join('category_description cd', 'c.category_id = cd.category_id', 'left');
         $builder->where('cd.language_id', service('registry')->get('config_language_id'));
         $builder->where('c.status !=', '0');

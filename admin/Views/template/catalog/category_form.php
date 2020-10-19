@@ -58,7 +58,7 @@
 										<div class="form-group row required">
 											<label for="input-name" class="col-md-2 col-form-label"><?php echo $entry_name; ?></label>
 											<div class="col-md-10">
-												<input class="form-control" type="text" id="input-name-<?php echo $language['language_id']; ?>" name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo $category_description[$language['language_id']]['name'] ?? ''; ?>" onkeyup="generateSeo(<?php echo $language['language_id']; ?>)">
+												<input class="form-control" type="text" id="input-name-<?php echo $language['language_id']; ?>" name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo $category_description[$language['language_id']]['name'] ?? ''; ?>">
 												<?php echo form_error("category_description.".$language['language_id'].".name"); ?>
 											</div>
 										</div>

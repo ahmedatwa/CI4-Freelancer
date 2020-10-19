@@ -28,6 +28,7 @@
 					<div class="company-inner-alignment">
 						<span class="company-logo"><img src="images/company-logo-placeholder.png" alt=""></span>
 						<h4><?php echo $category['name']; ?></h4>
+						<small><?php echo $category['description']; ?></small>
 					</div>
 				</a>
 			<?php } ?>

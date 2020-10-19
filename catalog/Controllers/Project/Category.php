@@ -65,6 +65,7 @@ class Category extends \Catalog\Controllers\BaseController
             $data['categories'][] = [
                 'category_id'  => $result['category_id'],
                 'name'        => $result['name'],
+                'description'        => $result['description'],
                 'href'        => (route_to('projects') . '?gid=' . $result['category_id']) ? route_to('projects') . '?gid=' . $result['category_id'] : base_url('project/project?gid=' . $result['category_id']),
             ];
         }
