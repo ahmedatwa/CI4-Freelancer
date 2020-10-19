@@ -18,24 +18,24 @@ class CategoryModel extends \CodeIgniter\Model
 
     public function getCategories(array $data = [])
     {
-        $builder = $this->db->table('category');
-        $builder->select('category_description.category_id, category_description.name, category.sort_order, category.status');
-        $builder->join('category_description', 'category.category_id = category_description.category_id', 'left');
-        $builder->where('category_description.language_id', service('registry')->get('config_language_id'));
-        $builder->where('category.status !=', '0');
+        $builder = $this->db->table('category c');
+        $builder->select('cd.category_id, cd.name, c.sort_order, c.status');
+        $builder->join('category_description cd', 'c.category_id = cd.category_id', 'left');
+        $builder->where('cd.language_id', service('registry')->get('config_language_id'));
+        $builder->where('c.status !=', '0');
 
         if (isset($data['category_id'])) {
-            $builder->where('category.parent_id', $data['category_id']);
+            $builder->where('c.parent_id', $data['category_id']);
         }
 
         if (isset($data['filter_name'])) {
-            $builder->like('category_description.name', $data['filter_name'], 'both');
+            $builder->like('c.name', $data['filter_name'], 'both');
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
-            $builder->orderBy('category_description.name', 'DESC');
+            $builder->orderBy('cd.name', 'DESC');
         } else {
-            $builder->orderBy('category_description.name', 'ASC');
+            $builder->orderBy('cd.name', 'ASC');
         }
 
         if (isset($data['start']) || isset($data['limit'])) {

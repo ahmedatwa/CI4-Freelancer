@@ -10,7 +10,7 @@ class Project extends \Catalog\Controllers\BaseController
         $projectModel = new ProjectModel();
         $seoUrl = service('seo_url');
 
-        $this->template->setTitle(lang('project/category.heading_title'));
+        $this->template->setTitle(lang('project/project.heading_title'));
             
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -19,7 +19,7 @@ class Project extends \Catalog\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('project/category.text_projects'),
+            'text' => lang('project/project.text_projects'),
             'href' => '',
         ];
 
@@ -239,12 +239,12 @@ class Project extends \Catalog\Controllers\BaseController
         $data['states'][] = [
             'id'    => 'open',
             'value' => '8',
-            'text'  => lang('project/category.text_all_open'),
+            'text'  => lang('project/project.text_all_open'),
         ];
         $data['states'][] = [
             'id'    => 'open_closed',
             'value' => '8_7',
-            'text'  => lang('project/category.text_all_open_closed'),
+            'text'  => lang('project/project.text_all_open_closed'),
         ];
 
         $data['types'] = [];
@@ -271,21 +271,21 @@ class Project extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['text_search_keyword'] = lang('project/category.text_search_keyword');
-        $data['button_search']       = lang('project/category.button_search');
-        $data['text_found']          = lang('project/category.text_found', [$total]);
-        $data['text_sidebar']        = lang('project/category.text_sidebar');
-        $data['text_type']           = lang('project/category.text_type');
-        $data['text_skills']         = lang('project/category.text_skills');
-        $data['text_languages']      = lang('project/category.text_languages');
-        $data['text_state']          = lang('project/category.text_state');
-        $data['text_budget']         = lang('project/category.text_budget');
-        $data['heading_title']       = lang('project/category.text_projects');
+        $data['text_search_keyword'] = lang('project/project.text_search_keyword');
+        $data['button_search']       = lang('project/project.button_search');
+        $data['text_found']          = lang('project/project.text_found', [$total]);
+        $data['text_sidebar']        = lang('project/project.text_sidebar');
+        $data['text_type']           = lang('project/project.text_type');
+        $data['text_skills']         = lang('project/project.text_skills');
+        $data['text_languages']      = lang('project/project.text_languages');
+        $data['text_state']          = lang('project/project.text_state');
+        $data['text_budget']         = lang('project/project.text_budget');
+        $data['heading_title']       = lang('project/project.text_projects');
         
-        $data['text_projects']       = lang('project/category.text_projects');
+        $data['text_projects']       = lang('project/project.text_projects');
         $data['button_hire']         = lang('en.button_hire');
         $data['button_work']         = lang('en.button_work');
-        $data['button_bid_now']      = lang('project/category.button_bid_now');
+        $data['button_bid_now']      = lang('project/project.button_bid_now');
         $data['text_select']         = lang('en.text_select');
 
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');

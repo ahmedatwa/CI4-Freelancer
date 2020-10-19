@@ -162,7 +162,6 @@
 						<?php echo $pagination; ?>
 					</div>
 				<!-- Pagination / End -->
-			
 			</div>
 		</div>
 		</div>

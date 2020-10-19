@@ -64,9 +64,11 @@ $routes->group('account', function ($routes) {
 });
 
 // projects
-$routes->add('project/(:any)', 'Project\Project::project/$1', ['as' => 'single_project']);
+$routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
 $routes->add('add-project', 'Project\Project::add');
 $routes->add('projects', 'Project\Project::index', ['as' => 'projects']);
+$routes->add('project/(:any)', 'Project\Project::project/$1', ['as' => 'single_project']);
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing

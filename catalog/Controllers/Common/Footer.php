@@ -65,7 +65,7 @@ class Footer extends \Catalog\Controllers\BaseController
         
         $data['freelancers'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');
         $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/project');
-        $data['categorys']   = route_to('categories') ? route_to('categories') : base_url('project/category');
+        $data['category']   = route_to('categories') ? route_to('categories') : base_url('project/category');
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
 
         $data['project_added'] = $this->session->getFlashdata('project_added');

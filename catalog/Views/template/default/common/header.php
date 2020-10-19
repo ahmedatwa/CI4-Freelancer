@@ -37,6 +37,7 @@
   <script src="catalog/default/vendor/select2/js/select2.min.js"></script> 
   <!-- Pusher -->
   <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+  <script src="catalog/default/javascript/button-inline-loader.js"></script>
 
   <script src="catalog/default/javascript/custom.js"></script>
 

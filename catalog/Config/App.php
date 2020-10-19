@@ -183,7 +183,7 @@ class App extends BaseConfig
 	|
 	*/
 	public $sessionDriver            = 'CodeIgniter\Session\Handlers\FileHandler';
-	public $sessionCookieName        = 'YALLACATSESS';
+	public $sessionCookieName        = 'FSESSN';
 	public $sessionExpiration        = 7200;
 	public $sessionSavePath          = WRITEPATH . 'session';
 	public $sessionMatchIP           = false;
@@ -205,7 +205,7 @@ class App extends BaseConfig
 	|       'cookie_httponly') will also affect sessions.
 	|
 	*/
-	public $cookiePrefix   = 'YALLACOOK';
+	public $cookiePrefix   = 'COOKCAT';
 	public $cookieDomain   = '';
 	public $cookiePath     = '/';
 	public $cookieSecure   = false;
@@ -244,7 +244,7 @@ class App extends BaseConfig
 	| CSRFRegenerate  = Regenerate token on every submission
 	| CSRFRedirect    = Redirect to previous page with error on failure
 	*/
-	public $CSRFTokenName  = 'YALLA-CSRF-CAT';
+	public $CSRFTokenName  = 'CSRFCAT';
 	public $CSRFHeaderName = 'X-CSRF-TOKEN-CATALOG';
 	public $CSRFCookieName = 'csrf_cookie_catalog';
 	public $CSRFExpire     = 7200;

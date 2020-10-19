@@ -75,7 +75,7 @@
 					<div class="footer-links">
 						<h3><?php echo $text_freelancer; ?></h3>
 						<ul>
-							<li><a href="<?php echo $categorys; ?>"><span><?php echo $text_categories; ?></span></a></li>
+							<li><a href="<?php echo $category; ?>"><span><?php echo $text_categories; ?></span></a></li>
 							<li><a href="<?php echo $projects; ?>"><span><?php echo $text_projects; ?></span></a></li>
 							<li><a href="<?php echo $freelancers; ?>"><span><?php echo $text_freelancers; ?></span></a></li>
 							
