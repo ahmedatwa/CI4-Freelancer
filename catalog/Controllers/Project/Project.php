@@ -314,8 +314,8 @@ class Project extends \Catalog\Controllers\BaseController
         $categoryModel = new \Catalog\Models\Catalog\CategoryModel();
 
 
-        if ($this->request->uri->getSegment(3)) {
-            $keyword = $this->request->uri->getSegment(3);
+        if ($this->request->uri->getSegment(2)) {
+            $keyword = $this->request->uri->getSegment(2);
         } else {
             $keyword = '';
         }
@@ -343,7 +343,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => $categoryModel->getCategoryByProjectId($project_id),
-            'href' => route_to('projects') ? route_to('projects') : base_url('projects?pid=' . $project_id),
+            'href' => route_to('projects') ? route_to('projects') : base_url('project/project?pid=' . $project_id),
         ];
 
         $data['breadcrumbs'][] = [

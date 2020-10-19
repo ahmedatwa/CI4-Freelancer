@@ -41,9 +41,10 @@ class Categories extends Model
         $builder = $this->db->table('category');
 
         $category_data = [
-           'parent_id'  => $data['parent_id'] ?? 0,
+           'parent_id'  => $data['parent_id'],
            'top'        => $data['top'] ?? 0,
            'sort_order' => $data['sort_order'],
+           'icon'       => $data['icon'],
            'status'     => $data['status'],
         ];
         
@@ -54,7 +55,7 @@ class Categories extends Model
 
         // category_description Query
         if (isset($data['category_description'])) {
-            
+
             $builder_description = $this->db->table('category_description');
             $builder_description->delete(['category_id' => $category_id]);
             $seo_url = $this->db->table('seo_url');
@@ -90,8 +91,9 @@ class Categories extends Model
         $builder = $this->db->table('category');
 
         $category_data = [
-           'parent_id'  => $data['parent_id'] ?? 0,
+           'parent_id'  => $data['parent_id'],
            'top'        => $data['top'] ?? 0,
+            'icon'      => $data['icon'],
            'sort_order' => $data['sort_order'],
            'status'     => $data['status'],
         ];
@@ -155,10 +157,14 @@ class Categories extends Model
         $builder = $this->db->table('category c');
         $builder->distinct('cd.category_id, cd.name, c.sort_order, c.status');
         $builder->join('category_description cd', 'c.category_id = cd.category_id', 'left');
-        $builder->where('language_id', \Admin\Libraries\Registry::get('config_language_id'));
+        $builder->where('language_id', service('registry')->get('config_language_id'));
 
         if (!empty($data['filter_name'])) {
-            $builder->like('cd.name', $data['filter_name'], 'both');
+            $builder->like('cd.name', $data['filter_name'], 'after');
+        }
+
+        if (!empty($data['filter_parent_id'])) {
+            $builder->where('c.parent_id', $data['filter_parent_id']);
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
@@ -181,6 +187,18 @@ class Categories extends Model
         return $query->getResultArray();
     }
 
+    public function getCategoryParents()
+    {
+        $builder = $this->db->table('category c');
+        $builder->select('cd.category_id, cd.name');
+        $builder->join('category_description cd', 'c.category_id = cd.category_id', 'left');
+        $builder->where('c.parent_id', 0);
+        $builder->orderBy('cd.name', 'DESC');
+        $query = $builder->get();
+        return $query->getResultArray();
+
+
+    }
     public function getCategoryDescriptions($category_id)
     {
         $category_description_data = [];

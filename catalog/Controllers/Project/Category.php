@@ -19,20 +19,20 @@ class Category extends \Catalog\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('project/category.text_projects'),
+            'text' => lang('project/category.text_by'),
             'href' => route_to('categories') ? route_to('categories') : base_url('project/category'),
         ];
 
         if ($this->request->getVar('sort_by')) {
             $sort_by = $this->request->getVar('sort_by');
         } else {
-            $sort_by = 'c.date_added';
+            $sort_by = 'c.category_id';
         }
        
         if ($this->request->getVar('order_by')) {
             $order_by = $this->request->getVar('order_by');
         } else {
-            $order_by = 'DESC';
+            $order_by = 'ASC';
         }
 
         if ($this->request->getVar('limit')) {
@@ -63,16 +63,17 @@ class Category extends \Catalog\Controllers\BaseController
 
         foreach ($results as $result) {
             $data['categories'][] = [
-                'category_id'  => $result['category_id'],
+                'category_id' => $result['category_id'],
                 'name'        => $result['name'],
-                'description'        => $result['description'],
+                'icon'        => $result['icon'],
+                'description' => $result['description'],
                 'href'        => (route_to('projects') . '?gid=' . $result['category_id']) ? route_to('projects') . '?gid=' . $result['category_id'] : base_url('project/project?gid=' . $result['category_id']),
+                'children' => $categoryModel->getChildrenByCategoryId($result['category_id']),
             ];
         }
 
-
         $data['heading_title'] = lang('project/category.heading_title');
-        $data[''] = lang('project/category.text_search_keyword');
+        $data['text_by'] = lang('project/category.text_by');
 
         $data['add_project'] = base_url('project/project/add');
         $data['login']       = base_url('account/login');

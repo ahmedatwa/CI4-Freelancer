@@ -91,7 +91,14 @@
 								<?php } ?>
 							</div><!-- tab content Language -->
 						</div>
+
 						<div class="tab-pane" id="<?php echo $tab_data; ?>" role="tabpanel" aria-labelledby="<?php echo $tab_data; ?>-tab">
+							<div class="form-group row">
+								<label for="input-sort-order" class="col-md-2 col-form-label"><span data-toggle="tooltip" data-placement="top" title="<?php echo $help_icon; ?>"><?php echo $entry_icon; ?> <i class="fas fa-info-circle"></i></span></label>
+								<div class="col-md-10">
+									<input class="form-control" type="text" id="input-icon" name="icon" value="<?php echo $icon; ?>">
+								</div>
+							</div>
 							<div class="form-group row">
 								<label for="input-sort-order" class="col-md-2 col-form-label"><?php echo $entry_sort_order; ?></label>
 								<div class="col-md-10">
@@ -106,10 +113,10 @@
 									<select class="form-control" name="parent_id" data-width="100%">
 										<option></option>
 										<?php foreach ($parents as $parent) {?>
-											<?php if ($parent['parent_id'] == $parent_id) {?>
-												<option value='<?php echo $parent['parent_id'] ?>' selected><?php echo $parent['name'] ?> </option>
+											<?php if ($parent['category_id'] == $parent_id) {?>
+												<option value='<?php echo $parent['category_id'] ?>' selected><?php echo $parent['name'] ?> </option>
 											<?php } else {?>
-												<option value='<?php echo $parent['parent_id'] ?>'><?php echo $parent['name'] ?> </option>
+												<option value='<?php echo $parent['category_id'] ?>'><?php echo $parent['name'] ?> </option>
 											<?php }?>
 										<?php }?>
 									</select>
@@ -166,7 +173,7 @@ $('select[name=\'parent_id\']').select2({
 			},
 			cache: true
 		},
-minimumInputLength: 3,
+minimumInputLength: 2,
 placeholder: '<?php echo $text_select; ?>',
 allowClear: true,
 minimumResultsForSearch: 5

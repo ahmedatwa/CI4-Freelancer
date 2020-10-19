@@ -177,14 +177,22 @@ class Category extends \Admin\Controllers\BaseController
             $data['sort_order'] = '';
         }
 
-        $data['parents'] = $this->categories->getCategories();
+        $data['parents'] = $this->categories->getCategoryParents();
 
         if ($this->request->getPost('parent_id')) {
             $data['parent_id'] = $this->request->getPost('parent_id');
         } elseif (!empty($category_info)) {
             $data['parent_id'] = $category_info['parent_id'];
         } else {
-            $data['parent_id'] = '';
+            $data['parent_id'] = 0;
+        }
+
+        if ($this->request->getPost('icon')) {
+            $data['icon'] = $this->request->getPost('icon');
+        } elseif (!empty($category_info)) {
+            $data['icon'] = $category_info['icon'];
+        } else {
+            $data['icon'] = '';
         }
 
         if ($this->request->getPost('status')) {
@@ -202,11 +210,11 @@ class Category extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->request->getGet('parent_id')) {
+        if ($this->request->getVar('parent_id')) {
             $categories = new \Admin\Models\Catalog\Categories();
 
-            if ($this->request->getGet('parent_id')) {
-                $filter_name = html_entity_decode($this->request->getGet('parent_id'), ENT_QUOTES, 'UTF-8');
+            if ($this->request->getVar('parent_id')) {
+                $filter_name = html_entity_decode($this->request->getVar('parent_id'), ENT_QUOTES, 'UTF-8');
             } else {
                 $filter_name = null;
             }

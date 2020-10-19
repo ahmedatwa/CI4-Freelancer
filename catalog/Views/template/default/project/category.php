@@ -21,19 +21,38 @@
 <div class="container">
 	<div class="row">
 
-		<div class="col-xl-12">
+		<div class="col-12">
 			<div class="companies-list">
 				<?php foreach ($categories as $category) { ?>
 				<a href="<?php echo $category['href']; ?>" class="company">
 					<div class="company-inner-alignment">
-						<span class="company-logo"><img src="images/company-logo-placeholder.png" alt=""></span>
+						<span class="company-logo"><i class="<?php echo $category['icon']; ?> fa-5x"></i></span>
 						<h4><?php echo $category['name']; ?></h4>
 						<small><?php echo $category['description']; ?></small>
 					</div>
 				</a>
 			<?php } ?>
-
 			</div>
+		</div>
+		<hr />
+		<div class="col-12 margin-top-40 margin-bottom-25">
+			<h3><?php echo $heading_title; ?></h3>
+		   <?php foreach ($categories as $category) { ?>
+		   <?php if ($category['children']) { ?>
+			<div class="section-headline border-top margin-top-40 padding-top-45 margin-bottom-25">
+				<h4><?php echo $category['name']; ?></h4>
+			</div>
+			<div class="row">
+				<div class="col-xl-4 col-md-4">
+					<ul class="list-1">
+					<?php foreach ($category['children'] as $child) { ?>
+						<li><a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a></li>
+					<?php } ?>
+					</ul>
+				</div>
+				<?php } ?>
+			</div>
+		<?php } ?>
 		</div>
 	</div>
 </div>

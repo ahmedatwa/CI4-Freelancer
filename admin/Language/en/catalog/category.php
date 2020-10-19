@@ -31,8 +31,10 @@ return [
 'entry_sort_order'       => 'Sort Order',
 'entry_status'           => 'Status',
 'entry_layout'           => 'Layout Override',
+'entry_icon'             => 'Icon',
 // Help
 'help_filter'            => '(Autocomplete)',
+'help_icon'              => 'visit fontawesome.com for more icons',
 'help_top'               => 'Display in the top menu bar. Only works for the top parent categories.',
 'help_column'            => 'Number of columns to use for the bottom 3 categories. Only works for the top parent categories.',
 ],
