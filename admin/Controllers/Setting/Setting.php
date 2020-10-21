@@ -219,6 +219,15 @@ class Setting extends \Admin\Controllers\BaseController
         } else {
             $data['config_logo'] = '';
         }
+
+        if ($this->request->getPost('config_maintenance')) {
+            $data['config_maintenance'] = $this->request->getPost('config_maintenance');
+        } elseif (!empty($setting_info['config_maintenance'])) {
+            $data['config_maintenance'] = $setting_info['config_maintenance'];
+        } else {
+            $data['config_maintenance'] = 0;
+        }
+
         // Social Networks
         if ($this->request->getPost('config_facebook')) {
             $data['config_facebook'] = $this->request->getPost('config_facebook');

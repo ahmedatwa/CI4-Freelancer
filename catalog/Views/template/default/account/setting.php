@@ -1,67 +1,61 @@
 <?php echo $header; ?><?php echo $dashboard_menu ;?>
 <!-- Dashboard Content -->
-<div class="dashboard-content-container container margin-top-40 rounded shadow-box">
+<div class="dashboard-content-container container margin-top-20">
 	<div class="dashboard-content-inner" >
-		<!-- Dashboard Headline -->
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>
 		</div>
-		<!-- Row -->
 		<div class="row">
+		<div class="col-12">
 			<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" id="form-location" accept-charset="utf-8"> 
 				<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-				<!-- Dashboard Box -->
-				<div class="col-12">
-					<div class="dashboard-box margin-top-0">
-						<!-- Headline -->
-						<div class="headline">
+			   <div class="shadow-sm p-3 mb-5 bg-white rounded">
+						<div class="mb-4">
 							<h3><i class="icon-material-outline-account-circle"></i> <?php echo $text_account; ?></h3>
 						</div>
-
 						<div class="content with-padding padding-bottom-0">
 							<div class="row">
-								<div class="col-auto">
-									<div class="avatar-wrapper" data-toggle="tooltip" data-placement="right" title="Change Avatar">
-										<img class="profile-pic" src="images/user-avatar-placeholder.png" alt="" />
-										<div class="upload-button"></div>
-										<input class="file-upload" type="file" accept="image/*"/>
+								<div class="col-sm-4 text-center">
+									<div class="kv-avatar">
+										<div class="file-loading">
+											<input id="avatar-1" name="image" type="file">
+										</div>
 									</div>
+									<div class="kv-avatar-hint">
+										<small>Select file < 1500 KB | jpg,png,gif</small>
+									</div>
+									<div id="kv-avatar-errors" class="center-block" style="width:100%;display:none"></div>
 								</div>
-
 								<div class="col">
 									<div class="row">
 										<div class="col-xl-6">
-											<div class="submit-field">
+											<div class="submit-field required">
 												<h5><?php echo $entry_firstname; ?></h5>
 												<input type="text" class="form-control" name="firstname" value="<?php echo $firstname; ?>">
+												<?php echo formError('firstname'); ?>
 											</div>
 										</div>
 
 										<div class="col-xl-6">
-											<div class="submit-field">
+											<div class="submit-field required">
 												<h5><?php echo $entry_lastname; ?></h5>
 												<input type="text" class="form-control" name="lastname" value="<?php echo $lastname; ?>">
+												<?php echo formError('lastname'); ?>
 											</div>
 										</div>
 										<div class="col-xl-6">
 											<div class="submit-field">
 												<h5><?php echo $entry_email; ?></h5>
-												<input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
+												<input type="text" class="form-control" value="<?php echo $email; ?>" disabled>
 											</div>
 										</div>
 
 									</div>
 								</div>
 							</div>
-
 						</div>
-					</div>
-				</div>
-				<!-- Dashboard Box -->
-				<div class="col-12">
-					<div class="dashboard-box">
-						<!-- Headline -->
-						<div class="headline">
+						<div class="dropdown-divider"></div>
+						<div class="headline mt-4">
 							<h3><i class="icon-material-outline-face"></i> <?php echo $text_profile; ?></h3>
 						</div>
 						<div class="content">
@@ -70,37 +64,10 @@
 									<div class="row">
 										<div class="col-xl-6">
 											<div class="submit-field">
-												<div class="bidding-widget">
-													<!-- Headline -->
-													<span class="bidding-detail"><?php echo $text_hourly_rate; ?></span>
-													<!-- Slider -->
-													<div class="bidding-value margin-bottom-10">EGP<span id="biddingVal"></span></div>
-													<input name="rate" class="bidding-slider" type="text" value="" data-slider-handle="custom" data-slider-currency="EGP" data-slider-min="5" data-slider-max="150" data-slider-value="35" data-slider-step="1" data-slider-tooltip="hide" />
-												</div>
+													<span class="bidding-detail"><?php echo $text_hourly_rate; ?> : <?php echo $currency; ?></span>
+													<input class="range-slider" type="text" value="" data-provide="slider" data-slider-currency="$" data-slider-min="5" data-slider-max="150" data-slider-step="5" data-slider-value="<?php echo $rate; ?>" name="rate"/>
 											</div>
 										</div>
-
-										<div class="col-xl-6">
-											<div class="submit-field">
-												<h5><?php echo $text_skills; ?> <i class="help-icon" data-toggle="tooltip" title="Add up to 10 skills" data-placement="right"></i></h5>
-												<!-- Skills List -->
-												<div class="keywords-container">
-													<div class="keyword-input-container">
-														<input type="text" class="form-control" placeholder="e.g. Angular, Laravel"/>
-														<button class="keyword-input-button ripple-effect"><i class="icon-material-outline-add"></i></button>
-													</div>
-													<div class="keywords-list">
-														<span class="keyword"><span class="keyword-remove"></span><span class="keyword-text">Angular</span></span>
-														<span class="keyword"><span class="keyword-remove"></span><span class="keyword-text">Vue JS</span></span>
-														<span class="keyword"><span class="keyword-remove"></span><span class="keyword-text">iOS</span></span>
-														<span class="keyword"><span class="keyword-remove"></span><span class="keyword-text">Android</span></span>
-														<span class="keyword"><span class="keyword-remove"></span><span class="keyword-text">Laravel</span></span>
-													</div>
-													<div class="clearfix"></div>
-												</div>
-											</div>
-										</div>
-
 									</div>
 								</li>
 								<li>
@@ -108,71 +75,67 @@
 										<div class="col-xl-6">
 											<div class="submit-field">
 												<h5><?php echo $entry_tagline; ?></h5>
-												<input type="text" class="form-control" name="tagline" value="<?php echo $tagline; ?>">
+												<input type="text" class="form-control" name="tag_line" value="<?php echo $tag_line; ?>">
 											</div>
 										</div>
 										<div class="col-xl-12">
 											<div class="submit-field">
 												<h5><?php echo $text_about; ?></h5>
-												<textarea cols="30" rows="5" class="form-control"><?php echo $about; ?></textarea>
+												<textarea cols="30" rows="5" name="about" class="form-control"><?php echo $about; ?></textarea>
 											</div>
 										</div>
+								   <div class="col-12">
+									<button type="submit" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
+									</div>
 									</div>
 								</li>
 							</ul>
 						</div>
-					</div>
 				</div>
+				</div>	
+				</form>
 				<!-- Dashboard Box -->
 				<div class="col-12">
-					<div id="test1" class="dashboard-box">
-						<!-- Headline -->
-						<div class="headline">
+					<div class="shadow-sm p-3 mb-5 bg-white rounded" id="password-form">
+						<div class="headline mb-4">
 							<h3><i class="icon-material-outline-lock"></i> <?php echo $text_password_security; ?></h3>
 						</div>
 						<div class="content with-padding">
 							<div class="row">
 								<div class="col-xl-4">
-									<div class="submit-field">
+									<div class="submit-field required">
 										<h5><?php echo $entry_current_password; ?></h5>
-										<input type="password" class="form-control" name="current_password">
+										<input type="password" class="form-control" id="input-current" name="current">
 									</div>
 								</div>
-
 								<div class="col-xl-4">
-									<div class="submit-field">
+									<div class="submit-field required">
 										<h5><?php echo $entry_password; ?></h5>
-										<input type="password" class="form-control" name="password">
+										<input type="password" class="form-control" id="input-password" name="password">
+										<?php echo formError('password'); ?>
 									</div>
 								</div>
-
 								<div class="col-xl-4">
-									<div class="submit-field">
+									<div class="submit-field required">
 										<h5><?php echo $entry_confirm; ?></h5>
-										<input type="password" class="form-control" name="confirm">
-									</div>
+										<input type="password" class="form-control" id="input-confirm" name="confirm">
+										<?php echo formError('confirm'); ?>
+									</div>										
 								</div>
-
-								<div class="col-xl-12">
-									<div class="checkbox">
-										<input type="checkbox" id="two-step" name="" checked >
-										<label for="two-step"><span class="checkbox-icon"></span> <?php echo $text_2step; ?></label>
-									</div>
-									<button type="submit" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
+								<div class="col-12">
+									<button type="button" id="password-form-button" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</form>
 			<div class="col-12">
-				<div class="dashboard-box">
+				<div class="shadow-sm p-3 mb-5 bg-white rounded">
 					<div class="headline">
 							<h3><i class="icon-material-outline-lock"></i> <?php echo $text_professional_heading; ?></h3>
 							<small><?php echo $text_professional_sub; ?></small>
 						</div>
 					<div class="content with-padding">
-						
 						 <!-- Certificates BEGIN -->
 						<div class="accordion" id="certificatesAccordion">
 							<div class="card-header" id="headingOne">
@@ -405,7 +368,7 @@ $('#certificates-list').on('click', '.pagination a', function(e) {
 $('#certificates-list').load('account/setting/getCertificates');
 //  Certificates Delete Button 
 $('#certificates-list').on('click', 'button[id^=\'button-delete-certificate\']', function() {
-    if (confirm('<?php echo $text_sure; ?>')) {
+    if (confirm('<?php echo $text_confirm; ?>')) {
         var node = this;
         $.ajax({
             url: 'account/setting/deleteCertificate?certificate_id=' + $(node).val(),
@@ -530,7 +493,7 @@ $('#educations-list').on('click', '.pagination a', function(e) {
 $('#educations-list').load('account/setting/getEducation');
 //  Educations Delete Button 
 $('#educations-list').on('click', 'button[id^=\'button-delete-education\']', function() {
-    if (confirm('<?php echo $text_sure; ?>')) {
+    if (confirm('<?php echo $text_confirm; ?>')) {
         var node = this;
         $.ajax({
             url: 'account/setting/deleteEducation?education_id=' + $(node).val(),
@@ -629,7 +592,7 @@ $('#languages-list').on('click', '.pagination a', function(e) {
 $('#languages-list').load('account/setting/getLanguages');
 //  Languages Delete Button 
 $('#languages-list').on('click', 'button[id^=\'button-delete-language\']', function() {
-    if (confirm('<?php echo $text_sure; ?>')) {
+    if (confirm('<?php echo $text_confirm; ?>')) {
         var node = this;
         $.ajax({
             url: 'account/setting/deleteLanguage?language_id=' + $(node).val(),
@@ -726,7 +689,7 @@ $('#skills-list').on('click', '.pagination a', function(e) {
 $('#skills-list').load('account/setting/getSkills');
 //  Skills Delete Button 
 $('#skills-list').on('click', 'button[id^=\'button-delete-skill\']', function() {
-    if (confirm('<?php echo $text_sure; ?>')) {
+    if (confirm('<?php echo $text_confirm; ?>')) {
         var node = this;
         $.ajax({
             url: 'account/setting/deleteSkill?category_id=' + $(node).val(),
@@ -757,4 +720,117 @@ $('#skills-list').on('click', 'button[id^=\'button-delete-skill\']', function() 
     }
 });
 </script>
+<link href="catalog/default/vendor/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css">
+<script src="catalog/default/vendor/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="catalog/default/vendor/bootstrap-fileinput/themes/fas/theme.min.js"></script>
+<script type="text/javascript">
+$("#avatar-1").fileinput({
+	uploadUrl: 'account/setting/avatarUpload',
+    maxFileSize: 1500,
+    showClose: false,
+    showCaption: false,
+    showUpload: false,
+    showBrowse: false,
+    theme: 'fas',
+    browseOnZoneClick: true,
+    fileActionSettings: {
+       showZoom: false,
+       showDrag: false,
+       removeClass: 'd-none',
+    },
+    removeLabel: '',
+    uploadExtraData: {
+            '<?php echo csrf_token(); ?>': '<?php echo csrf_hash(); ?>', 
+    },
+    showRemove: false,
+    elErrorContainer: '#kv-avatar-errors',
+    msgErrorClass: 'alert alert-block alert-danger',
+    defaultPreviewContent: '<img src="images/catalog/avatar.jpg" style="height:260px;"alt="Your Avatar"><h6 class="text-muted">Click to select</h6>',
+    overwriteInitial: false,
+    initialPreviewAsData: true,
+    initialPreview: ['<?php echo base_url('images/catalog/' . $thumb); ?>'],
+    allowedFileExtensions: ["jpg", "png", "gif"]
+});
+</script>
+<!-- password change -->
+<script type="text/javascript">
+	$('#password-form-button').on('click', function (){
+		$.ajax({
+			url: 'account/setting/passwordUpdate',
+			method: 'post',
+			dataType : 'json',
+			data: $('#csrf_token, #password-form input[name=\'current\'], #password-form input[name=\'password\'], #password-form input[name=\'confirm\']'), 
+			beforeSend: function() {
+				$('#password-form-button').prop('disabled', true);
+			},
+			success: function (json) {
+				if (json['error_required']) {
+
+					for(i in json['error_required']) {
+						('#input-' + json['error_required'].i).after('<p class="text-danger">'+json['error_required'].i+'</p>');
+
+					}
+
+				}
+
+				if (json['error_password_form']) {
+					$('#password-form .content').after('<div class="alert alert-danger alert-dismissible fade show" role="alert">'+ json['error'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+
+				if (json['success_password_form']) {
+					$('#password-form .content').after('<div class="alert alert-success alert-dismissible fade show" role="alert">'+ json['error'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+			},
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+		});
+	});
+</script>
+<?php if ($error_warning) { ?>
+<script type="text/javascript">
+	$.notify({
+	// options
+	icon: 'fas fa-exclamation-circle',
+	title: 'Warning:',
+	message: "<?php echo $error_warning; ?>",
+},{
+	// settings
+	element: 'body',
+	type: "danger",
+	allow_dismiss: false,
+	placement: {
+		from: "bottom",
+		align: "left"
+	},
+	animate: {
+		enter: 'animate__animated animate__fadeInDown',
+		exit: 'animate__animated animate__fadeOutUp'
+	},
+});	
+</script>								
+<?php } ?>
+<?php if ($success) { ?>
+<script type="text/javascript">
+	$.notify({
+	// options
+	icon: 'fas fa-check-circle',
+	title: 'Success:',
+	message: "<?php echo $success; ?>",
+},{
+	// settings
+	element: 'body',
+	type: "success",
+	allow_dismiss: false,
+	placement: {
+		from: "bottom",
+		align: "left"
+	},
+	animate: {
+		enter: 'animate__animated animate__fadeInDown',
+		exit: 'animate__animated animate__fadeOutUp'
+	},
+});	
+</script>								
+<?php } ?>
 <?php echo $footer; ?>

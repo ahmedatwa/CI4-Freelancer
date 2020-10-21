@@ -22,7 +22,16 @@ class Header extends \Catalog\Controllers\BaseController
         $data['text_projects']    = lang('common/header.text_projects');
         $data['text_dashboard']   = lang('common/header.text_dashboard');
         $data['text_setting']     = lang('common/header.text_setting');
+        $data['text_profile']     = lang('common/header.text_profile');
         $data['text_add_project'] = lang('common/header.text_add_project');
+
+        $data['text_finance']              = lang('common/header.text_finance');
+        $data['text_account']              = lang('common/header.text_account');
+        $data['text_balances']             = lang('common/header.text_balances');
+        $data['text_deposite_funds']       = lang('common/header.text_deposite_funds');
+        $data['text_withdraw_funds']       = lang('common/header.text_withdraw_funds');
+        $data['text_transactions_history'] = lang('common/header.text_transactions_history');
+
 
         $data['config_name'] = $this->registry->get('config_name');
 
@@ -36,13 +45,17 @@ class Header extends \Catalog\Controllers\BaseController
         $data['register']    = route_to('account_register') ? route_to('account_register') : base_url('account/register');
         $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
         $data['forgotton']   = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
-        $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
-
-        $data['setting']     = route_to('account_setting') ? route_to('account_setting') : base_url('account/setting?cid=' . $this->customer->getCustomerId());
-        $data['dashboard']   = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard?cid=' . $this->customer->getCustomerId());
-
         $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/project');
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
+
+        if ($this->customer->getCustomerId()) {
+            $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
+            $data['profile']     = route_to('freelancer_profile', $this->customer->getCustomerId(), $this->customer->getCustomerUserName()) ? route_to('freelancer_profile', $this->customer->getCustomerId(), $this->customer->getCustomerUserName()) : base_url('freelancer/freelancer?cid=' . $this->customer->getCustomerId());
+            $data['setting']     = route_to('account_setting') ? route_to('account_setting') : base_url('account/setting?cid=' . $this->customer->getCustomerId());
+            $data['dashboard']   = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard?cid=' . $this->customer->getCustomerId());
+
+        }
+
 
         $data['informations'] = [];
         
@@ -81,7 +94,6 @@ class Header extends \Catalog\Controllers\BaseController
         $data['defaut_color_scheme'] = $this->registry->get('theme_default_color') ?? 'red.css';
         $data['all_messages'] = route_to('account_messages') ? route_to('account_messages') : base_url('account/message');
 
-       
 
         return view('common/header', $data);
     }
@@ -106,13 +118,14 @@ class Header extends \Catalog\Controllers\BaseController
 
         foreach ($results as $result) {
             $json[] = [
+                'message_id'  => $result['message_id'],
                 'customer_id' => $result['customer_id'],
                 'name'        => $result['name'],
                 'image'       => ($result['image']) ? $this->resize($result['image'], 42, 42) : $this->resize('catalog/avatar.jpg', 42, 42),
                 'message'     => word_limiter($result['message'], 10),
                 'date_added'  => $this->dateDifference($result['date_added']),
                 'count'       => $result['total'],
-                'href'        => base_url('account/message'),
+                'href'        => base_url('account/message?message_id=' . $result['message_id']),
 
             ];
         }

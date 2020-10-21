@@ -29,6 +29,8 @@ return [
     'text_fixed_price'    => 'Fixed Price',
     'text_per_hour'       => 'Hourly Rate',
     'text_no_results'   => 'No Results !',
+    'text_confirm'  => 'Are you sure?',
+
 
 
     // Button

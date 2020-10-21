@@ -5,12 +5,35 @@ class CustomerModel extends \CodeIgniter\Model
     protected $table          = 'customer';
     protected $primaryKey     = 'customer_id';
     protected $returnType     = 'array';
-    protected $allowedFields  = ['customer_group_id', 'email', 'password'];
+    protected $allowedFields  = ['customer_group_id', 'email', 'password', 'firstname', 'lastname', 'image', 'about', 'tag_line', 'rate'];
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
+    // Password Hashing Events
+    protected $beforeInsert = ['hashPassword'];
+    protected $beforeUpdate = ['hashPassword'];
+    // User Activity Events
+    protected $afterUpdate = ['afterUpdateEvent'];
     // should use for keep data record create timestamp
     protected $createdField = 'date_added';
     protected $updatedField = 'date_modified';
+
+    protected function hashPassword(array $data)
+    {
+        if (isset($data['data']['password']) && !empty($data['data']['password'])) {
+            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
+        } else {
+            unset($data['data']['password']);
+        }
+        return $data;
+    }
+
+    protected function afterUpdateEvent(array $data)
+    {
+        if (isset($data['data']['username'])) {
+            \CodeIgniter\Events\Events::trigger('customer_activity_update', $data['customer_id'], $data['data']['username']);
+        } 
+    }
+
 
     public function addCustomer($data)
     {
@@ -25,7 +48,7 @@ class CustomerModel extends \CodeIgniter\Model
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($customer_data);
         \CodeIgniter\Events\Events::trigger('customer_register_activity', $this->db->insertID(), explode('@', $data['email'])[0]);
-        //\CodeIgniter\Events\Events::trigger('mail_register', $data['email']);
+        \CodeIgniter\Events\Events::trigger('new_customer_greeting', $data['email']);
     }
 
     public function getCustomers(array $data = [])

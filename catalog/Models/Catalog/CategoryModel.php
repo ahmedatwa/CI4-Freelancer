@@ -29,7 +29,7 @@ class CategoryModel extends \CodeIgniter\Model
         }
 
         if (isset($data['filter_name'])) {
-            $builder->like('c.name', $data['filter_name'], 'both');
+            $builder->like('cd.name', $data['filter_name'], 'after');
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {

@@ -10,29 +10,3 @@
   </div>
 </nav>
 
-<nav id="menu">
-  <ul class="">
-    <?php foreach ($menus as $menu) { ?>
-     <li><a href="<?php echo $menu['href']; ?>"><?php echo $menu['name']; ?></a></li>
-   <?php } ?>    
- </ul>
-</nav>
-
-<div class="header">
-  <a href="#menu">Demo</a>              
-</div>
-<!-- Fire the plugin -->
-<script>
-    document.addEventListener(
-        "DOMContentLoaded", () => {
-            new Mmenu( "#menu", {
-               "extensions": [
-                  "pagedim-black",
-                  "position-bottom",
-                  "theme-dark"
-               ]
-            });
-        }
-    );
-</script>
-

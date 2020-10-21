@@ -28,6 +28,22 @@ class Activity
         $User->addLoginAttempts($email);
     }
 
+    // Catalog\Controllers\Account\Setting::Edit
+    public static function CustomerActivityUpdate()
+    {
+        $activityModel = new ActivityModel;
+
+        $customer = new Customer();
+
+        $data = [
+            'user_id'     => $customer->getCustomerId(),
+            'username'    => $customer->getCustomerUserName(),
+            ];
+
+        $activityModel->addActivity('activity_customer_login', $data);
+    }
+
+
     // Catalog\Controllers\Account\Forgotten::index
     public static function mailForgotten(string $customer_email)
     {

@@ -11,9 +11,8 @@ class Setting extends \Catalog\Controllers\BaseController
         $customerModel = new CustomerModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->categories->editCategory($this->customer->getCustomerID(), $this->request->getPost());
-            return redirect()->to(route_to('account/setting', $this->customer->getCustomerUserName()))
-                             ->with('success', lang('catalog/category.text_success'));
+            $customerModel->update($this->customer->getCustomerID(), $this->request->getPost());
+            return redirect()->route('account_setting')->with('success', lang('catalog/category.text_success'));
         }
 
         $this->index();
@@ -22,6 +21,14 @@ class Setting extends \Catalog\Controllers\BaseController
     public function index()
     {
         $this->template->setTitle(lang('account/setting.heading_title'));
+
+        if ($this->request->getVar('cid')) {
+            $customer_id = $this->request->getVar('cid');
+        } elseif ($this->customer->getCustomerId()) {
+            $customer_id = $this->customer->getCustomerId();
+        } else {
+            $customer_id = 0;
+        }
 
         $customerModel = new CustomerModel();
 
@@ -33,12 +40,12 @@ class Setting extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/dashboard.heading_title'),
-            'href' => route_to('account/dashboard'),
+            'href' => route_to('account_dashboard'),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/setting.heading_title'),
-            'href' => route_to('account/setting', $this->customer->getCustomerUserName()),
+            'href' => route_to('account_setting', $this->customer->getCustomerUserName()),
         ];
 
 
@@ -54,13 +61,13 @@ class Setting extends \Catalog\Controllers\BaseController
             $data['success'] = '';
         }
 
-        if (($this->request->getMethod() != 'post') && $this->customer->getCustomerID()) {
-            $customer_info = $customerModel->getCustomer($this->customer->getCustomerID());
+        if ($customer_id) {
+            $customer_info = $customerModel->getCustomer($customer_id);
         }
 
         if ($this->request->getPost('firstname')) {
             $data['firstname'] = $this->request->getPost('firstname');
-        } elseif (!empty($customer_info['firstname'])) {
+        } elseif ($customer_info['firstname']) {
             $data['firstname'] = $customer_info['firstname'];
         } else {
             $data['firstname'] = '';
@@ -68,15 +75,13 @@ class Setting extends \Catalog\Controllers\BaseController
 
         if ($this->request->getPost('lastname')) {
             $data['lastname'] = $this->request->getPost('lastname');
-        } elseif (!empty($customer_info['lastname'])) {
+        } elseif ($customer_info['lastname']) {
             $data['lastname'] = $customer_info['lastname'];
         } else {
             $data['lastname'] = '';
         }
 
-        if ($this->request->getPost('email')) {
-            $data['email'] = $this->request->getPost('email');
-        } elseif (!empty($customer_info['email'])) {
+        if (isset($customer_info['email'])) {
             $data['email'] = $customer_info['email'];
         } else {
             $data['email'] = '';
@@ -84,22 +89,22 @@ class Setting extends \Catalog\Controllers\BaseController
 
         if ($this->request->getPost('about')) {
             $data['about'] = $this->request->getPost('about');
-        } elseif (!empty($customer_info['about'])) {
+        } elseif ($customer_info['about']) {
             $data['about'] = $customer_info['about'];
         } else {
             $data['about'] = '';
         }
-        if ($this->request->getPost('tagline')) {
-            $data['tagline'] = $this->request->getPost('tagline');
-        } elseif (!empty($customer_info['tagline'])) {
-            $data['tagline'] = $customer_info['tagline'];
+        if ($this->request->getPost('tag_line')) {
+            $data['tag_line'] = $this->request->getPost('tag_line');
+        } elseif ($customer_info['tag_line']) {
+            $data['tag_line'] = $customer_info['tag_line'];
         } else {
-            $data['tagline'] = '';
+            $data['tag_line'] = '';
         }
 
         if ($this->request->getPost('rate')) {
             $data['rate'] = $this->request->getPost('rate');
-        } elseif (!empty($customer_info['rate'])) {
+        } elseif ($customer_info['rate']) {
             $data['rate'] = $customer_info['rate'];
         } else {
             $data['rate'] = 0;
@@ -122,8 +127,10 @@ class Setting extends \Catalog\Controllers\BaseController
         } else {
             $data['current_passowrd'] = '';
         }
+
+        $data['thumb'] = isset($customer_info['image']) ? $customer_info['image'] : '';
         
-        $data['action'] = base_url('account/setting?customer_id=' . $this->customer->getCustomerID());
+        $data['action'] = base_url('account/setting/edit?customer_id=' . $this->customer->getCustomerID());
 
         $data['heading_title']          = lang('account/setting.heading_title');
         $data['entry_firstname']        = lang('account/setting.entry_firstname');
@@ -144,7 +151,7 @@ class Setting extends \Catalog\Controllers\BaseController
         $data['text_certification']     = lang('account/setting.text_certification');
         $data['text_loading']           = lang('account/setting.text_loading');
         $data['text_select']            = lang('en.text_select');
-        $data['text_sure']              = lang('account/setting.text_sure');
+        $data['text_confirm']              = lang('en.text_confirm');
         $data['text_education']         = lang('account/setting.text_education');
         
         $data['entry_year']             = lang('account/setting.entry_year');
@@ -154,12 +161,11 @@ class Setting extends \Catalog\Controllers\BaseController
         $data['entry_major']            = lang('account/setting.entry_major');
         $data['entry_certification']    = lang('account/setting.entry_certification');
 
-
         $data['tab_certificates']          = lang('account/setting.tab_certificates');
         $data['tab_education']             = lang('account/setting.tab_education');
         $data['tab_languages']             = lang('account/setting.tab_languages');
-        $data['tab_skill']                = lang('account/setting.tab_skill');
-
+        $data['tab_skill']                 = lang('account/setting.tab_skill');
+        
         $data['text_professional_heading'] = lang('account/setting.text_professional_heading');
         $data['text_professional_sub']     = lang('account/setting.text_professional_sub');
         $data['text_add_language']         = lang('account/setting.text_add_language');
@@ -171,17 +177,16 @@ class Setting extends \Catalog\Controllers\BaseController
         $data['text_intermediate']         = lang('account/setting.text_intermediate');
         $data['text_expert']               = lang('account/setting.text_expert');
         $data['text_add_skill']            = lang('account/setting.text_add_skill');
-        $data['entry_language']       = lang('account/setting.entry_language');
-        $data['entry_language_level']       = lang('account/setting.entry_language_level');
-        $data['entry_skill']       = lang('account/setting.entry_skill');
-        $data['entry_skill_level']       = lang('account/setting.entry_skill_level');
-
-        $data['entry_current_password'] = lang('account/setting.entry_current_password');
-        $data['entry_password']         = lang('account/setting.entry_password');
-        $data['entry_confirm']          = lang('account/setting.entry_confirm');
-        $data['entry_hourly_rate']          = lang('account/setting.entry_hourly_rate');
+        $data['entry_language']            = lang('account/setting.entry_language');
+        $data['entry_language_level']      = lang('account/setting.entry_language_level');
+        $data['entry_skill']               = lang('account/setting.entry_skill');
+        $data['entry_skill_level']         = lang('account/setting.entry_skill_level');
         
-       
+        $data['entry_current_password']    = lang('account/setting.entry_current_password');
+        $data['entry_password']            = lang('account/setting.entry_password');
+        $data['entry_confirm']             = lang('account/setting.entry_confirm');
+        $data['entry_hourly_rate']         = lang('account/setting.entry_hourly_rate');
+
         $data['button_submit'] = lang('account/setting.button_submit');
 
         //  Education Title
@@ -254,6 +259,8 @@ class Setting extends \Catalog\Controllers\BaseController
         $data['customer_id'] = $this->customer->getCustomerID();
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
+
+        $data['currency'] = $this->session->get('currency') ?? $this->registry->get('config_currency');
 
         $this->template->output('account/setting', $data);
     }
@@ -472,7 +479,7 @@ class Setting extends \Catalog\Controllers\BaseController
     public function deleteEducation()
     {
         $json = [];
-        if ($this->customer->get_customer_id()) {
+        if ($this->customer->getCustomerId()) {
             $customerModel = new CustomerModel();
             if ($this->request->getVar('education_id')) {
                 $customerModel->deleteCustomerEducation($this->request->getVar('education_id'));
@@ -514,17 +521,17 @@ class Setting extends \Catalog\Controllers\BaseController
         $json = [];
         
         if ($this->request->getMethod() == 'post') {
-        $customerModel = new CustomerModel();
+            $customerModel = new CustomerModel();
 
-        if (! $this->validate([
+            if (! $this->validate([
             'language_id' => "required",
             'language_level'   => "required",
         ])) {
-            $json['error'] = lang('account/setting.error_data');
-            $json['error_language'] = $this->validator->getError('language_id');
-            $json['error_language_level'] = $this->validator->getError('language_level');
-            return false;
-        } 
+                $json['error'] = lang('account/setting.error_data');
+                $json['error_language'] = $this->validator->getError('language_id');
+                $json['error_language_level'] = $this->validator->getError('language_level');
+                return false;
+            }
             $customerModel->addCustomerLanguage($this->request->getPost());
             $json['success'] = sprintf(lang('account/setting.text_success_edu'), lang('account/setting.text_languages'));
         }
@@ -574,7 +581,7 @@ class Setting extends \Catalog\Controllers\BaseController
     public function deleteLanguage()
     {
         $json = [];
-        if ($this->customer->get_customer_id()) {
+        if ($this->customer->getCustomerId()) {
             $customerModel = new CustomerModel();
             if ($this->request->getVar('language_id')) {
                 $customerModel->deleteCustomerLanguage($this->request->getVar('language_id'));
@@ -592,15 +599,15 @@ class Setting extends \Catalog\Controllers\BaseController
             $customerModel = new CustomerModel();
 
             if (! $this->validate([
-                    'category_id'      => ['label' => 'Skill', 'rules' => 'required'],
+                    'category_id' => ['label' => 'Skill', 'rules' => 'required'],
              ])) {
                 $json['error'] = lang('account/setting.error_data');
                 $json['error_category'] = $this->validator->getError('category_id');
             }
 
             if (!$json) {
-            $customerModel->addCustomrSkill($this->request->getPost());
-            $json['success'] = sprintf(lang('account/setting.text_success_edu'), lang('account/setting.text_skills'));
+                $customerModel->addCustomrSkill($this->request->getPost());
+                $json['success'] = sprintf(lang('account/setting.text_success_edu'), lang('account/setting.text_skills'));
             }
         }
 
@@ -647,14 +654,70 @@ class Setting extends \Catalog\Controllers\BaseController
     public function deleteSkill()
     {
         $json = [];
-        if ($this->request->getVar('cid') && $this->request->getMethod() == 'post') {
+
+        if ($this->request->getVar('category_id')) {
             $customerModel = new CustomerModel();
-            if ($this->request->getVar('category_id')) {
-                $customerModel->deleteCustomerSkill($this->request->getVar('category_id'));
-                $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Skills');
-            }
-            return $this->response->setJSON($json);
+            $customerModel->deleteCustomerSkill($this->request->getVar('category_id'));
+            $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Skills');
         }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function avatarUpload()
+    {
+        $json = [];
+
+        if ($imagefile = $this->request->getFile('image')) {
+            $customerModel = new CustomerModel();
+
+            if ($imagefile->isValid() && ! $imagefile->hasMoved()) {
+                $newName = $imagefile->getRandomName();
+                $imagefile->move('images/catalog', $newName);
+                $customerModel->where('customer_id', $this->session->get('customer_id'))
+                              ->set('image', $newName)
+                              ->update();
+            }
+        }
+        return $this->response->setJSON($json);
+    }
+
+    public function passwordUpdate()
+    {
+        $json = [];
+
+                // Fields Validation Rules
+        if (! $this->validate([
+            'current'  => 'required',
+            'password' => 'required|min_length[4]',
+            'confirm'  => 'required_with[password]|matches[password]',
+            ])) {
+
+            $json['error_required'] = $this->validator->getErrors();
+        } 
+
+        if (!$json) {
+        if ($this->request->getMethod() == 'post' && $this->request->getPost('current')) {
+
+            $customerModel = new CustomerModel();
+
+            $oldPassword = $customerModel->where('customer_id', $this->session->get('customer_id'))
+                                     ->findColumn('password');
+
+            if (password_verify($this->request->getPost('current'), $oldPassword[0])) {
+                // old password passed then update
+                $customerModel->where('customer_id', $this->session->get('customer_id'))
+                              ->set('password', password_hash($this->request->getPost('password'), PASSWORD_DEFAULT))
+                              ->update();
+
+                $json['success_password_form'] = lang('account/setting.text_password_success');              
+            } else {
+                $json['error_password_form'] = lang('account/setting.error_old_password');
+            }
+        }
+    }
+
+        return $this->response->setJSON($json);
     }
 
     protected function validateForm()
@@ -662,13 +725,7 @@ class Setting extends \Catalog\Controllers\BaseController
         // Fields Validation Rules
         if (! $this->validate([
             'firstname' => 'required|alpha_numeric',
-            'lastname' => 'required|alpha_numeric',
-            'email' => [
-                'rules' => 'required|valid_email|is_unique[customer.email]',
-                'errors' => [
-                    'is_unique' => 'Warning: E-Mail Address is already registered!'
-                ],
-            ],
+            'lastname'  => 'required|alpha_numeric',
             'password' => 'required|min_length[4]',
             'confirm'  => 'required_with[password]|matches[password]',
             ])) {

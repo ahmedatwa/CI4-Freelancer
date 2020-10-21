@@ -115,9 +115,9 @@ class customers extends \CodeIgniter\Model
             $builder->where('p.date_added', $data['filter_date_added']);
         }
 
-        $sorting_data = array(
+        $sorting_data = [
             'cr.date_added',
-        );
+        ];
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
             $data['order_by'] = 'DESC';

@@ -54,7 +54,7 @@
         uploadUrl: "tool/upload?cid=<?php echo $customer_id; ?>&pid=<?php echo $project_id; ?>",
         enableResumableUpload: false,
         uploadExtraData: {
-            '<?= csrf_token() ?>': '<?= csrf_hash() ?>', // for access control / security 
+            '<?= csrf_token() ?>': '<?= csrf_hash() ?>', 
         },
         maxFileCount: 3,
         allowedFileExtensions: ['zip','txt','png','jpe','jpeg','jpg','gif','bmp','ico','tiff','tif','svg','svgz','rar','mp3','mov','pdf','psd','ai','doc'],    // allow only images

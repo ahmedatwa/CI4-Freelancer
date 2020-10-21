@@ -62,40 +62,40 @@ $(".btn-close, .screen-overlay").click(function(e){
 	/*  Mobile Menu - mmenu.js
 	/*--------------------------------------------------*/
     
-	// $(function() {
-	// 	function mmenuInit() {
-	// 		var wi = $(window).width();
-	// 		if(wi <= '1099') {
+	$(function() {
+		function mmenuInit() {
+			var wi = $(window).width();
+			if(wi <= '1099') {
 
-	// 			$(".mmenu-init" ).remove();
-	// 			$("#navigation").clone().addClass("mmenu-init").insertBefore("#navigation").removeAttr('id').removeClass('style-1 style-2')
-	// 							.find('ul, div').removeClass('style-1 style-2 mega-menu mega-menu-content mega-menu-section').removeAttr('id');
-	// 			$(".mmenu-init").find("ul").addClass("mm-listview");
-	// 			$(".mmenu-init").find(".mobile-styles .mm-listview").unwrap();
+				$(".mmenu-init" ).remove();
+				$("#navigation").clone().addClass("mmenu-init").insertBefore("#navigation").removeAttr('id').removeClass('style-1 style-2')
+								.find('ul, div').removeClass('style-1 style-2 mega-menu mega-menu-content mega-menu-section').removeAttr('id');
+				$(".mmenu-init").find("ul").addClass("mm-listview");
+				$(".mmenu-init").find(".mobile-styles .mm-listview").unwrap();
 
 
-	// 			$(".mmenu-init").mmenu({
-	// 			 	"counters": true
-	// 			}, {
-	// 			 // configuration
-	// 			 offCanvas: {
-	// 			    pageNodetype: "#wrapper"
-	// 			 }
-	// 			});
+				$(".mmenu-init").mmenu({
+				 	"counters": true
+				}, {
+				 // configuration
+				 offCanvas: {
+				    pageNodetype: "#wrapper"
+				 }
+				});
 
-	// 			var mmenuAPI = $(".mmenu-init").data( "mmenu" );
-	// 			var $icon = $(".mmenu-trigger .hamburger");
+				var mmenuAPI = $(".mmenu-init").data( "mmenu" );
+				var $icon = $(".mmenu-trigger .hamburger");
 
-	// 			$(".mmenu-trigger").on('click', function() {
-	// 				mmenuAPI.open();
-	// 			});
+				$(".mmenu-trigger").on('click', function() {
+					mmenuAPI.open();
+				});
 
-	// 		}
-	// 		$(".mm-next").addClass("mm-fullsubopen");
-	// 	}
-	// 	mmenuInit();
-	// 	$(window).resize(function() { mmenuInit(); });
-	// });
+			}
+			$(".mm-next").addClass("mm-fullsubopen");
+		}
+		mmenuInit();
+		$(window).resize(function() { mmenuInit(); });
+	});
 	/*----------------------------------------------------*/
 	/*  Back to Top
 	/*----------------------------------------------------*/
@@ -144,6 +144,31 @@ $(".btn-close, .screen-overlay").click(function(e){
 		}, 800);
 	});
 
+
+    // Avatar Switcher
+	// function avatarSwitcher() {
+	//     var readURL = function(input) {
+	//         if (input.files && input.files[0]) {
+	//             var reader = new FileReader();
+
+	//             reader.onload = function (e) {
+	//                 $('.profile-pic').attr('src', e.target.result);
+	//             };
+	    
+	//             reader.readAsDataURL(input.files[0]);
+	//             $('input[name=\'image\']').val(input.files[0]['name']);
+	//         }
+	//     };
+
+	//     $(".file-upload").on('change', function(){
+	//         readURL(this);
+
+	//     });
+	    
+	//     $(".upload-button").on('click', function() {
+	//        $(".file-upload").click();
+	//     });
+	// } avatarSwitcher();
 
 	/*--------------------------------------------------*/
 	/*  Interactive Effects

@@ -78,6 +78,35 @@ class Message extends \Catalog\Controllers\BaseController
         return $this->response->setJSON($json);
     }
 
+
+    public function markRead() 
+    {
+        $json = [];
+        
+        if ($this->request->getVar('message_id') && $this->request->getMethod() == 'post') {
+
+               $messageModel = new MessageModel();
+
+               $messageModel->markSeen($this->request->getVar('message_id'));
+        }
+         return $this->response->setJSON($json);
+    }
+
+
+    public function getTotalUnseenMessages()
+    {
+        $json = [];
+
+        $messageModel = new \Catalog\Models\Account\MessageModel();
+
+        $total = $messageModel->getTotalUnseen($this->session->get('customer_id'));
+       
+        $json = ['total' => $total];
+        
+        return $this->response->setJSON($json);
+
+    }
+
     public function sendMessage()
     {
         $json = [];

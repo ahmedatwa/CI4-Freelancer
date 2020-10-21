@@ -2,7 +2,9 @@
         
 return [
     'text_warning'           => 'Please check the form for errors.',
-    'text_success'           => 'Your Account Has Been Created!, Please Check Your Email for activation',
+    'text_success'           => 'Your account has been successfully updated.',
+    'text_password_success'  => 'Your passowrd has been successfully updated.',
+
     'heading_title'          => 'Settings',
     'text_profile'           => 'My Profile',
     'text_account'           => 'My Account',
@@ -59,9 +61,9 @@ return [
     'entry_uni_title'        => 'Title',
     'entry_major'            => 'Major',
     'entry_certification'    => 'Certificate/Award Name',
-    'entry_language'    => 'Language Name',
-    'entry_language_level'    => 'Language Level',
-    'entry_skill' => 'Skills Name',
+    'entry_language'         => 'Language Name',
+    'entry_language_level'   => 'Language Level',
+    'entry_skill'          => 'Skills Name',
     'entry_skill_level'    => 'Skill Level',
     'entry_hourly_rate'    => 'Hourly Rate',
     // column
@@ -81,7 +83,7 @@ return [
     'tab_certificates' => 'Certificates',
     'tab_education' => 'Education',
     'tab_languages' => 'Languages',
-
+    'error_old_password' => 'Old password doesn\'t match the current records',
 
 
 

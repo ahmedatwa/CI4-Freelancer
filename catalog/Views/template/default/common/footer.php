@@ -112,7 +112,79 @@
 </div>
 </div>
 <!-- Footer / End -->
+<script type="text/javascript">
+// refresh notification count
+  function totalUnseen(data) {
+   $.ajax({
+      url: 'account/message/getTotalUnseenMessages',
+      dataType: 'json',
+      success: function(json) {
+          if (json['total']) {
+               $('#message-count').html('<span>' + json['total'] + '</span>');
+           } 
+        }
+    });
+ }totalUnseen();
 
+setInterval(function(){
+ totalUnseen();
+}, 5000);
+
+$('.header-notifications-trigger').on('click', function() {
+  loadMessages();
+});
+ 
+function loadMessages() {
+   $.ajax({
+      url: 'common/header/getMessages',
+      dataType: 'json',
+      beforeSend: function() {
+          $('#message-list').html('<p class="text-center loading-state" id="loading-state"><i class="fas fa-spinner fa-spin"></i> loading... </p>');
+          $('#message-count').html('');
+      },
+      complete: function () {
+          $('.loading-state').remove();
+      },
+      success: function(json) {
+
+          for (var i = 0; json.length > i; i++) {
+
+          if (json[i].count) {
+               $('#message-count').html('<span>' + json[i].count + '</span>');
+           } 
+
+           html = '<li class="notifications-not-read" id="'+json[i].message_id+'">';
+           html += '<a href="#" onclick="markRead('+json[i].message_id+');">';
+           html += '<span class="notification-avatar status-online"><img src="'+json[i].image+'" alt=""></span>';
+           html += '<div class="notification-text">';
+           html += '<strong>' + json[i].name + '</strong>';
+           html += '<p class="notification-msg-text">' + json[i].message + '</p>';
+           html += '<span class="color">' + json[i].date_added + '</span>';
+           html += '</div>';
+           html += '</a>';
+           html += '</li>';
+
+          $('#message-list').append(html);
+        }
+      }
+    });
+  }
+
+
+function markRead(message_id) {
+  $.ajax({
+      url: 'account/message/markRead',
+      dataType: 'json',
+      method: 'post',
+      data: {'message_id' : message_id, '<?php echo csrf_token(); ?>': '<?php echo csrf_hash(); ?>'},
+      success: function(json) {
+           totalUnseen();
+           loadMessages();
+        }
+  });
+}
+</script>
+<!-- Notification Event -->
 <script type="text/javascript">
 $(document).ready(function() {
   var pusher = new Pusher('b4093000fa8e8cab989a', {
@@ -124,7 +196,7 @@ $(document).ready(function() {
   channel.bind('new-project-event', function(data) {
     $.notify({
 	// options
-	icon: 'glyphicon glyphicon-warning-sign',
+	icon: 'fas fa-desktop',
 	title: data.name,
 	message: data.budget,
 	url: data.href,

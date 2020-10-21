@@ -82,18 +82,9 @@ class MessageModel extends \CodeIgniter\Model
     public function getMessageByCustomerId($viewed, $customer_id)
     {
 
-
         $messages = [];
 
         $builder = $this->db->table($this->table);
-
-
-        if ($viewed == 'yes') {
-            $builder->set('seen', 1);
-            $builder->where('to_id', $customer_id);
-            $builder->update();
-
-        }
 
         $builder->select();
         $builder->where(['to_id' => $customer_id, 'seen' => 0]);
@@ -102,6 +93,7 @@ class MessageModel extends \CodeIgniter\Model
 
         foreach ($query->getResultArray() as $result) {
            $messages[] = [
+            'message_id'  => $result['message_id'],
             'customer_id' => $result['to_id'],
             'image'       => $this->getCustomer($result['to_id'])['image'],
             'name'        => $this->getCustomer($result['to_id'])['name'],
@@ -129,6 +121,15 @@ class MessageModel extends \CodeIgniter\Model
        $builder->where('customer_id', $customer_id);
        $query = $builder->get();
        return $query->getRowArray(); 
+    }
+
+    public function markSeen($message_id)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->where('message_id', $message_id);
+        $builder->set('seen', 1);
+        $builder->update();
+    
     }
 
     // public function updateMessage($project_id, $data)

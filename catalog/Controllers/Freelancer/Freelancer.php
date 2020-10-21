@@ -341,22 +341,26 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         $messageModel = new \Catalog\Models\Account\MessageModel();
 
-        $options = [
-            'cluster' => 'eu',
-            'useTLS' => true
-            ];
+        // $options = [
+        //     'cluster' => 'eu',
+        //     'useTLS' => true
+        //     ];
 
-            $pusher = new \Pusher\Pusher(
-                'b4093000fa8e8cab989a',
-                'fb4bfd2d78aac168d918',
-                '1047280',
-                $options
-            );
+        //     $pusher = new \Pusher\Pusher(
+        //         'b4093000fa8e8cab989a',
+        //         'fb4bfd2d78aac168d918',
+        //         '1047280',
+        //         $options
+        //     );
 
 
         $messageModel->addMessage($this->request->getPost());
 
-        $event = $pusher->trigger('chat-channel', 'new-message-event', ['total' => $messageModel->getTotalUnseen($this->session->get('customer_id'))]);
+        // $pusher_data = [
+        //     'total_unseen' => $messageModel->getTotalUnseen($this->request->getPost('to_id'))
+        // ];
+
+        // $event = $pusher->trigger('chat-channel', 'new-message-event', $pusher_data);
 
 
         $json['success'] = lang('freelancer/freelancer.text_success');

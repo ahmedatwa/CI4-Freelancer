@@ -12,6 +12,7 @@ class Filters extends BaseConfig
 		'honeypot'     => \CodeIgniter\Filters\Honeypot::class,
 		'seo_url'      => \Catalog\Filters\Seo_url::class,
 		'localization' => \Catalog\Filters\Localization::class,
+		'maintenance'  => \Catalog\Filters\Maintenance::class,
 	];
 
 	// Always applied before every request
@@ -21,6 +22,7 @@ class Filters extends BaseConfig
 		    'seo_url',
 			'csrf',
 		    'honeypot',
+		    'maintenance',
 		],
 		'after'  => [
 			'toolbar',

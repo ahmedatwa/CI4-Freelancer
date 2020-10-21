@@ -49,8 +49,6 @@ $routes->group('blog', function ($routes) {
 	$routes->add('freelancers', 'Freelancer\Freelancer::index');
 	$routes->add('freelancer/u(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
 
-	//$routes->add('freelancer(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
-
 // Account
 $routes->group('account', function ($routes) {
 	$routes->add('dashboard', 'Account\Dashboard::index', ['as' => 'account_dashboard']);
@@ -70,7 +68,7 @@ $routes->group('account', function ($routes) {
 $routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
 $routes->add('add-project', 'Project\Project::add');
 $routes->add('projects', 'Project\Project::index', ['as' => 'projects']);
-$routes->add('project/(:any)', 'Project\Project::project/$1', ['as' => 'single_project']);
+$routes->add('service/(:any)', 'Project\Project::project/$1', ['as' => 'single_project']);
 
 /**
  * --------------------------------------------------------------------
