@@ -50,6 +50,15 @@
 	</div>
 </div>
 </div>
+<a href="#" onclick="signOut();">Sign out</a>
+<script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
 <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 <script>
 function onSuccess(googleUser) {

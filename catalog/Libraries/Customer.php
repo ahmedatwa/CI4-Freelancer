@@ -62,13 +62,13 @@ class Customer
                 $this->customer_image    = $row['image'];
                 // Build User Data Session Array
                 $session_data = [
-                'customer_id'       => $row['customer_id'],
-                'customer_name'     => $row['firstname'] . ' ' . $row['lastname'],
-                'username'          => $row['username'],
-                'customer_group_id' => $row['customer_group_id'],
-                'isLogged'          => (bool) true,
-            ];
-
+                    'customer_id'       => $row['customer_id'],
+                    'customer_name'     => $row['firstname'] . ' ' . $row['lastname'],
+                    'username'          => $row['username'],
+                    'customer_group_id' => $row['customer_group_id'],
+                    'isLogged'          => (bool) true,
+                ];
+                // close any open sessions
                 $this->session->set($session_data);
                 // Set the Online Status
                 $builder->set('online', 1)

@@ -13,7 +13,7 @@ class Login extends \Catalog\Controllers\BaseController
             'text' => lang($this->locale . '.text_home'),
             'href' => base_url(),
         ];
-var_dump($this->session->get('username'));
+        var_dump($this->session->get());
         $data['breadcrumbs'][] = [
             'text' => lang('account/login.heading_title'),
             'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
@@ -117,22 +117,25 @@ var_dump($this->session->get('username'));
                             'username'          => substr($payload['email'], 0, strpos($payload['email'], '@')),
                       ];
 
-                    $customer_id = $customerModel->insert($customer_data);
-                    // user registered 
-                    $login_data = $customerModel->find($customer_id);
-                    // Establish new User Session
+                        $customer_id = $customerModel->insert($customer_data);
+                        // user registered
+                        $customer_info = $customerModel->find($customer_id);
+                        // Establish new User Session
+                        $this->session->remove(['customer_id', 'customer_name', 'username', 'customer_group_id', 'isLogged']);
                         $session_data = [
-                            'customer_id'       => $login_data['customer_id'],
-                            'customer_name'     => $login_data['firstname'] . ' ' . $login_data['lastname'],
-                            'username'          => $login_data['username'],
-                            'customer_group_id' => $login_data['customer_group_id'],
+                            'customer_id'       => $customer_info['customer_id'],
+                            'customer_name'     => $customer_info['firstname'] . ' ' . $customer_info['lastname'],
+                            'username'          => $customer_info['username'],
+                            'customer_group_id' => $customer_info['customer_group_id'],
                             'isLogged'          => (bool) true,
                         ];
-                    $this->session->set($session_data);
-                    // Trigger Pusher Online Event
+                        // close the old session first
+                        //$this->session->destroy();
+                        $this->session->set($session_data);
+
+                        // Trigger Pusher Online Event
                         $options = [
-                            'cluster' => 'eu',
-                            'useTLS' => true
+                            'cluster' => 'eu', 'useTLS' => true
                         ];
 
                         $pusher = new \Pusher\Pusher(
@@ -143,15 +146,13 @@ var_dump($this->session->get('username'));
                         );
 
                         $data['message'] = [
-                            'customer_id' => $login_data['customer_id'],
-                            'username'    => $login_data['username']
+                            'customer_id' => $customer_info['customer_id'],
+                            'username'    => $customer_info['username']
                         ];
 
                         $pusher->trigger('chat-channel', 'online-event', $data);
                           
-                        $json['redirect'] = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
-                
- 
+                        $json['redirect'] = base_url('account/dashboard');
                     }
                 }
                 // If request specified a G Suite domain:

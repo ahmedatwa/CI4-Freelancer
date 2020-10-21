@@ -48,11 +48,11 @@ class Header extends \Catalog\Controllers\BaseController
         $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/project');
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
 
-        if ($this->customer->getCustomerId()) {
+        if ($this->session->get('customer_id')) {
             $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
-            $data['profile']     = route_to('freelancer_profile', $this->customer->getCustomerId(), $this->customer->getCustomerUserName()) ? route_to('freelancer_profile', $this->customer->getCustomerId(), $this->customer->getCustomerUserName()) : base_url('freelancer/freelancer?cid=' . $this->customer->getCustomerId());
-            $data['setting']     = route_to('account_setting') ? route_to('account_setting') : base_url('account/setting?cid=' . $this->customer->getCustomerId());
-            $data['dashboard']   = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard?cid=' . $this->customer->getCustomerId());
+            $data['profile']     = route_to('freelancer_profile', $this->session->get('customer_id'), $this->session->get('username')) ? route_to('freelancer_profile', $this->session->get('customer_id'), $this->session->get('username')) : base_url('freelancer/freelancer?cid=' . $this->session->get('customer_id'));
+            $data['setting']     = route_to('account_setting') ? route_to('account_setting') : base_url('account/setting?cid=' . $this->session->get('customer_id'));
+            $data['dashboard']   = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard?cid=' . $this->session->get('customer_id'));
 
         }
 
@@ -83,7 +83,7 @@ class Header extends \Catalog\Controllers\BaseController
         }
 
         $data['logged'] = $this->customer->isLogged();
-        $data['username'] = $this->customer->getCustomerName();
+        $data['username'] = $this->session->get('username');
 
         if (is_file(DIR_IMAGE . $this->customer->getcustomerImage())) {
             $data['image'] = slash_item('baseURL')  . 'images/' . $this->customer->getcustomerImage();

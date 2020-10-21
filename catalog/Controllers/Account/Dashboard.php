@@ -14,8 +14,8 @@ class Dashboard extends \Catalog\Controllers\BaseController
         
         if($this->request->getVar('cid')) {
             $customer_id = $this->request->getVar('cid');
-        } elseif($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
+        } elseif($this->session->get('customer_id')) {
+            $customer_id = $this->session->get('customer_id');
         } else {
             $customer_id = 0;
         }
