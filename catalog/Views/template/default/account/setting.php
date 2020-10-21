@@ -738,15 +738,18 @@ $("#avatar-1").fileinput({
        showDrag: false,
        removeClass: 'd-none',
     },
-    removeLabel: '',
+    removeLabel: 'Remove',
+    removeIcon: '<i class="far fa-window-close"></i>',
+    removeClass: 'btn btn-danger',
+    removeTitle: 'Cancel or reset changes',
     uploadExtraData: {
             '<?php echo csrf_token(); ?>': '<?php echo csrf_hash(); ?>', 
     },
-    showRemove: false,
+    //showRemove: false,
     elErrorContainer: '#kv-avatar-errors',
     msgErrorClass: 'alert alert-block alert-danger',
     defaultPreviewContent: '<img src="images/catalog/avatar.jpg" style="height:260px;"alt="Your Avatar"><h6 class="text-muted">Click to select</h6>',
-    overwriteInitial: false,
+    overwriteInitial: true,
     initialPreviewAsData: true,
     initialPreview: ['<?php echo base_url('images/catalog/' . $thumb); ?>'],
     allowedFileExtensions: ["jpg", "png", "gif"]
@@ -755,30 +758,38 @@ $("#avatar-1").fileinput({
 <!-- password change -->
 <script type="text/javascript">
 	$('#password-form-button').on('click', function (){
+		var node = this;
 		$.ajax({
 			url: 'account/setting/passwordUpdate',
 			method: 'post',
 			dataType : 'json',
 			data: $('#csrf_token, #password-form input[name=\'current\'], #password-form input[name=\'password\'], #password-form input[name=\'confirm\']'), 
 			beforeSend: function() {
-				$('#password-form-button').prop('disabled', true);
+				$('.alert, .text-danger').remove();
+				$(node).prop('disabled', true);
+				$(node).html('<p id="loading-state"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...</p>');
+			},
+			complete: function () {
+				$(node).prop('disabled', false);
+				$(node).html('Save Changes');
 			},
 			success: function (json) {
+				// validation errors
 				if (json['error_required']) {
-
 					for(i in json['error_required']) {
-						('#input-' + json['error_required'].i).after('<p class="text-danger">'+json['error_required'].i+'</p>');
-
+						var el = $('#input-' + i.replace('_', '-'));
+			            if (el) {
+							el.after('<div class="text-danger">' + json['error_required'][i] + '</div>');
+						} 
 					}
-
 				}
 
 				if (json['error_password_form']) {
-					$('#password-form .content').after('<div class="alert alert-danger alert-dismissible fade show" role="alert">'+ json['error'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('#password-form .content').before('<div class="alert alert-danger alert-dismissible fade show" role="alert">'+ json['error_password_form'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 				}
 
 				if (json['success_password_form']) {
-					$('#password-form .content').after('<div class="alert alert-success alert-dismissible fade show" role="alert">'+ json['error'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('#password-form .content').before('<div class="alert alert-success alert-dismissible fade show" role="alert">'+ json['success_password_form'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 				}
 			},
             error: function(xhr, ajaxOptions, thrownError) {

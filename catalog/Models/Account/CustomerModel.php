@@ -19,6 +19,7 @@ class CustomerModel extends \CodeIgniter\Model
 
     protected function hashPassword(array $data)
     {
+
         if (isset($data['data']['password']) && !empty($data['data']['password'])) {
             $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
         } else {
@@ -29,9 +30,11 @@ class CustomerModel extends \CodeIgniter\Model
 
     protected function afterUpdateEvent(array $data)
     {
-        if (isset($data['data']['username'])) {
-            \CodeIgniter\Events\Events::trigger('customer_activity_update', $data['customer_id'], $data['data']['username']);
+        if (isset($data['data']['firstname']) || isset($data['data']['lastname']) || isset($data['data']['tag_line'])) {
+            $name  = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
+            \CodeIgniter\Events\Events::trigger('customer_activity_update', $data['id'], $name);
         } 
+       return $data;  
     }
 
 
@@ -48,7 +51,7 @@ class CustomerModel extends \CodeIgniter\Model
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($customer_data);
         \CodeIgniter\Events\Events::trigger('customer_register_activity', $this->db->insertID(), explode('@', $data['email'])[0]);
-        \CodeIgniter\Events\Events::trigger('new_customer_greeting', $data['email']);
+        \CodeIgniter\Events\Events::trigger('mail_register', $data['email']);
     }
 
     public function getCustomers(array $data = [])

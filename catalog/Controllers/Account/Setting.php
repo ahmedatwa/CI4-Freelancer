@@ -11,8 +11,8 @@ class Setting extends \Catalog\Controllers\BaseController
         $customerModel = new CustomerModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $customerModel->update($this->customer->getCustomerID(), $this->request->getPost());
-            return redirect()->route('account_setting')->with('success', lang('catalog/category.text_success'));
+            $customerModel->update($this->session->get('customer_id'), $this->request->getPost());
+            return redirect()->route('account_setting')->with('success', lang('account/setting.text_success'));
         }
 
         $this->index();
@@ -24,7 +24,7 @@ class Setting extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('cid')) {
             $customer_id = $this->request->getVar('cid');
-        } elseif ($this->customer->getCustomerId()) {
+        } elseif ($this->session->get('customer_id')) {
             $customer_id = $this->customer->getCustomerId();
         } else {
             $customer_id = 0;
@@ -108,24 +108,6 @@ class Setting extends \Catalog\Controllers\BaseController
             $data['rate'] = $customer_info['rate'];
         } else {
             $data['rate'] = 0;
-        }
-
-        if ($this->request->getPost('passowrd')) {
-            $data['passowrd'] = $this->request->getPost('passowrd');
-        } else {
-            $data['passowrd'] = '';
-        }
-
-        if ($this->request->getPost('confirm')) {
-            $data['confirm'] = $this->request->getPost('confirm');
-        } else {
-            $data['confirm'] = '';
-        }
-
-        if ($this->request->getPost('current_passowrd')) {
-            $data['current_passowrd'] = $this->request->getPost('current_passowrd');
-        } else {
-            $data['current_passowrd'] = '';
         }
 
         $data['thumb'] = isset($customer_info['image']) ? $customer_info['image'] : '';
@@ -686,18 +668,18 @@ class Setting extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-                // Fields Validation Rules
+        // Fields Validation Rules
         if (! $this->validate([
-            'current'  => 'required',
-            'password' => 'required|min_length[4]',
-            'confirm'  => 'required_with[password]|matches[password]',
+                'current'  => 'required',
+                'password' => 'required|min_length[4]',
+                'confirm'  => 'required_with[password]|matches[password]',
             ])) {
 
             $json['error_required'] = $this->validator->getErrors();
         } 
 
         if (!$json) {
-        if ($this->request->getMethod() == 'post' && $this->request->getPost('current')) {
+        if ($this->request->getMethod() == 'post' && !empty($this->request->getPost('current'))) {
 
             $customerModel = new CustomerModel();
 
@@ -724,10 +706,8 @@ class Setting extends \Catalog\Controllers\BaseController
     {
         // Fields Validation Rules
         if (! $this->validate([
-            'firstname' => 'required|alpha_numeric',
-            'lastname'  => 'required|alpha_numeric',
-            'password' => 'required|min_length[4]',
-            'confirm'  => 'required_with[password]|matches[password]',
+                'firstname' => 'required|alpha_numeric',
+                'lastname'  => 'required|alpha_numeric',
             ])) {
             $this->session->setFlashData('error_warning', lang('account/register.text_warning'));
             return false;

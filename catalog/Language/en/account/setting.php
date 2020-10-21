@@ -83,7 +83,7 @@ return [
     'tab_certificates' => 'Certificates',
     'tab_education' => 'Education',
     'tab_languages' => 'Languages',
-    'error_old_password' => 'Old password doesn\'t match the current records',
+    'error_old_password' => 'Old password doesn\'t match the our records',
 
 
 
