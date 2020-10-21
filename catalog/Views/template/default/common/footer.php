@@ -113,6 +113,7 @@
 </div>
 <!-- Footer / End -->
 <script type="text/javascript">
+<?php if (!$logged) { ?>	
 // refresh notification count
   function totalUnseen(data) {
    $.ajax({
@@ -125,7 +126,6 @@
         }
     });
  }totalUnseen();
-
 setInterval(function(){
  totalUnseen();
 }, 5000);
@@ -170,7 +170,6 @@ function loadMessages() {
     });
   }
 
-
 function markRead(message_id) {
   $.ajax({
       url: 'account/message/markRead',
@@ -183,6 +182,7 @@ function markRead(message_id) {
         }
   });
 }
+<?php } ?>
 </script>
 <!-- Notification Event -->
 <script type="text/javascript">

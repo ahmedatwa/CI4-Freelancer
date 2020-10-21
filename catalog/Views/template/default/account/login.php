@@ -1,4 +1,5 @@
 <?php echo $header; ?>
+<meta name="google-signin-client_id" content="135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com">
 <div class="section gray padding-bottom-60 padding-top-60 full-width-carousel-fix">	
 <!-- Page Content -->
 <div class="container">
@@ -41,8 +42,7 @@
 				<!-- Social Login -->
 				<div class="social-login-separator"><span>or</span></div>
 				<div class="social-login-buttons">
-					<button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i> Log In via Facebook</button>
-					<button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i> Log In via Google+</button>
+					<div id="my-signin2"></div>
 				</div>
 			</div>
 
@@ -50,6 +50,46 @@
 	</div>
 </div>
 </div>
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+<script>
+function onSuccess(googleUser) {
+  var id_token = googleUser.getAuthResponse().id_token;
+  $.ajax({
+  	url: 'account/login/googleAuth?g_token=' + id_token,
+  	dataType: 'json',
+  	success: function(json) {
+  		if (json['redirect']) {
+  			location = json['redirect'];
+  		}
+  	}
+
+  });
+
+  var profile = googleUser.getBasicProfile();
+
+  console.log('ID: ' + profile.getId());
+  console.log('Full Name: ' + profile.getName());
+  console.log('Given Name: ' + profile.getGivenName());
+  console.log('Family Name: ' + profile.getFamilyName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail());
+}
+
+function onFailure(error) {
+  console.log(error);
+}
+function renderButton() {
+  gapi.signin2.render('my-signin2', {
+    'scope': 'profile email',
+    'width': 270,
+    'height': 50,
+    'longtitle': true,
+    'theme': 'dark',
+    'onsuccess': onSuccess,
+    'onfailure': onFailure
+  });
+}
+</script>
 <?php if ($error_warning) { ?>
 <script type="text/javascript">
 	$.notify({

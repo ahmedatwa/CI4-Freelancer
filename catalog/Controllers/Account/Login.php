@@ -13,7 +13,7 @@ class Login extends \Catalog\Controllers\BaseController
             'text' => lang($this->locale . '.text_home'),
             'href' => base_url(),
         ];
-
+var_dump($this->session->get('username'));
         $data['breadcrumbs'][] = [
             'text' => lang('account/login.heading_title'),
             'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
@@ -40,7 +40,7 @@ class Login extends \Catalog\Controllers\BaseController
 
             $pusher->trigger('chat-channel', 'online-event', $data);
               
-            return redirect()->to(route_to('dashboard') ? route_to('dashboard') : base_url('account/dashboard'));
+            return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
         }
         
 
@@ -87,6 +87,82 @@ class Login extends \Catalog\Controllers\BaseController
         $data['forgotton'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
 
         $this->template->output('account/login', $data);
+    }
+
+    public function googleAuth()
+    {
+        $json = [];
+
+        $clientId = '135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com';
+
+        if ($this->request->getVar('g_token')) {
+            $customerModel = new CustomerModel();
+
+            $client = new \Google_Client(['client_id' => $clientId]);
+
+            $payload = $client->verifyIdToken($this->request->getVar('g_token'));
+
+            if ($payload) {
+                if (($payload['aud'] == $clientId) && (in_array($payload['iss'], ['https://accounts.google.com', 'accounts.google.com']))) {
+                    $customerEmail = $customerModel->where('email', $payload['email'])->findColumn('email');
+                    // user doesn't exist create new one from Client Response
+                    if (! $customerEmail) {
+                        $customer_data = [
+                            'customer_group_id' => 1,
+                            'online'            => 1,
+                            'email'             => $payload['email'],
+                            'image'             => $payload['picture'],
+                            'firstname'         => $payload['given_name'],
+                            'lastname'          => $payload['family_name'],
+                            'username'          => substr($payload['email'], 0, strpos($payload['email'], '@')),
+                      ];
+
+                    $customer_id = $customerModel->insert($customer_data);
+                    // user registered 
+                    $login_data = $customerModel->find($customer_id);
+                    // Establish new User Session
+                        $session_data = [
+                            'customer_id'       => $login_data['customer_id'],
+                            'customer_name'     => $login_data['firstname'] . ' ' . $login_data['lastname'],
+                            'username'          => $login_data['username'],
+                            'customer_group_id' => $login_data['customer_group_id'],
+                            'isLogged'          => (bool) true,
+                        ];
+                    $this->session->set($session_data);
+                    // Trigger Pusher Online Event
+                        $options = [
+                            'cluster' => 'eu',
+                            'useTLS' => true
+                        ];
+
+                        $pusher = new \Pusher\Pusher(
+                            'b4093000fa8e8cab989a',
+                            'fb4bfd2d78aac168d918',
+                            '1047280',
+                            $options
+                        );
+
+                        $data['message'] = [
+                            'customer_id' => $login_data['customer_id'],
+                            'username'    => $login_data['username']
+                        ];
+
+                        $pusher->trigger('chat-channel', 'online-event', $data);
+                          
+                        $json['redirect'] = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
+                
+ 
+                    }
+                }
+                // If request specified a G Suite domain:
+         // $domain = $payload['hd'];
+            } else {
+                $json['invalid'] = 'Invalid ID token';
+            }
+        }
+
+
+        return $this->response->setJSON($json);
     }
 
     protected function validateForm()

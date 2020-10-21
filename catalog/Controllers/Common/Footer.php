@@ -71,6 +71,9 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['project_added'] = $this->session->getFlashdata('project_added');
 
         $data['config_name'] = $this->registry->get('config_name');
+
+        $data['logged'] = $this->customer->isLogged();
+
         
         if (is_file(DIR_IMAGE . $this->registry->get('config_logo'))) {
             $data['logo'] = base_url() . '/images/' . $this->registry->get('config_logo');

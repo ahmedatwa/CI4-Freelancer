@@ -33,7 +33,7 @@ class Home extends \Catalog\Controllers\BaseController
 
         foreach ($results as $result) {
 
-            if ($result['image']) {
+            if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
                     $image = $this->resize($result['image'], 110, 110);
                 } else {
                     $image = $this->resize('catalog/avatar.jpg', 110, 110);

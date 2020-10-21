@@ -35,8 +35,6 @@ $('.intro-search-field input').on('keydown', function(e) {
 // Highlight any found errors
 $('.text-danger').each(function() {
 	var element = $(this).parent();
-
-    console.log(element);
     if (element.hasClass('input-group')) {
         element.addClass('is-invalid');
     }
