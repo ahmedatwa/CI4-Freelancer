@@ -40,9 +40,13 @@
 
 				<!-- Social Login -->
 				<div class="social-login-separator"><span>or</span></div>
-				<div class="social-login-buttons">
-					<div id="my-signin2"></div>
-				</div>
+				<div class="social-login-buttons align-content-center">
+					<div id="my-signin2" class="mt-auto"></div>
+					
+<!-- 					<a id="linkedin-button" class="btn btn-block btn-primary mt-3">
+						  <i class="fab fa-linkedin"></i> Sign in with Linkedin
+					</a>
+ -->				</div>
 			</div>
 
 		</div>
@@ -58,7 +62,7 @@ function onSuccess(googleUser) {
   	url: 'account/login/googleAuth?client_id=' + client_id + '&id_token=' + id_token,
   	contentType: 'application/x-www-form-urlencoded',
   	beforeSend: function() {
-  		$('#overlay').fadeIn();
+  		$('#overlay').fadeIn().delay(2000);
   	},
   	complete: function() {
   		$('#overlay').fadeOut();
@@ -78,7 +82,7 @@ function onFailure(error) {
 function renderButton() {
   gapi.signin2.render('my-signin2', {
     'scope': 'profile email',
-    'width': 270,
+    'width': 300,
     'height': 50,
     'longtitle': true,
     'theme': 'dark',
@@ -86,6 +90,29 @@ function renderButton() {
     //'onfailure': onFailure
   });
 }
+</script>
+<!-- linked in  -->
+<script type="text/javascript">
+	$('#linkedin-button').on('click', function() {
+  // Initialize with your OAuth.io app public key
+  OAuth.initialize('YOUR_OAUTH_KEY');
+  // Use popup for oauth
+  OAuth.popup('linkedin2').then(linkedin => {
+    console.log('linkedin:',linkedin);
+    // Prompts 'welcome' message with User's email on successful login
+    // #me() is a convenient method to retrieve user data without requiring you
+    // to know which OAuth provider url to call
+    linkedin.me().then(data => {
+      console.log('me data:', data);
+      alert('Linkedin says your email is:' + data.email + ".\nView browser 'Console Log' for more details");
+    })
+    // Retrieves user data from OAuth provider by using #get() and
+    // OAuth provider url
+    linkedin.get('/v2/me').then(data => {
+      console.log('self data:', data);
+    })
+  });
+})
 </script>
 <?php if ($error_warning) { ?>
 <script type="text/javascript">

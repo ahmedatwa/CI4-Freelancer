@@ -127,7 +127,6 @@
             <a class="dropdown-item" href="<?php echo $dashboard; ?>"> <?php echo $text_dashboard; ?></a>
             <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_setting; ?></a>
             <a class="dropdown-item" href="<?php echo $profile; ?>"> <?php echo $text_profile; ?></a>
-            <div class="dropdown-divider"></div>
             <a role="button" id="button-logout" class="dropdown-item"> <?php echo $text_logout; ?></a>
     </div>
     </div>

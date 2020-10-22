@@ -41,6 +41,65 @@ class Currency extends \Admin\Controllers\BaseController
         $this->getForm();
     }
 
+public function refresh($force = false)
+    {
+        $currency_data = [];
+
+        $client = \Config\Services::curlrequest();
+
+        $response = $client->request('GET', 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
+
+        $body = $response->getBody();
+        var_dump($body);
+
+        if ($body) {
+                $dom = new \DOMDocument('1.0', 'UTF-8');
+
+                $dom->loadXml($body);
+
+                $cube = $dom->getElementsByTagName('Cube')->item(0);
+
+
+                $currencies = [];
+
+                $currencies['EUR'] = 1.0000;
+
+                foreach ($cube->getElementsByTagName('Cube') as $currency) {
+                    var_dump($currency);
+                   
+                    if ($currency->getAttribute('currency')) {
+                        $currencies[$currency->getAttribute('currency')] = $currency->getAttribute('rate');
+                    }
+                }
+
+                if ($currencies) {
+                   // $this->load->model('localisation/currency');
+
+                    //$results = $this->model_localisation_currency->getCurrencies();
+
+                    // foreach ($results as $result) {
+                    //     if (isset($currencies[$result['code']])) {
+                    //         $from = $currencies['EUR'];
+
+                    //         $to = $currencies[$result['code']];
+
+                    //         $this->model_localisation_currency->editValueByCode($result['code'], 1 / ($currencies[$default] * ($from / $to)));
+                    //     }
+                    // }
+                }
+            }
+
+
+        //     if ((float)$value) {
+        //         $this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . (float)$value . "', date_modified = '" .  $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE code = '" . $this->db->escape($currency) . "'");
+        //     }
+        // }
+
+        // $this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '1.00000', date_modified = '" .  $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE code = '" . $this->db->escape($this->config->get('config_currency')) . "'");
+
+        // $this->cache->delete('currency');
+    }
+
     public function delete()
     {
         $json = [];

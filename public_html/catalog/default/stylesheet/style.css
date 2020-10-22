@@ -9552,7 +9552,7 @@ img.mfp-img {
 }
 
 /* Social Login Buttons */
-.social-login-buttons {
+/*.social-login-buttons {
 	display: flex;
 	width: calc(100% + 20px)
 }
@@ -9569,9 +9569,9 @@ img.mfp-img {
 	padding: 9px 5px;
 	max-width: 50%;
 	transition: 0.3s;
-}
+}*/
 
-.social-login-buttons button:hover {
+/*.social-login-buttons button:hover {
 	background-color: #333;
 	color: #fff;
 }
@@ -9601,13 +9601,13 @@ img.mfp-img {
 .social-login-buttons .google-login:hover {
 	background-color: #dd4b39;
 	color: #fff;
-}
+}*/
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
 	.social-login-separator { margin-bottom: 25px; }
 	.social-login-buttons,
 	.social-login-buttons a { width: 100%; display: block; max-width: 100%; }
-}
+}*/
 
 /* Account Type */
 .account-type {

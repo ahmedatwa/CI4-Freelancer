@@ -40,11 +40,11 @@ class Login extends \Catalog\Controllers\BaseController
 
             $pusher->trigger('chat-channel', 'online-event', $data);
 
-            if ($this->session->get('_ci_previous_url')) {
-                return redirect()->to($this->session->get('_ci_previous_url'));
-            } else {
+            //if ($this->session->get('_ci_previous_url')) {
+                //return redirect()->to($this->session->get('_ci_previous_url'));
+           // } else {
                 return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
-            }
+            //}
         }
         
 
