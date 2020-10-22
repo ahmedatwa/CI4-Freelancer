@@ -4,9 +4,11 @@
     <div class="page-header">
       <div class="container-fluid">
         <div class="float-right">
+            <a href="<?php echo $refresh; ?>" data-toggle="tooltip" title="<?php echo $button_currency; ?>" class="btn btn-warning"><i class="fas fa-sync-alt"></i></a>  
             <a href="<?php echo $add; ?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="<?php echo $button_add; ?>">
                 <i class="fas fa-plus"></i></a>
-                <button type="button" id="button-delete" data-toggle="tooltip" data-placement="top" class="btn btn-danger" title="<?php echo $button_delete;?>" disabled><i class="fa fa-trash"></i></button></div>
+                <button type="button" id="button-delete" data-toggle="tooltip" data-placement="top" class="btn btn-danger" title="<?php echo $button_delete;?>" disabled><i class="fa fa-trash"></i></button>
+            </div>
                 <h1><?php echo $heading_title; ?> </h1>
                 <nav aria-label="breadcrumb" id="breadcrumb">
                    <ol class="breadcrumb">
@@ -31,8 +33,9 @@
                     <thead>
                         <tr>
                             <th width="1%" class="no-sort"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                            <th width="70%"><?php echo $column_title; ?></th>
+                            <th width="50%"><?php echo $column_title; ?></th>
                             <th><?php echo $column_code; ?></th>
+                            <th><?php echo $column_date_modified; ?></th>
                             <th width="5%"><?php echo $column_action; ?></th>
                         </tr>
                     </thead>
@@ -47,6 +50,7 @@
                                         <?php } ?> </div></th>
                                         <td><?php echo $currency['title']; ?></td>
                                         <td><?php echo $currency['code']; ?></td>
+                                        <td><?php echo $currency['date_modified']; ?></td>
                                         <td class="text-center">  
                                             <a href="<?php echo $currency['edit']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>" ><i class="far fa-edit"></i></a></td>
                                         </tr>

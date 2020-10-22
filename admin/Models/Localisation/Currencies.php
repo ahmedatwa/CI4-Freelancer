@@ -93,26 +93,6 @@ class Currencies extends Model
             $builder = $this->db->table('currency');
             $builder->select();
 
-
-            // $sort_data = array(
-            //     'title',
-            //     'code',
-            //     'value',
-            //     'date_modified'
-            // );
-
-            // if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-            //     $sql .= " ORDER BY " . $data['sort'];
-            // } else {
-            //     $sql .= " ORDER BY title";
-            // }
-
-            // if (isset($data['order']) && ($data['order'] == 'DESC')) {
-            //     $sql .= " DESC";
-            // } else {
-            //     $sql .= " ASC";
-            // }
-
             if (isset($data['start']) || isset($data['limit'])) {
                 if ($data['start'] < 0) {
                     $data['start'] = 0;
@@ -123,10 +103,9 @@ class Currencies extends Model
                 $builder->limit($data['limit'], $data['start']);
             }
 
-
-
             $query = $builder->get();
             return $query->getResultArray();
+
         } else {
             $currency_data = cache()->get('currency');
 
@@ -149,7 +128,7 @@ class Currencies extends Model
                     ];
                 }
 
-                $cache()->save('currency', $currency_data);
+                cache()->save('currency', $currency_data);
             }
 
             return $currency_data;
@@ -160,29 +139,62 @@ class Currencies extends Model
     {
         $currency_data = [];
 
-        $options = [
-                'baseURI' => 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml',
-                'timeout'  => 3
-        ];
-        
-        $client = \Config\Services::curlrequest($options);
+        $client = \Config\Services::curlrequest();
 
+        $request = $client->request('POST', 'http://data.fixer.io/api/latest?access_key=95dd47e556d581360e59d3d16575f5c7');
 
-            if ((float)$value) {
-                $this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . (float)$value . "', date_modified = '" .  $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE code = '" . $this->db->escape($currency) . "'");
+        $response = $request->getBody();
+
+        $response_info = json_decode($response, true);
+
+        if (is_array($response_info) && isset($response_info['rates'])) {
+            $currencies = [];
+
+            $currencies['EUR'] = 1.0000;
+
+            foreach ($response_info['rates'] as $key => $value) {
+                $currencies[$key] = $value;
+            }
+
+            if ($currencies) {
+                $currencyModel = new Currencies();
+
+                $results = $currencyModel->getCurrencies();
+
+                foreach ($results as $result) {
+                    if (isset($currencies[$result['code']])) {
+                       
+                        $from = $currencies['EUR'];
+                        
+                        $to = $currencies[$result['code']];
+
+                        $currencyModel->editValueByCode($result['code'], 1 / ($currencies['EUR'] * ($from / $to)));
+                    }
+                    $currencyModel->editValueByCode('EUR', 1);
+
+                    cache()->delete('currency');
+                }
             }
         }
+    }
 
-        $this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '1.00000', date_modified = '" .  $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE code = '" . $this->db->escape($this->config->get('config_currency')) . "'");
+    public function editValueByCode($code, $value) 
+    {
+        $builder = $this->db->table('currency');
+        $builder->set('value', $value);
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->where('code', $code);
+        $builder->update();
 
-        $this->cache->delete('currency');
+        cache()->delete('currency');
     }
 
     public function getTotalCurrencies()
     {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "currency");
-
-        return $query->row['total'];
+        $builder = $this->db->table('currency');
+        $builder->select();
+        return $builder->countAll();
     }
+
     // -----------------------------------------------------------------
 }

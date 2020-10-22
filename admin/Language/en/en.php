@@ -15,13 +15,14 @@ return [
     'medium_time'       => 'The time is now {0, time, medium}.',
     'long_time'         => 'The time is now {0, time, long}.',
     'full_time'         => 'The time is now {0, time, full}.',
-    'short_date'        => 'The date is now {0, date, short}.',
-    'medium_date'       => 'The date is now {0, date, medium}.',
+    'short_date'        => '{0, date, short}',
+    'medium_date'       => '{0, date, medium}',
     'long_date'         => 'The date is now {0, date, long}.',
     'full_date'         => 'The date is now {0, date, full}.',
     'spelled_out'       => '{0, spellout}',
     'ordinal'           => 'The ordinal is {0, ordinal}',
     'duration'          => 'It has been {0, duration}',
+    'text_default'      => ' <b>(Default)</b>',
     // Text
 'list' => [
     'text_yes'          => 'Yes',
