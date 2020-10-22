@@ -95,8 +95,12 @@ class BaseController extends \CodeIgniter\Controller
 
     public function currencyFormat(float $num)
     {
+        $currencyModel = new \Catalog\Models\Localization\CurrencyModel();
+
+        $currency_info = $currencyModel->getCurrencyByCode($this->session->get('currency'));
+
         helper('number');
-        return number_to_currency($num, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale);
+        return number_to_currency(($num / $currency_info['value']), $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
     }
 
     public function dateAfter(string $date_end)
