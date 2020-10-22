@@ -1,5 +1,4 @@
 <?php echo $header; ?>
-<meta name="google-signin-client_id" content="135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com">
 <div class="section gray padding-bottom-60 padding-top-60 full-width-carousel-fix">	
 <!-- Page Content -->
 <div class="container">
@@ -14,7 +13,7 @@
 				
 				<!-- Form -->
 				<form method="post" action="<?php echo $action; ?>" enctype="multipart/form-data" accept-charset="utf-8">
-				<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+				<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="X-CSRF-TOKEN" />
 				 <div class="form-group">
 					<div class="input-group is-invalid">
 						<div class="input-group-prepend">
@@ -50,21 +49,20 @@
 	</div>
 </div>
 </div>
-<a href="#" onclick="signOut();">Sign out</a>
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
 <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 <script>
 function onSuccess(googleUser) {
   var id_token = googleUser.getAuthResponse().id_token;
+  var client_id = $('meta[name=\'google-signin-client_id\']').attr('content');
   $.ajax({
-  	url: 'account/login/googleAuth?g_token=' + id_token,
+  	url: 'account/login/googleAuth?client_id=' + client_id + '&id_token=' + id_token,
+  	contentType: 'application/x-www-form-urlencoded',
+  	beforeSend: function() {
+  		$('#overlay').fadeIn();
+  	},
+  	complete: function() {
+  		$('#overlay').fadeOut();
+  	},
   	dataType: 'json',
   	success: function(json) {
   		if (json['redirect']) {
@@ -73,19 +71,9 @@ function onSuccess(googleUser) {
   	}
 
   });
-
-  var profile = googleUser.getBasicProfile();
-
-  console.log('ID: ' + profile.getId());
-  console.log('Full Name: ' + profile.getName());
-  console.log('Given Name: ' + profile.getGivenName());
-  console.log('Family Name: ' + profile.getFamilyName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail());
 }
 
 function onFailure(error) {
-  console.log(error);
 }
 function renderButton() {
   gapi.signin2.render('my-signin2', {
@@ -95,7 +83,7 @@ function renderButton() {
     'longtitle': true,
     'theme': 'dark',
     'onsuccess': onSuccess,
-    'onfailure': onFailure
+    //'onfailure': onFailure
   });
 }
 </script>

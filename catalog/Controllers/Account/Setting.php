@@ -657,7 +657,7 @@ class Setting extends \Catalog\Controllers\BaseController
                 $newName = $imagefile->getRandomName();
                 $imagefile->move('images/catalog', $newName);
                 $customerModel->where('customer_id', $this->session->get('customer_id'))
-                              ->set('image', $newName)
+                              ->set('image', 'catalog/' . $newName)
                               ->update();
             }
         }

@@ -7,10 +7,14 @@ class Logout extends BaseController
 
     public function index()
     {
+    	$json = [];
 
         $this->customer->logout();
+        
+        $json['redirect'] = base_url();
+        
 
-        return redirect()->to('/');
+        return $this->response->setJSON($json);
     }
 
     //--------------------------------------------------------------------

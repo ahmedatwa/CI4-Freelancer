@@ -111,9 +111,14 @@
 	<!-- Footer Copyrights / End -->
 </div>
 </div>
+<!-- loader overlay -->
+<div id="overlay">
+	<div class="spinner"></div>
+</div>
+
 <!-- Footer / End -->
 <script type="text/javascript">
-<?php if (!$logged) { ?>	
+<?php if ($logged) { ?>	
 // refresh notification count
   function totalUnseen(data) {
    $.ajax({
@@ -221,6 +226,37 @@ $(document).ready(function() {
    });
   });
 });
+</script>
+<!-- Gmail Sign in  -->
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+<script>
+function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+ }
+
+function gSignOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut();
+  }
+
+</script>
+<!-- singout button -->
+<script type="text/javascript">
+	$('#button-logout').on('click', function(){
+		$.ajax({
+			url: 'account/logout',
+			dataType: 'json',
+			success: function(json) {
+			    gSignOut();
+
+				if (json['redirect']) {
+					location = json['redirect'];
+				}
+			}
+		});
+	});
 </script>
 </body>
 </html>

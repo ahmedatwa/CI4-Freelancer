@@ -19,11 +19,16 @@ class Customer
         $this->session = \Config\Services::session();
 
         if ($this->session->get('customer_id')) {
+
             $builder = $this->db->table($this->db->prefixTable('customer'));
 
-            $builder->where('customer_id', $this->session->get('customer_id'));
-            $builder->where('status', 1);
-            $row = $builder->get()->getRowArray();
+            $builder->where([
+                'customer_id' => $this->session->get('customer_id'),
+                'status'      => 1
+            ]);
+
+            $row = $builder->get()
+                           ->getRowArray();
             if ($row) {
                 $this->customer_id       = $row['customer_id'];
                 $this->customer_group_id = $row['customer_group_id'];

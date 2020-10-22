@@ -5,6 +5,8 @@
   <base href="<?php echo $base; ?>">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="google-signin-client_id" content="135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com">
+
   <!-- CSS -->
   <link rel="stylesheet" href="catalog/default/vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="catalog/default/stylesheet/style.css">
@@ -105,9 +107,9 @@
 <?php } ?>
 </div>
 <?php if ($logged) { ?>
-
 <li class="nav-item dropdown dropdown-bubble">
-  <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" loading="lazy"> <?php echo $username; ?></a>
+  <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> <?php echo $username; ?></a>
     <div class="row justify-content-md-center">
               <div class="dropdown-menu multi-column" aria-labelledby="headerLoginDropdown">
 
@@ -126,19 +128,14 @@
             <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_setting; ?></a>
             <a class="dropdown-item" href="<?php echo $profile; ?>"> <?php echo $text_profile; ?></a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<?php echo $logout; ?>"> <?php echo $text_logout; ?></a>
+            <a role="button" id="button-logout" class="dropdown-item"> <?php echo $text_logout; ?></a>
     </div>
     </div>
   </div>
-
-
-
-
 </li>
 <?php } ?>
 <div class="header-widget d-none d-sm-block ml-3">
   <a href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a>
 </div> 
 </nav>  
-
 <!-- Header Container / End -->

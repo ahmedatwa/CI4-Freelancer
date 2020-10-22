@@ -13,7 +13,7 @@ class Login extends \Catalog\Controllers\BaseController
             'text' => lang($this->locale . '.text_home'),
             'href' => base_url(),
         ];
-        var_dump($this->session->get());
+
         $data['breadcrumbs'][] = [
             'text' => lang('account/login.heading_title'),
             'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
@@ -39,8 +39,12 @@ class Login extends \Catalog\Controllers\BaseController
             ];
 
             $pusher->trigger('chat-channel', 'online-event', $data);
-              
-            return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
+
+            if ($this->session->get('_ci_previous_url')) {
+                return redirect()->to($this->session->get('_ci_previous_url'));
+            } else {
+                return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
+            }
         }
         
 
@@ -93,23 +97,24 @@ class Login extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        $clientId = '135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com';
-
-        if ($this->request->getVar('g_token')) {
+        if ($this->request->getVar('id_token') && $this->request->getVar('client_id')) {
             $customerModel = new CustomerModel();
 
-            $client = new \Google_Client(['client_id' => $clientId]);
+            $client = new \Google_Client([
+                'client_id' => $this->request->getVar('client_id'),
+            ]);
 
-            $payload = $client->verifyIdToken($this->request->getVar('g_token'));
+            $payload = $client->verifyIdToken($this->request->getVar('id_token'));
 
             if ($payload) {
-                if (($payload['aud'] == $clientId) && (in_array($payload['iss'], ['https://accounts.google.com', 'accounts.google.com']))) {
-                    $customerEmail = $customerModel->where('email', $payload['email'])->findColumn('email');
+                if (($payload['aud'] == $this->request->getVar('client_id')) && (in_array($payload['iss'], ['https://accounts.google.com', 'accounts.google.com']))) {
+                    $customer_info = $customerModel->where('email', $payload['email'])->first();
                     // user doesn't exist create new one from Client Response
-                    if (! $customerEmail) {
+                    if (! $customer_info) {
                         $customer_data = [
                             'customer_group_id' => 1,
                             'online'            => 1,
+                            'status'            => 1,
                             'email'             => $payload['email'],
                             'image'             => $payload['picture'],
                             'firstname'         => $payload['given_name'],
@@ -117,20 +122,17 @@ class Login extends \Catalog\Controllers\BaseController
                             'username'          => substr($payload['email'], 0, strpos($payload['email'], '@')),
                       ];
 
-                        $customer_id = $customerModel->insert($customer_data);
+                        $insertID = $customerModel->insert($customer_data);
                         // user registered
-                        $customer_info = $customerModel->find($customer_id);
                         // Establish new User Session
-                        $this->session->remove(['customer_id', 'customer_name', 'username', 'customer_group_id', 'isLogged']);
                         $session_data = [
-                            'customer_id'       => $customer_info['customer_id'],
-                            'customer_name'     => $customer_info['firstname'] . ' ' . $customer_info['lastname'],
-                            'username'          => $customer_info['username'],
-                            'customer_group_id' => $customer_info['customer_group_id'],
-                            'isLogged'          => (bool) true,
+                            'customer_id'   => $insertID,
+                            'customer_name' => $payload['given_name'] . ' ' . $payload['family_name'],
+                            'username'      => substr($payload['email'], 0, strpos($payload['email'], '@')),
+                            'gtoken'        => $this->request->getVar('id_token'),
+                            'isLogged'      => TRUE,
                         ];
-                        // close the old session first
-                        //$this->session->destroy();
+
                         $this->session->set($session_data);
 
                         // Trigger Pusher Online Event
@@ -154,9 +156,17 @@ class Login extends \Catalog\Controllers\BaseController
                           
                         $json['redirect'] = base_url('account/dashboard');
                     }
+                    
+                    $session_data = [
+                        'customer_id'       => $customer_info['customer_id'],
+                        'customer_name'     => $customer_info['firstname'] . ' ' . $customer_info['lastname'],
+                        'username'          => $customer_info['username'],
+                        'isLogged'          => TRUE,
+                    ];
+
+                    $this->session->set($session_data);
+                    $json['redirect'] = base_url('account/dashboard');
                 }
-                // If request specified a G Suite domain:
-         // $domain = $payload['hd'];
             } else {
                 $json['invalid'] = 'Invalid ID token';
             }

@@ -44,14 +44,52 @@
 					<!-- Social Login -->
 					<div class="social-login-separator"><span>or</span></div>
 					<div class="social-login-buttons">
-						<button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i> Register via Facebook</button>
-						<button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i> Register via Google+</button>
+					<div id="my-signin2"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+<script>
+function onSuccess(googleUser) {
+  var id_token = googleUser.getAuthResponse().id_token;
+  var client_id = $('meta[name=\'google-signin-client_id\']').attr('content');
+  $.ajax({
+  	url: 'account/login/googleAuth?client_id=' + client_id + '&id_token=' + id_token,
+  	contentType: 'application/x-www-form-urlencoded',
+  	beforeSend: function() {
+  		$('.loading').css('background', '#FFF');
+  		$('.loading').show();
+  	},
+  	complete: function() {
+  		$('.loading').hide();
+  	},
+  	dataType: 'json',
+  	success: function(json) {
+  		if (json['redirect']) {
+  			location = json['redirect'];
+  		}
+  	}
+
+  });
+}
+
+function onFailure(error) {
+}
+function renderButton() {
+  gapi.signin2.render('my-signin2', {
+    'scope': 'profile email',
+    'width': 270,
+    'height': 50,
+    'longtitle': true,
+    'theme': 'dark',
+    'onsuccess': onSuccess,
+    //'onfailure': onFailure
+  });
+}
+</script>
 <?php if ($error_warning) { ?>
 <script type="text/javascript">
 	$.notify({
