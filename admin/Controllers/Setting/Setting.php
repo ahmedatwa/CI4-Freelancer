@@ -220,6 +220,14 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_project_expired_status'] = '';
         }
 
+        if ($this->request->getPost('freelancer_fee')) {
+            $data['freelancer_fee'] = $this->request->getPost('freelancer_fee');
+        } elseif (!empty($setting_info['freelancer_fee'])) {
+            $data['freelancer_fee'] = $setting_info['freelancer_fee'];
+        } else {
+            $data['freelancer_fee'] = '';
+        }
+
         if ($this->request->getPost('config_logo')) {
             $data['config_logo'] = $this->request->getPost('config_logo');
         } elseif (!empty($setting_info['config_logo'])) {
@@ -277,6 +285,7 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_instagram'] = '#';
         }
 
+        $data['entry_freelancer_fee'] = sprintf(lang('setting/setting.list.entry_freelancer_fee'), $this->registry->get('config_name'));
 
         return $this->document->output('setting/setting', $data);
     }

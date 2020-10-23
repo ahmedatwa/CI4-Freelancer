@@ -58,6 +58,7 @@ return [
     'entry_linkedin'          => 'Linkedin',
     'entry_instagram'         => 'Instagram',
     'entry_maintenance'       => 'Maintenance Mode',
+    'entry_freelancer_fee'    => '%s Fee',
 
     // Help
     'help_user_activity'             => 'Allow system to track user activity',

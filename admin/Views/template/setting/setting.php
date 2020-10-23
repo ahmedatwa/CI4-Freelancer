@@ -244,6 +244,13 @@
 										</div>
 									</fieldset>
 									<fieldset>
+										<legend><?php echo $text_customer; ?></legend>
+										<div class="form-group row">
+											<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_freelancer_fee; ?> </label>
+
+										</div>
+									</fieldset>
+									<fieldset>
 									</div><!-- ./End tab_option -->
 									<!-- ./tab_image -->
 									<div role="tabpanel" class="tab-pane fade mt-3" id="nav-social" aria-labelledby="nav-social-tab">

@@ -1,5 +1,6 @@
 	<?php
     return [
+    'heading_title' => 'Projects',
     // text
     'text_expire'          => '{0, number} Days Left',
     'text_description'      => 'Project Description',

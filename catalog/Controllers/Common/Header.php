@@ -99,8 +99,8 @@ class Header extends \Catalog\Controllers\BaseController
 
         if (is_file(DIR_IMAGE . $this->customer->getcustomerImage())) {
             $data['image'] = slash_item('baseURL')  . 'images/' . $this->customer->getcustomerImage();
-        } elseif(!empty($this->customer->getcustomerImage())) {
-            $data['image'] = $this->customer->getcustomerImage();
+        } elseif($this->session->get('customer_image')) {
+            $data['image'] = $this->session->get('customer_image');
         } else {    
             $data['image'] = base_url()  . '/images/profile.png';
         }

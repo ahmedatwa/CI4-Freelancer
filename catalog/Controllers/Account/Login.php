@@ -41,9 +41,9 @@ class Login extends \Catalog\Controllers\BaseController
             $pusher->trigger('chat-channel', 'online-event', $data);
 
             //if ($this->session->get('_ci_previous_url')) {
-                //return redirect()->to($this->session->get('_ci_previous_url'));
-           // } else {
-                return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
+            //return redirect()->to($this->session->get('_ci_previous_url'));
+            // } else {
+            return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
             //}
         }
         
@@ -116,56 +116,46 @@ class Login extends \Catalog\Controllers\BaseController
                             'online'            => 1,
                             'status'            => 1,
                             'email'             => $payload['email'],
-                            'image'             => $payload['picture'],
                             'firstname'         => $payload['given_name'],
                             'lastname'          => $payload['family_name'],
                             'username'          => substr($payload['email'], 0, strpos($payload['email'], '@')),
-                      ];
+                            'origin'            => 'google',
+                        ];
 
                         $insertID = $customerModel->insert($customer_data);
                         // user registered
                         // Establish new User Session
-                        $session_data = [
-                            'customer_id'   => $insertID,
-                            'customer_name' => $payload['given_name'] . ' ' . $payload['family_name'],
-                            'username'      => substr($payload['email'], 0, strpos($payload['email'], '@')),
-                            'gtoken'        => $this->request->getVar('id_token'),
-                            'isLogged'      => TRUE,
-                        ];
+                        if ($insertID) {
+                            $session_data = [
+                                'customer_id'    => $insertID,
+                                'customer_image' => $payload['picture'],
+                                'customer_name'  => $payload['given_name'] . ' ' . $payload['family_name'],
+                                'username'       => substr($payload['email'], 0, strpos($payload['email'], '@')),
+                                'gtoken'         => $this->request->getVar('id_token'),
+                                'isLogged'       => true,
+                            ];
 
-                        $this->session->set($session_data);
+                            $this->session->set($session_data);
 
-                        // Trigger Pusher Online Event
-                        $options = [
-                            'cluster' => 'eu', 'useTLS' => true
-                        ];
+                             // Trigger Pusher Online Event
+                            $options = ['cluster' => 'eu', 'useTLS' => true];
 
-                        $pusher = new \Pusher\Pusher(
-                            'b4093000fa8e8cab989a',
-                            'fb4bfd2d78aac168d918',
-                            '1047280',
-                            $options
-                        );
+                            $pusher = new \Pusher\Pusher(
+                                'b4093000fa8e8cab989a',
+                                'fb4bfd2d78aac168d918',
+                                '1047280',
+                                $options
+                            );
 
-                        $data['message'] = [
-                            'customer_id' => $customer_info['customer_id'],
-                            'username'    => $customer_info['username']
-                        ];
+                            $data['message'] = [
+                                'customer_id' => $insertID,
+                                'username'    => $payload['given_name'] . ' ' . $payload['family_name']
+                            ];
 
-                        $pusher->trigger('chat-channel', 'online-event', $data);
-                          
-                        $json['redirect'] = base_url('account/dashboard');
-                    }
-                    
-                    $session_data = [
-                        'customer_id'       => $customer_info['customer_id'],
-                        'customer_name'     => $customer_info['firstname'] . ' ' . $customer_info['lastname'],
-                        'username'          => $customer_info['username'],
-                        'isLogged'          => TRUE,
-                    ];
+                            $pusher->trigger('chat-channel', 'online-event', $data);
 
-                    $this->session->set($session_data);
-                    $json['redirect'] = base_url('account/dashboard');
+                            $json['redirect'] = base_url('account/dashboard');
+                        }
                 }
             } else {
                 $json['invalid'] = 'Invalid ID token';
