@@ -212,6 +212,14 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_project_completed_status'] = '';
         }
 
+        if ($this->request->getPost('config_project_expired_status')) {
+            $data['config_project_expired_status'] = $this->request->getPost('config_project_expired_status');
+        } elseif (!empty($setting_info['config_project_expired_status'])) {
+            $data['config_project_expired_status'] = $setting_info['config_project_expired_status'];
+        } else {
+            $data['config_project_expired_status'] = '';
+        }
+
         if ($this->request->getPost('config_logo')) {
             $data['config_logo'] = $this->request->getPost('config_logo');
         } elseif (!empty($setting_info['config_logo'])) {

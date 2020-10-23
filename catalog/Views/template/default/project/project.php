@@ -58,6 +58,7 @@
 						<h3><?php echo $text_description; ?></h3>
 						<p><?php echo $description; ?></p>
 					</div>
+					<h4 class="mb-4">Viewed: <span class="badge badge-success"><?php echo $viewed; ?></span></h4>
 					<div class="single-page-section">
 						<h3><?php echo $text_skills; ?></h3>
 						<?php if ($categories) { ?>
@@ -72,35 +73,34 @@
 				<!-- Sidebar -->
 				<div class="col-sm-12 col-md-3">
 					<div class="sidebar-container p-3 mb-5 bg-white">
-						<?php if ($runtime) { ?>
-						<div class="countdown green mb-4"><?php echo $days_left; ?></div>
-					    <?php } ?>
+						<?php if ($days_left <= 0) { ?>
+							<div class="alert alert-danger text-center" role="alert">
+							  <?php echo $text_expired; ?>
+							</div>
+					    <?php } else { ?>
+					    	<div class="alert alert-info text-center" role="alert">
+							  <?php echo $days_left; ?>
+							</div>
+						<?php } ?>
 						<div class="sidebar-widget">
 							<div class="bidding-widget text-white text-center">
-							 <a href="<?php echo $add_project; ?>" class="button full-width ripple-effect button-sliding-icon">Post a project like this <i class="fas fa-long-arrow-alt-right"></i></a>
+							 <a href="<?php echo $add_project; ?>" class="button ripple-effect button-sliding-icon"><?php echo $button_post_project; ?> <i class="fas fa-long-arrow-alt-right"></i></a>
 							</div>
 						</div>
-						<div class="sidebar-widget">
-							<h3>Viewed: <span class="badge badge-success"><?php echo $viewed; ?></span></h3>
-						</div>	
 						<!-- Sidebar Widget -->
+						<?php if ($other_projects) { ?>
 						<div class="sidebar-widget">
-							<h3>Share</h3>
-							<!-- Share Buttons -->
-							<div class="share-buttons margin-top-25">
-								<div class="share-buttons-trigger"><i class="icon-feather-share-2"></i></div>
-								<div class="share-buttons-content">
-									<span>Interesting? <strong>Share It!</strong></span>
-									<ul class="share-buttons-icons">
-										<li><a href="#" data-toggle="tooltip" title="<?php echo $text_facebook; ?>" data-placement="top"><i class="icon-brand-facebook-f"></i></a></li>
-										<li><a href="#" data-toggle="tooltip" title="<?php echo $text_twitter; ?>" data-placement="top"><i class="icon-brand-twitter"></i></a></li>
-										<li><a href="#" data-toggle="tooltip" title="<?php echo $text_gplus; ?>" data-placement="top"><i class="icon-brand-google-plus-g"></i></a></li>
-									</ul>
-								</div>
-							</div>
+							<h3><?php echo $text_similar; ?></h3>
+							<ul class="list-group list-group-flush">
+								<?php foreach ($other_projects as $other) { ?>
+							    <li class="list-group-item"><a href="<?php echo $other['href']; ?>"><?php echo $other['name']; ?></a></li>
+							  <?php } ?>
+							</ul>
 						</div>
+					<?php } ?>
 					</div>
 				</div>
+				<?php if ($days_left > 0) { ?>
 				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow rounded bg-white">
 				<div class="single-page-section">
 						<div class="bidding-headline"><h3><?php echo $text_bid; ?></h3>
@@ -141,6 +141,7 @@
 					<button id="snackbar-place-bid" class="button ripple-effect move-on-hover full-width margin-top-30"><span><?php echo $button_bid; ?></span></button>
 					</div>
 				</div>
+			<?php } ?>
 				<!-- Freelancers Bidding -->
 			 <div class="col-sm-12 col-md-9 shadow rounded bg-white margin-bottom-60 " id="bid-container"></div>
 			</div>

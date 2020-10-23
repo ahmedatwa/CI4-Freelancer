@@ -2263,7 +2263,7 @@ body #backtotop a {
 }
 
 @media (min-width: 1365px) {
-	.single-page-header .right-side { max-width: 30%; }
+	.single-page-header .right-side { max-width: 35%; }
 }
 
 /* Image */
@@ -8011,7 +8011,6 @@ transform: translateY(-18px);
 ------------------------------------- */
 .bidding-widget {
 	border-radius: 4px;
-	background-color: #f9f9f9;
 }
 
 .dashboard-box .bidding-widget,

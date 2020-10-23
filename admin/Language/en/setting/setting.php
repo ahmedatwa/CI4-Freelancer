@@ -49,6 +49,8 @@ return [
     'entry_customer_activity' => 'Customer Activity',
     'entry_login_attempts'    => 'Max Login Attempts',
     'entry_project_status'    => 'Project status',
+    'entry_project_completed_status'    => 'Project Completed status',
+    'entry_project_expired_status'    => 'Project Expired status',
     'entry_logo'              => 'Logo',
     'entry_facebook'          => 'Facebook', 
     'entry_twitter'           => 'Twitter',

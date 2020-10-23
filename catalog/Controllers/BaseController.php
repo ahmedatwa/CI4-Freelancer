@@ -100,7 +100,12 @@ class BaseController extends \CodeIgniter\Controller
         $currency_info = $currencyModel->getCurrencyByCode($this->session->get('currency'));
 
         helper('number');
-        return number_to_currency(($num / $currency_info['value']), $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
+        if ($this->session->get('currency')) {
+         return number_to_currency(($num / $currency_info['value']), $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
+        } else {
+         return number_to_currency($num, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
+
+        }
     }
 
     public function dateAfter(string $date_end)
@@ -132,11 +137,14 @@ class BaseController extends \CodeIgniter\Controller
         }
 
         $time = $time::parse($date_added);
+        // thw bidding endDate
         $endDate = $time->addDays($runtime)->toDateTimeString();
 
-        $oldDate = $time::parse($date_added);
+        $today = $time::today();
+
+        //$oldDate = $time::parse($date_added);
         
-        $diff = $oldDate->difference($endDate);
+        $diff = $today->difference($endDate);
 
         return $diff->getDays(); 
     }

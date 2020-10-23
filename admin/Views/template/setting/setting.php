@@ -189,11 +189,25 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-sm-2 control-label" for="input-project-status"><?php echo $entry_project_status; ?> </label>
+										<label class="col-sm-2 control-label" for="input-project-status"><?php echo $entry_project_completed_status; ?> </label>
 										<div class="col-sm-10">
 											<select name="config_project_completed_status" class="form-control">
 												<?php foreach($project_statuses as $project_status) { ?>
 													<?php if ($project_status['status_id'] == $config_project_completed_status) { ?>
+														<option value="<?php echo $project_status['status_id']; ?>" selected><?php echo $project_status['name']; ?></option>	
+													<?php } else { ?>
+														<option value="<?php echo $project_status['status_id']; ?>"><?php echo $project_status['name']; ?></option>	
+													<?php } ?>
+												<?php } ?>
+											</select>
+										</div>
+									</div>									
+									<div class="form-group row">
+										<label class="col-sm-2 control-label" for="input-project-status"><?php echo $entry_project_expired_status; ?> </label>
+										<div class="col-sm-10">
+											<select name="config_project_expired_status" class="form-control">
+												<?php foreach($project_statuses as $project_status) { ?>
+													<?php if ($project_status['status_id'] == $config_project_expired_status) { ?>
 														<option value="<?php echo $project_status['status_id']; ?>" selected><?php echo $project_status['name']; ?></option>	
 													<?php } else { ?>
 														<option value="<?php echo $project_status['status_id']; ?>"><?php echo $project_status['name']; ?></option>	

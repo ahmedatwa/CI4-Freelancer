@@ -103,7 +103,19 @@ class Project extends \Catalog\Controllers\BaseController
         $reviewModel = new \Catalog\Models\Catalog\ReviewModel();
 
         foreach ($results as $result) {
+            // SEO Query
             $keyword = $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']);
+
+            $days_left = $this->dateDifference($result['date_added'], $result['runtime']);
+
+            if ($days_left <= 0) {
+                $projectModel->update($result['project_id'], ['status_id' => $this->registry->get('config_project_expired_status')]);
+                $status = $result['status'];
+            } else {
+                $status = lang('project/project.text_expire', [$days_left]);;
+            }
+
+
 
             $data['projects'][] = [
                 'project_id'  => $result['project_id'],
@@ -112,7 +124,7 @@ class Project extends \Catalog\Controllers\BaseController
                 'meta_keyword'=> ($result['meta_keyword']) ? explode(',', $result['meta_keyword']) : '',
                 'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
                 'type'        => ($result['type'] == 1) ? lang('en.text_fixed_price') : lang('en.text_per_hour'),
-                'date_added'  => $this->dateDifference($result['date_added']),
+                'date_added'  => $status,
                 'href'        => ($keyword) ? route_to('single_project', $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
             ];
         }
@@ -385,37 +397,64 @@ class Project extends \Catalog\Controllers\BaseController
             $data['description'] = $project_info['description'];
             $data['categories']  = $categoryModel->getCategoriesByProjectId($project_id);
             $data['viewed']      = $project_info['viewed'];
+
             // Calculate the Bidding Time
-            if ($project_info['runtime']) {
-                $data['days_left'] = lang('project/project.text_expire', [$this->dateDifference($project_info['date_added'], $project_info['runtime'])]);
-            } else {
-                $data['days_left'] = '';
+            $days_left = $this->dateDifference($project_info['date_added'], $project_info['runtime']);
+
+            if ($days_left <= 0) {
+                $project_status = [
+                    'status_id' => $this->registry->get('config_project_expired_status')
+                ];
+                $projectModel->update($project_info['project_id'], $project_status);
             }
+
+            $data['days_left'] = lang('project/project.text_expire', [$days_left]);
 
             $data['runtime'] = $project_info['runtime'];
             
-
             $data['rating']      = round($reviewModel->getAvgReviewByEmployerId($project_info['employer_id']));
             $data['employer']    = $project_info['employer'];
             $data['employer_id'] = $project_info['employer_id'];
             $data['status'] = $projectModel->getStatusByProjectId($project_info['project_id']);
+
+            // Other Employer projects
+            $filter_data = [
+                'start' => 0,
+                'limit' => 5,
+                'current_project' => $project_info['project_id']
+            ];
+
+            $other_projects = $projectModel->getProjects($filter_data);
+
+            foreach ($other_projects as $result) {
+                $keyword = $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']);
+                $data['other_projects'][] = [
+                'project_id'  => $result['project_id'],
+                'name'        => $result['name'],
+                'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
+                'href'        => ($keyword) ? route_to('single_project', $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
+            ];
+            }
         }
 
-        $data['text_about']       = lang('project/project.text_about');
-        $data['text_budget']      = lang('project/project.text_budget');
-        $data['text_description'] = lang('project/project.text_description');
-        $data['text_attachments'] = lang('project/project.text_attachments');
-        $data['text_skills']      = lang('project/project.text_skills');
-        $data['text_bid']         = lang('project/project.text_bid');
-        $data['text_rate']        = lang('project/project.text_rate');
-        $data['text_bid_detail']  = lang('project/project.text_bid_detail');
-        $data['text_describe']  = lang('project/project.text_describe');
-        $data['text_delivery']    = lang('project/project.text_delivery');
-        $data['text_register']    = lang('common/header.text_register');
-        $data['text_facebook']    = lang('en.text_facebook');
-        $data['text_twitter']     = lang('en.text_twitter');
-        $data['text_gplus']       = lang('en.text_gplus');
-        $data['button_bid']       = lang('project/project.button_bid');
+        $data['text_about']          = lang('project/project.text_about');
+        $data['text_budget']         = lang('project/project.text_budget');
+        $data['text_description']    = lang('project/project.text_description');
+        $data['text_attachments']    = lang('project/project.text_attachments');
+        $data['text_skills']         = lang('project/project.text_skills');
+        $data['text_bid']            = lang('project/project.text_bid');
+        $data['text_rate']           = lang('project/project.text_rate');
+        $data['text_bid_detail']     = lang('project/project.text_bid_detail');
+        $data['text_describe']       = lang('project/project.text_describe');
+        $data['text_delivery']       = lang('project/project.text_delivery');
+        $data['text_register']       = lang('common/header.text_register');
+        $data['text_facebook']       = lang('en.text_facebook');
+        $data['text_twitter']        = lang('en.text_twitter');
+        $data['text_gplus']          = lang('en.text_gplus');
+        $data['button_bid']          = lang('project/project.button_bid');
+        $data['text_expired']        = lang('project/project.text_expired');
+        $data['text_similar']        = lang('project/project.text_similar');
+        $data['button_post_project'] = lang('project/project.button_post_project');
         
 
         $projectModel->updateViewed($project_id);

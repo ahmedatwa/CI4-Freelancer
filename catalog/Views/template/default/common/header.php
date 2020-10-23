@@ -61,15 +61,14 @@
       </span>
       <a class="navbar-brand" href="<?php echo $home; ?>">
         <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top" loading="lazy"></a>
-
+        <?php if (! $logged) { ?>
         <nav class="navbar navbar-light d-block d-sm-none">
-          <?php if (! $logged) { ?>
             <span class="navbar-text">
               <a class="m-auto" href="<?php echo $login; ?>"><?php echo $text_login; ?></a>
               <a class="ml-3" href="<?php echo $register; ?>"><?php echo $text_register; ?></a>
             </span>
-          <?php } ?>
         </nav>
+        <?php } ?>
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="navbar-nav mr-auto">
             <?php foreach ($informations as $information) { ?>
@@ -77,11 +76,15 @@
            <?php }  ?>
            <li class="nav-item"><a class="nav-link" href="<?php echo $projects; ?>"> <?php echo $text_projects; ?></a></li>
            <li class="nav-item"><a class="nav-link" href="<?php echo $blog; ?>"> <?php echo $text_blog; ?></a></li>
+           <li class="nav-item d-md-none "><a class="nav-link" href="<?php echo $dashoard; ?>"> <?php echo $text_dashboard; ?></a></li>
+           <li class="nav-item d-md-none"><a class="nav-link" href="<?php echo $account_project; ?>"> <?php echo $text_my_projects; ?></a></li>
+           <li class="nav-item d-md-none"><a class="nav-link" href="<?php echo $account_message; ?>"> <?php echo $text_messages; ?></a></li>
+           <li class="nav-item d-md-none"><a class="nav-link" href="<?php echo $account_review; ?>"> <?php echo $text_reviews; ?></a></li>
          </ul>
          <?php if (! $logged) { ?>
            <ul class="navbar-nav">
              <li class="nav-item d-none d-md-block"><a class="nav-link" href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
-             <li class="nav-item d-none d-md-block"><a class="nav-link" href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
+             <li class="nav-item d-none d-md-block"><a class="nav-link btn btn-outline-light" href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
            </ul>
          <?php } else { ?>
           <ul class="navbar-nav">

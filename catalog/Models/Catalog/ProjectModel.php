@@ -5,6 +5,10 @@ class ProjectModel extends \CodeIgniter\Model
     protected $table          = 'project';
     protected $primaryKey     = 'project_id';
     protected $returnType     = 'array';
+    protected $allowedFields = ['status_id'];
+    protected $createdField  = 'date_added';
+    protected $updatedField  = 'date_modified';
+
 
     public function addProject($data)
     {
@@ -145,12 +149,12 @@ class ProjectModel extends \CodeIgniter\Model
         }
     }
 
-    public function getProjects($data = [])
+    public function getProjects(array $data = [])
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime');
+        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
-       // $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
+        $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
         if (isset($data['filter_category_id'])) {
@@ -160,6 +164,10 @@ class ProjectModel extends \CodeIgniter\Model
 
         if (isset($data['employer_id'])) {
             $builder->where('p.employer_id', $data['employer_id']);
+        }
+
+        if (isset($data['current_project'])) {
+            $builder->where('p.project_id !=', $data['current_project']);
         }
 
         if (isset($data['status_id'])) {

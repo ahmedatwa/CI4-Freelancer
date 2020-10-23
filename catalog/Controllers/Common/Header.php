@@ -82,6 +82,18 @@ class Header extends \Catalog\Controllers\BaseController
             $data['blog'] = '';
         }
 
+        // customer Menu
+        $data['text_dashboard']   = lang('account/menu.text_dashboard');
+        $data['dashoard']         = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
+        $data['text_my_projects'] = lang('account/menu.text_my_projects');
+        $data['account_project']  = route_to('account_project') ? route_to('account_project') : base_url('account/project');
+        
+        $data['text_messages']    = lang('account/menu.text_messages');
+        $data['account_message']  = route_to('account_message') ? route_to('account_message') : base_url('account/message');
+        $data['text_reviews']     = lang('account/menu.text_reviews');
+        $data['account_review']   = route_to('account_review') ? route_to('account_review') : base_url('account/review');
+
+
         $data['logged'] = $this->customer->isLogged();
         $data['username'] = $this->session->get('username');
 
@@ -92,6 +104,8 @@ class Header extends \Catalog\Controllers\BaseController
         } else {    
             $data['image'] = base_url()  . '/images/profile.png';
         }
+
+        $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
         $data['defaut_color_scheme'] = $this->registry->get('theme_default_color') ?? 'red.css';
         $data['all_messages'] = route_to('account_messages') ? route_to('account_messages') : base_url('account/message');

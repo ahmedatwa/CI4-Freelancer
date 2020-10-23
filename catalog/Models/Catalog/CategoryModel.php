@@ -77,9 +77,10 @@ class CategoryModel extends \CodeIgniter\Model
     public function getCategoriesByProjectId($project_id)
     {
         $builder = $this->db->table('project_to_category p2c');
-        $builder->select('name');
+        $builder->select();
         $builder->join('category_description cd', 'p2c.category_id = cd.category_id', 'left');
         $builder->where('p2c.project_id', $project_id);
+        $builder->where('cd.language_id', service('registry')->get('config_language_id'));
         $query = $builder->get();
         return $query->getResultArray();
          
