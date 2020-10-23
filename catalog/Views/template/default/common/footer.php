@@ -113,7 +113,7 @@
 </div>
 <!-- loader overlay -->
 <div id="overlay">
-	<div class="spinner"></div>
+	<div class="spinner"></div> Loading...
 </div>
 
 <!-- Footer / End -->

@@ -157,6 +157,10 @@ $("#snackbar-place-bid").on('click', function () {
 		beforeSend: function() {
 			$('#snackbar-place-bid').prop('disabled');
 			$('.text-danger, .alert-danger').remove();
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function() {
+  		    $('#overlay').fadeOut();
 		},
 		success: function(json) {
 

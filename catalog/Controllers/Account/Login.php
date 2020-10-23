@@ -19,6 +19,10 @@ class Login extends \Catalog\Controllers\BaseController
             'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
         ];
 
+        if ($this->session->get('_ci_previous_url') != base_url('account/login')) {
+            $this->session->set('redirect_url', $this->session->get('_ci_previous_url'));
+        }
+
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             // Trigger Pusher Online Event
             $options = [
@@ -40,11 +44,13 @@ class Login extends \Catalog\Controllers\BaseController
 
             $pusher->trigger('chat-channel', 'online-event', $data);
 
-            //if ($this->session->get('_ci_previous_url')) {
-            //return redirect()->to($this->session->get('_ci_previous_url'));
-            // } else {
-            return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
-            //}
+
+
+            if ($this->session->get('redirect_url')) {
+                return redirect()->to($this->session->get('redirect_url'));
+            } else {
+                return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
+            }
         }
         
 
@@ -160,7 +166,6 @@ class Login extends \Catalog\Controllers\BaseController
                     $json['invalid'] = 'Invalid ID token';
                 }
             }
-    
         }
 
 

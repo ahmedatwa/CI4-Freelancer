@@ -465,6 +465,7 @@ class Project extends \Catalog\Controllers\BaseController
     public function add()
     {
         if (! $this->customer->isLogged()) {
+
             return redirect()->to(route_to('account_login') ? route_to('account_login') : base_url('account/login'));
         }
 
