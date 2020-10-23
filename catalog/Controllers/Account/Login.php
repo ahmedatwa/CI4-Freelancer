@@ -123,11 +123,11 @@ class Login extends \Catalog\Controllers\BaseController
                         ];
 
                         $insertID = $customerModel->insert($customer_data);
-                        // user registered
-                        // Establish new User Session
-                        if ($insertID) {
-                            $session_data = [
-                                'customer_id'    => $insertID,
+                    }
+
+                    if ($customer_info) {
+                        $session_data = [
+                                'customer_id'    => $insertID ?? $customer_info['customer_id'],
                                 'customer_image' => $payload['picture'],
                                 'customer_name'  => $payload['given_name'] . ' ' . $payload['family_name'],
                                 'username'       => substr($payload['email'], 0, strpos($payload['email'], '@')),
@@ -135,31 +135,32 @@ class Login extends \Catalog\Controllers\BaseController
                                 'isLogged'       => true,
                             ];
 
-                            $this->session->set($session_data);
+                        $this->session->set($session_data);
 
-                             // Trigger Pusher Online Event
-                            $options = ['cluster' => 'eu', 'useTLS' => true];
+                        // Trigger Pusher Online Event
+                        $options = ['cluster' => 'eu', 'useTLS' => true];
 
-                            $pusher = new \Pusher\Pusher(
-                                'b4093000fa8e8cab989a',
-                                'fb4bfd2d78aac168d918',
-                                '1047280',
-                                $options
-                            );
+                        $pusher = new \Pusher\Pusher(
+                            'b4093000fa8e8cab989a',
+                            'fb4bfd2d78aac168d918',
+                            '1047280',
+                            $options
+                        );
 
-                            $data['message'] = [
+                        $data['message'] = [
                                 'customer_id' => $insertID,
                                 'username'    => $payload['given_name'] . ' ' . $payload['family_name']
                             ];
 
-                            $pusher->trigger('chat-channel', 'online-event', $data);
+                        $pusher->trigger('chat-channel', 'online-event', $data);
 
-                            $json['redirect'] = base_url('account/dashboard');
-                        }
+                        $json['redirect'] = base_url('account/dashboard');
+                    }
+                } else {
+                    $json['invalid'] = 'Invalid ID token';
                 }
-            } else {
-                $json['invalid'] = 'Invalid ID token';
             }
+    
         }
 
 
