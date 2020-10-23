@@ -9,7 +9,7 @@ class Maintenance implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         
-        if (service('registry')->get('config_maintenance') == 1) {
+        if (service('registry')->get('config_maintenance')) {
             echo view_cell('Catalog\Controllers\Common\Maintenance::index');
             exit;
         }

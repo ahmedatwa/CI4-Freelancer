@@ -1573,6 +1573,12 @@ em.mm-counter+a.mm-fullsubopen+span {
 	box-shadow: none;
 }
 
+.company-inner-alignment {
+	padding:10px;
+}
+.company-inner-alignment small{
+	color: #333;
+}
 .language-switcher.bootstrap-select.btn-group .dropdown-toggle .filter-option {
 	height: 44px;
 	line-height: 44px;

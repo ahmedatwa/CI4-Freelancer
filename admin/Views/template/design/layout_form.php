@@ -54,6 +54,7 @@
               </tr>
             </tbody>
           </table>
+          <div class="table-responsive">
           <table id="module" class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
@@ -123,6 +124,7 @@
               </tr>
             </tfoot>
           </table>
+        </div>
         </form>
  </div><!-- Card Body -->
 </div><!-- Card -->
