@@ -105,7 +105,6 @@ class Currencies extends Model
 
             $query = $builder->get();
             return $query->getResultArray();
-
         } else {
             $currency_data = cache()->get('currency');
 
@@ -157,11 +156,8 @@ class Currencies extends Model
             }
 
             if ($currencies) {
-
                 foreach ($this->getCurrencies() as $result) {
-
                     if (isset($currencies[$result['code']])) {
-
                         $from = $currencies['EUR'];
 
                         $to = $currencies[$result['code']];
@@ -177,7 +173,7 @@ class Currencies extends Model
         }
     }
 
-    public function editValueByCode($code, $value) 
+    public function editValueByCode($code, $value)
     {
         $builder = $this->db->table('currency');
         $builder->set('value', $value);
