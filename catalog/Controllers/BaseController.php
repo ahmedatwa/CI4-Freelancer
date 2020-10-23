@@ -106,7 +106,7 @@ class BaseController extends \CodeIgniter\Controller
         if ($this->session->get('currency')) {
          return number_to_currency($value, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
         } else {
-         return number_to_currency($num, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
+         return number_to_currency($number, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
 
         }
     }

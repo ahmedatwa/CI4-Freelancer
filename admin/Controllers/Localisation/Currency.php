@@ -61,8 +61,8 @@ class Currency extends \Admin\Controllers\BaseController
         return $this->response->setJSON($json);
     }
 
-    public function refresh() {
-
+    public function refresh()
+    {
         $this->document->setTitle(lang('localisation/currency.list.heading_title'));
 
         $currencyModel = new Currencies();

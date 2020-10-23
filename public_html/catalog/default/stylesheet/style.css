@@ -1565,7 +1565,6 @@ em.mm-counter+a.mm-fullsubopen+span {
 /* Language Switcher */
 
 .language-switcher select {
-    width: 160px;
 	padding-right: 35px;
 	padding-left: 18px;
 	color: #fff;
