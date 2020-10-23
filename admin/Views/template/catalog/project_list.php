@@ -26,10 +26,6 @@
                 <label for="input-name"><?php echo $entry_name; ?></label>
                 <input type="text" class="form-control" name="filter_name" placeholder="<?php echo $entry_name; ?>">
             </div>
-            <div class="form-group">
-                <label for="input-freelancer"><?php echo $entry_freelancer; ?></label>
-                <input type="text" class="form-control" name="filter_freelancer" placeholder="<?php echo $entry_freelancer; ?>">
-            </div>
         </div>
         <div class="col-6">
             <div class="form-group">
@@ -62,7 +58,6 @@
                                     onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                 </th>
                                 <th><?php echo $column_name; ?></th>
-                                <th><?php echo $column_freelancer; ?></th>
                                 <th><?php echo $column_employer; ?></th>
                                 <th><?php echo $column_price; ?></th>
                                 <th><?php echo $column_type; ?></th>
@@ -86,7 +81,6 @@
                                         </div>
                                     </th>
                                     <td><?php echo $project['name']; ?></td>
-                                    <td><?php echo $project['freelancer']; ?></td>
                                     <td><?php echo $project['employer']; ?></td>
                                     <td><?php echo $project['price']; ?></td>
                                     <td><?php echo $project['type']; ?></td>
@@ -122,12 +116,9 @@ $('input[name=\'filter_name\']').on( 'keyup', function () {
 var filter_status = $('select[name=\'filter_status\']').val();
 if (filter_status !== '*') {
 $('select[name=\'filter_status\']').on( 'change', function () {
-    table.column(6).search( $(this).val()).draw();
+    table.column(5).search( $(this).val()).draw();
 });
 }
-$('input[name=\'filter_freelancer\']').on( 'keyup', function () {
-    table.columns(2).search( this.value ).draw();
-});
 $('input[name=\'filter_employer\']').on( 'keyup', function () {
     table.columns(3).search( this.value ).draw();
 });

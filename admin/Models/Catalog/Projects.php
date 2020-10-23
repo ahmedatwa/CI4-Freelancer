@@ -41,7 +41,6 @@ class Projects extends \CodeIgniter\Model
         $builder->select('project.project_id, project_description.name AS name, project.status_id, project.date_added, project.budget_min, project.budget_max, project.type');
         $builder->join('project_description', 'project.project_id = project_description.project_id', 'left');
         $builder->where('project_description.language_id', (int) service('registry')->get('config_language_id'));
-        $builder->where('project.status_id', 1);
 
         if (!empty($data['filter_date_added'])) {
             $builder->where('DATE("project.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
@@ -236,8 +235,8 @@ class Projects extends \CodeIgniter\Model
     {
         $builder = $this->db->table('customer c');
         $builder->select();
-        $builder->join('project p', 'c.customer_id = p.freelancer_id', 'left');
-        $builder->where('project_id', $project_id);
+        //$builder->join('project p', 'c.customer_id = p.freelancer_id', 'left');
+        //$builder->where('project_id', $project_id);
         $query = $builder->get();
         $row = $query->getRowArray();
         if ($row) {

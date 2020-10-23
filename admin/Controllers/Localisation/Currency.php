@@ -68,7 +68,7 @@ class Currency extends \Admin\Controllers\BaseController
         $currencyModel = new Currencies();
 
         if ($this->validateDelete()) {
-            $currencyModel->refresh(true);
+            $currencyModel->refresh($this->registry->get('config_currency'));
 
             $this->session->setFlashdata('success', lang('localisation/currency.text_success'));
             return redirect()->to(base_url('index.php/localisation/currency?user_token=' . $this->request->getVar('user_token')));
@@ -252,6 +252,6 @@ class Currency extends \Admin\Controllers\BaseController
         }
         return true;
     }
-        
+      
     //--------------------------------------------------------------------
 }

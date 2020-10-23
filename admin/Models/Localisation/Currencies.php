@@ -35,7 +35,7 @@ class Currencies extends Model
         $currency_id = $this->db->insertID();
 
         if (service('registry')->get('config_currency_auto')) {
-            $this->refresh(true);
+            $this->refresh(service('registry')->get('config_currency'));
         }
 
         cache()->delete('currency');
@@ -135,7 +135,7 @@ class Currencies extends Model
         }
     }
 
-    public function refresh($force = false)
+    public function refresh($default = 'EGP')
     {
         $currency_data = [];
 
@@ -157,20 +157,19 @@ class Currencies extends Model
             }
 
             if ($currencies) {
-                $currencyModel = new Currencies();
 
-                $results = $currencyModel->getCurrencies();
+                foreach ($this->getCurrencies() as $result) {
 
-                foreach ($results as $result) {
                     if (isset($currencies[$result['code']])) {
-                       
+
                         $from = $currencies['EUR'];
-                        
+
                         $to = $currencies[$result['code']];
 
-                        $currencyModel->editValueByCode($result['code'], 1 / ($currencies['EUR'] * ($from / $to)));
+                        $this->editValueByCode($result['code'], 1 / ($currencies[$default] * ($from / $to)));
                     }
-                    $currencyModel->editValueByCode('EUR', 1);
+
+                    $this->editValueByCode($default, 1);
 
                     cache()->delete('currency');
                 }

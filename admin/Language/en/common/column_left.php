@@ -17,7 +17,7 @@ return [
     'text_information'     => 'Information',
     'text_localisation'    => 'Localisation',
     'text_language'        => 'Language',
-    'text_currency'        => 'Currency',
+    'text_currency'        => 'Currencies',
     'text_navigation'      => 'Navigation',
     'text_design'          => 'Design',
     'text_layouts'         => 'Layouts',

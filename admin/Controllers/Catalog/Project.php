@@ -92,11 +92,10 @@ class Project extends \Admin\Controllers\BaseController
             $data['projects'][] = [
                 'project_id' => $result['project_id'],
                 'name'       => $result['name'],
-                'freelancer' => $this->projects->getFreelancerByProjectId($result['project_id']),
                 'employer'   => $this->projects->getEmployerByProjectId($result['project_id']),
                 'price'      => currency_format($result['budget_min'], 'USD'),
                 'type'       => $type,
-                'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                'status'     => $result['status_id'],
                 'edit'       => base_url('index.php/catalog/project/edit?user_token=' . $this->session->get('user_token') . '&project_id=' . $result['project_id']),
                 'delete'     => base_url('index.php/catalog/project/delete?user_token=' . $this->session->get('user_token') . '&project_id=' . $result['project_id']),
             ];

@@ -33,10 +33,11 @@
                     <thead>
                         <tr>
                             <th width="1%" class="no-sort"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                            <th width="50%"><?php echo $column_title; ?></th>
+                            <th width="30%"><?php echo $column_title; ?></th>
                             <th><?php echo $column_code; ?></th>
+                            <th><?php echo $column_value; ?></th>
                             <th><?php echo $column_date_modified; ?></th>
-                            <th width="5%"><?php echo $column_action; ?></th>
+                            <th><?php echo $column_action; ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,6 +51,7 @@
                                         <?php } ?> </div></th>
                                         <td><?php echo $currency['title']; ?></td>
                                         <td><?php echo $currency['code']; ?></td>
+                                        <td><?php echo $currency['value']; ?></td>
                                         <td><?php echo $currency['date_modified']; ?></td>
                                         <td class="text-center">  
                                             <a href="<?php echo $currency['edit']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>" ><i class="far fa-edit"></i></a></td>

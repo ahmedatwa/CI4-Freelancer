@@ -93,15 +93,18 @@ class BaseController extends \CodeIgniter\Controller
         return base_url() . '/images/' . $image_new;
     }
 
-    public function currencyFormat(float $num)
+    public function currencyFormat(float $number)
     {
         $currencyModel = new \Catalog\Models\Localization\CurrencyModel();
 
         $currency_info = $currencyModel->getCurrencyByCode($this->session->get('currency'));
 
         helper('number');
+        
+        $currency_info['value'] ? (float)$number * $currency_info['value'] : (float)$number
+
         if ($this->session->get('currency')) {
-         return number_to_currency(($num / $currency_info['value']), $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
+         return number_to_currency($value, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
         } else {
          return number_to_currency($num, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
 
