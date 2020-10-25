@@ -92,6 +92,11 @@ class Header extends \Catalog\Controllers\BaseController
         $data['account_message']  = route_to('account_message') ? route_to('account_message') : base_url('account/message');
         $data['text_reviews']     = lang('account/menu.text_reviews');
         $data['account_review']   = route_to('account_review') ? route_to('account_review') : base_url('account/review');
+        
+        $data['deposit']          = route_to('freelancer_deposit') ? route_to('freelancer_deposit') : base_url('freelancer/deposit');
+        $data['withdraw']         = route_to('freelancer_withdraw') ? route_to('freelancer_withdraw') : base_url('freelancer/withdraw');
+        $data['balance']          = route_to('freelancer_balance') ? route_to('freelancer_balance') : base_url('freelancer/balance');
+        $data['transaction']      = route_to('freelancer_transaction') ? route_to('freelancer_transaction') : base_url('account/review');
 
 
         $data['logged'] = $this->customer->isLogged();
@@ -141,7 +146,7 @@ class Header extends \Catalog\Controllers\BaseController
                 'message'     => word_limiter($result['message'], 10),
                 'date_added'  => $this->dateDifference($result['date_added']),
                 'count'       => $result['total'],
-                'href'        => base_url('account/message?message_id=' . $result['message_id']),
+                'href'        => base_url('account/inbox?message_id=' . $result['message_id']),
 
             ];
         }

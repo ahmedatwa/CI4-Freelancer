@@ -229,8 +229,8 @@
 			<div class="modal-body">
 				<form enctype="multipart/form-data" method="post" action="" id="form-hire" accept-charset="utf-8"> 
 					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-					<input type="hidden" name="from_id" value="<?php echo $employer_id; ?>" />
-					<input type="hidden" name="to_id" value="<?php echo $freelancer_id; ?>" />
+					<input type="hidden" name="sender_id" value="<?php echo $employer_id; ?>" />
+					<input type="hidden" name="receiver_id" value="<?php echo $freelancer_id; ?>" />
 
 					<div class="form-group">
 						<label for="exampleInputEmail1"><i class="fas fa-comment"></i> <?php echo $text_message; ?></label>
@@ -267,6 +267,7 @@ $("#button-hire-me").on('click', function () {
 			url: 'freelancer/freelancer/hireMe?cid=<?php echo $employer_id; ?>',
 			dataType: 'json',
 			method: 'post',
+		    data:$("#form-hire").serialize(),
 			beforeSend: function() {
 				$('.fas, .alert').remove();
 				$(this).prop("disabled", true);
@@ -275,7 +276,6 @@ $("#button-hire-me").on('click', function () {
 			complete: function() {
 				$(this).html('<?php echo $button_hire; ?>');
 			},
-			data:$("#form-hire").serialize(),
 			success : function (json){
 				if (json['success']) {
 					$('.modal-header').after('<div class="alert alert-success alert-dismissible fade show" role="alert">'+ json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');

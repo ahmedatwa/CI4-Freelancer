@@ -244,11 +244,24 @@
 										</div>
 									</fieldset>
 									<fieldset>
-										<legend><?php echo $text_customer; ?></legend>
+										<legend><?php echo $text_fees; ?></legend>
 										<div class="form-group row">
 											<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_freelancer_fee; ?> </label>
-
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="config_freelancer_fee" value="<?php echo $config_freelancer_fee; ?>">
+											</div>
 										</div>
+										<div class="form-group row">
+										<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_freelancer_fee; ?> </label>
+										<div class="col-sm-10">
+										<div class="input-group mb-3">
+										  <input type="text" class="form-control" name="config_processing_fee" value="<?php echo $config_processing_fee; ?>" aria-label="" aria-describedby="basic-addon2">
+										  <div class="input-group-append">
+										    <span class="input-group-text" id="basic-addon2">%</span>
+										  </div>
+										</div>
+									</div>
+								</div>
 									</fieldset>
 									<fieldset>
 									</div><!-- ./End tab_option -->

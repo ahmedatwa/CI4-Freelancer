@@ -10,13 +10,16 @@ class Message extends \Catalog\Controllers\BaseController
         $this->template->setTitle(lang('account/message.heading_title'));
 
         $customerModel = new CustomerModel();
+        $messageModel = new MessageModel();
 
         if ($this->request->getVar('cid')) {
             $customer_id = $this->request->getVar('cid');
+        } elseif ($this->session->get('customer_id')) {
+            $customer_id = $this->session->get('customer_id');
         } else {
             $customer_id = 0;
         }
-            
+
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang($this->locale . '.text_home'),
@@ -33,7 +36,23 @@ class Message extends \Catalog\Controllers\BaseController
             'href' => base_url('account/message?cid=' . $customer_id),
         ];
 
-        $data['active_members'] = $customerModel->where('customer_id !=', $customer_id)->where('online', 1)->findAll();
+       // Chat Memebers
+        $data['members'] = [];
+
+        $members = $messageModel->getMembersByCustomerId($customer_id);
+
+        foreach ($members as $result) {
+
+            $customer_info = $customerModel->getCustomer($result['receiver_id']);
+
+            $data['members'][] = [
+                'sender_id'   => $result['sender_id'],
+                'online'      => $customer_info['online'],
+                'receiver_id' => $result['receiver_id'],
+                'receiver'    => $customer_info['username'],
+                'image'       => $this->resize($customer_info['image'], 40, 40) ? $this->resize($customer_info['image'], 40, 40) : $this->resize('catalog/avatar.jpg', 40, 40)
+            ];
+        }
 
         $data['username'] = $this->customer->getCustomerUserName();
 
@@ -50,27 +69,25 @@ class Message extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->request->getVar('to_id') && $this->request->getVar('from_id')) {
+        if ($this->request->getVar('receiver_id') && $this->request->getVar('sender_id')) {
             
             $messageModel = new MessageModel();
 
             $filter_data = [
-            'from_id'     => $this->request->getVar('from_id'),
-            'to_id'       => $this->request->getVar('to_id'),
-            'project_id'  => 1,
+                'sender_id'   => $this->request->getVar('sender_id'),
+                'receiver_id' => $this->request->getVar('receiver_id'),
+                'project_id'  => 1,
             ];
 
             $results = $messageModel->getMessages($filter_data);
               
             foreach ($results as $result) {
                 $json[] = [
-                    'project_id'   => $result['project_id'],
-                    'from_id'      => $result['from_id'],
-                    'to_id'        => $result['to_id'],
-                    'sender'       => $result['from_username'],
-                    'receiver'     => $result['to_username'],
-                    'message'      => $result['message'],
-                    'date_added'   => $result['date_added'],
+                    'project_id'  => $result['project_id'],
+                    'sender_id'   => $result['sender_id'],
+                    'receiver_id' => $result['receiver_id'],
+                    'message'     => $result['message'],
+                    'date_added'  => $result['date_added'],
                 ];
             }
         }
@@ -128,13 +145,11 @@ class Message extends \Catalog\Controllers\BaseController
             );
 
             $data = [
-                'project_id'    => 1,
-                'from_id'       => $this->customer->getCustomerId(),
-                'to_id'         => $this->request->getPost('to_id'),
-                'from_username' => $this->customer->getCustomerUserName(),
-                'to_username'   => $this->request->getPost('to_name'),
-                'message'       => $this->request->getPost('message'),
-                'date_added'    => date('H:i A'),
+                'project_id'  => 1,
+                'sender_id'   => $this->customer->getCustomerId(),
+                'receiver_id' => $this->request->getPost('receiver_id'),
+                'message'     => $this->request->getPost('message'),
+                'date_added'  => date('H:i A'),
             ];
 
 

@@ -119,10 +119,10 @@
       <div class="multi-column-dropdown col-6 border-right">
       <h4><?php echo $text_finance; ?></h4>
       <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<?php echo $dashboard; ?>"> <?php echo $text_balances; ?></a>
-            <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_deposite_funds; ?></a>
-            <a class="dropdown-item" href="<?php echo $logout; ?>"> <?php echo $text_withdraw_funds; ?></a>
-            <a class="dropdown-item" href="<?php echo $logout; ?>"> <?php echo $text_transactions_history; ?></a>
+            <a class="dropdown-item" href="<?php echo $balance; ?>"> <?php echo $text_balances; ?></a>
+            <a class="dropdown-item" href="<?php echo $deposit; ?>"> <?php echo $text_deposite_funds; ?></a>
+            <a class="dropdown-item" href="<?php echo $withdraw; ?>"> <?php echo $text_withdraw_funds; ?></a>
+            <a class="dropdown-item" href="<?php echo $transaction; ?>"> <?php echo $text_transactions_history; ?></a>
       </div>
     <div class="multi-column-dropdown col-6">
       <h4><?php echo $text_account; ?></h4>

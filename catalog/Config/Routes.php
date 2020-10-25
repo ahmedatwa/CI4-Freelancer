@@ -48,6 +48,7 @@ $routes->group('blog', function ($routes) {
 // Freelancers
 	$routes->add('freelancers', 'Freelancer\Freelancer::index');
 	$routes->add('freelancer/u(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
+	$routes->add('deposit', 'Freelancer\Deposit::index', ['as' => 'freelancer_deposit']);
 
 // Account
 $routes->group('account', function ($routes) {

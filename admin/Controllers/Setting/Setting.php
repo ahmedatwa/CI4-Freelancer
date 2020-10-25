@@ -220,12 +220,20 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_project_expired_status'] = '';
         }
 
-        if ($this->request->getPost('freelancer_fee')) {
-            $data['freelancer_fee'] = $this->request->getPost('freelancer_fee');
-        } elseif (!empty($setting_info['freelancer_fee'])) {
-            $data['freelancer_fee'] = $setting_info['freelancer_fee'];
+        if ($this->request->getPost('config_freelancer_fee')) {
+            $data['config_freelancer_fee'] = $this->request->getPost('config_freelancer_fee');
+        } elseif (!empty($setting_info['config_freelancer_fee'])) {
+            $data['config_freelancer_fee'] = $setting_info['config_freelancer_fee'];
         } else {
-            $data['freelancer_fee'] = '';
+            $data['config_freelancer_fee'] = '';
+        }
+
+        if ($this->request->getPost('config_processing_fee')) {
+            $data['config_processing_fee'] = $this->request->getPost('config_processing_fee');
+        } elseif (!empty($setting_info['config_processing_fee'])) {
+            $data['config_processing_fee'] = $setting_info['config_processing_fee'];
+        } else {
+            $data['config_processing_fee'] = '';
         }
 
         if ($this->request->getPost('config_logo')) {

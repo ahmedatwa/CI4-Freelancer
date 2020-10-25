@@ -13231,10 +13231,7 @@ ul.dashboard-box-list > li:hover {
 }
 
 .messages-inbox .message-avatar {
-	position: absolute;
-	left: 30px;
-	top: 50%;
-	transform: translateY(-50%);
+	border-radius: 20px;
 }
 
 .messages-inbox .message-by {
@@ -14489,6 +14486,13 @@ body.modal-open .mm-slideout{
 	height: auto !important;
 }
 
+i.green {
+	color: #38b653;
+	font-size: 10px;
+}
+.messages-inbox .nav-link.active { 
+	background-color: #fafafa;
+ }
 /*loading overlay*/
 #overlay {
   background: #EDEDED;

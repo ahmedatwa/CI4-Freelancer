@@ -245,7 +245,7 @@ class App extends BaseConfig
 	| CSRFRedirect    = Redirect to previous page with error on failure
 	*/
 	public $CSRFTokenName  = 'CSRFCAT';
-	public $CSRFHeaderName = 'X-CSRF-TOKEN-CATALOG';
+	public $CSRFHeaderName = 'X-CSRF-TOKEN-CAT';
 	public $CSRFCookieName = 'csrf_cookie_catalog';
 	public $CSRFExpire     = 7200;
 	public $CSRFRegenerate = false;

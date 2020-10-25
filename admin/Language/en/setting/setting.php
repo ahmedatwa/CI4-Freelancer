@@ -21,6 +21,7 @@ return [
     'text_upload'             => 'Upload',
     'text_speed'              => 'Performance',
     'text_customer'           => 'Customer',
+    'text_fees'               => 'Fees',
     // Tabs
     'tab_general'             => 'General',
     'tab_site'                => 'Site',
@@ -59,6 +60,7 @@ return [
     'entry_instagram'         => 'Instagram',
     'entry_maintenance'       => 'Maintenance Mode',
     'entry_freelancer_fee'    => '%s Fee',
+    'entry_processing_fee'    => 'Despoit Processing Fee',
 
     // Help
     'help_user_activity'             => 'Allow system to track user activity',
