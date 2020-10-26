@@ -16,15 +16,14 @@
 					</div>
 					<div class="content">
 						<ul class="dashboard-box-list">
+							<?php foreach ($news_feed as $feed) { ?>
 							<li>
 								<span class="notification-icon"><i class="icon-material-outline-group"></i></span>
-								<?php foreach ($news_feed as $feed) { ?>
 								<span class="notification-text">
 									<?php echo $feed['comment']; ?>
 								</span>
-							<?php } ?>
 							</li>
-
+							<?php } ?>
 						</ul>
 					</div>
 				</div>
