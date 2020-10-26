@@ -75,7 +75,7 @@ class MessageModel extends \CodeIgniter\Model
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($data);
         // Trigger Notification Event
-        \CodeIgniter\Events\Events::trigger('customer_new_message', $data['sender_id'], $data['receiver_id'], $this->getCustomer($data['sender_id'])['name'], $data['message']);
+        //\CodeIgniter\Events\Events::trigger('customer_new_message', $data['sender_id'], $data['receiver_id'], $this->getCustomer($data['sender_id'])['name'], $data['message']);
     }
 
     public function getMessageByCustomerId($viewed, $customer_id)
