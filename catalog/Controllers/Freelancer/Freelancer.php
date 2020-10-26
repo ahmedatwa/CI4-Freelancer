@@ -233,8 +233,10 @@ class Freelancer extends \Catalog\Controllers\BaseController
         } else {
            $customer_id = 0;
         }
-       
 
+        $data['customer_profile_id'] = $customer_id;
+        $data['customer_id'] = $this->session->get('customer_id');
+       
         if ($customer_id) {
             $customer_info = $customerModel->getCustomer($customer_id);
         } 
@@ -325,7 +327,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $pager = \Config\Services::pager();
         $data['pagination'] = ($projects_total <= $limit) ? '' : $pager->makeLinks($page, $limit, $projects_total);
 
-        $data['employer_id'] = $this->customer->getCustomerId();
+        $data['employer_id'] = $this->session->get('customer_id');
 
 
         $customerModel->updateViewed($customer_id);

@@ -95,7 +95,9 @@
 			</div>
 
 			<!-- Button -->
+			<?php if ($customer_id != $customer_profile_id) { ?> 
 			<button type="button" data-toggle="modal" data-target="#hireme" class="button btn-block apply-now-button margin-bottom-50"><?php echo $button_offer; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
+			<?php } ?>
 
 			<!-- Freelancer Indicators -->
 			<div class="sidebar-widget">

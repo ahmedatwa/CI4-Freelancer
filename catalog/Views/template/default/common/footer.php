@@ -131,6 +131,7 @@
         }
     });
  }totalUnseen();
+
 setInterval(function(){
  totalUnseen();
 }, 5000);
@@ -159,7 +160,7 @@ function loadMessages() {
            } 
 
            html = '<li class="notifications-not-read" id="'+json[i].message_id+'">';
-           html += '<a href="#" onclick="markRead('+json[i].message_id+');">';
+           html += '<a href="" onclick="markRead('+json[i].message_id+');">';
            html += '<span class="notification-avatar status-online"><img src="'+json[i].image+'" alt=""></span>';
            html += '<div class="notification-text">';
            html += '<strong>' + json[i].name + '</strong>';

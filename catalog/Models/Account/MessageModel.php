@@ -87,7 +87,7 @@ class MessageModel extends \CodeIgniter\Model
 
         $builder->select();
         $builder->where(['receiver_id' => $customer_id, 'seen' => 0]);
-        $builder->orderBy('message_id', 'DESC');
+        $builder->orderBy('date_added', 'DESC');
         $query = $builder->get();
 
         foreach ($query->getResultArray() as $result) {
