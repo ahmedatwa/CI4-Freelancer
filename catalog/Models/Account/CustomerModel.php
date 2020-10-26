@@ -515,6 +515,20 @@ class CustomerModel extends \CodeIgniter\Model
         $row = $query->getRowArray();
         return $row['total'];
     }
+
+    public function getBalanceByCustomerID($customer_id)
+    {
+        $builder = $this->db->table('customer_to_balance');
+        $builder->select('available');
+        $builder->where('customer_id', $customer_id);
+        $row = $builder->get()->getRow();
+        if ($row) {
+           return $row->available;
+        } else {
+            return false;
+        }
+        
+    }
     
 
     // -----------------------------------------------------------------

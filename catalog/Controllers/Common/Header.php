@@ -25,9 +25,16 @@ class Header extends \Catalog\Controllers\BaseController
         $data['text_profile']     = lang('common/header.text_profile');
         $data['text_add_project'] = lang('common/header.text_add_project');
 
+        $customerModel = new \Catalog\Models\Account\CustomerModel();
+
+        helper('number');
+
+        $customer_balance = $customerModel->getBalanceByCustomerID($this->session->get('customer_id'));
+
         $data['text_finance']              = lang('common/header.text_finance');
         $data['text_account']              = lang('common/header.text_account');
         $data['text_balances']             = lang('common/header.text_balances');
+        $data['customer_balance'] = number_to_currency($customer_balance, $this->session->get('customer_currency') ?? $this->registry->get('config_currency'));
         $data['text_deposite_funds']       = lang('common/header.text_deposite_funds');
         $data['text_withdraw_funds']       = lang('common/header.text_withdraw_funds');
         $data['text_transactions_history'] = lang('common/header.text_transactions_history');

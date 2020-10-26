@@ -26,7 +26,7 @@ class MessageModel extends \CodeIgniter\Model
             $builder->where('project_id', $data['project_id']);
         }
 
-        $builder->orderBy('date_added', 'ASC');
+        $builder->orderBy('date_added', 'DESC');
         //$builder->groupBy('sender_id');
 
         $query = $builder->get();
@@ -74,11 +74,8 @@ class MessageModel extends \CodeIgniter\Model
 
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($data);
-
         // Trigger Notification Event
-        \CodeIgniter\Events\Events::trigger('freelancer_message', $data['receiver_id'], $data['message']);
-
-
+        \CodeIgniter\Events\Events::trigger('customer_new_message', $data['sender_id'], $data['receiver_id'], $data['message']);
     }
 
     public function getMessageByCustomerId($viewed, $customer_id)

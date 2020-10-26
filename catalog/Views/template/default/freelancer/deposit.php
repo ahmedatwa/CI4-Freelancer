@@ -37,7 +37,7 @@
 				</div>
 
 
-				<div class="payment-tab">
+<!-- 				<div class="payment-tab">
 					<div class="payment-tab-trigger">
 						<input type="radio" name="cardType" id="creditCart" value="creditCard">
 						<label for="creditCart">Credit / Debit Card</label>
@@ -80,21 +80,22 @@
 
 						</div>
 					</div>
-				</div>
+				</div> -->
 
 			</div>
 			<!-- Payment Methods Accordion / End -->
 		
-			<a href="pages-order-confirmation.html" class="button big ripple-effect margin-top-40 margin-bottom-65">Proceed Payment</a>
-		</div>
+<!-- 			<a href="pages-order-confirmation.html" class="button big ripple-effect margin-top-40 margin-bottom-65">Proceed Payment</a>
+ -->		</div>
 		<!-- Summary -->
-		<div class="col">
-			
+		<div class="col margin-top-60">
 			<!-- Summary -->
 			<div class="boxed-widget summary margin-top-0">
-				<div class="boxed-widget-headline">
+				<div class="boxed-widget-headline" id="payment-summery">
 					<h3>Summary</h3>
 					<input type="hidden" id="csrf" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+					<input type="hidden" name="amount">
+					<input type="hidden" name="status">
 				</div>
 				<div class="boxed-widget-inner">
 					<ul>
@@ -126,6 +127,7 @@
 
 
 </div>
+<div class="margin-bottom-30"></div>
 <script type="text/javascript">
 $('#input-amount').on('input', function(){
 	var amount = $(this).val();
@@ -150,15 +152,14 @@ $('#input-amount').on('input', function(){
     onApprove: function(data, actions) {
       // This function captures the funds from the transaction.
       return actions.order.capture().then(function(details) {
-      	var csrf_name = $('#csrf').attr('name');
+      	var csrf_name = 'CSRFCAT';
       	var csrf_token = $('#csrf').val();
-
         // This function shows a transaction success message to your buyer.
         $.ajax({
         	url: 'freelancer/deposit/addFunds?customer_id=<?php echo $customer_id; ?>',
         	method: 'post',
         	dataType: 'json',
-        	data: {amount: details.purchase_units[0].amount.value, status:details.status, csrf_name: csrf_token},
+        	data: {amount: details.purchase_units[0].amount.value, currency: details.purchase_units[0].amount.currency_code, status:details.status, 'CSRFCAT': csrf_token},
         	success: function(json) {
         		if (json['success']) {
         			$.notify({

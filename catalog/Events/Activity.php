@@ -2,6 +2,7 @@
 
 use \Catalog\Models\Account\ActivityModel;
 use Catalog\Libraries\Customer;
+use \Catalog\Models\Account\CustomerModel;
 
 class Activity
 {
@@ -17,7 +18,7 @@ class Activity
             'username'    => $customer->getCustomerUserName(),
             ];
 
-        $activityModel->addActivity('activity_customer_login', $data);
+        $activityModel->addActivity('customer_activity_login', $data);
     }
 
     // Admin\Controllers\user\user::Rules
@@ -28,7 +29,7 @@ class Activity
         $User->addLoginAttempts($email);
     }
 
-    // Catalog\Controllers\Account\Setting::Edit
+    // Catalog\Controllers\Account\Setting::update
     public static function CustomerActivityUpdate($customer_id, $name)
     {
         $activityModel = new ActivityModel;
@@ -38,7 +39,7 @@ class Activity
             'name'        => $name,
         ];
 
-        $activityModel->addActivity('activity_customer_update', $data);
+        $activityModel->addActivity('customer_activity_update', $data);
     }
 
     // Catalog\Models\Account\Register::addCustomer
@@ -52,7 +53,20 @@ class Activity
 
         $activityModel->addActivity('customer_register_activity', $data);
     }
-    
+
+    // Catalog\Models\Freelancer\Withdraw::addRequest
+    public static function CustomerActivityWithdraw(int $customer_id, float $amount)
+    {
+        $activityModel = new ActivityModel;
+
+        $data = [
+            'customer_id' => (int) $customer_id,
+            'amount'      => (float) $amount,
+        ];
+
+        $activityModel->addActivity('customer_activity_withdraw', $amount);
+    }
+
     
     
 

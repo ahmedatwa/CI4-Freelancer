@@ -5,6 +5,8 @@ return [
     'text_success'      => 'Your Account Has Been Created!, Please Check Your Email for activation',
     'heading_title'     => 'Dashboard',
     'text_greeting'     => 'Howdy, %s! <span>We are glad to see you again!</span>',
+    'text_news_feed'    => 'News Feed',
+    'text_reviews'      => 'Reviews',
     // Text
 
     // Entry
