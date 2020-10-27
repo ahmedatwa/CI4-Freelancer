@@ -74,7 +74,34 @@
             <?php foreach ($informations as $information) { ?>
              <li class="nav-item"><a class="nav-link" href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
            <?php }  ?>
-           <li class="nav-item"><a class="nav-link" href="<?php echo $projects; ?>"> <?php echo $text_projects; ?></a></li>
+<!--            <li class="nav-item"><a class="nav-link" href="<?php //echo $projects; ?>"> <?php //echo $text_projects; ?></a></li>
+ -->
+      
+
+  <li class="nav-item dropdown has-megamenu">
+    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><?php echo $text_projects; ?>  </a>
+      <div class="dropdown-menu megamenu" role="menu">
+                    <div class="row">
+                      <?php foreach($categories as $category) { ?>
+                        <div class="col-md-3">
+                            <div class="col-megamenu">
+                              <h4 class="title"><a class="text-dark" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></h4>
+                              <ul class="list-unstyled">
+                                <?php foreach ($category['children'] as $child) { ?>
+                                  <li><a href="<?php echo $child['href']; ?>"><i class="fas fa-angle-right"></i> <?php echo $child['name']; ?></a></li>
+                                 <?php } ?> 
+                              </ul>
+                            </div>  <!-- col-megamenu.// -->
+                        </div><!-- end col-3 -->
+                      <?php } ?>
+                    </div><!-- end row --> 
+        </div> <!-- dropdown-mega-menu.// -->
+  </li>
+
+
+
+
+
            <li class="nav-item"><a class="nav-link" href="<?php echo $blog; ?>"> <?php echo $text_blog; ?></a></li>
            <li class="nav-item d-md-none "><a class="nav-link" href="<?php echo $dashoard; ?>"> <?php echo $text_dashboard; ?></a></li>
            <li class="nav-item d-md-none"><a class="nav-link" href="<?php echo $account_project; ?>"> <?php echo $text_my_projects; ?></a></li>

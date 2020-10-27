@@ -55,7 +55,10 @@ $(".btn-close, .screen-overlay").click(function(e){
     $("body").removeClass("offcanvas-active");
 }); 
 
-
+// Prevent closing from click inside dropdown
+$(document).on('click', '.dropdown-menu', function (e) {
+  e.stopPropagation();
+});
 	/*--------------------------------------------------*/
 	/*  Mobile Menu - mmenu.js
 	/*--------------------------------------------------*/
@@ -73,7 +76,7 @@ $(".btn-close, .screen-overlay").click(function(e){
 
 
 				$(".mmenu-init").mmenu({
-				 	"counters": true
+				 	"counters": false
 				}, {
 				 // configuration
 				 offCanvas: {

@@ -1,4 +1,4 @@
-<?php namespace Catalog\Controllers\Account;
+<?php namespace Catalog\Controllers\freelancer;
 
 use Catalog\Models\Catalog\ProjectModel;
 
@@ -43,8 +43,8 @@ class Project extends \Catalog\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('account/project.text_view'),
-            'href' => base_url('account/project/view?pid=' . $project_id),
+            'text' => lang('freelancer/project.text_view'),
+            'href' => base_url('freelancer/project/view?pid=' . $project_id),
         ];
 
         if ($project_id) {
@@ -58,7 +58,7 @@ class Project extends \Catalog\Controllers\BaseController
             $data['project_id']  = $project_info['project_id'];
             $data['name']        = $project_info['name'];
 
-            $data['days_left']   = lang('account/project.text_expire', [$this->dateDifference($project_info['date_added'], $project_info['runtime'])]);
+            $data['days_left']   = lang('freelancer/project.text_expire', [$this->dateDifference($project_info['date_added'], $project_info['runtime'])]);
             $data['employer']    = $project_info['employer'];
             $data['employer_id'] = $project_info['employer_id'];
             $data['status'] = $projectModel->getStatusByProjectId($project_info['project_id']);
@@ -102,7 +102,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('project/project.text_my_projects'),
-            'href' => base_url('account/project'),
+            'href' => base_url('freelancer/project'),
         ];
 
         if ($this->request->getVar('cid')) {
@@ -134,12 +134,12 @@ class Project extends \Catalog\Controllers\BaseController
                 'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
                 'date_added' => $this->dateDifference($result['date_added']),
                 'total_bids' => $projectModel->getTotalBidsByProjectId($result['project_id']),
-                'days_left'  => $this->dateAfter($this->addDays($result['date_added'], $result['runtime'])) ? lang('account/project.text_expired') : lang('en.mediumDate', [strtotime($this->addDays($result['date_added'], $result['runtime']))]),
+                'days_left'  => $this->dateAfter($this->addDays($result['date_added'], $result['runtime'])) ? lang('freelancer/project.text_expired') : lang('en.mediumDate', [strtotime($this->addDays($result['date_added'], $result['runtime']))]),
                 'avgBids'    => $projectModel->getAvgBidsByProjectId($result['project_id']),
                 'status'     => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
                 'expired'    => $result['runtime'],
-                'view'       => base_url('account/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-                'bidders'    => base_url('account/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
+                'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
+                'bidders'    => base_url('freelancer/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
             ];
           
         }
@@ -156,28 +156,28 @@ class Project extends \Catalog\Controllers\BaseController
         }
 
     
-        $data['heading_title']     = lang('account/project.text_my_projects');
-        $data['column_status']     = lang('account/project.column_status');
-        $data['column_action']     = lang('account/project.column_action');
-        $data['column_name']       = lang('account/project.column_name');
-        $data['button_view']       = lang('account/project.button_view');
-        $data['button_cancel']     = lang('account/project.button_cancel');
-        $data['column_freelancer'] = lang('account/project.column_freelancer');
-        $data['column_budget']     = lang('account/project.column_budget');
-        $data['column_bids']       = lang('account/project.column_bids');
-        $data['column_avg_bids']   = lang('account/project.column_avg_bids');
-        $data['column_expiry']     = lang('account/project.column_expiry');
-        $data['column_type']       = lang('account/project.column_type');
-        $data['entry_name']        = lang('account/project.entry_name');
-        $data['entry_status']      = lang('account/project.entry_status');
+        $data['heading_title']     = lang('freelancer/project.text_my_projects');
+        $data['column_status']     = lang('freelancer/project.column_status');
+        $data['column_action']     = lang('freelancer/project.column_action');
+        $data['column_name']       = lang('freelancer/project.column_name');
+        $data['button_view']       = lang('freelancer/project.button_view');
+        $data['button_cancel']     = lang('freelancer/project.button_cancel');
+        $data['column_freelancer'] = lang('freelancer/project.column_freelancer');
+        $data['column_budget']     = lang('freelancer/project.column_budget');
+        $data['column_bids']       = lang('freelancer/project.column_bids');
+        $data['column_avg_bids']   = lang('freelancer/project.column_avg_bids');
+        $data['column_expiry']     = lang('freelancer/project.column_expiry');
+        $data['column_type']       = lang('freelancer/project.column_type');
+        $data['entry_name']        = lang('freelancer/project.entry_name');
+        $data['entry_status']      = lang('freelancer/project.entry_status');
         $data['text_select']       = lang('en.text_select');
-        $data['']                  = lang('account/project.column_status');
-        $data['']                  = lang('account/project.column_status');
-        $data['']                  = lang('account/project.column_status');
-        $data['']                  = lang('account/project.column_status');
-        $data['']                  = lang('account/project.column_status');
-        $data['']                  = lang('account/project.column_status');
-        $data['']                  = lang('account/project.column_status');
+        $data['']                  = lang('freelancer/project.column_status');
+        $data['']                  = lang('freelancer/project.column_status');
+        $data['']                  = lang('freelancer/project.column_status');
+        $data['']                  = lang('freelancer/project.column_status');
+        $data['']                  = lang('freelancer/project.column_status');
+        $data['']                  = lang('freelancer/project.column_status');
+        $data['']                  = lang('freelancer/project.column_status');
 
 
         $data['customer_id'] = $this->request->getVar('cid');
@@ -185,7 +185,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
 
-        $this->template->output('account/project_list', $data);
+        $this->template->output('freelancer/project_list', $data);
     }
 
     // Account Dashboard
@@ -245,7 +245,7 @@ class Project extends \Catalog\Controllers\BaseController
         }
 
         $data['name'] = $project_info['name'];
-        $data['href'] = base_url('account/project&pid=' . $pid);
+        $data['href'] = base_url('freelancer/project&pid=' . $pid);
          
         $bidModel = new \Catalog\Models\Extension\Bid\BidModel();
 
@@ -279,7 +279,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
-        $this->template->output('account/project_bidders', $data);
+        $this->template->output('freelancer/project_bidders', $data);
 
     } 
 
@@ -320,12 +320,12 @@ class Project extends \Catalog\Controllers\BaseController
                 'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
                 'date_added' => $this->dateDifference($result['date_added']),
                 'total_bids' => $projectModel->getTotalBidsByProjectId($result['project_id']),
-                'expiry'  => $this->dateAfter($this->addDays($result['date_added'], $result['runtime'])) ? lang('account/project.text_expired') : lang('en.mediumDate', [strtotime($this->addDays($result['date_added'], $result['runtime']))]),
+                'expiry'  => $this->dateAfter($this->addDays($result['date_added'], $result['runtime'])) ? lang('freelancer/project.text_expired') : lang('en.mediumDate', [strtotime($this->addDays($result['date_added'], $result['runtime']))]),
                 'avgBids'    => $projectModel->getAvgBidsByProjectId($result['project_id']),
                 'status'     => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
                 'expired'    => $result['runtime'],
-                'view'       => base_url('account/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-                'bidders'    => base_url('account/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
+                'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
+                'bidders'    => base_url('freelancer/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
             ];
         }
 

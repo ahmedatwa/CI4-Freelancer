@@ -50,30 +50,8 @@ class Home extends \Catalog\Controllers\BaseController
         }
 
 
-
-        // Categories Block
-   //      $filter_data = [
-			// 'limit'             => 8,
-			// 'start'             => 0,
-   //      ];
-        
-   //      $data['categories'] = [];
-
-   //      $categoryModel = new \Catalog\Models\Catalog\CategoryModel();
-
-   //      $results = $categoryModel->getCategories($filter_data);
-
-   //      foreach ($results as $result) {
-   //          $data['categories'][] = [
-   //              'name'     => $result['name'],
-   //              'total'    => $categoryModel->getTotalProjectsByCategoryId($result['category_id']),
-   //              'href'     => base_url('project/category?gid=' . $result['category_id'])
-   //          ];
-   //      }
-
-
-    $data['freelancers_all'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');
-    $data['register']        = route_to('register') ? route_to('register') : base_url('account/register');
+        $data['freelancers_all'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');
+        $data['register']        = route_to('register') ? route_to('register') : base_url('account/register');
 
 		$this->template->output('common/home', $data);
 

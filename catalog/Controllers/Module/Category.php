@@ -1,49 +1,32 @@
 <?php namespace Catalog\Controllers\Module;
 
+use \Catalog\Models\Catalog\CategoryModel;
+
 class Category extends \Catalog\Controllers\BaseController
 {
 	public function index() {
 
 		$data['heading_title'] = lang('module/account.heading_title');
 
+        $filter_data = [
+			'limit'             => 8,
+			'start'             => 0,
+        ];
+        
+        $data['categories'] = [];
 
-		$this->load->model('catalog/category');
+        $categoryModel = new CategoryModel();
 
-		$this->load->model('catalog/product');
+        $results = $categoryModel->getCategories($filter_data);
 
-		$data['categories'] = array();
-
-		$categories = $this->model_catalog_category->getCategories(0);
-
-		foreach ($categories as $category) {
-			$children_data = array();
-
-			if ($category['category_id'] == $data['category_id']) {
-				$children = $this->model_catalog_category->getCategories($category['category_id']);
-
-				foreach($children as $child) {
-					$filter_data = array('filter_category_id' => $child['category_id'], 'filter_sub_category' => true);
-
-					$children_data[] = array(
-						'category_id' => $child['category_id'],
-						'name' => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
-						'href' => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
-					);
-				}
-			}
-
-			$filter_data = array(
-				'filter_category_id'  => $category['category_id'],
-				'filter_sub_category' => true
-			);
-
-			$data['categories'][] = array(
-				'category_id' => $category['category_id'],
-				'name'        => $category['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
-				'children'    => $children_data,
-				'href'        => $this->url->link('product/category', 'path=' . $category['category_id'])
-			);
-		}
+        foreach ($results as $result) {
+            $data['categories'][] = [
+                'name'     => $result['name'],
+                'total'    => $categoryModel->getTotalProjectsByCategoryId($result['category_id']),
+                'icon'     => $result['icon'],
+                'href'        => (route_to('projects') . '?gid=' . $result['category_id']) ? route_to('projects') . '?gid=' . $result['category_id'] : base_url('project/project?gid=' . $result['category_id']),
+            ];
+        }
 
 		return view('module/category', $data);
 	}

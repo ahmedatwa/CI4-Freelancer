@@ -1,17 +1,28 @@
-<div class="list-group">
-  {% for category in categories %}
-  {% if category.category_id == category_id %} 
-  <a href="{{ category.href }}" class="list-group-item active">{{ category.name }}</a> 
-  {% if category.children %}
-  {% for child in category.children %}
-  {% if child.category_id == child_id %}
-  <a href="{{ child.href }}" class="list-group-item active">&nbsp;&nbsp;&nbsp;- {{ child.name }}</a> 
-  {% else %} 
-  <a href="{{ child.href }}" class="list-group-item">&nbsp;&nbsp;&nbsp;- {{ child.name }}</a>
-  {% endif %}
-  {% endfor %}
-  {% endif %}
-  {% else %} <a href="{{ category.href }}" class="list-group-item">{{ category.name }}</a>
-  {% endif %}
-  {% endfor %}
+<!-- Category Boxes -->
+<div class="section margin-top-65">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="section-headline centered margin-bottom-15">
+          <h3><?php echo $heading_title; ?></h3>
+        </div>
+        
+        <div class="categories-container">
+          <?php foreach ($categories as $category) { ?>
+          <a href="<?php echo $category['href']; ?>" class="category-box">
+            <div class="category-box-icon">
+              <i class="<?php echo $category['icon']; ?>"></i>
+            </div>
+            <div class="category-box-counter"><?php echo $category['total']; ?></div>
+            <div class="category-box-content">
+              <h3><?php echo $category['name']; ?></h3>
+              <p>Software Engineer, Web / Mobile Developer & More</p>
+            </div>
+          </a>
+          <?php } ?>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>

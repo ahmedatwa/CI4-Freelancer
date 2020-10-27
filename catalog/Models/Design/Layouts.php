@@ -17,11 +17,12 @@ class Layouts extends \CodeIgniter\Model
         }
     }
 
-    public function getLayoutModules($layout_id)
+    public function getLayoutModules($layout_id, $position)
     {
         $builder = $this->db->table('layout_module');
         $builder->select()
                 ->where('layout_id', $layout_id)
+                ->where('position', $position)
                 ->orderBy('position ASC, sort_order ASC');
         $query = $builder->get();
         return $query->getResultArray();

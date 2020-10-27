@@ -177,13 +177,13 @@ class Template
             // Renderer
             $renderer = \Config\Services::renderer();
             // Parts
-            $data['header']      = view_cell('\Catalog\Controllers\Common\Header::index');
-            //$data['menu']        = view_cell('\Catalog\Controllers\Common\Menu::index');
-            $data['column_left'] = view_cell('\Catalog\Controllers\Common\Column_left::index');
+            $data['header']         = view_cell('\Catalog\Controllers\Common\Header::index');
+            //$data['menu']         = view_cell('\Catalog\Controllers\Common\Menu::index');
+            $data['column_left']    = view_cell('\Catalog\Controllers\Common\Column_left::index');
             //$data['column_right'] = view_cell('\Catalog\Controllers\Common\Column_right::index');
-            $data['content_top'] = view_cell('\Catalog\Controllers\Common\Content_top::index');
-            //$data['content_bottom'] = view_cell('\Catalog\Controllers\Common\Content_bottom::index');
-            $data['footer'] = view_cell('\Catalog\Controllers\Common\Footer::index');
+            $data['content_top']    = view_cell('\Catalog\Controllers\Common\Content_top::index');
+            $data['content_bottom'] = view_cell('\Catalog\Controllers\Common\Content_bottom::index');
+            $data['footer']         = view_cell('\Catalog\Controllers\Common\Footer::index');
 
             echo $renderer->setData($data)->render(service('registry')->get('config_theme') . '/' . $view);
         }

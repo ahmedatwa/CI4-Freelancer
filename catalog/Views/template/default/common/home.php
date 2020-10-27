@@ -66,71 +66,10 @@
 
 </div>
 <!-- Content -->
-
-
-
 <?php echo $content_top; ?>
-<!-- Icon Boxes -->
-<div class="section padding-top-65 padding-bottom-65">
-	<div class="container">
-		<div class="row">
 
-			<div class="col-xl-12">
-				<!-- Section Headline -->
-				<div class="section-headline centered margin-top-0 margin-bottom-5">
-					<h3>How It Works?</h3>
-				</div>
-			</div>
-			
-			<div class="col-xl-4 col-md-4">
-				<!-- Icon Box -->
-				<div class="icon-box with-line">
-					<!-- Icon -->
-					<div class="icon-box-circle">
-						<div class="icon-box-circle-inner">
-							<i class="icon-line-awesome-lock"></i>
-							<div class="icon-box-check"><i class="icon-material-outline-check"></i></div>
-						</div>
-					</div>
-					<h3>Create an Account</h3>
-					<p>Bring to the table win-win survival strategies to ensure proactive domination going forward.</p>
-				</div>
-			</div>
 
-			<div class="col-xl-4 col-md-4">
-				<!-- Icon Box -->
-				<div class="icon-box with-line">
-					<!-- Icon -->
-					<div class="icon-box-circle">
-						<div class="icon-box-circle-inner">
-							<i class="icon-line-awesome-legal"></i>
-							<div class="icon-box-check"><i class="icon-material-outline-check"></i></div>
-						</div>
-					</div>
-					<h3>Post a Task</h3>
-					<p>Efficiently unleash cross-media information without. Quickly maximize return on investment.</p>
-				</div>
-			</div>
-
-			<div class="col-xl-4 col-md-4">
-				<!-- Icon Box -->
-				<div class="icon-box">
-					<!-- Icon -->
-					<div class="icon-box-circle">
-						<div class="icon-box-circle-inner">
-							<i class=" icon-line-awesome-trophy"></i>
-							<div class="icon-box-check"><i class="icon-material-outline-check"></i></div>
-						</div>
-					</div>
-					<h3>Choose an Expert</h3>
-					<p>Nanotechnology immersion along the information highway will close the loop on focusing solely.</p>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</div>
-<!-- Icon Boxes / End -->
+<!-- Category Boxes / End -->
 <!-- Highest Rated Freelancers -->
 <div class="section gray padding-top-65 padding-bottom-70 full-width-carousel-fix">
 	<div class="container">
@@ -213,25 +152,100 @@
 </div>
 <!-- Highest Rated Freelancers / End-->
 <!-- Photo Section -->
-<div class="photo-section" data-background-image="catalog/default/images/section-background.jpg">
+<!-- Testimonials -->
+<div class="section gray padding-top-65 padding-bottom-55">
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12">
+				<!-- Section Headline -->
+				<div class="section-headline centered margin-top-0 margin-bottom-5">
+					<h3>Testimonials</h3>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<!-- Infobox -->
-	<div class="text-content white-font">
-		<div class="container">
+	<!-- Categories Carousel -->
+	<div class="fullwidth-carousel-container margin-top-20">
+		<div class="testimonial-carousel testimonials">
 
-			<div class="row">
-				<div class="col-lg-6 col-md-8 col-sm-12">
-					<h2>Hire experts or be hired. <br> For any job, any time.</h2>
-					<p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation is on the runway towards.</p>
-					<a href="<?php echo $register; ?>" class="button button-sliding-icon ripple-effect big margin-top-20">Get Started <i class="icon-material-outline-arrow-right-alt"></i></a>
+			<!-- Item -->
+			<div class="fw-carousel-review">
+				<div class="testimonial-box">
+					<div class="testimonial-avatar">
+						<img src="images/user-avatar-small-02.jpg" alt="">
+					</div>
+					<div class="testimonial-author">
+						<h4>Sindy Forest</h4>
+						 <span>Freelancer</span>
+					</div>
+					<div class="testimonial">Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. Dramatically maintain clicks-and-mortar solutions without functional solutions.</div>
+				</div>
+			</div>
+
+			<!-- Item -->
+			<div class="fw-carousel-review">
+				<div class="testimonial-box">
+					<div class="testimonial-avatar">
+						<img src="images/user-avatar-small-01.jpg" alt="">
+					</div>
+					<div class="testimonial-author">
+						<h4>Tom Smith</h4>
+						 <span>Freelancer</span>
+					</div>
+					<div class="testimonial">Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art.</div>
+				</div>
+			</div>
+
+			<!-- Item -->
+			<div class="fw-carousel-review">
+				<div class="testimonial-box">
+					<div class="testimonial-avatar">
+						<img src="images/user-avatar-placeholder.png" alt="">
+					</div>
+					<div class="testimonial-author">
+						<h4>Sebastiano Piccio</h4>
+						 <span>Employer</span>
+					</div>
+					<div class="testimonial">Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art.</div>
+				</div>
+			</div>
+
+			<!-- Item -->
+			<div class="fw-carousel-review">
+				<div class="testimonial-box">
+					<div class="testimonial-avatar">
+						<img src="images/user-avatar-small-03.jpg" alt="">
+					</div>
+					<div class="testimonial-author">
+						<h4>David Peterson</h4>
+						 <span>Freelancer</span>
+					</div>
+					<div class="testimonial">Collaboratively administrate turnkey channels whereas virtual e-tailers. Objectively seize scalable metrics whereas proactive e-services. Seamlessly empower fully researched growth strategies and interoperable sources.</div>
+				</div>
+			</div>
+
+			<!-- Item -->
+			<div class="fw-carousel-review">
+				<div class="testimonial-box">
+					<div class="testimonial-avatar">
+						<img src="images/user-avatar-placeholder.png" alt="">
+					</div>
+					<div class="testimonial-author">
+						<h4>Marcin Kowalski</h4>
+						 <span>Freelancer</span>
+					</div>
+					<div class="testimonial">Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. Dramatically maintain clicks-and-mortar solutions without functional solutions.</div>
 				</div>
 			</div>
 
 		</div>
 	</div>
-
-	<!-- Infobox / End -->
+	<!-- Categories Carousel / End -->
 
 </div>
+<!-- Testimonials / End -->
+<?php echo $content_bottom; ?>
 <!-- Photo Section / End -->
 <?php echo $footer; ?>
