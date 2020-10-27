@@ -55,6 +55,31 @@ $(".btn-close, .screen-overlay").click(function(e){
     $("body").removeClass("offcanvas-active");
 }); 
 
+// Mobile Menu
+$("[data-trigger]").on("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $('#navbar_main').addClass("show");
+        $('body').addClass("offcanvas-active");
+        $(".screen-overlay").addClass("show");
+    }); 
+
+   	// Close menu when pressing ESC
+    $(document).on('keydown', function(event) {
+        if(event.keyCode === 27) {
+           $(".mobile-offcanvas").removeClass("show");
+           $("body").removeClass("overlay-active");
+        }
+    });
+
+    $(".btn-close, .screen-overlay").click(function(e){
+    	$(".screen-overlay").removeClass("show");
+        $(".mobile-offcanvas").removeClass("show");
+        $("body").removeClass("offcanvas-active");
+
+
+    }); 
+
 // Prevent closing from click inside dropdown
 $(document).on('click', '.dropdown-menu', function (e) {
   e.stopPropagation();
@@ -63,40 +88,6 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	/*  Mobile Menu - mmenu.js
 	/*--------------------------------------------------*/
     
-	$(function() {
-		function mmenuInit() {
-			var wi = $(window).width();
-			if(wi <= '1099') {
-
-				$(".mmenu-init" ).remove();
-				$("#navigation").clone().addClass("mmenu-init").insertBefore("#navigation").removeAttr('id').removeClass('style-1 style-2')
-								.find('ul, div').removeClass('style-1 style-2 mega-menu mega-menu-content mega-menu-section').removeAttr('id');
-				$(".mmenu-init").find("ul").addClass("mm-listview");
-				$(".mmenu-init").find(".mobile-styles .mm-listview").unwrap();
-
-
-				$(".mmenu-init").mmenu({
-				 	"counters": false
-				}, {
-				 // configuration
-				 offCanvas: {
-				    pageNodetype: "#wrapper"
-				 }
-				});
-
-				var mmenuAPI = $(".mmenu-init").data( "mmenu" );
-				var $icon = $(".mmenu-trigger .hamburger");
-
-				$(".mmenu-trigger").on('click', function() {
-					mmenuAPI.open();
-				});
-
-			}
-			$(".mm-next").addClass("mm-fullsubopen");
-		}
-		mmenuInit();
-		$(window).resize(function() { mmenuInit(); });
-	});
 	/*----------------------------------------------------*/
 	/*  Back to Top
 	/*----------------------------------------------------*/
