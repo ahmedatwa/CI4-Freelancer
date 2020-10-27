@@ -85,6 +85,10 @@ class Project extends \Catalog\Controllers\BaseController
 
     public function getList()
     {
+        if (! $this->session->get('customer_id') && ! $this->customer->isLogged() ) {
+            return redirect('account_login');
+        }
+
         $projectModel = new ProjectModel();
 
         $this->template->setTitle(lang('project/project.text_my_projects'));

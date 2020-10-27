@@ -7,7 +7,7 @@ class Dashboard extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        if (! $this->customer->getCustomerId() && ! $this->customer->isLogged() ) {
+        if (! $this->session->get('customer_id') && ! $this->customer->isLogged() ) {
              return redirect('account_login');
         }
 

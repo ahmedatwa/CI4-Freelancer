@@ -6,7 +6,10 @@ class Review extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        
+        if (! $this->session->get('customer_id') && ! $this->customer->isLogged() ) {
+             return redirect('account_login');
+        }
+
         $this->template->setTitle(lang('account/review.heading_title'));
 
         $projectModel = new ProjectModel();

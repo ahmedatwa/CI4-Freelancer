@@ -79,13 +79,13 @@
       
 
   <li class="nav-item dropdown has-megamenu">
-    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><?php echo $text_projects; ?>  </a>
+    <a class="nav-link dropdown-toggle" href="<?php echo $projects; ?>" data-toggle="dropdown"><?php echo $text_projects; ?>  </a>
       <div class="dropdown-menu megamenu" role="menu">
                     <div class="row">
                       <?php foreach($categories as $category) { ?>
                         <div class="col-md-3">
                             <div class="col-megamenu">
-                              <h4 class="title"><a class="text-dark" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></h4>
+                              <h4 class="title"><a class="" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></h4>
                               <ul class="list-unstyled">
                                 <?php foreach ($category['children'] as $child) { ?>
                                   <li><a href="<?php echo $child['href']; ?>"><i class="fas fa-angle-right"></i> <?php echo $child['name']; ?></a></li>

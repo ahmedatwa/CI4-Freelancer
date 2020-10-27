@@ -6,6 +6,10 @@ class Deposit extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
+        if (! $this->session->get('customer_id') && ! $this->customer->isLogged() ) {
+            return redirect('account_login');
+        }
+
         $this->template->setTitle(lang('freelancer/deposit.heading_title'));
 
         $data['breadcrumbs'] = [];

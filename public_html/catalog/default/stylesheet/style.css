@@ -14500,7 +14500,9 @@ i.green {
 }	
 /* ============ desktop view .end// ============ */
 
-
+.col-megamenu .title a {
+	color: #333 !important;
+}
 .col-megamenu > ul {
 	margin-left: 10px;
 	margin-top: 10px;

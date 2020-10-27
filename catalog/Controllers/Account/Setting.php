@@ -20,6 +20,10 @@ class Setting extends \Catalog\Controllers\BaseController
 
     public function index()
     {
+        if (! $this->session->get('customer_id') && ! $this->customer->isLogged() ) {
+             return redirect('account_login');
+        }
+
         $this->template->setTitle(lang('account/setting.heading_title'));
 
         if ($this->request->getVar('cid')) {
