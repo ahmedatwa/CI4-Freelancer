@@ -192,7 +192,7 @@ $(document).on('click',"#award-freelancer-button", function() {
     modal += '</div>';
     modal += '<div class="modal-footer">';
     modal += '<div class="w-100">';
-    modal += '<button type="button" class="button" id="modal-button-select">Accept</button>';
+    modal += '<button type="button" class="button" id="modal-button-select">Award</button>';
     modal += '<button type="button" data-dismiss="modal" class="button dark float-right">Cancel</button>';
     modal += '</div></div>';
     modal += '</div>';
@@ -309,7 +309,13 @@ $(document).on('click',"#send-message-button", function() {
 <!-- MileStones -->
 <script type="text/javascript">
 $('#milestones-tab').on('shown.bs.tab', function () {
-    $('#milestones-list').load('freelancer/project/getProjectMilestones?project_id=<?php echo $project_id; ?>');
+
+    $('#milestones-list').html('<p id="loader-div" class="text-center"><i class="fas fa-spinner fa-spin fa-lg"></i> Retrieving Data...</p>'); 
+
+    $( "#milestones-list" ).load('freelancer/project/getProjectMilestones?project_id=<?php echo $project_id; ?>', function() {
+         $('#loader-div').remove();
+    });
+
     // Create MileStone
     $(document).on('click', '#milestone-button-add', function() {
         modal = '<div class="modal fade" id="milestone-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';

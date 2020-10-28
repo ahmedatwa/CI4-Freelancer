@@ -583,6 +583,10 @@ class ProjectModel extends \CodeIgniter\Model
 
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($data);
+
+        // trigget new direct message event
+        \CodeIgniter\Events\Events::trigger('project_milestone_create', $data['project_id'], $data['amount'], $data['description'], $data['deadline']);
+
     }
 
 
