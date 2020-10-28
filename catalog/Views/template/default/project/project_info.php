@@ -265,8 +265,9 @@ $(document).on('click',"#send-message-button", function() {
         modal += '</div>';
 
         $('body').append(modal);
-
         $('#send-message-modal').modal('show');
+        
+
         $('#send-message-modal #modal-button-save').on('click', function (e) {
             e.preventDefault();
              $.ajax({
@@ -309,6 +310,83 @@ $(document).on('click',"#send-message-button", function() {
 <script type="text/javascript">
 $('#milestones-tab').on('shown.bs.tab', function () {
     $('#milestones-list').load('freelancer/project/getProjectMilestones?project_id=<?php echo $project_id; ?>');
+    // Create MileStone
+    $(document).on('click', '#milestone-button-add', function() {
+        modal = '<div class="modal fade" id="milestone-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+        modal += '<div class="modal-dialog">';
+        modal += '<div class="modal-content">';
+        modal += '<div class="modal-header">';
+        modal += '<h5 class="modal-title" id="exampleModalLabel">Milestone</h5>';
+        modal += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+        modal += '<span aria-hidden="true">&times;</span>';
+        modal += '</button>';
+        modal += '</div>';
+        modal += '<div class="modal-body">';
+        modal += '<form id="milestone-modal-form">';
+        modal += '<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />';
+        modal += '<input type="hidden" name="project_id" value="<?php echo $project_id; ?>" />';
+        modal += '<div class="form-group">';
+        modal += '<label for="input-message">Amount</label>';
+        modal += '<input type="number" min="1" class="form-control" name="amount">';
+        modal += '</div>';
+        modal += '<div class="form-group">';
+        modal += '<label for="input-message">Description</label>';
+        modal += '<textarea type="text" cols="3" row="4" class="form-control" name="description"></textarea>';
+        modal += '</div>';
+        modal += '<div class="form-group">';
+        modal += '<label for="input-message">Completed in</label>';
+        modal += '<input type="number" min="1" max="30" class="form-control" name="deadline">';
+        modal += '</div>';
+        modal += '</form>';
+        modal += '</div>';
+        modal += '<div class="modal-footer">';
+        modal += '<button type="button" id="milestone-button-save" class="button">Add</button>';
+        modal += '</div>';
+        modal += '</div>';
+        modal += '</div>';
+        modal += '</div>';
+        $('body').append(modal);
+
+        $('#milestone-modal').modal('show');
+
+        $('#milestone-modal #milestone-button-save').on('click', function (e) {
+            e.preventDefault();
+             $.ajax({
+                url: 'freelancer/project/addMilestone?pid=<?php echo $pid; ?>',
+                dataType: 'json',
+                method: 'post',
+                data: $('#milestone-modal-form').serialize(),
+                beforeSend: function() {
+                    $('.text-danger').remove();
+                },
+                success: function(json) {
+                    if (json['error']) {
+                        $('textarea[name=\'message\']').after('<p class="text-danger">' + json['error'] + '</p>')
+                    }
+
+                    if (json['success']) {
+                        // dispose the modal first
+                        $('#milestone-modal').modal('hide');
+                        $.notify({
+                            icon: 'fas fa-check-circle',
+                            title: 'Success',
+                            message: json['success']
+                        },{
+                         animate: {
+                            enter: 'animate__animated animate__lightSpeedInRight',
+                            exit: 'animate__animated animate__lightSpeedOutRight'
+                        },
+                        type: 'success'
+                        });
+                    }                        
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });    
+        });  
+    });
+    
 });
 </script>
 <?php echo $footer; ?>

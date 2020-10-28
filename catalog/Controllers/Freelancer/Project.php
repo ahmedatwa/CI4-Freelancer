@@ -454,6 +454,19 @@ class Project extends \Catalog\Controllers\BaseController
 
         return $this->response->setJSON($json);
     }
+
+    public function addMilestone()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post' && $this->request->getVar('pid')) {
+            $projectModel = new ProjectModel();
+                $projectModel->insertMilestone($this->request->getPost());
+                $json['success'] = lang('freelancer/project.text_success_winner');
+        }
+
+        return $this->response->setJSON($json);
+    }
  
     public function sendMessage()
     {

@@ -1,4 +1,4 @@
-<?php if ($project_milestones) { ?>
+
 	<button class="button my-4" id="milestone-button-add">Create Milestone </button>
 	<table class="table table-striped table-bordered">
 		<thead>
@@ -12,6 +12,7 @@
 		</thead>
 		<tbody>
 			<tr>
+				<?php if ($project_milestones) { ?>
 				<?php foreach ($project_milestones as $milestone) { ?> 
 				<td><?php echo $milestone['date_added']; ?></td>
 				<td><?php echo $milestone['amount']; ?></td>
@@ -25,8 +26,8 @@
 			</tr>
 		<?php } else { ?>
 			<tr>
-				<td>No Records! </td>
-				<tr>
+				<td colspan="5" class="text-center">No Records! </td>
+			<tr>
+				<?php } ?>
 				</tbody>
 			</table>  	
-<?php } ?>

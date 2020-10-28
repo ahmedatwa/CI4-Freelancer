@@ -570,6 +570,22 @@ class ProjectModel extends \CodeIgniter\Model
         return $query->getResultArray();
     }
 
+    // insert Milestone
+    public function insertMilestone($data)
+    {
+        $builder = $this->db->table('project_to_milestone');
+        $data = [
+            'project_id'  => $data['project_id'],
+            'amount'      => $data['amount'],
+            'description' => $data['description'],
+            'deadline'    => $data['deadline'],
+        ];
+
+        $builder->set('date_added', 'NOW()', false);
+        $builder->insert($data);
+    }
+
+
     
     // -----------------------------------------------------------------
 }
