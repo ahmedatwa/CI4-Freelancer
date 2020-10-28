@@ -23,7 +23,7 @@ class Inbox extends \Catalog\Controllers\BaseController
         }
         
         $data['customer_id'] = $customer_id;
-
+ $data['members'] = [];
         // Chat Memebers
         $members = $messageModel->getMembersByCustomerId($customer_id);
 

@@ -73,7 +73,7 @@ class Bid extends \Catalog\Controllers\BaseController
         if (! $this->validate([
             'quote'         => "required",
             'description'   => "required",
-            'delivery_time' => ['label' => 'Delivery Time', 'rules' => 'required|numeric']
+            'delivery'      => 'required|numeric',
         ])) {
             $json['error'] = $this->validator->getErrors();
         }
@@ -81,7 +81,6 @@ class Bid extends \Catalog\Controllers\BaseController
         if (! $this->customer->isLogged()) {
             $json['redirect'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
         }
-
 
         if (!$json) {
             

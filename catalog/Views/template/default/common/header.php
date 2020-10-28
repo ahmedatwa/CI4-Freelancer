@@ -5,7 +5,7 @@
   <base href="<?php echo $base; ?>">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="google-signin-client_id" content="135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com">
+  <!-- <meta name="google-signin-client_id" content="135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com"> -->
 
   <!-- CSS -->
   <link rel="stylesheet" href="catalog/default/vendor/bootstrap/css/bootstrap.min.css">

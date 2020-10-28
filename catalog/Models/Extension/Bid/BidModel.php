@@ -24,19 +24,24 @@ class BidModel extends \CodeIgniter\Model
 
     public function getBids(array $data =[])
     {
-        $builder = $this->db->table('project_bids b');
-        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, c.email, b.quote, b.bid_id, b.status, b.delivery, c.image, c.customer_id, c.image, b.freelancer_id');
-        $builder->join('customer c', 'b.freelancer_id = c.customer_id', 'left');
-        $builder->join('project_description pd', 'b.project_id = pd.project_id', 'left');
+        $builder = $this->db->table('project_bids pb');
+        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, c.email, pb.quote, pb.bid_id, pb.status, pb.delivery, c.image, c.customer_id, pb.freelancer_id, ');
+        $builder->join('customer c', 'pb.freelancer_id = c.customer_id', 'left');
+        $builder->join('project_description pd', 'pb.project_id = pd.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
 
         if (isset($data['project_id'])) {
-            $builder->where('pd.project_id', $data['project_id']);
+            $builder->where('pb.project_id', $data['project_id']);
         }
+
+        if (isset($data['freelancer_id'])) {
+            $builder->where('pb.freelancer_id', $data['freelancer_id']);
+        }
+
         if (isset($data['orderBy']) && $data['orderBy'] == 'DESC') {
             $builder->orderBy($data['orderBy'], 'DESC');
         } else {
-            $builder->orderBy('b.date_added', 'ASC');
+            $builder->orderBy('pb.date_added', 'ASC');
         }
 
         if (isset($data['start']) || isset($data['limit'])) {

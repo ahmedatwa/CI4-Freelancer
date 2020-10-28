@@ -14453,7 +14453,9 @@ ul.dashboard-box-list > li:hover {
 body.modal-open .mm-slideout{
     z-index:inherit;
 }
-
+body.modal-open .file-zoom-dialog {
+	z-index:inherit;
+}
 
 .dropdown-menu .dropdown-item {
 	padding: 5px 15px;

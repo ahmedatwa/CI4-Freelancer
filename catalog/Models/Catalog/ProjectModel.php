@@ -16,7 +16,7 @@ class ProjectModel extends \CodeIgniter\Model
         $project_data = [
             'status_id'     => service('registry')->get('config_project_status_id'),
             'type'          => $data['type'],
-            //'upload'        => $data['upload'],
+            'runtime'       => $data['runtime'],
             'employer_id'   => $data['employer_id'],
             'budget_min'    => $data['budget_min'],
             'budget_max'    => $data['budget_max'],
@@ -503,23 +503,73 @@ class ProjectModel extends \CodeIgniter\Model
         return json_encode($config_data);
     }
 
-    // // Hire Me Button
-    // public function addProposal($data)
-    // {
-    //     $builder = $this->db->table('project_proposal');
-    //     $proposal_data = [
-    //         'employer_id'   => $data['employer_id'],
-    //         'freelancer_id' => $data['freelancer_id'],
-    //         'budget_min'    => $data['budget_min'],
-    //         'type'          => $data['type'],
-    //         'delivery_time' => $data['delivery_time'],
-    //         'message'       => $data['message'],
-    //         'status'        => 1
-    //     ];
+   // Send Message
+    public function addMessage($data)
+    {
+        $builder = $this->db->table('project_to_message');
 
-    //     $builder->set('date_added', 'NOW()', false);
-    //     $builder->insert($proposal_data);
-    // }
+        $message_data = [
+            'employer_id'   => $data['employer_id'],
+            'freelancer_id' => $data['freelancer_id'],
+            'project_id'    => $data['project_id'],
+            'message'       => $data['message'],
+        ];
 
+        $builder->set('date_added', 'NOW()', false);
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->insert($message_data);
+
+        // trigget new direct message event
+        \CodeIgniter\Events\Events::trigger('customer_new_message', $data['employer_id'], $data['freelancer_id'], $data['project_id'], $data['message']);
+    }
+
+
+    // Send Message
+    public function addWinner($data)
+    {
+        $builder = $this->db->table('project_bids');
+        $builder->set('selected', 1);
+        $builder->where([
+            'freelancer_id' =>  $data['freelancer_id'],
+            'project_id'    =>  $data['project_id'],
+            'bid_id'        =>  $data['bid_id']
+        ]);
+
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->update();
+
+        // trigget new direct message event
+        \CodeIgniter\Events\Events::trigger('project_winner_selected', $data['freelancer_id'], $data['project_id'], $data['bid_id']);
+    }
+
+    // project Private Messages
+    public function getProjectMessagesById(array $data = [])
+    {
+        $builder = $this->db->table('project_to_message');
+        $builder->select();
+        $builder->where('project_id', $data['project_id']);
+
+        if (isset($data['customer_id'])) {
+            $builder->where('employer_id', $data['customer_id']);
+            $builder->orWhere('freelancer_id', $data['customer_id']);
+        }
+
+        $builder->orderBy('date_added', 'DESC');
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
+    // project Private Messages
+    public function getMilestonesByProjectId($project_id)
+    {
+        $builder = $this->db->table('project_to_milestone');
+        $builder->select();
+        $builder->where('project_id', $project_id);
+        $builder->orderBy('date_added', 'DESC');
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
+    
     // -----------------------------------------------------------------
 }

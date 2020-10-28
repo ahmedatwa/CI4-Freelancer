@@ -84,10 +84,7 @@ $("[data-trigger]").on("click", function(e){
 $(document).on('click', '.dropdown-menu', function (e) {
   e.stopPropagation();
 });
-	/*--------------------------------------------------*/
-	/*  Mobile Menu - mmenu.js
-	/*--------------------------------------------------*/
-    
+	
 	/*----------------------------------------------------*/
 	/*  Back to Top
 	/*----------------------------------------------------*/
@@ -115,7 +112,10 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	 return false;
 	});
 	
-
+// Makes tooltips work on ajax generated content
+    $(document).ajaxStop(function() {
+        $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+    });
 	/*--------------------------------------------------*/
 	/*  Ripple Effect
 	/*--------------------------------------------------*/

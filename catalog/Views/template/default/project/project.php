@@ -114,7 +114,7 @@
 								<div class="form-group col-md-6">
 									<label for="inputEmail4"><?php echo $text_rate; ?></label>
 									<div class="input-group">
-									<input class="form-control" type="text" id="input-delivery-time" name="delivery_time" value=""/>
+									<input class="form-control" type="text" id="input-quote" name="quote" value=""/>
 									<div class="input-group-append">
 								    <span class="input-group-text" id="basic-addon2"><?php echo $config_currency; ?></span>
 								  </div>
@@ -123,14 +123,12 @@
 								<div class="form-group col-md-6">
 									<label for="inputEmail4"><?php echo $text_delivery; ?></label>
 									<div class="input-group">
-										<input type="number" class="form-control" id="input-quote" name="quote" min="5">
-										
+										<input type="number" class="form-control" id="input-delivery" name="delivery" min="5">
 										<div class="input-group-prepend">
 											<span class="input-group-text">Days</span>
 										</div>
 									</div>
 								</div>
-								
 							</div>
 							<div class="form-group">
 							    <label for="exampleFormControlTextarea1"><?php echo $text_describe; ?></label>

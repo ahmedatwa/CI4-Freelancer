@@ -6,6 +6,10 @@ class Login extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
+        if ($this->customer->isLogged() && $this->session->get('customer_id')) {
+            return redirect('account_dashboard');
+        }
+        
         $this->template->setTitle(lang('account/login.heading_title'));
 
         $data['breadcrumbs'] = [];

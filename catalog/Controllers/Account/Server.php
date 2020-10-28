@@ -5,7 +5,7 @@ use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use Catalog\Libraries\Chat;
 
-class Server extends \Catalog\Controllers\BaseController
+class Server 
 {
     public function index()
     {
@@ -17,7 +17,7 @@ class Server extends \Catalog\Controllers\BaseController
                 new Chat()
             )
         ),
-            8080
+            54314
         );
 
         $server->run();

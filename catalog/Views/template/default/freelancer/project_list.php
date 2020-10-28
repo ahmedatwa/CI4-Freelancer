@@ -137,7 +137,7 @@ table.destroy();
 
 $('#table-' + $(this).attr('id')).DataTable({
 'ajax': {
-	'url': "freelancer/project/getProjects?cid=<?php echo $customer_id; ?>&status_id=" + encodeURIComponent(status_id),
+	'url': "freelancer/project/getProjects?cid=<?php echo $customer_id; ?>&status_id=" + status_id,
 	'dataSrc': '',
     },
 	"columns": [
