@@ -39,8 +39,12 @@
 									</ul>
 									<!-- Buttons -->
 									<div class="buttons-to-right always-visible margin-top-25 margin-bottom-0" id="bidders-button-wrapper">
-										<button type="button" id="award-freelancer-button" class="button ripple-effect" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" data-bid-id="<?php echo $bidder['bid_id']; ?>"><i class="icon-material-outline-check"></i>Award Freelancer</button>
-										<button type="button" id="send-message-button" class="button dark ripple-effect" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" ><i class="icon-feather-mail"></i> Send Message</button>
+									<?php if ($bidder['type']) { ?>
+										<button type="button" id="award-freelancer-button" class="btn btn-success btn-sm" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" data-bid-id="<?php echo $bidder['bid_id']; ?>" disabled><i class="icon-material-outline-check"></i>Awarded</button>
+									<?php } else { ?>
+										<button type="button" id="award-freelancer-button" class="btn btn-danger btn-sm" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" data-bid-id="<?php echo $bidder['bid_id']; ?>" ><i class="icon-material-outline-check"></i>Award Freelancer</button>
+									<?php } ?>
+										<button type="button" id="send-message-button" class="btn btn-dark btn-sm" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" ><i class="icon-feather-mail"></i> Send Message</button>
 									</div>
 								</div>
 							</div>

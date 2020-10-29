@@ -134,7 +134,9 @@
     <?php } else { ?>
       <li class="nav-item dropdown d-none d-lg-block">
         <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> <?php echo $username; ?></a>
+          <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> <?php echo $username; ?>
+        </a>
+
           <div class="row justify-content-md-center">
             <div class="dropdown-menu multi-column" aria-labelledby="headerLoginDropdown">
               <div class="multi-column-dropdown col-6 border-right">
@@ -150,7 +152,7 @@
                 <a class="dropdown-item" href="<?php echo $dashboard; ?>"> <?php echo $text_dashboard; ?></a>
                 <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_setting; ?></a>
                 <a class="dropdown-item" href="<?php echo $profile; ?>"> <?php echo $text_profile; ?></a>
-                <a role="button" id="button-logout" class="dropdown-item"> <?php echo $text_logout; ?></a>
+                <a class="dropdown-item" href="#" id="button-logout"> <?php echo $text_logout; ?></a>
               </div>
             </div>
           </div>

@@ -97,6 +97,32 @@ class BidModel extends \CodeIgniter\Model
         $builder->insert();
     }
 
+    public function isAwarded($freelancer_id)
+    {
+       $builder = $this->db->table('project_bids');
+       $builder->select('selected');
+       $builder->where('freelancer_id', $freelancer_id);
+       $row = $builder->get()->getRow();
+       if ($row->selected != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isAccepted($freelancer_id)
+    {
+       $builder = $this->db->table('project_bids');
+       $builder->select('accepted');
+       $builder->where('freelancer_id', $freelancer_id);
+       $row = $builder->get()->getRow();
+       if ($row->accepted != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     // -----------------------------------------------------------------
 }

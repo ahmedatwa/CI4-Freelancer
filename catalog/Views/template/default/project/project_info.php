@@ -10,7 +10,7 @@
 			<div class="col-12">
 			<ul class="nav nav-tabs" id="project-info" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="bids-tab" data-toggle="tab" href="#bids" role="tab" aria-controls="bids" aria-selected="true">Bids</a>
+                    <a class="nav-link active" id="bids-tab" data-toggle="tab" href="#bids" role="tab" aria-controls="bids" aria-selected="true">Bids <span class="badge badge-success"><?php echo $total_bids; ?></span></a>
                 </li>
 				<li class="nav-item" role="presentation">
 					<a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="true">Messages</a>

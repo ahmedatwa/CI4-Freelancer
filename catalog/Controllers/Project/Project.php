@@ -115,8 +115,6 @@ class Project extends \Catalog\Controllers\BaseController
                 $status = lang('project/project.text_expire', [$days_left]);;
             }
 
-
-
             $data['projects'][] = [
                 'project_id'  => $result['project_id'],
                 'name'        => $result['name'],

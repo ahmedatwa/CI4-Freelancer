@@ -28,13 +28,25 @@ class Notification
         $activityModel = new ActivityModel();
 
         $activity_data = [
-            'customer_id'   => 0,
-            'freelancer_id' => $freelancer_id,
             'project_id'    => $project_id,
-            'bid_id'       => $bid_id,
+            'customer_id'   => $freelancer_id,
+            'bid_id'        => $bid_id,
         ];
 
         $activityModel->addActivity('project_winner_selected', $activity_data);
+    }
+
+    // Catalog\Models\Freelancer\FreelanceModel::acceptOffer
+    public static function winnerAccepted(int $freelancer_id, int $project_id)
+    {
+        $activityModel = new ActivityModel();
+
+        $activity_data = [
+            'project_id'    => $project_id,
+            'customer_id'   => $freelancer_id,
+        ];
+
+        $activityModel->addActivity('project_winner_accepted', $activity_data);
     }
 
 

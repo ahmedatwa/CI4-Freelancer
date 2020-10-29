@@ -2,6 +2,7 @@
 
 @import url('icons.css');                              /* Default Reset, Responsive Grid*/
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&subset=latin-ext');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400&display=swap');
 
 
 /* -------------------------------------------------------------- */
@@ -5534,69 +5535,6 @@ body .notification strong { border: none; }
 	cursor: pointer;
 	font-weight: 600;
 }
-
-
-/* ---------------------------------- */
-/* Tables
-------------------------------------- */
-table.basic-table {
-	width: 100%;
-	border-collapse: separate;
-	border-spacing: 0;
-	border:none;
-	margin-bottom: 15px;
-}
-
-table.basic-table th {
-	background-color: #66676b;
-	text-align: left;
-	color: #fff;
-	vertical-align: top;
-	font-weight: 500;
-}
-
-table.basic-table th:first-child { border-radius: 4px 0 0 4px; }
-table.basic-table th:last-child { border-radius: 0 4px 4px 0; }
-
-
-table.basic-table th,
-table.basic-table td {
-	padding: 15px 28px;
-}
-
-table.basic-table tr:nth-child(odd) {
-	background-color: #f4f4f4;
-}
-
-table.basic-table { margin-bottom: 0; }
-
-
-@media screen and (max-width: 600px) {
-
-	table { border: 0; }
-	table th { display: none; }
-
-	table tr {
-		display: block;
-		margin-bottom: 0;
-	}
-	table td {
-		border-bottom: 1px solid #ddd;
-		display: block;
-		font-size: 14px;
-		text-align: right;
-	}
-
-	table td:before {
-		content: attr(data-label);
-		float: left;
-		font-weight: 600;
-	}
-
-	table td:last-child { border-bottom: 0; }
-}
-
-
 
 /* ---------------------------------- */
 /* Share Buttons
@@ -12655,7 +12593,7 @@ ul.dashboard-box-list > li:hover {
     align-items: stretch;
     align-self: flex-end;
     position: absolute;
-    right: 30px;
+    right: 80px;
     top: 50%;
     transform: translateY(-50%);
     transition: 0.3s;
@@ -13559,20 +13497,14 @@ ul.dashboard-box-list > li:hover {
 	.messages-headline { max-height: 120px; }
 }
 
-
-/* -------------------------------------------------------------- */
-/*  08. Others
------------------------------------------------------------------ */
-
-	/* ---------------------------------- */
-	/* Common Styles
-	------------------------------------- */
+/* ---------------------------------- */
+/* Common Styles
+------------------------------------- */
 
 	body {
 		color: #666;
 		font-size: 16px;
 		line-height: 27px;
-		/*background-color: #fff;*/
 	}
 
 	body.gray { background-color: #fbfbfb !important; }
@@ -13581,7 +13513,7 @@ ul.dashboard-box-list > li:hover {
 	/* Main Font */
 	body, h1, h2, h3, h4, h5, h6,  input[type="text"], input[type="password"], input[type="email"],
 	textarea, select, input[type="button"], input[type="submit"], button, body .pac-container
-	{ font-family: "Nunito", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif; text-transform: none; }
+	{ font-family: "Alegreya Sans", "Nunito", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif; text-transform: none; }
 
 	/* Headlines */
 	h1, h2, h3, h4, h5, h6 {

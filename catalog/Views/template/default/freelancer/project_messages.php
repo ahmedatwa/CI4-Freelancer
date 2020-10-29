@@ -1,3 +1,4 @@
+
 <?php if ($project_messages) { ?>
 <div class="header-notifications-content">
 <div class="header-notifications-scroll" data-simplebar>
@@ -5,7 +6,6 @@
 		<!-- Notification -->
 		<li class="notifications-not-read">
 			<?php foreach ($project_messages as $value) { ?>
-			<a href="javascript:void(0)">
 				<span class="notification-icon"><i class="icon-material-outline-group"></i></span>
 				<span class="notification-text">
 					<?php if ($customer_id == $value['employer_id']) { ?>
@@ -16,7 +16,6 @@
 					 <strong><?php echo $value['employer'][0]; ?></strong>
 					<?php } ?> 
 				</span>
-			</a>
 			<?php } ?> 
 		</li>
 	</ul>

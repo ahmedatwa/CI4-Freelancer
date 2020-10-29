@@ -18,6 +18,7 @@ return [
     'text_canned'      => 'Hi %s, I noticed your profile and would like to offer you my project. We can discuss any details over chat.',
     'text_budget_min'  => 'Budget (Min)',
     'text_success'     => 'Your Message has been sent, awating freelancer acceptance',
+    'text_offer_accepted' => 'Proposal offer has been accepted.',
     // button
     'button_hire'      => 'Hire Now!',
     'text_skills'      => 'Skills',

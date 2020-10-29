@@ -245,7 +245,7 @@ function gSignOut() {
 </script>
 <!-- singout button -->
 <script type="text/javascript">
-	$('#button-logout').on('click', function(){
+	$(document).on('click', '#button-logout', function(){
 		$.ajax({
 			url: 'account/logout',
 			dataType: 'json',

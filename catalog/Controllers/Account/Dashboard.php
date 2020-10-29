@@ -49,22 +49,28 @@ class Dashboard extends \Catalog\Controllers\BaseController
         $results = $activityModel->where('customer_id', $customer_id)->findAll();
 
         foreach ($results as $result) {
-
-            $comment = vsprintf(lang('account/activity.' . $result['key']), json_decode($result['data'], true));
+            $data = json_decode($result['data'], true);
+            
+            $comment = vsprintf(lang('account/activity.' . $result['key']), $data);
 
             $find = [
-                'customer_id=',
+                'project_id=',
             ];
 
+            $projectModel = new \Catalog\Models\Catalog\ProjectModel();
+            $project_info = $projectModel->getProject($data['project_id']);
+
             $replace = [
-                base_url('customer/customer/edit'),
+                $project_info['name'],
             ];
+
 
             $data['news_feed'][] = [
                 'comment'    => str_replace($find, $replace, $comment),
                 'date_added' => $this->dateDifference($result['date_added'])
             ];
         }
+
 
         $data['text_dashboard'] = lang('account/dashboard.text_dashboard');
         $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $customer_info['firstname'] ." " . $customer_info['lastname']);

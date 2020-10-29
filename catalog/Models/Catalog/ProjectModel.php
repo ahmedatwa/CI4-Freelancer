@@ -152,7 +152,7 @@ class ProjectModel extends \CodeIgniter\Model
     public function getProjects(array $data = [])
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status');
+        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status, p.employer_id, p.freelancer_id');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
@@ -171,7 +171,8 @@ class ProjectModel extends \CodeIgniter\Model
         }
 
         if (isset($data['status_id'])) {
-            $builder->where('p.status_id', $data['status_id']);
+            $status_id = explode(',', $data['status_id']);
+            $builder->whereIn('p.status_id', $status_id);
         }
 
         if (isset($data['filter_keyword']) && !empty($data['filter_keyword'])) {
@@ -538,6 +539,12 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->set('date_modified', 'NOW()', false);
         $builder->update();
 
+        // Update Project Status
+        $projects = $this->db->table('project');
+        $projects->where('project_id', $data['project_id']);
+        $projects->set('status_id', 6);
+        $projects->update();
+
         // trigget new direct message event
         \CodeIgniter\Events\Events::trigger('project_winner_selected', $data['freelancer_id'], $data['project_id'], $data['bid_id']);
     }
@@ -589,6 +596,23 @@ class ProjectModel extends \CodeIgniter\Model
 
     }
 
+    // Freelancer In-progress Projects
+    public function getfreelancerProjects($freelancer_id)
+    {
+        $builder = $this->db->table('project p');
+        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status');
+        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
+        $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
+        $builder->join('project_bids pb', 'pb.project_id = p.project_id', 'left');
+        $builder->where([
+            'pd.language_id' => service('registry')->get('config_language_id'),
+            'pb.freelancer_id' => $freelancer_id,
+            'pb.accepted' => 1,
+        ]);
+
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
 
     
     // -----------------------------------------------------------------

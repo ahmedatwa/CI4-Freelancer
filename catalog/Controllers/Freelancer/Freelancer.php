@@ -2,6 +2,7 @@
 
 use Catalog\Models\Account\CustomerModel;
 use \Catalog\Models\Catalog\CategoryModel;
+use \Catalog\Models\Freelancer\FreelancerModel;
 
 class Freelancer extends \Catalog\Controllers\BaseController
 {
@@ -351,6 +352,86 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         return $this->response->setJSON($json);
    }
+
+     // getProjects
+    public function getFreelancerBids()
+    {
+        $freelancerModel = new FreelancerModel();
+
+        if ($this->request->getVar('customer_id')) {
+            $freelancer_id = $this->request->getVar('customer_id');
+        } elseif ($this->session->get('customer_id')) {
+            $freelancer_id = $this->session->get('customer_id');
+        } else {
+            $freelancer_id = 0;
+        }
+
+        $data['bids'] = [];
+
+        $results = $freelancerModel->getFreelancerBidsById($freelancer_id);
+
+        foreach ($results as $result) {
+            $data['bids'][] = [
+                'project_id' => $result['project_id'],
+                'name'       => $result['name'],
+                'quote'      => $this->currencyFormat($result['quote']),
+                'delivery'   => $result['delivery'],
+                'selected'   => ($result['selected']) ? 'Awarded' : '',
+                'status'     => ($result['accepted']) ? 'Accepted' : $result['selected'],
+                'date_added' => $this->dateDifference($result['date_added']),
+                'href'       => base_url('project/project/project?pid=' . $result['project_id'])
+            ];
+        }
+
+        return view ('freelancer/bids_list', $data);
+    }  
+
+
+    public function acceptOffer()
+    {
+        $json = [];
+
+        if ($this->request->getVar('freelancer_id')) {
+
+            if ($this->request->getVar('freelancer_id')) {
+               $freelancer_id = $this->request->getVar('freelancer_id');
+            } else {
+               $freelancer_id = 0;
+            }
+
+            if ($this->request->getVar('project_id')) {
+               $project_id = $this->request->getVar('project_id');
+            } else {
+               $project_id = 0;
+            }
+
+            $freelancerModel = new FreelancerModel();
+
+            $freelancerModel->acceptOffer($freelancer_id, $project_id);
+
+            $json['success'] = lang('freelancer/freelancer.text_offer_accepted');
+        }
+
+        return $this->response->setJSON($json);
+   }
+
+    public function openDispute()
+    {   
+        $json = [];
+
+        $this->template->setTitle(lang('freelancer/freelancer.heading_title'));
+
+        $disputeModel = new \Catalog\Models\freelancer\DisputeModel();
+
+        if ($this->request->getMethod() == 'post') {
+
+            $disputeModel->insert($this->request->getPost());
+
+            $json['success'] = lang('freelancer/dispute.text_success');
+        }
+        return $this->response->setJSON($json);
+    }
+
 
     //--------------------------------------------------------------------
 }

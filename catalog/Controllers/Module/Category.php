@@ -6,7 +6,7 @@ class Category extends \Catalog\Controllers\BaseController
 {
 	public function index() {
 
-		$data['heading_title'] = lang('module/account.heading_title');
+		$data['heading_title'] = lang('module/category.heading_title');
 
         $filter_data = [
 			'limit'             => 8,

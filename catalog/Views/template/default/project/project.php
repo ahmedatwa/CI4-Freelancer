@@ -25,6 +25,7 @@
 									</div>
 								</li>
 								<li><div class="verified-badge-with-title">Verified</div></li>
+								<li><div class="verified-badge-with-title"><?php echo $status; ?></div></li>
 							</ul>
 						</div>
 					</div>
