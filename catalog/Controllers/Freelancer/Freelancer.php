@@ -432,6 +432,23 @@ class Freelancer extends \Catalog\Controllers\BaseController
         return $this->response->setJSON($json);
     }
 
+    public function transferFunds()
+    {   
+        $json = [];
+
+        $this->template->setTitle(lang('freelancer/freelancer.heading_title'));
+
+        $disputeModel = new \Catalog\Models\freelancer\DisputeModel();
+
+        if ($this->request->getMethod() == 'post') {
+
+            $disputeModel->insert($this->request->getPost());
+
+            $json['success'] = lang('freelancer/dispute.text_success');
+        }
+        return $this->response->setJSON($json);
+    }
+
 
     //--------------------------------------------------------------------
 }

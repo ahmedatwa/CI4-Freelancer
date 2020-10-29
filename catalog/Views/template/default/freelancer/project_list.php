@@ -47,6 +47,7 @@
 							    </tr>
 							</thead>
 							 <tbody>
+							 	<?php if ($open_projects) { ?>
 							 	<?php foreach ($open_projects as $open) { ?>
 							  <tr>
 							  	<td><?php echo $open['name']; ?></td>
@@ -67,6 +68,11 @@
 						      </td>
 							  </tr>
 							 <?php } ?>
+							<?php } else { ?>
+								<tr>
+									<td colspan="8" class="text-center">No Open Porjects</td>
+								</tr>
+							<?php } ?>	
 							 </tbody> 
 							  </table>
 							 </div>  <!-- table-responsive ./div --->
@@ -84,6 +90,7 @@
 							    </tr>
 							  </thead>
 							  <tbody>
+							  	<?php if ($work_projects) { ?>
 							 <?php foreach ($work_projects as $work) { ?>
 							  <tr>
 							  	<td><?php echo $work['name']; ?></td>
@@ -100,6 +107,11 @@
 								</td>
 							  </tr>
 							 <?php } ?>
+							 <?php } else { ?>
+								<tr>
+									<td colspan="5" class="text-center">No Current in progress Porjects</td>
+								</tr>
+							<?php } ?>	
 							 </tbody> 
 							  </table>
 							   </div>  <!-- table-responsive ./div --->
@@ -119,6 +131,7 @@
 							</thead>
 							  </thead>
 							  <tbody>
+							  	<?php if ($past_projects) { ?>
 							 	<?php foreach ($past_projects as $past) { ?>
 							  <tr>
 							  	<td><?php echo $past['name']; ?></td>
@@ -133,6 +146,11 @@
 							  	<td><?php echo $past['status']; ?></td>
 							  </tr>
 							 <?php } ?>
+							 <?php } else { ?>
+								<tr>
+									<td colspan="6" class="text-center">No Open Porjects</td>
+								</tr>
+							<?php } ?>	
 							 </tbody> 
 							  </table>
 							   </div>  <!-- table-responsive ./div --->
@@ -167,7 +185,23 @@
 							    	<th><?php echo $column_action; ?></th></tr>
 							    </tr>
 							   </thead>
-
+								<tbody>
+							  	<?php if ($freelancer_progress_projects) { ?>
+							 	<?php foreach ($freelancer_progress_projects as $work) { ?>
+							  <tr>
+							  	<td><?php echo $work['name']; ?></td>
+							  	<td><?php echo $work['budget']; ?></td>
+							  	<td><?php echo $work['type']; ?></td>
+							  	<td><?php echo $work['status']; ?></td>
+							  	<td><a href="<?php echo $work['view']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="view"><i class="far fa-eye"></i></a></td>
+							  </tr>
+							 <?php } ?>
+							 <?php } else { ?>
+								<tr>
+									<td colspan="6" class="text-center">No Open Porjects</td>
+								</tr>
+							<?php } ?>	
+							 </tbody> 
 							</table>
 						</div> <!-- workinprogress-tab --> 
                        </div>
@@ -216,7 +250,13 @@
 
 <link href="catalog/default/vendor/DataTables/datatables.min.css" rel="stylesheet" type="text/css">
 <script src="catalog/default/vendor/DataTables/datatables.min.js"></script>
-
+<script type="text/javascript">
+var table = $('#table-pastprojects-tab').DataTable({
+    "dom": 'lrtp',
+    "order":[[ 1, "asc" ]],
+    "lengthMenu": [15, 20, 25, 30]
+});
+</script>
 <!-- // Freelancer  -->
 <script type="text/javascript">
 $('#open-dispute').on('show.bs.modal', function (event) {
@@ -267,7 +307,6 @@ $('#open-dispute').on('show.bs.modal', function (event) {
     })
   })
 </script>	
-
 
 
 <script type="text/javascript">

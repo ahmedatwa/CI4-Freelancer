@@ -230,8 +230,24 @@ class Project extends \Catalog\Controllers\BaseController
           
         }
 
-        $data['project_statuses'] = [];
+        // Freelancer in Progress 
+        $data['freelancer_progress_projects'] = [];
+        
+        $results = $results = $projectModel->getFreelancerProjects($customer_id);
+        foreach ($results as $result) {
+            $data['freelancer_progress_projects'][] = [
+                'project_id' => $result['project_id'],
+                'name'       => $result['name'],
+                'budget'     => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
+                'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
+                'status'     => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
+                'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
+            ];
+          
+        }
 
+        // Status
+        $data['project_statuses'] = [];
         $projectStatusesModel = new \Catalog\Models\Localization\ProjectStatusModel();
         $projectStatuses = $projectStatusesModel->getProjectSatuses();
         foreach ($projectStatuses as $status) {
@@ -566,36 +582,36 @@ class Project extends \Catalog\Controllers\BaseController
     }
 
     // getProjects
-    public function getFreelancerProjects()
-    {
-        $json = [];
+    // public function getFreelancerProjects()
+    // {
+    //     $json = [];
 
-        $projectModel = new ProjectModel();
+    //     $projectModel = new ProjectModel();
 
-        if ($this->request->getVar('cid')) {
-            $freelancer_id = $this->request->getVar('cid');
-        } elseif ($this->session->get('freelancer_id')) {
-            $freelancer_id = $this->session->get('freelancer_id');
-        } else {
-            $freelancer_id = 0;
-        }
+    //     if ($this->request->getVar('cid')) {
+    //         $freelancer_id = $this->request->getVar('cid');
+    //     } elseif ($this->session->get('freelancer_id')) {
+    //         $freelancer_id = $this->session->get('freelancer_id');
+    //     } else {
+    //         $freelancer_id = 0;
+    //     }
 
-        $results = $projectModel->getFreelancerProjects($freelancer_id);
+    //     $results = $projectModel->getFreelancerProjects($freelancer_id);
 
-        foreach ($results as $result) {
-            $json[] = [
-                'project_id' => $result['project_id'],
-                'name'       => $result['name'],
-                'budget'     => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
-                'date_added' => $this->dateDifference($result['date_added']),
-                'status'     => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
-                'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $freelancer_id),
-            ];
-        }
+    //     foreach ($results as $result) {
+    //         $json[] = [
+    //             'project_id' => $result['project_id'],
+    //             'name'       => $result['name'],
+    //             'budget'     => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
+    //             'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
+    //             'date_added' => $this->dateDifference($result['date_added']),
+    //             'status'     => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
+    //             'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $freelancer_id),
+    //         ];
+    //     }
 
-        return $this->response->setJSON($json);
-    }   
+    //     return $this->response->setJSON($json);
+    // }   
 
 
     
