@@ -6,6 +6,7 @@ return [
     'text_success_pm'        => 'Message has been send successfully',
     'text_success_winner'    => 'Award request has been sent pending approval',
     'text_success_milestone' => 'Milestone has been created',
+    'text_success_complete' => 'Project Marked as Completed, pending employer payment',
     // column
     'column_status'          => 'Status',
     'column_name'            => 'Project Name',
@@ -16,6 +17,7 @@ return [
     'column_bids'            => 'Bids',
     'column_avg_bids'        => 'Avg Bids',
     'column_expiry'          => 'Bids Expiry',
+    'column_amount'          => 'Due Amount',
     // button
     'button_view'            => 'View',
     'button_cancel'          => 'Cancel',

@@ -44,5 +44,61 @@ class FreelancerModel extends \CodeIgniter\Model
         $projects->update();
     }
 
+    public function transferProjectFunds($data)
+    {
+        // update freelancer balance
+        $builder = $this->db->table('customer_to_balance');
+         if (isset($data['freelancer_id'])) {
+                      $builder->where([
+            'customer_id'   => $data['freelancer_id'],
+            'project_id'    => $project_id,
+        ]);
+
+        $query = $builder->get();
+        $row = $query->getRow();
+
+        if ($row) {
+            $balance_data = [
+               'available'   => $row->available + $data['amount']
+        ];
+            $builder->set('date_modified', 'NOW()', false);
+            $builder->update($balance_data);
+        } else {
+            $balance_data = [
+              'available'   => $data['amount'],
+              'customer_id' => $data['freelancer_id']
+        ];
+            $builder->set('date_added', 'NOW()', false);
+            $builder->insert($balance_data);
+          }
+        }
+        // update emplyer balance
+        if (isset($data['employer_id'])) {
+        $builder->where([
+            'customer_id'   => $data['employer_id'],
+            'project_id'    => $project_id,
+        ]);
+
+        $query = $builder->get();
+        $row = $query->getRow();
+
+        if ($row) {
+            $balance_data = [
+               'available'   => $row->available - $data['amount']
+        ];
+            $builder->set('date_modified', 'NOW()', false);
+            $builder->update($balance_data);
+        } else {
+            $balance_data = [
+              'available'   => $data['amount'],
+              'customer_id' => $data['employer_id']
+        ];
+            $builder->set('date_added', 'NOW()', false);
+            $builder->insert($balance_data);
+        }
+      }
+
+    }
+
     // -----------------------------------------------------------------
 }

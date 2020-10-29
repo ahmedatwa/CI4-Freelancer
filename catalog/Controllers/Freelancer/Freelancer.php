@@ -438,11 +438,11 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         $this->template->setTitle(lang('freelancer/freelancer.heading_title'));
 
-        $disputeModel = new \Catalog\Models\freelancer\DisputeModel();
+        $freelancerModel = new FreelancerModel();
 
         if ($this->request->getMethod() == 'post') {
 
-            $disputeModel->insert($this->request->getPost());
+            $freelancerModel->transferProjectFunds($this->request->getPost());
 
             $json['success'] = lang('freelancer/dispute.text_success');
         }

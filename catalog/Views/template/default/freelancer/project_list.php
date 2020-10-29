@@ -63,7 +63,6 @@
 							  	<td><?php echo $open['status']; ?></td>
 							  	<td>
 							  	<a href="<?php echo $open['view']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="view"><i class="far fa-eye"></i></a>
-							  	<a href="<?php echo $open['view']; ?>" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Pay"><i class="fas fa-wallet"></i></a>
 							    <a href="<?php echo $open['view']; ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Mark As Complete"><i class="fas fa-check"></i></a>
 						      </td>
 							  </tr>
@@ -99,17 +98,16 @@
 							  	<td><?php echo $work['status']; ?></td>
 							  	<td>
 							  	<a href="<?php echo $work['view']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="view"><i class="far fa-eye"></i></a>
-							  	<a href="<?php echo $work['view']; ?>" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Pay"><i class="fas fa-wallet"></i></a>
 							  	<button type="button" id="button-dispute" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#open-dispute" data-emploerid="<?php echo $work['employer_id']; ?>" data-freelancerid="<?php echo $work['freelancer_id']; ?>" data-projectid="<?php echo $work['project_id']; ?>"><i class="fas fa-exclamation-circle"></i></button>
 							  	<?php if ($customer_id != $work['employer_id']) { ?>
-							    <a href="<?php echo $work['view']; ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Mark As Complete"><i class="fas fa-check"></i></a>
+							    <button type="button" onclick="confirm('Are You Sure') ? markComeplete(<?php echo $work['project_id']; ?>) : false;" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Mark As Complete" id="button-complete-status"><i class="fas fa-check"></i></a>
 							    <?php } ?>
 								</td>
 							  </tr>
 							 <?php } ?>
 							 <?php } else { ?>
 								<tr>
-									<td colspan="5" class="text-center">No Current in progress Porjects</td>
+									<td colspan="5" class="text-center">No Current under development Porjects</td>
 								</tr>
 							<?php } ?>	
 							 </tbody> 
@@ -127,6 +125,8 @@
 							    	<th><?php echo $column_bids; ?></th>
 							    	<th><?php echo $column_avg_bids; ?></th>
 							    	<th><?php echo $column_status; ?></th>
+							    	<th><?php echo $column_amount; ?></th>
+							    	<th><?php echo $column_action; ?></th>
 							    </tr>
 							</thead>
 							  </thead>
@@ -144,6 +144,14 @@
 							  	<?php } ?></td>
 							  	<td><?php echo $past['avgBids']; ?></td>
 							  	<td><?php echo $past['status']; ?></td>
+							  	<td><?php echo number_format($past['amount'][0], 2); ?></td>
+							  	
+							  	<td><?php if ($past['amount'][0] > 0) { ?>
+							  	<button type="button" id="button-pay" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#pay-freelancer" data-emploerid="<?php echo $past['employer_id']; ?>" data-freelancerid="<?php echo $past['freelancer_id']; ?>" data-projectid="<?php echo $past['project_id']; ?>" data-amount="<?php echo number_format($past['amount'][0], 2); ?>"><i class="fas fa-exclamation-circle"></i></button>
+							  	<?php } else { ?>
+								<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Pay" disabled><i class="fas fa-wallet"></i></button>
+								<?php } ?>
+							  	</td>
 							  </tr>
 							 <?php } ?>
 							 <?php } else { ?>
@@ -193,7 +201,9 @@
 							  	<td><?php echo $work['budget']; ?></td>
 							  	<td><?php echo $work['type']; ?></td>
 							  	<td><?php echo $work['status']; ?></td>
-							  	<td><a href="<?php echo $work['view']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="view"><i class="far fa-eye"></i></a></td>
+							  	<td><a href="<?php echo $work['view']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="view"><i class="far fa-eye"></i></a>
+							    <button type="button" onclick="confirm('Are You Sure') ? markComeplete(<?php echo $work['project_id']; ?>) : false;" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Mark As Complete" id="button-complete-status"><i class="fas fa-check"></i></a>
+							    </td>
 							  </tr>
 							 <?php } ?>
 							 <?php } else { ?>
@@ -248,6 +258,33 @@
   </div>
 </div>
 
+<!--payment Modal   -->
+<div class="modal fade" id="pay-freelancer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<div class="alert alert-info" role="alert"><i class="fas fa-exclamation-circle"></i> Your Currenct Balance is: <?php echo $balance; ?></div>
+        <form>
+          <div class="form-group">
+            <label for="amount" class="col-form-label">Amount:</label>
+            <input type="number" class="form-control" name="amount" id="amount"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="button-transfer">Transfer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <link href="catalog/default/vendor/DataTables/datatables.min.css" rel="stylesheet" type="text/css">
 <script src="catalog/default/vendor/DataTables/datatables.min.js"></script>
 <script type="text/javascript">
@@ -267,8 +304,8 @@ $('#open-dispute').on('show.bs.modal', function (event) {
 
   $('#open-dispute #button-claim').on('click', function() {
 
-  	var comment = $('.modal-body #comment').val();
-    var dispute_reason_id = $('.modal-body #dispute_reason_id').val();
+  	var comment = $('#open-dispute #comment').val();
+    var dispute_reason_id = $('#open-dispute #dispute_reason_id').val();
 
   $.ajax({
 		url: 'freelancer/freelancer/openDispute',
@@ -304,10 +341,65 @@ $('#open-dispute').on('show.bs.modal', function (event) {
 		    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	  });
-    })
-  })
+    });
+  });
 </script>	
 
+
+<!-- Tranfer amount -->
+<script type="text/javascript">
+$('#pay-freelancer').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) 
+  var amount = button.data('amount') 
+  var modal = $(this)
+  modal.find('.modal-title').text('Pay Freelancer | ' + amount)
+  modal.find('.modal-body input[type="number"]').val(amount)
+  var project_id = button.data('projectid');
+  var freelancer_id = button.data('freelancerid');
+  var employer_id = button.data('employerid');
+
+$('#button-transfer').on('click', function() {
+
+  var amount = $('#pay-freelancer #amount').val();
+
+  $.ajax({
+		url: 'freelancer/freelancer/transferFunds',
+		dataType: 'json',
+		method:'post',
+		data: {employer_id : employer_id, freelancer_id : freelancer_id, project_id: project_id, amount: amount, dispute_reason_id: dispute_reason_id, '<?= csrf_token() ?>' : '<?= csrf_hash() ?>'},
+		beforeSend: function() {
+		    $('#button-transfer').html(' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+		},
+		complete: function() {
+		    $('#button-transfer').html('Transfer');
+		},
+		success: function(json) {
+		   	
+		   	if (json['success']) {
+		   		$('#pay-freelancer').modal('hide');
+
+	        	$.notify({
+                icon: 'fas fa-check-circle',
+                title: 'Success',
+                message: json['success']
+	            },{
+	             animate: {
+	                enter: 'animate__animated animate__lightSpeedInRight',
+	                exit: 'animate__animated animate__lightSpeedOutRight'
+	            },
+               type: 'success'
+             });
+	        } 
+
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+		    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	  });
+    })
+  })
+
+</script>
 
 <script type="text/javascript">
 $('#freelancer a[href="#freelancer-bids"]').on('click', function () {
@@ -331,7 +423,7 @@ $('#freelancer a[href="#freelancer-bids"]').on('click', function () {
 
 $('#freelancer a[href="#freelancer-bids').trigger('click') // Select first tab
 
-
+// Freelancer to accept offer
 function acceptOffer(project_id) {
 	$.ajax({
 		url: 'freelancer/freelancer/acceptOffer?freelancer_id=<?php echo $customer_id; ?>&project_id=' + project_id,
@@ -366,7 +458,42 @@ function acceptOffer(project_id) {
 		});
     }
 </script>
+<!-- Freelancer to complete project  -->
+<script type="text/javascript">
+function markComeplete(project_id) {
+	$.ajax({
+	url: 'freelancer/project/completeProject?project_id=' + project_id,
+	dataType: 'json',
+	beforeSend: function() {
+       $('#button-complete-status').html(' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+    },
+    complete: function() {
+       $('#button-complete-status').html('<i class="fas fa-check"></i>');
+    },
+    success: function(json) {
 
+        if (json['success']) {
+        	$.notify({
+            icon: 'fas fa-check-circle',
+            title: 'Success',
+            message: json['success']
+            },{
+             animate: {
+                enter: 'animate__animated animate__lightSpeedInRight',
+                exit: 'animate__animated animate__lightSpeedOutRight'
+            },
+           type: 'success'
+         });
+        location.reload();	
+        }
+
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
+});
+}
+</script>
 <script type="text/javascript">
 $('#employer li:first-child a').trigger('click') // Select first tab
 $('#freelancer li:first-child a').trigger('click') // Select first tab

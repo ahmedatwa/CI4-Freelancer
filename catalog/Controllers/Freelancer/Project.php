@@ -200,7 +200,7 @@ class Project extends \Catalog\Controllers\BaseController
         // Past 
         $filter_data = [
             'employer_id' => $customer_id,
-            'status_id'   => '5,7',
+            'status_id'   => '5,7,1,2',
             'sortBy'      => 'p.date_added',
             'orderBy'     => 'DESC',
             'limit'       => 20,
@@ -208,13 +208,18 @@ class Project extends \Catalog\Controllers\BaseController
         ];
     
         $data['past_projects'] = [];
+
+        $bidModel = new \Catalog\Models\Extension\Bid\BidModel();
         
         $results = $projectModel->getProjects($filter_data);
+
         $projects_total = $projectModel->getTotalProjects();
 
         foreach ($results as $result) {
             $data['past_projects'][] = [
                 'project_id' => $result['project_id'],
+                'employer_id' => $result['employer_id'],
+                'freelancer_id' => $result['freelancer_id'],
                 'name'       => $result['name'],
                 'budget'     => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
                 'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
@@ -226,6 +231,7 @@ class Project extends \Catalog\Controllers\BaseController
                 'expired'    => $result['runtime'],
                 'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
                 'bidders'    => base_url('freelancer/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
+                'amount'     => $bidModel->where('project_id', $result['project_id'])->findColumn('quote')
             ];
           
         }
@@ -281,6 +287,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['column_status']     = lang('freelancer/project.column_status');
         $data['column_action']     = lang('freelancer/project.column_action');
         $data['column_name']       = lang('freelancer/project.column_name');
+        $data['column_amount']     = lang('freelancer/project.column_amount');
 
         $data['entry_name']        = lang('freelancer/project.entry_name');
         $data['entry_status']      = lang('freelancer/project.entry_status');
@@ -288,6 +295,10 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['customer_id'] = $customer_id;
         $data['pid'] = $customer_id;
+
+        $customerModel = new \Catalog\Models\Account\CustomerModel();
+
+        $data['balance'] = $this->currencyFormat($customerModel->getBalanceByCustomerID($this->session->get('customer_id')));
         
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
@@ -580,6 +591,24 @@ class Project extends \Catalog\Controllers\BaseController
 
         return $this->response->setJSON($json);
     }
+
+    public function completeProject()
+    {
+        $json = [];
+
+        if ($this->request->getVar('project_id')) {
+
+            $projectModel = new ProjectModel();
+
+            $projectModel->update($this->request->getVar('project_id'), ['status_id' => 2]);
+
+            $json['success'] = lang('freelancer/project.text_success_complete');
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+
 
     // getProjects
     // public function getFreelancerProjects()

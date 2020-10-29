@@ -110,6 +110,15 @@ class BidModel extends \CodeIgniter\Model
         }
     }
 
+    public function getBidByProjectId($project_id)
+    {
+        $builder = $this->db->table('project_bids');
+        $builder->select();
+        $builder->where('project_id', $project_id);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
+
     public function isAccepted($freelancer_id)
     {
        $builder = $this->db->table('project_bids');
