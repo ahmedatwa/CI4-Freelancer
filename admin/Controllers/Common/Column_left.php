@@ -41,7 +41,12 @@ class Column_left extends \Admin\Controllers\BaseController
             'href'     => base_url('index.php/catalog/information?user_token=' . $this->request->getVar('user_token')),
             'children' => [],
         ];
-
+        $catalog[] = [
+            'id'       => 'menu-catalog',
+            'name'     => lang('common/column_left.text_disputes'),
+            'href'     => base_url('index.php/catalog/dispute?user_token=' . $this->request->getVar('user_token')),
+            'children' => [],
+        ];
         $data['menus'][] = [
             'id'           => 'menu-catalog',
             'icon'         => 'fas fa-tags',
@@ -166,6 +171,32 @@ class Column_left extends \Admin\Controllers\BaseController
             'name'     => lang('common/column_left.text_currency'),
             'href'     => base_url('index.php/localisation/currency?user_token=' . $this->request->getVar('user_token')),
             'children' => [],
+        ];
+        // level 3
+        $disputes = [];
+        $disputes[] = [
+            'id'       => 'menu-disputes',
+            'name'     => lang('common/column_left.text_dispute_action'),
+            'href'     => base_url('index.php/localisation/dispute_action?user_token=' . $this->request->getVar('user_token')),
+            'children' => [],
+        ];
+        $disputes[] = [
+            'id'       => 'menu-disputes',
+            'name'     => lang('common/column_left.text_dispute_reason'),
+            'href'     => base_url('index.php/localisation/dispute_reason?user_token=' . $this->request->getVar('user_token')),
+            'children' => [],
+        ];
+        $disputes[] = [
+            'id'       => 'menu-disputes',
+            'name'     => lang('common/column_left.text_dispute_status'),
+            'href'     => base_url('index.php/localisation/dispute_status?user_token=' . $this->request->getVar('user_token')),
+            'children' => [],
+        ];
+        $localisation[] = [
+            'id'       => 'menu-disputes',
+            'name'     => lang('common/column_left.text_disputes'),
+            'href'     => base_url('index.php/localisation/disputes?user_token=' . $this->request->getVar('user_token')),
+            'children' => $disputes,
         ];
         $system[] = [
             'id'       => 'menu-localisation',

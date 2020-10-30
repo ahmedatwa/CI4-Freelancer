@@ -273,6 +273,10 @@ a:hover, a:focus {
     list-style: none;
 }
 
+/*#menu, #menu ul, #menu li a {
+    margin-left: 25px;
+}*/
+
 #menu {
     margin-bottom: 25px;
 }
@@ -384,6 +388,15 @@ a:hover, a:focus {
     padding-left: 40px;
 }
 
+/*level 3*/
+#menu li > ul > ul > a {
+ padding-left: 40px;
+}
+
+#menu li > ul > ul > ul > li > a {
+ padding-left: 50px;
+}
+/*level 3 end */
 #menu li li ul a {
     padding-left: 40px;
 }

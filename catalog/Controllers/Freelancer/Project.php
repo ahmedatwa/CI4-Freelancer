@@ -216,6 +216,19 @@ class Project extends \Catalog\Controllers\BaseController
         $projects_total = $projectModel->getTotalProjects();
 
         foreach ($results as $result) {
+            $paidStatus = (int) $bidModel->where('project_id', $result['project_id'])->findColumn('status')[0];
+
+            if ($paidStatus == 0) {
+                 $paid = lang('freelancer/project.text_unpaid');
+             } elseif ($paidStatus == 1) {
+                 $paid = lang('freelancer/project.text_paid');
+             } else {
+                 $paid = lang('freelancer/project.text_partial');
+             }
+
+
+            $amount = (int) $bidModel->where('project_id', $result['project_id'])->findColumn('quote')[0];
+
             $data['past_projects'][] = [
                 'project_id' => $result['project_id'],
                 'employer_id' => $result['employer_id'],
@@ -231,7 +244,8 @@ class Project extends \Catalog\Controllers\BaseController
                 'expired'    => $result['runtime'],
                 'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
                 'bidders'    => base_url('freelancer/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-                'amount'     => $bidModel->where('project_id', $result['project_id'])->findColumn('quote')
+                'amount'     => $amount,
+                'paid'       => ($amount == 0) ? '-' : $paid
             ];
           
         }
@@ -288,6 +302,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['column_action']     = lang('freelancer/project.column_action');
         $data['column_name']       = lang('freelancer/project.column_name');
         $data['column_amount']     = lang('freelancer/project.column_amount');
+        $data['column_paid']       = lang('freelancer/project.column_paid');
 
         $data['entry_name']        = lang('freelancer/project.entry_name');
         $data['entry_status']      = lang('freelancer/project.entry_status');

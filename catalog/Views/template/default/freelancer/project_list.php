@@ -126,6 +126,7 @@
 							    	<th><?php echo $column_avg_bids; ?></th>
 							    	<th><?php echo $column_status; ?></th>
 							    	<th><?php echo $column_amount; ?></th>
+							    	<th><?php echo $column_paid; ?></th>
 							    	<th><?php echo $column_action; ?></th>
 							    </tr>
 							</thead>
@@ -144,10 +145,11 @@
 							  	<?php } ?></td>
 							  	<td><?php echo $past['avgBids']; ?></td>
 							  	<td><?php echo $past['status']; ?></td>
-							  	<td><?php echo number_format($past['amount'][0], 2); ?></td>
+							  	<td><?php echo number_format($past['amount'], 2); ?></td>
+							  	<td><?php echo $past['paid']; ?></td>
 							  	
-							  	<td><?php if ($past['amount'][0] > 0) { ?>
-							  	<button type="button" id="button-pay" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#pay-freelancer" data-emploerid="<?php echo $past['employer_id']; ?>" data-freelancerid="<?php echo $past['freelancer_id']; ?>" data-projectid="<?php echo $past['project_id']; ?>" data-amount="<?php echo number_format($past['amount'][0], 2); ?>"><i class="fas fa-exclamation-circle"></i></button>
+							  	<td><?php if (($past['amount'] > 0)) { ?>
+							  	<button type="button" id="button-pay" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#pay-freelancer" data-emploerid="<?php echo $past['employer_id']; ?>" data-freelancerid="<?php echo $past['freelancer_id']; ?>" data-projectid="<?php echo $past['project_id']; ?>" data-amount="<?php echo number_format($past['amount'], 2); ?>" data-employerid="<?php echo $past['employer_id']; ?>"><i class="fas fa-exclamation-circle"></i></button>
 							  	<?php } else { ?>
 								<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Pay" disabled><i class="fas fa-wallet"></i></button>
 								<?php } ?>
@@ -269,7 +271,7 @@
         </button>
       </div>
       <div class="modal-body">
-      	<div class="alert alert-info" role="alert"><i class="fas fa-exclamation-circle"></i> Your Currenct Balance is: <?php echo $balance; ?></div>
+      	<div class="alert alert-info" role="alert"><i class="fas fa-exclamation"></i> Your Currenct Balance is: <?php echo $balance; ?></div>
         <form>
           <div class="form-group">
             <label for="amount" class="col-form-label">Amount:</label>
@@ -366,7 +368,7 @@ $('#button-transfer').on('click', function() {
 		url: 'freelancer/freelancer/transferFunds',
 		dataType: 'json',
 		method:'post',
-		data: {employer_id : employer_id, freelancer_id : freelancer_id, project_id: project_id, amount: amount, dispute_reason_id: dispute_reason_id, '<?= csrf_token() ?>' : '<?= csrf_hash() ?>'},
+		data: {employer_id : employer_id, freelancer_id : freelancer_id, project_id: project_id, amount: amount, '<?= csrf_token() ?>': '<?= csrf_hash() ?>'},
 		beforeSend: function() {
 		    $('#button-transfer').html(' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
 		},
@@ -374,6 +376,10 @@ $('#button-transfer').on('click', function() {
 		    $('#button-transfer').html('Transfer');
 		},
 		success: function(json) {
+
+			if (json['error']) {
+				  modal.find('.modal-body').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['error']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+			}
 		   	
 		   	if (json['success']) {
 		   		$('#pay-freelancer').modal('hide');
@@ -390,14 +396,13 @@ $('#button-transfer').on('click', function() {
                type: 'success'
              });
 	        } 
-
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 		    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	  });
-    })
-  })
+    });
+  });
 
 </script>
 

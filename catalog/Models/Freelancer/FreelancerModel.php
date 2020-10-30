@@ -48,55 +48,58 @@ class FreelancerModel extends \CodeIgniter\Model
     {
         // update freelancer balance
         $builder = $this->db->table('customer_to_balance');
-         if (isset($data['freelancer_id'])) {
-                      $builder->where([
+
+        if (isset($data['freelancer_id'])) {
+        $builder->where([
             'customer_id'   => $data['freelancer_id'],
-            'project_id'    => $project_id,
+            'project_id'    => $data['project_id'],
         ]);
-
-        $query = $builder->get();
-        $row = $query->getRow();
-
-        if ($row) {
-            $balance_data = [
-               'available'   => $row->available + $data['amount']
+        $amount_data = [
+            'customer_id' => $data['freelancer_id'],
+            'project_id'  => $data['project_id'],
+            'income'      => $data['amount'],
         ];
-            $builder->set('date_modified', 'NOW()', false);
-            $builder->update($balance_data);
-        } else {
-            $balance_data = [
-              'available'   => $data['amount'],
-              'customer_id' => $data['freelancer_id']
-        ];
-            $builder->set('date_added', 'NOW()', false);
-            $builder->insert($balance_data);
-          }
-        }
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->replace($amount_data);
+       }
+
         // update emplyer balance
         if (isset($data['employer_id'])) {
         $builder->where([
             'customer_id'   => $data['employer_id'],
-            'project_id'    => $project_id,
+            'project_id'    => $data['project_id'],
         ]);
 
-        $query = $builder->get();
-        $row = $query->getRow();
+        $amount_data = [
+            'customer_id' => $data['employer_id'],
+            'project_id'  => $data['project_id'],
+            'used'        => $data['amount'],
+        ];
 
-        if ($row) {
-            $balance_data = [
-               'available'   => $row->available - $data['amount']
-        ];
-            $builder->set('date_modified', 'NOW()', false);
-            $builder->update($balance_data);
-        } else {
-            $balance_data = [
-              'available'   => $data['amount'],
-              'customer_id' => $data['employer_id']
-        ];
-            $builder->set('date_added', 'NOW()', false);
-            $builder->insert($balance_data);
-        }
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->replace($amount_data);
       }
+      // update project bid query
+      $project_bid = $this->db->table('project_bids');
+      $project_bid->where([
+            'freelancer_id' => $data['freelancer_id'],
+            'project_id'    => $data['project_id'],
+        ]);
+
+      $project_bid->select('quote');
+      $row = $project_bid->get()->getRow();
+
+      if ($data['amount'] == $row->quote) {
+         $project_bid->set('status', 1)
+                 ->update();
+      } elseif ($data['amount'] < $row->quote) {
+         $project_bid->set('status', 2)
+                 ->update();
+      }
+
+      \CodeIgniter\Events\Events::trigger('project_transfer_funds', $data);
+      \CodeIgniter\Events\Events::trigger('mail_payment', $data);
+
 
     }
 

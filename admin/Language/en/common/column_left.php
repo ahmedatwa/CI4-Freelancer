@@ -30,15 +30,16 @@ return [
     'text_reviews'         =>'Reviews',
     'text_project_status'  =>'Project Status',
     // Blog
-    'text_blog'       => 'Blog',
-    'text_blog_posts' => 'Posts',
-    'text_blog_category' => 'Category',
-    'text_categories' => 'Categories',
-    'text_extensions' => 'Extensions',
-    'text_modules' => 'Modules',
-    'text_events'     => 'Events'
-
-
-
+    'text_blog'            => 'Blog',
+    'text_blog_posts'      => 'Posts',
+    'text_blog_category'   => 'Category',
+    'text_categories'      => 'Categories',
+    'text_extensions'      => 'Extensions',
+    'text_modules'         => 'Modules',
+    'text_events'          => 'Events',
+    'text_disputes'        => 'Disputes',
+    'text_dispute_action'  => 'Dispute Actions',
+    'text_dispute_reason'  => 'Dispute Reasons',
+    'text_dispute_status'  => 'Dispute Statuses',
 
 ];

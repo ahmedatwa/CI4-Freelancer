@@ -58,8 +58,6 @@
 				<?php } ?>	
 				</tbody>
 			</table>
-
-
 		</div>	
 	</div>
 		<!-- Summary -->
@@ -89,7 +87,7 @@
 <script type="text/javascript">
 var table = $('#table-withdraw').DataTable({
     "order":[[ 1, "asc" ]],
-    "lengthMenu": [15, 20, 25, 30]
+    "lengthMenu": [10, 20, 30]
 });
 // submit the form
 $('#button-submit').on('click', function(){

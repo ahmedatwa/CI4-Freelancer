@@ -442,9 +442,21 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         if ($this->request->getMethod() == 'post') {
 
+            $customerModel = new \Catalog\Models\Account\CustomerModel();
+
+            $balance = $customerModel->getBalanceByCustomerID($this->session->get('customer_id'));
+
+            // Emploer Balance Validation
+            if (($balance == 0) || $this->request->getPost('amount') > $balance) {
+                  $json['error'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
+            }
+
+            if (!$json) {
+
             $freelancerModel->transferProjectFunds($this->request->getPost());
 
-            $json['success'] = lang('freelancer/dispute.text_success');
+            $json['success'] = lang('freelancer/freelancer.text_transaction');
+          }
         }
         return $this->response->setJSON($json);
     }
