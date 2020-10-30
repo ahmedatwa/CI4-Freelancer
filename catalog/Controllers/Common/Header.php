@@ -145,6 +145,17 @@ class Header extends \Catalog\Controllers\BaseController
         $data['all_messages'] = route_to('account_messages') ? route_to('account_messages') : base_url('account/message');
 
 
+        // Logged Menu
+        $data['text_dashboard'] = lang('account/menu.text_dashboard');
+        $data['text_my_projects'] = lang('account/menu.text_my_projects');
+        $data['text_messages'] = lang('account/menu.text_messages');
+        $data['text_reviews'] = lang('account/menu.text_reviews');
+
+        $data['dashboard']    = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
+        $data['my_projects']    = route_to('freelancer_project') ? route_to('freelancer_project') : base_url('freelancer/project');
+        $data['messages']    = route_to('account_message') ? route_to('account_message') : base_url('account/message');
+        $data['reviews']    = route_to('account_review') ? route_to('account_review') : base_url('account/review');
+
         return view('common/header', $data);
     }
 

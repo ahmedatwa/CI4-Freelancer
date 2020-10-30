@@ -42,27 +42,71 @@ class MailAlert
     {
         $config = \Config\Services::email();
 
-        $data['text_greeting'] = sprintf(lang('account/forgotten.text_greeting'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
-        $data['text_change']   = lang('account/forgotten.text_change');
-        $data['text_ip']       = lang('account/forgotten.text_ip');
-        
-        $data['reset'] = str_replace('&amp;', '&', base_url('account/reset?code=' . $code));
+        $data['text_subject'] = sprintf(lang('mail/register.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_welcome'] = lang('mail/register.text_welcome');
+        $data['text_login']   = lang('mail/register.text_login');
+        $data['text_service'] = lang('mail/register.text_service');
+        $data['text_thanks']  = lang('mail/register.text_thanks');
 
-        $request = \Config\Services::request();
+        $data['config_name']      = service('registry')->get('config_name');
+        $data['config_address']   = service('registry')->get('config_address');
 
-        $data['ip'] = $request->getIPAddress();
 
         $config->setFrom(service('registry')->get('config_email'));
 
         $config->setTo($email);
 
-        $config->setSubject(html_entity_decode(sprintf(lang('account/forgotten.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
-        $config->setMessage(view('mail/forgotten', $data));
+        $config->setSubject(html_entity_decode(sprintf(lang('mail/register.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        $config->setMessage(view('mail/register', $data));
 
         $config->send();
     }
     
+    // Catalog\Model\Account\CustomerModel\AddCustomer
+    public static function projectAlert(string $email, string $code)
+    {
+        $config = \Config\Services::email();
+
+        $data['text_subject']    = sprintf(lang('mail/project_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_received']   = lang('mail/project_alert.text_received');
+        $data['text_pay']        = lang('mail/project_alert.text_pay');
+        $data['text_project_id'] = lang('mail/project_alert.text_project_id');
+
+        $data['config_name']      = service('registry')->get('config_name');
+        $data['config_address']   = service('registry')->get('config_address');
 
 
+        $config->setFrom(service('registry')->get('config_email'));
+
+        $config->setTo($email);
+
+        $config->setSubject(html_entity_decode(sprintf(lang('mail/project_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        $config->setMessage(view('mail/project_alert', $data));
+
+        $config->send();
+    }
+
+    // Catalog\Model\Account\CustomerModel\AddCustomer
+    public static function PaymentMail(string $email, string $code)
+    {
+        $config = \Config\Services::email();
+
+        $data['text_subject']    = sprintf(lang('mail/payment_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_received']   = lang('mail/payment_alert.text_received');
+        $data['text_amount']     = lang('mail/payment_alert.text_amount');
+
+        $data['config_name']      = service('registry')->get('config_name');
+        $data['config_address']   = service('registry')->get('config_address');
+
+
+        $config->setFrom(service('registry')->get('config_email'));
+
+        $config->setTo($email);
+
+        $config->setSubject(html_entity_decode(sprintf(lang('mail/project_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        $config->setMessage(view('mail/payment_alert', $data));
+
+        $config->send();
+    }
     // --------------------------------------------------
 }

@@ -32,19 +32,15 @@
 		<div class="card">
 			<div class="card-header"><i class="far fa-edit"></i> <?php echo $text_form; ?></div>
 			<div class="card-body">
-				<fieldset class="mb-3">
+				<fieldset class="mb-4">
 					<legend><?php echo $text_details; ?></legend>
 					<ul class="list-group list-group-flush">
-					  <li class="list-group-item">Employer: <?php echo $employer; ?></li>
-					  <li class="list-group-item">Freelancer: <?php echo $freelancer; ?></li>
-					  <li class="list-group-item">Comment: <?php echo $comment; ?></li>
-					  <li class="list-group-item">Project: <?php echo $project; ?></li>
+					  <li class="list-group-item"><i class="fas fa-long-arrow-alt-right"></i> Employer: <?php echo $employer; ?></li>
+					  <li class="list-group-item"><i class="fas fa-long-arrow-alt-right"></i> Freelancer: <?php echo $freelancer; ?></li>
+					  <li class="list-group-item"><i class="fas fa-long-arrow-alt-right"></i> Comment: <?php echo $comment; ?></li>
+					  <li class="list-group-item"><i class="fas fa-long-arrow-alt-right"></i> Project: <?php echo $project; ?></li>
 					</ul>
 				</fieldset>
-				
-				
-             
-				
 				<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" id="form-location" accept-charset="utf-8"> 
 								<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 								<div class="form-group row">

@@ -14488,7 +14488,7 @@ body.offcanvas-active{
 .screen-overlay {
   width:0%;
   height: 100%;
-  z-index: 30;
+  z-index: 1000;
   position: fixed;
   top: 0;
   left: 0;

@@ -91,11 +91,11 @@
 
 
  <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-light shadow-sm p-sm-0 bg-white">
-  <div class="offcanvas-header bg-dark p-2">  
+  <div class="offcanvas-header p-2">  
     <button type="button" class="close btn-close" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-    <h5 class="py-2 text-white text-center">Menu</h5>
+    <h5 class="py-2 text-white text-center"></h5>
   </div>
 <!-- Logo -->
 <a class="navbar-brand pt-0 d-none d-lg-block ml-3" href="<?php echo $home; ?>">
@@ -126,6 +126,16 @@
   </div> <!-- dropdown-mega-menu.// -->
 </li>
 <li class="nav-item d-lg-none"><a class="nav-link" href="<?php echo $projects; ?>"><?php echo $text_projects; ?></a></li>
+<?php if($logged) { ?>
+<ul class="list-unstyled d-lg-none mt-3">
+  <h3>freelancer</h3>
+   <div class="dropdown-divider"></div>
+  <li class="ml-4"><a class="nav-link" href="<?php echo $dashboard; ?>"><i class="fas fa-angle-right"></i> <?php echo $text_dashboard; ?></a></li>
+  <li class="ml-4"><a class="nav-link" href="<?php echo $my_projects; ?>"><i class="fas fa-angle-right"></i> <?php echo $text_my_projects; ?></a></li>
+  <li class="ml-4"><a class="nav-link" href="<?php echo $messages; ?>"><i class="fas fa-angle-right"></i> <?php echo $text_messages; ?></a></li>
+  <li class="ml-4"><a class="nav-link" href="<?php echo $reviews; ?>"><i class="fas fa-angle-right"></i> <?php echo $text_reviews; ?></a></li>
+</ul>
+<?php } ?>
 </ul>
 <ul class="navbar-nav ml-auto mr-3">
     <?php if (! $logged) { ?>
