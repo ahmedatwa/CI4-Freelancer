@@ -6,7 +6,6 @@ class Disputes extends Model
 {
     protected $table      = 'dispute';
     protected $primaryKey = 'dispute_id';
-
     protected $returnType     = 'array';
 
     protected $allowedFields = ['dispute_id', 'project_id', 'freelancer_id', 'employer_id', 'comment', 'dispute_status_id', 'dispute_reason_id', 'dispute_action_id'];
@@ -15,7 +14,15 @@ class Disputes extends Model
     protected $createdField  = 'date_added';
     protected $updatedField  = 'date_modified';
 
-
+    public function getDisputes()
+    {
+       $builder = $this->db->table('dispute d'); 
+       $builder->select('*, ds.name as status');
+       $builder->join('dispute_status ds', 'd.dispute_status_id = d.dispute_status_id', 'left');
+       $builder->groupBy('d.dispute_status_id');
+       $query = $builder->get();
+       return $query->getResultArray();
+    }
     // status
    public function getDisputeStatuses()
    {

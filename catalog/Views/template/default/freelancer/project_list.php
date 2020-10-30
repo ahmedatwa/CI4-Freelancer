@@ -313,7 +313,7 @@ $('#open-dispute').on('show.bs.modal', function (event) {
 		url: 'freelancer/freelancer/openDispute',
 		dataType: 'json',
 		method:'post',
-		data: {employer_id : employer_id, freelancer_id : freelancer_id, project_id: project_id, comment: comment, dispute_reason_id: dispute_reason_id, '<?= csrf_token() ?>' : '<?= csrf_hash() ?>'},
+		data: {employer_id : employer_id, freelancer_id : freelancer_id, project_id: project_id, comment: comment, dispute_status_id, : '1', dispute_reason_id: dispute_reason_id, '<?= csrf_token() ?>' : '<?= csrf_hash() ?>'},
 		beforeSend: function() {
 		    $('#button-dispute').html(' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
 		},

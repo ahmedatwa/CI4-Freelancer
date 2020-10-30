@@ -1,67 +1,42 @@
 <?php
 return [
 'error_warning'        => 'Warning: Please check the form carefully for errors!',
-'error_permission'     => 'Warning: You do not have permission to modify returns!',
-'text_success'         => 'Success: You have modified returns!',
+'error_permission'     => 'Warning: You do not have permission to modify dispute!',
+'text_success'         => 'Success: You have modified dispute!',
  'list' => [
 // Heading
-'heading_title'        => 'Product Returns',
+'heading_title'        => 'Project Disputes',
 
 // Text
-'text_list'            => 'Product Return List',
-'text_add'             => 'Add Product Return',
-'text_edit'            => 'Edit Product Return',
-'text_opened'          => 'Opened',
-'text_unopened'        => 'Unopened',
-'text_order'           => 'Order Information',
-'text_product'         => 'Product Information &amp, Reason for Return',
+'text_list'            => 'Project Dispute List',
+'text_add'             => 'Add Project Dispute',
+'text_edit'            => 'Edit Project Dispute',
 'text_history'         => 'History',
 'text_history_add'     => 'Add History',
+'text_details' => 'Dispute Details:',
 
 // Column
-'column_return_id'     => 'Return ID',
-'column_order_id'      => 'Order ID',
-'column_customer'      => 'Customer',
-'column_product'       => 'Product',
-'column_model'         => 'Model',
+'column_dispute_id'     => 'Dispute ID',
+'column_project_id'    => 'Project ID',
+'column_freelancer'    => 'Freelancer',
+'column_employer'      => 'Employer',
+'column_project'       => 'Project',
 'column_status'        => 'Status',
 'column_date_added'    => 'Date Added',
 'column_date_modified' => 'Date Modified',
 'column_comment'       => 'Comment',
-'column_notify'        => 'Customer Notified',
 'column_action'        => 'Action',
 
 // Entry
 'entry_customer'       => 'Customer',
-'entry_order_id'       => 'Order ID',
-'entry_date_ordered'   => 'Order Date',
-'entry_firstname'      => 'First Name',
-'entry_lastname'       => 'Last Name',
-'entry_email'          => 'E-Mail',
-'entry_telephone'      => 'Telephone',
-'entry_product'        => 'Product',
-'entry_model'          => 'Model',
-'entry_quantity'       => 'Quantity',
-'entry_opened'         => 'Opened',
-'entry_comment'        => 'Comment',
-'entry_return_reason'  => 'Return Reason',
-'entry_return_action'  => 'Return Action',
-'entry_return_status'  => 'Return Status',
+'entry_dispute_id'     => 'Dispute ID',
+'entry_return_reason'  => 'Dispute Reason',
+'entry_dispute_action'  => 'Dispute Action',
+'entry_return_status'  => 'Dispute Status',
 'entry_notify'         => 'Notify Customer',
-'entry_return_id'      => 'Return ID',
+'entry_return_id'      => 'Dispute ID',
 'entry_date_added'     => 'Date Added',
 'entry_date_modified'  => 'Date Modified',
 
-// Help
-'help_product'         => '(Autocomplete)',
-
-// Error
-'error_order_id'       => 'Order ID required!',
-'error_firstname'      => 'First Name must be between 1 and 32 characters!',
-'error_lastname'       => 'Last Name must be between 1 and 32 characters!',
-'error_email'          => 'E-Mail Address does not appear to be valid!',
-'error_telephone'      => 'Telephone must be between 3 and 32 characters!',
-'error_product'        => 'Product Name must be greater than 3 and less than 255 characters!',
-'error_model'          => 'Product Model must be greater than 3 and less than 64 characters!',
  ]
 ];

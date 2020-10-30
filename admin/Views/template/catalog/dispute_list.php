@@ -4,7 +4,6 @@
     <div class="page-header">
       <div class="container-fluid">
         <div class="float-right">
-            <a href="<?php echo $add; ?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="<?php echo $button_add; ?>"><i class="fas fa-plus"></i></a>
             <button type="button" id="button-delete" data-toggle="tooltip" data-placement="top" class="btn btn-danger" title="<?php echo $button_delete;?>" disabled><i class="fa fa-trash"></i></button></div>
             <h1><?php echo $heading_title; ?> </h1>
             <nav aria-label="breadcrumb" id="breadcrumb">
@@ -23,15 +22,11 @@
       <div class="card-body row">
         <div class="col-6">
             <div class="form-group">
-                <label for="input-name"><?php echo $entry_name; ?></label>
-                <input type="text" class="form-control" name="filter_name" placeholder="<?php echo $entry_name; ?>">
+                <label for="input-name"><?php echo $entry_dispute_id; ?></label>
+                <input type="text" class="form-control" name="filter_dispute_id" placeholder="<?php echo $entry_dispute_id; ?>">
             </div>
         </div>
         <div class="col-6">
-            <div class="form-group">
-                <label for="input-employer"><?php echo $entry_employer; ?></label>
-                <input type="text" class="form-control" name="filter_employer" placeholder="<?php echo $entry_employer; ?>">
-            </div>
             <div class="form-group">
                 <label for="input_status"><?php echo $entry_status; ?></label>
                 <select name="filter_status" class="form-control">
@@ -57,36 +52,38 @@
                                 <th width="1%" class="no-sort"><input type="checkbox"
                                     onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                 </th>
-                                <th><?php echo $column_name; ?></th>
+                                <th><?php echo $column_dispute_id; ?></th>
+                                <th><?php echo $column_project_id; ?></th>
+                                <th><?php echo $column_freelancer; ?></th>
                                 <th><?php echo $column_employer; ?></th>
-                                <th><?php echo $column_price; ?></th>
-                                <th><?php echo $column_type; ?></th>
                                 <th><?php echo $column_status; ?></th>
+                                <th><?php echo $column_date_added; ?></th>
                                 <th><?php echo $column_action; ?></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if ($projects) { ?>
-                                <?php foreach ($projects as $project) { ?>
+                            <?php if ($disputes) { ?>
+                                <?php foreach ($disputes as $dispute) { ?>
                                     <tr>
                                         <th scope="row">
-                                            <?php if (in_array($project['project_id'], $selected)) { ?>
+                                            <?php if (in_array($dispute['dispute_id'], $selected)) { ?>
                                                 <input type="checkbox" name="selected[]"
-                                                value="<?php echo $project['project_id']; ?>"
+                                                value="<?php echo $dispute['dispute_id']; ?>"
                                                 checked="checked" />
                                             <?php } else { ?>
                                                 <input type="checkbox" name="selected[]"
-                                                value="<?php echo $project['project_id']; ?>" />
+                                                value="<?php echo $dispute['dispute_id']; ?>" />
                                             <?php } ?>
                                         </div>
                                     </th>
-                                    <td><?php echo $project['name']; ?></td>
-                                    <td><?php echo $project['employer']; ?></td>
-                                    <td><?php echo $project['price']; ?></td>
-                                    <td><?php echo $project['type']; ?></td>
-                                    <td><?php echo $project['status']; ?></td>
+                                    <td><?php echo $dispute['dispute_id']; ?></td>
+                                    <td><?php echo $dispute['project_id']; ?></td>
+                                    <td><?php echo $dispute['freelancer']; ?></td>
+                                    <td><?php echo $dispute['employer']; ?></td>
+                                    <td><?php echo $dispute['status']; ?></td>
+                                    <td><?php echo $dispute['date_added']; ?></td>
                                     <td class="text-center">
-                                        <a href="<?php echo $project['edit']; ?>" class="btn btn-primary btn-sm"
+                                        <a href="<?php echo $dispute['edit']; ?>" class="btn btn-primary btn-sm"
                                             data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>"><i
                                             class="far fa-edit"></i></a></td>
                                         </tr>

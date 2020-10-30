@@ -13,20 +13,6 @@ class Dispute extends \Admin\Controllers\BaseController
         $this->getList();
     }
 
-    public function add()
-    {
-        $this->document->setTitle(lang('catalog/dispute.list.text_add'));
-
-        $disputeModel = new Disputes();
-
-        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->disputes->addProject($this->request->getPost());
-            return redirect()->to(base_url('index.php/catalog/dispute?user_token=' . $this->session->get('user_token')))
-                              ->with('success', lang('catalog/dispute.text_success'));
-        }
-        $this->getForm();
-    }
-
     public function edit()
     {
         $this->document->setTitle(lang('catalog/dispute.list.text_edit'));
@@ -82,17 +68,24 @@ class Dispute extends \Admin\Controllers\BaseController
         ];
 
         $data['disputes'] = [];
+
+        $customerModel = new \Admin\Models\Customer\Customers();
+
         $disputeModel = new Disputes();
-        $results = $disputeModel->findAll();
+
+        $results = $disputeModel->getDisputes();
 
         foreach ($results as $result) {
             $data['disputes'][] = [
-                'dispute_id' => $result['dispute_id'],
+                'dispute_id'    => $result['dispute_id'],
                 'freelancer_id' => $result['freelancer_id'],
-                'employer_id' => $result['employer_id'],
-                'comment'    => $result['comment'],
-                'edit'       => base_url('index.php/catalog/dispute/edit?user_token=' . $this->session->get('user_token') . '&dispute_id=' . $result['dispute_id']),
-                'delete'     => base_url('index.php/catalog/dispute/delete?user_token=' . $this->session->get('user_token') . '&dispute_id=' . $result['dispute_id']),
+                'freelancer'    => $customerModel->where('customer_id', $result['freelancer_id'])->findColumn('username')[0],
+                'project_id'    => $result['project_id'],
+                'employer'      => $customerModel->where('customer_id', $result['employer_id'])->findColumn('username')[0],
+                'status'        => $result['status'],
+                'date_added'    => $result['date_added'],
+                'edit'          => base_url('index.php/catalog/dispute/edit?user_token=' . $this->session->get('user_token') . '&dispute_id=' . $result['dispute_id']),
+                'delete'        => base_url('index.php/catalog/dispute/delete?user_token=' . $this->session->get('user_token') . '&dispute_id=' . $result['dispute_id']),
             ];
         }
 
@@ -153,75 +146,34 @@ class Dispute extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
+        $disputeModel = new Disputes();
+
         if ($this->request->getGet('dispute_id') && ($this->request->getMethod() != 'post')) {
-            $dispute_info = $this->disputes->getProject($this->request->getGet('dispute_id'));
+            $dispute_info = $disputeModel->find($this->request->getGet('dispute_id'));
         }
-
-        if ($this->request->getPost('dispute_description')) {
-            $data['dispute_description'] = $this->request->getPost('dispute_description');
-        } elseif ($this->request->getGet('dispute_id')) {
-            $data['dispute_description'] = $this->disputes->getProjectDescription($this->request->getVar('dispute_id'));
-        } else {
-            $data['dispute_description'] = [];
-        }
-
-        if ($this->request->getPost('sort_order')) {
-            $data['sort_order'] = $this->request->getPost('sort_order');
-        } elseif (!empty($dispute_info)) {
-            $data['sort_order'] = $dispute_info['sort_order'];
-        } else {
-            $data['sort_order'] = '';
-        }
-
-        if ($this->request->getPost('status')) {
-            $data['status'] = $this->request->getPost('status');
-        } elseif (!empty($dispute_info)) {
-            $data['status'] = $dispute_info['status'];
-        } else {
-            $data['status'] = 1;
-        }
-
-        if ($this->request->getPost('type')) {
-            $data['type'] = $this->request->getPost('type');
-        } elseif (!empty($dispute_info)) {
-            $data['type'] = $dispute_info['type'];
-        } else {
-            $data['type'] = 1;
-        }
-
-        if ($this->request->getPost('image')) {
-            $data['image'] = $this->request->getPost('image');
-        } elseif (!empty($dispute_info)) {
-            $data['image'] = $dispute_info['image'];
-        } else {
-            $data['image'] = '';
-        }
-
-        if ($this->request->getPost('image') && is_file(DIR_IMAGE . $this->request->getPost('image'))) {
-            $data['thumb'] = resizeImage($this->request->getPost('image'), 100, 100);
-        } elseif (!empty($dispute_info) && is_file(DIR_IMAGE . $dispute_info['image'])) {
-            $data['thumb'] = resizeImage($dispute_info['image'], 100, 100);
-        } else {
-            $data['thumb'] = resizeImage('no_image.jpg', 100, 100);
-        }
-
-        $data['placeholder'] = resizeImage('no_image.jpg', 100, 100);
-
-        // Employer
-        $customers_model = new \Admin\Models\Customer\Customers();
-        $data['customers'] = $customers_model->getCustomers();
-
-        if ($this->request->getPost('employer_id')) {
-            $data['employer_id'] = $this->request->getPost('employer_id');
-        } elseif (!empty($dispute_info['employer_id'])) {
-            $data['employer_id'] = $dispute_info['employer_id'];
-        } else {
-            $data['employer_id'] = 0;
-        }
-
-        $languages = new \Admin\Models\Localisation\Languages();
-        $data['languages'] = $languages->where('status', 1)->findAll();
         
+        $data['dispute_actions'] = $disputeModel->getDisputeActions();
+
+        if ($this->request->getPost('dispute_action_id')) {
+            $data['dispute_action_id'] = $this->request->getPost('dispute_action_id');
+        } elseif (!empty($dispute_info)) {
+            $data['dispute_action_id'] = $dispute_info['dispute_action_id'];
+        } else {
+            $data['dispute_action_id'] = 0;
+        }
+
+        if ($dispute_info) {
+            $customerModel = new \Admin\Models\Customer\Customers();
+
+            $projectModel = new \Admin\Models\Catalog\Projects();
+
+            $data['freelancer'] = $customerModel->where('customer_id', $dispute_info['freelancer_id'])->findColumn('username')[0];
+            $data['employer']   = $customerModel->where('customer_id', $dispute_info['employer_id'])->findColumn('username')[0];
+            $data['comment']    = $dispute_info['comment'];
+            $data['project']    = $projectModel->getProject($dispute_info['project_id'])['name'];
+        }
+
+
         $this->document->output('catalog/dispute_form', $data);
     }
 
