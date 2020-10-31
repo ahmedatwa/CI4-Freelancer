@@ -89,9 +89,6 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['initial_preview_config_data'] = $projectModel->getFilesPreviewConfig($project_id);
 
-        $data['pid'] = $project_id;
-        $data['employer_id'] = $customer_id;
-
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
 
@@ -160,7 +157,6 @@ class Project extends \Catalog\Controllers\BaseController
             ];
           
         }
-
 
         // in progress
         $filter_data = [
@@ -331,6 +327,8 @@ class Project extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
+        } elseif ($this->session->get('customer_id')) {
+            $customer_id = $this->session->get('customer_id');
         } else {
             $customer_id = 0;
         }
@@ -408,6 +406,8 @@ class Project extends \Catalog\Controllers\BaseController
         $data['heading_title'] = lang('project/project.text_manage_bidders');
         $data['text_total_bidders'] = sprintf(lang('project/project.text_total_bidders'), $total);
 
+        $data['customer_id'] = $customer_id;
+
         // Pagination
         $pager = \Config\Services::pager();
         $data['pagination'] = $pager->makeLinks($page, $limit, $total);
@@ -483,7 +483,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $filter_data = [
             'project_id'    => $project_id,
-            'customer_id'    => $customer_id,
+            'customer_id'   => $customer_id,
          ];
          
         $data['project_messages'] = [];
@@ -494,12 +494,13 @@ class Project extends \Catalog\Controllers\BaseController
 
         foreach ($results as $result) {
             $data['project_messages'][] = [
-                'message'       => $result['message'],
-                'employer_id'   => $result['employer_id'],
-                'freelancer_id' => $result['freelancer_id'],
-                'freelancer'    => $customerModel->where('customer_id', $result['freelancer_id'])->findColumn('username'),
-                'employer'      =>  $customerModel->where('customer_id', $result['employer_id'])->findColumn('username'),
-                'date_added'    => $this->dateDifference($result['date_added']),
+                'message'     => $result['message'],
+                'receiver_id' => $result['receiver_id'],
+                'sender_id'   => $result['sender_id'],
+                'project_id'  => $result['project_id'],
+                'sender'  => $customerModel->where('customer_id', $result['sender_id'])->findColumn('username'),
+                'receiver'    =>  $customerModel->where('customer_id', $result['receiver_id'])->findColumn('username'),
+                'date_added'  => $this->dateDifference($result['date_added']),
             ];
         }  
 

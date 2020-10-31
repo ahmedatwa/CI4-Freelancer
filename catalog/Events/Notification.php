@@ -6,16 +6,16 @@ use Catalog\Models\Account\CustomerModel;
 class Notification
 {
     // Catalog\Models\Project\ProjectModel::addMessage
-    public static function newMessage(int $employer_id, int $freelancer_id, int $project_id, string $message)
+    public static function newMessage(array $data)
     {
         $activityModel = new ActivityModel();
 
         $activity_data = [
-            'customer_id'   => 0,
-            'employer_id'   => $employer_id,
-            'freelancer_id' => $freelancer_id,
-            'project_id'    => $project_id,
-            'message'       => $message,
+            'customer_id' => 0,
+            'sender_id'   => $data['sender_id'],
+            'receiver_id' => $data['receiver_id'],
+            'project_id'  => $data['project_id'],
+            'message'     => $data['message'],
         ];
 
         $activityModel->addActivity('customer_new_message', $activity_data);

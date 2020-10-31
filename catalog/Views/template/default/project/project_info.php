@@ -9,9 +9,11 @@
 		<div class="row">
 			<div class="col-12">
 			<ul class="nav nav-tabs" id="project-info" role="tablist">
+                 <?php if ($employer_id == $customer_id) { ?>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="bids-tab" data-toggle="tab" href="#bids" role="tab" aria-controls="bids" aria-selected="true">Bids <span class="badge badge-success"><?php echo $total_bids; ?></span></a>
                 </li>
+                <?php } ?>
 				<li class="nav-item" role="presentation">
 					<a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="true">Messages</a>
 				</li>
@@ -130,9 +132,10 @@
 
 <!-- // load the bidders List Table-->
 <script type="text/javascript">
+
 $('#project-info a[href="#bids"]').on('click', function (e) {
  $.ajax({
-    url: 'freelancer/project/bids?pid=<?php echo $pid; ?>',
+    url: 'freelancer/project/bids?pid=<?php echo $project_id; ?>',
     dataType: 'html',
     beforeSend: function() {
         $('#bids').html('<p id="loader-div" class="text-center"><i class="fas fa-spinner fa-spin fa-lg"></i> Retrieving Data...</p>');
@@ -153,7 +156,7 @@ $('#project-info a[href="#bids"]').on('click', function (e) {
 // Messages
 $('#project-info a[href="#messages"]').on('click', function (e) {
  $.ajax({
-    url: 'freelancer/project/getProjectMessages?pid=<?php echo $pid; ?>&customer_id=<?php echo $employer_id; ?>',
+    url: 'freelancer/project/getProjectMessages?pid=<?php echo $project_id; ?>&customer_id=<?php echo $employer_id; ?>',
     dataType: 'html',
     beforeSend: function() {
         $('#messages').html('<p id="loader-div" class="text-center"><i class="fas fa-spinner fa-spin fa-lg"></i> Retrieving Data...</p>');
@@ -169,6 +172,9 @@ $('#project-info a[href="#messages"]').on('click', function (e) {
     }
  });
 }); 
+
+$('#project-info li:first-child a').tab('show') // Select first tab
+
 $('#project-info li:first-child a').trigger('click') // Select first tab
 
 </script>
@@ -179,7 +185,7 @@ $(document).on('click',"#award-freelancer-button", function() {
     var $node = $(this);
     var freelancer_id = $($node).attr('data-freelancer-id');
     var bid_id = $($node).attr('data-bid-id');
-    var project_id = <?php echo $pid; ?>;
+    var project_id = <?php echo $project_id; ?>;
 
     modal = '<div class="modal fade" id="award-freelancer-modal" tabindex="-1" aria-labelledby="" aria-hidden="true">';
     modal += '<div class="modal-dialog modal-sm">';
@@ -205,7 +211,7 @@ $(document).on('click',"#award-freelancer-button", function() {
 
     $('#award-freelancer-modal #modal-button-select').on('click', function (e) {
          $.ajax({
-            url: 'freelancer/project/awardWinner?pid=<?php echo $pid; ?>',
+            url: 'freelancer/project/awardWinner?pid=<?php echo $project_id; ?>',
             dataType: 'json',
             method: 'post',
             data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', freelancer_id: freelancer_id, bid_id: bid_id, project_id : project_id},
@@ -235,7 +241,8 @@ $(document).on('click',"#award-freelancer-button", function() {
 
 // <!-- Send Message -->
 $(document).on('click',"#send-message-button", function() {
-    var freelancer_id = $(this).attr('data-freelancer-id');
+    var sender_id = $(this).attr('data-senderid');
+    var receiver_id = $(this).attr('data-receiverid');
         modal = '<div class="modal fade" id="send-message-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
         modal += '<div class="modal-dialog">';
         modal += '<div class="modal-content">';
@@ -248,9 +255,9 @@ $(document).on('click',"#send-message-button", function() {
         modal += '<div class="modal-body">';
         modal += '<form id="send-message-modal-form">';
         modal += '<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />';
-        modal += '<input type="hidden" name="employer_id" value="<?php echo $employer_id; ?>" />';
-        modal += '<input type="hidden" name="project_id" value="<?php echo $pid; ?>" />';
-        modal += '<input type="hidden" name="freelancer_id" value="'+ freelancer_id +'" />';
+        modal += '<input type="hidden" name="receiver_id" value="'+receiver_id+'" />';
+        modal += '<input type="hidden" name="project_id" value="<?php echo $project_id; ?>" />';
+        modal += '<input type="hidden" name="sender_id" value="'+ sender_id +'" />';
         modal += '<div class="form-group">';
         modal += '<label for="input-message">Message</label>';
         modal += '<textarea type="text" class="form-control" name="message" cols="4" rows="3"></textarea>';
@@ -271,7 +278,7 @@ $(document).on('click',"#send-message-button", function() {
         $('#send-message-modal #modal-button-save').on('click', function (e) {
             e.preventDefault();
              $.ajax({
-                url: 'freelancer/project/sendMessage?pid=<?php echo $pid; ?>',
+                url: 'freelancer/project/sendMessage?pid=<?php echo $project_id; ?>',
                 dataType: 'json',
                 method: 'post',
                 data: $('#send-message-modal-form').serialize(),
@@ -358,7 +365,7 @@ $('#milestones-tab').on('shown.bs.tab', function () {
         $('#milestone-modal #milestone-button-save').on('click', function (e) {
             e.preventDefault();
              $.ajax({
-                url: 'freelancer/project/addMilestone?pid=<?php echo $pid; ?>',
+                url: 'freelancer/project/addMilestone?pid=<?php echo $project_id; ?>',
                 dataType: 'json',
                 method: 'post',
                 data: $('#milestone-modal-form').serialize(),

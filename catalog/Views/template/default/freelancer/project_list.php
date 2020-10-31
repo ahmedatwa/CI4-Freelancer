@@ -158,7 +158,7 @@
 							 <?php } ?>
 							 <?php } else { ?>
 								<tr>
-									<td colspan="6" class="text-center">No Open Porjects</td>
+									<td colspan="9" class="text-center">No Open Porjects</td>
 								</tr>
 							<?php } ?>	
 							 </tbody> 

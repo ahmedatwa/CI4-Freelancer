@@ -505,15 +505,15 @@ class ProjectModel extends \CodeIgniter\Model
     }
 
    // Send Message
-    public function addMessage($data)
+    public function addMessage(array $data)
     {
         $builder = $this->db->table('project_to_message');
 
         $message_data = [
-            'employer_id'   => $data['employer_id'],
-            'freelancer_id' => $data['freelancer_id'],
-            'project_id'    => $data['project_id'],
-            'message'       => $data['message'],
+            'sender_id'   => $data['sender_id'],
+            'receiver_id' => $data['receiver_id'],
+            'project_id'  => $data['project_id'],
+            'message'     => $data['message'],
         ];
 
         $builder->set('date_added', 'NOW()', false);
@@ -521,7 +521,7 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->insert($message_data);
 
         // trigget new direct message event
-        \CodeIgniter\Events\Events::trigger('customer_new_message', $data['employer_id'], $data['freelancer_id'], $data['project_id'], $data['message']);
+        \CodeIgniter\Events\Events::trigger('customer_new_message', $message_data);
     }
 
 
@@ -557,11 +557,11 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->where('project_id', $data['project_id']);
 
         if (isset($data['customer_id'])) {
-            $builder->where('employer_id', $data['customer_id']);
-            $builder->orWhere('freelancer_id', $data['customer_id']);
+            $builder->where('sender_id', $data['customer_id']);
+            $builder->orWhere('receiver_id', $data['customer_id']);
         }
 
-        $builder->orderBy('date_added', 'DESC');
+        $builder->orderBy('date_added', 'ASC');
         $query = $builder->get();
         return $query->getResultArray();
     }

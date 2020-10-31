@@ -44,7 +44,7 @@
 									<?php } else { ?>
 										<button type="button" id="award-freelancer-button" class="btn btn-danger btn-sm" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" data-bid-id="<?php echo $bidder['bid_id']; ?>" ><i class="icon-material-outline-check"></i>Award Freelancer</button>
 									<?php } ?>
-										<button type="button" id="send-message-button" class="btn btn-dark btn-sm" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" ><i class="icon-feather-mail"></i> Send Message</button>
+										<button type="button" id="send-message-button" class="btn btn-dark btn-sm" data-senderid="<?php echo $customer_id; ?>" data-receiverid="<?php echo $bidder['freelancer_id']; ?>"><i class="icon-feather-mail"></i> Send Message</button>
 									</div>
 								</div>
 							</div>
