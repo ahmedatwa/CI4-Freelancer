@@ -18,7 +18,7 @@ class Activity
             'username'    => $customer->getCustomerUserName(),
             ];
 
-        $activityModel->addActivity('customer_activity_login', $data);
+        $activityModel->addActivity('customer_login', $data);
     }
 
     // Admin\Controllers\user\user::Rules
@@ -39,7 +39,7 @@ class Activity
             'name'        => $name,
         ];
 
-        $activityModel->addActivity('customer_activity_update', $data);
+        $activityModel->addActivity('customer_update', $data);
     }
 
     // Catalog\Models\Account\Register::addCustomer
@@ -51,7 +51,7 @@ class Activity
             'username'    => (string) $username,
         ];
 
-        $activityModel->addActivity('customer_register_activity', $data);
+        $activityModel->addActivity('customer_register', $data);
     }
 
     // Catalog\Models\Freelancer\Withdraw::addRequest
@@ -64,10 +64,24 @@ class Activity
             'amount'      => (float) $amount,
         ];
 
-        $activityModel->addActivity('customer_activity_withdraw', $amount);
+        $activityModel->addActivity('customer_withdraw', $amount);
     }
 
-    
+    // Catalog\Models\Freelancer\FreelancerModel::addRequest
+    public static function transferFunds(array $data)
+    {
+        $activityModel = new ActivityModel;
+
+        $activity_data = [
+            'sender'        => (int) $data['employer_id'],
+            'receiver'      => (int) $data['freelancer_id'],
+            'project_id'    => (int) $data['project_id'],
+            'amount'        => (float) $data['amount'],
+            'customer_id'   => json_encode([$data['employer_id'], $data['freelancer_id']]) ,
+        ];
+
+        $activityModel->addActivity('customer_transfer_funds', $activity_data);
+    }
     
 
     // --------------------------------------------------

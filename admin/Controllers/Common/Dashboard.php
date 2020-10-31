@@ -39,19 +39,20 @@ class Dashboard extends \Admin\Controllers\BaseController
 
         // Get a list of installed modules
         $extensions = $extensionsModel->getInstalled('dashboard');
-    
+
         // Add all the modules which have multiple settings for each module
         foreach ($extensions as $code) {
-            if ($this->registry->get('dashboard_' . $code . '_status') && $this->user->hasPermission('access', 'extension/dashboard/' . $code)) {
+            if ($this->registry->get('dashboard_' . $code . '_status') && $this->user->hasPermission('access', 'extensions/dashboard/' . $code)) {
+                
                 $controller = ucfirst($code);
                 // Loading controller Method
-                //$output = view_cell("Admin\Controllers\Extension\Dashboard\\{$controller}::dashboard");
+                $output = view_cell("Extensions\Controllers\Dashboard\\{$controller}::dashboard");
 
                 $dashboards[] = [
                         'code'       => $code,
                         'width'      => $this->registry->get('dashboard_' . $code . '_width'),
                         'sort_order' => $this->registry->get('dashboard_' . $code . '_sort_order'),
-                        'output'     => '',//$output,
+                        'output'     => $output,
                 ];
             }
         }

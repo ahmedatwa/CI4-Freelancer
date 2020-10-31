@@ -4,7 +4,6 @@ use Config\Services;
 
 class Document
 {
-    protected $ttl = false;
     // Meta
     protected $title;
     protected $description;
@@ -37,7 +36,6 @@ class Document
     public function getTitle()
     {
         return $this->title;
-        var_dump($this->title);
     }
 
     /**
@@ -217,21 +215,17 @@ class Document
         // Renderer
         $renderer = \Config\Services::renderer();
 
-        $options = [
-            'cache' => 60,
-            'saveData' => false,
-        ];
         // Merge Language Data
         // if (is_array($this->getLanguage())) {
         //     $data = array_merge($this->getLanguage(), $data);
         // }
 
         // Parts
-        $data['header']      = view_cell('\Admin\Controllers\Common\Header::index', null, $this->ttl);
-        $data['column_left'] = view_cell('\Admin\Controllers\Common\Column_left::index', null, $this->ttl);
-        $data['footer']      = view_cell('\Admin\Controllers\Common\Footer::index', null, $this->ttl);
+        $data['header']      = view_cell('\Admin\Controllers\Common\Header::index');
+        $data['column_left'] = view_cell('\Admin\Controllers\Common\Column_left::index');
+        $data['footer']      = view_cell('\Admin\Controllers\Common\Footer::index');
 
-        echo $renderer->setData($data)->render($view, $options);
+        echo $renderer->setData($data)->render($view);
     }
 
     //  Final Template Output
@@ -245,9 +239,9 @@ class Document
         // }
 
         // Parts
-        $data['header']      = view_cell('\Admin\Controllers\Common\Header::index', null, $this->ttl);
-        $data['column_left'] = view_cell('\Admin\Controllers\Common\Column_left::index', null, $this->ttl);
-        $data['footer']      = view_cell('\Admin\Controllers\Common\Footer::index', null, $this->ttl);
+        $data['header']      = view_cell('\Admin\Controllers\Common\Header::index');
+        $data['column_left'] = view_cell('\Admin\Controllers\Common\Column_left::index');
+        $data['footer']      = view_cell('\Admin\Controllers\Common\Footer::index');
 
         echo $renderer->setData($data)->render($type . '\Views\template\\' . $view);
     }

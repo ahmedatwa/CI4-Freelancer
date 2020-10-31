@@ -1,18 +1,18 @@
-<?php namespace Admin\Controllers\Extension\Dashboard;
+<?php namespace Extensions\Controllers\Dashboard;
 
 class Activity extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->document->setTitle(lang('extension/dashboard/activity.list.heading_title'));
+        $this->document->setTitle(lang('dashboard/activity.list.heading_title'));
   
-        $setting_model = new \Admin\Models\Setting\Settings();
+        $settingModel = new \Admin\Models\Setting\Settings();
   
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $setting_model->editSetting('dashboard_activity', $this->request->getPost());
+            $settingModel->editSetting('dashboard_activity', $this->request->getPost());
     
-            return redirect()->to(base_url('index.php/setting/extension?user_token=' . $this->session->get('user_token') . '&type=dashboard'))
-                         ->with('success', lang('extension/dashboard/activity.text_success'));
+            return redirect()->to(base_url('index.php/setting/extension?user_token=' . $this->request->getVar('user_token') . '&type=dashboard'))
+                             ->with('success', lang('dashboard/activity.text_success'));
         }
   
         if ($this->session->getFlashdata('error_warning')) {
@@ -21,26 +21,26 @@ class Activity extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
   
-        $data['breadcrumbs'] = array();
+        $data['breadcrumbs'] = [];
   
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
         'text' => lang('en.text_home'),
-        'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token'))
-      );
+        'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token'))
+      ];
   
-        $data['breadcrumbs'][] = array(
-        'text' => lang('extension/dashboard/activity.list.text_extension'),
-        'href' => base_url('index.php/setting/extension?user_token=' . $this->session->get('user_token') . '&type=dashboard')
-      );
+        $data['breadcrumbs'][] = [
+        'text' => lang('dashboard/activity.list.text_extension'),
+        'href' => base_url('index.php/setting/extension?user_token=' . $this->request->getVar('user_token') . '&type=dashboard')
+      ];
   
-        $data['breadcrumbs'][] = array(
-        'text' => lang('extension/dashboard/activity.list.heading_title'),
-        'href' => base_url('index.php/extension/dashboard/activity/user_token=' . $this->session->get('user_token'))
-      );
+        $data['breadcrumbs'][] = [
+        'text' => lang('dashboard/activity.list.heading_title'),
+        'href' => base_url('index.php/extension/dashboard/activity/user_token=' . $this->request->getVar('user_token'))
+      ];
   
-        $data['action'] = base_url('index.php/extension/dashboard/activity?user_token=' . $this->session->get('user_token'));
+        $data['action'] = base_url('index.php/extensions/dashboard/activity?user_token=' . $this->request->getVar('user_token'));
   
-        $data['cancel'] = base_url('index.php/setting/extension?user_token=' . $this->session->get('user_token') . '&type=dashboard');
+        $data['cancel'] = base_url('index.php/setting/extension?user_token=' . $this->request->getVar('user_token') . '&type=dashboard');
   
         if ($this->request->getPost('dashboard_activity_width')) {
             $data['dashboard_activity_width'] = $this->request->getPost('dashboard_activity_width');
@@ -48,7 +48,7 @@ class Activity extends \Admin\Controllers\BaseController
             $data['dashboard_activity_width'] = $this->registry->get('dashboard_activity_width');
         }
       
-        $data['columns'] = array();
+        $data['columns'] = [];
       
         for ($i = 3; $i <= 12; $i++) {
             $data['columns'][] = $i;
@@ -66,13 +66,14 @@ class Activity extends \Admin\Controllers\BaseController
             $data['dashboard_activity_sort_order'] = $this->registry->get('dashboard_activity_sort_order');
         }
   
-        $this->document->output('extension/dashboard/activity_form', $data);
+
+        $this->document->moduleOutput('Extensions', 'dashboard\activity_form', $data);
     }
   
     protected function validateForm()
     {
-        if (!$this->user->hasPermission('modify', 'extension/dashboard/activity')) {
-            $this->session->setFlashdata('error_warning', lang('extension/dashboard/activity.error_permission'));
+        if (!$this->user->hasPermission('modify', 'dashboard/activity')) {
+            $this->session->setFlashdata('error_warning', lang('dashboard/activity.error_permission'));
             return false;
         }
         return true;
@@ -80,37 +81,36 @@ class Activity extends \Admin\Controllers\BaseController
     
     public function dashboard()
     {
-        $data['heading_title'] = lang('extension/dashboard/activity.list.heading_title');
+        $data['heading_title'] = lang('dashboard/activity.list.heading_title');
         $data['text_no_results'] = lang('en.text_no_results');
 
-        $data['user_token'] = $this->session->get('user_token');
+        $data['user_token'] = $this->request->getVar('user_token');
   
-        $data['activities'] = array();
+        $data['activities'] = [];
   
-        $extensionModel = new \Admin\Models\Extension\Dashboard\Activities();
+        $activityModel = new \Extensions\Models\Dashboard\Activities();
   
-        $results = $extensionModel->findAll(5);
+        $results = $activityModel->findAll(5);
 
         foreach ($results as $result) {
-            $text = vsprintf(lang('extension/dashboard/activity.list.text_activity_' . $result['key']), json_decode($result['data'], true));
+            $text = vsprintf(lang('dashboard/activity.list.text_activity_' . $result['key']), json_decode($result['data'], true));
   
-            $find = array(
-          'customer_id=',
-          'order_id=',
-        );
+            $find = [
+              'customer_id=',
+              'order_id=',
+         ];
   
-            $replace = array(
-          base_url('index.php/customer/customer/edit?user_token=' . $this->session->get('user_token') . '&customer_id='),
-          base_url('index.php/sale/order/info?user_token=' . $this->session->get('user_token') . '&order_id='),
-        );
+            $replace = [
+              base_url('index.php/customer/customer/edit?user_token=' . $this->request->getVar('user_token') . '&customer_id='),
+        ];
   
-            $data['activities'][] = array(
-          'comment'    => str_replace($find, $replace, $text),
-          'date_added' => date(lang('en.datetime_format'), strtotime($result['date_added']))
-        );
+            $data['activities'][] = [
+              'comment'    => str_replace($find, $replace, $text),
+              'date_added' => date(lang('en.datetime_format'), strtotime($result['date_added']))
+        ];
         }
   
-        return view('extension/dashboard/activity_info', $data);
+        return view('Extensions\Views\template\dashboard\activity_info', $data);
     }
 
     // -------------------------------------------------

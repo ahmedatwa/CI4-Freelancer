@@ -8,6 +8,15 @@ class ActivityModel extends \CodeIgniter\Model
     protected $primaryKey = 'customer_activity_id';
     protected $returnType = 'array';
 
+    public function getActivityByCustomerID($customer_id)
+    {
+        $builder = $this->db->table('customer_activity');
+        $builder->select();
+        //$builder->where('customer_id', $customer_id);
+        echo $builder->getCompiledSelect();
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
 
     public function addActivity($key, $data)
     {
@@ -21,6 +30,7 @@ class ActivityModel extends \CodeIgniter\Model
             'ip'         => $request->getIPAddress(),
             'user_agent' => $request->getUserAgent(),
         ];
+
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($activity_data);
     }

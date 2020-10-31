@@ -87,13 +87,15 @@ class MailAlert
     }
 
     // Catalog\Model\Account\CustomerModel\AddCustomer
-    public static function PaymentMail(string $email, string $code)
+    public static function PaymentMail(array $data)
     {
+
         $config = \Config\Services::email();
+        $customerModel = new CustomerModel();
 
         $data['text_subject']    = sprintf(lang('mail/payment_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
-        $data['text_received']   = lang('mail/payment_alert.text_received');
-        $data['text_amount']     = lang('mail/payment_alert.text_amount');
+        $data['text_received']   = sprintf(lang('mail/payment_alert.text_received'), $data['project_id']);
+        $data['text_amount']     = sprintf(lang('mail/payment_alert.text_amount'), $data['amount']);
 
         $data['config_name']      = service('registry')->get('config_name');
         $data['config_address']   = service('registry')->get('config_address');
@@ -101,9 +103,10 @@ class MailAlert
 
         $config->setFrom(service('registry')->get('config_email'));
 
-        $config->setTo($email);
+        $config->setTo($customerModel->getCustomer($data['freelancer_id'])['email']);
 
-        $config->setSubject(html_entity_decode(sprintf(lang('mail/project_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        $config->setSubject(html_entity_decode(sprintf(lang('mail/payment_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        
         $config->setMessage(view('mail/payment_alert', $data));
 
         $config->send();

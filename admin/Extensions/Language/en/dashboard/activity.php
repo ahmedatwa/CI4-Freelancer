@@ -18,6 +18,7 @@ return [
 'text_activity_address_edit'   => '<a href="customer_id=%d">%s</a> updated their address.',
 'text_activity_address_delete' => '<a href="customer_id=%d">%s</a> deleted one of their addresses.',
 'text_activity_order_account'  => '<a href="customer_id=%d">%s</a> added a <a href=>"order_id=>%d">new order</a>.',
+
 // Entry
 'entry_status'                 => 'Status',
 'entry_sort_order'             => 'Sort Order',

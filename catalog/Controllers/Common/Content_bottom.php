@@ -32,12 +32,10 @@ class Content_bottom extends \Catalog\Controllers\BaseController
             $part = explode('.', $module['code']);
 
             $basename = ucfirst($part[0]);
-            var_dump($part[1]);
 
             if (isset($basename) ) {
 
                 $module_data = view_cell("Catalog\Controllers\Module\\{$basename}::index");
-                var_dump($module_data);
 
                 if ($module_data) {
                     $data['modules'][] = $module_data;

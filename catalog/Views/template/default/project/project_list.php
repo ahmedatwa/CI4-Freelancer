@@ -151,7 +151,7 @@
 					<?php } else { ?>
 						<div class="col-12 text-center p-4">
 						<p class="p-4">No Projects Found !</p>
-						<a type="button" href="<?php echo $add_project; ?>" class="button">Add Project</a>
+						<a role="button" href="<?php echo $add_project; ?>" class="btn btn-danger btn-lg">Add Project</a>
 					</div>
 			      <?php } ?>	
 				</div>

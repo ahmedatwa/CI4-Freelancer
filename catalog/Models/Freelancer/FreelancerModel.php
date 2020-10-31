@@ -97,7 +97,7 @@ class FreelancerModel extends \CodeIgniter\Model
                  ->update();
       }
 
-      \CodeIgniter\Events\Events::trigger('project_transfer_funds', $data);
+      \CodeIgniter\Events\Events::trigger('customer_transfer_funds', $data);
       \CodeIgniter\Events\Events::trigger('mail_payment', $data);
 
 

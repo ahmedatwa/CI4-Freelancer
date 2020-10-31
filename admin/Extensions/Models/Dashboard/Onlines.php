@@ -1,4 +1,4 @@
-<?php namespace Admin\Models\Extension\Dashboard;
+<?php namespace Extensions\Models\Dashboard;
 
 class Onlines extends \CodeIgniter\Model
 {

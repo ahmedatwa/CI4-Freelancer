@@ -18,7 +18,7 @@ class Filters extends BaseConfig
     // Always applied before every request
     public $globals = [
         'before' => [
-             'permission',
+             //'permission',
              'language',
             //'honeypot'
               'csrf' => ['except' => ['common/filemanager/[a-z]+']],
