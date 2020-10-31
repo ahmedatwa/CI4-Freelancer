@@ -46,39 +46,48 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $activityModel = new ActivityModel();
 
-        $results = $activityModel->getActivityByCustomerID($customer_id);
-        var_dump($results);
+        $results = $activityModel->getActivitiesByCustomerID($customer_id);
+
         foreach ($results as $result) {
 
-            $data = json_decode($result['data'], true);
-            
-            $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $data);
+            $info = json_decode($result['data'], true);
+
+            $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
 
             $find = [
                 'project_id=',
-                'sender=',
+                'employer_id=',
+                'freelancer_id=',
             ];
 
-            $projectModel = new \Catalog\Models\Catalog\ProjectModel();
-            $project_info = $projectModel->getProject($data['project_id']);
-            $customerModel = new CustomerModel();
-            $customer_info = $customerModel->getCustomer($data['sender']);
+            $seo_url = service('seo_url');
+            $keyword = $seo_url->getKeywordByQuery('project_id=' . $info['project_id']);
+
+            if (isset($info['employer_id'])) {
+               $employer = $activityModel->getEmployerUserName($info['employer_id']);
+            }
+
+            if (isset($info['freelancer_id'])) {
+                $freelancer = $activityModel->getFreelancerUserName($info['freelancer_id']);
+            }
 
             $replace = [
-                'service/' . $project_info['name'],
-                 $customer_info['username'],
+                'service/' . $keyword,
+                $employer['username'] ?? '',
+                $freelancer['username'] ?? '',
             ];
 
 
-            $data['news_feed'][] = [
+            $data['news_feeds'][] = [
                 'comment'    => str_replace($find, $replace, $comment),
                 'date_added' => $this->dateDifference($result['date_added'])
             ];
+
+
         }
 
-
         $data['text_dashboard'] = lang('account/dashboard.text_dashboard');
-        $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $customer_info['firstname'] ." " . $customer_info['lastname']);
+       // $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $customer_info['firstname'] ." " . $customer_info['lastname']);
         $data['heading_title']  = lang('account/dashboard.heading_title');
         $data['text_news_feed'] = lang('account/dashboard.text_news_feed');
 

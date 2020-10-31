@@ -34,7 +34,7 @@ class FreelancerModel extends \CodeIgniter\Model
         $builder->set('accepted', 1);
         $builder->update();
 
-        \CodeIgniter\Events\Events::trigger('project_winner_accepted', $freelancer_id, $project_id);
+        \CodeIgniter\Events\Events::trigger('offer_accepted', $freelancer_id, $project_id);
 
         // Update Project Status
         $projects = $this->db->table('project');

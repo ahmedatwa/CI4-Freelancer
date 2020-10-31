@@ -73,11 +73,10 @@ class Activity
         $activityModel = new ActivityModel;
 
         $activity_data = [
-            'sender'        => (int) $data['employer_id'],
-            'receiver'      => (int) $data['freelancer_id'],
+            'employer_id'   => (int) $data['employer_id'],
+            'freelancer_id' => (int) $data['freelancer_id'],
             'project_id'    => (int) $data['project_id'],
             'amount'        => (float) $data['amount'],
-            'customer_id'   => json_encode([$data['employer_id'], $data['freelancer_id']]) ,
         ];
 
         $activityModel->addActivity('customer_transfer_funds', $activity_data);

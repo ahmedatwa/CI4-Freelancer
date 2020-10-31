@@ -39,7 +39,7 @@
 									</ul>
 									<!-- Buttons -->
 									<div class="buttons-to-right always-visible margin-top-25 margin-bottom-0" id="bidders-button-wrapper">
-									<?php if ($bidder['type']) { ?>
+									<?php if ($bidder['isSelected']) { ?>
 										<button type="button" id="award-freelancer-button" class="btn btn-success btn-sm" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" data-bid-id="<?php echo $bidder['bid_id']; ?>" disabled><i class="icon-material-outline-check"></i>Awarded</button>
 									<?php } else { ?>
 										<button type="button" id="award-freelancer-button" class="btn btn-danger btn-sm" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" data-bid-id="<?php echo $bidder['bid_id']; ?>" ><i class="icon-material-outline-check"></i>Award Freelancer</button>

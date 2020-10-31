@@ -23,17 +23,17 @@ class Notification
 
 
     // Catalog\Models\Project\ProjectModel::addWinner
-    public static function winnerSelected(int $freelancer_id, int $project_id, int $bid_id)
+    public static function winnerSelected(array $data)
     {
         $activityModel = new ActivityModel();
 
         $activity_data = [
-            'project_id'    => $project_id,
-            'customer_id'   => $freelancer_id,
-            'bid_id'        => $bid_id,
+            'freelancer_id'  => $data['freelancer_id'],
+            'project_id'    => $data['project_id'],
+            'bid_id'        => $data['bid_id'],
         ];
 
-        $activityModel->addActivity('project_winner_selected', $activity_data);
+        $activityModel->addActivity('offer_selected', $activity_data);
     }
 
     // Catalog\Models\Freelancer\FreelanceModel::acceptOffer
@@ -46,7 +46,7 @@ class Notification
             'customer_id'   => $freelancer_id,
         ];
 
-        $activityModel->addActivity('project_winner_accepted', $activity_data);
+        $activityModel->addActivity('offer_accepted', $activity_data);
     }
 
 

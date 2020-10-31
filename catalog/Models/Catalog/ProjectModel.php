@@ -546,7 +546,7 @@ class ProjectModel extends \CodeIgniter\Model
         $projects->update();
 
         // trigget new direct message event
-        \CodeIgniter\Events\Events::trigger('project_winner_selected', $data['freelancer_id'], $data['project_id'], $data['bid_id']);
+        \CodeIgniter\Events\Events::trigger('offer_selected', $data);
     }
 
     // project Private Messages

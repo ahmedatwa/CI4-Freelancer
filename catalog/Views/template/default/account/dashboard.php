@@ -15,16 +15,20 @@
 						<h3><i class="icon-material-baseline-notifications-none"></i> <?php echo $text_news_feed; ?></h3>
 					</div>
 					<div class="content">
+						<?php if ($news_feeds) { ?>
 						<ul class="dashboard-box-list">
-							<?php foreach ($news_feed as $feed) { ?>
+							<?php foreach ($news_feeds as $news_feed) { ?>
 							<li>
 								<span class="notification-icon"><i class="icon-material-outline-group"></i></span>
 								<span class="notification-text">
-									<?php echo $feed['comment']; ?>
+									<?php echo $news_feed['comment']; ?>. <small><?php echo $news_feed['date_added']; ?></small>	
 								</span>
 							</li>
 							<?php } ?>
 						</ul>
+					<?php } else { ?>
+					<p class="text-center">No Feeds! </p>	
+				<?php } ?>
 					</div>
 				</div>
 			</div>
