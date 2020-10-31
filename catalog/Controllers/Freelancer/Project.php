@@ -68,6 +68,7 @@ class Project extends \Catalog\Controllers\BaseController
         if ($project_info) {
             $data['project_id']  = $project_info['project_id'];
             $data['name']        = $project_info['name'];
+            $data['type']        = ($project_info['type'] == 1) ? 'Fixed Rate' : 'Hourly Rate';
 
             $data['days_left']   = lang('freelancer/project.text_expire', [$this->dateDifference($project_info['date_added'], $project_info['runtime'])]);
             $data['employer']    = $project_info['employer'];

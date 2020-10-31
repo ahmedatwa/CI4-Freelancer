@@ -4,8 +4,12 @@
 	<div class="dashboard-content-inner" >
 		<div class="dashboard-headline">
 			<h3><?php echo $name; ?></h3>
-            <small><?php echo $budget; ?></small>
 		</div>
+        <h4>Project Details: </h4>
+        <ul class="list-group list-group-flush mb-4 col-4">
+              <li class="list-group-item list-group-item-light"><strong>Budget: </strong><?php echo $budget; ?></li>
+              <li class="list-group-item list-group-item-light"><strong>Type: </strong><?php echo $type; ?></li>
+            </ul>
 		<div class="row">
 			<div class="col-12">
 			<ul class="nav nav-tabs" id="project-info" role="tablist">
