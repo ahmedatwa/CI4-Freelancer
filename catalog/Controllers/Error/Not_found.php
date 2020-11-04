@@ -5,11 +5,13 @@ class Not_found extends \Catalog\Controllers\BaseController
 	public function index() 
 	{
 
+		$this->template->setTitle(lang('error/not_found.text_not_found'));
 
         $data['base'] = slash_item('baseURL');
-        $data['text_not_found'] = lang('error/not_found.text_not_found');
-        $data['text_404'] = lang('error/not_found.text_404');
-        $data['text_sorry'] = lang('error/not_found.text_sorry');
+        
+		$data['text_not_found'] = lang('error/not_found.text_not_found');
+		$data['text_404']       = lang('error/not_found.text_404');
+		$data['text_sorry']     = lang('error/not_found.text_sorry');
 
 		$data['breadcrumbs'] = [];
 

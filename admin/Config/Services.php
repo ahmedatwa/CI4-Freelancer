@@ -28,5 +28,25 @@ class Services extends CoreServices
 	       }
 	
 	       return new \Admin\Libraries\Registry();
+	   }	  
+
+	   public static function document($getShared = true)
+	   {
+	       if ($getShared)
+	       {
+	           return static::getSharedInstance('Document');
+	       }
+	
+	       return new \Admin\Libraries\Document();
+	   }
+
+	   public static function user($getShared = true)
+	   {
+	       if ($getShared)
+	       {
+	           return static::getSharedInstance('User');
+	       }
+	
+	       return new \Admin\Libraries\User();
 	   }
 }

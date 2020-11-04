@@ -39,9 +39,9 @@ class BaseController extends \CodeIgniter\Controller
         //--------------------------------------------------------------------
         // E.g.:
         $this->session  = \Config\Services::session();
-        $this->document = new \Admin\Libraries\Document();
+        $this->document = service('document');
         $this->registry = service('registry');
-        $this->user     = new \Admin\Libraries\User();
+        $this->user     = service('User');
     }
     
     public function paginationInitilize($page, $limit, $total)

@@ -100,7 +100,7 @@ class Project extends \Catalog\Controllers\BaseController
         
         $results = $projectModel->getProjects($filter_data);
         $total = $projectModel->getTotalProjects();
-        $reviewModel = new \Catalog\Models\Catalog\ReviewModel();
+        $reviewModel = new \Catalog\Models\Account\ReviewModel();
 
         foreach ($results as $result) {
             // SEO Query
@@ -387,7 +387,7 @@ class Project extends \Catalog\Controllers\BaseController
 
 
         if ($project_info) {
-            $reviewModel = new \Catalog\Models\Catalog\ReviewModel();
+            $reviewModel = new \Catalog\Models\Account\ReviewModel();
 
             $data['project_id']  = $project_info['project_id'];
             $data['name']        = $project_info['name'];
@@ -395,6 +395,12 @@ class Project extends \Catalog\Controllers\BaseController
             $data['description'] = $project_info['description'];
             $data['categories']  = $categoryModel->getCategoriesByProjectId($project_id);
             $data['viewed']      = $project_info['viewed'];
+
+            // attachments
+            $downloadModel = new \Catalog\Models\Tool\DownloadModel();
+            $data['download']        = base_url('tool/download?download_id=' . $project_info['download_id']);
+            $data['attachment']      = $downloadModel->where('download_id', $project_info['download_id'])->findColumn('filename')[0];
+            $data['attachment_ext'] =  strtoupper($downloadModel->where('download_id', $project_info['download_id'])->findColumn('ext')[0]);
 
             // Calculate the Bidding Time
             $days_left = $this->dateDifference($project_info['date_added'], $project_info['runtime']);
@@ -415,7 +421,7 @@ class Project extends \Catalog\Controllers\BaseController
             $data['employer_id'] = $project_info['employer_id'];
             $data['status'] = $projectModel->getStatusByProjectId($project_info['project_id']);
 
-            // Other Employer projects
+            // more Employer projects
             $filter_data = [
                 'start' => 0,
                 'limit' => 5,
@@ -463,7 +469,6 @@ class Project extends \Catalog\Controllers\BaseController
     public function add()
     {
         if (! $this->customer->isLogged()) {
-
             return redirect()->to(route_to('account_login') ? route_to('account_login') : base_url('account/login'));
         }
 
@@ -616,21 +621,20 @@ class Project extends \Catalog\Controllers\BaseController
             $data['delivery_time'] = $project_info['runtime'];
         } else {
             $data['runtime'] = 3;
-        }
+        }        
 
-        if ($this->request->getFile('file_upload')) {
-            $data['file_upload'] = $this->request->getFile('file_upload');
+        if ($this->request->getPost('download_id')) {
+            $data['download_id'] = $this->request->getPost('download_id');
         } else {
-            $data['file_upload'] = '';
+            $data['download_id'] = 0;
         }
-
 
         $data['language_id'] = $this->registry->get('config_language_id');
         $data['config_currency'] = $this->session->get('currency') ?? $this->registry->get('config_currency');
 
         $this->template->output('project/project_form', $data);
     }
-    
+
     protected function validateForm()
     {
         foreach ($this->request->getPost('project_description') as $language_id => $value) {

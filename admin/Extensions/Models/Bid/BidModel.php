@@ -63,11 +63,22 @@ class BidModel extends \CodeIgniter\Model
                 'type' => 'TINYINT',
                 'constraint' => 1,
         ],
+        'selected' => [
+                'type' => 'TINYINT',
+                'constraint' => 1,
+        ],
+        'accepted' => [
+                'type' => 'TINYINT',
+                'constraint' => 1,
+        ],
         'status' => [
                 'type' => 'TINYINT',
                 'constraint' => 1,
         ],
         'date_added' => [
+                'type'  => 'DATETIME',
+        ],        
+        'date_modified' => [
                 'type'  => 'DATETIME',
         ],
       ];

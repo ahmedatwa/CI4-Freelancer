@@ -78,7 +78,7 @@
 									<label for="input-image" class="col-md-2 col-form-label"><?php echo $entry_logo; ?></label>
 									<div class="col-md-10">
 										<a href="" id="thumb-config-logo" data-toggle="image">
-											<img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" class="img-thumbnail" /></a>
+											<img src="<?php echo $logo; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" class="img-thumbnail" /></a>
 											<input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="input-config-logo" />
 										</div>
 									</div>

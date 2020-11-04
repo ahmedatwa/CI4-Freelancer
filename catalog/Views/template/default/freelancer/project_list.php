@@ -63,7 +63,6 @@
 							  	<td><?php echo $open['status']; ?></td>
 							  	<td>
 							  	<a href="<?php echo $open['view']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="view"><i class="far fa-eye"></i></a>
-							    <a href="<?php echo $open['view']; ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Mark As Complete"><i class="fas fa-check"></i></a>
 						      </td>
 							  </tr>
 							 <?php } ?>
@@ -98,7 +97,9 @@
 							  	<td><?php echo $work['status']; ?></td>
 							  	<td>
 							  	<a href="<?php echo $work['view']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="view"><i class="far fa-eye"></i></a>
-							  	<button type="button" id="button-dispute" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#open-dispute" data-emploerid="<?php echo $work['employer_id']; ?>" data-freelancerid="<?php echo $work['freelancer_id']; ?>" data-projectid="<?php echo $work['project_id']; ?>"><i class="fas fa-exclamation-circle"></i></button>
+							  	<span data-toggle="tooltip" data-placement="top" title="Open Dispute">
+							  	<button type="button" id="button-dispute" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#open-dispute" data-emploerid="<?php echo $work['employer_id']; ?>" data-freelancerid="<?php echo $work['freelancer_id']; ?>" data-projectid="<?php echo $work['project_id']; ?>"><i class="fas fa-exclamation-circle"></i></button>
+							  </span>
 							  	<?php if ($customer_id != $work['employer_id']) { ?>
 							    <button type="button" onclick="confirm('Are You Sure') ? markComeplete(<?php echo $work['project_id']; ?>) : false;" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Mark As Complete" id="button-complete-status"><i class="fas fa-check"></i></a>
 							    <?php } ?>
@@ -148,8 +149,13 @@
 							  	<td><?php echo number_format($past['amount'], 2); ?></td>
 							  	<td><?php echo $past['paid']; ?></td>
 							  	
-							  	<td><?php if (($past['amount'] > 0)) { ?>
-							  	<button type="button" id="button-pay" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#pay-freelancer" data-emploerid="<?php echo $past['employer_id']; ?>" data-freelancerid="<?php echo $past['freelancer_id']; ?>" data-projectid="<?php echo $past['project_id']; ?>" data-amount="<?php echo number_format($past['amount'], 2); ?>" data-employerid="<?php echo $past['employer_id']; ?>"><i class="fas fa-exclamation-circle"></i></button>
+							  	<td width="10%"><?php if (($past['amount'] > 0)) { ?>
+							  	<span data-toggle="tooltip" data-placement="top" title="Pay">
+							  	<button type="button" id="button-pay" class="btn btn-success btn-sm" data-toggle="modal" data-target="#pay-freelancer" data-emploerid="<?php echo $past['employer_id']; ?>" data-freelancerid="<?php echo $past['freelancer_id']; ?>" data-projectid="<?php echo $past['project_id']; ?>" data-amount="<?php echo number_format($past['amount'], 2); ?>" data-employerid="<?php echo $past['employer_id']; ?>"><i class="far fa-money-bill-alt"></i></button>
+							  	</span>
+							  	<span data-toggle="tooltip" data-placement="top" title="Open Dispute">
+							  	<button type="button" id="button-dispute" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#open-dispute" data-emploerid="<?php echo $past['employer_id']; ?>" data-freelancerid="<?php echo $past['freelancer_id']; ?>" data-projectid="<?php echo $past['project_id']; ?>"><i class="fas fa-exclamation-circle"></i></button>
+							  </span>
 							  	<?php } else { ?>
 								<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Pay" disabled><i class="fas fa-wallet"></i></button>
 								<?php } ?>
@@ -158,7 +164,7 @@
 							 <?php } ?>
 							 <?php } else { ?>
 								<tr>
-									<td colspan="9" class="text-center">No Open Porjects</td>
+									<td colspan="9" class="text-center">No Past Porjects</td>
 								</tr>
 							<?php } ?>	
 							 </tbody> 
@@ -504,4 +510,18 @@ $('#employer li:first-child a').trigger('click') // Select first tab
 $('#freelancer li:first-child a').trigger('click') // Select first tab
 </script>	
 
+<script type="text/javascript">
+var url = document.URL;
+var hash = url.substring(url.indexOf('#'));
+
+$(".nav-tabs").find("li a").each(function(key, val) {
+    if (hash == $(val).attr('href')) {
+        $(val).click();
+    }
+    
+    $(val).click(function(ky, vl) {
+        location.hash = $(this).attr('href');
+    });
+});
+</script>
 <?php echo $footer; ?>

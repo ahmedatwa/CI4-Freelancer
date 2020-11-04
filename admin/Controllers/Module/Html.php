@@ -1,12 +1,14 @@
 <?php namespace Admin\Controllers\Module;
 
+use \Admin\Models\Setting\Modules;
+
 class Html extends \Admin\Controllers\BaseController
 {
     public function index()
     {
         $this->document->setTitle(lang('module/html.list.heading_title'));
 
-        $modules = new \Admin\Models\Setting\Modules();
+        $modules = new Modules();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             if (! $this->request->getVar('module_id')) {

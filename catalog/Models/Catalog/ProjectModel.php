@@ -18,6 +18,7 @@ class ProjectModel extends \CodeIgniter\Model
             'type'          => $data['type'],
             'runtime'       => $data['runtime'],
             'employer_id'   => $data['employer_id'],
+            'download_id'   => $data['download_id'],
             'budget_min'    => $data['budget_min'],
             'budget_max'    => $data['budget_max'],
             'delivery_time' => $data['delivery_time'],
@@ -333,7 +334,7 @@ class ProjectModel extends \CodeIgniter\Model
     public function getProject($project_id)
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, p.status_id, p.viewed');
+        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, p.status_id, p.viewed, p.download_id');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('customer c', 'p.employer_id = c.customer_id', 'left');
         $builder->where('p.project_id', $project_id);
@@ -394,7 +395,7 @@ class ProjectModel extends \CodeIgniter\Model
     public function getProjectAward($data = [])
     {
         $builder = $this->db->table('project_award pa');
-        $builder->select('pa.project_id, pd.name, pa.delivery_time, pa.employer_id, pa.freelancer_id, ps.name as status_name, pa.status_id');
+        $builder->select('pa.project_id, pd.name, pa.delivery_time, pa.employer_id, pa.freelancer_id, ps.name as status_name, pa.status_id, pa.employer_id');
         $builder->join('project_description pd', 'pa.project_id = pd.project_id', 'left');
         $builder->join('project_status ps', 'pa.status_id = ps.status_id', 'left');
 
@@ -402,8 +403,9 @@ class ProjectModel extends \CodeIgniter\Model
             $builder->where('pa.status_id', $data['status']);
         }
 
-        if (isset($data['freelancer_id'])) {
-            $builder->where('pa.freelancer_id', $data['freelancer_id']);
+        if (isset($data['customer_id'])) {
+            $builder->where('pa.freelancer_id', $data['customer_id']);
+            $builder->orWhere('pa.employer_id', $data['customer_id']);
         }
 
         if (isset($data['orderBy']) && $data['orderBy'] == 'DESC') {

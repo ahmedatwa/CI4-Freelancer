@@ -49,7 +49,7 @@ class Modules extends Model
         if ($row) {
             return json_decode($row['setting'], true);
         } else {
-            return array();
+            return [];
         }
     }
 

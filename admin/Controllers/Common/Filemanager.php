@@ -8,7 +8,7 @@ class Filemanager extends \Admin\Controllers\BaseController
         
         helper('filesystem');
 
-        $images = array();
+        $images = [];
 
         // Make sure we have the correct directory
         if ($this->request->getGet('directory')) {
@@ -45,17 +45,17 @@ class Filemanager extends \Admin\Controllers\BaseController
                     }
     
                     $folder_data[] = [
-                    'thumb' => '',
-                    'name'  => $basename,
-                    'type'  => 'directory',
-                    'path'  => str_replace('catalog/', '', substr(rtrim($source_dir . $image, '/'), strlen(DIR_IMAGE))),
-                    'href'  => $server . 'index.php/common/filemanager?user_token=' . $this->session->get('user_token') . '&directory=' . urlencode(ltrim(str_replace('catalog/', '', str_replace(DIR_IMAGE, '', $directory . '/' . $basename)), '/')) . $url
+                        'thumb' => '',
+                        'name'  => $basename,
+                        'type'  => 'directory',
+                        'path'  => str_replace('catalog/', '', substr(rtrim($source_dir . $image, '/'), strlen(DIR_IMAGE))),
+                        'href'  => $server . 'index.php/common/filemanager?user_token=' . $this->session->get('user_token') . '&directory=' . urlencode(ltrim(str_replace('catalog/', '', str_replace(DIR_IMAGE, '', $directory . '/' . $basename)), '/')) . $url
                   ];
                 }
 
                 !empty($folder_data) ? ksort($folder_data) : false;
 
-                if (is_file($source_dir . $image) && in_array($mime_type, array('image/gif', 'image/jpeg', 'image/png', 'image/bmp'))) {
+                if (is_file($source_dir . $image) && in_array($mime_type, ['image/gif', 'image/jpeg', 'image/png', 'image/bmp', 'video/mp4', 'video/webm'])) {
                     $file_data[] = [
                     'thumb' => resizeImage(str_replace(DIR_IMAGE, '', $source_dir) . $basename, 100, 100),
                     'name'  => $basename,
@@ -176,9 +176,9 @@ class Filemanager extends \Admin\Controllers\BaseController
         }
 
         // Allowed file extension types
-        $extensions = array('jpg','jpeg','gif','png', 'bmp');
+        $extensions = ['jpg','jpeg','gif','png', 'bmp', 'mp4', 'webm'];
         // Allowed file mime types
-        $mimes = array('image/jpeg','image/pjpeg','image/png','image/x-png','image/gif', 'image/bmp');
+        $mimes = ['image/jpeg','image/pjpeg','image/png','image/x-png','image/gif', 'image/bmp', 'video/webm', 'video/mp4'];
 
         $files = $this->request->getFiles();
         if ($files) {

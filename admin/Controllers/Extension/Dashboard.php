@@ -28,15 +28,15 @@ class Dashboard extends \Admin\Controllers\BaseController
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/dashboard/' . $this->request->getVar('extension'));
 
             $settingModel = new \Admin\Models\Setting\Settings();
-            $dashboard_data = array(
+            $dashboard_data = [
                 'dashboard_' . $this->request->getVar('extension') . '_status' => 1,
                 'dashboard_' . $this->request->getVar('extension') . '_width' => 6,
                 'dashboard_' . $this->request->getVar('extension') .  '_sort_order' => 0,
-            );
+            ];
             
             $settingModel->editSetting('dashboard_' . $this->request->getVar('extension'), $dashboard_data);
 
-            $this->session->setFlashdata('success', lang('extension/extensions/dashboard.text_success'));
+            $this->session->setFlashdata('success', lang('extension/dashboard.text_success'));
         }
 
         $this->getList();
@@ -49,7 +49,7 @@ class Dashboard extends \Admin\Controllers\BaseController
         $extensionsModel = new Extensions();
 
         if ($this->validateForm()) {
-            $this->extensions->uninstall('dashboard', $this->request->getVar('extension'));
+            $extensionsModel->uninstall('dashboard', $this->request->getVar('extension'));
             $this->session->setFlashdata('success', lang('extension/dashboard.text_success'));
         }
 

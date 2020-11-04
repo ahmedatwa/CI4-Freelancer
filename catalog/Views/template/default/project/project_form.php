@@ -34,13 +34,14 @@
 									<?php echo formError("project_description." . $language_id.".description"); ?>
 								</div>
 							</div>
-<!-- 							<div class="form-group row margin-top-30">
-							<label for="staticEmail" class="col-sm-3 col-form-label"><?php //echo $entry_upload; ?><span data-toggle="tooltip" title="<?php //echo $help_upload; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
+							<div class="form-group row margin-top-30">
+							<label for="staticEmail" class="col-sm-3 col-form-label"><?php echo $entry_upload; ?><span data-toggle="tooltip" title="<?php echo $help_upload; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col-sm-9">
-									<input type="file" name="file_upload" class="form-control" id="input-" value="">
+									<input type="file" class="form-control" name="file" id="input-upload" value="">
+									<input type="hidden" name="download_id" value="">
 									<div id="kartik-file-errors"></div>
 								</div>
-							</div> -->
+							</div>
 						</div>
 							<div class="clearfix"></div>
 							<div class="form-group row ">
@@ -117,7 +118,7 @@
 								</div>
 							</div>
 							<div class="padding-top-20 text-right padding-bottom-30">
-								<button type="submit" class="button btn-sm ripple-effect" data-toggle="tooltip" title="<?php echo $button_save; ?>" data-placement="top"><i class="icon-material-outline-add"></i> <?php echo $button_save; ?></button>
+								<button type="submit" class="button btn-sm ripple-effect"><i class="icon-material-outline-add"></i> <?php echo $button_save; ?></button>
 							</div>	
 						</div>
 					</form>
@@ -161,12 +162,24 @@ minimumResultsForSearch: 5
 </script>
 <script type="text/javascript">
 $("#input-upload").fileinput({
+	uploadUrl: 'tool/upload?type=1',
+	enableResumableUpload: false,
+    uploadExtraData: {
+      '<?= csrf_token() ?>': '<?= csrf_hash() ?>', 
+    },
+    maxFileCount: 1,
     showPreview: false,
-    showUpload: false,
+    showUpload: true,
+    showCancel: true,
+    autoReplace: true,
     elErrorContainer: '#kartik-file-errors',
     allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
-    showCancel: true,
+ }).on('fileuploaded', function(event, data, previewId, index) {
+ 	   var response = data.response, reader = data.reader;
+       $('input[name=\'download_id\']').val(response.download_id);
+       $(this).fileinput("disable").fileinput("refresh", {showUpload: false});
  });
+
 </script>
 <!-- // tags input -->
 <script type="text/javascript">

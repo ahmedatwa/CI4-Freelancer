@@ -1,9 +1,35 @@
 <?php namespace Catalog\Controllers\Account;
 
 use Catalog\Models\Catalog\ProjectModel;
+use Catalog\Models\Account\ReviewModel;
 
 class Review extends \Catalog\Controllers\BaseController
 {
+    public function add()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post' && $this->request->getVar('project_id')) {
+            $reviewModel = new ReviewModel();
+            $data = [
+                'project_id'    => $this->request->getVar('project_id'),
+                'freelancer_id' => $this->request->getVar('freelancer_id'),
+                'employer_id'   => $this->request->getVar('employer_id'),
+                'ontime'        => $this->request->getPost('ontime'),
+                'recommended'   => $this->request->getPost('recommended'),
+                'rating'        => $this->request->getPost('rating'),
+                'comment'       => $this->request->getPost('comment'),
+                'submitted_by'  => $this->session->get('customer_id'),
+                'status'        => 1,
+            ];
+
+            $reviewModel->insert($data);
+            $json['success'] = lang('account/review.text_success');
+        }
+
+        return $this->response->setJSON($json);
+    }
+
     public function index()
     {
         if (! $this->session->get('customer_id') && ! $this->customer->isLogged() ) {
@@ -32,6 +58,8 @@ class Review extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('cid')) {
             $customer_id = $this->request->getVar('cid');
+        } elseif($this->session->get('customer_id')) {
+            $customer_id = $this->session->get('customer_id');
         } else {
             $customer_id = 0;
         }
@@ -75,6 +103,7 @@ class Review extends \Catalog\Controllers\BaseController
         }
 
         $filter_data = [
+            'customer_id' => $customer_id,
             'sortBy'      => 'p.date_added',
             'orderBy'     => 'DESC',
             'limit'       => $limit,
@@ -85,6 +114,7 @@ class Review extends \Catalog\Controllers\BaseController
         $data['projects'] = [];
         
         $results = $projectModel->getProjectAward($filter_data);
+
         $customerModel = new \Catalog\Models\Account\CustomerModel();
         //$total = $reviewModel->getTotalReviews();
 
@@ -92,15 +122,16 @@ class Review extends \Catalog\Controllers\BaseController
             $employer = $customerModel->getCustomer($result['employer_id']);
             $freelancer = $customerModel->getCustomer($result['freelancer_id']);
             $data['projects'][] = [
-                'project_id'  => $result['project_id'],
-                'name'        => $result['name'],
-                'status'      => $result['status_name'],
-                'employer'    => $employer['firstname'] . $employer['lastname'],
-                'freelancer'  => $freelancer['firstname'] . $freelancer['lastname'],
+                'project_id'    => $result['project_id'],
+                'freelancer_id' => $result['freelancer_id'],
+                'employer_id'   => $result['employer_id'],
+                'name'          => $result['name'],
+                'status'        => $result['status_name'],
+                'employer'      => $employer['firstname'] . ' ' . $employer['lastname'],
+                'freelancer'    => $freelancer['firstname'] . ' ' . $freelancer['lastname'],
                 'edit' => ''
             ];
         }
-
 
         $data['heading_title']     = lang('account/review.heading_title');
         $data['column_name']       = lang('account/review.column_name');
@@ -110,6 +141,8 @@ class Review extends \Catalog\Controllers\BaseController
         $data['column_freelancer'] = lang('account/review.column_freelancer');
         $data['button_edit']       = lang('en.button_edit');
         $data['text_no_results']   = lang('en.text_no_results');
+
+        $data['customer_id'] = $customer_id;
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 

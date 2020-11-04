@@ -29,6 +29,7 @@ return [
     'text_no'           => 'No',
     'text_clear'        => 'Clear',
     'text_no_results'   => 'No Results !',
+    'text_no_notification'   => 'No New Notifications !',
     'text_enabled'      => 'Enabled',
     'text_disabled'     => 'Disabled',
     'text_pagination'   => 'Showing %u to %u of %u entries',
@@ -56,6 +57,8 @@ return [
     'button_install'    => 'Install',
     'button_approve'    => 'Approve',
     'button_view'       => 'View',
+    'button_history_add'  => 'Add History',
+
     // Entry
     'entry_date_added'  => 'Date Added',
     'entry_status'      => 'Status',
@@ -66,6 +69,7 @@ return [
     // 
     'tab_general'       => 'General',
     'tab_data'          => 'Data',
+    'tab_history'       => 'History',
 
 ],
     // Error

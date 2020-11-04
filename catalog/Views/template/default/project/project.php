@@ -53,7 +53,7 @@
 		</div>
 	</div>
 		<!-- Page Content-->
-			<div class="row">
+			<div class="row align-items-start">
 				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow rounded bg-white">
 					<div class="single-page-section">
 						<h3><?php echo $text_description; ?></h3>
@@ -70,6 +70,15 @@
 							</div>
 						<?php } ?>
 					</div>
+					<!-- Atachments -->
+					<div class="single-page-section">
+						<h3>Attachments</h3>
+						<div class="attachments-container">
+							<a href="<?php echo $download; ?>" class="attachment-box ripple-effect"><span><?php echo $attachment; ?></span><i><?php echo $attachment_ext; ?></i></a>
+						</div>
+					</div>
+					<hr />
+					<div id="bid-container"></div>
 				</div>
 				<!-- Sidebar -->
 				<div class="col-sm-12 col-md-3">
@@ -99,6 +108,19 @@
 							</ul>
 						</div>
 					<?php } ?>
+					<hr />
+					<div class="sidebar-widget">
+						<h4><i class="fas fa-info-circle"></i> How to write a winning bid</h4>
+						<p>Your best chance of winning this project is writing a great bid proposal here!</p>
+						<p>Great bids are ones that:</p>
+						<ul>
+						<li>Are engaging and well written without spelling or grammatical errors</li>	
+						<li>Show a clear understanding of what is required for this specific project - personalize your response!</li>
+						<li>Explain how your skills & experience relate to the project and your approach to working on it</li>
+						<li>Ask questions to clarify any unclear details</li>
+						</ul>
+						<p>Most of all - don't spam or post cut-and-paste bids. You will be penalized or banned if you do so.</p>
+					</div>
 					</div>
 				</div>
 				<?php if ($days_left > 0) { ?>
@@ -142,7 +164,6 @@
 				</div>
 			<?php } ?>
 				<!-- Freelancers Bidding -->
-			 <div class="col-sm-12 col-md-9 shadow rounded bg-white margin-bottom-60 " id="bid-container"></div>
 			</div>
 			</div>
 	</div> <!---- content-wrapper ---->
@@ -195,8 +216,8 @@ $("#snackbar-place-bid").on('click', function () {
 });
 </script>
 <script type='text/javascript'>
-<?php if (service('registry')->get('bidding_extension_status')) { ?>
-$('#bid-container').delegate('.pagination a', 'click', function(e) {
+<?php if (service('registry')->get('extension_bid_status')) { ?>
+$('#bid-container').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#bid-container').fadeOut('slow');

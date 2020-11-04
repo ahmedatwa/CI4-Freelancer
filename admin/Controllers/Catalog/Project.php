@@ -19,7 +19,7 @@ class Project extends \Admin\Controllers\BaseController
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $this->projects->addProject($this->request->getPost());
-            return redirect()->to(base_url('index.php/catalog/project?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/catalog/project?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('catalog/project.text_success'));
         }
         $this->getForm();
@@ -33,7 +33,7 @@ class Project extends \Admin\Controllers\BaseController
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $this->projects->editProject($this->request->getGet('project_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/catalog/project?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/catalog/project?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('catalog/project.text_success'));
         }
         $this->getForm();
@@ -51,7 +51,7 @@ class Project extends \Admin\Controllers\BaseController
             foreach ($this->request->getPost('selected') as $project_id) {
                 $this->projects->deleteProject($project_id);
                 $json['success'] = lang('catalog/project.text_success');
-                $json['redirect'] = 'index.php/catalog/project?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/catalog/project?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('catalog/project.error_permission');
@@ -65,12 +65,12 @@ class Project extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('catalog/project.list.heading_title'),
-            'href' => base_url('index.php/catalog/project?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/catalog/project?user_token=' . $this->request->getVar('user_token')),
         ];
 
         // Data
@@ -96,13 +96,13 @@ class Project extends \Admin\Controllers\BaseController
                 'price'      => currency_format($result['budget_min'], 'USD'),
                 'type'       => $type,
                 'status'     => $result['status_id'],
-                'edit'       => base_url('index.php/catalog/project/edit?user_token=' . $this->session->get('user_token') . '&project_id=' . $result['project_id']),
-                'delete'     => base_url('index.php/catalog/project/delete?user_token=' . $this->session->get('user_token') . '&project_id=' . $result['project_id']),
+                'edit'       => base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id=' . $result['project_id']),
+                'delete'     => base_url('index.php/catalog/project/delete?user_token=' . $this->request->getVar('user_token') . '&project_id=' . $result['project_id']),
             ];
         }
 
-        $data['add'] = base_url('index.php/catalog/project/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/catalog/project/delete?user_token=' . $this->session->get('user_token'));
+        $data['add'] = base_url('index.php/catalog/project/add?user_token=' . $this->request->getVar('user_token'));
+        $data['delete'] = base_url('index.php/catalog/project/delete?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -132,24 +132,24 @@ class Project extends \Admin\Controllers\BaseController
         
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('catalog/project.list.heading_title'),
-            'href' => base_url('index.php/catalog/project/edit?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['text_form'] = !$this->request->getGet('project_id') ? lang('catalog/project.list.text_add') : lang('catalog/project.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/catalog/project?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/catalog/project?user_token=' . $this->request->getVar('user_token'));
 
         $data['user_token'] = $this->request->getGet('user_token');
 
         if (!$this->request->getGet('project_id')) {
-            $data['action'] = base_url('index.php/catalog/project/add?user_token=' . $this->session->get('user_token'));
+            $data['action'] = base_url('index.php/catalog/project/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/catalog/project/edit?user_token=' . $this->session->get('user_token') . '&project_id=' . $this->request->getGet('project_id'));
+            $data['action'] = base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id=' . $this->request->getGet('project_id'));
         }
 
         if ($this->session->getFlashdata('error_warning')) {

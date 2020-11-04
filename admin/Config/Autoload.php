@@ -72,9 +72,7 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 		 *       'MyClass'   => '/path/to/class/file.php'
 		 *   ];
 		 */
-		$classmap = [
-			//'Registry'   => APPPATH . 'Libraries/Registry.php'
-		];
+		$classmap = [];
 
 		//--------------------------------------------------------------------
 		// Do Not Edit Below This Line

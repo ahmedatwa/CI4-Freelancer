@@ -1,31 +1,26 @@
-<div class="swiper-viewport">
-  <div id="carousel{{ module }}" class="swiper-container">
-    <div class="swiper-wrapper">
-      <?php foreach ($banners as $banner ) { ?>
-      <div class="swiper-slide text-center">
-        <?php if ($banner['link']) { ?>
-        <a href="<?php echo $banner['link']; ?>">
-          <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></a>
+<div class="shadow-sm ">
+<div class="video-container" id="carousel-slick-carousel">
+  <?php foreach ($banners as $banner ) { ?>
+    <?php if ($banner['link']) { ?>
+       <div> <a href="<?php echo $banner['link']; ?>">
+          <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></a></div>
           <?php } else { ?>
-          <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" />
-          <?php } ?></div>
-      <?php } ?></div>
-  </div>
-  <div class="swiper-pagination carousel{{ module }}"></div>
-  <div class="swiper-pager">
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-  </div>
+        <div><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></div>
+      <?php } ?>
+<?php } ?>
 </div>
-<script type="text/javascript"><!--
-$('#carousel{{ module }}').swiper({
-	mode: 'horizontal',
-	slidesPerView: 5,
-	pagination: '.carousel{{ module }}',
-	paginationClickable: true,
-	nextButton: '.swiper-button-next',
-    prevButton: '.swiper-button-prev',
-	autoplay: 2500,
-	loop: true
+</div>
+
+<script type="text/javascript">
+$('#carousel-slick-carousel').slick({
+  centerMode: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  dots: true,
+  infinite: true,
+  fade: true,
+  autoplay:true,
+  arrows: false
+  
 });
---></script>
+</script>

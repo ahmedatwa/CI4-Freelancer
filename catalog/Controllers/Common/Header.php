@@ -69,7 +69,7 @@ class Header extends \Catalog\Controllers\BaseController
         $informations = new \Catalog\Models\Catalog\Informations();
         $seo_url = service('seo_url');
 
-        foreach ($informations->getInformations(4) as $result) {
+        foreach ($informations->getInformations() as $result) {
             if ($result['bottom'] == 0) {
                 $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
                 $data['informations'][] = [

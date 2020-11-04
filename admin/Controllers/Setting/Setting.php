@@ -131,16 +131,6 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_telephone'] = '';
         }
 
-        if ($this->request->getPost('config_image') && is_file(DIR_IMAGE . $this->request->getPost('config_image'))) {
-            $data['thumb'] = resizeImage($this->request->post['config_image'], 100, 100);
-        } elseif ($this->registry->get('config_image') && is_file(DIR_IMAGE . $this->registry->get('config_image'))) {
-            $data['thumb'] = resizeImage($this->registry->get('config_image'), 100, 100);
-        } else {
-            $data['thumb'] = resizeImage('no_image.jpg', 100, 100);
-        }
-
-        $data['placeholder'] = resizeImage('no_image.jpg', 100, 100);
-
         // Local
         $languages = new \Admin\Models\Localisation\Languages();
         $data['languages'] = $languages->where('status', 1)->findAll();
@@ -243,6 +233,17 @@ class Setting extends \Admin\Controllers\BaseController
         } else {
             $data['config_logo'] = '';
         }
+
+        if ($this->request->getPost('config_logo') && is_file(DIR_IMAGE . $this->request->getPost('config_logo'))) {
+            $data['logo'] = resizeImage($this->request->getPost('config_logo'), 100, 100);
+        } elseif ($this->registry->get('config_logo') && is_file(DIR_IMAGE . $this->registry->get('config_logo'))) {
+            $data['logo'] = resizeImage($this->registry->get('config_logo'), 100, 100);
+        } else {
+            $data['logo'] = resizeImage('no_image.jpg', 100, 100);
+        }
+
+        $data['placeholder'] = resizeImage('no_image.jpg', 100, 100);
+
 
         if ($this->request->getPost('config_maintenance')) {
             $data['config_maintenance'] = $this->request->getPost('config_maintenance');

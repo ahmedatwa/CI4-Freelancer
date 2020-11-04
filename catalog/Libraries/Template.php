@@ -2,12 +2,12 @@
 
 class Template
 {
-    protected static $title;
-    protected static $description;
-    protected static $keywords;
-    protected static $links = [];
-    protected static $styles = [];
-    protected static $scripts = [];
+    protected $title;
+    protected $description;
+    protected $keywords;
+    protected $links = [];
+    protected $styles = [];
+    protected $scripts = [];
 
 
 
@@ -23,7 +23,7 @@ class Template
      */
     public function setTitle(string $title)
     {
-        self::$title = $title;
+        $this->title = $title;
     }
     /**
      *
@@ -32,7 +32,7 @@ class Template
      */
     public function getTitle()
     {
-        return (string) self::$title;
+        return (string) $this->title;
     }
 
     /**
@@ -42,7 +42,7 @@ class Template
      */
     public function setDescription(string $description)
     {
-        self::$description = $description;
+        $this->description = $description;
     }
 
     /**
@@ -54,7 +54,7 @@ class Template
      */
     public function getDescription()
     {
-        return self::$description;
+        return $this->description;
     }
 
     /**
@@ -64,7 +64,7 @@ class Template
      */
     public function setKeywords($keywords)
     {
-        self::$keywords = $keywords;
+        $this->keywords = $keywords;
     }
 
     /**
@@ -74,7 +74,7 @@ class Template
      */
     public function getKeywords()
     {
-        return self::$keywords;
+        return $this->keywords;
     }
     
     /**
@@ -85,7 +85,7 @@ class Template
      */
     public function addLink($href, $rel)
     {
-        self::$links[$href] = [
+        $this->links[$href] = [
             'href' => $href,
             'rel'  => $rel
         ];
@@ -98,7 +98,7 @@ class Template
      */
     public function getLinks()
     {
-        return self::$links;
+        return $this->links;
     }
     /**
      *
@@ -109,7 +109,7 @@ class Template
      */
     public function addStyle($href, $rel = 'stylesheet', $media = 'screen')
     {
-        self::$styles[$href] = [
+        $this->styles[$href] = [
             'href'  => $href,
             'rel'   => $rel,
             'media' => $media
@@ -123,7 +123,7 @@ class Template
      */
     public function getStyles()
     {
-        return self::$styles;
+        return $this->styles;
     }
     /**
      *
@@ -133,7 +133,7 @@ class Template
      */
     public function addScript($src, $postion = 'footer')
     {
-        self::$scripts[$postion][$src] = $src;
+        $this->scripts[$postion][$src] = $src;
     }
     /**
      *
@@ -144,8 +144,8 @@ class Template
      */
     public function getScripts($postion = 'footer')
     {
-        if (isset(self::$scripts[$postion])) {
-            return self::$scripts[$postion];
+        if (isset($this->scripts[$postion])) {
+            return $this->scripts[$postion];
         } else {
             return [];
         }

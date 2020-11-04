@@ -10,8 +10,8 @@ class Upload extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('cid')) {
             $customer_id = $this->request->getVar('cid');
-        } elseif ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
+        } elseif ($this->session->get('customer_id')) {
+            $customer_id = $this->session->get('customer_id');
         } else {
             $customer_id = 0;
         }
@@ -20,6 +20,10 @@ class Upload extends \Catalog\Controllers\BaseController
             $project_id = $this->request->getVar('pid');
         } else {
             $project_id = 0;
+        }
+
+        if (!$this->customer->isLogged()) {
+            $json['error'] = 'Please login';
         }
 
 
@@ -76,10 +80,15 @@ class Upload extends \Catalog\Controllers\BaseController
                         'filename'      => $file->getClientName(),
                         'code'          => $newName,
                         'type'          => $file->getClientMimeType(),
+                        'ext'           => $file->getClientExtension(),
                         'size'          => $file->getSize()
                     ];
-
-                    $uploadModel->insert($data);
+                    // check if uploading attachment or project files
+                    if ($this->request->getVar('type')) {
+                        $json['download_id'] = $uploadModel->addAttachment($data);
+                    } else {
+                        $uploadModel->insert($data);
+                    }
 
                     $json['success'] = lang('tool/upload.text_upload');
                 }

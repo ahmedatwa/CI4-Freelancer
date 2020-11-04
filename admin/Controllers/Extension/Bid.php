@@ -30,7 +30,7 @@ class Bid extends \Admin\Controllers\BaseController
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/bid/' . $this->request->getVar('extension'));
             // Add Setting Key Since extension has no config Values
             $settingModel = new \Admin\Models\Setting\Settings();
-            $settingModel->editSetting('bidding_extension', ['bidding_extension_status' => 1]);
+            $settingModel->editSetting('extension_bid', ['extension_bid_status' => 1]);
 
             // Call install Method is exists
             $bidsModel = new \Extensions\Models\Bid\BidModel();
@@ -101,7 +101,7 @@ class Bid extends \Admin\Controllers\BaseController
                 
                 $data['extensions'][] = [
                     'name'       => lang('bid/' . strtolower($basename) . '.list.heading_title'),
-                    'status'     => ($this->registry->get('bidding_extension_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                    'status'     => ($this->registry->get('extension_bid_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'install'    => base_url('index.php/extension/bid/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/bid/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'installed'  => in_array(strtolower($basename), $installedExtensions),

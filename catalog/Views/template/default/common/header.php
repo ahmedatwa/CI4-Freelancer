@@ -9,7 +9,7 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="catalog/default/vendor/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="catalog/default/stylesheet/style.css">
+  <link rel="stylesheet" href="catalog/default/stylesheet/stylesheet.css">
   <link rel="stylesheet" href="catalog/default/vendor/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="catalog/default/javascript/jquery-ui/jquery-ui.css">
   <!-- Animate -->
@@ -39,7 +39,7 @@
   <script src="catalog/default/vendor/select2/js/select2.min.js"></script> 
   <!-- Pusher -->
   <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-  <script src="catalog/default/javascript/custom.js"></script>
+  <script src="catalog/default/javascript/common.js"></script>
 
   <?php foreach ($scripts as $script) { ?>
     <script src="<?php echo $script; ?>" type="text/javascript"></script>
@@ -142,6 +142,28 @@
       <li class="nav-item d-none d-lg-block"><a class="nav-link" href="<?php echo $login; ?>"><?php echo $text_login; ?> </a></li>
       <li class="nav-item d-none d-lg-block"><a class="nav-link" href="<?php echo $register; ?>"> <?php echo $text_register; ?> </a></li>
     <?php } else { ?>
+      <!-- Messages -->
+      <ul class="navbar-nav">
+            <li class="nav-item ml-3">
+             <div class="header-notifications">
+              <div class="header-notifications-trigger">
+               <a href="#"><i class="icon-feather-mail" id="message-count"></i></a>
+             </div>
+             <div class="header-notifications-dropdown">
+               <div class="header-notifications-headline">
+                <h4 class="mr-4">Messages</h4>
+                <small class="ml-4"><a href="<?php echo $all_messages; ?>" class="btn btn-link">View All Messages</a></small>
+              </div>
+              <div class="header-notifications-content">
+                <div class="header-notifications-scroll text-center" data-simplebar>
+                  <ul id="message-list"></ul>
+                </div>
+              </div>
+            </div>
+          </div> 
+        </li>
+      </ul>
+      <!-- Messages -->
       <li class="nav-item dropdown d-none d-lg-block">
         <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> <?php echo $username; ?>
@@ -167,6 +189,7 @@
             </div>
           </div>
         </li>
+
       <?php } ?>
       <li class="mt-lg-2 ml-4 d-none d-lg-block"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
     </ul>  

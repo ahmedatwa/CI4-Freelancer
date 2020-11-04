@@ -15,16 +15,18 @@ class Informations extends \CodeIgniter\Model
     protected $updatedField = 'date_modified';
 
 
-	public function getInformations(int $limit, int $start = 0)
+	public function getInformations(int $limit = null, int $start = 0)
     {
 		$builder = $this->db->table('information');
         $builder->select();
         $builder->join('information_description', 'information_description.information_id = information.information_id', 'left');
         $builder->where('information_description.language_id', service('registry')->get('config_language_id'));
-        $builder->limit($limit, $start);
+        
+        if ($limit) {
+            $builder->limit($limit, $start);
+        }
 
         $query = $builder->get();
-
         return $query->getResultArray();
     }
 

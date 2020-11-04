@@ -23,7 +23,7 @@ class Login extends \Catalog\Controllers\BaseController
             'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
         ];
 
-        if ($this->session->get('_ci_previous_url') != base_url('account/login')) {
+        if (($this->session->get('_ci_previous_url') != base_url('account/login')) || ($this->session->get('_ci_previous_url') != base_url())) {
             $this->session->set('redirect_url', $this->session->get('_ci_previous_url'));
         }
 
@@ -47,8 +47,6 @@ class Login extends \Catalog\Controllers\BaseController
             ];
 
             $pusher->trigger('chat-channel', 'online-event', $data);
-
-
 
             if ($this->session->get('redirect_url')) {
                 return redirect()->to($this->session->get('redirect_url'));

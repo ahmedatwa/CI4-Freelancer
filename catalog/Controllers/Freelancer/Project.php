@@ -98,6 +98,7 @@ class Project extends \Catalog\Controllers\BaseController
 
     public function getList()
     {
+
         $projectModel = new ProjectModel();
 
         $this->template->setTitle(lang('project/project.text_my_projects'));

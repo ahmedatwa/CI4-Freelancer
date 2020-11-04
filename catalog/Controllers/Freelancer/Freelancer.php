@@ -3,6 +3,7 @@
 use Catalog\Models\Account\CustomerModel;
 use \Catalog\Models\Catalog\CategoryModel;
 use \Catalog\Models\Freelancer\FreelancerModel;
+use  \Catalog\Models\Account\ReviewModel;
 
 class Freelancer extends \Catalog\Controllers\BaseController
 {
@@ -21,7 +22,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $this->template->setTitle(lang('freelancer/freelancer.heading_title'));
 
         $customerModel = new CustomerModel();
-        $reviewModel = new \Catalog\Models\Catalog\ReviewModel();
+        $reviewModel = new ReviewModel();
 
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -117,7 +118,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
             $url .= '&rate=' . $this->request->getVar('rate');
         }
                 
-        $data['action_skills'] = str_replace('&amp;', '&', base_url('freelancer/freelancer') . $url);
+        $data['action_skills'] = route_to('freelancers') . $url;
 
 
 
@@ -160,31 +161,31 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $data['rates'][] = [
             'text'  => lang('freelancer/freelancer.text_10'),
             'value' => '10',
-            'href'  => base_url('freelancer/freelancer?rate=10&order_by=ASC' . $url)
+            'href'  => route_to('freelancers') .'?rate=10&order_by=ASC' . $url
         ];
 
         $data['rates'][] = [
             'text'  => lang('freelancer/freelancer.text_10_20'),
             'value' => '10_20',
-            'href'  => base_url('freelancer/freelancer?rate=10_20&order_by=ASC' . $url)
+            'href'  => route_to('freelancers') .'?rate=10_20&order_by=ASC' . $url
         ];
 
         $data['rates'][] = [
             'text'  => lang('freelancer/freelancer.text_20_30'),
             'value' => '20_30',
-            'href'  => base_url('freelancer/freelancer?rate=20_30&order_by=ASC' . $url)
+            'href'  => route_to('freelancers') .'?rate=20_30&order_by=ASC' . $url
         ];
 
         $data['rates'][] = [
             'text'  => lang('freelancer/freelancer.text_30_40'),
             'value' => '30_40',
-            'href'  => base_url('freelancer/freelancer?rate=30_40&order_by=DESC' . $url)
+            'href'  => route_to('freelancers') . '?rate=30_40&order_by=DESC' . $url
         ];
 
         $data['rates'][] = [
             'text'  => lang('freelancer/freelancer.text_40'),
             'value' => '40',
-            'href'  => base_url('freelancer/freelancer?rate=40&order_by=DESC' . $url)
+            'href'  => route_to('freelancers') . '?rate=40&order_by=DESC' . $url
         ];
 
         $categoryModel = new CategoryModel();
@@ -258,7 +259,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
             'href' => base_url('freelancer/freelancer'),
         ];
 
-        $reviewModel = new \Catalog\Models\Catalog\ReviewModel();
+        $reviewModel = new ReviewModel();
         $projectModel = new \Catalog\Models\Catalog\ProjectModel();
 
         if ($customer_info) {
@@ -377,6 +378,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
                 'quote'      => $this->currencyFormat($result['quote']),
                 'delivery'   => $result['delivery'],
                 'selected'   => ($result['selected']) ? 'Awarded' : '',
+                'accepted'   => $result['accepted'],
                 'status'     => ($result['accepted']) ? 'Accepted' : $result['selected'],
                 'date_added' => $this->dateDifference($result['date_added']),
                 'href'       => base_url('project/project/project?pid=' . $result['project_id'])

@@ -9,8 +9,8 @@ class Footer extends \Catalog\Controllers\BaseController
         $informations = new \Catalog\Models\Catalog\Informations();
         $seo_url = service('seo_url');
 
-        foreach ($informations->getInformations(4) as $result) {
-
+        foreach ($informations->getInformations() as $result) {
+            if ($result['bottom']) {
             $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
 
                $data['informations'][] = [
@@ -18,6 +18,7 @@ class Footer extends \Catalog\Controllers\BaseController
                 'title'          => $result['title'],
                 'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/information?fid=' . $result['information_id']),
             ];
+          }
         }
 
         // Categories

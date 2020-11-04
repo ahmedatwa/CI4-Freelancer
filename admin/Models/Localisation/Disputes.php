@@ -6,7 +6,7 @@ class Disputes extends Model
 {
     protected $table      = 'dispute';
     protected $primaryKey = 'dispute_id';
-    protected $returnType     = 'array';
+    protected $returnType = 'array';
 
     protected $allowedFields = ['dispute_id', 'project_id', 'freelancer_id', 'employer_id', 'comment', 'dispute_status_id', 'dispute_reason_id', 'dispute_action_id'];
 
@@ -158,7 +158,36 @@ class Disputes extends Model
     $builder->delete(['dispute_action_id' => $dispute_action_id]);
    }
 
-  
+   // History
+   public function getDisputeHistories($dispute_id)
+   {
+    $builder = $this->db->table('dispute_history dh');
+    $builder->select('dh.date_added, ds.name AS status, dh.comment, dh.notify');
+    $builder->join('dispute_status ds', 'dh.dispute_status_id = ds.dispute_status_id', 'left');
+    $builder->where([
+      'dispute_id'      => $dispute_id,
+    ]);
+    $builder->orderBy('dh.date_added', 'DESC');
+    $query = $builder->get();
+    return $query->getResultArray();
+
+   }
+
+    public function addDisputeHistory($dispute_id, $dispute_status_id, $comment, $notify) {
+      $builder = $this->db->table('dispute');
+      $builder->set('dispute_status_id', $dispute_status_id);
+      $builder->set('date_modified', 'NOW()', false);
+      $builder->where('dispute_id', $dispute_id);
+      $builder->update();
+
+      $history = $this->db->table('dispute_history');
+      $history->set('dispute_id', $dispute_id);
+      $history->set('dispute_status_id', $dispute_status_id);
+      $history->set('notify', $notify);
+      $history->set('comment', $comment);
+      $history->set('date_added', 'NOW()', false);
+      $history->insert();
+  }
 
    
    

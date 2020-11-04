@@ -123,7 +123,7 @@ class Module extends \Admin\Controllers\BaseController
             }
         }
 
-        $data['extensions'] = array();
+        $data['extensions'] = [];
         
         helper('filesystem');
 
@@ -144,16 +144,16 @@ class Module extends \Admin\Controllers\BaseController
                         $setting_info = [];
                     }
                     
-                    $module_data[] = array(
+                    $module_data[] = [
                         'module_id' => $module['module_id'],
                         'name'      => $module['name'],
                         'status'    => (isset($setting_info['status']) && $setting_info['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                         'edit'      => base_url('index.php/module/' . strtolower($basename) . '?user_token=' . $this->session->get('user_token') . '&module_id=' . $module['module_id']),
                         'delete'    => base_url('index.php/setting/module/delete?user_token=' . $this->session->get('user_token') . '&module_id=' . $module['module_id'])
-                    );
+                    ];
                 }
 
-                $data['extensions'][] = array(
+                $data['extensions'][] = [
                     'name'       => lang('module/' . strtolower($basename) . '.list.heading_title'),
                     'width'      => $this->registry->get('module_' . strtolower($basename) . '_width'),
                     'status'     => $this->registry->get('module_' . strtolower($basename) . '_status') ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
@@ -163,7 +163,7 @@ class Module extends \Admin\Controllers\BaseController
                     'uninstall'  => base_url('index.php/setting/module/uninstall?user_token=' . $this->session->get('user_token') . '&extension=' . strtolower($basename)),
                     'installed'  => in_array(strtolower($basename), $installedExtensions),
                     'edit'       => base_url('index.php/module/' . strtolower($basename) .'?user_token=' . $this->session->get('user_token')),
-                );
+                ];
             }
         }
 

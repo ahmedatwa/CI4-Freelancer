@@ -20,7 +20,7 @@ class Dispute extends \Admin\Controllers\BaseController
         $disputeModel = new Disputes(); 
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->disputes->editProject($this->request->getGet('dispute_id'), $this->request->getPost());
+            $disputeModel->update($this->request->getGet('dispute_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/catalog/dispute?user_token=' . $this->session->get('user_token')))
                               ->with('success', lang('catalog/dispute.text_success'));
         }
@@ -31,13 +31,13 @@ class Dispute extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $this->disputes = new \Admin\Models\Catalog\Projects();
+        $disputeModel = new Disputes(); 
    
         $this->document->setTitle(lang('catalog/dispute.list.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $dispute_id) {
-                $this->disputes->deleteProject($dispute_id);
+                $disputeModel->delete($dispute_id);
                 $json['success'] = lang('catalog/dispute.text_success');
                 $json['redirect'] = 'index.php/catalog/dispute?user_token=' . $this->session->get('user_token');
             }
@@ -162,6 +162,22 @@ class Dispute extends \Admin\Controllers\BaseController
             $data['dispute_action_id'] = 0;
         }
 
+        $data['dispute_statuses'] = $disputeModel->getDisputeStatuses();
+
+        if ($this->request->getPost('dispute_status_id')) {
+            $data['dispute_status_id'] = $this->request->getPost('dispute_status_id');
+        } elseif (!empty($dispute_info)) {
+            $data['dispute_status_id'] = $dispute_info['dispute_status_id'];
+        } else {
+            $data['dispute_status_id'] = 0;
+        }
+
+        if ($this->request->getVar('dispute_id')) {
+           $data['dispute_id'] = $this->request->getVar('dispute_id');
+        } else {
+           $data['dispute_id'] = 0; 
+        }
+
         if ($dispute_info) {
             $customerModel = new \Admin\Models\Customer\Customers();
 
@@ -175,6 +191,50 @@ class Dispute extends \Admin\Controllers\BaseController
 
 
         $this->document->output('catalog/dispute_form', $data);
+    }
+
+    public function history() {
+
+        $data['histories'] = [];
+
+        $disputeModel = new Disputes();
+
+        $results = $disputeModel->getDisputeHistories($this->request->getVar('dispute_id'));
+
+        foreach ($results as $result) {
+            $data['histories'][] = [
+                'notify'     => $result['notify'] ? lang('en.list.text_yes') : lang('en.list.text_no'),
+                'status'     => $result['status'],
+                'comment'    => nl2br($result['comment']),
+                'date_added' => lang('en.medium_date', [strtotime($result['date_added'])])
+            ];
+        }
+
+        $data['column_date_added'] = lang('catalog/dispute.list.column_date_added');
+        $data['column_comment']    = lang('catalog/dispute.list.column_comment');
+        $data['column_status']     = lang('catalog/dispute.list.column_status');
+        $data['column_notify']     = lang('catalog/dispute.list.column_notify');
+
+         return view('catalog/dispute_history', $data);
+    }
+    
+    public function addHistory() {
+
+        $json = [];
+
+        if (! $this->user->hasPermission('modify', 'catalog/dispute')) {
+            $json['error'] = lang('catalog/dispute.error_permission');
+        }
+
+        if (! $json) {
+            $disputeModel = new Disputes();
+
+            $disputeModel->addDisputeHistory($this->request->getVar('dispute_id'), $this->request->getPost('dispute_status_id'), $this->request->getPost('comment'), $this->request->getPost('notify'));
+
+            $json['success'] = lang('catalog/dispute.text_success');
+          }
+
+        return $this->response->setJSON($json);
     }
 
     protected function validateForm()

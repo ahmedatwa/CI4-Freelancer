@@ -51,24 +51,25 @@ class Featured extends \Admin\Controllers\BaseController
             $data['action'] = base_url('index.php/module/featured?user_token=' . $this->request->getVar('user_token') . '&module_id=' . $this->request->getVar('module_id'));
         }
 
-        $data['cancel'] = base_url('index.php/setting/moduel?user_token=' . $this->request->getVar('user_token'));
+        $data['cancel'] = base_url('index.php/setting/module?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->request->getVar('module_id') && ($this->request->getMethod() != 'post')) {
             $module_info = $modules->getModule($this->request->getVar('module_id'));
         }
+        //var_dump($module_info);
 
         if ($this->request->getPost('module_featured_status')) {
             $data['module_featured_status'] = $this->request->getPost('module_featured_status');
-        } elseif (!empty($module_info)) {
-            $data['module_featured_status'] = $module_info['module_featured_status'];
+        } elseif ($this->registry->get('module_featured_status')) {
+            $data['module_featured_status'] = $this->registry->get('module_featured_status');
         } else {
-            $data['module_featured_status'] = '';
+            $data['module_featured_status'] = 0;
         }
 
         if ($this->request->getPost('module_featured_limit')) {
             $data['module_featured_limit'] = $this->request->getPost('module_featured_limit');
-        } elseif (!empty($module_info)) {
-            $data['module_featured_limit'] = $module_info['module_featured_limit'];
+        } elseif ($this->registry->get('module_featured_limit')) {
+            $data['module_featured_limit'] = $this->registry->get('module_featured_limit');
         } else {
             $data['module_featured_limit'] = 8;
         }

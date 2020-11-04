@@ -33,7 +33,7 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
         <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
           <div class="form-group row">
-          <label class="col-sm-2 control-label" for="input-limit"><?php echo $entry_status; ?></label>
+          <label class="col-sm-2 control-label" for="input-limit"><?php echo $entry_limit; ?></label>
           <div class="col-sm-10">
             <input class="form-control" name="module_featured_limit" value="<?php echo $module_featured_limit; ?>">
           </div>

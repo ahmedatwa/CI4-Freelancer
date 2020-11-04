@@ -62,7 +62,7 @@
               </tr>
               <?php foreach($extension['module'] as $module) { ?>
                 <tr>
-                  <td class="text-left">&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i>&nbsp;&nbsp;&nbsp;<?php echo $module['name']; ?></td>
+                  <td class="text-left"><span class="ml-3"></span><i class="fa fa-folder-open text-info"></i><span class="ml-1"></span><?php echo $module['name']; ?></td>
                   <td class="text-left"><?php echo $module['status']; ?></td>
                   <td class="text-right"><a href="<?php echo $module['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a> <a href="<?php echo $module['delete']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-warning btn-sm"><i class="far fa-trash-alt"></i></a></td>
                 </tr>

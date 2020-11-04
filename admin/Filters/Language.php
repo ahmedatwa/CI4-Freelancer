@@ -11,9 +11,8 @@ class Language implements FilterInterface
 
     public function before(RequestInterface $request)
     {
-        
         $view = \Config\Services::renderer();
-        $loader = Services::locator(true);
+
         // Getting the Current Url Segment
         $uri = new \CodeIgniter\HTTP\URI((string) current_url(true));
 
@@ -21,31 +20,38 @@ class Language implements FilterInterface
 
         $route = '';
 
-        $parts = $uri->getSegments();
+        $uriParts = $uri->getSegments();
 
-        if (isset($parts[0]) && ($parts[0] == 'extensions')) {
-             unset($parts[0]);
+        if ($uriParts) {
+            if (isset($uriParts[0]) && ($uriParts[0] == 'admin')) {
+                 unset($uriParts[0]);
+           }
+
+           if (isset($uriParts[1]) && ($uriParts[1] == 'extensions')) {
+                unset($uriParts[1]);
+           }
         }
 
         // check if the last string is a method
         $methods = ['install', 'uninstall', 'add', 'edit', 'delete'];
 
-        $last = end($parts);
+        $last = end($uriParts);
         
         if (in_array($last, $methods)) {
-            array_pop($parts);
+            array_pop($uriParts);
         }
 
-        $route = implode('/', $parts);
-        
+        $route = implode('/', $uriParts);
+
         if ($route) {
 
-            $routeLang = [];
+            $loader = Services::locator(true);
 
+            $routeLang = [];
+            // Controller Route Lang File array
             $routeLang = lang($route . '.list');
 
             // Combining the Master Language File if Exists
-
             $primaryLangPath = $loader->locateFile('en', 'Language/' . config('App')->defaultLocale);
 
             $primaryLang = [];
@@ -55,25 +61,15 @@ class Language implements FilterInterface
             }
            
             $language = array_merge($primaryLang, (array)$routeLang);
+
            }
-           $data = [];
-           
-          
+           // Setting the lang tempData Array
           $this->LangData = $view->setData($language);
-          
-         
-        //   foreach ($this->LangData as $key => $value)
-        //   {
-        //      var_dump($route . '.' . $key); 
-        //       lang($route . '.' . $key);
-        //   }
-          
+                    
     }
 
     public function after(RequestInterface $request, ResponseInterface $response)
     {
-        //var_dump($request);
-        //return $this->LangData;
     }
 
     // ----------------------------------------------------

@@ -49,17 +49,9 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label class="col-md-2 col-form-label"><?php echo $entry_language; ?></label>
+									<label class="col-md-2 col-form-label"><?php //echo $entry_language; ?></label>
 									<div class="col-md-10">
-										<select class="form-control" name="language">
-											<?php foreach ($languages as $language) { ?>
-											<?php if ($language['language_id'] == $language_id) { ?> 
-												<option value="<?php echo $language['language_id']; ?>" selected><?php echo $language['name']; ?></option>
-											<?php } else { ?>
-												<option value="<?php echo $language['language_id']; ?>"><?php echo $language['name']; ?></option>
-											<?php } ?>
-											<?php } ?>
-										</select>
+										<input class="form-control" type="hidden" name="language_id" value="<?php echo $language_id; ?>">
 									</div>
 								</div> 
 						</form>

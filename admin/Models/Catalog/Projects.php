@@ -43,7 +43,7 @@ class Projects extends \CodeIgniter\Model
         $builder->where('project_description.language_id', (int) service('registry')->get('config_language_id'));
 
         if (!empty($data['filter_date_added'])) {
-            $builder->where('DATE("project.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
+            $builder->where('project.date_added', 'DATE("' . $data['filter_date_added'] .'")');
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
@@ -205,17 +205,19 @@ class Projects extends \CodeIgniter\Model
 
     public function getTotalProjects($data = array())
     {
-        $builder = $this->db->table($this->table);
-        $builder->select();
+        $builder = $this->db->table('project');
+        $builder->select('project.project_id, project_description.name AS name, project.status_id, project.date_added, project.budget_min, project.budget_max, project.type');
+        $builder->join('project_description', 'project.project_id = project_description.project_id', 'left');
+        $builder->where('project_description.language_id', (int) service('registry')->get('config_language_id'));
 
         if (!empty($data['filter_date_added'])) {
-            $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
+            $builder->where('project.date_added', 'DATE("' . $data['filter_date_added'] .'")');
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
-            $builder->orderBy('pd.name', 'DESC');
+            $builder->orderBy('project_description.name', 'DESC');
         } else {
-            $builder->orderBy('pd.name', 'ASC');
+            $builder->orderBy('project_description.name', 'ASC');
         }
 
         if (isset($data['start']) || isset($data['limit'])) {

@@ -7,6 +7,14 @@ class Seo_urls extends Model
     protected $table          = 'seo_url';
     protected $primaryKey     = 'seo_url_id';
     protected $returnType     = 'array';
+    protected $useSoftDeletes = true;
+
+    protected $allowedFields = ['site_id', 'language_id', 'query', 'keyword'];
+
+    protected $useTimestamps = false;
+
+    protected $validationRules    = [];
+    protected $validationMessages = [];
     
     public function getSeoUrls(array $data = [])
     {

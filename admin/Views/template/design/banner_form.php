@@ -76,17 +76,17 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($banner_images) { ?>
+                <?php if (isset($banner_images[$language['language_id']])) { ?>
                   <?php foreach ($banner_images[$language['language_id']] as $banner_image) { ?>
                    <tr id="image-row<?php echo $image_row; ?>">
                     <td><input type="text" name="banner_image[<?php echo $language['language_id']; ?>][<?php echo $image_row; ?>][title]" value="<?php echo $banner_image['title'];?>" placeholder="<?php echo $entry_title; ?>" class="form-control" />
-                      <?php echo form_error("banner_image.".$language['language_id'].".".$banner_image['banner_image_id'].".title"); ?></td>
+                      <?php echo form_error("banner_image." . $language['language_id'] . "." . $image_row . ".title"); ?></td>
                       <td><input type="text" name="banner_image[<?php echo $language['language_id']; ?>][<?php echo $image_row; ?>][link]" value="<?php echo $banner_image['link']; ?>" placeholder="<?php echo $entry_link; ?>" class="form-control" /></td>
                       <td><a href="" id="thumb-image<?php echo $image_row; ?>" data-toggle="image"><img src="<?php echo $banner_image['thumb']; ?>" alt="" title="" class="img-thumbnail" data-placeholder="<?php echo $placeholder; ?>" />
                        </a>
                         <input type="hidden" name="banner_image[<?php echo $language['language_id']; ?>][<?php echo $image_row; ?>][image]" value="<?php echo $banner_image['image'] ;?>" id="input-image<?php echo $image_row; ?>" /></td>
                         <td width="12%"><input type="text" name="banner_image[<?php echo $language['language_id']; ?>][<?php echo $image_row; ?>][sort_order]" value="<?php echo $banner_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
-                        <td width="4%"><button type="button" id="button-remove" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>           
+                        <td width="4%"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>, .tooltip').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>           
                       </tr>
                       <?php $image_row++; ?> 
                     <?php } ?>
@@ -95,7 +95,8 @@
                 <tfoot>
                   <tr>
                     <th colspan="4"></th>
-                    <th class="text-center"><button type="button" onclick="addImage('<?php echo $language['language_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+                    <th class="text-center">
+                      <button type="button" onclick="addImage(<?php echo $language['language_id']; ?>)" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
                     </th>
                   </tr>
                 </tfoot>
@@ -111,29 +112,25 @@
 <link href="assets/vendor/DataTables/datatables.min.css" rel="stylesheet" type="text/css">
 <script src="assets/vendor/DataTables/datatables.min.js"></script>
 <script type="text/javascript">
-<?php foreach ($languages as $language) { ?>
-$('#table-<?php echo $language['language_id']; ?>').DataTable({
-    "order": [[ 3, "asc" ]],
-    "lengthMenu": [5, 10, 15, 20],
-});
-<?php } ?>
+
+
+
 
 var image_row = <?php echo $image_row; ?>
 
 function addImage(language_id) {
-  var t = $('#table-' + language_id).DataTable();
-    t.row.add([
-      '<input type="text" name="banner_image[' + language_id + '][' + image_row + '][title]" value="" placeholder="<?php echo $entry_title; ?>" class="form-control" />', 
-      '<input type="text" name="banner_image[' + language_id + '][' + image_row + '][link]" value="" placeholder="<?php $entry_link; ?>" class="form-control" />', 
-      '<a href="" id="thumb-image' + image_row + '" data-toggle="image"><img src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>"  class="img-thumbnail" /></a><input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][image]" value="" id="input-image' + image_row + '" />',
-      '<input type="text" name="banner_image[' + language_id + '][' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" />',
-      '<button type="button" id="button-remove" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>']).node().id = 'image-row' + image_row;
-    t.draw( false );
-    image_row ++;
+  html  = '<tr id="image-row' + image_row + '">';
+    html += '  <td class="text-left"><input type="text" name="banner_image[' + language_id + '][' + image_row + '][title]" value="" placeholder="<?php echo $entry_title; ?>" class="form-control" /></td>';  
+  html += '  <td class="text-left" style="width: 30%;"><input type="text" name="banner_image[' + language_id + '][' + image_row + '][link]" value="" placeholder="<?php echo $entry_link; ?>" class="form-control" /></td>';  
+  html += '  <td class="text-center"><a href="" id="thumb-image' + image_row + '" data-toggle="image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a><input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
+  html += '  <td class="text-right" style="width: 10%;"><input type="text" name="banner_image[' + language_id + '][' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
+  html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + ', .tooltip\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+  html += '</tr>';
+  
+  $('#table-' + language_id + ' tbody').append(html);
+  
+  image_row++;
 
-    t.on( 'click', '#button-remove', function () {
-      t.row( $(this).parents('tr')).remove().draw();
-    });
   }
 </script>
 <script type="text/javascript">

@@ -38,11 +38,11 @@ class BaseController extends \CodeIgniter\Controller
         // Preload any models, libraries, etc, here.
         //--------------------------------------------------------------------
         // E.g.:
-        $this->template = new \Catalog\Libraries\Template();
-        $this->customer = new \Catalog\Libraries\Customer();
         $this->session  = \Config\Services::session();
         $this->locale   = $this->request->getLocale();
         $this->registry = service('registry');
+        $this->template = service('template');
+        $this->customer = service('customer');
     }
 
     public function resize(string $filename, int $width = 0, int $height = 0)

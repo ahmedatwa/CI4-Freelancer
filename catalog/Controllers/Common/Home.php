@@ -29,7 +29,7 @@ class Home extends \Catalog\Controllers\BaseController
         $customerModel = new CustomerModel();
 
         $results = $customerModel->getCustomers($filter_data);
-        $reviewModel = new \Catalog\Models\Catalog\ReviewModel();
+        $reviewModel = new \Catalog\Models\Account\ReviewModel();
 
         foreach ($results as $result) {
 

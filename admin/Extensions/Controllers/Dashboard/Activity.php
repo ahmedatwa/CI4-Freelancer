@@ -90,7 +90,7 @@ class Activity extends \Admin\Controllers\BaseController
   
         $activityModel = new \Extensions\Models\Dashboard\Activities();
   
-        $results = $activityModel->findAll(5);
+        $results = $activityModel->where('customer_id !=', 0)->findAll(5);
 
         foreach ($results as $result) {
             $text = vsprintf(lang('dashboard/activity.list.text_activity_' . $result['key']), json_decode($result['data'], true));

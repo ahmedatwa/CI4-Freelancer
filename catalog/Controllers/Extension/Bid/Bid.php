@@ -12,6 +12,8 @@ class Bid extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('pid')) {
             $project_id = $this->request->getVar('pid');
+        } elseif ($this->request->getGet('project_id')) {
+            $project_id = $this->request->getGet('project_id');
         } else {
             $project_id = 0;
         }
