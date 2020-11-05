@@ -43,7 +43,7 @@ They could be designed for Admin or Catalog.
 ```diff
 - Important Note, you might encounter issues with lang vars, since no lang data vars are needed in controller.
 - therfore you have to alter the Config/Routes.php following the same rules for correct routing.
-- Nice isn't it 
+- Nice isn't it ?
 ```
 >
 *****
