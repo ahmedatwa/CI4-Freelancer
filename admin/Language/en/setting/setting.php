@@ -48,6 +48,7 @@ return [
     'entry_currency'          => 'currency',
     'entry_admin_limit'       => 'Default Items per page (Admin)',
     'entry_customer_activity' => 'Customer Activity',
+    'entry_customer_online' => 'Customer Online',
     'entry_login_attempts'    => 'Max Login Attempts',
     'entry_project_status'    => 'Project status',
     'entry_project_completed_status'    => 'Project Completed status',

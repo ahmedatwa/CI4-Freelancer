@@ -89,9 +89,17 @@ class Basic extends \Admin\Controllers\BaseController
         } else {
             $data['theme_default_status'] = '';
         }
+
+        if ($this->request->getPost('theme_default_projects_limit')) {
+            $data['theme_default_projects_limit'] = $this->request->getPost('theme_default_projects_limit');
+        } elseif (isset($setting_info['theme_default_projects_limit'])) {
+            $data['theme_default_projects_limit'] = $setting_info['theme_default_projects_limit'];
+        } else {
+            $data['theme_default_projects_limit'] = 15;
+        }
         
         
-        $this->document->moduleOutput('Extensions', 'theme/default_theme', $data);
+        $this->document->moduleOutput('Extensions', 'theme/basic', $data);
     }
 
     protected function validateForm()

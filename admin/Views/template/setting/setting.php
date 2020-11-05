@@ -242,6 +242,30 @@
 												<?php } ?>
 											</div>
 										</div>
+										<div class="form-group row">
+											<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_customer_online; ?> </label>
+											<div class="col-sm-10">
+												<?php if ($config_customer_online == 1)	 { ?>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="radio" name="config_customer_online" value="1" checked>
+														<label class="form-check-label" for="inlineRadio1"><?php echo $text_yes; ?></label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="radio" name="config_customer_online" value="0">
+														<label class="form-check-label" for="inlineRadio1"><?php echo $text_no; ?></label>
+													</div>
+												<?php } else { ?>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="radio" name="config_customer_online" value="1">
+														<label class="form-check-label" for="inlineRadio1"><?php echo $text_yes; ?></label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="radio" name="config_customer_online" value="0" checked>
+														<label class="form-check-label" for="inlineRadio1"><?php echo $text_no; ?></label>
+													</div>
+												<?php } ?>
+											</div>
+										</div>
 									</fieldset>
 									<fieldset>
 										<legend><?php echo $text_fees; ?></legend>

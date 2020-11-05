@@ -6,7 +6,7 @@ class Onlines extends \CodeIgniter\Model
     protected $primaryKey     = 'customer_id';
     protected $returnType     = 'array';
 
-    public function getTotalOnline($data = array())
+    public function getTotalOnline($data = [])
     {
 		$builder = $this->db->table($this->table);
 		return $builder->countAll();

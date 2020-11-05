@@ -31,7 +31,7 @@
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-theme" class="form-horizontal">
           <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
             <div class="form-group row">
-              <label class="col-sm-2 control-label" for="input-directory"><span data-toggle="tooltip" title="<?php echo $help_directory; ?>"><?php echo $entry_directory; ?></span></label>
+              <label class="col-sm-2 control-label" for="input-directory"><?php echo $entry_directory; ?></label>
               <div class="col-sm-10">
                 <select name="theme_default_directory" id="input-directory" class="form-control">
                   <?php foreach($directories as $directory) { ?>
@@ -70,6 +70,12 @@
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 control-label" for="input-status"><span data-toggle="tooltip" title="<?php echo $help_projects_limit; ?>" position="top"><?php echo $entry_projects_limit; ?> <i class="fas fa-question-circle"></i></span></label>
+              <div class="col-sm-10">
+                <input class="form-control" name="theme_default_projects_limit" value="<?php echo $theme_default_projects_limit;?>">
               </div>
             </div>
         </form>

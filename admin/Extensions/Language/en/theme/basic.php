@@ -28,9 +28,9 @@ return [
 'entry_image_location'             => 'Image Size (W x H)',
 'entry_width'                      => 'Width',
 'entry_color'                      => 'Color Scheme',
+'entry_projects_limit'             => 'Projects Limit',
 // Help
-'help_directory'                   => 'This field is only to enable older themes to be compatible with the new theme system. You can set the theme directory to use on the image size settings defined here.',
-'help_product_limit'               => 'Determines how many catalog items are shown per page (products, categories, etc)',
+'help_projects_limit'               => 'Determines how many catalog items are shown per page (projects, categories, etc)',
 'help_product_description_length'  => 'In the list view, short description character limit (categories, special etc)',
 // Error
 'error_limit'                      => 'Product Limit required!',

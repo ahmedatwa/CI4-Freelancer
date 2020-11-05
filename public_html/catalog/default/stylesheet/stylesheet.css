@@ -8342,11 +8342,15 @@ transform: translateY(-18px);
 .slick-next {  right: -85px; }
 .slick-next:before { content: '\e930'; right: -1px; }
 
+.bg-grey{
+	background: #f9f9f9; 
+}
 /* Dots */
 .slick-dots {
 	margin: 0 auto;
 	padding: 0;
 	text-align: center;
+	background: #f9f9f9; 
 }
 
 .slick-dots li {

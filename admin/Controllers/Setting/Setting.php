@@ -175,6 +175,14 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_customer_activity'] = '';
         }
 
+        if ($this->request->getPost('config_customer_online')) {
+            $data['config_customer_online'] = $this->request->getPost('config_customer_online');
+        } elseif (!empty($setting_info['config_customer_online'])) {
+            $data['config_customer_online'] = $setting_info['config_customer_online'];
+        } else {
+            $data['config_customer_online'] = 0;
+        }
+
         if ($this->request->getPost('config_login_attempts')) {
             $data['config_login_attempts'] = $this->request->getPost('config_login_attempts');
         } elseif (!empty($setting_info['config_login_attempts'])) {

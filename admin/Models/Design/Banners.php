@@ -45,7 +45,7 @@ class Banners extends \CodeIgniter\Model
 
         $builder->where('banner_id', $banner_id);
         $builder->update($banner_data);
-
+        
         if (isset($data['banner_image'])) {
             $banner_image_table = $this->db->table('banner_image');
             $banner_image_table->delete(['banner_id' => $banner_id]);

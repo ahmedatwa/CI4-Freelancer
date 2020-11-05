@@ -74,7 +74,7 @@ class Project extends \Catalog\Controllers\BaseController
         if ($this->request->getVar('limit')) {
             $limit = $this->request->getVar('limit');
         } else {
-            $limit = 10;
+            $limit = $this->registry->get('theme_default_projects_limit') ?? 15;
         }
 
         if ($this->request->getVar('page')) {

@@ -1,4 +1,4 @@
-<div class="shadow-sm ">
+<div class="">
 <div class="video-container" id="carousel-slick-carousel">
   <?php foreach ($banners as $banner ) { ?>
     <?php if ($banner['link']) { ?>

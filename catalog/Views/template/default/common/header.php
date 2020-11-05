@@ -166,7 +166,6 @@
         <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> <?php echo $username; ?>
         </a>
-
           <div class="row justify-content-md-center">
             <div class="dropdown-menu multi-column" aria-labelledby="headerLoginDropdown">
               <div class="multi-column-dropdown col-6 border-right">
@@ -189,7 +188,7 @@
         </li>
 
       <?php } ?>
-      <li class="mt-lg-2 ml-4 d-none d-lg-block"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
+      <li class="mt-lg-3 ml-4 d-none d-lg-block"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
     </ul>  
   </nav>
 <!-- Header Container / End -->

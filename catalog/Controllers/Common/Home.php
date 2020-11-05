@@ -12,16 +12,16 @@ class Home extends \Catalog\Controllers\BaseController
 
         $seoUrl = service('seo_url');
         
-    		$data['text_login']           = lang('common/home.text_title');
-    		$data['text_freelancers']     = lang('common/home.text_freelancers');
-    		$data['text_all_freelancers'] = lang('common/home.text_all_freelancers');
-    		$data['text_view_profile']    = lang('common/home.text_view_profile');
+		$data['text_login']           = lang('common/home.text_title');
+		$data['text_freelancers']     = lang('common/home.text_freelancers');
+		$data['text_all_freelancers'] = lang('common/home.text_all_freelancers');
+		$data['text_view_profile']    = lang('common/home.text_view_profile');
 
-            // Freelancers Block
+        // Freelancers Block
         $filter_data = [
-    			'filter_freelancer' => 0,
-    			'limit'             => 7,
-    			'start'             => 0,
+			'filter_freelancer' => 0,
+			'limit'             => 7,
+			'start'             => 0,
         ];
         
         $data['freelancers'] = [];

@@ -41,14 +41,14 @@ class Footer extends \Catalog\Controllers\BaseController
          ];
         }
 
-        $data['text_terms']         = lang('common/footer.text_terms');
-        $data['text_freelancers']   = lang('common/footer.text_freelancers');
-        $data['text_freelancer']   = lang('common/footer.text_freelancer');
-        $data['text_categories']    = lang('common/footer.text_categories');
-        $data['text_projects']      = lang('common/footer.text_projects');
-        $data['text_freelancers']   = lang('common/footer.text_freelancers');
-
-
+        $data['text_terms']       = lang('common/footer.text_terms');
+        $data['text_freelancers'] = lang('common/footer.text_freelancers');
+        $data['text_freelancer']  = lang('common/footer.text_freelancer');
+        $data['text_categories']  = lang('common/footer.text_categories');
+        $data['text_projects']    = lang('common/footer.text_projects');
+        $data['text_freelancers'] = lang('common/footer.text_freelancers');
+        
+        
         $data['text_footer']      = lang('common/footer.text_footer');
         $data['text_newsletter']  = lang('common/footer.text_newsletter');
         $data['help_newsletter']  = lang('common/footer.help_newsletter');
@@ -66,7 +66,7 @@ class Footer extends \Catalog\Controllers\BaseController
         
         $data['freelancers'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');
         $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/project');
-        $data['category']   = route_to('categories') ? route_to('categories') : base_url('project/category');
+        $data['category']    = route_to('categories') ? route_to('categories') : base_url('project/category');
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
 
         $data['project_added'] = $this->session->getFlashdata('project_added');

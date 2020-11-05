@@ -46,7 +46,7 @@ class Video extends \Admin\Controllers\BaseController
             ];
         } else {
             $data['breadcrumbs'][] = [
-                'text' => lang('heading_title'),
+                'text' => lang('module/video.list.heading_title'),
                 'href' => base_url('index.php/module/video?user_token=' . $this->request->getVar('user_token') . '&module_id=' . $this->request->getVar('module_id'))
             ];
         }
@@ -89,13 +89,13 @@ class Video extends \Admin\Controllers\BaseController
 
         if ($this->request->getPost('image') && is_file(DIR_IMAGE . $this->request->getPost('image'))) {
             $data['thumb'] = resizeImage($this->request->getPost('image'), 864, 415);
-        } elseif (isset($module_info['image']) && is_file(DIR_IMAGE . $module_info['image'])) {
-            $data['thumb'] = resizeImage($module_info['image'], 864, 415);
+        } elseif (isset($module_info['module_description']['image']) && is_file(DIR_IMAGE . $module_info['module_description']['image'])) {
+            $data['thumb'] = resizeImage($module_info['module_description']['image'], 200, 100);
         } else {
-            $data['thumb'] = resizeImage('no_image.jpg', 100, 100);
+            $data['thumb'] = resizeImage('no_image.jpg', 200, 100);
         }
 
-        $data['placeholder'] = resizeImage('no_image.jpg', 100, 100);
+        $data['placeholder'] = resizeImage('no_image.jpg', 200, 100);
 
 
         $this->document->output('module/video', $data);

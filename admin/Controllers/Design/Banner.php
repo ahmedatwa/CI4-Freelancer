@@ -36,7 +36,7 @@ class Banner extends \Admin\Controllers\BaseController
         $bannerModel = new Banners();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            //$bannerModel->editBanner($this->request->getVar('banner_id'), $this->request->getPost());
+            $bannerModel->editBanner($this->request->getVar('banner_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/design/banner?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('design/banner.text_success'));
         }
@@ -223,7 +223,6 @@ class Banner extends \Admin\Controllers\BaseController
     {
 
         foreach ($this->request->getPost('banner_image') as $language_id => $value) {
-
             foreach ($value as $banner_image_id => $banner_image) {
 
                 if (! $this->validate([
@@ -234,8 +233,7 @@ class Banner extends \Admin\Controllers\BaseController
                 ])) 
                 {
                     $this->session->setFlashdata('error_warning', lang('en.error.error_form'));
-                    
-                    //return false;
+                    return false;
                 }
             }
 
