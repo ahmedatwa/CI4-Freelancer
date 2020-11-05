@@ -15,32 +15,6 @@
  */
 use Config\Services;
 
- /**
- * Short Date Format
- *
- * @param string   $where  Where something interesting takes place
- * @throws Exception If something interesting cannot hCatalogen
- * @return string
- **/
-// if (!function_exists('DateShortFormat')) {
-//     function DateShortFormat(string $date)
-//     {
-//         if (!$date) {
-//             throw new \Exception("Date is missing in function!");
-//         }
-//         $fmt = date_create($date);
-//         return date_format($fmt, lang(config('Catalog')->defaultLocale . '.date_format_short'));
-//     }
-// }
-
-
-if (! function_exists('img_url')) {
-    function img_url(string $image)
-    {
-        return base_url('catalog/' . \Catalog\Libraries\Registry::get('config_theme').'/img/' . $image);
-    }
-}
-
 if (! function_exists('formError')) {
     function formError(string $name)
     {
