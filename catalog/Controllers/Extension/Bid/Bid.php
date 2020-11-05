@@ -42,7 +42,7 @@ class Bid extends \Catalog\Controllers\BaseController
 
         $results = $bidModel->getBids($filter_data);
         $total = $bidModel->getTotalBids($filter_data);
-        $reviewModel = new \Catalog\Models\Catalog\ReviewModel();
+        $reviewModel = new \Catalog\Models\Account\ReviewModel();
         
         foreach ($results as $result) {
             $data['bids'][] = [

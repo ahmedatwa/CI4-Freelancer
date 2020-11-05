@@ -60,12 +60,12 @@
 						
 						<!-- Details -->
 						<div class="freelancer-details">
-							<div class="freelancer-details-list">
-								<ul>
+							<div class="freelancer-details-list mx-auto w-100">
+								<div class="row">
 									<!-- <li>Location <strong><i class="icon-material-outline-location-on"></i> London</strong></li> -->
-									<li>Rate <strong><?php echo $freelancer['rate']; ?> / hr</strong></li>
-									<li>Job Success <strong>95%</strong></li>
-								</ul>
+									<div class="col pb-2">Rate:<strong> <?php echo $freelancer['rate']; ?> / hr</strong></div>
+									<div class="col pb-2">On Time:<strong> <?php echo $freelancer['success']; ?>%</strong></div>
+								</div>
 							</div>
 							<a href="<?php echo $freelancer['href']; ?>" class="button button-sliding-icon ripple-effect"><?php echo $text_view_profile;?> <i class="icon-material-outline-arrow-right-alt"></i></a>
 						</div>

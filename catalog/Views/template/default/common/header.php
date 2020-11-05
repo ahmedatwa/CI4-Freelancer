@@ -90,7 +90,7 @@
 </nav>
 
 
- <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-light shadow-sm p-sm-0 bg-white">
+ <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-light shadow-sm p-sm-0 bg-white border-bottom">
   <div class="offcanvas-header p-2">  
     <button type="button" class="close btn-close" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -101,7 +101,7 @@
 <a class="navbar-brand pt-0 d-none d-lg-block ml-3" href="<?php echo $home; ?>">
  <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top" loading="lazy"></a>
  <!-- Logo End -->
- <ul class="navbar-nav p-md-3">
+ <ul class="navbar-nav p-md-2">
   <?php foreach ($informations as $information) { ?>
    <li class="nav-item"><a class="nav-link" href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
  <?php }  ?>

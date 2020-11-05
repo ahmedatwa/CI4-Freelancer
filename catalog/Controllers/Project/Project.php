@@ -324,7 +324,8 @@ class Project extends \Catalog\Controllers\BaseController
         $this->template->output('project/project_list', $data);
     }
 
-    public function project()
+    // Single Project View
+    public function info()
     {
         $projectModel = new ProjectModel();
         $seoUrl = service('seo_url');
@@ -463,7 +464,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $projectModel->updateViewed($project_id);
 
-        $this->template->output('project/project', $data);
+        $this->template->output('project/project_info', $data);
     }
     
     public function add()

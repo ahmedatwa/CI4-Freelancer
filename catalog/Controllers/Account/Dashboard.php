@@ -41,8 +41,7 @@ class Dashboard extends \Catalog\Controllers\BaseController
         $data['profile_views'] = $customerModel->getCustomerProfileView($customer_id);
 
         // news Feed
-
-        $data['news_feed'] = [];
+        $data['news_feeds'] = [];
 
         $activityModel = new ActivityModel();
 

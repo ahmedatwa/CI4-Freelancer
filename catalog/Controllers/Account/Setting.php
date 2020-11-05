@@ -105,13 +105,40 @@ class Setting extends \Catalog\Controllers\BaseController
         } else {
             $data['tag_line'] = '';
         }
-
         if ($this->request->getPost('rate')) {
             $data['rate'] = $this->request->getPost('rate');
         } elseif ($customer_info['rate']) {
             $data['rate'] = $customer_info['rate'];
         } else {
             $data['rate'] = 0;
+        }
+        if ($this->request->getPost('facebook')) {
+            $data['facebook'] = $this->request->getPost('facebook');
+        } elseif ($customer_info['facebook']) {
+            $data['facebook'] = $customer_info['facebook'];
+        } else {
+            $data['facebook'] = '';
+        }
+        if ($this->request->getPost('twitter')) {
+            $data['twitter'] = $this->request->getPost('twitter');
+        } elseif ($customer_info['twitter']) {
+            $data['twitter'] = $customer_info['twitter'];
+        } else {
+            $data['twitter'] = '';
+        }
+        if ($this->request->getPost('linkedin')) {
+            $data['linkedin'] = $this->request->getPost('linkedin');
+        } elseif ($customer_info['linkedin']) {
+            $data['linkedin'] = $customer_info['linkedin'];
+        } else {
+            $data['linkedin'] = '';
+        }
+        if ($this->request->getPost('github')) {
+            $data['github'] = $this->request->getPost('github');
+        } elseif ($customer_info['github']) {
+            $data['github'] = $customer_info['github'];
+        } else {
+            $data['github'] = '';
         }
 
         $data['thumb'] = isset($customer_info['image']) ? $customer_info['image'] : '';
@@ -134,18 +161,23 @@ class Setting extends \Catalog\Controllers\BaseController
         $data['text_loading']           = lang('en.text_loading');
         $data['button_add']             = lang('en.button_add');
         
-        $data['text_certification']     = lang('account/setting.text_certification');
-        $data['text_loading']           = lang('account/setting.text_loading');
-        $data['text_select']            = lang('en.text_select');
-        $data['text_confirm']              = lang('en.text_confirm');
-        $data['text_education']         = lang('account/setting.text_education');
+        $data['text_certification'] = lang('account/setting.text_certification');
+        $data['text_loading']       = lang('account/setting.text_loading');
+        $data['text_select']        = lang('en.text_select');
+        $data['text_confirm']       = lang('en.text_confirm');
+        $data['text_education']     = lang('account/setting.text_education');
+        $data['text_social']        = lang('account/setting.text_social');
         
-        $data['entry_year']             = lang('account/setting.entry_year');
-        $data['entry_university']       = lang('account/setting.entry_university');
-        $data['entry_country']          = lang('account/setting.entry_country');
-        $data['entry_uni_title']        = lang('account/setting.entry_uni_title');
-        $data['entry_major']            = lang('account/setting.entry_major');
-        $data['entry_certification']    = lang('account/setting.entry_certification');
+        $data['entry_year']          = lang('account/setting.entry_year');
+        $data['entry_university']    = lang('account/setting.entry_university');
+        $data['entry_country']       = lang('account/setting.entry_country');
+        $data['entry_uni_title']     = lang('account/setting.entry_uni_title');
+        $data['entry_major']         = lang('account/setting.entry_major');
+        $data['entry_certification'] = lang('account/setting.entry_certification');
+        $data['entry_facebook']      = lang('account/setting.entry_facebook');
+        $data['entry_twitter']       = lang('account/setting.entry_twitter');
+        $data['entry_linkedin']      = lang('account/setting.entry_linkedin');
+        $data['entry_github']        = lang('account/setting.entry_github');
 
         $data['tab_certificates']          = lang('account/setting.tab_certificates');
         $data['tab_education']             = lang('account/setting.tab_education');

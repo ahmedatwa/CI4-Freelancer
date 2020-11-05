@@ -30,6 +30,8 @@ class Home extends \Catalog\Controllers\BaseController
 
         $results = $customerModel->getCustomers($filter_data);
         $reviewModel = new \Catalog\Models\Account\ReviewModel();
+        $total_services = $reviewModel->getTotalJobsByFreelancerId($this->customer->getCustomerId()) ?? null;
+        $ontime =  $reviewModel->getOntimeByFreelancerId($this->customer->getCustomerId()) ?? null;
 
         foreach ($results as $result) {
 
@@ -39,12 +41,15 @@ class Home extends \Catalog\Controllers\BaseController
                     $image = $this->resize('catalog/avatar.jpg', 110, 110);
                 }
 
+
             $data['freelancers'][] = [
+
                 'image'    => $image,
                 'name'     => $result['name'],
                 'tag_line' => $result['tag_line'],
                 'rate'     => $this->currencyFormat($result['rate']),
                 'rating'   => $reviewModel->getAvgReviewByFreelancerId($result['customer_id']),
+                'success'  => @($total_services / $ontime),
                 'href'     => (route_to('freelancer_profile', $result['customer_id'], $result['name'])) ? route_to('freelancer_profile', $result['customer_id'], $result['name']) : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
             ];
         }

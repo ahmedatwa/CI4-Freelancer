@@ -93,7 +93,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
 
-        $this->template->output('project/project_info', $data);
+        $this->template->output('freelancer/project_info', $data);
     }
 
     public function getList()

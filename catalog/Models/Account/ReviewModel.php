@@ -20,6 +20,34 @@ class ReviewModel extends \CodeIgniter\Model
         $builder->where(['freelancer_id' => $freelancer_id, 'status' => 1]);
         $query = $builder->get()->getRowArray();
         return round($query['total']);
+    }    
+
+    public function getRecommendedByFreelancerId($freelancer_id)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->selectCount('recommended', 'total');
+        $builder->where('freelancer_id', $freelancer_id);
+        $query = $builder->get()->getRowArray();
+        return $query['total'];
+    }
+
+    public function getTotalJobsByFreelancerId($freelancer_id)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->where('freelancer_id', $freelancer_id);
+        return $builder->countAllResults();
+    }
+
+    public function getOntimeByFreelancerId($freelancer_id)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->selectCount('ontime', 'total');
+        $builder->where([
+            'freelancer_id' => $freelancer_id,
+            'ontime' => 1
+        ]);
+        $query = $builder->get()->getRowArray();
+        return $query['total'];
     }
 
     public function getAvgReviewByEmployerId($employer_id)
@@ -31,13 +59,31 @@ class ReviewModel extends \CodeIgniter\Model
         return round($query['total']);
     }
 
-    public function getFreelancerReview($freelancer_id)
+    public function getSuccessByEmployerId($employer_id)
     {
         $builder = $this->db->table($this->table);
-        $builder->select('*, AVG(rating)');
-        $builder->where(['freelancer_id' => $freelancer_id, 'status' => 1]);
+        $builder->selectAvg('rating', 'total');
+        $builder->where(['employer_id' => $employer_id, 'status' => 1]);
+        $query = $builder->get()->getRowArray();
+        return round($query['total']);
+    }
+
+
+    public function getFreelancerReviews($freelancer_id)
+    {
+        $builder = $this->db->table('review r');
+        $builder->select('r.comment, r.date_added, r.submitted_by, AVG(r.rating) AS rating, pd.name');
+        $builder->join('project_description pd', 'r.project_id = pd.project_id', 'left');
+        $builder->where('r.freelancer_id', $freelancer_id)
+                ->where('r.submitted_by !=', $freelancer_id);
         $query = $builder->get();
-        return $query->getRowArray();
+        foreach ($query->getResultArray() as $key => $value) {
+           if (is_null(array_values($value)[0])) {
+               return [];
+           } else {
+               return $query->getResultArray();
+           }
+       }
     }
 
 

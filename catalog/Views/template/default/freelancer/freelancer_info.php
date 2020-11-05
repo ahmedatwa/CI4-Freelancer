@@ -47,7 +47,6 @@
 		</div>
 	</div>
 <div class="row">
-
 	<!-- Content -->
 	<div class="col-sm-12 col-md-9 mb-4 shadow p-3 mb-5 bg-white rounded">
 		<!-- Page Content -->
@@ -102,88 +101,62 @@
 			<!-- Freelancer Indicators -->
 			<div class="sidebar-widget">
 				<div class="freelancer-indicators">
-
 					<!-- Indicator -->
 					<div class="indicator">
-						<strong>88%</strong>
-						<div class="indicator-bar" data-indicator-percentage="88"><span></span></div>
-						<span>Job Success</span>
-					</div>
-
-					<!-- Indicator -->
-					<div class="indicator">
-						<strong>100%</strong>
-						<div class="indicator-bar" data-indicator-percentage="100"><span></span></div>
+						<strong><?php echo $recommended; ?></strong>
+						<div class="indicator-bar" data-indicator-percentage="<?php echo $recommended; ?>"><span></span></div>
 						<span>Recommendation</span>
 					</div>
-
 					<!-- Indicator -->
 					<div class="indicator">
-						<strong><?php echo $completed; ?>%</strong>
-						<div class="indicator-bar" data-indicator-percentage="<?php echo $completed; ?>"><span></span></div>
+						<strong><?php echo $ontime; ?>%</strong>
+						<div class="indicator-bar" data-indicator-percentage="<?php echo $ontime; ?>"><span></span></div>
 						<span>On Time</span>
 					</div>	
-
-					<!-- Indicator -->
-					<div class="indicator">
-						<strong>80%</strong>
-						<div class="indicator-bar" data-indicator-percentage="80"><span></span></div>
-						<span>On Budget</span>
-					</div>
 				</div>
 			</div>
 
 			<!-- Widget -->
+			<?php if ($facebook || $github) { ?>
 			<div class="sidebar-widget">
 				<h3><?php echo $text_social; ?></h3>
 				<div class="freelancer-socials margin-top-25">
 					<ul>
-						<li><a href="#" title="Dribbble" data-placement="top" data-toggle="tooltip"><i class="icon-brand-dribbble"></i></a></li>
-						<li><a href="#" title="Twitter" data-placement="top" data-toggle="tooltip"><i class="icon-brand-twitter"></i></a></li>
-						<li><a href="#" title="Behance" data-placement="top" data-toggle="tooltip"><i class="icon-brand-behance"></i></a></li>
-						<li><a href="#" title="GitHub" data-placement="top" data-toggle="tooltip"><i class="icon-brand-github"></i></a></li>
-
+						<?php if ($facebook) { ?>
+						<li><a href="<?php echo $facebook; ?>" title="Facebook" data-placement="top" data-toggle="tooltip"><i class="icon-brand-facebook"></i></a></li>
+						<?php } ?>
+						<?php if ($twitter) { ?>	
+						<li><a href="<?php echo $twitter; ?>" title="Twitter" data-placement="top" data-toggle="tooltip"><i class="icon-brand-twitter"></i></a></li>
+						<?php } ?>
+						<?php if ($linkedin) { ?>
+						<li><a href="<?php echo $linkedin; ?>" title="LinkedIn" data-placement="top" data-toggle="tooltip"><i class="icon-brand-linkedin"></i></a></li>
+						<?php } ?>
+						<?php if ($github) { ?>
+						<li><a href="<?php echo $github; ?>" title="GitHub" data-placement="top" data-toggle="tooltip"><i class="icon-brand-github"></i></a></li>
+					    <?php } ?>
 					</ul>
 				</div>
 			</div>
-
-			<!-- Widget -->
-			<!-- Sidebar Widget -->
-			<div class="sidebar-widget">
-				<!-- Share Buttons -->
-				<div class="share-buttons margin-top-25">
-					<div class="share-buttons-trigger"><i class="icon-feather-share-2"></i></div>
-					<div class="share-buttons-content">
-						<span>Interesting? <strong>Share It!</strong></span>
-						<ul class="share-buttons-icons">
-							<li><a href="#" data-button-color="#3b5998" title="Share on Facebook" data-tippy-placement="top"><i class="icon-brand-facebook-f"></i></a></li>
-							<li><a href="#" data-button-color="#1da1f2" title="Share on Twitter" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>
-							<li><a href="#" data-button-color="#dd4b39" title="Share on Google Plus" data-tippy-placement="top"><i class="icon-brand-google-plus-g"></i></a></li>
-							<li><a href="#" data-button-color="#0077b5" title="Share on LinkedIn" data-tippy-placement="top"><i class="icon-brand-linkedin-in"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
+			<?php } ?>
 		</div>
 	</div>
 </div>
 <div class="row">
 	<!-- Boxed List -->
-	<?php if ($projects) { ?>
+	<?php if ($reviews) { ?>
 	<div class="col-sm-12 col-md-9 mb-4 shadow p-3 mb-5 bg-white rounded">
 		<div class="boxed-list-headline">
 			<h3><i class="icon-material-outline-thumb-up"></i> <?php echo $text_history; ?></h3>
 		</div>
-		<ul class="boxed-list-ul">
-			<?php foreach ($projects as $project) { ?>
+		<ul class="boxed-list-ul py-4">
+			<?php foreach ($reviews as $review) { ?>
 				<li>
 					<div class="boxed-list-item">
 						<!-- Content -->
 						<div class="item-content">
-							<h4><?php echo $project['name']; ?> <span>Rated as Freelancer</span></h4>
+							<h4><?php echo $review['name']; ?> <span>Rated as Freelancer</span></h4>
 							<div class="item-details margin-top-10">
-								<div class="detail-item"><i class="icon-material-outline-date-range"></i> <?php echo $project['date_added']; ?></div>
+								<div class="detail-item"><i class="icon-material-outline-date-range"></i> <?php echo $review['date_added']; ?></div>
 								<div class="star-rating rating">
 									<ul>
 										<?php for ($i=1; $i <= 5; $i++) { ?>
@@ -198,7 +171,7 @@
 									</div>
 								</div>
 								<div class="item-description">
-									<p><?php echo $project['comment']; ?></p>
+									<p><?php echo $review['comment']; ?></p>
 								</div>
 							</div>
 						</div>

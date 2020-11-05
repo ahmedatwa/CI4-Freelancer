@@ -274,34 +274,40 @@ class Freelancer extends \Catalog\Controllers\BaseController
             $data['tag_line']      = $customer_info['tag_line'];
 
             $data['image'] = $customer_info['image'] ? $this->resize($customer_info['image'], 130, 130) : $this->resize('catalog/avatar.jpg', 130, 130);
-
+            // Widgets
             $data['rating']        = $reviewModel->getAvgReviewByFreelancerId($customer_id);
+            $data['recommended']   = $reviewModel->getRecommendedByFreelancerId($customer_id);
+            $data['ontime']        = $reviewModel->getOntimeByFreelancerId($customer_id);
+            // Social
+            $data['facebook'] = $customer_info['facebook'];
+            $data['twitter']  = $customer_info['twitter'];
+            $data['linkedin'] = $customer_info['linkedin'];
+            $data['github']   = $customer_info['github'];
+
             $data['skills']        = $customerModel->getCustomerSkills($customer_id);
             $data['languages']     = $customerModel->getCustomerLanguages($customer_id);
 
             $data['educations'] = $customerModel->getEducations($customer_id);
-            $data['completed'] = $projectModel->getTotalAwardsByFreelancerId($customer_id);
 
             
             $data['certificates'] = $customerModel->getCustomerCertificates($customer_id);
 
+            // $filter_data = [
+            //  'freelancer_id' => $customer_id,
+            //  'status'        => $this->registry->get('config_project_completed_status')
+            // ];
+
+            // $projects = $projectModel->getProjectAward($filter_data);
             
-            $filter_data = [
-             'freelancer_id' => $customer_id,
-             'status'        => $this->registry->get('config_project_completed_status')
-            ];
-
-            $projects = $projectModel->getProjectAward($filter_data);
-            $reviews = $reviewModel->getFreelancerReview($customer_id);
-
-            $data['projects'] = [];
-            foreach ($projects as $project) {
-                $data['projects'][] = [
-                    'name'          => $project['name'],
-                    'delivery_time' => $project['delivery_time'],
-                    'comment'       => $reviews['comment'],
-                    'date_added'    => $reviews['date_added'],
-                    'rating'        => $reviews['rating'],
+            // reviews
+            $data['reviews'] = [];
+            $freelancer_reviews = $reviewModel->getFreelancerReviews($customer_id);
+            foreach ($freelancer_reviews as $result) {
+                $data['reviews'][] = [
+                    'name'          => $result['name'],
+                    'comment'       => $result['comment'],
+                    'rating'        => $result['rating'],
+                    'date_added'    => lang('en.mediumDate', [strtotime($result['date_added'])]),
                 ];
             }
         }

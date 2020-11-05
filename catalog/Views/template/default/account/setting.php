@@ -84,6 +84,35 @@
 												<textarea cols="30" rows="5" name="about" class="form-control"><?php echo $about; ?></textarea>
 											</div>
 										</div>
+										<legend>
+											<div class="dropdown-divider"></div>
+											<h4><?php echo $text_social; ?></h4>
+										</legend>
+										<div class="col-xl-6">
+											<div class="submit-field">
+												<h5><?php echo $entry_facebook; ?></h5>
+												<input type="text" class="form-control" name="facebook" value="<?php echo $facebook; ?>">
+											</div>
+										</div>
+										<div class="col-xl-6">
+											<div class="submit-field">
+												<h5><?php echo $entry_twitter; ?></h5>
+												<input type="text" class="form-control" name="twitter" value="<?php echo $twitter; ?>">
+											</div>
+										</div>
+										<div class="col-xl-6">
+											<div class="submit-field">
+												<h5><?php echo $entry_linkedin; ?></h5>
+												<input type="text" class="form-control" name="linkedin" value="<?php echo $linkedin; ?>">
+											</div>
+										</div>
+										<div class="col-xl-6">
+											<div class="submit-field">
+												<h5><?php echo $entry_github; ?></h5>
+												<input type="text" class="form-control" name="github" value="<?php echo $github; ?>">
+											</div>
+										</div>
+										
 								   <div class="col-12">
 									<button type="submit" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
 									</div>
@@ -132,7 +161,7 @@
 			<div class="col-12">
 				<div class="shadow-sm p-3 mb-5 bg-white rounded">
 					<div class="headline">
-							<h3><i class="icon-material-outline-lock"></i> <?php echo $text_professional_heading; ?></h3>
+							<h3><i class="fab fa-leanpub"></i> <?php echo $text_professional_heading; ?></h3>
 							<small><?php echo $text_professional_sub; ?></small>
 						</div>
 					<div class="content with-padding">

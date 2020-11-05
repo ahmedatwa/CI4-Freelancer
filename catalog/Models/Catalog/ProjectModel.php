@@ -158,7 +158,7 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
-        if (isset($data['filter_category_id'])) {
+        if (isset($data['filter_category_id']) && !empty($data['filter_category_id'])) {
             $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
             $builder->where('p2c.category_id', $data['filter_category_id']);
         }
@@ -185,6 +185,7 @@ class ProjectModel extends \CodeIgniter\Model
         }
 
         if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
+            $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
             $builder->whereIn('p2c.category_id', $data['filter_skills']);
         }
 
