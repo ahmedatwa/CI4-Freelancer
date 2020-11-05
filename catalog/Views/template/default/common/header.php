@@ -5,8 +5,8 @@
   <base href="<?php echo $base; ?>">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="<?php echo csrf_token(); ?>" content="<?php echo csrf_hash(); ?>">
   <!-- <meta name="google-signin-client_id" content="135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com"> -->
-
   <!-- CSS -->
   <link rel="stylesheet" href="catalog/default/vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="catalog/default/stylesheet/stylesheet.css">
@@ -22,7 +22,6 @@
   <?php foreach ($styles as $style) { ?>
     <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
   <?php } ?>
-
   <!-- Scripts -->
   <script src="catalog/default/javascript/jquery-3.5.1.min.js"></script>
   <script src="catalog/default/javascript/jquery-ui/jquery-ui.js"></script>
@@ -88,8 +87,7 @@
   <?php } ?>
   </ul>
 </nav>
-
-
+<!-- Main Nav -->
  <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-light shadow-sm p-sm-0 bg-white border-bottom">
   <div class="offcanvas-header p-2">  
     <button type="button" class="close btn-close" aria-label="Close">
@@ -137,7 +135,7 @@
 </ul>
 <?php } ?>
 </ul>
-<ul class="navbar-nav ml-auto mr-3">
+<ul class="navbar-nav ml-auto mr-3" id="nav-user-main">
     <?php if (! $logged) { ?>
       <li class="nav-item d-none d-lg-block"><a class="nav-link" href="<?php echo $login; ?>"><?php echo $text_login; ?> </a></li>
       <li class="nav-item d-none d-lg-block"><a class="nav-link" href="<?php echo $register; ?>"> <?php echo $text_register; ?> </a></li>
@@ -155,7 +153,7 @@
                 <small class="ml-4"><a href="<?php echo $all_messages; ?>" class="btn btn-link">View All Messages</a></small>
               </div>
               <div class="header-notifications-content">
-                <div class="header-notifications-scroll text-center" data-simplebar>
+                <div class="header-notifications-scroll text-center">
                   <ul id="message-list"></ul>
                 </div>
               </div>

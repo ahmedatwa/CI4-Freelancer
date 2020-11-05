@@ -137,30 +137,98 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	});
 
 
-    // Avatar Switcher
-	// function avatarSwitcher() {
-	//     var readURL = function(input) {
-	//         if (input.files && input.files[0]) {
-	//             var reader = new FileReader();
+ /*--------------------------------------------------*/
+	/*  Notification Messages
+	/*--------------------------------------------------*/
+// refresh notification count
+  function totalUnseen(data) {
+   $.ajax({
+      url: 'account/message/getTotalUnseenMessages',
+      dataType: 'json',
+      success: function(json) {
+          if (json['total']) {
+               $('#message-count').html('<span>' + json['total'] + '</span>');
+           } 
+        }
+    });
+ }totalUnseen();
 
-	//             reader.onload = function (e) {
-	//                 $('.profile-pic').attr('src', e.target.result);
-	//             };
-	    
-	//             reader.readAsDataURL(input.files[0]);
-	//             $('input[name=\'image\']').val(input.files[0]['name']);
-	//         }
-	//     };
+	setInterval(function(){
+	   totalUnseen();
+	}, 5000);
 
-	//     $(".file-upload").on('change', function(){
-	//         readURL(this);
+	$('#nav-user-main .header-notifications').on('click', function() {
+	  loadMessages();
+	});
+	 
+	function loadMessages() {
+	   $.ajax({
+	      url: 'common/header/getMessages',
+	      dataType: 'json',
+	      beforeSend: function() {
+	          $('#message-list').html('<p class="text-center m-3"><div class="spinner-grow text-info" role="status"><span class="sr-only">Loading...</span></div></p>');
+	          $('#message-count').html('');
+	      },
+	      complete: function () {
+	          $('.spinner-grow').remove();
+	      },
+	      success: function(json) {
+	      	var html = '';
 
-	//     });
-	    
-	//     $(".upload-button").on('click', function() {
-	//        $(".file-upload").click();
-	//     });
-	// } avatarSwitcher();
+	          for (var i = 0; json.length > i; i++) {
+
+	           html = '<li class="notifications-not-read" id="'+json[i].message_id+'">';
+	           html += '<a href="account/message">';
+	           html += '<span class="notification-avatar status-online"><img src="'+json[i].image+'" alt=""></span>';
+	           html += '<div class="notification-text">';
+	           html += '<strong>' + json[i].name + '</strong>';
+	           html += '<p class="notification-msg-text">' + json[i].message + '</p>';
+	           html += '<span class="color">' + json[i].date_added + '</span>';
+	           html += '</div>';
+	           html += '</a>';
+	           html += '</li>';
+
+	          $('#nav-user-main #message-list').append(html);
+	        }
+	      }
+	    });
+	  }
+    /*--------------------------------------------------*/
+	/*  Pusher new-project-event
+	/*--------------------------------------------------*/
+
+  var pusher = new Pusher('b4093000fa8e8cab989a', {
+      cluster: 'eu'
+    });
+
+  var channel = pusher.subscribe('global-channel');
+
+  channel.bind('new-project-event', function(data) {
+    $.notify({
+	// options
+	icon: 'fas fa-desktop',
+	title: data.name,
+	message: data.budget,
+	url: data.href,
+	target: '_blank'
+    },{
+	// settings
+	newest_on_top: true,
+	placement: {
+		from: "bottom",
+		align: "right"
+	},
+	offset: 20,
+	spacing: 10,
+	z_index: 1031,
+	delay: 8000,
+	timer: 1000,
+	animate: {
+		enter: 'animate__animated animate__fadeInLeftBig',
+		exit: 'animate__animated animate__fadeInDownBig'
+	},
+   });
+  });
 
 	/*--------------------------------------------------*/
 	/*  Interactive Effects

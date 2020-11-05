@@ -87,6 +87,7 @@ class Message extends \Catalog\Controllers\BaseController
               
             foreach ($results as $result) {
                 $json[] = [
+                    'message_id'  => $result['message_id'],
                     'project_id'  => $result['project_id'],
                     'sender_id'   => $result['sender_id'],
                     'receiver_id' => $result['receiver_id'],
@@ -104,7 +105,7 @@ class Message extends \Catalog\Controllers\BaseController
     {
         $json = [];
         
-        if ($this->request->getVar('message_id') && $this->request->getMethod() == 'post') {
+        if ($this->request->getVar('message_id')) {
 
                $messageModel = new MessageModel();
 

@@ -108,8 +108,7 @@ class MessageModel extends \CodeIgniter\Model
     public function getTotalUnseen($customer_id)
     {
         $builder = $this->db->table($this->table);
-        $builder->select('message, date_added, sender_id');
-        $builder->where(['sender_id' => $customer_id, 'seen' => 0]);
+        $builder->where(['receiver_id' => $customer_id, 'seen' => 0]);
         return $builder->countAllResults();
     }
 
@@ -127,6 +126,7 @@ class MessageModel extends \CodeIgniter\Model
         $builder = $this->db->table($this->table);
         $builder->where('message_id', $message_id);
         $builder->set('seen', 1);
+        $builder->set('date_modified', 'NOW()', false);
         $builder->update();
     
     }

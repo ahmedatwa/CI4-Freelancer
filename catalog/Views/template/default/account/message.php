@@ -65,11 +65,6 @@
 <script type="text/javascript">
 // Enable pusher logging - don't include this in production
 $(document).ready(function(){
-	Pusher.log = function(message) {
-		if (window.console && window.console.log) {
-			window.console.log(message);
-		}
-	};
 
 	var pusher = new Pusher('b4093000fa8e8cab989a', {
       cluster: 'eu'
@@ -160,10 +155,14 @@ function fetchChatHistory (sender_id, receiver_id) {
       beforeSend: function() {
       	$('#v-pills-tabContent').html('<i class="fas fa-spinner fa-spin"></i>');	
       },
+      complete: function() {
+      	$('.fas').remove();
+      },
       success:function(json) { 
-      	console.log(json);
-      	html = '';
-          $.map( json, function( val, i ) {
+
+      	var html = '';
+
+        $.map(json, function(val, i) {
       		     	
       	if (json[i].sender_id == <?php echo $customer_id; ?>) {
       		html = '<div class="message-time-sign">';
@@ -186,16 +185,24 @@ function fetchChatHistory (sender_id, receiver_id) {
 			html += '<div class="clearfix"></div>';
 			html += '</div>';
 	    }  // else 
-	    	//$('#v-pills-' + receiver_id).html(html);
           $('#v-pills-' + receiver_id).append(html);
-
-	   
-	       });
-
-
-      } // success  
-  	});
+         markRead(json[i].message_id);
+	});
+   } // success  
+ });
 }
+
+
+function markRead(message_id) {
+  $.ajax({
+      url: 'account/message/markRead?message_id=' + message_id,
+      dataType: 'json',
+      success: function(json) {
+      	console.log('ok');
+      }
+  });
+}
+
 </script>
 
 <?php echo $footer; ?>
