@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 04, 2020 at 08:23 PM
+-- Generation Time: Nov 05, 2020 at 04:14 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -553,7 +553,10 @@ CREATE TABLE `ci_customer` (
   `rate` int(11) NOT NULL,
   `online` tinyint(1) NOT NULL,
   `origin` varchar(64) NOT NULL,
-  `github` varchar(255) NOT NULL,
+  `github` varchar(50) NOT NULL,
+  `linkedin` varchar(50) NOT NULL,
+  `facebook` varchar(50) NOT NULL,
+  `twitter` varchar(50) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -562,11 +565,11 @@ CREATE TABLE `ci_customer` (
 -- Dumping data for table `ci_customer`
 --
 
-INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `online`, `origin`, `github`, `date_added`, `date_modified`) VALUES
-(1, 1, 'John', 'Duo', 'john-1', 'customer@customer.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 187, 1, 'f5ErHhyM8WPLj142Cackm9XDFTwIYuRnv3qi60Zp', 'catalog/1603268888_338f07c8f86f7d9b2bac.jpg', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developers', 50, 0, '', '', '2020-09-20 12:44:02', '2020-10-26 19:36:31'),
-(20, 1, 'John2', 'Duo2', 'John-2', 'customer_2@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 110, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 1, '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
-(21, 1, 'John3', 'Duo3', 'John-3', 'customer_3@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 1, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 1, '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
-(22, 1, 'John2', 'Duo', 'John-4', 'mark@mark.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 8, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 1, '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57');
+INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `online`, `origin`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
+(1, 1, 'John', 'Duo', 'john-1', 'customer@customer.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 238, 1, 'f5ErHhyM8WPLj142Cackm9XDFTwIYuRnv3qi60Zp', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developers', 50, 1, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-26 19:36:31'),
+(20, 1, 'John2', 'Duo2', 'John-2', 'customer_2@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 129, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 0, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
+(21, 1, 'John3', 'Duo3', 'John-3', 'customer_3@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 1, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 1, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
+(22, 1, 'John2', 'Duo', 'John-4', 'mark@mark.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 8, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 1, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57');
 
 -- --------------------------------------------------------
 
@@ -585,35 +588,6 @@ CREATE TABLE `ci_customer_activity` (
   `user_agent` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `ci_customer_activity`
---
-
-INSERT INTO `ci_customer_activity` (`customer_activity_id`, `customer_id`, `freelancer_id`, `employer_id`, `key`, `data`, `ip`, `user_agent`, `date_added`) VALUES
-(2, 0, 20, 1, 'customer_transfer_funds', '{\"employer_id\":1,\"freelancer_id\":20,\"project_id\":41,\"amount\":15}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 18:29:05'),
-(3, 0, 20, 1, 'customer_new_message', '{\"customer_id\":0,\"employer_id\":1,\"freelancer_id\":20,\"project_id\":41,\"message\":\"test\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 18:51:03'),
-(4, 0, 20, 0, 'offer_selected', '{\"freelancer_id\":\"20\",\"project_id\":\"41\",\"bid_id\":\"5\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 18:55:38'),
-(23, 20, 0, 0, 'offer_accepted', '{\"project_id\":41,\"customer_id\":20}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-11-03 10:51:58'),
-(6, 0, 0, 20, 'customer_new_message', '{\"customer_id\":0,\"employer_id\":20,\"freelancer_id\":0,\"project_id\":41,\"message\":\"thanks\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-10-31 20:45:58'),
-(7, 0, 20, 1, 'customer_new_message', '{\"customer_id\":0,\"employer_id\":1,\"freelancer_id\":20,\"project_id\":41,\"message\":\"thanks\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 20:49:35'),
-(8, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"undefined\",\"receiver_id\":\"undefined\",\"project_id\":\"41\",\"message\":\"thanks\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 22:15:03'),
-(9, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"undefined\",\"receiver_id\":\"undefined\",\"project_id\":\"41\",\"message\":\"thanks\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 22:15:36'),
-(10, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"undefined\",\"receiver_id\":\"undefined\",\"project_id\":\"41\",\"message\":\"thanks\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 22:15:36'),
-(11, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"1\",\"receiver_id\":\"20\",\"project_id\":\"41\",\"message\":\"thanks\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 22:15:47'),
-(12, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"undefined\",\"receiver_id\":\"undefined\",\"project_id\":\"41\",\"message\":\"thanks\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-10-31 22:16:30'),
-(13, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"20\",\"receiver_id\":\"20\",\"project_id\":\"41\",\"message\":\"thanks\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-10-31 22:16:53'),
-(14, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"1\",\"receiver_id\":\"20\",\"project_id\":\"41\",\"message\":\"test\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 22:30:48'),
-(15, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"20\",\"receiver_id\":\"20\",\"project_id\":\"41\",\"message\":\"thank again\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-10-31 22:31:08'),
-(16, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"20\",\"receiver_id\":\"20\",\"project_id\":\"41\",\"message\":\"from john 2\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-10-31 22:33:57'),
-(17, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"20\",\"receiver_id\":\"1\",\"project_id\":\"41\",\"message\":\"hi\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-10-31 22:34:59'),
-(18, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"1\",\"receiver_id\":\"20\",\"project_id\":\"41\",\"message\":\"ffff\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 22:35:17'),
-(19, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"1\",\"receiver_id\":\"20\",\"project_id\":\"41\",\"message\":\"rrrr\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 22:47:12'),
-(20, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"20\",\"receiver_id\":\"1\",\"project_id\":\"41\",\"message\":\"yyyy\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-10-31 22:47:25'),
-(21, 0, 0, 0, 'customer_new_message', '{\"customer_id\":0,\"sender_id\":\"1\",\"receiver_id\":\"20\",\"project_id\":\"41\",\"message\":\"eeee\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-10-31 22:47:51'),
-(22, 0, 20, 1, 'customer_transfer_funds', '{\"employer_id\":1,\"freelancer_id\":20,\"project_id\":41,\"amount\":15}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-11-01 19:06:06'),
-(24, 20, 0, 0, 'offer_accepted', '{\"project_id\":41,\"customer_id\":20}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-11-03 11:18:52'),
-(25, 0, 20, 0, 'offer_selected', '{\"freelancer_id\":\"20\",\"project_id\":\"41\",\"bid_id\":\"1\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-03 11:33:46');
 
 -- --------------------------------------------------------
 
@@ -1461,7 +1435,7 @@ CREATE TABLE `ci_project` (
 --
 
 INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`) VALUES
-(1, 1, 0, '20.0000', '30.0000', 1, 5, 3, 128, '', 0, 5, 0, 0, '2020-10-03 12:44:26', '2020-10-03 12:44:26'),
+(1, 1, 0, '20.0000', '30.0000', 1, 5, 3, 135, '', 0, 5, 0, 0, '2020-10-03 12:44:26', '2020-10-03 12:44:26'),
 (2, 1, 0, '60.0000', '80.0000', 2, 8, 2, 141, '', 0, 5, 0, 0, '2020-10-22 21:57:56', '2020-10-03 12:45:22'),
 (41, 1, 20, '20.0000', '30.0000', 1, 5, 3, 63, '', 0, 5, 1, 0, '2020-10-27 19:14:30', '2020-10-27 19:14:30'),
 (3, 1, 0, '60.0000', '80.0000', 2, 8, 2, 103, '', 0, 5, 0, 0, '2020-10-22 21:57:56', '2020-10-03 12:45:22'),
@@ -1567,6 +1541,14 @@ CREATE TABLE `ci_project_message` (
   `date_added` datetime NOT NULL DEFAULT current_timestamp(),
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_project_message`
+--
+
+INSERT INTO `ci_project_message` (`message_id`, `project_id`, `sender_id`, `receiver_id`, `message`, `seen`, `date_added`, `date_modified`) VALUES
+(1, 0, 1, 20, 'Hi John-2, I noticed your profile and would like to offer you my project. We can discuss any details over chat.', 1, '2020-11-05 13:50:45', '2020-11-05 15:10:24'),
+(2, 0, 20, 1, 'Hi john-1, I noticed your profile and would like to offer you my project. We can discuss any details over chat.', 1, '2020-11-05 14:22:02', '2020-11-05 15:10:24');
 
 -- --------------------------------------------------------
 
@@ -1926,7 +1908,10 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('ae18c6e9e9e5fa73521e196c95947491be012308', '127.0.0.1', 1604501668, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343530313530383b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f62616e6e65723f757365725f746f6b656e3d3539315a796e75664e4a594f7a696d726548707753747667494d564b37615155223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a223539315a796e75664e4a594f7a696d726548707753747667494d564b37615155223b737563636573737c733a33353a22537563636573733a20596f752068617665206d6f6469666965642062616e6e65727321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
 ('6578061640a9802c8333b4a30745e8f3c30d49b6', '127.0.0.1', 1604516898, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343531363839383b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d4b704c34396e674143385779727332763378554a746956755058546b44683745223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224b704c34396e674143385779727332763378554a746956755058546b44683745223b),
 ('61d9b077b0535f859ac3bbc615c8f9ab93245e8e', '127.0.0.1', 1604517482, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343531373438323b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f6576656e743f757365725f746f6b656e3d4b704c34396e674143385779727332763378554a746956755058546b44683745223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224b704c34396e674143385779727332763378554a746956755058546b44683745223b),
-('94805a5cafadd116325b1b7d5ec466c9d7c79ab2', '127.0.0.1', 1604517673, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343531373438323b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f62616e6e65723f757365725f746f6b656e3d4b704c34396e674143385779727332763378554a746956755058546b44683745223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224b704c34396e674143385779727332763378554a746956755058546b44683745223b);
+('94805a5cafadd116325b1b7d5ec466c9d7c79ab2', '127.0.0.1', 1604517673, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343531373438323b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f62616e6e65723f757365725f746f6b656e3d4b704c34396e674143385779727332763378554a746956755058546b44683745223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224b704c34396e674143385779727332763378554a746956755058546b44683745223b),
+('65262febd88323a365f96e1e5164480546d76164', '127.0.0.1', 1604565850, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343536353835303b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a36343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d64657369676e25324662616e6e6572223b),
+('d544094e56f8374e7edd759743e64a76e5f8d6f0', '127.0.0.1', 1604566037, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343536353835303b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d647957564a543148506638516e414d375a5339656735784c70696c7275747a59223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22647957564a543148506638516e414d375a5339656735784c70696c7275747a59223b),
+('8c37101b534d87290aa466a6dc9ff4c1d8aba098', '127.0.0.1', 1604584152, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343538343135323b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b);
 
 -- --------------------------------------------------------
 
@@ -3141,7 +3126,7 @@ ALTER TABLE `ci_customer`
 -- AUTO_INCREMENT for table `ci_customer_activity`
 --
 ALTER TABLE `ci_customer_activity`
-  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_deposit`
@@ -3303,7 +3288,7 @@ ALTER TABLE `ci_project_bids`
 -- AUTO_INCREMENT for table `ci_project_message`
 --
 ALTER TABLE `ci_project_message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ci_project_proposal`
