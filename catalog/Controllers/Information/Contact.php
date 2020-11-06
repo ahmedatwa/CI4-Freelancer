@@ -6,6 +6,8 @@ class Contact extends BaseController
 {
     public function index()
     {
+        $this->template->setTitle(lang('information/contact.heading_title'));
+        
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             
             $email = \Config\Services::email();

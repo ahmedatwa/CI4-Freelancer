@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 05, 2020 at 04:14 PM
+-- Generation Time: Nov 06, 2020 at 09:24 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -61,11 +61,8 @@ CREATE TABLE `ci_banner_image` (
 --
 
 INSERT INTO `ci_banner_image` (`banner_image_id`, `banner_id`, `language_id`, `title`, `link`, `image`, `sort_order`) VALUES
-(8, 2, 1, '', '', 'catalog/demo/banners/MacBookAir.jpg', 0),
-(7, 2, 1, '', '', 'catalog/avatar.jpg', 0),
-(6, 2, 1, 'test', '', 'catalog/demo/banners/iPhone6.jpg', 0),
-(9, 2, 1, '', '', 'catalog/demo/sony_vaio_3.jpg', 0),
-(10, 2, 1, '', '', 'catalog/demo/sony_vaio_3.jpg', 0);
+(16, 2, 1, 'test', '', 'catalog/demo/banners/detail.jpg', 0),
+(15, 2, 1, 'test', '', 'catalog/demo/banners/detail.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -708,6 +705,13 @@ CREATE TABLE `ci_customer_online` (
   `date_added` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `ci_customer_online`
+--
+
+INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
+('127.0.0.1', 0, 'http://ci4.localhost/images/company-logo-01.png', 'http://ci4.localhost/', '2020-11-06 08:19:23');
+
 -- --------------------------------------------------------
 
 --
@@ -1090,7 +1094,8 @@ INSERT INTO `ci_extension` (`extension_id`, `type`, `code`) VALUES
 (64, 'module', 'html'),
 (71, 'theme', 'basic'),
 (79, 'dashboard', 'online'),
-(77, 'module', 'video');
+(77, 'module', 'video'),
+(80, 'module', 'freelancer');
 
 -- --------------------------------------------------------
 
@@ -1331,8 +1336,7 @@ INSERT INTO `ci_layout` (`layout_id`, `name`) VALUES
 (3, 'category'),
 (6, 'Account'),
 (8, 'Contact'),
-(11, 'Information'),
-(13, 'Search');
+(11, 'Information');
 
 -- --------------------------------------------------------
 
@@ -1353,11 +1357,12 @@ CREATE TABLE `ci_layout_module` (
 --
 
 INSERT INTO `ci_layout_module` (`layout_module_id`, `layout_id`, `code`, `position`, `sort_order`) VALUES
-(64, 1, 'html.5', 'content_top', 4),
-(63, 1, 'category', 'content_top', 3),
-(62, 1, 'featured', 'content_top', 2),
-(61, 1, 'video.9', 'content_top', 1),
-(60, 1, 'html.6', 'content_bottom', 1);
+(78, 1, 'featured', 'content_top', 2),
+(77, 1, 'video.9', 'content_top', 1),
+(76, 1, 'html.6', 'content_bottom', 2),
+(75, 1, 'freelancer', 'content_bottom', 1),
+(79, 1, 'category', 'content_top', 3),
+(80, 1, 'html.5', 'content_top', 4);
 
 -- --------------------------------------------------------
 
@@ -1377,7 +1382,7 @@ CREATE TABLE `ci_layout_route` (
 --
 
 INSERT INTO `ci_layout_route` (`layout_route_id`, `layout_id`, `site_id`, `route`) VALUES
-(33, 1, 0, 'common/home'),
+(36, 1, 0, 'common/home'),
 (7, 6, 0, 'account/(:any)'),
 (10, 3, 0, 'project/category');
 
@@ -1399,7 +1404,7 @@ CREATE TABLE `ci_module` (
 --
 
 INSERT INTO `ci_module` (`module_id`, `name`, `code`, `setting`) VALUES
-(3, 'Home Slide Show', 'carousel', '{\"name\":\"Home Slide Show\",\"banner_id\":\"2\",\"width\":\"1500\",\"height\":\"480\",\"status\":\"1\"}'),
+(3, 'Home Slide Show', 'carousel', '{\"name\":\"Home Slide Show\",\"banner_id\":\"2\",\"width\":\"1500\",\"height\":\"500\",\"status\":\"1\"}'),
 (4, 'InfoBox', 'html', '{\"name\":\"InfoBox\",\"module_description\":{\"title\":\"\",\"description\":\"<div class=\\\"photo-section\\\" data-background-image=\\\"catalog\\/default\\/images\\/section-background.jpg\\\"><p><\\/p><p><br><\\/p><p><span style=\\\"white-space:pre\\\">\\t<\\/span><!-- Infobox --><\\/p><p><span style=\\\"white-space:pre\\\">\\t<\\/span><\\/p><div class=\\\"text-content white-font\\\"><p><\\/p><p><span style=\\\"white-space:pre\\\">\\t\\t<\\/span><\\/p><div class=\\\"container\\\"><p><\\/p><p><br><\\/p><p><span style=\\\"white-space:pre\\\">\\t\\t\\t<\\/span><\\/p><div class=\\\"row\\\"><p><\\/p><p><span style=\\\"white-space:pre\\\">\\t\\t\\t\\t<\\/span><\\/p><div class=\\\"col-lg-6 col-md-8 col-sm-12\\\"><p><\\/p><p><span style=\\\"white-space:pre\\\">\\t\\t\\t\\t\\t<\\/span><\\/p><h2>Hire experts or be hired. <br> For any job, any time.<\\/h2><p><\\/p><p><span style=\\\"white-space:pre\\\">\\t\\t\\t\\t\\t<\\/span><\\/p><p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation is on the runway towards.<\\/p><p><\\/p><p><span style=\\\"white-space:pre\\\">\\t\\t\\t\\t\\t<\\/span><a href=\\\"<?php echo $register; ?>\\\" class=\\\"button button-sliding-icon ripple-effect big margin-top-20\\\">Get Started <i class=\\\"icon-material-outline-arrow-right-alt\\\"><\\/i><\\/a><\\/p><p><span style=\\\"white-space:pre\\\">\\t\\t\\t\\t<\\/span><\\/p><\\/div><p><\\/p><p><span style=\\\"white-space:pre\\\">\\t\\t\\t<\\/span><\\/p><\\/div><p><\\/p><p><br><\\/p><p><span style=\\\"white-space:pre\\\">\\t\\t<\\/span><\\/p><\\/div><p><\\/p><p><span style=\\\"white-space:pre\\\">\\t<\\/span><\\/p><\\/div><p><\\/p><p><span style=\\\"white-space:pre\\\">\\t<\\/span><!-- Infobox \\/ End --><\\/p><p><\\/p><\\/div>\"},\"status\":\"1\"}'),
 (6, 'Testimonials', 'html', '{\"name\":\"Testimonials\",\"module_description\":{\"title\":\"\",\"description\":\"<!-- Testimonials -->\\r\\n<div class=\\\"section gray padding-top-65 padding-bottom-55\\\">\\r\\n\\t\\r\\n\\t<div class=\\\"container\\\">\\r\\n\\t\\t<div class=\\\"row\\\">\\r\\n\\t\\t\\t<div class=\\\"col-xl-12\\\">\\r\\n\\t\\t\\t\\t<!-- Section Headline -->\\r\\n\\t\\t\\t\\t<div class=\\\"section-headline centered margin-top-0 margin-bottom-5\\\">\\r\\n\\t\\t\\t\\t\\t<h3>Testimonials<\\/h3>\\r\\n\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t<\\/div>\\r\\n\\t\\t<\\/div>\\r\\n\\t<\\/div>\\r\\n\\r\\n\\t<!-- Categories Carousel -->\\r\\n\\t<div class=\\\"fullwidth-carousel-container margin-top-20\\\">\\r\\n\\t\\t<div class=\\\"testimonial-carousel testimonials\\\">\\r\\n\\r\\n\\t\\t\\t<!-- Item -->\\r\\n\\t\\t\\t<div class=\\\"fw-carousel-review\\\">\\r\\n\\t\\t\\t\\t<div class=\\\"testimonial-box\\\">\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial-avatar\\\">\\r\\n\\t\\t\\t\\t\\t\\t<img src=\\\"images\\/user-avatar-small-02.jpg\\\" alt=\\\"\\\">\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial-author\\\">\\r\\n\\t\\t\\t\\t\\t\\t<h4>Sindy Forest<\\/h4>\\r\\n\\t\\t\\t\\t\\t\\t <span>Freelancer<\\/span>\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial\\\">Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. Dramatically maintain clicks-and-mortar solutions without functional solutions.<\\/div>\\r\\n\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t<\\/div>\\r\\n\\r\\n\\t\\t\\t<!-- Item -->\\r\\n\\t\\t\\t<div class=\\\"fw-carousel-review\\\">\\r\\n\\t\\t\\t\\t<div class=\\\"testimonial-box\\\">\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial-avatar\\\">\\r\\n\\t\\t\\t\\t\\t\\t<img src=\\\"images\\/user-avatar-small-01.jpg\\\" alt=\\\"\\\">\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial-author\\\">\\r\\n\\t\\t\\t\\t\\t\\t<h4>Tom Smith<\\/h4>\\r\\n\\t\\t\\t\\t\\t\\t <span>Freelancer<\\/span>\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial\\\">Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art.<\\/div>\\r\\n\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t<\\/div>\\r\\n\\r\\n\\t\\t\\t<!-- Item -->\\r\\n\\t\\t\\t<div class=\\\"fw-carousel-review\\\">\\r\\n\\t\\t\\t\\t<div class=\\\"testimonial-box\\\">\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial-avatar\\\">\\r\\n\\t\\t\\t\\t\\t\\t<img src=\\\"images\\/user-avatar-placeholder.png\\\" alt=\\\"\\\">\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial-author\\\">\\r\\n\\t\\t\\t\\t\\t\\t<h4>Sebastiano Piccio<\\/h4>\\r\\n\\t\\t\\t\\t\\t\\t <span>Employer<\\/span>\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial\\\">Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art.<\\/div>\\r\\n\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t<\\/div>\\r\\n\\r\\n\\t\\t\\t<!-- Item -->\\r\\n\\t\\t\\t<div class=\\\"fw-carousel-review\\\">\\r\\n\\t\\t\\t\\t<div class=\\\"testimonial-box\\\">\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial-avatar\\\">\\r\\n\\t\\t\\t\\t\\t\\t<img src=\\\"images\\/user-avatar-small-03.jpg\\\" alt=\\\"\\\">\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial-author\\\">\\r\\n\\t\\t\\t\\t\\t\\t<h4>David Peterson<\\/h4>\\r\\n\\t\\t\\t\\t\\t\\t <span>Freelancer<\\/span>\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial\\\">Collaboratively administrate turnkey channels whereas virtual e-tailers. Objectively seize scalable metrics whereas proactive e-services. Seamlessly empower fully researched growth strategies and interoperable sources.<\\/div>\\r\\n\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t<\\/div>\\r\\n\\r\\n\\t\\t\\t<!-- Item -->\\r\\n\\t\\t\\t<div class=\\\"fw-carousel-review\\\">\\r\\n\\t\\t\\t\\t<div class=\\\"testimonial-box\\\">\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial-avatar\\\">\\r\\n\\t\\t\\t\\t\\t\\t<img src=\\\"images\\/user-avatar-placeholder.png\\\" alt=\\\"\\\">\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial-author\\\">\\r\\n\\t\\t\\t\\t\\t\\t<h4>Marcin Kowalski<\\/h4>\\r\\n\\t\\t\\t\\t\\t\\t <span>Freelancer<\\/span>\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<div class=\\\"testimonial\\\">Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. Dramatically maintain clicks-and-mortar solutions without functional solutions.<\\/div>\\r\\n\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t<\\/div>\\r\\n\\r\\n\\t\\t<\\/div>\\r\\n\\t<\\/div>\\r\\n\\t<!-- Categories Carousel \\/ End --><\\/div>\"},\"status\":\"1\"}'),
 (5, 'How It Works', 'html', '{\"name\":\"How It Works\",\"module_description\":{\"title\":\"\",\"description\":\"<div class=\\\"section padding-top-65 padding-bottom-65\\\">\\r\\n\\t<div class=\\\"container\\\">\\r\\n\\t\\t<div class=\\\"row\\\">\\r\\n\\r\\n\\t\\t\\t<div class=\\\"col-xl-12\\\">\\r\\n\\t\\t\\t\\t<!-- Section Headline -->\\r\\n\\t\\t\\t\\t<div class=\\\"section-headline centered margin-top-0 margin-bottom-5\\\">\\r\\n\\t\\t\\t\\t\\t<h3>How It Works?<\\/h3>\\r\\n\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\r\\n\\t\\t\\t<div class=\\\"col-xl-4 col-md-4\\\">\\r\\n\\t\\t\\t\\t<!-- Icon Box -->\\r\\n\\t\\t\\t\\t<div class=\\\"icon-box with-line\\\">\\r\\n\\t\\t\\t\\t\\t<!-- Icon -->\\r\\n\\t\\t\\t\\t\\t<div class=\\\"icon-box-circle\\\">\\r\\n\\t\\t\\t\\t\\t\\t<div class=\\\"icon-box-circle-inner\\\">\\r\\n\\t\\t\\t\\t\\t\\t\\t<i class=\\\"icon-line-awesome-lock\\\"><\\/i>\\r\\n\\t\\t\\t\\t\\t\\t\\t<div class=\\\"icon-box-check\\\"><i class=\\\"icon-material-outline-check\\\"><\\/i><\\/div>\\r\\n\\t\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<h3>Create an Account<\\/h3>\\r\\n\\t\\t\\t\\t\\t<p>Bring to the table win-win survival strategies to ensure proactive domination going forward.<\\/p>\\r\\n\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t<\\/div>\\r\\n\\r\\n\\t\\t\\t<div class=\\\"col-xl-4 col-md-4\\\">\\r\\n\\t\\t\\t\\t<!-- Icon Box -->\\r\\n\\t\\t\\t\\t<div class=\\\"icon-box with-line\\\">\\r\\n\\t\\t\\t\\t\\t<!-- Icon -->\\r\\n\\t\\t\\t\\t\\t<div class=\\\"icon-box-circle\\\">\\r\\n\\t\\t\\t\\t\\t\\t<div class=\\\"icon-box-circle-inner\\\">\\r\\n\\t\\t\\t\\t\\t\\t\\t<i class=\\\"icon-line-awesome-legal\\\"><\\/i>\\r\\n\\t\\t\\t\\t\\t\\t\\t<div class=\\\"icon-box-check\\\"><i class=\\\"icon-material-outline-check\\\"><\\/i><\\/div>\\r\\n\\t\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<h3>Post a Task<\\/h3>\\r\\n\\t\\t\\t\\t\\t<p>Efficiently unleash cross-media information without. Quickly maximize return on investment.<\\/p>\\r\\n\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t<\\/div>\\r\\n\\r\\n\\t\\t\\t<div class=\\\"col-xl-4 col-md-4\\\">\\r\\n\\t\\t\\t\\t<!-- Icon Box -->\\r\\n\\t\\t\\t\\t<div class=\\\"icon-box\\\">\\r\\n\\t\\t\\t\\t\\t<!-- Icon -->\\r\\n\\t\\t\\t\\t\\t<div class=\\\"icon-box-circle\\\">\\r\\n\\t\\t\\t\\t\\t\\t<div class=\\\"icon-box-circle-inner\\\">\\r\\n\\t\\t\\t\\t\\t\\t\\t<i class=\\\" icon-line-awesome-trophy\\\"><\\/i>\\r\\n\\t\\t\\t\\t\\t\\t\\t<div class=\\\"icon-box-check\\\"><i class=\\\"icon-material-outline-check\\\"><\\/i><\\/div>\\r\\n\\t\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t\\t\\t<h3>Choose an Expert<\\/h3>\\r\\n\\t\\t\\t\\t\\t<p>Nanotechnology immersion along the information highway will close the loop on focusing solely.<\\/p>\\r\\n\\t\\t\\t\\t<\\/div>\\r\\n\\t\\t\\t<\\/div>\\r\\n\\r\\n\\t\\t<\\/div>\\r\\n\\t<\\/div>\\r\\n<\\/div>\"},\"status\":\"1\"}'),
@@ -1911,7 +1916,22 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('94805a5cafadd116325b1b7d5ec466c9d7c79ab2', '127.0.0.1', 1604517673, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343531373438323b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f62616e6e65723f757365725f746f6b656e3d4b704c34396e674143385779727332763378554a746956755058546b44683745223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224b704c34396e674143385779727332763378554a746956755058546b44683745223b),
 ('65262febd88323a365f96e1e5164480546d76164', '127.0.0.1', 1604565850, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343536353835303b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a36343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d64657369676e25324662616e6e6572223b),
 ('d544094e56f8374e7edd759743e64a76e5f8d6f0', '127.0.0.1', 1604566037, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343536353835303b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d647957564a543148506638516e414d375a5339656735784c70696c7275747a59223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22647957564a543148506638516e414d375a5339656735784c70696c7275747a59223b),
-('8c37101b534d87290aa466a6dc9ff4c1d8aba098', '127.0.0.1', 1604584152, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343538343135323b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b);
+('8c37101b534d87290aa466a6dc9ff4c1d8aba098', '127.0.0.1', 1604584152, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343538343135323b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b),
+('67473cf9c7ee6f1023d1a59df7a6cffae440a69e', '127.0.0.1', 1604604046, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343630343034363b5f63695f70726576696f75735f75726c7c733a39333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f7468656d652f62617369633f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b),
+('cf7cf6292de3e7119c4658f9b0245b3b72c06742', '127.0.0.1', 1604605575, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343630353537353b5f63695f70726576696f75735f75726c7c733a39333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f7468656d652f62617369633f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b),
+('ff98731e79bb59e0b10ef0ebdfee65ec8b205fea', '127.0.0.1', 1604605906, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343630353930363b5f63695f70726576696f75735f75726c7c733a3130313a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f62616e6e65722f656469743f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c7972732662616e6e65725f69643d32223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b),
+('2ac5bdabc9df7107e8e361f59b64348a66969f62', '127.0.0.1', 1604606376, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343630363337363b5f63695f70726576696f75735f75726c7c733a3130313a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f62616e6e65722f656469743f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c7972732662616e6e65725f69643d32223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b),
+('7e13f66a4e1f5415717ffe3ed5746ebc102c3010', '127.0.0.1', 1604606762, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343630363736323b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f62616e6e65723f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b737563636573737c733a33353a22537563636573733a20596f752068617665206d6f6469666965642062616e6e65727321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
+('210599f7193e9cfb488b0b64850317b5aeb7b7db', '127.0.0.1', 1604607149, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343630373134393b5f63695f70726576696f75735f75726c7c733a39353a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f6d6f64756c652f766964656f3f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c797273266d6f64756c655f69643d39223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b),
+('e1604a4fe1cbdb763bcd57a662ad55d3ad7e59d1', '127.0.0.1', 1604607792, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343630373739323b5f63695f70726576696f75735f75726c7c733a39383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f6d6f64756c652f6361726f7573656c3f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c797273266d6f64756c655f69643d33223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b),
+('38cc11a99234045283e4b66f359289fdbdca6356', '127.0.0.1', 1604608313, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343630383331333b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b),
+('b8345291e55bd51bc2338bbd87f1acdcf100011e', '127.0.0.1', 1604608678, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343630383637383b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b),
+('c5345298576dfec33898e5a2710e8fd3d8752892', '127.0.0.1', 1604611563, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343631313536333b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b),
+('20e529778c1f35e2f9c0f1a6758380d195148b2a', '127.0.0.1', 1604612064, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343631323036343b5f63695f70726576696f75735f75726c7c733a37393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f746f6f6c2f6c6f673f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b),
+('de515d3adbd1ab089420f398d45392afd10f06ef', '127.0.0.1', 1604612094, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343631323036343b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d75356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2275356d5748644a52554d465a784b517a6f32307174507641673470536c797273223b737563636573737c733a32373a22596f752068617665206d6f6469666965642053657474696e677321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
+('214db44d98ddd7ffd1c253b565de384276563068', '127.0.0.1', 1604648505, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343634383530353b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d4972435a5263623946663168336a554a6f6757544f45707a3047445661413265223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224972435a5263623946663168336a554a6f6757544f45707a3047445661413265223b),
+('f3db78f223301a91b9ce12c76ca949b4347c6f23', '127.0.0.1', 1604648875, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343634383837353b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f6c61796f75743f757365725f746f6b656e3d4972435a5263623946663168336a554a6f6757544f45707a3047445661413265223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224972435a5263623946663168336a554a6f6757544f45707a3047445661413265223b737563636573737c733a33353a22537563636573733a20596f752068617665206d6f646966696564206c61796f75747321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
+('69b2b415dfe00b547ffa4d95305851a01c4d1f27', '127.0.0.1', 1604648995, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343634383837353b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f6c61796f75743f757365725f746f6b656e3d4972435a5263623946663168336a554a6f6757544f45707a3047445661413265223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224972435a5263623946663168336a554a6f6757544f45707a3047445661413265223b);
 
 -- --------------------------------------------------------
 
@@ -1933,50 +1953,52 @@ CREATE TABLE `ci_setting` (
 --
 
 INSERT INTO `ci_setting` (`setting_id`, `site_id`, `code`, `name`, `setting`, `serialized`) VALUES
-(316, 0, 'config', 'config_pintrest', 'https://www.pinterest.com/yallafreelancers/', 0),
-(319, 0, 'config', 'config_maintenance', '0', 0),
-(318, 0, 'config', 'config_instagram', 'https://www.instagram.com/yallafreelancers/', 0),
-(317, 0, 'config', 'config_linkedin', 'https://www.linkedin.com/in/yallafreelancers/', 0),
-(315, 0, 'config', 'config_twitter', 'https://twitter.com/yallfreelancer', 0),
-(314, 0, 'config', 'config_facebook', 'https://www.facebook.com/Yallafreelancer/', 0),
-(313, 0, 'config', 'config_processing_fee', '2.3', 0),
-(312, 0, 'config', 'config_freelancer_fee', '', 0),
-(311, 0, 'config', 'config_customer_activity', '0', 0),
-(310, 0, 'config', 'config_project_expired_status', '5', 0),
-(309, 0, 'config', 'config_project_completed_status', '2', 0),
-(308, 0, 'config', 'config_project_status_id', '8', 0),
-(307, 0, 'config', 'config_login_attempts', '5', 0),
+(450, 0, 'config', 'config_maintenance', '0', 0),
+(449, 0, 'config', 'config_instagram', 'https://www.instagram.com/yallafreelancers/', 0),
+(448, 0, 'config', 'config_linkedin', 'https://www.linkedin.com/in/yallafreelancers/', 0),
+(447, 0, 'config', 'config_pintrest', 'https://www.pinterest.com/yallafreelancers/', 0),
+(446, 0, 'config', 'config_twitter', 'https://twitter.com/yallfreelancer', 0),
+(445, 0, 'config', 'config_facebook', 'https://www.facebook.com/Yallafreelancer/', 0),
+(444, 0, 'config', 'config_processing_fee', '2.3', 0),
+(443, 0, 'config', 'config_freelancer_fee', '', 0),
+(442, 0, 'config', 'config_customer_online', '1', 0),
+(441, 0, 'config', 'config_customer_activity', '1', 0),
+(440, 0, 'config', 'config_project_expired_status', '5', 0),
+(439, 0, 'config', 'config_project_completed_status', '2', 0),
 (324, 0, 'dashboard_activity', 'dashboard_activity_sort_order', '0', 0),
 (323, 0, 'dashboard_activity', 'dashboard_activity_width', '6', 0),
 (322, 0, 'dashboard_activity', 'dashboard_activity_status', '1', 0),
+(438, 0, 'config', 'config_project_status_id', '8', 0),
 (365, 0, 'dashboard_online', 'dashboard_online_sort_order', '0', 0),
 (102, 0, 'wallet_extension', 'wallet_extension_status', '1', 0),
 (25, 0, 'blog_extension', 'blog_extension_status', '1', 0),
 (26, 0, 'customer_wallet', 'customer_wallet_status', '1', 0),
 (27, 0, 'job_extension', 'job_extension_status', '1', 0),
 (320, 0, 'module_category', 'module_category_status', '1', 0),
-(305, 0, 'config', 'config_currency', 'EGP', 0),
+(437, 0, 'config', 'config_login_attempts', '5', 0),
 (99, 0, 'extension_wallet', 'extension_wallet_status', '1', 0),
 (344, 0, 'module_featured', 'module_featured_status', '1', 0),
 (343, 0, 'module_featured', 'module_featured_limit', '8', 0),
 (340, 0, 'theme_default', 'theme_default_status', '1', 0),
 (338, 0, 'theme_default', 'theme_default_directory', 'default', 0),
-(306, 0, 'config', 'config_admin_limit', '20', 0),
-(304, 0, 'config', 'config_admin_language_id', '1', 0),
-(303, 0, 'config', 'config_language_id', '1', 0),
-(302, 0, 'config', 'config_telephone', '+00 000-00-000', 0),
-(300, 0, 'config', 'config_address', '6th Forrest Ray, London - 10001 UK', 0),
-(301, 0, 'config', 'config_email', 'admin@admin.com', 0),
-(299, 0, 'config', 'config_owner', 'Ahmed Atwa', 0),
-(298, 0, 'config', 'config_name', 'YallaFreelancer', 0),
+(436, 0, 'config', 'config_admin_limit', '20', 0),
+(435, 0, 'config', 'config_currency', 'EGP', 0),
+(433, 0, 'config', 'config_language_id', '1', 0),
+(434, 0, 'config', 'config_admin_language_id', '1', 0),
+(432, 0, 'config', 'config_telephone', '+00 000-00-000', 0),
+(431, 0, 'config', 'config_email', 'admin@admin.com', 0),
+(430, 0, 'config', 'config_address', '6th Forrest Ray, London - 10001 UK', 0),
+(429, 0, 'config', 'config_owner', 'Ahmed Atwa', 0),
 (339, 0, 'theme_default', 'theme_default_color', 'red.css', 0),
-(297, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
-(296, 0, 'config', 'config_theme', 'default', 0),
-(295, 0, 'config', 'config_meta_keyword', '', 0),
-(294, 0, 'config', 'config_meta_description', 'Yallafreelancer mission is to change how the world works together. Yallafreelancer connects businesses with freelancers offering digital services in 300+ categories.', 0),
-(293, 0, 'config', 'config_meta_title', 'Yallafreelancer | Freelance Services Marketplace for Businesses in Egypt', 0),
-(321, 0, 'config', 'config_layout_id', '1', 0),
+(428, 0, 'config', 'config_name', 'YallaFreelancer', 0),
+(427, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
+(426, 0, 'config', 'config_theme', 'default', 0),
+(425, 0, 'config', 'config_meta_keyword', '', 0),
+(423, 0, 'config', 'config_meta_title', 'Yallafreelancer | Freelance Services Marketplace for Businesses in Egypt', 0),
+(424, 0, 'config', 'config_meta_description', 'Yallafreelancer mission is to change how the world works together. Yallafreelancer connects businesses with freelancers offering digital services in 300+ categories.', 0),
 (331, 0, 'extension_bid', 'extension_bid_status', '1', 0),
+(452, 0, 'module_freelancer', 'module_freelancer_status', '1', 0),
+(451, 0, 'module_freelancer', 'module_freelancer_limit', '8', 0),
 (363, 0, 'dashboard_online', 'dashboard_online_status', '1', 0),
 (364, 0, 'dashboard_online', 'dashboard_online_width', '6', 0);
 
@@ -2577,7 +2599,8 @@ INSERT INTO `ci_user_activity` (`activity_id`, `user_id`, `key`, `data`, `ip`, `
 (9, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-11-02 08:14:15'),
 (10, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-11-02 17:35:01'),
 (11, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-03 22:16:20'),
-(12, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-04 12:31:04');
+(12, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-04 12:31:04'),
+(13, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-11-05 19:15:44');
 
 -- --------------------------------------------------------
 
@@ -2599,7 +2622,7 @@ CREATE TABLE `ci_user_group` (
 
 INSERT INTO `ci_user_group` (`user_group_id`, `name`, `permission`, `date_added`, `date_modified`) VALUES
 (2, 'Demonstration', '{\"access\":[\"extension\\/dashboard\",\"extension\\/module\",\"localisation\\/language\",\"catalog\\/information\",\"user\\/user\",\"user\\/user_group\",\"common\\/filemanager\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/setting\",\"tool\\/log\",\"blog\\/post\",\"module\\/featured\",\"module\\/information\",\"module\\/special\",\"module\\/slideshow\",\"module\\/html\",\"module\\/carousel\",\"module\\/bestseller\",\"dashboard\\/sale\",\"dashboard\\/order\",\"dashboard\\/recent\",\"dashboard\\/map\",\"dashboard\\/chart\",\"dashboard\\/customer\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\"],\"modify\":[\"extension\\/dashboard\",\"extension\\/module\",\"localisation\\/language\",\"catalog\\/information\",\"user\\/user\",\"user\\/user_group\",\"common\\/filemanager\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/setting\",\"tool\\/log\",\"blog\\/post\",\"module\\/featured\",\"module\\/information\",\"module\\/special\",\"module\\/slideshow\",\"module\\/html\",\"module\\/carousel\",\"module\\/bestseller\",\"dashboard\\/sale\",\"dashboard\\/order\",\"dashboard\\/recent\",\"dashboard\\/map\",\"dashboard\\/chart\",\"dashboard\\/customer\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\"]}', '2020-07-21 21:45:31', '2020-07-21 21:45:31'),
-(1, 'Administrator', '{\"access\":[\"catalog\\/category\",\"catalog\\/dispute\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/html\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job\\/job\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet\\/wallet\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/bid\\/bid\",\"module\\/video\",\"module\\/video\",\"extensions\\/dashboard\\/online\",\"extensions\\/dashboard\\/online\"],\"modify\":[\"catalog\\/category\",\"catalog\\/dispute\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/html\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job\\/job\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet\\/wallet\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/bid\\/bid\",\"module\\/video\",\"module\\/video\",\"extensions\\/dashboard\\/online\",\"extensions\\/dashboard\\/online\"]}', '2020-08-07 11:33:45', '2020-10-30 10:47:52');
+(1, 'Administrator', '{\"access\":[\"catalog\\/category\",\"catalog\\/dispute\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/html\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job\\/job\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet\\/wallet\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/bid\\/bid\",\"module\\/video\",\"module\\/video\",\"extensions\\/dashboard\\/online\",\"extensions\\/dashboard\\/online\",\"module\\/freelancer\"],\"modify\":[\"catalog\\/category\",\"catalog\\/dispute\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/html\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job\\/job\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet\\/wallet\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/bid\\/bid\",\"module\\/video\",\"module\\/video\",\"extensions\\/dashboard\\/online\",\"extensions\\/dashboard\\/online\",\"module\\/freelancer\"]}', '2020-08-07 11:33:45', '2020-10-30 10:47:52');
 
 -- --------------------------------------------------------
 
@@ -3078,7 +3101,7 @@ ALTER TABLE `ci_banner`
 -- AUTO_INCREMENT for table `ci_banner_image`
 --
 ALTER TABLE `ci_banner_image`
-  MODIFY `banner_image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `banner_image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `ci_blog_category`
@@ -3216,7 +3239,7 @@ ALTER TABLE `ci_event`
 -- AUTO_INCREMENT for table `ci_extension`
 --
 ALTER TABLE `ci_extension`
-  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `ci_information`
@@ -3252,13 +3275,13 @@ ALTER TABLE `ci_layout`
 -- AUTO_INCREMENT for table `ci_layout_module`
 --
 ALTER TABLE `ci_layout_module`
-  MODIFY `layout_module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `layout_module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `ci_layout_route`
 --
 ALTER TABLE `ci_layout_route`
-  MODIFY `layout_route_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `layout_route_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `ci_module`
@@ -3342,7 +3365,7 @@ ALTER TABLE `ci_seo_url`
 -- AUTO_INCREMENT for table `ci_setting`
 --
 ALTER TABLE `ci_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=366;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=453;
 
 --
 -- AUTO_INCREMENT for table `ci_university`
@@ -3366,7 +3389,7 @@ ALTER TABLE `ci_user`
 -- AUTO_INCREMENT for table `ci_user_activity`
 --
 ALTER TABLE `ci_user_activity`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `ci_user_group`
