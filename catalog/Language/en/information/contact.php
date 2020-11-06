@@ -1,6 +1,5 @@
 <?php
 return [
-'list' => [
 // Heading
 'heading_title'  => 'Contact Us',
 // Text
@@ -20,5 +19,4 @@ return [
 // Email
 'email_subject'  => 'Enquiry %s',
 'text_help' => ' Learn everything you need to know on posting and completing projects.'
-],
 ];

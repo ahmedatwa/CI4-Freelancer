@@ -2051,7 +2051,7 @@ body #backtotop a {
 /* ---------------------------------- */
 /* Titlebar
 ------------------------------------- */
-/*#titlebar {
+#titlebar {
 	background-color: #f8f8f8;
 	position: relative;
 	padding: 70px 0;
@@ -2090,7 +2090,7 @@ body #backtotop a {
 	font-size: 30px;
 	line-height: 40px;
 	margin: 1px 0 3px 0;
-}*/
+}
 
 /* Breadcrumbs */
 #breadcrumbs {
@@ -3230,9 +3230,6 @@ span.blog-item-tag {
 	}
 }
 
-#contact div input {
-	margin-bottom: 22px;
-}
 
 
 /* ---------------------------------- */

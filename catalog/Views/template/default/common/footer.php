@@ -91,6 +91,7 @@
 							<?php foreach ($informations as $information) { ?>
 								<li><a href="<?php echo $information['href']; ?>"><span><?php echo $information['title']; ?></span></a></li>
 							<?php } ?>	
+							<li><a href="<?php echo $contact; ?>"><span><?php echo $text_contact; ?></span></a></li>
 						</ul>
 					</div>
 				</div>

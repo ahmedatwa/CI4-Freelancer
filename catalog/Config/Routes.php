@@ -50,7 +50,6 @@ $routes->group('blog', function ($routes) {
 	$routes->add('freelancer/u(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
 	$routes->add('deposit', 'Freelancer\Deposit::index', ['as' => 'freelancer_deposit']);
 	$routes->add('withdraw', 'Freelancer\Withdraw::index', ['as' => 'freelancer_withdraw']);
-
 	$routes->add('manage/project', 'Freelancer\Project::index', ['as' => 'freelancer_project']);
 
 // Account

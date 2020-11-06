@@ -10,7 +10,7 @@ class Contact extends BaseController
             
             $email = \Config\Services::email();
 
-            $email->setFrom(getSettingValue('config_email'), getSettingValue('config_name'));
+            $email->setFrom($this->registry->get('config_email'), $this->registry->get('config_name'));
             $email->setTo(html_entity_decode($this->request->getPost('name'), ENT_QUOTES, 'UTF-8'));
 
             $email->setSubject(html_entity_decode(sprintf(lang('information/contact.email_subject'), $this->request->getPost('name')), ENT_QUOTES, 'UTF-8'));
@@ -23,12 +23,12 @@ class Contact extends BaseController
 			}
         }
 
-        $data['breadcrumbs'] = array();
+        $data['breadcrumbs'] = [];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('text_home'),
             'href' => base_url('common/home')
-        );
+        ];
 
 
         if ($this->request->getPost('name')) {
@@ -43,17 +43,29 @@ class Contact extends BaseController
             $data['email'] = '';
         }
 
+        if ($this->request->getPost('subject')) {
+            $data['subject'] = $this->request->getPost('subject');
+        } else {
+            $data['subject'] = '';
+        }
+
         if ($this->request->getPost('inquiry')) {
             $data['inquiry'] = $this->request->getPost('inquiry');
         } else {
             $data['inquiry'] = '';
         }
 
+        $data['action'] = route_to('contact');
 
-		$data['site']       = getSettingValue('config_name');
-		$data['address']    = nl2br(getSettingValue('config_address'));
-        $data['open']       = getSettingValue('config_open');
-        $data['telephone']  = getSettingValue('config_telephone');
+		$data['site']       = $this->registry->get('config_name');
+		$data['address']    = nl2br($this->registry->get('config_address'));
+        $data['open']       = $this->registry->get('config_open');
+        $data['telephone']  = $this->registry->get('config_telephone');
+
+        $data['heading_title']    = lang('information/contact.heading_title');
+        $data['text_help_center'] = lang('information/contact.text_help_center');
+        $data['text_help']        = lang('information/contact.text_help');
+        $data['text_address']     = lang('information/contact.text_address');
 
 
         $this->template->output('information/contact', $data);

@@ -47,6 +47,7 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['text_categories']  = lang('common/footer.text_categories');
         $data['text_projects']    = lang('common/footer.text_projects');
         $data['text_freelancers'] = lang('common/footer.text_freelancers');
+        $data['text_contact'] = lang('common/footer.text_contact');
         
         
         $data['text_footer']      = lang('common/footer.text_footer');

@@ -48,7 +48,7 @@ class Services extends CoreServices
     public static function customer($getShared = true)
     {
         if ($getShared) {
-            return static::getSharedInstance('Customer');
+            return static::getSharedInstance('customer');
         }
         return new \Catalog\Libraries\Customer;
     }    
@@ -56,7 +56,7 @@ class Services extends CoreServices
     public static function template($getShared = true)
     {
         if ($getShared) {
-            return static::getSharedInstance('Template');
+            return static::getSharedInstance('template');
         }
         return new \Catalog\Libraries\Template;
     }

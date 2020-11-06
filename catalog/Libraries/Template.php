@@ -152,7 +152,7 @@ class Template
     }
 
     // Generating Final Template Output
-    public function output(string $view, array $data)
+    public function output(string $view, array $data = [])
     {
         if (config('App')->templateEngine == 'twig') {
             // specify where to look for templates

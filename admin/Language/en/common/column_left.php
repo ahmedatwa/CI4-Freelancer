@@ -26,9 +26,9 @@ return [
     'text_customers'       => 'Customers',
     'text_customers_group' => 'Customers Groups',
     'text_projects'        => 'Projects',
-    'text_jobs'            =>'Jobs',
-    'text_reviews'         =>'Reviews',
-    'text_project_status'  =>'Project Status',
+    'text_jobs'            => 'Jobs',
+    'text_reviews'         => 'Reviews',
+    'text_project_status'  => 'Project Status',
     // Blog
     'text_blog'            => 'Blog',
     'text_blog_posts'      => 'Posts',

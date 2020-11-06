@@ -1,85 +1,78 @@
-<?php echo $header;?><?php echo $menu;?>
-<main>
-		<div class="hero_single inner_pages background-image" data-background="url(img/home_section_1.jpg)">
-			<div class="opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.6)">
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-xl-9 col-lg-10 col-md-8">
-							<h1><?php echo $heading_title; ?></h1>
-							<p>A successful Freelancer experience</p>
-						</div>
-					</div>
-					<!-- /row -->
+<?php echo $header;?>
+<div id="titlebar" class="gradient">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2><?php echo $heading_title; ?></h2>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Container -->
+<div class="container">
+	<div class="row">
+
+		<div class="col-xl-12">
+			<div class="contact-location-info margin-bottom-50">
+				<div class="contact-address">
+					<ul>
+						<li class="contact-address-headline">Our Office</li>
+						<li><?php echo $address; ?></li>
+						<li><?php echo $telephone; ?></li>
+					</ul>
+
+				</div>
+				<div id="single-job-map-container">
+					<div id="singleListingMap" data-latitude="37.777842" data-longitude="-122.391805" data-map-icon="im im-icon-Hamburger"></div>
+					<a href="#" id="streetView">Street View</a>
 				</div>
 			</div>
 		</div>
-		<!-- /hero_single -->
+		<div class="col-xl-8 col-lg-8 offset-xl-2 offset-lg-2">
+			<section class="margin-bottom-60">
+				<h3 class="headline margin-top-15 margin-bottom-35">Any questions? Feel free to contact us!</h3>
 
-		<div class="bg_gray">
-		    <div class="container margin_60_40">
-		        <div class="row justify-content-md-center">
-		            <div class="col-lg-6">
-		                <div class="box_contacts">
-		                    <h2><i class="fas fa-life-ring"></i> <?php echo $text_help_center; ?></h2>
-							<small><?php echo $text_help; ?></small>
-		                </div>
-		            </div>
-		            <div class="col-lg-6">
-		                <div class="box_contacts">
-		                    <h2><i class="fas fa-map-marker-alt"></i> <?php echo $text_address; ?></h2>
-		                    <div><?php echo $address; ?></div>
-		                    <small><?php echo $open; ?></small>
-		                </div>
-		            </div>
-		        </div>
-		        <!-- /row -->
-		    </div>
-		    <!-- /container -->
+				<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" id="form-location" accept-charset="utf-8"> 
+					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+					<div class="form-group row">
+						<div class="input-group input-group-lg">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon1"><i class="icon-material-outline-account-circle"></i></span>
+							</div>
+							<input class="form-control" name="name" type="text" placeholder="Name" required="required" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="input-group input-group-lg">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon1"><i class="icon-material-outline-email"></i></span>
+							</div>
+							<input class="form-control" name="email" type="email" placeholder="Email Address" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" required="required" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="input-group input-group-lg">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon1"><i class="icon-material-outline-assignment"></i></span>
+							</div>
+							<input class="form-control" name="subject" type="text" placeholder="Subject" required="required" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="input-group input-group-lg">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon1"><i class="icon-material-outline-account-circle"></i></span>
+							</div>
+							<textarea class="form-control" name="inquiry" cols="40" rows="7" placeholder="Message" spellcheck="true" required="required"></textarea>
+						</div>
+					</div>
+					<input type="submit" class="submit button margin-top-15" id="submit" value="Submit Message" />
+
+				</form>
+			</section>
 		</div>
-		<!-- /bg_gray -->
-
-		<div class="container margin_60_40">
-		    <h5 class="mb_5">Drop Us a Line</h5>
-		    <div class="row">
-		        <div class="col-lg-4 col-md-6 add_bottom_25">
-		            <div id="message-contact"></div>
-		            <form method="post" action="assets/contact.php" id="contactform" autocomplete="off">
-					    <div class="form-group">
-					        <input class="form-control" type="text" placeholder="Name" id="name_contact" name="name_contact">
-					    </div>
-					    <div class="form-group">
-					        <input class="form-control" type="email" placeholder="Email" id="email_contact" name="email_contact">
-					    </div>
-					    <div class="form-group">
-					        <textarea class="form-control" style="height: 150px;" placeholder="Message" id="message_contact" name="message_contact"></textarea>
-					    </div>
-					    <div class="form-group">
-					        <input class="btn_1 full-width" type="submit" value="Submit" id="submit-contact">
-					    </div>
-					</form>
-				</div>
-		        <div class="col-lg-8 col-md-6 add_bottom_25">
-				<div id="map"></div>
-		        </div>
-		    </div>
-		</div>
-		<!-- /container -->
-
-	</main>
-	<!-- /main -->
+	</div>
+</div>
 <?php echo $footer;?>
-<script>
-// Initialize and add the map
-function initMap() {
-  // The location of Uluru
-  var uluru = {lat: -25.344, lng: 131.036};
-  // The map, centered at Uluru
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 4, center: uluru});
-  // The marker, positioned at Uluru
-  var marker = new google.maps.Marker({position: uluru, map: map});
-}
-</script>
-    <script defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdVw13RlcaeCfkTtJQhQRXiN6XsXTsRi0&callback=initMap">
-</script>
