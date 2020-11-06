@@ -188,7 +188,7 @@
         </li>
 
       <?php } ?>
-      <li class="mt-lg-3 ml-4 d-none d-lg-block"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
+      <li class="mt-lg-auto ml-4 d-none d-lg-block"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
     </ul>  
   </nav>
 <!-- Header Container / End -->
