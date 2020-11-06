@@ -99,18 +99,7 @@
 							 <a href="<?php echo $add_project; ?>" class="button ripple-effect button-sliding-icon"><?php echo $button_post_project; ?> <i class="fas fa-long-arrow-alt-right"></i></a>
 							</div>
 						</div>
-						<!-- Sidebar Widget -->
-						<?php if ($other_projects) { ?>
-						<div class="sidebar-widget">
-							<h3><?php echo $text_similar; ?></h3>
-							<ul class="list-group list-group-flush">
-								<?php foreach ($other_projects as $other) { ?>
-							    <li class="list-group-item"><a href="<?php echo $other['href']; ?>"><?php echo $other['name']; ?></a></li>
-							  <?php } ?>
-							</ul>
-						</div>
-					<?php } ?>
-					<hr />
+					<div class="dropdown-divider"></div>
 					<div class="sidebar-widget">
 						<h4><i class="fas fa-info-circle"></i> How to write a winning bid</h4>
 						<p>Your best chance of winning this project is writing a great bid proposal here!</p>
@@ -123,6 +112,18 @@
 						</ul>
 						<p>Most of all - don't spam or post cut-and-paste bids. You will be penalized or banned if you do so.</p>
 					</div>
+					<!-- Sidebar Widget -->
+					<?php if ($other_projects) { ?>
+						<div class="dropdown-divider"></div>
+						<div class="sidebar-widget">
+							<h3><?php echo $text_similar; ?></h3>
+							<ul class="list-group list-group-flush">
+								<?php foreach ($other_projects as $other) { ?>
+							    <li class="list-group-item"><a class="text-primary" href="<?php echo $other['href']; ?>"><?php echo $other['name']; ?></a></li>
+							  <?php } ?>
+							</ul>
+						</div>
+					<?php } ?>
 					</div>
 				</div>
 				<?php if ($days_left > 0) { ?>

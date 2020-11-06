@@ -21,11 +21,9 @@
 			<div class="col">
 				<div class="sidebar-container">
 					<!-- Category -->
-					<div class="keywords-list"></div>
-					<div class="dropdown-divider"></div>
 					<div class="sidebar-widget">
 						<h3><?php echo $text_skills; ?></h3>
-						<div class="keywords-container margin-top-20">
+						<div class="keywords-container margin-top-20 mb-3">
 							<div class="input-group keyword-input-container">
 								<select class="form-control" name="filter_category[]" data-width="100%" multiple="multiple">
 									<?php foreach($categories as $category) { ?>
@@ -36,12 +34,12 @@
 										<?php } ?>
 									<?php } ?>
 								</select>
-								
 							</div>
 						</div>
-
+						<div class="keywords-list"></div>
 					</div>
 					<!-- Hourly Rate -->
+					<div class="dropdown-divider"></div>
 					<div class="sidebar-widget">
 						<h3><?php echo $text_hourly_rate; ?></h3>
 						<div class="form-group">
@@ -73,7 +71,6 @@
 					<!-- Overview -->
 					<div class="freelancer-overview">
 						<div class="freelancer-overview-inner">
-							
 							<!-- Bookmark Icon -->
 							<span class="bookmark-icon"></span>
 							
