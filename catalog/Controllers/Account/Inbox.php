@@ -33,7 +33,7 @@ class Inbox extends \Catalog\Controllers\BaseController
             $data['members'][] = [
                 'receiver_id' => $result['receiver_id'],
                 'receiver'    => $customer_info['username'],
-                'image'       => $this->resize($customer_info['image'], 40, 40) ? $this->resize($customer_info['image'], 40, 40) : $this->resize('catalog/avatar.jpg', 40, 40)
+                'image'       => '',//$this->resize($customer_info['image'], 40, 40) ? $this->resize($customer_info['image'], 40, 40) : $this->resize('catalog/avatar.jpg', 40, 40)
         ];
         }
 
