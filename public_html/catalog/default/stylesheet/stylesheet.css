@@ -14483,8 +14483,10 @@ body.offcanvas-active{
 	overflow:hidden;
 }
 
-.navbar.bg-transparent {
-	background: transparent;
+/*Cats Sub Menu*/
+#navbar-header-category {
+	transition: all 0.3s ease-in-out;
+	border-bottom: 1px solid rgba(255, 255, 255, 0);
 }
 
 .navbar-carousel .slick-prev, .slick-next {
@@ -14502,9 +14504,14 @@ body.offcanvas-active{
 	color: #333 !important;
 }
 
+.navbar-carousel .nav-link {
+	color: #333 !important
+}
+
 .navbar-carousel .slick-prev::before, .slick-next::before {
 	color: #333 !important;
 }
+
 /*mobile menu*/
 .offcanvas-header{ display:none; }
 

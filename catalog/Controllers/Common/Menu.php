@@ -8,13 +8,8 @@ class Menu extends \Catalog\Controllers\BaseController
         $data['categories'] = [];
 
         $categoryModel = new \Catalog\Models\Catalog\CategoryModel();
-
-        $filter_data = [
-            'limit' => 4,
-            'start' => 0,
-        ];
         
-        $results = $categoryModel->getCategories($filter_data);
+        $results = $categoryModel->getCategories();
 
         foreach ($results as $result) {
             $data['categories'][] = [

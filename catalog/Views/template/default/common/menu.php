@@ -1,3 +1,4 @@
+<div class="clearfix"></div>
 <!-- Categories sub-nav -->
 <div class="container" id="navbar-header-category">
     <div class="row">

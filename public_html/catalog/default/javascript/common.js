@@ -753,12 +753,13 @@ $(document).on('click', '.dropdown-menu', function (e) {
  $('.navbar-carousel').slick({
 	  dots: false,
 	  infinite: true,
-	  centerPadding: '60px',
+	  //centerPadding: '30px',
 	  swipeToSlide: true,
-	  slidesToShow: 4,
-	  slidesToScroll: 1,
+	  slidesToShow: 8,
+	  slidesToScroll: 2,
 	  centerMode: true,
 	  arrows: true,
+	  variableWidth: true,
 });
 
 // ------------------ End Document ------------------ //
