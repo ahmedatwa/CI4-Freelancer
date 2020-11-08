@@ -755,11 +755,34 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	  infinite: true,
 	  //centerPadding: '30px',
 	  swipeToSlide: true,
-	  slidesToShow: 8,
-	  slidesToScroll: 2,
-	  centerMode: true,
+	  dots: false,
 	  arrows: true,
 	  variableWidth: true,
+	  responsive: [
+			{
+			  breakpoint: 1365,
+			  settings: {
+				slidesToShow: 8,
+				slidesToScroll: 2,
+			    centerMode: false,
+			  }
+			},
+			{
+			  breakpoint: 992,
+			  settings: {
+				slidesToShow: 6,
+				slidesToScroll: 2,
+			    centerMode: false,
+			  }
+			},
+			{
+			  breakpoint: 768,
+			  settings: {
+				slidesToShow: 2,
+				slidesToScroll: 2,
+			  }
+			}
+		]
 });
 
 // ------------------ End Document ------------------ //
