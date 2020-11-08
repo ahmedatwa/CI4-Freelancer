@@ -14483,6 +14483,28 @@ body.offcanvas-active{
 	overflow:hidden;
 }
 
+.navbar.bg-transparent {
+	background: transparent;
+}
+
+.navbar-carousel .slick-prev, .slick-next {
+  width: 40px !important;
+  height: 27px !important;
+  top: calc(50% - 0px) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.navbar-carousel .slick-prev.slick-disabled, .slick-next.slick-disabled {
+	color: #333 !important;
+}
+.navbar-carousel .slick-prev.slick-disabled::before, .slick-next.slick-disabled::before {
+	color: #333 !important;
+}
+
+.navbar-carousel .slick-prev::before, .slick-next::before {
+	color: #333 !important;
+}
 /*mobile menu*/
 .offcanvas-header{ display:none; }
 

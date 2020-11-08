@@ -47,7 +47,6 @@
 <body class="grey">
   <div id="wrapper">
     <b class="screen-overlay"></b>
-
  <nav class="navbar navbar-expand navbar-light bg-white d-lg-none">
   <!-- Mobile Menu Trigger -->
     <button data-trigger="#navbar_main" class="d-lg-none btn btn-light bg-white border border-white ml-0" type="button"><i class="fas fa-bars"></i></button>
@@ -88,7 +87,7 @@
   </ul>
 </nav>
 <!-- Main Nav -->
- <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-light shadow-sm p-sm-0 bg-white border-bottom">
+ <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-light p-sm-0 bg-white border-bottom">
   <div class="offcanvas-header p-2">  
     <button type="button" class="close btn-close" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -104,26 +103,7 @@
    <li class="nav-item"><a class="nav-link" href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
  <?php }  ?>
  <li class="nav-item"><a class="nav-link" href="<?php echo $blog; ?>"> <?php echo $text_blog; ?></a></li>
- <li class="nav-item dropdown has-megamenu d-none d-lg-block">
-  <a class="nav-link dropdown-toggle" href="<?php echo $projects; ?>" data-toggle="dropdown"><?php echo $text_projects; ?></a>
-  <div class="dropdown-menu megamenu" role="menu">
-    <div class="row">
-      <?php foreach($categories as $category) { ?>
-        <div class="col-md-3">
-          <div class="col-megamenu">
-            <h4 class="title"><a class="" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></h4>
-            <ul class="list-unstyled">
-              <?php foreach ($category['children'] as $child) { ?>
-                <li><a href="<?php echo $child['href']; ?>"><i class="fas fa-angle-right"></i> <?php echo $child['name']; ?></a></li>
-              <?php } ?> 
-            </ul>
-          </div>  <!-- col-megamenu.// -->
-        </div><!-- end col-3 -->
-      <?php } ?>
-    </div><!-- end row --> 
-  </div> <!-- dropdown-mega-menu.// -->
-</li>
-<li class="nav-item d-lg-none"><a class="nav-link" href="<?php echo $projects; ?>"><?php echo $text_projects; ?></a></li>
+<li><a class="nav-link" href="<?php echo $projects; ?>"><?php echo $text_projects; ?></a></li>
 <?php if($logged) { ?>
 <ul class="list-unstyled d-lg-none mt-3">
   <h3>freelancer</h3>
@@ -191,4 +171,3 @@
       <li class="mt-lg-auto ml-4 d-none d-lg-block"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
     </ul>  
   </nav>
-<!-- Header Container / End -->

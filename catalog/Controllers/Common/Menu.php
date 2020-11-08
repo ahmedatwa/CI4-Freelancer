@@ -5,47 +5,25 @@ class Menu extends \Catalog\Controllers\BaseController
     public function index()
     {
 
-        // Extensions
-        $extensionModel = new \Catalog\Models\Setting\ExtensionModel();
+        $data['categories'] = [];
 
-        $data['blog'] = [];
+        $categoryModel = new \Catalog\Models\Catalog\CategoryModel();
 
-        $blog = $extensionModel->getExtensions('blog');
-
-        // Menu
-        $data['menus'][] = [
-            'id'       => 'menu-home',
-            'name'     => lang('common/menu.text_home'),
-            'icon'     => '',
-            'href'     => base_url(),
-            'children' => [],
+        $filter_data = [
+            'limit' => 4,
+            'start' => 0,
         ];
+        
+        $results = $categoryModel->getCategories($filter_data);
 
-        $data['menus'][] = [
-            'id'       => 'menu-project',
-            'name'     => lang('common/menu.text_project'),
-            'icon'     => '',
-            'href'     => route_to('project/category'),
-            'children' => [],
-        ];
-        $data['menus'][] = [
-            'id'       => 'menu-employer',
-            'name'     => lang('common/menu.text_employer'),
-            'icon'     => '',
-            'href'     => route_to('project/category'),
-            'children' => [],
-        ];
-        // if ($this->registry->get('blog_status')) {
-        //     $data['menus'][] = [
-        //     'id'       => 'menu-blog',
-        //     'name'     => lang('extension/blog/blog.heading_title'),
-        //     'icon'     => '',
-        //     'href'     => base_url('blog'),
-        //     'children' => [],
-        // ];
-        // }
-
-        // Links
+        foreach ($results as $result) {
+            $data['categories'][] = [
+                'name'     => $result['name'],
+                'icon'     => $result['icon'],
+                'children' => $categoryModel->getChildrenByCategoryId($result['category_id']),
+                'href'        => (route_to('projects') . '?gid=' . $result['category_id']) ? route_to('projects') . '?gid=' . $result['category_id'] : base_url('project/project?gid=' . $result['category_id']),
+            ];
+        }
 
 
         return view('common/menu', $data);

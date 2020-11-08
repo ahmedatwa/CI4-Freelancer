@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '4dd76fa1ab84cd67d199862f2dedd0ff686d1f88',
+    'reference' => '3d4f409211d2c8170a6d43fc4126313ea9a4055f',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '4dd76fa1ab84cd67d199862f2dedd0ff686d1f88',
+      'reference' => '3d4f409211d2c8170a6d43fc4126313ea9a4055f',
     ),
     'firebase/php-jwt' => 
     array (
@@ -31,21 +31,21 @@
     ),
     'google/apiclient' => 
     array (
-      'pretty_version' => 'v2.8.0',
-      'version' => '2.8.0.0',
+      'pretty_version' => 'v2.8.1',
+      'version' => '2.8.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'cf9a070f9da78cd207a69b2a94832d381c8c4163',
+      'reference' => 'c8f6d09f50f859fa9457104bb0fb72c893804ede',
     ),
     'google/apiclient-services' => 
     array (
-      'pretty_version' => 'v0.151',
-      'version' => '0.151.0.0',
+      'pretty_version' => 'v0.153',
+      'version' => '0.153.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '784a4fdb110b67a2344cfbdbf927194bd29f9e73',
+      'reference' => 'db62bb19f32f81c9551f223c72be0682eb58ebd8',
     ),
     'google/auth' => 
     array (
@@ -214,12 +214,12 @@
     ),
     'twig/twig' => 
     array (
-      'pretty_version' => 'v3.1.0',
-      'version' => '3.1.0.0',
+      'pretty_version' => 'v3.1.1',
+      'version' => '3.1.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9a29e1fa7b5431969f96878b8662e3fcb18601b7',
+      'reference' => 'b02fa41f3783a2616eccef7b92fbc2343ffed737',
     ),
   ),
 );

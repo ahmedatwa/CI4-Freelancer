@@ -22,7 +22,7 @@ class App extends BaseConfig
 	|
 	*/
 	public $baseURL = 'http://ci4.localhost/';
-	public $adminURL = 'http://ci4.localhost/admin/';
+	public $adminURL = 'http://admin.ci4.localhost/';
 
 	/*
 	|--------------------------------------------------------------------------

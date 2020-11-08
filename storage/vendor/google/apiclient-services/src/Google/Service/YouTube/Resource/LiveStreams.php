@@ -121,10 +121,6 @@ class Google_Service_YouTube_Resource_LiveStreams extends Google_Service_Resourc
    *
    * @opt_param string id Return LiveStreams with the given ids from Stubby or
    * Apiary.
-   * @opt_param string pageToken The *pageToken* parameter identifies a specific
-   * page in the result set that should be returned. In an API response, the
-   * nextPageToken and prevPageToken properties identify other pages that could be
-   * retrieved.
    * @opt_param bool mine
    * @opt_param string maxResults The *maxResults* parameter specifies the maximum
    * number of items that should be returned in the result set.
@@ -154,6 +150,10 @@ class Google_Service_YouTube_Resource_LiveStreams extends Google_Service_Resourc
    * without having to provide authentication credentials for each individual
    * channel. The CMS account that the user authenticates with must be linked to
    * the specified YouTube content owner.
+   * @opt_param string pageToken The *pageToken* parameter identifies a specific
+   * page in the result set that should be returned. In an API response, the
+   * nextPageToken and prevPageToken properties identify other pages that could be
+   * retrieved.
    * @return Google_Service_YouTube_LiveStreamListResponse
    */
   public function listLiveStreams($part, $optParams = array())

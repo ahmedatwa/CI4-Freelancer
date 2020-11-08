@@ -750,7 +750,17 @@ $(document).on('click', '.dropdown-menu', function (e) {
 		]
 	});
 
-  
+ $('.navbar-carousel').slick({
+	  dots: false,
+	  infinite: true,
+	  centerPadding: '60px',
+	  swipeToSlide: true,
+	  slidesToShow: 4,
+	  slidesToScroll: 1,
+	  centerMode: true,
+	  arrows: true,
+});
+
 // ------------------ End Document ------------------ //
 });
 

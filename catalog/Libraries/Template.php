@@ -168,7 +168,7 @@ class Template
             $twig  = new \Twig\Environment($loader, $config);
 
             $data['header']      = view_cell('\Catalog\Controllers\Common\Header::index');
-            //$data['menu']        = view_cell('\Catalog\Controllers\Common\Menu::index');
+            $data['menu']        = view_cell('\Catalog\Controllers\Common\Menu::index');
             $data['column_left'] = view_cell('\Catalog\Controllers\Common\Column_left::index');
             $data['footer']      = view_cell('\Catalog\Controllers\Common\Footer::index');
 
@@ -178,7 +178,7 @@ class Template
             $renderer = \Config\Services::renderer();
             // Parts
             $data['header']         = view_cell('\Catalog\Controllers\Common\Header::index');
-            //$data['menu']         = view_cell('\Catalog\Controllers\Common\Menu::index');
+            $data['menu']           = view_cell('\Catalog\Controllers\Common\Menu::index');
             $data['column_left']    = view_cell('\Catalog\Controllers\Common\Column_left::index');
             //$data['column_right'] = view_cell('\Catalog\Controllers\Common\Column_right::index');
             $data['content_top']    = view_cell('\Catalog\Controllers\Common\Content_top::index');

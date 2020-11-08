@@ -1,4 +1,4 @@
-<?php echo $header; ?> 
+<?php echo $header; ?><?php echo $menu; ?>
 <div class="jumbotron">
 	<div class="container-fluid">
 		<h2 class="display-5"><?php echo $heading_title; ?></h2>
