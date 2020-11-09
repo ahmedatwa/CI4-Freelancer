@@ -71,7 +71,7 @@
 		<div class="container">
 			<div class="row">
 				<!-- Links -->
-				<div class="col-md-4">
+				<div class="col">
 					<div class="footer-links">
 						<h3><?php echo $text_freelancer; ?></h3>
 						<ul>
@@ -84,7 +84,7 @@
 				</div>
 
 				<!-- Links -->
-				<div class="col-md-4">
+				<div class="col">
 					<div class="footer-links">
 						<h3><?php echo $text_terms; ?></h3>
 						<ul>

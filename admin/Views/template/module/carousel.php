@@ -65,6 +65,102 @@
           </div>
         </div>
         <div class="form-group row">
+          <label class="col-sm-2 control-label" for="input-autoplay"><?php echo $entry_autoplay; ?></label>
+          <div class="col-sm-10">
+            <?php if ($autoplay == 1)  { ?>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="autoplay" value="1" checked>
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_yes; ?></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="autoplay" value="0">
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_no; ?></label>
+              </div>
+            <?php } else { ?>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="autoplay" value="1">
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_yes; ?></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="autoplay" value="0" checked>
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_no; ?></label>
+              </div>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 control-label" for="input-dots"><?php echo $entry_dots; ?></label>
+          <div class="col-sm-10">
+            <?php if ($dots == 1)  { ?>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="dots" value="1" checked>
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_yes; ?></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="dots" value="0">
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_no; ?></label>
+              </div>
+            <?php } else { ?>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="dots" value="1">
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_yes; ?></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="dots" value="0" checked>
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_no; ?></label>
+              </div>
+            <?php } ?>
+          </div>       
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 control-label" for="input-infinite"><?php echo $entry_infinite; ?></label>
+          <div class="col-sm-10">
+            <?php if ($infinite == 1)  { ?>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="infinite" value="1" checked>
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_yes; ?></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="infinite" value="0">
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_no; ?></label>
+              </div>
+            <?php } else { ?>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="infinite" value="1">
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_yes; ?></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="infinite" value="0" checked>
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_no; ?></label>
+              </div>
+            <?php } ?>
+          </div>      
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 control-label" for="input-infinite"><?php echo $entry_arrows; ?></label>
+          <div class="col-sm-10">
+            <?php if ($arrows == 1)  { ?>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="arrows" value="1" checked>
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_yes; ?></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="arrows" value="0">
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_no; ?></label>
+              </div>
+            <?php } else { ?>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="arrows" value="1">
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_yes; ?></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="arrows" value="0" checked>
+                <label class="form-check-label" for="inlineRadio1"><?php echo $text_no; ?></label>
+              </div>
+            <?php } ?>
+          </div>      
+        </div>
+        <div class="form-group row">
           <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
           <div class="col-sm-10">
             <select name="status" id="input-status" class="form-control">

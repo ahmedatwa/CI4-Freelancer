@@ -1,4 +1,3 @@
-<div class="">
 <div class="video-container" id="carousel-slick-carousel">
   <?php foreach ($banners as $banner ) { ?>
     <?php if ($banner['link']) { ?>
@@ -9,18 +8,16 @@
       <?php } ?>
 <?php } ?>
 </div>
-</div>
 
 <script type="text/javascript">
 $('#carousel-slick-carousel').slick({
   centerMode: true,
   slidesToShow: 1,
   slidesToScroll: 1,
-  dots: false,
-  infinite: true,
+  dots: <?php echo $dots; ?>,
+  infinite: <?php echo $infinite; ?>,
+  autoplay: <?php echo $autoplay; ?>,
+  arrows: <?php echo $arrows; ?>,
   fade: true,
-  autoplay:true,
-  arrows: false
-  
 });
 </script>

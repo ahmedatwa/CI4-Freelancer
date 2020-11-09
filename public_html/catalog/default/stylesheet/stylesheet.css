@@ -6340,6 +6340,14 @@ input:checked + .switch-button:before {
 	z-index: 9;
 }
 
+/*for Slick Slideshow*/
+.video-container .slick-prev {
+	left: 13px;
+}
+.video-container .slick-next {
+	right: 13px;
+}
+
 /* Field Row Styles */
 .intro-search-field {
 	padding: 10px 12px;
@@ -14495,11 +14503,9 @@ body.offcanvas-active{
 
 #cats-navbar-dropdown {
 	top: 140px !important;
-	left: 8px !important;
+	right: 0;
+	left: 0;
 }
-
-
-
 #navbar-header-category .megamenu-li {
 	position: static;
 }

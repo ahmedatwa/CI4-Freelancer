@@ -12,10 +12,14 @@ return [
 'text_edit'        => 'Edit Carousel Module',
 
 // Entry
-'entry_name'       => 'Module Name',
-'entry_banner'     => 'Banner',
-'entry_width'      => 'Width',
-'entry_height'     => 'Height',
-'entry_status'     => 'Status',
+'entry_name'     => 'Module Name',
+'entry_banner'   => 'Banner',
+'entry_width'    => 'Width',
+'entry_height'   => 'Height',
+'entry_status'   => 'Status',
+'entry_autoplay' => 'Autoplay',
+'entry_dots'     => 'Dots',
+'entry_infinite' => 'Infinite',
+'entry_arrows'   => 'Arrows',
 ],
 ];

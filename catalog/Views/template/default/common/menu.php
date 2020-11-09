@@ -9,12 +9,13 @@
 						<div class="dropdown-menu megamenu" aria-labelledby="dropdown<?php echo $category['category_id']; ?>" id="cats-navbar-dropdown">
 							<div class="row">
 								<?php foreach (array_chunk($category['children'], ceil(count($category['children']) / 2)) as $children) { ?>
-									<ul class="col">
+									<ul class="col list-unstyled">
 										<?php foreach ($children as $child) { ?>
-											<a class="dropdown-item" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
-										<?php } ?>  
+											<li class="ml-4"><a class="dropdown-item" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a></li>
+										<?php } ?> 
 									</ul>
 								<?php } ?>
+								<div class="col m-auto"><i class="<?php echo $category['ico']; ?> fa-10x"></i></div>
 							</div>
 						</div>
 					</li>

@@ -35,6 +35,7 @@ class Menu extends \Catalog\Controllers\BaseController
             $data['categories'][] = [
                 'category_id' => $result['category_id'],
                 'name'        => $result['name'],
+                'ico'         => $result['icon'],
                 'children'    => $children_data,
                 'href'        => (route_to('projects') . '?gid=' . $result['category_id']) ? route_to('projects') . '?gid=' . $result['category_id'] : base_url('project/project?gid=' . $result['category_id']),
             ];

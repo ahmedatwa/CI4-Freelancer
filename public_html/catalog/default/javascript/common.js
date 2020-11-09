@@ -750,43 +750,9 @@ $(document).on('click', '.dropdown-menu', function (e) {
 		]
 	});
 
- $('.navbar-carousel').slick({
-	  dots: false,
-	  arrows: true,
-	  infinite: false,
-	  swipeToSlide: true,
-	 variableWidth: true,
-	  responsive: [
-			{
-			  breakpoint: 1365,
-			  settings: {
-				slidesToShow: 8,
-				slidesToScroll: 2,
-			    centerMode: false,
-			  }
-			},
-			{
-			  breakpoint: 992,
-			  settings: {
-				slidesToShow: 6,
-				slidesToScroll: 2,
-			    centerMode: false,
-			  }
-			},
-			{
-			  breakpoint: 768,
-			  settings: {
-				slidesToShow: 2,
-				slidesToScroll: 2,
-			  }
-			}
-		]
-     });
-
   	/*----------------------------------------------------*/
-    /*  Cts sub-nav
+    /*  Cats sub-nav hack
     /*----------------------------------------------------*/
-
 	$(document).on('show.bs.dropdown', '#cats-navbar-dropdown', function(e) {
         var dropdown = $(e.target).find('.dropdown-menu');
          dropdown.appendTo('body');

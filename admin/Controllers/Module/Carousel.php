@@ -1,12 +1,14 @@
 <?php namespace Admin\Controllers\Module;
 
+use \Admin\Models\Setting\Modules;
+
 class Carousel extends \Admin\Controllers\BaseController
 {
     public function index()
     {
         $this->document->setTitle(lang('module/carousel.list.heading_title'));
 
-        $modules = new \Admin\Models\Setting\Modules();
+        $modules = new Modules();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             if (! $this->request->getVar('module_id')) {
@@ -93,16 +95,47 @@ class Carousel extends \Admin\Controllers\BaseController
             $data['height'] = 100;
         }
 
+        if ($this->request->getPost('autoplay')) {
+            $data['autoplay'] = $this->request->getPost('autoplay');
+        } elseif (!empty($module_info['autoplay'])) {
+            $data['autoplay'] = $module_info['autoplay'];
+        } else {
+            $data['autoplay'] = true;
+        }
+
+        if ($this->request->getPost('dots')) {
+            $data['dots'] = $this->request->getPost('dots');
+        } elseif (!empty($module_info['dots'])) {
+            $data['dots'] = $module_info['dots'];
+        } else {
+            $data['dots'] = true;
+        }
+
+        if ($this->request->getPost('infinite')) {
+            $data['infinite'] = $this->request->getPost('infinite');
+        } elseif (!empty($module_info['infinite'])) {
+            $data['infinite'] = $module_info['infinite'];
+        } else {
+            $data['infinite'] = true;
+        }
+
+        if ($this->request->getPost('arrows')) {
+            $data['arrows'] = $this->request->getPost('arrows');
+        } elseif (!empty($module_info['arrows'])) {
+            $data['arrows'] = $module_info['arrows'];
+        } else {
+            $data['arrows'] = false;
+        }
+
         if ($this->request->getPost('status')) {
             $data['status'] = $this->request->getPost('status');
         } elseif (!empty($module_info)) {
             $data['status'] = $module_info['status'];
         } else {
-            $data['status'] = '';
+            $data['status'] = 1;
         }
 
         $banners_model = new \Admin\Models\Design\Banners();
-
         $data['banners'] = $banners_model->getBanners();
 
         $this->document->output('module/carousel', $data);
