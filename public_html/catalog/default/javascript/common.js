@@ -752,12 +752,10 @@ $(document).on('click', '.dropdown-menu', function (e) {
 
  $('.navbar-carousel').slick({
 	  dots: false,
-	  infinite: true,
-	  //centerPadding: '30px',
-	  swipeToSlide: true,
-	  dots: false,
 	  arrows: true,
-	  variableWidth: true,
+	  infinite: false,
+	  swipeToSlide: true,
+	 variableWidth: true,
 	  responsive: [
 			{
 			  breakpoint: 1365,
@@ -783,8 +781,19 @@ $(document).on('click', '.dropdown-menu', function (e) {
 			  }
 			}
 		]
-});
+     });
 
+  	/*----------------------------------------------------*/
+    /*  Cts sub-nav
+    /*----------------------------------------------------*/
+
+	$(document).on('show.bs.dropdown', '#cats-navbar-dropdown', function(e) {
+        var dropdown = $(e.target).find('.dropdown-menu');
+         dropdown.appendTo('body');
+        $(this).on('hidden.bs.dropdown', function () {
+            dropdown.appendTo(e.target);
+        })
+    });
 // ------------------ End Document ------------------ //
 });
 

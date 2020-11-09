@@ -14487,29 +14487,38 @@ body.offcanvas-active{
 #navbar-header-category {
 	transition: all 0.3s ease-in-out;
 	border-bottom: 1px solid rgba(255, 255, 255, 0);
+	overflow-x: auto;
+}
+#navbar-header-category .nav-item {
+	width: max-content;
 }
 
-.navbar-carousel .slick-prev, .slick-next {
-  width: 40px !important;
-  height: 27px !important;
-  top: calc(50% - 0px) !important;
-  background: transparent !important;
-  box-shadow: none !important;
+#cats-navbar-dropdown {
+	top: 140px !important;
+	left: 8px !important;
 }
 
-.navbar-carousel .slick-prev.slick-disabled, .slick-next.slick-disabled {
-	color: #333 !important;
-}
-.navbar-carousel .slick-prev.slick-disabled::before, .slick-next.slick-disabled::before {
-	color: #333 !important;
+
+
+#navbar-header-category .megamenu-li {
+	position: static;
 }
 
-.navbar-carousel .nav-link {
-	color: #333 !important
+#navbar-header-category .megamenu {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	right: 0;
+	padding: 15px;
+	z-index: 3000;
 }
 
-.navbar-carousel .slick-prev::before, .slick-next::before {
-	color: #333 !important;
+#navbar-header-category .navbar.megamenu {
+	top: 60px;
+}
+#navbar-header-category .dropdown-menu.megamenu {
+	max-width: 600px;
+	right: auto;	
 }
 
 /*mobile menu*/

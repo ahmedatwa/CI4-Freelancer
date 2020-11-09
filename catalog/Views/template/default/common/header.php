@@ -122,7 +122,7 @@
     <?php } else { ?>
       <!-- Messages -->
       <ul class="navbar-nav">
-            <li class="nav-item ml-3">
+            <li class="nav-item ml-3 d-none d-lg-block">
              <div class="header-notifications">
               <div class="header-notifications-trigger">
                <a href="#"><i class="icon-feather-mail" id="message-count"></i></a>

@@ -16,7 +16,7 @@ $('#carousel-slick-carousel').slick({
   centerMode: true,
   slidesToShow: 1,
   slidesToScroll: 1,
-  dots: true,
+  dots: false,
   infinite: true,
   fade: true,
   autoplay:true,
