@@ -750,16 +750,49 @@ $(document).on('click', '.dropdown-menu', function (e) {
 		]
 	});
 
+
   	/*----------------------------------------------------*/
     /*  Cats sub-nav hack
     /*----------------------------------------------------*/
-	$(document).on('show.bs.dropdown', '#cats-navbar-dropdown', function(e) {
-        var dropdown = $(e.target).find('.dropdown-menu');
-         dropdown.appendTo('body');
-        $(this).on('hidden.bs.dropdown', function () {
-            dropdown.appendTo(e.target);
-        })
-    });
+	// $(document).on('show.bs.dropdown', '#cats-navbar-dropdown', function(e) {
+ //        var dropdown = $(e.target).find('.dropdown-menu');
+ //        console.log(e.target)
+ //         dropdown.appendTo('body');
+ //        $(this).on('hidden.bs.dropdown', function () {
+ //            dropdown.appendTo(e.target);
+ //        })
+ //    });
+
+    const $dropdown = $("#cats-navbar-dropdown");
+	const $dropdownToggle = $("#cats-navbar-dropdown .dropdown-toggle");
+	const $dropdownMenu = $("#cats-navbar-dropdown .dropdown-menu");
+	const showClass = "show";
+
+	$(window).on("load resize", function() {
+
+	  if (this.matchMedia("(min-width: 768px)").matches) {
+	    $dropdown.hover(
+	      function() {
+	        const $this = $(this);
+	        console.log($this.parent());
+	        $this.addClass(showClass);
+	        $this.find($dropdownToggle).attr("aria-expanded", "true");
+	        $this.find($dropdownMenu).addClass(showClass);
+	        $dropdownMenu.appendTo('body');
+
+	      },
+	      function() {
+	        const $this = $(this);
+	        $this.removeClass(showClass);
+	        $this.find($dropdownToggle).attr("aria-expanded", "false");
+	        $this.find($dropdownMenu).removeClass(showClass);
+	        $dropdownMenu.appendTo($this);
+	      }
+	    );
+	  } else {
+	    $dropdown.off("mouseenter mouseleave");
+	  }
+	});
 // ------------------ End Document ------------------ //
 });
 
