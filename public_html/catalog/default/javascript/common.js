@@ -754,14 +754,14 @@ $(document).on('click', '.dropdown-menu', function (e) {
   	/*----------------------------------------------------*/
     /*  Cats sub-nav hack
     /*----------------------------------------------------*/
-	// $(document).on('show.bs.dropdown', '#cats-navbar-dropdown', function(e) {
- //        var dropdown = $(e.target).find('.dropdown-menu');
- //        console.log(e.target)
- //         dropdown.appendTo('body');
- //        $(this).on('hidden.bs.dropdown', function () {
- //            dropdown.appendTo(e.target);
- //        })
- //    });
+	$(document).on('show.bs.dropdown', '#cats-navbar-dropdown', function(e) {
+        var dropdown = $(e.target).find('.dropdown-menu');
+        console.log(e.target)
+         dropdown.appendTo('body');
+        $(this).on('hidden.bs.dropdown', function () {
+            dropdown.appendTo(e.target);
+        })
+    });
 
     const $dropdown = $("#cats-navbar-dropdown");
 	const $dropdownToggle = $("#cats-navbar-dropdown .dropdown-toggle");
