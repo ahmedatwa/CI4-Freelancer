@@ -756,7 +756,6 @@ $(document).on('click', '.dropdown-menu', function (e) {
     /*----------------------------------------------------*/
 	$(document).on('show.bs.dropdown', '#cats-navbar-dropdown', function(e) {
         var dropdown = $(e.target).find('.dropdown-menu');
-        console.log(e.target)
          dropdown.appendTo('body');
         $(this).on('hidden.bs.dropdown', function () {
             dropdown.appendTo(e.target);
@@ -769,30 +768,30 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	const showClass = "show";
 
 	$(window).on("load resize", function() {
-
 	  if (this.matchMedia("(min-width: 768px)").matches) {
 	    $dropdown.hover(
 	      function() {
 	        const $this = $(this);
-	        console.log($this.parent());
 	        $this.addClass(showClass);
 	        $this.find($dropdownToggle).attr("aria-expanded", "true");
-	        $this.find($dropdownMenu).addClass(showClass);
+	        $dropdownMenu.addClass(showClass);
 	        $dropdownMenu.appendTo('body');
-
 	      },
 	      function() {
 	        const $this = $(this);
+	        console.log($this)
 	        $this.removeClass(showClass);
 	        $this.find($dropdownToggle).attr("aria-expanded", "false");
-	        $this.find($dropdownMenu).removeClass(showClass);
-	        $dropdownMenu.appendTo($this);
+	        $dropdownMenu.on('mouseleave', function() {
+			   $dropdownMenu.removeClass(showClass);
+			});
 	      }
 	    );
 	  } else {
 	    $dropdown.off("mouseenter mouseleave");
 	  }
 	});
+	
 // ------------------ End Document ------------------ //
 });
 

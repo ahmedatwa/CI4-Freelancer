@@ -6,38 +6,32 @@ class Menu extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-
         $data['categories'] = [];
 
         $categoryModel = new CategoryModel();
         
-        $filter_data = [
-            'category_id' => 0,
-        ];
+        $categories = $categoryModel->getCategories(['category_id' => 0]);
 
-        $results = $categoryModel->getCategories($filter_data);
+        foreach ($categories as $category) {
 
-        foreach ($results as $result) {
+            // Level 2
+            $children_data = [];
 
-                // Level 2
-                $children_data = [];
+            $children = $categoryModel->getCategories(['category_id' => $category['category_id']]);
 
-                $children = $categoryModel->getCategories(['category_id' => $result['category_id']]);
-
-                foreach ($children as $child) {
-
-                    $children_data[] = [
-                        'name'  => $child['name'],
-                        'href'  => route_to('projects') . '?gid=' . $result['category_id']
+            foreach ($children as $child) {
+                $children_data[] = [
+                    'name'  => $child['name'],
+                    'href'  => route_to('projects') . '?gid=' . $child['category_id']
                     ];
-             }
+                }
 
             $data['categories'][] = [
-                'category_id' => $result['category_id'],
-                'name'        => $result['name'],
-                'ico'         => $result['icon'],
+                'category_id' => $category['category_id'],
+                'name'        => $category['name'],
+                'ico'         => $category['icon'],
                 'children'    => $children_data,
-                'href'        => (route_to('projects') . '?gid=' . $result['category_id']) ? route_to('projects') . '?gid=' . $result['category_id'] : base_url('project/project?gid=' . $result['category_id']),
+                'href'        => (route_to('projects') . '?gid=' . $category['category_id']) ? route_to('projects') . '?gid=' . $category['category_id'] : base_url('project/project?gid=' . $category['category_id']),
             ];
         }
 

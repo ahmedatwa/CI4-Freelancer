@@ -66,7 +66,7 @@ class CategoryModel extends \CodeIgniter\Model
             $children_data[] = [
                 'category_id' => $result['category_id'],
                 'name'        => $result['name'],
-                'href'        => route_to('projects') ? route_to('projects') . '?gid=' . $result['category_id'] : base_url('project/project?gid=' . $result['category_id'])
+                'href'        => route_to('projects') . '?gid=' . $result['category_id'],
             ];
         }
 
