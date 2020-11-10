@@ -276,7 +276,7 @@
 											</div>
 										</div>
 										<div class="form-group row">
-										<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_freelancer_fee; ?> </label>
+										<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_processing_fee; ?> </label>
 										<div class="col-sm-10">
 										<div class="input-group mb-3">
 										  <input type="text" class="form-control" name="config_processing_fee" value="<?php echo $config_processing_fee; ?>" aria-label="" aria-describedby="basic-addon2">
