@@ -48,12 +48,14 @@ class Message extends \Catalog\Controllers\BaseController
         foreach ($members as $result) {
 
             $customer_info = $customerModel->getCustomer($result['receiver_id']);
+            $sender_info = $customerModel->getCustomer($result['sender_id']);
 
             $data['members'][] = [
                 'sender_id'   => $result['sender_id'],
                 'online'      => $customer_info['online'],
                 'receiver_id' => $result['receiver_id'],
                 'receiver'    => $customer_info['username'],
+                'sender'      => $sender_info['username'],
                 'image'       => $this->resize($customer_info['image'], 40, 40) ? $this->resize($customer_info['image'], 40, 40) : $this->resize('catalog/avatar.jpg', 40, 40)
             ];
         }
@@ -107,10 +109,11 @@ class Message extends \Catalog\Controllers\BaseController
         
         if ($this->request->getVar('message_id')) {
 
-               $messageModel = new MessageModel();
+            $messageModel = new MessageModel();
 
-               $messageModel->markSeen($this->request->getVar('message_id'));
+            $messageModel->markSeen($this->request->getVar('message_id'));
         }
+        
          return $this->response->setJSON($json);
     }
 

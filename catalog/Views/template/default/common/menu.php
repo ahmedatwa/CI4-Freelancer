@@ -1,5 +1,5 @@
 <div class="clearfix"></div>
-<nav class="navbar navbar-expand-md navbar-light bg-white" id="navbar-header-category">
+<nav class="navbar navbar-expand navbar-light bg-white" id="navbar-header-category">
 	<div class="navbar-collapse">
 		<ul class="navbar-nav mx-auto">
 			<?php foreach($categories as $category) { ?>

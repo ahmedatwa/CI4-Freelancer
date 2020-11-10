@@ -82,7 +82,6 @@
 						</ul>
 					</div>
 				</div>
-
 				<!-- Links -->
 				<div class="col">
 					<div class="footer-links">
@@ -92,6 +91,15 @@
 								<li><a href="<?php echo $information['href']; ?>"><span><?php echo $information['title']; ?></span></a></li>
 							<?php } ?>	
 							<li><a href="<?php echo $contact; ?>"><span><?php echo $text_contact; ?></span></a></li>
+						</ul>
+					</div>
+				</div>
+			   <div class="col">
+					<div class="footer-links">
+						<h3><?php echo $text_account; ?></h3>
+						<ul>
+							<li><a href="<?php echo $register; ?>"><span><?php echo $text_register; ?></span></a></li>
+							<li><a href="<?php echo $login; ?>"><span><?php echo $text_login; ?></span></a></li>
 						</ul>
 					</div>
 				</div>

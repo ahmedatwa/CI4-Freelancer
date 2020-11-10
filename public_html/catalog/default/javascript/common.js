@@ -178,7 +178,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	          for (var i = 0; json.length > i; i++) {
 
 	           html = '<li class="notifications-not-read" id="'+json[i].message_id+'">';
-	           html += '<a href="account/message">';
+	           html += '<a href="account/message#v-pills-'+json[i].sender_id+'">';
 	           html += '<span class="notification-avatar status-online"><img src="'+json[i].image+'" alt=""></span>';
 	           html += '<div class="notification-text">';
 	           html += '<strong>' + json[i].name + '</strong>';

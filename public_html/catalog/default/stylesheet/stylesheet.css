@@ -492,6 +492,7 @@ a.header-notifications-button i {
 	background-color: #c0c0c0;
 	bottom: 0;
 	right: 0;
+	top: 24px;
 	display: block;
 	border: 2px solid #fff;
 	box-shadow: 0 2px 3px rgba(0,0,0,0.3);
@@ -1627,7 +1628,7 @@ em.mm-counter+a.mm-fullsubopen+span {
 
 /* Middle Section */
 .footer-middle-section {
-	padding: 60px 0;
+	padding: 30px 0;
 	position: relative;
 	z-index: 10;
 }
@@ -14500,6 +14501,17 @@ body.offcanvas-active{
 #navbar-header-category .nav-item {
 	width: max-content;
 }
+
+#navbar-header-category .dropdown-toggle::after {
+
+}
+
+@media (max-width: 575.98px) {
+	#navbar-header-category .megamenu-li {
+	  margin-top: 8px;
+   }
+}
+
 
 #cats-navbar-dropdown {
 	top: 140px !important;

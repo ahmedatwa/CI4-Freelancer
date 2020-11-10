@@ -26,7 +26,7 @@ class MessageModel extends \CodeIgniter\Model
             $builder->where('project_id', $data['project_id']);
         }
 
-        $builder->orderBy('date_added', 'DESC');
+        $builder->orderBy('date_added', 'ASC');
         //$builder->groupBy('sender_id');
 
         $query = $builder->get();
@@ -94,6 +94,7 @@ class MessageModel extends \CodeIgniter\Model
            $messages[] = [
             'message_id'  => $result['message_id'],
             'customer_id' => $result['receiver_id'],
+            'sender_id'   => $result['sender_id'],
             'image'       => $this->getCustomer($result['receiver_id'])['image'],
             'name'        => $this->getCustomer($result['receiver_id'])['name'],
             'message'     => $result['message'],

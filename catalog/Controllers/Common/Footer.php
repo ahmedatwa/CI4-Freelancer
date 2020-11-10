@@ -47,7 +47,10 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['text_categories']  = lang('common/footer.text_categories');
         $data['text_projects']    = lang('common/footer.text_projects');
         $data['text_freelancers'] = lang('common/footer.text_freelancers');
-        $data['text_contact'] = lang('common/footer.text_contact');
+        $data['text_contact']     = lang('common/footer.text_contact');
+        $data['text_account']     = lang('common/footer.text_account');
+        $data['text_login']     = lang('common/footer.text_login');
+        $data['text_register']     = lang('common/footer.text_register');
         
         
         $data['text_footer']      = lang('common/footer.text_footer');
@@ -63,6 +66,8 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['instagram']     = $this->registry->get('config_instagram');
 
         $data['contact']     = route_to('contact') ? route_to('contact') : base_url('information/contact');
+        $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
+        $data['register']    = route_to('account_register') ? route_to('account_register') : base_url('account/register');
         $data['blog']        = base_url('blog');
         
         $data['freelancers'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');

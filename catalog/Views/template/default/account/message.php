@@ -11,23 +11,28 @@
 						<!-- Messages -->
 						<div class="messages-inbox">
 							<!-- Customer Online -->
-							
  							<div class="nav flex-column nav-pills" id="online-list" role="tablist" aria-orientation="vertical">
 							<?php foreach ($members as $member) { ?>
-							<?php if ($customer_id != $member['receiver_id']) { ?>
   							<a class="nav-link text-dark" id="v-pills-<?php echo $member['receiver_id']; ?>-tab" data-toggle="pill" href="#v-pills-<?php echo $member['receiver_id']; ?>" role="tab" aria-controls="v-pills-<?php echo $member['receiver_id']; ?>" aria-selected="true" onClick="openChat(<?php echo $member['receiver_id']; ?>, <?php echo $member['sender_id']; ?>);"> 
+  							
   								<div class="message-avatar">
   									<?php if ($member['online']) { ?>
-  									<i class="fas fa-circle green"></i>
-  								<?php } else { ?>
-  									<i class="fas fa-circle"></i>
-  								<?php } ?>
-  								<img src="<?php echo $member['image']; ?>"> 
-  									<?php echo $member['receiver']; ?>
-  								</div>	
+  										<span class="notification-avatar status-online"><img src="<?php echo $member['image']; ?>"></span>
+  									<?php } else { ?>
+  										<span class="notification-avatar status-offline"><img src="<?php echo $member['image']; ?>"></span>
+  									<?php } ?>		
   								
+  								<div class="notification-text">
+  								<?php if ($customer_id != $member['receiver_id']) { ?>
+  									<strong><?php echo $member['receiver']; ?></strong>
+  								<?php } else {  ?>
+  									<strong><?php echo $member['sender']; ?></strong>
+  								<?php } ?> 
+  								</div> 								
+  								</div>	
+  							
   								</a>
-							<?php } ?>
+							
 						<?php } ?>
 							</div>
 						</div>
@@ -65,6 +70,7 @@
 <script type="text/javascript">
 // Enable pusher logging - don't include this in production
 $(document).ready(function(){
+
 
 	var pusher = new Pusher('b4093000fa8e8cab989a', {
       cluster: 'eu'
@@ -120,6 +126,7 @@ $(document).ready(function(){
 	      type: 'post',
 	      data:$("#form-message").serialize(),
 	      success:function() { 
+	      	console.log('ok')
 	      }    
 	  	});
 	    }
@@ -143,9 +150,6 @@ $(document).ready(function(){
     $("#form-message #input-sender-id-id").val(sender_id);
 
 }
-
-$('#online-list a:first-child').trigger('click');
-
 
 // get the chat history from DB
 function fetchChatHistory (sender_id, receiver_id) {
@@ -186,7 +190,7 @@ function fetchChatHistory (sender_id, receiver_id) {
 			html += '</div>';
 	    }  // else 
           $('#v-pills-' + receiver_id).append(html);
-         markRead(json[i].message_id);
+           markRead(json[i].message_id);
 	});
    } // success  
  });
@@ -205,4 +209,25 @@ function markRead(message_id) {
 
 </script>
 
+<script type="text/javascript">
+if (window.location.hash) {
+	$('#online-list'+ window.location.hash.substring(1)).trigger('click');
+} else {
+	$('#online-list a:first-child').trigger('click');
+}
+
+var url = document.URL;
+var hash = url.substring(url.indexOf('#'));
+
+
+$(".nav-pills").find("a").each(function(key, val) {
+    if (hash == $(val).attr('href')) {
+        $(val).click();
+    }
+    
+    $(val).click(function(ky, vl) {
+        location.hash = $(this).attr('href');
+    });
+});
+</script>
 <?php echo $footer; ?>

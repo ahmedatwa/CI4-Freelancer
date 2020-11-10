@@ -180,6 +180,7 @@ class Header extends \Catalog\Controllers\BaseController
             $json[] = [
                 'message_id'  => $result['message_id'],
                 'customer_id' => $result['customer_id'],
+                'sender_id'   => $result['sender_id'],
                 'name'        => $result['name'],
                 'image'       => ($result['image']) ? $this->resize($result['image'], 42, 42) : $this->resize('catalog/avatar.jpg', 42, 42),
                 'message'     => word_limiter($result['message'], 10),

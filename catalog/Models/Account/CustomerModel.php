@@ -516,6 +516,13 @@ class CustomerModel extends \CodeIgniter\Model
         return $row['total'];
     }
 
+    public function setOnlineStatus(int $status)
+    {
+         $builder = $this->db->table($this->table);
+         $builder->set('online', $status);
+         $builder->update();
+    }
+
     public function getBalanceByCustomerID($customer_id)
     {
         $builder = $this->db->table('customer_to_balance');
