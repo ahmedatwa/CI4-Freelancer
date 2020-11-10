@@ -6,7 +6,7 @@
 				<?php if ($category['children']) { ?>	
 					<li class="nav-item dropdown megamenu-li" id="cats-navbar-dropdown">
 						<a class="nav-link dropdown-toggle" href="" id="dropdown<?php echo $category['category_id']; ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $category['name']; ?></a>
-						<div class="dropdown-menu megamenu" aria-labelledby="dropdown<?php echo $category['category_id']; ?>" id="cats-navbar-dropdown">
+						<div class="dropdown-menu megamenu rounded-0" aria-labelledby="dropdown<?php echo $category['category_id']; ?>" id="cats-navbar-dropdown">
 							<div class="row">
 								<?php foreach (array_chunk($category['children'], ceil(count($category['children']) / 2)) as $children) { ?>
 									<ul class="col list-unstyled">

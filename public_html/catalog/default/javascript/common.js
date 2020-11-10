@@ -779,7 +779,6 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	      },
 	      function() {
 	        const $this = $(this);
-	        console.log($this)
 	        $this.removeClass(showClass);
 	        $this.find($dropdownToggle).attr("aria-expanded", "false");
 	        $dropdownMenu.on('mouseleave', function() {
@@ -791,7 +790,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	    $dropdown.off("mouseenter mouseleave");
 	  }
 	});
-	
+
 // ------------------ End Document ------------------ //
 });
 
