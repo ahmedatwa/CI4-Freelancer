@@ -62,9 +62,9 @@
 			<div class="freelancers-container freelancers-list-layout compact-list shadow p-3 mb-5 bg-white rounded">
 				<div class="notify-box">
 						<h3 class="float-left ml-3"><?php echo $text_found ;?></h3>
-						<div class="col-md-3 float-right">
-						</div>
+						<div class="col-md-3 float-right"></div>
 					</div>
+				<?php if ($freelancers) { ?>	
 				<?php foreach ($freelancers as $freelancer) { ?>
 				<!--Freelancer -->
 				<div class="freelancer">
@@ -118,6 +118,11 @@
 				</div>
 				<!-- Freelancer / End -->
 				<?php } ?>	
+				<?php } else { ?>
+						<div class="col-12 text-center p-4">
+						<p class="p-4">No Freelancers Found !</p>
+					</div>
+			     <?php } ?>	
 			</div>
 			<!-- Freelancers Container / End -->
 			<!-- Pagination -->

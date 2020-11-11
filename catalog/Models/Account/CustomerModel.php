@@ -132,18 +132,44 @@ class CustomerModel extends \CodeIgniter\Model
 
     public function getTotalCustomers($data = [])
     {
-        $builder = $this->db->table('customer');
-        $builder->select();
-        
+        $builder = $this->db->table('customer c');
+        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS name, c.about, c.tag_line, c.image, c.customer_id, c.rate, c.online, c.username');
+        $builder->join('customer_to_category c2c', 'c.customer_id = c2c.freelancer_id', 'left');
 
-        if (!empty($data['filter_freelancer'])) {
-            $builder->OrWhere('about IS NOT', $data['filter_freelancer']);
+        if (isset($data['filter_freelancer'])) {
+            //$builder->where('about IS NOT', $data['filter_freelancer']);
+            $builder->where('c.rate >', $data['filter_freelancer']);
+        }
+
+        if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
+            $builder->whereIn('c2c.category_id', $data['filter_skills']);
+        }
+
+       
+        if (isset($data['filter_rate'])) {
+            switch ($data['filter_rate']) {
+                case '10': 
+                   $builder->where('c.rate <=', 10);
+                   break;
+                case '10_20': 
+                   $builder->where('c.rate >=', 10)->where('c.rate <=', 20);
+                   break;
+                case '20_30': 
+                   $builder->where('c.rate >=', 20)->where('c.rate <=', 30);
+                   break;
+                case '30_40': 
+                   $builder->where('c.rate >=', 30)->where('c.rate <=', 40);
+                   break;
+                case '40': 
+                   $builder->where('c.rate >=', 40);
+                   break;
+            }
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
-            $builder->orderBy('date_added', 'DESC');
+            $builder->orderBy('c.date_added', 'DESC');
         } else {
-            $builder->orderBy('date_added', 'ASC');
+            $builder->orderBy('c.date_added', 'ASC');
         }
 
         if (isset($data['start']) || isset($data['limit'])) {
