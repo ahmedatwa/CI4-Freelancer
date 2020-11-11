@@ -158,7 +158,7 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
-        if (isset($data['filter_category_id']) && !empty($data['filter_category_id'])) {
+        if ((isset($data['filter_category_id']) && !empty($data['filter_category_id']))|| (isset($data['filter_skills']) && !empty($data['filter_skills']))) {
             $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
             $builder->where('p2c.category_id', $data['filter_category_id']);
         }
@@ -167,13 +167,23 @@ class ProjectModel extends \CodeIgniter\Model
             $builder->where('p.employer_id', $data['employer_id']);
         }
 
-        if (isset($data['current_project'])) {
-            $builder->where('p.project_id !=', $data['current_project']);
+        if (isset($data['filter_type']) && !empty($data['filter_type'])) {
+            $builder->whereIn('p.type', $data['filter_type']);
         }
 
-        if (isset($data['status_id'])) {
-            $status_id = explode(',', $data['status_id']);
-            $builder->whereIn('p.status_id', $status_id);
+        if (isset($data['filter_state'])) {
+            $filter_state = explode(',', $data['filter_state']);
+           
+            if(in_array('all', $filter_state))
+            {
+              $builder->where('p.status_id > ', 0);
+            } else {
+               $builder->whereIn('p.status_id', $filter_state);
+            }  
+        }
+
+        if (isset($data['current_project'])) {
+            $builder->where('p.project_id !=', $data['current_project']);
         }
 
         if (isset($data['filter_keyword']) && !empty($data['filter_keyword'])) {
@@ -182,11 +192,6 @@ class ProjectModel extends \CodeIgniter\Model
 
         if (isset($data['filter_date_added'])) {
             $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
-        }
-
-        if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
-            $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
-            $builder->whereIn('p2c.category_id', $data['filter_skills']);
         }
 
         // Budget Filter 
@@ -241,11 +246,12 @@ class ProjectModel extends \CodeIgniter\Model
     public function getTotalProjects($data = [])
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime');
+        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status, p.employer_id, p.freelancer_id');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
+        $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
-        if (isset($data['filter_category_id'])) {
+        if ((isset($data['filter_category_id']) && !empty($data['filter_category_id']))|| (isset($data['filter_skills']) && !empty($data['filter_skills']))) {
             $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
             $builder->where('p2c.category_id', $data['filter_category_id']);
         }
@@ -254,26 +260,42 @@ class ProjectModel extends \CodeIgniter\Model
             $builder->where('p.employer_id', $data['employer_id']);
         }
 
-        if (isset($data['status_id'])) {
-            $builder->where('p.status_id', $data['status_id']);
+        if (isset($data['filter_type']) && !empty($data['filter_type'])) {
+            $builder->whereIn('p.type', $data['filter_type']);
+        }
+
+        if (isset($data['filter_state'])) {
+            $filter_state = explode(',', $data['filter_state']);
+           
+            if(in_array('all', $filter_state))
+            {
+              $builder->where('p.status_id > ', 0);
+            } else {
+               $builder->whereIn('p.status_id', $filter_state);
+            }  
+        }
+
+        if (isset($data['current_project'])) {
+            $builder->where('p.project_id !=', $data['current_project']);
+        }
+
+        if (isset($data['filter_keyword']) && !empty($data['filter_keyword'])) {
+            $builder->like('pd.name', $data['filter_keyword'], 'after');
         }
 
         if (isset($data['filter_date_added'])) {
             $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
         }
 
-        if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
-            $builder->whereIn('pd.name', $data['filter_skills']);
-        }
+        // Budget Filter 
+        if (isset($data['filter_budget']) && !empty($data['filter_budget'])) {
+            
+            $parts  = explode('_', $data['filter_budget']);
 
-        // Budget Filter Min
-        if (isset($data['filter_min']) && !empty($data['filter_min'])) {
-            $builder->where('p.budget_min >= ', $data['filter_min']);
+            $builder->where('p.budget_min >= ', $parts[0])
+                    ->where('p.budget_min <= ', $parts[1]);
         }
-        // Budget Filter Max
-        if (isset($data['filter_max']) && !empty($data['filter_max'])) {
-            $builder->where('p.budget_min <= ', $data['filter_max']);
-        }
+        
         // Filter
         if (isset($data['filter']) && !empty($data['filter'])) {
             $builder->whereIn('p.type', (array) $data['filter']);

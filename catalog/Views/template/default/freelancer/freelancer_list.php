@@ -20,7 +20,24 @@
 		<div class="row">
 			<div class="col">
 				<div class="sidebar-container">
+					<!-- Hourly Rate -->
+					<div class="sidebar-widget">
+						<h3><?php echo $text_hourly_rate; ?></h3>
+						<div class="form-group">
+							<select class="custom-select" onchange="location = this.value;">
+								<option><?php echo $text_select; ?></option>
+								<?php foreach ($rates as $rate) { ?> 
+									<?php if ($rate['value'] == $filter_rate) { ?>
+										<option value="<?php echo $rate['href']; ?>" selected><?php echo $rate['text']; ?></option>
+									<?php } else { ?>
+										<option value="<?php echo $rate['href']; ?>"><?php echo $rate['text']; ?></option>  
+									<?php } ?>
+								<?php } ?>      
+							</select>
+						</div>
+					</div>
 					<!-- Category -->
+					<div class="dropdown-divider"></div>
 					<div class="sidebar-widget">
 						<h3><?php echo $text_skills; ?></h3>
 						<div class="keywords-container margin-top-20 mb-3">
@@ -37,23 +54,6 @@
 							</div>
 						</div>
 						<div class="keywords-list"></div>
-					</div>
-					<!-- Hourly Rate -->
-					<div class="dropdown-divider"></div>
-					<div class="sidebar-widget">
-						<h3><?php echo $text_hourly_rate; ?></h3>
-						<div class="form-group">
-							<select class="custom-select" onchange="location = this.value;">
-								<option><?php echo $text_select; ?></option>
-								<?php foreach ($rates as $rate) { ?> 
-									<?php if ($rate['value'] == $filter_rate) { ?>
-										<option value="<?php echo $rate['href']; ?>" selected><?php echo $rate['text']; ?></option>
-									<?php } else { ?>
-										<option value="<?php echo $rate['href']; ?>"><?php echo $rate['text']; ?></option>  
-									<?php } ?>
-								<?php } ?>      
-							</select>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -117,22 +117,18 @@
 					</div>
 				</div>
 				<!-- Freelancer / End -->
-				<?php } ?>
-
-				
+				<?php } ?>	
 			</div>
 			<!-- Freelancers Container / End -->
 			<!-- Pagination -->
 			<div class="clearfix"></div>
 			<?php echo $pagination; ?>
 			<!-- Pagination / End -->
-
 		</div>
 	</div>
+   </div>
+ </div>
 </div>
-</div>
-</div>
-
 <!-- Spacer -->
 <div class="margin-top-15"></div>
 <!-- Spacer / End-->

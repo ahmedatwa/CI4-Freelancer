@@ -46,11 +46,11 @@ $routes->group('blog', function ($routes) {
 });
 
 // Freelancers
-	$routes->add('freelancers', 'Freelancer\Freelancer::index');
-	$routes->add('freelancer/u(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
-	$routes->add('deposit', 'Freelancer\Deposit::index', ['as' => 'freelancer_deposit']);
-	$routes->add('withdraw', 'Freelancer\Withdraw::index', ['as' => 'freelancer_withdraw']);
-	$routes->add('manage/project', 'Freelancer\Project::index', ['as' => 'freelancer_project']);
+$routes->add('freelancers', 'Freelancer\Freelancer::index');
+$routes->add('freelancer/u(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
+$routes->add('deposit', 'Freelancer\Deposit::index', ['as' => 'freelancer_deposit']);
+$routes->add('withdraw', 'Freelancer\Withdraw::index', ['as' => 'freelancer_withdraw']);
+$routes->add('manage/project', 'Freelancer\Project::index', ['as' => 'freelancer_project']);
 
 // Account
 $routes->group('account', function ($routes) {
@@ -63,14 +63,16 @@ $routes->group('account', function ($routes) {
 	$routes->add('forgotten', 'Account\Forgotten::index', ['as' => 'account_forgotten']);
 	$routes->add('reset', 'Account\Reset::index', ['as' => 'account_reset']);
 	$routes->add('logout', 'Account\Logout::index', ['as' => 'account_logout']);
-
 });
 
 // projects
-$routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
 $routes->add('add-project', 'Project\Project::add');
 $routes->add('projects', 'Project\Project::index', ['as' => 'projects']);
+$routes->add('category/c(:num)/(:any)', 'Project\Project::index', ['as' => 'category']);
 $routes->add('service/(:any)', 'Project\Project::info/$1', ['as' => 'single_project']);
+
+// Category
+$routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
 
 /**
  * --------------------------------------------------------------------

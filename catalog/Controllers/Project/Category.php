@@ -62,12 +62,14 @@ class Category extends \Catalog\Controllers\BaseController
         $total = $categoryModel->getTotalCategories();
 
         foreach ($results as $result) {
+            $keyword = $seoUrl->getKeywordByQuery('category_id=' . $result['category_id']);
+
             $data['categories'][] = [
                 'category_id' => $result['category_id'],
                 'name'        => $result['name'],
                 'icon'        => $result['icon'],
                 'description' => $result['description'],
-                'href'        => (route_to('projects') . '?gid=' . $result['category_id']) ? route_to('projects') . '?gid=' . $result['category_id'] : base_url('project/project?gid=' . $result['category_id']),
+                'href'        => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project?gid=' . $result['category_id']),
                 'children' => $categoryModel->getChildrenByCategoryId($result['category_id']),
             ];
         }

@@ -25,6 +25,8 @@ class Project extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('gid')) {
             $filter_category_id = $this->request->getVar('gid');
+        } elseif ($this->request->uri->getSegment(2)) {
+            $filter_category_id = substr($this->request->uri->getSegment(2), 1);
         } else {
             $filter_category_id = null;
         }
@@ -99,7 +101,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['projects'] = [];
         
         $results = $projectModel->getProjects($filter_data);
-        $total = $projectModel->getTotalProjects();
+        $total = $projectModel->getTotalProjects($filter_data);
         $reviewModel = new \Catalog\Models\Account\ReviewModel();
 
         foreach ($results as $result) {
@@ -127,128 +129,27 @@ class Project extends \Catalog\Controllers\BaseController
             ];
         }
 
-
-        // Filter Skills
-        $url = '';
-        $route  = route_to('projects') ? route_to('projects') . '?gid=' . $this->request->getVar('gid') : base_url('project/project?gid=') . $this->request->getVar('gid');
-
-        if ($this->request->getVar('order_by')) {
-            $url .= '&order_by=' . $this->request->getVar('order_by');
-        }
-
-        if ($this->request->getVar('sort_by')) {
-            $url .= '&sort_by=' . $this->request->getVar('sort_by');
-        }
         
-        if ($this->request->getVar('type')) {
-            $url .= '&type=' . $this->request->getVar('type');
-        }
-        
-        if ($this->request->getVar('state')) {
-            $url .= '&state=' . $this->request->getVar('state');
-        }
-
-        if ($this->request->getVar('budget')) {
-            $url .= '&budget=' . $this->request->getVar('budget');
-        }
-        
-        $data['action_skills'] = $route . $url;
-       
-        // Filter State
-        $url = '';
-
-        if ($this->request->getVar('order_by')) {
-            $url .= '&order_by=' . $this->request->getVar('order_by');
-        }
-
-        if ($this->request->getVar('sort_by')) {
-            $url .= '&sort_by=' . $this->request->getVar('sort_by');
-        }
-        
-        if ($this->request->getVar('type')) {
-            $url .= '&type=' . $this->request->getVar('type');
-        }
-        
-        if ($this->request->getVar('skills')) {
-            $url .= '&skills=' . $this->request->getVar('skills');
-        }
-
-        if ($this->request->getVar('budget')) {
-            $url .= '&budget=' . $this->request->getVar('budget');
-        }
-
-        $data['action_state'] = $route . $url;
-
-        // Filter Type
-        $url = '';
-
-        if ($this->request->getVar('order_by')) {
-            $url .= '&order_by=' . $this->request->getVar('order_by');
-        }
-
-        if ($this->request->getVar('sort_by')) {
-            $url .= '&sort_by=' . $this->request->getVar('sort_by');
-        }
-        
-        if ($this->request->getVar('state')) {
-            $url .= '&state=' . $this->request->getVar('state');
-        }
-        
-        if ($this->request->getVar('skills')) {
-            $url .= '&skills=' . $this->request->getVar('skills');
-        }
-
-        if ($this->request->getVar('budget')) {
-            $url .= '&budget=' . $this->request->getVar('budget');
-        }
-
-        $data['action_type'] = $route . $url;
-    
-        
-        // budget
-        $url = '';
-
-        if ($this->request->getVar('order_by')) {
-            $url .= '&order_by=' . $this->request->getVar('order_by');
-        }
-
-        if ($this->request->getVar('sort_by')) {
-            $url .= '&sort_by=' . $this->request->getVar('sort_by');
-        }
-        
-        if ($this->request->getVar('state')) {
-            $url .= '&state=' . $this->request->getVar('state');
-        }
-        
-        if ($this->request->getVar('skills')) {
-            $url .= '&skills=' . $this->request->getVar('skills');
-        }
-
-        if ($this->request->getVar('type')) {
-            $url .= '&type=' . $this->request->getVar('type');
-        }
-
-        $data['action_price'] =  $route . $url;
-
-
+        $uri = $this->request->uri;
+ 
         $data['sorts'] = [];
 
         $data['sorts'][] = [
             'text'  => lang('common/search.text_newest'),
             'value' => 'p.date_added-ASC',
-            'href'  => $route  . '&sort_by=budget_min&order_by=ASC' . $url
+            'href'  => $uri->addQuery('sort_by', 'budget_min')->addQuery('order_by', 'ASC')
         ];
 
         $data['sorts'][] = [
             'text'  => lang('common/search.text_lowest'),
             'value' => 'p.budget_min-ASC',
-            'href'  => $route  . '&sort_by=budget_min&order_by=ASC' . $url
+            'href'  => $uri->addQuery('sort_by', 'budget_min')->addQuery('order_by', 'ASC')
         ];
 
         $data['sorts'][] = [
             'text'  => lang('common/search.text_highest'),
             'value' => 'p.budget_min-DESC',
-            'href'  => $route  . '&sort_by=budget_min&order_by=DESC' . $url
+            'href'  => $uri->addQuery('sort_b', 'budget_min')->addQuery('order_by', 'DESC')
         ];
 
         $data['states'] = [];
@@ -260,7 +161,7 @@ class Project extends \Catalog\Controllers\BaseController
         ];
         $data['states'][] = [
             'id'    => 'open_closed',
-            'value' => '8_7',
+            'value' => 'all',
             'text'  => lang('project/project.text_all_open_closed'),
         ];
 
@@ -634,6 +535,45 @@ class Project extends \Catalog\Controllers\BaseController
         $data['config_currency'] = $this->session->get('currency') ?? $this->registry->get('config_currency');
 
         $this->template->output('project/project_form', $data);
+    }
+
+    public function filter()
+    {
+        $json = [];
+
+        if ($this->request->getVar('url')) {
+            
+            $uri = new \CodeIgniter\HTTP\URI($this->request->getVar('url'));
+
+            if ($this->request->getPost('skills')) {
+                $uri->addQuery('skills', $this->request->getPost('skills'));
+            }
+
+            if ($this->request->getPost('budget')) {
+                $uri->addQuery('budget', $this->request->getPost('budget'));
+            }
+
+            if ($this->request->getPost('type')) {
+                $uri->addQuery('type', $this->request->getPost('type'));
+            }
+
+            if ($this->request->getPost('clear')) {
+                $uri->stripQuery($this->request->getPost('clear'));
+            }
+
+            if ($this->request->getPost('state')) {
+               $uri->addQuery('state', $this->request->getPost('state'));
+            }
+
+            
+            
+
+            $json['uri'] = (string) $uri;
+
+        }
+
+
+        return $this->response->setJSON($json);
     }
 
     protected function validateForm()

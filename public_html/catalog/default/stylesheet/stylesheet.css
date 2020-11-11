@@ -14497,10 +14497,13 @@ body.offcanvas-active{
 #navbar-header-category {
 	transition: all 0.3s ease-in-out;
 	border-bottom: 1px solid rgba(255, 255, 255, 0);
-	overflow-x: auto;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	width: 100%;
 }
 #navbar-header-category .nav-item {
-	width: max-content;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 #navbar-header-category .dropdown-toggle::after {

@@ -155,20 +155,20 @@
 					</div>
 			      <?php } ?>	
 				</div>
-				<!-- Tasks Container / End -->
-				<!-- Pagination -->
 				<div class="clearfix"></div>
 					<div class="col-12">
 						<?php echo $pagination; ?>
 					</div>
-				<!-- Pagination / End -->
 			</div>
 		</div>
-		</div>
-		</div> <!---- content-wrapper ---->
+	</div>
+</div> <!---- content-wrapper ---->
 <link href="catalog/default/vendor/select2/customSelectionAdapter/css/select2.customSelectionAdapter.min.css">		
 <script src="catalog/default/vendor/select2/customSelectionAdapter/js/select2.customSelectionAdapter.min.js"></script>
 <script type="text/javascript">
+
+var uri = document.URL;
+
 // Skills
 var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
 $('select[name^=\'filter_category\']').select2({
@@ -195,28 +195,65 @@ ajax: {
 },
 theme: 'bootstrap4',
 placeholder: '<?php echo $text_select;?>',
-allowClear: true,
+allowClear: false,
 minimumResultsForSearch: 5,
 selectionAdapter: CustomSelectionAdapter,
 selectionContainer: $('.keywords-list'),
 
 }).on("select2:select", function (e) { 
 	var select_val = $(e.currentTarget).val();
-    location = '<?php echo $action_skills; ?>&skills=' +  select_val.join('_');
+
+	$.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		dataType: 'json',
+		method: 'post',
+		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), skills: select_val.join('_')},
+		beforeSend: function() {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function() {
+  		    $('#overlay').fadeOut();
+		},
+		success: function(json) {
+			location = json['uri'];
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	});
+
+
+    //location = '<?php //echo $action_filter; ?>?skills=' +  select_val.join('_');
   
 }).on('select2:unselect', function (e) {
 	  var select_val = $(e.currentTarget).val();
-	  location = '<?php echo $action_skills; ?>&skills=' +  select_val.join('_');
+	  console.log(select_val)
 
-}).on('select2:clear', function (e) {
-    location = '<?php echo $action_skills; ?>';
+	  $.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		dataType: 'json',
+		method: 'post',
+		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), clear: 'skills'},
+		beforeSend: function() {
+			//$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function() {
+  		   // $('#overlay').fadeOut();
+		},
+		success: function(json) {
+			console.log(json)
+			//location = json['uri'];
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	});
+
+	  //location = '<?php //echo $action_filter; ?>?skills=' +  select_val.join('_');
+
 });
 
-
-
-</script>	
-<!-- // Filters -->
-<script type="text/javascript">
+// <!-- // Filters -->
 $('input[name^=\'filter_state\']').on('click', function() {
 
     var filter = [];
@@ -224,28 +261,86 @@ $('input[name^=\'filter_state\']').on('click', function() {
     $('input[name^=\'filter_state\']:checked').each(function(element) {
         filter.push(this.value);
     });
+
+    $.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		dataType: 'json',
+		method: 'post',
+		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), state: filter.join('_')},
+		beforeSend: function() {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function() {
+  		    $('#overlay').fadeOut();
+		},
+		success: function(json) {
+			location = json['uri'];
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	});
     
-    location = '<?php echo $action_state; ?>&state=' + filter.join('_');
+    //location = '<?php //echo $action_filter; ?>?state=' + filter.join('_');
 });    
 
 $('input[name^=\'filter_type\']').on('click', function() {
 
-       var filter = [];
+     var filter = [];
     
     $('input[name^=\'filter_type\']:checked').each(function(element) {
         filter.push(this.value);
     });
+
+	$.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		dataType: 'json',
+		method: 'post',
+		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), type: filter.join('_')},
+		beforeSend: function() {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function() {
+  		    $('#overlay').fadeOut();
+		},
+		success: function(json) {
+			location = json['uri'];
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	})
+
     
-    location = '<?php echo $action_type; ?>&type=' + filter.join('_');
-});    
-</script>
-<!-- // Filter Budget -->
-<script type="text/javascript">
+    //location = '<?php //echo $action_filter; ?>?type=' + filter.join('_');
+}); 
+
+// <!-- // Filter Budget -->
 var mySlider = $("input[name=\'filter_budget\']").slider();
 
 mySlider.on('slide', function(e){
 	var filter = e.value;
-	location = '<?php echo $action_price; ?>&budget=' + filter.join('_');
+	
+	$.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		dataType: 'json',
+		method: 'post',
+		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), budget: filter.join('_')},
+		beforeSend: function() {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function() {
+  		    $('#overlay').fadeOut();
+		},
+		success: function(json) {
+			location = json['uri'];
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	});
+
+	//location = '<?php //echo $action_filter; ?>?budget=' + filter.join('_');
 });
 
 </script>

@@ -1,5 +1,5 @@
 <div class="clearfix"></div>
-<nav class="navbar navbar-expand navbar-light bg-white" id="navbar-header-category">
+<nav class="navbar navbar-expand navbar-light bg-white shadow-sm" id="navbar-header-category">
 	<div class="navbar-collapse">
 		<ul class="navbar-nav mx-auto">
 			<?php foreach($categories as $category) { ?>
@@ -20,7 +20,7 @@
 						</div>
 					</li>
 				<?php } else { ?>
-					<li class="nav-item">
+					<li class="nav-item d-sm-none d-md-block">
 						<a class="nav-link" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
 					</li>
 				<?php } ?> 

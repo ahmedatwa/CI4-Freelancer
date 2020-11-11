@@ -1,29 +1,32 @@
 <?php namespace Catalog\Controllers\Common;
 
+use \Catalog\Models\Catalog\CategoryModel;
+use \Catalog\Models\Catalog\Informations;
+
 class Footer extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
         $data['informations'] = [];
         
-        $informations = new \Catalog\Models\Catalog\Informations();
+        $informations = new Informations();
         $seo_url = service('seo_url');
 
         foreach ($informations->getInformations() as $result) {
             if ($result['bottom']) {
-            $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
+                $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
 
-               $data['informations'][] = [
+                $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
                 'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/information?fid=' . $result['information_id']),
             ];
-          }
+            }
         }
 
         // Categories
         $data['categories'] = [];
-        $categoryModel = new \Catalog\Models\Catalog\CategoryModel();
+        $categoryModel = new CategoryModel();
 
         $filter_data = [
             'start'         => 0,
@@ -37,7 +40,7 @@ class Footer extends \Catalog\Controllers\BaseController
             $data['categories'][] = [
             'category_id' => $result['category_id'],
             'name'        => $result['name'],
-            'href'        => ($keyword) ? route_to('categories', $keyword) : base_url('project/category?gid=' . $result['category_id']),
+            'href'        => ($keyword) ? route_to('categories', $result['category_id'], $keyword) : base_url('project/category?gid=' . $result['category_id']),
          ];
         }
 
@@ -49,8 +52,8 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['text_freelancers'] = lang('common/footer.text_freelancers');
         $data['text_contact']     = lang('common/footer.text_contact');
         $data['text_account']     = lang('common/footer.text_account');
-        $data['text_login']     = lang('common/footer.text_login');
-        $data['text_register']     = lang('common/footer.text_register');
+        $data['text_login']       = lang('common/footer.text_login');
+        $data['text_register']    = lang('common/footer.text_register');
         
         
         $data['text_footer']      = lang('common/footer.text_footer');
@@ -122,13 +125,8 @@ class Footer extends \Catalog\Controllers\BaseController
 
         $data['currency'] = view_cell('\Catalog\Controllers\Common\Currency::index');
 
-        
-
         return view('common/footer', $data);
     }
-
-
-
 
     //--------------------------------------------------------------------
 }
