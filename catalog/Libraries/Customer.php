@@ -106,8 +106,8 @@ class Customer
     {
         $builder = $this->db->table($this->db->prefixTable('customer'));
         $builder->set('online', 0)
-                    ->where('customer_id', $this->session->get('customer_id'))
-                    ->update();
+                ->where('customer_id', $this->session->get('customer_id'))
+                ->update();
 
         $this->customer_id = '';
         $this->customer_name = '';
