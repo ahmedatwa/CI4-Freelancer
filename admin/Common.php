@@ -102,9 +102,9 @@ if (! function_exists('img_url')) {
 }
 
 if (!function_exists('currency_format')) {
-    function currency_format(float $num, string $currency = null)
+    function currency_format(float $num, string $currency = 'EGP')
     {
-        return number_format($num, 2) .' ' . \Admin\Libraries\Registry::get('config_currency');
+        return number_format($num, 2) .' ' . service('registry')->get('config_currency');
     }
 }
 

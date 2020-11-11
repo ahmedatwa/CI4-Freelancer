@@ -4,14 +4,15 @@ use CodeIgniter\Model;
 
 class Reviews extends Model
 {
-    protected $table          = 'project_review';
-    protected $primaryKey     = 'project_review_id';
+    protected $table          = 'review';
+    protected $primaryKey     = 'review_id';
     protected $returnType     = 'array';
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
+    protected $allowedFields = ['status'];
     // User Activity Events
-    protected $afterInsert = ['afterInsertEvent'];
-    protected $afterUpdate = ['afterUpdateEvent'];
+    //protected $afterInsert = ['afterInsertEvent'];
+    //protected $afterUpdate = ['afterUpdateEvent'];
     // should use for keep data record create timestamp
     protected $createdField = 'date_added';
     protected $updatedField = 'date_modified';
@@ -42,9 +43,10 @@ class Reviews extends Model
 
     public function getReviews(array $data = [])
     {        
-        $builder = $this->db->table('project_review pr');
-        $builder->select('pr.project_review_id as review_id, pr.rating, pr.status, pr.date_added, pr.author, pd.name, pr.project_id');
-        $builder->join('project_description pd', 'pr.project_id = pd.project_id', 'LEFT');
+        $builder = $this->db->table('review r');
+        $builder->select('r.review_id as review_id, r.rating, r.status, r.date_added, pd.name, r.project_id, CONCAT(c.firstname, " ", c.lastname) As author');
+        $builder->join('project_description pd', 'r.project_id = pd.project_id', 'left');
+        $builder->join('customer c', 'c.customer_id = r.submitted_by', 'left');
         $builder->where('pd.language_id', service('Registry')->get('config_language_id'));
        
         if (!empty($data['filter_date_added'])) {
@@ -81,9 +83,10 @@ class Reviews extends Model
 
     public function getReview($review_id)
     {
-        $builder = $this->db->table('project_review pr');
-        $builder->join('project_description pd', 'pr.project_id = pd.project_id', 'left');
-        $builder->select();
+        $builder = $this->db->table('review r');
+        $builder->select('CONCAT(c.firstname, " ", c.lastname) As author, r.project_id, r.comment, r.rating, r.date_added, r.status');
+        $builder->join('project_description pd', 'r.project_id = pd.project_id', 'left');
+        $builder->join('customer c', 'c.customer_id = r.submitted_by', 'left');
         $query = $builder->get();
         return $query->getRowArray();
     }
