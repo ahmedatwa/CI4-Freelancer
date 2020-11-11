@@ -111,7 +111,6 @@ class Project extends \Catalog\Controllers\BaseController
             $days_left = $this->dateDifference($result['date_added'], $result['runtime']);
 
             if ($days_left <= 0) {
-                $projectModel->update($result['project_id'], ['status_id' => $this->registry->get('config_project_expired_status')]);
                 $status = $result['status'];
             } else {
                 $status = lang('project/project.text_expire', [$days_left]);;

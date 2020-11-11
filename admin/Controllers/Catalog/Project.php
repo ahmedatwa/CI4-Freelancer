@@ -95,7 +95,7 @@ class Project extends \Admin\Controllers\BaseController
                 'employer'   => $this->projects->getEmployerByProjectId($result['project_id']),
                 'price'      => currency_format($result['budget_min'], 'USD'),
                 'type'       => $type,
-                'status'     => $result['status_id'],
+                'status'     => $result['status'],
                 'edit'       => base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id=' . $result['project_id']),
                 'delete'     => base_url('index.php/catalog/project/delete?user_token=' . $this->request->getVar('user_token') . '&project_id=' . $result['project_id']),
             ];

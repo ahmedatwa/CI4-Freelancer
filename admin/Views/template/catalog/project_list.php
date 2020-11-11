@@ -26,6 +26,14 @@
                 <label for="input-name"><?php echo $entry_name; ?></label>
                 <input type="text" class="form-control" name="filter_name" placeholder="<?php echo $entry_name; ?>">
             </div>
+             <div class="form-group">
+                <label for="input-type"><?php echo $entry_type; ?></label>
+                <select name="filter_type" class="form-control">
+                    <option value=""><?php echo $text_select; ?></option>
+                    <option value="Fixed Rate"><?php echo $text_fixed_price; ?></option>
+                    <option value="Hour Rate"><?php echo $text_per_hour; ?></option>
+                </select>
+            </div>
         </div>
         <div class="col-6">
             <div class="form-group">
@@ -117,6 +125,12 @@ var filter_status = $('select[name=\'filter_status\']').val();
 if (filter_status !== '*') {
 $('select[name=\'filter_status\']').on( 'change', function () {
     table.column(5).search( $(this).val()).draw();
+});
+}
+var filter_type = $('select[name=\'filter_type\']').val();
+if (filter_type !== '*') {
+$('select[name=\'filter_type\']').on( 'change', function () {
+    table.column(4).search( $(this).val()).draw();
 });
 }
 $('input[name=\'filter_employer\']').on( 'keyup', function () {

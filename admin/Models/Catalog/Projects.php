@@ -38,8 +38,9 @@ class Projects extends \CodeIgniter\Model
     public function getProjects(array $data = [])
     {
         $builder = $this->db->table('project');
-        $builder->select('project.project_id, project_description.name AS name, project.status_id, project.date_added, project.budget_min, project.budget_max, project.type');
+        $builder->select('project.project_id, project_description.name AS name, project.status_id, project.date_added, project.budget_min, project.budget_max, project.type, project_status.name as status');
         $builder->join('project_description', 'project.project_id = project_description.project_id', 'left');
+        $builder->join('project_status', 'project.status_id = project_status.status_id', 'left');
         $builder->where('project_description.language_id', (int) service('registry')->get('config_language_id'));
 
         if (!empty($data['filter_date_added'])) {
