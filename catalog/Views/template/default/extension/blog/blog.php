@@ -96,17 +96,6 @@
 					</div>
 					<!-- Widget / End-->
 					<!-- Widget -->
-					<div class="sidebar-widget">
-						<h3><?php echo $text_social; ?></h3>
-						<div class="freelancer-socials margin-top-25">
-							<ul>
-								<li><a href="#" title="Dribbble" data-tippy-placement="top"><i class="icon-brand-dribbble"></i></a></li>
-								<li><a href="#" title="Twitter" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>
-								<li><a href="#" title="Behance" data-tippy-placement="top"><i class="icon-brand-behance"></i></a></li>
-								<li><a href="#" title="GitHub" data-tippy-placement="top"><i class="icon-brand-github"></i></a></li>
-							</ul>
-						</div>
-					</div>
 					<!-- Widget -->
 					<!-- <div class="sidebar-widget">
 						<h3>Tags</h3>
