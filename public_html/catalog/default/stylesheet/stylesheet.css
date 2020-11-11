@@ -2368,7 +2368,6 @@ body #backtotop a {
 
 .single-page-header .header-details li {
 	display: inline-block;
-	margin-right: 20px;
 	margin-bottom: 12px;
 }
 
@@ -14593,6 +14592,9 @@ body.offcanvas-active{
 
 .btn-close {
 	margin: 5px;
+}
+#nav-user-main .dropdown-toggle::after {
+	display: none;
 }
 /*loading overlay*/
 #overlay {
