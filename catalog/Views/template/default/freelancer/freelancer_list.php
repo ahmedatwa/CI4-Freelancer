@@ -61,7 +61,7 @@
 			<!-- Freelancers List Container -->
 			<div class="freelancers-container freelancers-list-layout compact-list shadow p-3 mb-5 bg-white rounded">
 				<div class="notify-box">
-						<h3 class="float-left ml-3"><?php echo $text_found ;?></h3>
+						<h3 class="float-left mx-4 mt-2"><?php echo $text_found ;?></h3>
 						<div class="col-md-3 float-right"></div>
 					</div>
 				<?php if ($freelancers) { ?>	

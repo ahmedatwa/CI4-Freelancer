@@ -9,10 +9,14 @@ class Menu extends \Catalog\Controllers\BaseController
         $data['categories'] = [];
 
         $categoryModel = new CategoryModel();
+
+        $seoUrl = service('seo_url');
         
         $categories = $categoryModel->getCategories(['category_id' => 0]);
 
         foreach ($categories as $category) {
+
+            $keyword = $seoUrl->getKeywordByQuery('category_id=' . $category['category_id']);
 
             // Level 2
             $children_data = [];
@@ -22,7 +26,7 @@ class Menu extends \Catalog\Controllers\BaseController
             foreach ($children as $child) {
                 $children_data[] = [
                     'name'  => $child['name'],
-                    'href'  => route_to('projects') . '?gid=' . $child['category_id']
+                    'href'  => ($keyword) ? route_to('category', $child['category_id'], $keyword) : base_url('project/project?gid=' . $child['category_id']),
                     ];
                 }
 
@@ -31,7 +35,7 @@ class Menu extends \Catalog\Controllers\BaseController
                 'name'        => $category['name'],
                 'ico'         => $category['icon'],
                 'children'    => $children_data,
-                'href'        => (route_to('projects') . '?gid=' . $category['category_id']) ? route_to('projects') . '?gid=' . $category['category_id'] : base_url('project/project?gid=' . $category['category_id']),
+                'href'        => ($keyword) ? route_to('category', $category['category_id'], $keyword) : base_url('project/project?gid=' . $category['category_id']),
             ];
         }
 

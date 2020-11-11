@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 10, 2020 at 10:39 AM
+-- Generation Time: Nov 11, 2020 at 12:39 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -573,7 +573,7 @@ CREATE TABLE `ci_customer` (
 --
 
 INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `online`, `origin`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
-(1, 1, 'John', 'Duo', 'john-1', 'customer@customer.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 241, 1, 'f5ErHhyM8WPLj142Cackm9XDFTwIYuRnv3qi60Zp', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developers', 50, 0, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-26 19:36:31'),
+(1, 1, 'John', 'Duo', 'john-1', 'customer@customer.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 241, 1, 'f5ErHhyM8WPLj142Cackm9XDFTwIYuRnv3qi60Zp', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developers', 50, 1, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-26 19:36:31'),
 (20, 1, 'John2', 'Duo2', 'John-2', 'customer_2@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 129, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 0, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
 (21, 1, 'John3', 'Duo3', 'John-3', 'customer_3@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 1, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 0, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
 (22, 1, 'John2', 'Duo', 'John-4', 'mark@mark.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 8, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 0, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57');
@@ -721,7 +721,7 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 0, 'http://ci4.localhost/images/user-avatar-placeholder.png', 'http://ci4.localhost/', '2020-11-10 09:33:19');
+('::1', 0, 'http://ci4.localhost/freelancers', 'http://ci4.localhost/freelancers?rate=10&order_by=ASC', '2020-11-11 11:37:42');
 
 -- --------------------------------------------------------
 
@@ -1453,11 +1453,11 @@ CREATE TABLE `ci_project` (
 INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`) VALUES
 (1, 1, 0, '20.0000', '30.0000', 1, 5, 3, 145, '', 0, 5, 0, 0, '2020-10-03 12:44:26', '2020-10-03 12:44:26'),
 (2, 1, 0, '60.0000', '80.0000', 2, 8, 2, 141, '', 0, 5, 0, 0, '2020-10-22 21:57:56', '2020-10-03 12:45:22'),
-(41, 1, 20, '20.0000', '30.0000', 1, 5, 3, 63, '', 0, 5, 1, 0, '2020-10-27 19:14:30', '2020-10-27 19:14:30'),
+(41, 1, 20, '20.0000', '30.0000', 1, 5, 3, 65, '', 0, 5, 1, 0, '2020-10-27 19:14:30', '2020-10-27 19:14:30'),
 (3, 1, 0, '60.0000', '80.0000', 2, 8, 2, 103, '', 0, 5, 0, 0, '2020-10-22 21:57:56', '2020-10-03 12:45:22'),
-(42, 1, 0, '45.0000', '70.0000', 1, 6, 8, 0, '', 0, 8, 1, 0, '2020-11-02 20:02:23', '2020-11-02 20:02:23'),
-(43, 1, 0, '45.0000', '67.0000', 1, 5, 8, 0, '', 0, 8, 1, 0, '2020-11-02 20:04:01', '2020-11-02 20:04:01'),
-(44, 1, 0, '45.0000', '56.0000', 1, 4, 7, 0, '', 0, 5, 1, 0, '2020-11-02 20:06:54', '2020-11-02 20:06:54');
+(42, 1, 0, '45.0000', '70.0000', 1, 6, 8, 0, '', 0, 5, 1, 0, '2020-11-02 20:02:23', '2020-11-02 20:02:23'),
+(43, 1, 0, '45.0000', '67.0000', 1, 5, 8, 0, '', 0, 5, 1, 0, '2020-11-02 20:04:01', '2020-11-02 20:04:01'),
+(44, 1, 0, '45.0000', '56.0000', 1, 4, 7, 1, '', 0, 5, 1, 0, '2020-11-02 20:06:54', '2020-11-02 20:06:54');
 
 -- --------------------------------------------------------
 
@@ -1638,46 +1638,8 @@ CREATE TABLE `ci_project_to_category` (
 
 INSERT INTO `ci_project_to_category` (`project_id`, `category_id`) VALUES
 (1, 1),
-(1, 9),
-(1, 23),
 (2, 1),
-(2, 16),
-(3, 11),
-(4, 7),
-(4, 52),
-(5, 7),
-(5, 11),
-(6, 24),
-(7, 9),
-(7, 37),
-(10, 2),
-(11, 14),
-(12, 3),
-(13, 1),
-(14, 7),
-(16, 7),
-(18, 3),
-(19, 3),
-(21, 11),
-(22, 7),
-(23, 14),
-(24, 14),
-(26, 7),
-(27, 2),
-(28, 2),
-(29, 11),
-(30, 1),
-(31, 1),
-(32, 11),
-(33, 12),
-(34, 1),
-(34, 12),
-(35, 1),
-(35, 12),
-(36, 3),
-(37, 9),
-(38, 1),
-(39, 3),
+(3, 1),
 (41, 1),
 (42, 1),
 (43, 1),
@@ -1974,7 +1936,11 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('d459589ced38a461f45a4ffbab1a9df860ae7304', '::1', 1604937889, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343933373739363b5f63695f70726576696f75735f75726c7c733a38353a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f6d6f64756c653f757365725f746f6b656e3d4d3663523071646575576b4143616e51496c76794b5859334742684a72627067223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224d3663523071646575576b4143616e51496c76794b5859334742684a72627067223b737563636573737c733a33353a22537563636573733a20596f752068617665206d6f646966696564206d6f64756c657321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
 ('10dce34b2ecd8fe3e3d9e6d7ff609632114f9a96', '::1', 1604998959, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343939383935393b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a36353a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e672532466d6f64756c65223b),
 ('0e90a4a2bb18ca2a5b0e6758629daa9841e1018f', '::1', 1604998960, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630343939383935393b5f63695f70726576696f75735f75726c7c733a36353a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e672532466d6f64756c65223b),
-('3296b8c2bbd6d8f255e44635c6608844bb3dc349', '::1', 1605001044, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353030313032363b5f63695f70726576696f75735f75726c7c733a38353a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f6d6f64756c653f757365725f746f6b656e3d4d346457546963504e524a73437742616b74584830513578454c537144663268223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224d346457546963504e524a73437742616b74584830513578454c537144663268223b737563636573737c733a33353a22537563636573733a20596f752068617665206d6f646966696564206d6f64756c657321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d);
+('3296b8c2bbd6d8f255e44635c6608844bb3dc349', '::1', 1605006147, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353030363134373b5f63695f70726576696f75735f75726c7c733a38353a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f6d6f64756c653f757365725f746f6b656e3d4d346457546963504e524a73437742616b74584830513578454c537144663268223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224d346457546963504e524a73437742616b74584830513578454c537144663268223b737563636573737c733a33353a22537563636573733a20596f752068617665206d6f646966696564206d6f64756c657321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
+('fbe7bf776820d1335c269799f50deb489f4f0e19', '::1', 1605006458, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353030363435383b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d7658343667566a42577a325a5975306e77456452624371783733445535466b4b223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227658343667566a42577a325a5975306e77456452624371783733445535466b4b223b),
+('8695b94d05769f91c567dc6f630ae73380ee31a5', '::1', 1605006561, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353030363435383b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d7658343667566a42577a325a5975306e77456452624371783733445535466b4b223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227658343667566a42577a325a5975306e77456452624371783733445535466b4b223b),
+('8e4855dd490e91513343b05be73b38f15bdf6481', '::1', 1605017912, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353031373931323b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d46347763677830384a39367342556a61797172597662315647445237704e4c4f223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2246347763677830384a39367342556a61797172597662315647445237704e4c4f223b),
+('569d47f97a15959586244c0735fe21d3ffb443f5', '::1', 1605017912, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353031373931323b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d46347763677830384a39367342556a61797172597662315647445237704e4c4f223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2246347763677830384a39367342556a61797172597662315647445237704e4c4f223b);
 
 -- --------------------------------------------------------
 
@@ -2646,7 +2612,9 @@ INSERT INTO `ci_user_activity` (`activity_id`, `user_id`, `key`, `data`, `ip`, `
 (13, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0', '2020-11-05 19:15:44'),
 (14, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-08 15:12:36'),
 (15, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-09 08:46:26'),
-(16, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-10 09:37:12');
+(16, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-10 09:37:12'),
+(17, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-10 11:07:28'),
+(18, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-10 14:15:38');
 
 -- --------------------------------------------------------
 
@@ -3442,7 +3410,7 @@ ALTER TABLE `ci_user`
 -- AUTO_INCREMENT for table `ci_user_activity`
 --
 ALTER TABLE `ci_user_activity`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `ci_user_group`
