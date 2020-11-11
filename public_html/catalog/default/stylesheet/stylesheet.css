@@ -14507,6 +14507,7 @@ body.offcanvas-active{
 }
 
 #navbar-header-category .dropdown-toggle::after {
+	display: none;
 
 }
 
