@@ -84,7 +84,7 @@ $(document).ready(function(){
 
 	function sendMessage(data) {
 
-		if(data.sender_id == data.sender_id) {
+		if(data.sender_id == <?php echo $customer_id; ?>) {
 			html = '<div class="message-time-sign">';
 			html += '<span> ' + data.date_added + ' </span>'; 
 			html += '</div>';
@@ -97,8 +97,9 @@ $(document).ready(function(){
 			html += '</div>';
 			$('#v-pills-tabContent #v-pills-' + data.receiver_id).append(html);
 			$('#input-message').val("");
+			$(".tab-content").animate({ scrollTop: $(document).height() }, 1000);
 		} 
-		 if(data.sender_id == data.sender_id) {
+		 if(data.sender_id != <?php echo $customer_id; ?>) {
 			html = '<div class="message-bubble">';
 			html += '<div class="message-bubble-inner">';
 			html += '<div class="message-avatar"><img src="images/catalog/avatar.jpg" alt="" /></div>';
@@ -190,7 +191,9 @@ function fetchChatHistory (sender_id, receiver_id) {
 			html += '</div>';
 	    }  // else 
           $('#v-pills-' + receiver_id).append(html);
-           markRead(json[i].message_id);
+            markRead(json[i].message_id);
+           	$(".tab-content").animate({ scrollTop: $(document).height() }, 1000);
+
 	});
    } // success  
  });
