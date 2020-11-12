@@ -4,7 +4,7 @@ class User
 {
     protected $userId;
     protected $userGroupId;
-    protected $permission = array();
+    protected $permission = [];
     protected $userName;
     protected $session;
     protected $db;
@@ -21,7 +21,8 @@ class User
 
             $users->where('user_id', $this->session->get('user_id'));
             $users->where('status', 1);
-            $usersRow = $users->get()->getRow();
+            $usersRow = $users->get()
+                              ->getRow();
             if ($usersRow) {
                 $this->userId = $usersRow->user_id;
                 $this->userGroupId = $usersRow->user_group_id;
@@ -29,8 +30,8 @@ class User
 
                 // Permission Query
                 $usersGroup = $this->db->table($this->db->prefixTable('user_group'));
-                $usersGroup->select('permission');
-                $usersGroup->where('user_group_id', $usersRow->user_group_id);
+                $usersGroup->select('permission')
+                           ->where('user_group_id', $usersRow->user_group_id);
                 $query = $usersGroup->get();
                 $usersGroupRow = $query->getRowArray();
                 $permissionRow = json_decode($usersGroupRow['permission'], true);
@@ -53,8 +54,8 @@ class User
         // From Table Users
         $builder = $this->db->table($this->db->prefixTable('user'));
         $builder->select();
-        $builder->where('email', $email);
-        $builder->where('status', 1);
+        $builder->where('email', $email)
+                ->where('status', 1);
         if ($builder->countAllResults()) {
             $query = $builder->get();
             $row = $query->getRow();
@@ -75,12 +76,12 @@ class User
             $this->userGroupId = $row->user_group_id;
             $this->userName = $row->firstname . ' ' . $row->lastname;
             // Build User Data Session Array
-            $user_data = array(
+            $user_data = [
                 'user_id'       => $row->user_id,
                 'username'      => $row->firstname . ' ' . $row->lastname,
                 'user_group_id' => $row->user_group_id,
                 'isLogged'      => (bool) true,
-            );
+            ];
 
             $this->session->set($user_data);
 
