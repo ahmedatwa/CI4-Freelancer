@@ -53,7 +53,7 @@
 		</div>
 	</div>
 		<!-- Page Content-->
-			<div class="row align-items-start">
+			<div class="row">
 				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow rounded bg-white">
 					<div class="single-page-section">
 						<h3><?php echo $text_description; ?></h3>
