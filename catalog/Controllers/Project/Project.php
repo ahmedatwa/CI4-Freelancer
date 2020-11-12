@@ -52,7 +52,7 @@ class Project extends \Catalog\Controllers\BaseController
         if ($this->request->getVar('budget')) {
             $filter_budget = $this->request->getVar('budget');
         } else {
-            $filter_budget = '5_2500';
+            $filter_budget = '0_5500';
         }
 
         if ($this->request->getVar('keyword')) {
@@ -86,16 +86,16 @@ class Project extends \Catalog\Controllers\BaseController
         }
 
         $filter_data = [
-            'filter_category_id' => $filter_category_id,
-            'filter_type'        => $filter_type,
-            'filter_state'       => $filter_state,
-            'filter_budget'      => $filter_budget,
-            'filter_skills'      => $filter_skills,
-            'filter_keyword'     => $filter_keyword,
-            'sort_by'            => $sort_by,
-            'order_by'           => $order_by,
-            'limit'              => $limit,
-            'start'              => ($page - 1) * $limit,
+             'filter_category_id' => $filter_category_id,
+             'filter_type'        => $filter_type,
+             'filter_state'       => $filter_state,
+             'filter_budget'      => $filter_budget,
+             'filter_skills'      => $filter_skills,
+             'filter_keyword'     => $filter_keyword,
+             'sort_by'            => $sort_by,
+             'order_by'           => $order_by,
+             'limit'              => $limit,
+             'start'              => ($page - 1) * $limit,
         ];
     
         $data['projects'] = [];
@@ -364,7 +364,11 @@ class Project extends \Catalog\Controllers\BaseController
         // optional upgrades
         $data['config_upgrade_sponser'] = $this->registry->get('config_upgrade_sponser');
         $data['config_upgrade_highlight'] = $this->registry->get('config_upgrade_highlight');
-        
+
+        $data['isLogged'] = $this->customer->isLogged();
+        $data['login'] = route_to('account_login');
+        $this->session->set('redirect_url', current_url());
+
         $projectModel->updateViewed($project_id);
 
         $this->template->output('project/project_info', $data);
@@ -566,9 +570,6 @@ class Project extends \Catalog\Controllers\BaseController
             if ($this->request->getPost('state')) {
                $uri->addQuery('state', $this->request->getPost('state'));
             }
-
-            
-            
 
             $json['uri'] = (string) $uri;
 

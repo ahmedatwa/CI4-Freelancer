@@ -81,6 +81,88 @@
 					<hr />
 				    <?php } ?>
 					<div id="bid-container"></div>
+					<?php //if ($freelancer_id != $employer_id) { ?>
+				<?php if ($days_left > 0 && $isLogged) { ?>
+				<div class="single-page-section">
+						<div class="bidding-headline"><h3><?php echo $text_bid; ?></h3>
+							<p class="mb-4"><?php echo $text_bid_detail; ?></p></div>
+						<form action="" enctype="multipart/form-data" id="bidding-form" accept-charset="utf-8"> 
+							<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+							<input type="hidden" name="project_id" value="<?php echo $project_id; ?>" />
+							<input type="hidden" name="freelancer_id" value="<?php echo $freelancer_id; ?>" />
+							<input type="hidden" name="employer_id" value="<?php echo $employer_id; ?>" />
+							<input type="hidden" name="fee" value="" />
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="inputEmail4"><?php echo $text_rate; ?></label>
+									<div class="input-group">
+									<input class="form-control" type="text" id="input-quote" name="quote" value=""/>
+									<div class="input-group-append">
+								    <span class="input-group-text" id="basic-addon2"><?php echo $config_currency; ?></span>
+								  </div>
+								</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputEmail4"><?php echo $text_delivery; ?></label>
+									<div class="input-group">
+										<input type="number" class="form-control" id="input-delivery" name="delivery" min="1">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Days</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlTextarea1"><?php echo $text_describe; ?></label>
+								<textarea class="form-control" id="input-description" name="description" rows="7" cols="10"></textarea>
+							</div>
+						</form> 
+							<div class="margin-top-30">	  
+								<span>Optional Upgrades</span>	  
+								<table class="table table-hover" id="upgrade-options-table">
+									<thead>
+									</thead>
+									<tbody>
+										<tr>
+											<td width="20%">
+												<div class="form-check">
+													<input class="form-check-input" name="checkbox" type="checkbox" value="<?php echo number_format($config_upgrade_sponser, 2); ?>" id="sponsor">
+													<label class="form-check-label" for="input-sponser">
+														<?php echo number_format($config_upgrade_sponser, 2) . ' EGP'; ?>
+													</label>
+												</div>
+											</td>
+											<td><span class="badge badge-warning">Sponsored</span></td>
+											<td>Bids that are sponsored are 80% more likely to be awarded. Stand out from the rest of the freelancers, by being pinned to the top of the employer's bid list. There is only one sponsored bid per project.</td>
+										</tr>
+										<tr>
+											<td width="20%">
+												<div class="form-check">
+													<input class="form-check-input" name="checkbox" type="checkbox" value="<?php echo number_format($config_upgrade_highlight, 2); ?>" id="upgrade-fee">
+													<label class="form-check-label" for="input-highlight">
+														<?php echo number_format($config_upgrade_highlight, 2) . ' EGP'; ?>
+													</label>
+												</div>
+											</td>
+											<td><span class="badge badge-info">Highlight</span></td>
+											<td>Make your bid highlighted in yellow for greater visibility to the employer and a higher chance of being awarded the project.</td>
+										</tr>
+									</tbody>
+								</table> 
+						<!-- Button -->
+					<button id="button-place-bid" onclick="confirm('Are you sure') ? placeBid() : false;" class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right"><?php echo $button_bid; ?></button>
+					</div>
+				</div>
+			<?php } else { ?>
+				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow-sm border rounded bg-white">
+					<div class="single-page-section text-center">
+						<p class="lead mb-3">Not logged yet, please login to place bids</p>
+						<a href="<?php echo $login; ?>"role="button" class="button"><i class="fas fa-sign-in-alt"></i> Login</a>
+					</div>
+				</div>
+			<?php } ?>		
+				<!-- Freelancers Bidding -->
+		   <?php //} ?>	
 				</div>
 				<!-- Sidebar -->
 				<div class="col-sm-12 col-md-3">
@@ -126,103 +208,24 @@
 					<?php } ?>
 					</div>
 				</div>
-				<?php if ($days_left > 0) { ?>
-				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow-sm border rounded bg-white">
-				<div class="single-page-section">
-						<div class="bidding-headline"><h3><?php echo $text_bid; ?></h3>
-							<p class="mb-4"><?php echo $text_bid_detail; ?></p></div>
-						<form action="" enctype="multipart/form-data" id="bidding-form" accept-charset="utf-8"> 
-							<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-							<input type="hidden" name="project_id" value="<?php echo $project_id; ?>" />
-							<input type="hidden" name="freelancer_id" value="<?php echo $freelancer_id; ?>" />
-							<input type="hidden" name="employer_id" value="<?php echo $employer_id; ?>" />
-							<input type="hidden" name="fee" value="" />
-							<div class="form-row">
-								<div class="form-group col-md-6">
-									<label for="inputEmail4"><?php echo $text_rate; ?></label>
-									<div class="input-group">
-									<input class="form-control" type="text" id="input-quote" name="quote" value=""/>
-									<div class="input-group-append">
-								    <span class="input-group-text" id="basic-addon2"><?php echo $config_currency; ?></span>
-								  </div>
-								</div>
-								</div>
-								<div class="form-group col-md-6">
-									<label for="inputEmail4"><?php echo $text_delivery; ?></label>
-									<div class="input-group">
-										<input type="number" class="form-control" id="input-delivery" name="delivery" min="5">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Days</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="exampleFormControlTextarea1"><?php echo $text_describe; ?></label>
-								<textarea class="form-control" id="input-description" name="description" rows="7" cols="10"></textarea>
-							</div>
-							<div class="margin-top-30">	  
-								<span>Optional Upgrades</span>	  
-								<table class="table table-hover">
-									<thead>
-									</thead>
-									<tbody>
-										<tr>
-											<td width="20%">
-												<div class="form-check">
-													<input class="form-check-input" type="radio" value="<?php echo number_format($config_upgrade_sponser, 2); ?>" id="sponsor">
-													<label class="form-check-label" for="input-sponser">
-														<?php echo number_format($config_upgrade_sponser, 2) . ' EGP'; ?>
-													</label>
-												</div>
-											</td>
-											<td><span class="badge badge-warning">Sponsored</span></td>
-											<td>Bids that are sponsored are 80% more likely to be awarded. Stand out from the rest of the freelancers, by being pinned to the top of the employer's bid list. There is only one sponsored bid per project.</td>
-										</tr>
-										<tr>
-											<td width="20%">
-												<div class="form-check">
-													<input class="form-check-input" type="radio" value="<?php echo number_format($config_upgrade_highlight, 2); ?>" id="upgrade-fee">
-													<label class="form-check-label" for="input-highlight">
-														<?php echo number_format($config_upgrade_highlight, 2) . ' EGP'; ?>
-													</label>
-												</div>
-											</td>
-											<td><span class="badge badge-info">Highlight</span></td>
-											<td>Make your bid highlighted in yellow for greater visibility to the employer and a higher chance of being awarded the project.</td>
-										</tr>
-									</tbody>
-								</table> 
-						</form> 
-						<!-- Button -->
-					<button id="snackbar-place-bid" class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right"><span><?php echo $button_bid; ?></span></button>
-					</div>
-				</div>
-			<?php } ?>
-				<!-- Freelancers Bidding -->
-			</div>
+
 			</div>
 	</div> <!---- content-wrapper ---->
 <script type="text/javascript">
-$("#snackbar-place-bid").on('click', function () {
+function placeBid() {
 	$.ajax({
 		url: 'extension/bid/bid/placeBid',
 		method:'post',
 		data: $('#bidding-form').serialize(),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#snackbar-place-bid').prop('disabled');
-			$('.text-danger, .alert-danger').remove();
-			$('#overlay').fadeIn().delay(2000);
+			$('#button-place-bid').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+			$('.alert').remove();
 		},
 		complete: function() {
-  		    $('#overlay').fadeOut();
+  		    $('#button-place-bid').html('<?php echo $button_bid; ?>');
 		},
 		success: function(json) {
-
-			if (json['redirect']) {
-				location = json['redirect'];
-			}
 			
 			if (json['error']) {
                 for (i in json['error']) {
@@ -249,7 +252,7 @@ $("#snackbar-place-bid").on('click', function () {
 			alert(thrownError);
 		}
 	});
-});
+}
 </script>
 <script type='text/javascript'>
 <?php if (service('registry')->get('extension_bid_status')) { ?>
@@ -267,9 +270,16 @@ $('#bid-container').load("extension/bid/bid?pid=<?php echo $project_id; ?>");
 <?php } ?>
 </script>
 <script type="text/javascript">
-	$("input[type='radio']").change(function(){
-		$('#snackbar-place-bid').html('place bid and pay ' + $("#upgrade-fee:checked").val() + ' EGP');
-		$('input[name=\'fee\']').val($(this).val());
+	$("#upgrade-options-table input[type='checkbox']").on('change', function() {
+
+		var total = 0;
+
+		$('#upgrade-options-table input:checkbox:checked').each(function() { 
+            total += isNaN(parseInt($(this).val())) ? 0 : parseInt($(this).val());
+        });   
+
+		$('#button-place-bid').html('place bid and pay ' + total + '.00 EGP');
+		$('input[name=\'fee\']').val(total);
 
 	});
 	

@@ -156,6 +156,7 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status, p.employer_id, p.freelancer_id');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
+
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
         if ((isset($data['filter_category_id']) && !empty($data['filter_category_id']))|| (isset($data['filter_skills']) && !empty($data['filter_skills']))) {
@@ -196,7 +197,6 @@ class ProjectModel extends \CodeIgniter\Model
 
         // Budget Filter 
         if (isset($data['filter_budget']) && !empty($data['filter_budget'])) {
-            
             $parts  = explode('_', $data['filter_budget']);
 
             $builder->where('p.budget_min >= ', $parts[0])

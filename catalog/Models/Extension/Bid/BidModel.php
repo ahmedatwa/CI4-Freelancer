@@ -83,18 +83,38 @@ class BidModel extends \CodeIgniter\Model
         return $builder->countAllResults();
     }
 
-    public function addBid($data)
+    public function addBid(array $data)
     {
+        
         $builder = $this->db->table('project_bids');
-        $data = [
+        $bid_data = [
             'project_id'    => $data['project_id'],
             'freelancer_id' => $data['freelancer_id'],
             'quote'         => $data['quote'],
             'delivery'      => $data['delivery'],
+            'description'   => $data['description'],
             'status'        => 1
         ];
+
         $builder->set('date_added', 'NOW()', false);
-        $builder->insert();
+        $builder->insert($bid_data);
+        // trigger Bid Emailto Employer
+        \CodeIgniter\Events\Events::trigger('mail_bid_add', $data);
+
+        if (isset($data['fee'])) {
+            
+            $revenue = $this->db->table('project_bids_upgrade');
+            $revenue_data = [
+                'project_id' => $data['project_id'],
+                'payer_id'   => $data['freelancer_id'],
+                'bid_id'     => $this->db->insertID(),
+                'amount'     => $data['fee'],
+                'reason'     => 'Optional Upgrade',
+            ];
+
+            $revenue->set('date_added', 'NOW()', false);
+            $revenue->insert($revenue_data);
+        }
     }
 
     public function isAwarded($freelancer_id)

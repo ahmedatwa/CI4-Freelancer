@@ -9,7 +9,7 @@ class Login extends \Catalog\Controllers\BaseController
         if ($this->customer->isLogged() && $this->session->get('customer_id')) {
             return redirect('account_dashboard');
         }
-        
+
         $this->template->setTitle(lang('account/login.heading_title'));
 
         $data['breadcrumbs'] = [];
@@ -23,9 +23,9 @@ class Login extends \Catalog\Controllers\BaseController
             'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
         ];
 
-        if (($this->session->get('_ci_previous_url') != base_url('account/login')) || ($this->session->get('_ci_previous_url') != base_url())) {
-            $this->session->set('redirect_url', $this->session->get('_ci_previous_url'));
-        }
+        // if (($this->session->get('_ci_previous_url') != base_url('account/login')) || ($this->session->get('_ci_previous_url') != base_url())) {
+        //     $this->session->set('redirect_url', $this->session->get('_ci_previous_url'));
+        // }
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             // Trigger Pusher Online Event
@@ -43,13 +43,13 @@ class Login extends \Catalog\Controllers\BaseController
 
             $data['message'] = [
                 'customer_id' => $this->customer->getCustomerId(),
-                'username' => $this->customer->getCustomerUserName()
+                'username'    => $this->customer->getCustomerUserName()
             ];
 
             $pusher->trigger('chat-channel', 'online-event', $data);
 
             if ($this->session->get('redirect_url')) {
-                return redirect()->to($this->session->get('redirect_url'));
+                return redirect()->to((string) $this->session->get('redirect_url'));
             } else {
                 return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
             }
