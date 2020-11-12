@@ -234,6 +234,22 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_processing_fee'] = '';
         }
 
+        if ($this->request->getPost('config_upgrade_sponser')) {
+            $data['config_upgrade_sponser'] = $this->request->getPost('config_upgrade_sponser');
+        } elseif (!empty($setting_info['config_upgrade_sponser'])) {
+            $data['config_upgrade_sponser'] = $setting_info['config_upgrade_sponser'];
+        } else {
+            $data['config_upgrade_sponser'] = '';
+        }
+
+        if ($this->request->getPost('config_upgrade_highlight')) {
+            $data['config_upgrade_highlight'] = $this->request->getPost('config_upgrade_highlight');
+        } elseif (!empty($setting_info['config_upgrade_highlight'])) {
+            $data['config_upgrade_highlight'] = $setting_info['config_upgrade_highlight'];
+        } else {
+            $data['config_upgrade_highlight'] = '';
+        }
+
         if ($this->request->getPost('config_logo')) {
             $data['config_logo'] = $this->request->getPost('config_logo');
         } elseif (!empty($setting_info['config_logo'])) {

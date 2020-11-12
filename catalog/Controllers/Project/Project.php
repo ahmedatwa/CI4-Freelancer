@@ -360,8 +360,11 @@ class Project extends \Catalog\Controllers\BaseController
         $data['text_expired']        = lang('project/project.text_expired');
         $data['text_similar']        = lang('project/project.text_similar');
         $data['button_post_project'] = lang('project/project.button_post_project');
-        
 
+        // optional upgrades
+        $data['config_upgrade_sponser'] = $this->registry->get('config_upgrade_sponser');
+        $data['config_upgrade_highlight'] = $this->registry->get('config_upgrade_highlight');
+        
         $projectModel->updateViewed($project_id);
 
         $this->template->output('project/project_info', $data);

@@ -558,7 +558,7 @@ class CustomerModel extends \CodeIgniter\Model
                          ->getResultArray();
 
         foreach ($query as $result) {
-           $total = $result['available'] - ($result['used'] + $result['withdrawn'] + $result['income']);   
+           $total = ($result['available'] + $result['income']) - ($result['used'] + $result['withdrawn']);   
         }
         
         if ($total) {

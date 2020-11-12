@@ -52,8 +52,8 @@ class Deposit extends \Catalog\Controllers\BaseController
                 $depositModel = new DepositModel();
                 $data = [
                     'customer_id' => $customer_id,
-                    'amount'   => $this->request->getPost('amount'),
-                    'currency'   => $this->request->getPost('currency'),
+                    'amount'      => $this->request->getPost('amount'),
+                    'currency'    => $this->request->getPost('currency'),
                     'status'      => strtolower($this->request->getPost('status')),
                 ];
 

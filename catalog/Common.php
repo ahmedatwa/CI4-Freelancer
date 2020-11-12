@@ -84,7 +84,7 @@ if (!function_exists('seller_graduation_year')) {
     {
         $json = [];
         $cur_year = date('Y');
-        $years = range($cur_year, $cur_year-50);
+        $years = range($cur_year, $cur_year - 50);
 
         foreach ($years as $year) {
             $json[] = [
