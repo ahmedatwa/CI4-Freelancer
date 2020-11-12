@@ -1,5 +1,5 @@
 <?php if ($bids) { ?>
-<div class="col-8 rounded boxed-list">
+<div class="boxed-list">
 <div class="boxed-list-headline">
 	<h3><i class="icon-material-outline-group"></i> <?php echo $heading_title; ?></h3>
 </div>

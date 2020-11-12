@@ -80,8 +80,7 @@
 					</div>
 					<hr />
 				    <?php } ?>
-					<div id="bid-container"></div>
-					<?php //if ($freelancer_id != $employer_id) { ?>
+				<?php if ($freelancer_id != $employer_id) { ?>
 				<?php if ($days_left > 0 && $isLogged) { ?>
 				<div class="single-page-section">
 						<div class="bidding-headline"><h3><?php echo $text_bid; ?></h3>
@@ -153,16 +152,17 @@
 					<button id="button-place-bid" onclick="confirm('Are you sure') ? placeBid() : false;" class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right"><?php echo $button_bid; ?></button>
 					</div>
 				</div>
-			<?php } else { ?>
-				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow-sm border rounded bg-white">
-					<div class="single-page-section text-center">
-						<p class="lead mb-3">Not logged yet, please login to place bids</p>
-						<a href="<?php echo $login; ?>"role="button" class="button"><i class="fas fa-sign-in-alt"></i> Login</a>
+				<?php } else { ?>
+					<div class="col-sm-12 col-md-9 mb-4 p-4 shadow-sm border rounded bg-white">
+						<div class="single-page-section text-center">
+							<p class="lead mb-3">Not logged yet, please login to place bids</p>
+							<a href="<?php echo $login; ?>"role="button" class="button"><i class="fas fa-sign-in-alt"></i> Login</a>
+						</div>
 					</div>
-				</div>
-			<?php } ?>		
-				<!-- Freelancers Bidding -->
-		   <?php //} ?>	
+				<?php } ?>
+				<hr />		
+			<?php } ?>
+			<div id="bid-container"></div>	
 				</div>
 				<!-- Sidebar -->
 				<div class="col-sm-12 col-md-3">
