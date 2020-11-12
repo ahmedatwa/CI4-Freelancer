@@ -1,4 +1,4 @@
-<?php echo $header; ?> 
+<?php echo $header; ?><?php echo $menu; ?>
 <!-- Titlebar -->
 <div class="single-page-header" data-background-image="catalog/default/images/single-task.jpg">
 <div class="container">
