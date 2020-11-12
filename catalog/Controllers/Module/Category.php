@@ -16,15 +16,17 @@ class Category extends \Catalog\Controllers\BaseController
         $data['categories'] = [];
 
         $categoryModel = new CategoryModel();
+        $seoUrl = service('seo_url');
 
         $results = $categoryModel->getCategories($filter_data);
 
         foreach ($results as $result) {
+            $keyword = $seoUrl->getKeywordByQuery('category_id=' . $result['category_id']);
             $data['categories'][] = [
-                'name'     => $result['name'],
-                'total'    => $categoryModel->getTotalProjectsByCategoryId($result['category_id']),
-                'icon'     => $result['icon'],
-                'href'        => (route_to('projects') . '?gid=' . $result['category_id']) ? route_to('projects') . '?gid=' . $result['category_id'] : base_url('project/project?gid=' . $result['category_id']),
+                'name'  => $result['name'],
+                'total' => $categoryModel->getTotalProjectsByCategoryId($result['category_id']),
+                'icon'  => $result['icon'],
+                'href'  => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project?gid=' . $result['category_id']),
             ];
         }
 
