@@ -762,6 +762,8 @@ $(document).on('click', '.dropdown-menu', function (e) {
     /*  Cats sub-nav hack
     /*----------------------------------------------------*/
 	$(document).on('show.bs.dropdown', '#cats-navbar-dropdown', function(e) {
+		window.target = e.target;
+		console.log(e.target )
         var dropdown = $(e.target).find('.dropdown-menu');
          dropdown.appendTo('body');
         $(this).on('hidden.bs.dropdown', function () {
@@ -789,10 +791,13 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	        $this.removeClass(showClass);
 	        $this.find($dropdownToggle).attr("aria-expanded", "false");
 	        $dropdownMenu.on('mouseleave', function() {
-			   $dropdownMenu.removeClass(showClass);
+				$dropdownMenu.removeClass(showClass);
+				$dropdownMenu.appendTo($dropdown[0].outerHTML);
 			});
 	      }
+
 	    );
+
 	  } else {
 	    $dropdown.off("mouseenter mouseleave");
 	  }
