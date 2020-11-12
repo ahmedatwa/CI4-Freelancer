@@ -87,7 +87,7 @@
   </ul>
 </nav>
 <!-- Main Nav -->
- <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-light p-sm-0 bg-white border-bottom">
+ <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-light p-sm-0 bg-white">
   <div class="offcanvas-header p-2">  
     <button type="button" class="close btn-close" aria-label="Close">
       <span aria-hidden="true">&times;</span>

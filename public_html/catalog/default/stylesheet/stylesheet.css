@@ -14500,6 +14500,7 @@ body.offcanvas-active{
 	overflow-y: hidden;
 	width: 100%;
 }
+
 #navbar-header-category .nav-item {
 	white-space: nowrap;
 	text-overflow: ellipsis;

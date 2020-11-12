@@ -750,7 +750,14 @@ $(document).on('click', '.dropdown-menu', function (e) {
 		]
 	});
 
-
+	$('.navbar-slick-carousel').slick({
+		infinite: false,
+		slidesToShow: 7,
+		slidesToScroll: 2,
+		dots: false,
+		arrows: true,
+		
+	});
   	/*----------------------------------------------------*/
     /*  Cats sub-nav hack
     /*----------------------------------------------------*/
