@@ -28,6 +28,6 @@ return [
 // Help
 'help_project'      => '(Autocomplete)',
 'help_list' => 'Reviews given by either employers or freelancers',
-'help_form' => 'Approve the Feedback given by either Employer or Freelancer, otherwise it won\'t be visable in front-end',
+'help_form' => 'Approve/Moderate the Feedback given by either Employer or Freelancer, otherwise it won\'t be visable in front-end',
 ]
 ];
