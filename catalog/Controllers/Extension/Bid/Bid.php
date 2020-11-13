@@ -76,6 +76,15 @@ class Bid extends \Catalog\Controllers\BaseController
             $json['error'] = $this->validator->getErrors();
         }
 
+        $customerModel = new \Catalog\Models\Account\CustomerModel();
+
+        $balance = $customerModel->getBalanceByCustomerID($this->session->get('customer_id'));
+
+        // Emploer Balance Validation
+        if (($balance == 0) || $this->request->getPost('fee') > $balance) {
+              $json['error'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
+        }
+
         if (!$json) {
             
             if ($this->request->getPost('project_id') || $this->request->getPost('freelancer_id')) {

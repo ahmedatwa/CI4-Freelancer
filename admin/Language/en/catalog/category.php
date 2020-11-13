@@ -33,9 +33,11 @@ return [
 'entry_layout'           => 'Layout Override',
 'entry_icon'             => 'Icon',
 // Help
-'help_filter'            => '(Autocomplete)',
-'help_icon'              => 'visit fontawesome.com for more icons',
-'help_top'               => 'Display in the top menu bar. Only works for the top parent categories.',
-'help_column'            => 'Number of columns to use for the bottom 3 categories. Only works for the top parent categories.',
+'help_list'   => 'Manage Categories also known as skills for freelancers',
+'help_form'   => 'Add required Fields, from Data Tab choose the icon (display as image), select the parent if its a sub-category',
+'help_filter' => '(Autocomplete)',
+'help_icon'   => 'visit fontawesome.com for more icons',
+'help_top'    => 'Display in the top menu bar. Only works for the top parent categories.',
+'help_column' => 'Number of columns to use for the bottom 3 categories. Only works for the top parent categories.',
 ],
 ];

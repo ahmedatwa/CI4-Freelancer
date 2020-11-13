@@ -21,6 +21,7 @@
 	</div>
 	<!-- Page Heaedr End -->
 	<div class="container-fluid">
+		<div class="alert alert-info" role="alert"><i class="fas fa-info-circle"></i> <?php echo $help_form; ?></div>
 		<?php if ($error_warning){ ?>
 			<div class="alert alert-danger alert-dismissible fade show" role="alert">
 				<i class="fas fa-exclamation-triangle"></i> <?php echo $error_warning; ?>

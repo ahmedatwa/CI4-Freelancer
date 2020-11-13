@@ -28,7 +28,7 @@ return [
 	'column_date_modified' => 'Date Modified',
 	'column_comment'       => 'Comment',
 	'column_action'        => 'Action',
-	'column_notify'        => 'Customer Notified',
+	'column_notify'        => 'Notified',
 	
 	// Entry
 	'entry_customer'       => 'Customer',
@@ -36,11 +36,14 @@ return [
 	'entry_return_reason'  => 'Dispute Reason',
 	'entry_dispute_action' => 'Dispute Action',
 	'entry_dispute_status' => 'Dispute Status',
-	'entry_notify'         => 'Notify Customers',
+	'entry_notify'         => 'Notify',
 	'entry_comment'        => 'Comment',
 	'entry_return_id'      => 'Dispute ID',
 	'entry_date_added'     => 'Date Added',
 	'entry_date_modified'  => 'Date Modified',
+	// Help
+	'help_list' => 'List of All Disputs Raised by either Freelancer or Employer, go to Systm->Localisation->Dispute to add more actions/statuses',
+	'help_form' => 'Update the Dispute Action Taken, then send status update to both Employer/Freelancer by ticking notify checkbox',
 
  ]
 ];

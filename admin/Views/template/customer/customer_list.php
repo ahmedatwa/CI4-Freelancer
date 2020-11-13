@@ -20,6 +20,7 @@
   </div>
 </div> <!-- Page Heaedr End -->
 <div class="container-fluid mb-3"> <!-- Search ./ -->
+    <div class="alert alert-info" role="alert"><i class="fas fa-info-circle"></i> <?php echo $help_list; ?></div>
   <div class="card">
       <div class="card-body row">
         <div class="col-6">

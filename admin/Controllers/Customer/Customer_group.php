@@ -1,10 +1,12 @@
 <?php namespace Admin\Controllers\Customer;
 
+use \Admin\Models\Customer\Customers_group;
+
 class Customer_group extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->customers_group = new \Admin\Models\Customer\Customers_group();
+        $customersGroupModel = new Customers_group();
 
         $this->document->setTitle(lang('customer/customer_group.list.heading_title'));
 
@@ -15,11 +17,11 @@ class Customer_group extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('customer/customer_group.list.text_add'));
 
-        $this->customers_group = new \Admin\Models\Customer\Customers_group();
+        $customersGroupModel = new Customers_group();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->customers_group->addCustomerGroup($this->request->getPost());
-            return redirect()->to(base_url('index.php/customer/customer_group?user_token=' . $this->session->get('user_token')))
+            $customersGroupModel->addCustomerGroup($this->request->getPost());
+            return redirect()->to(base_url('index.php/customer/customer_group?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('customer/customer_group.text_success'));
         }
         $this->getForm();
@@ -29,11 +31,11 @@ class Customer_group extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('customer/customer_group.list.text_edit'));
 
-        $this->customers_group = new \Admin\Models\Customer\Customers_group();
+        $customersGroupModel = new Customers_group();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->customers_group->editCustomerGroup($this->request->getVar('customer_group_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/customer/customer_group?user_token=' . $this->session->get('user_token')))
+            $customersGroupModel->editCustomerGroup($this->request->getVar('customer_group_id'), $this->request->getPost());
+            return redirect()->to(base_url('index.php/customer/customer_group?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('customer/customer_group.text_success'));
         }
         $this->getForm();
@@ -43,15 +45,15 @@ class Customer_group extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $this->customers_group = new \Admin\Models\Customer\Customers_group();
+        $customersGroupModel = new Customers_group();
    
         $this->document->setTitle(lang('customer/customer_group.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $customer_group_id) {
-                $this->customers_group->deleteCustomerGroup($customer_group_id);
+                $customersGroupModel->deleteCustomerGroup($customer_group_id);
                 $json['success'] = lang('customer/customer_group.text_success');
-                $json['redirect'] = 'index.php/customer/customer_group?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/customer/customer_group?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('user/user.error_permission');
@@ -65,12 +67,12 @@ class Customer_group extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('customer/customer_group.list.heading_title'),
-            'href' => base_url('index.php/customer/customer_group?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/customer/customer_group?user_token=' . $this->request->getVar('user_token')),
         ];
 
         // Data
@@ -80,19 +82,22 @@ class Customer_group extends \Admin\Controllers\BaseController
         ];
 
         $data['customer_groups'] = [];
-        $results = $this->customers_group->getCustomerGroups($filter_data);
+
+        $customersGroupModel = new Customers_group();
+
+        $results = $customersGroupModel->getCustomerGroups($filter_data);
 
         foreach ($results as $result) {
             $data['customer_groups'][] = [
                 'customer_group_id' => $result['customer_group_id'],
                 'name'              => $result['name'],
                 'sort_order'        => $result['sort_order'],
-                'edit'              => base_url('index.php/customer/customer_group/edit?user_token=' . $this->session->get('user_token') . '&customer_group_id=' . $result['customer_group_id']),
+                'edit'              => base_url('index.php/customer/customer_group/edit?user_token=' . $this->request->getVar('user_token') . '&customer_group_id=' . $result['customer_group_id']),
             ];
         }
 
-        $data['add'] = base_url('index.php/customer/customer_group/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/customer/customer_group/delete?user_token=' . $this->session->get('user_token'));
+        $data['add'] = base_url('index.php/customer/customer_group/add?user_token=' . $this->request->getVar('user_token'));
+        $data['delete'] = base_url('index.php/customer/customer_group/delete?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -121,22 +126,22 @@ class Customer_group extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('customer/customer_group.list.heading_title'),
-            'href' => base_url('index.php/customer/customer_group/save?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/customer/customer_group/save?user_token=' . $this->request->getVar('user_token')),
         ];
 
-        $data['text_form'] = !$this->request->getGet('customer_group_id') ? lang('customer/customer_group.list.text_add') : lang('customer/customer_group.list.text_edit');
+        $data['text_form'] = !$this->request->getVar('customer_group_id') ? lang('customer/customer_group.list.text_add') : lang('customer/customer_group.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/customer/customer_group?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/customer/customer_group?user_token=' . $this->request->getVar('user_token'));
 
-        if (!$this->request->getGet('customer_group_id')) {
-            $data['action'] = base_url('index.php/customer/customer_group/add?user_token=' . $this->session->get('user_token'));
+        if (!$this->request->getVar('customer_group_id')) {
+            $data['action'] = base_url('index.php/customer/customer_group/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/customer/customer_group/edit?user_token=' . $this->session->get('user_token') . '&customer_group_id=' . $this->request->getGet('customer_group_id'));
+            $data['action'] = base_url('index.php/customer/customer_group/edit?user_token=' . $this->request->getVar('user_token') . '&customer_group_id=' . $this->request->getVar('customer_group_id'));
         }
 
         if ($this->session->getFlashdata('error_warning')) {
@@ -145,14 +150,16 @@ class Customer_group extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        if ($this->request->getGet('customer_group_id') && ($this->request->getMethod() != 'post')) {
-            $customer_group_info = $this->customers_group->getCustomerGroup($this->request->getGet('customer_group_id'));
+        $customersGroupModel = new Customers_group();
+
+        if ($this->request->getVar('customer_group_id') && ($this->request->getMethod() != 'post')) {
+            $customer_group_info = $this->customers_group->getCustomerGroup($this->request->getVar('customer_group_id'));
         }
 
         if ($this->request->getPost('customer_group_description')) {
             $data['customer_group_description'] = $this->request->getPost('customer_group_description');
         } elseif ($this->request->getVar('customer_group_id')) {
-            $data['customer_group_description'] = $this->customers_group->getCustomerGroupDescriptions($this->request->getVar('customer_group_id'));
+            $data['customer_group_description'] = $customersGroupModel->getCustomerGroupDescriptions($this->request->getVar('customer_group_id'));
         } else {
             $data['customer_group_description'] = [];
         }
@@ -174,9 +181,9 @@ class Customer_group extends \Admin\Controllers\BaseController
 
     protected function validateForm()
     {
-        foreach ($this->request->getPost('freelancer_group_description') as $language_id => $value) {
+        foreach ($this->request->getPost('customer_group_description') as $language_id => $value) {
             if (! $this->validate([
-            "freelancer_group_description.{$language_id}.name" => [
+            "customer_group_description.{$language_id}.name" => [
                 'label' => 'Group Name',
                 'rules' => 'required|min_length[3]'
             ],
@@ -186,7 +193,7 @@ class Customer_group extends \Admin\Controllers\BaseController
             }
         }
 
-        if (! $this->user->hasPermission('modify', $this->getRoute())) {
+        if (! $this->user->hasPermission('modify', 'customer/customer_group')) {
             $this->session->setFlashdata('error_warning', lang('customer/customer_group.error_permission'));
             return false;
         }
@@ -195,7 +202,7 @@ class Customer_group extends \Admin\Controllers\BaseController
     
     protected function validateDelete()
     {
-        if (!$this->user->hasPermission('modify', $this->getRoute())) {
+        if (!$this->user->hasPermission('modify', 'customer/customer_group')) {
             $this->session->setFlashdata('error_warning', lang('customer/customer_group.error_permission'));
             return false;
         }

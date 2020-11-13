@@ -53,7 +53,7 @@ class customers extends \CodeIgniter\Model
         $builder = $this->db->table('customer c');
         $builder->select('c.customer_id, CONCAT(c.firstname, " ", c.lastname) AS name, c.email, c.status, c.ip, cgd.name AS customer_group, c.date_added, c.customer_group_id');
         $builder->join('customer_group_description cgd', 'c.customer_group_id = cgd.customer_group_id', 'left');
-        $builder->where('cgd.language_id', \Admin\Libraries\Registry::get('config_language_id'));
+        $builder->where('cgd.language_id', service('registry')->get('config_language_id'));
         
         if (!empty($data['filter_name'])) {
             $builder->like('CONCAT(c.firstname, " ", c.lastname)', $data['filter_name'], 'after');

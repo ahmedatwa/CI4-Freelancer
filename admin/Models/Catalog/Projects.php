@@ -7,6 +7,7 @@ class Projects extends \CodeIgniter\Model
     protected $returnType     = 'array';
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
+    protected $allowedFields = ['status_id'];
     // User Activity Events
     protected $afterInsert = ['afterInsertEvent'];
     protected $afterUpdate = ['afterUpdateEvent'];

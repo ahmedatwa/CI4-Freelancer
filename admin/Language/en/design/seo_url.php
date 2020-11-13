@@ -22,6 +22,8 @@ return [
 'entry_keyword'    => 'Keyword',
 'entry_store'      => 'Store',
 'entry_language'   => 'Language',
+// Help
+'help_list' => 'SEO URLs are used to create friendly URLs for serach engines, for broken URLs add at from here, otherwise leave it.'
 
 ],
 

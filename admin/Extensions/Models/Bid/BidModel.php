@@ -55,6 +55,10 @@ class BidModel extends \CodeIgniter\Model
                 'type' =>'INT',
                 'constraint' => 11,
         ],
+        'employer_id' => [
+                'type' =>'INT',
+                'constraint' => 11,
+        ],
         'quote' => [
                 'type' => 'DECIMAL',
                 'constraint' => 15,4,
@@ -70,6 +74,9 @@ class BidModel extends \CodeIgniter\Model
         'accepted' => [
                 'type' => 'TINYINT',
                 'constraint' => 1,
+        ],
+        'description' => [
+                'type' => 'TEXT',
         ],
         'status' => [
                 'type' => 'TINYINT',

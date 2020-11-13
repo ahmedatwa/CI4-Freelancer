@@ -32,7 +32,7 @@ class Project extends \Admin\Controllers\BaseController
         $this->projects = new \Admin\Models\Catalog\Projects();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->projects->editProject($this->request->getGet('project_id'), $this->request->getPost());
+            $this->projects->update($this->request->getVar('project_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/catalog/project?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('catalog/project.text_success'));
         }
@@ -140,16 +140,16 @@ class Project extends \Admin\Controllers\BaseController
             'href' => base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token')),
         ];
 
-        $data['text_form'] = !$this->request->getGet('project_id') ? lang('catalog/project.list.text_add') : lang('catalog/project.list.text_edit');
+        $data['text_form'] = !$this->request->getVar('project_id') ? lang('catalog/project.list.text_add') : lang('catalog/project.list.text_edit');
 
         $data['cancel'] = base_url('index.php/catalog/project?user_token=' . $this->request->getVar('user_token'));
 
         $data['user_token'] = $this->request->getGet('user_token');
 
-        if (!$this->request->getGet('project_id')) {
+        if (!$this->request->getVar('project_id')) {
             $data['action'] = base_url('index.php/catalog/project/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id=' . $this->request->getGet('project_id'));
+            $data['action'] = base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id=' . $this->request->getVar('project_id'));
         }
 
         if ($this->session->getFlashdata('error_warning')) {
@@ -158,13 +158,13 @@ class Project extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        if ($this->request->getGet('project_id') && ($this->request->getMethod() != 'post')) {
-            $project_info = $this->projects->getProject($this->request->getGet('project_id'));
+        if ($this->request->getVar('project_id') && ($this->request->getMethod() != 'post')) {
+            $project_info = $this->projects->getProject($this->request->getVar('project_id'));
         }
 
         if ($this->request->getPost('project_description')) {
             $data['project_description'] = $this->request->getPost('project_description');
-        } elseif ($this->request->getGet('project_id')) {
+        } elseif ($this->request->getVar('project_id')) {
             $data['project_description'] = $this->projects->getProjectDescription($this->request->getVar('project_id'));
         } else {
             $data['project_description'] = [];
@@ -178,12 +178,12 @@ class Project extends \Admin\Controllers\BaseController
             $data['sort_order'] = '';
         }
 
-        if ($this->request->getPost('status')) {
-            $data['status'] = $this->request->getPost('status');
+        if ($this->request->getPost('status_id')) {
+            $data['status_id'] = $this->request->getPost('status_id');
         } elseif (!empty($project_info)) {
-            $data['status'] = $project_info['status'];
+            $data['status_id'] = $project_info['status_id'];
         } else {
-            $data['status'] = 1;
+            $data['status_id'] = 1;
         }
 
         if ($this->request->getPost('type')) {

@@ -91,5 +91,6 @@ return [
 'help_tracking'             => 'The tracking code that will be used to track referrals.',
 'help_commission'           => 'Percentage the affiliate receives on each order.',
 'help_points'               => 'Use minus to remove points',
+'help_list' => 'List of All registered Customers on site',
 ],
 ];

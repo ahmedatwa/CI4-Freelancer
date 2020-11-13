@@ -76,7 +76,7 @@ class Customers_group extends Model
             $description->insert($customer_group_description_data);
         }
     }
-    public function deleteCustomerGroup()
+    public function deleteCustomerGroup($customer_group_id)
     {
         $customer_group = $this->db->table('customer_group');
         $customer_group->delete(['customer_group_id' => $customer_group_id]);

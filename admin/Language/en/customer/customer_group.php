@@ -20,5 +20,6 @@ return [
 'entry_sort_order'  => 'Sort Order',
 // Help
 'help_approval'     => 'Customers must be approved by an administrator before they can login.',
+'help_list' => 'Customer Groups could be used in several ways, like sending emails to specific group.'
 ],
 ];

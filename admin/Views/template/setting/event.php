@@ -19,6 +19,7 @@
 </div>
 </div>
 <div class="container-fluid">
+    <div class="alert alert-info" role="alert"><i class="fas fa-info-circle"></i> <?php echo $help_list; ?></div>
     <?php if ($success) { ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?php echo $success; ?>

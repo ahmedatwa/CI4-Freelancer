@@ -20,6 +20,7 @@
   </div>
   <!-- Page Heaedr End -->
   <div class="container-fluid">
+    <div class="alert alert-info" role="alert"><i class="fas fa-info-circle"></i> <?php echo $help_list; ?></div>
     <div class="card">
         <div class="card-header"><i class="far fa-edit"></i> <?php echo $text_list; ?></div>
         <div class="card-body">

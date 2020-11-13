@@ -4,8 +4,8 @@
     <div class="page-header">
       <div class="container-fluid">
         <div class="float-right">
-            <a href="<?php echo $add; ?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="<?php echo $button_add; ?>"><i class="fas fa-plus"></i></a>
-            <button type="button" id="button-delete" data-toggle="tooltip" data-placement="top" class="btn btn-danger" title="<?php echo $button_delete;?>" disabled><i class="fa fa-trash"></i></button></div>
+<!--             <a href="<?php //echo $add; ?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="<?php //echo $button_add; ?>"><i class="fas fa-plus"></i></a>
+ -->            <button type="button" id="button-delete" data-toggle="tooltip" data-placement="top" class="btn btn-danger" title="<?php echo $button_delete;?>" disabled><i class="fa fa-trash"></i></button></div>
             <h1><?php echo $heading_title; ?> </h1>
             <nav aria-label="breadcrumb" id="breadcrumb">
              <ol class="breadcrumb">
@@ -19,6 +19,7 @@
   </div>
 </div>  <!-- Page Heaedr End -->
 <div class="container-fluid mb-3"> <!-- Search ./ -->
+ <div class="alert alert-info" role="alert"><i class="fas fa-info-circle"></i> <?php echo $help_list; ?></div>
   <div class="card">
       <div class="card-body row">
         <div class="col-6">

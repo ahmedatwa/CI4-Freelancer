@@ -19,5 +19,8 @@ return [
 	'entry_meta_keywords'    => 'Meta Tag Keywords',
 	'entry_sort_order'       => 'Sort Order',
 	'entry_bottom'           => 'Bottom',
+	// Help
+	'help_list' => 'Manage Static Pages to Display information about the site',
+	'help_form' => 'Fill the Form to add new Page, (Bottom) if chosen page will be diplayed in front-end Footer, otherwise will be displayed in Header',
    ],
 ];

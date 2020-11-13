@@ -21,6 +21,7 @@
 	</div>
 	<!-- Page Heaedr End -->
 	<div class="container-fluid">
+		<div class="alert alert-info" role="alert"><i class="fas fa-info-circle"></i> <?php echo $help_form; ?></div>
 		<?php if ($error_warning){ ?>
 			<div class="alert alert-danger alert-dismissible fade show" role="alert">
 				<i class="fas fa-exclamation-triangle"></i> <?php echo $error_warning; ?>
@@ -121,8 +122,8 @@
 							<div class="form-group row">
 								<label class="col-md-2 col-form-label"><?php echo $entry_status; ?></label>
 								<div class="col-md-10">
-									<select class="form-control" name="status">
-										<?php if ($status) { ?> 
+									<select class="form-control" name="status_id">
+										<?php if ($status_id) { ?> 
 											<option value="1" selected><?php echo $text_enabled; ?></option>
 											<option value="0"><?php echo $text_disabled; ?></option>
 										<?php } else { ?>

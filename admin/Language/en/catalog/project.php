@@ -37,5 +37,7 @@ return [
 	'entry_type'             => 'Type',
 	// Tabs
 	'tab_bid'                => 'Bids',
+	'help_list' => 'Delete or change status of project listed',
+	'help_form' => 'Only project status could be changed',
    ],
 ];
