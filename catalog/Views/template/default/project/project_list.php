@@ -221,9 +221,6 @@ selectionContainer: $('.keywords-list'),
 			alert(thrownError);
 		}
 	});
-
-
-    //location = '<?php //echo $action_filter; ?>?skills=' +  select_val.join('_');
   
 }).on('select2:unselect', function (e) {
 	  var select_val = $(e.currentTarget).val();
@@ -235,22 +232,18 @@ selectionContainer: $('.keywords-list'),
 		method: 'post',
 		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), clear: 'skills'},
 		beforeSend: function() {
-			//$('#overlay').fadeIn().delay(2000);
+			$('#overlay').fadeIn().delay(2000);
 		},
 		complete: function() {
-  		   // $('#overlay').fadeOut();
+  		    $('#overlay').fadeOut();
 		},
 		success: function(json) {
-			console.log(json)
-			//location = json['uri'];
+			location = json['uri'];
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError);
 		}
 	});
-
-	  //location = '<?php //echo $action_filter; ?>?skills=' +  select_val.join('_');
-
 });
 
 // <!-- // Filters -->
@@ -280,13 +273,11 @@ $('input[name^=\'filter_state\']').on('click', function() {
 			alert(thrownError);
 		}
 	});
-    
-    //location = '<?php //echo $action_filter; ?>?state=' + filter.join('_');
-});    
+ });    
 
 $('input[name^=\'filter_type\']').on('click', function() {
 
-     var filter = [];
+    var filter = [];
     
     $('input[name^=\'filter_type\']:checked').each(function(element) {
         filter.push(this.value);
@@ -310,15 +301,14 @@ $('input[name^=\'filter_type\']').on('click', function() {
 			alert(thrownError);
 		}
 	})
-
-    
-    //location = '<?php //echo $action_filter; ?>?type=' + filter.join('_');
 }); 
 
 // <!-- // Filter Budget -->
-var mySlider = $("input[name=\'filter_budget\']").slider();
+var mySlider = $("input[name=\'filter_budget\']").slider({
+	'tooltip': 'always',
+});
 
-mySlider.on('slide', function(e){
+mySlider.on('slideStop', function(e){
 	var filter = e.value;
 	
 	$.ajax({
@@ -339,8 +329,6 @@ mySlider.on('slide', function(e){
 			alert(thrownError);
 		}
 	});
-
-	//location = '<?php //echo $action_filter; ?>?budget=' + filter.join('_');
 });
 
 </script>
