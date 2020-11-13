@@ -156,7 +156,7 @@
 					<div class="text-center">
 						<div class="single-page-section">
 							<p class="lead mb-3">Not logged yet, please login to place bids</p>
-							<a href="<?php echo $login; ?>"role="button" class="button"><i class="fas fa-sign-in-alt"></i> Login</a>
+							<a href="<?php echo $login; ?>" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i> Login</a>
 						</div>
 					</div>
 				<?php } ?>
