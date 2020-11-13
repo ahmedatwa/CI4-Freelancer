@@ -25,7 +25,9 @@
 									</div>
 								</li>
 								<li><div class="verified-badge-with-title">Verified</div></li>
+								<?php if ($status != 'Expired') { ?>
 								<li><div class="verified-badge-with-title"><?php echo $status; ?></div></li>
+							    <?php } ?>
 							</ul>
 						</div>
 					</div>
