@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 13, 2020 at 09:07 AM
+-- Generation Time: Nov 13, 2020 at 12:19 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -573,7 +573,7 @@ CREATE TABLE `ci_customer` (
 --
 
 INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
-(1, 1, 'John', 'Duo', 'john-1', 'customer@customer.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 241, 1, 'f5ErHhyM8WPLj142Cackm9XDFTwIYuRnv3qi60Zp', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developers', 50, '', 1, '', '', '', '', '2020-09-20 12:44:02', '2020-10-26 19:36:31'),
+(1, 1, 'John', 'Duo', 'john-1', 'customer@customer.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 242, 1, 'f5ErHhyM8WPLj142Cackm9XDFTwIYuRnv3qi60Zp', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developers', 50, '', 1, '', '', '', '', '2020-09-20 12:44:02', '2020-10-26 19:36:31'),
 (20, 1, 'John2', 'Duo2', 'John-2', 'customer_2@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 129, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, '', 0, '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
 (21, 1, 'John3', 'Duo3', 'John-3', 'customer_3@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 1, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, '', 0, '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
 (22, 1, 'John2', 'Duo', 'John-4', 'mark@mark.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 8, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, '', 0, '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57');
@@ -719,7 +719,7 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 0, 'http://ci4.localhost/images/user-avatar-small-03.jpg', 'http://ci4.localhost/', '2020-11-13 08:04:23');
+('::1', 1, 'http://ci4.localhost/projects', 'http://ci4.localhost/freelancer/u1/john-1', '2020-11-13 11:19:30');
 
 -- --------------------------------------------------------
 
@@ -1449,14 +1449,20 @@ CREATE TABLE `ci_project` (
 --
 
 INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`) VALUES
-(1, 1, 0, '20.0000', '30.0000', 1, 5, 3, 155, '', 0, 5, 0, 0, '2020-10-03 12:44:26', '2020-10-03 12:44:26'),
+(1, 1, 0, '20.0000', '30.0000', 1, 5, 3, 157, '', 0, 5, 0, 0, '2020-10-03 12:44:26', '2020-10-03 12:44:26'),
 (2, 1, 0, '60.0000', '80.0000', 2, 8, 2, 142, '', 0, 5, 0, 0, '2020-10-22 21:57:56', '2020-10-03 12:45:22'),
 (41, 1, 20, '20.0000', '30.0000', 1, 5, 3, 188, '', 0, 5, 1, 0, '2020-11-12 19:14:30', '2020-10-27 19:14:30'),
 (3, 1, 0, '60.0000', '80.0000', 2, 8, 2, 103, '', 0, 5, 0, 0, '2020-10-22 21:57:56', '2020-10-03 12:45:22'),
 (42, 1, 0, '45.0000', '70.0000', 1, 6, 8, 0, '', 0, 5, 1, 0, '2020-11-02 20:02:23', '2020-11-02 20:02:23'),
 (43, 1, 0, '45.0000', '67.0000', 1, 5, 8, 0, '', 0, 5, 1, 0, '2020-11-02 20:04:01', '2020-11-02 20:04:01'),
 (44, 1, 0, '45.0000', '56.0000', 1, 4, 7, 1, '', 0, 5, 1, 0, '2020-11-02 20:06:54', '2020-11-02 20:06:54'),
-(45, 1, 0, '4.0000', '5.0000', 1, 5, 6, 40, '', 0, 8, 0, 0, '2020-11-12 16:53:59', '2020-11-12 16:53:59');
+(45, 1, 0, '4.0000', '5.0000', 1, 5, 6, 42, '', 0, 8, 0, 0, '2020-11-12 16:53:59', '2020-11-12 16:53:59'),
+(46, 1, 0, '23.0000', '45.0000', 1, 3, 3, 0, '', 0, 8, 0, 0, '2020-11-13 10:51:40', '2020-11-13 10:51:40'),
+(47, 1, 0, '34.0000', '66.0000', 1, 2, 1, 1, '', 0, 8, 0, 0, '2020-11-13 10:55:02', '2020-11-13 10:55:02'),
+(48, 1, 0, '33.0000', '66.0000', 1, 2, 2, 1, '', 0, 8, 0, 0, '2020-11-13 10:58:41', '2020-11-13 10:58:41'),
+(49, 1, 0, '333.0000', '55.0000', 1, 2, 2, 2, '', 0, 8, 0, 0, '2020-11-13 11:00:43', '2020-11-13 11:00:43'),
+(50, 1, 0, '444.0000', '666.0000', 1, 2, 2, 2, '', 0, 8, 0, 0, '2020-11-13 11:01:34', '2020-11-13 11:01:34'),
+(51, 1, 0, '44.0000', '55.0000', 1, 2, 2, 3, '', 0, 8, 0, 0, '2020-11-13 11:02:33', '2020-11-13 11:02:33');
 
 -- --------------------------------------------------------
 
@@ -1571,6 +1577,12 @@ CREATE TABLE `ci_project_description` (
 INSERT INTO `ci_project_description` (`project_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
 (1, 1, 'My First Test Project', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '', '', ''),
 (2, 1, 'My Second Test Project', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '', '', ''),
+(51, 1, 'What is Lorem Ipsum?5555', ' is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', '', '', ''),
+(50, 1, 'What is Lorem Ipsum?33333555555', ' is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', '', '', ''),
+(49, 1, 'What is Lorem Ipsum?3333344444444', ' is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', '', '', ''),
+(48, 1, 'What is Lorem Ipsum?33333444444', ' is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', '', '', ''),
+(47, 1, 'What is Lorem Ipsum?33333', ' is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', '', '', ''),
+(46, 1, 'What is Lorem Ipsum?', ' is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', '', '', ''),
 (45, 1, 'What is Lorem Ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n\r\n', '', '', ''),
 (44, 1, 'test another thing here', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.', '', '', ''),
 (43, 1, 'test the upload thing again', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.', '', '', ''),
@@ -1688,7 +1700,12 @@ INSERT INTO `ci_project_to_category` (`project_id`, `category_id`) VALUES
 (42, 1),
 (43, 1),
 (44, 1),
-(45, 1);
+(45, 1),
+(46, 1),
+(48, 1),
+(49, 1),
+(50, 1),
+(51, 1);
 
 -- --------------------------------------------------------
 
@@ -1893,7 +1910,13 @@ INSERT INTO `ci_seo_url` (`seo_url_id`, `site_id`, `language_id`, `query`, `keyw
 (111, 0, 1, 'category_id=25', 'angular-material'),
 (112, 0, 1, 'category_id=26', 'app-developer'),
 (113, 0, 1, 'category_id=27', 'bigcommerce'),
-(114, 0, 1, 'project_id=45', 'what-is-lorem-ipsum');
+(114, 0, 1, 'project_id=45', 'what-is-lorem-ipsum'),
+(115, 0, 1, 'project_id=46', 'what-is-lorem-ipsum'),
+(116, 0, 1, 'project_id=47', 'what-is-lorem-ipsum33333'),
+(117, 0, 1, 'project_id=48', 'what-is-lorem-ipsum33333444444'),
+(118, 0, 1, 'project_id=49', 'what-is-lorem-ipsum3333344444444'),
+(119, 0, 1, 'project_id=50', 'what-is-lorem-ipsum33333555555'),
+(120, 0, 1, 'project_id=51', 'what-is-lorem-ipsum5555');
 
 -- --------------------------------------------------------
 
@@ -2030,7 +2053,11 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('6bad372309059a054b614f362bbdcd24e3af96d0', '::1', 1605253863, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235333836333b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
 ('652b1a0acf9edefddb9a12fd90351653a09284ff', '::1', 1605254174, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235343137343b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
 ('404a5890ad27e4db7f07317d087e48dc75bb5ab6', '::1', 1605254485, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235343438353b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
-('ed0c3cc1fb801a3c26a5cdf4af1401121ea7fd3d', '::1', 1605254605, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235343438353b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b);
+('ed0c3cc1fb801a3c26a5cdf4af1401121ea7fd3d', '::1', 1605255400, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235353430303b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('0e92bcd7c5c379628aa7a34af4fbe96bf8502d07', '::1', 1605255702, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235353730323b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('d7f2cab3681ec1330bbe8eb3e63284aeb1f52b8f', '::1', 1605256008, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235363030383b5f63695f70726576696f75735f75726c7c733a39313a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f626c6f672f706f73743f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('821e32510e2a4251c5bd76e9f36e28874f0c872f', '::1', 1605256073, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235363030383b5f63695f70726576696f75735f75726c7c733a39383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b31483526747970653d626c6f67223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('2659d7e689d9396bd2b71abb65b1db8f4548a66f', '::1', 1605264179, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353236343137393b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e67253246657874656e73696f6e223b);
 
 -- --------------------------------------------------------
 
@@ -3417,7 +3444,7 @@ ALTER TABLE `ci_module`
 -- AUTO_INCREMENT for table `ci_project`
 --
 ALTER TABLE `ci_project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `ci_project_award`
@@ -3495,7 +3522,7 @@ ALTER TABLE `ci_review`
 -- AUTO_INCREMENT for table `ci_seo_url`
 --
 ALTER TABLE `ci_seo_url`
-  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `ci_setting`
