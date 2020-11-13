@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 11, 2020 at 12:39 PM
+-- Generation Time: Nov 13, 2020 at 09:07 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -558,8 +558,8 @@ CREATE TABLE `ci_customer` (
   `about` text DEFAULT NULL,
   `tag_line` varchar(64) DEFAULT 'NULL',
   `rate` int(11) NOT NULL,
-  `online` tinyint(1) NOT NULL,
   `origin` varchar(64) NOT NULL,
+  `online` tinyint(1) NOT NULL,
   `github` varchar(50) NOT NULL,
   `linkedin` varchar(50) NOT NULL,
   `facebook` varchar(50) NOT NULL,
@@ -572,11 +572,11 @@ CREATE TABLE `ci_customer` (
 -- Dumping data for table `ci_customer`
 --
 
-INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `online`, `origin`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
-(1, 1, 'John', 'Duo', 'john-1', 'customer@customer.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 241, 1, 'f5ErHhyM8WPLj142Cackm9XDFTwIYuRnv3qi60Zp', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developers', 50, 1, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-26 19:36:31'),
-(20, 1, 'John2', 'Duo2', 'John-2', 'customer_2@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 129, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 0, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
-(21, 1, 'John3', 'Duo3', 'John-3', 'customer_3@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 1, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 0, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
-(22, 1, 'John2', 'Duo', 'John-4', 'mark@mark.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 8, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, 0, '', '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57');
+INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
+(1, 1, 'John', 'Duo', 'john-1', 'customer@customer.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 241, 1, 'f5ErHhyM8WPLj142Cackm9XDFTwIYuRnv3qi60Zp', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developers', 50, '', 1, '', '', '', '', '2020-09-20 12:44:02', '2020-10-26 19:36:31'),
+(20, 1, 'John2', 'Duo2', 'John-2', 'customer_2@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 129, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, '', 0, '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
+(21, 1, 'John3', 'Duo3', 'John-3', 'customer_3@demo.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 1, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, '', 0, '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57'),
+(22, 1, 'John2', 'Duo', 'John-4', 'mark@mark.com', '', '$2y$10$39XfFIWc8e5PZquTntt5a.EDeGQgT7lr2JeJhj5rPcmopMCQ44BH.', '', 8, 1, '', '', 0, 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.', 'IOS & Android Developer', 50, '', 0, '', '', '', '', '2020-09-20 12:44:02', '2020-10-25 18:53:57');
 
 -- --------------------------------------------------------
 
@@ -606,8 +606,8 @@ CREATE TABLE `ci_customer_deposit` (
   `balance_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `amount` decimal(15,4) NOT NULL,
-  `gateway` varchar(50) NOT NULL,
   `currency` varchar(30) NOT NULL,
+  `gateway` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
@@ -617,8 +617,8 @@ CREATE TABLE `ci_customer_deposit` (
 -- Dumping data for table `ci_customer_deposit`
 --
 
-INSERT INTO `ci_customer_deposit` (`balance_id`, `customer_id`, `amount`, `gateway`, `currency`, `status`, `date_added`, `date_modified`) VALUES
-(1, 1, '22.3000', '', 'EUR', 'completed', '2020-10-25 20:40:53', '0000-00-00 00:00:00');
+INSERT INTO `ci_customer_deposit` (`balance_id`, `customer_id`, `amount`, `currency`, `gateway`, `status`, `date_added`, `date_modified`) VALUES
+(1, 1, '22.3000', 'EUR', '', 'completed', '2020-10-25 20:40:53', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -637,7 +637,6 @@ CREATE TABLE `ci_customer_group` (
 --
 
 INSERT INTO `ci_customer_group` (`customer_group_id`, `approval`, `sort_order`) VALUES
-(1, 0, 1),
 (2, 1, 2);
 
 -- --------------------------------------------------------
@@ -658,8 +657,7 @@ CREATE TABLE `ci_customer_group_description` (
 --
 
 INSERT INTO `ci_customer_group_description` (`customer_group_id`, `language_id`, `name`, `description`) VALUES
-(1, 1, 'Freelancer', 'Freelancer'),
-(2, 1, 'Employer', 'Employer');
+(1, 1, 'Default', 'Default');
 
 -- --------------------------------------------------------
 
@@ -721,7 +719,7 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 0, 'http://ci4.localhost/freelancers', 'http://ci4.localhost/freelancers?rate=10&order_by=ASC', '2020-11-11 11:37:42');
+('::1', 0, 'http://ci4.localhost/images/user-avatar-small-03.jpg', 'http://ci4.localhost/', '2020-11-13 08:04:23');
 
 -- --------------------------------------------------------
 
@@ -922,7 +920,7 @@ CREATE TABLE `ci_dispute` (
 --
 
 INSERT INTO `ci_dispute` (`dispute_id`, `project_id`, `freelancer_id`, `employer_id`, `comment`, `dispute_status_id`, `dispute_reason_id`, `dispute_action_id`, `date_added`, `date_modified`) VALUES
-(1, 41, 20, 1, 'TEST dispute', 1, 1, 0, '2020-10-29 18:22:20', '2020-11-03 10:11:01');
+(1, 41, 20, 1, 'TEST dispute', 2, 1, 0, '2020-10-29 18:22:20', '2020-11-11 21:42:01');
 
 -- --------------------------------------------------------
 
@@ -965,7 +963,8 @@ CREATE TABLE `ci_dispute_history` (
 --
 
 INSERT INTO `ci_dispute_history` (`dispute_history_id`, `dispute_id`, `dispute_status_id`, `notify`, `comment`, `date_added`) VALUES
-(1, 1, 1, 1, 'ddd', '2020-11-03 10:11:01');
+(1, 1, 1, 1, 'ddd', '2020-11-03 10:11:01'),
+(2, 1, 2, 0, '', '2020-11-11 21:42:01');
 
 -- --------------------------------------------------------
 
@@ -1075,7 +1074,8 @@ INSERT INTO `ci_event` (`event_id`, `code`, `action`, `description`, `status`, `
 (18, 'project_milestone_create', 'Catalog\\Events\\Notification::createMilestone', '', 1, 0),
 (19, 'offer_accepted', 'Catalog\\Events\\Notification::winnerAccepted', '', 1, 0),
 (20, 'project_transfer_funds', 'Catalog\\Events\\Notification::freelancerPayment', '', 1, 0),
-(21, 'mail_payment', 'Catalog\\Events\\MailAlert::PaymentMail', 'Trigger the Activation Email for new Customers', 1, 0);
+(21, 'mail_payment', 'Catalog\\Events\\MailAlert::PaymentMail', 'Trigger the Activation Email for new Customers', 1, 0),
+(23, 'customer_dispute_notify', 'Admin\\Events\\Mail::customer_dispute_notify', 'Notify Customers About dispute status', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1097,9 +1097,7 @@ INSERT INTO `ci_extension` (`extension_id`, `type`, `code`) VALUES
 (75, 'project', 'bid'),
 (53, 'blogger', 'post'),
 (52, 'blogger', 'category'),
-(73, 'dashboard', 'activity'),
 (72, 'module', 'category'),
-(57, 'job', 'job'),
 (63, 'module', 'carousel'),
 (60, 'module', 'featured'),
 (64, 'module', 'html'),
@@ -1451,13 +1449,14 @@ CREATE TABLE `ci_project` (
 --
 
 INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`) VALUES
-(1, 1, 0, '20.0000', '30.0000', 1, 5, 3, 145, '', 0, 5, 0, 0, '2020-10-03 12:44:26', '2020-10-03 12:44:26'),
-(2, 1, 0, '60.0000', '80.0000', 2, 8, 2, 141, '', 0, 5, 0, 0, '2020-10-22 21:57:56', '2020-10-03 12:45:22'),
-(41, 1, 20, '20.0000', '30.0000', 1, 5, 3, 65, '', 0, 5, 1, 0, '2020-10-27 19:14:30', '2020-10-27 19:14:30'),
+(1, 1, 0, '20.0000', '30.0000', 1, 5, 3, 155, '', 0, 5, 0, 0, '2020-10-03 12:44:26', '2020-10-03 12:44:26'),
+(2, 1, 0, '60.0000', '80.0000', 2, 8, 2, 142, '', 0, 5, 0, 0, '2020-10-22 21:57:56', '2020-10-03 12:45:22'),
+(41, 1, 20, '20.0000', '30.0000', 1, 5, 3, 188, '', 0, 5, 1, 0, '2020-11-12 19:14:30', '2020-10-27 19:14:30'),
 (3, 1, 0, '60.0000', '80.0000', 2, 8, 2, 103, '', 0, 5, 0, 0, '2020-10-22 21:57:56', '2020-10-03 12:45:22'),
 (42, 1, 0, '45.0000', '70.0000', 1, 6, 8, 0, '', 0, 5, 1, 0, '2020-11-02 20:02:23', '2020-11-02 20:02:23'),
 (43, 1, 0, '45.0000', '67.0000', 1, 5, 8, 0, '', 0, 5, 1, 0, '2020-11-02 20:04:01', '2020-11-02 20:04:01'),
-(44, 1, 0, '45.0000', '56.0000', 1, 4, 7, 1, '', 0, 5, 1, 0, '2020-11-02 20:06:54', '2020-11-02 20:06:54');
+(44, 1, 0, '45.0000', '56.0000', 1, 4, 7, 1, '', 0, 5, 1, 0, '2020-11-02 20:06:54', '2020-11-02 20:06:54'),
+(45, 1, 0, '4.0000', '5.0000', 1, 5, 6, 40, '', 0, 8, 0, 0, '2020-11-12 16:53:59', '2020-11-12 16:53:59');
 
 -- --------------------------------------------------------
 
@@ -1496,10 +1495,12 @@ CREATE TABLE `ci_project_bids` (
   `bid_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `freelancer_id` int(11) NOT NULL,
+  `employer_id` int(11) NOT NULL,
   `quote` decimal(15,0) NOT NULL,
   `delivery` tinyint(1) NOT NULL,
   `selected` tinyint(1) NOT NULL,
   `accepted` tinyint(1) NOT NULL,
+  `description` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
@@ -1509,8 +1510,43 @@ CREATE TABLE `ci_project_bids` (
 -- Dumping data for table `ci_project_bids`
 --
 
-INSERT INTO `ci_project_bids` (`bid_id`, `project_id`, `freelancer_id`, `quote`, `delivery`, `selected`, `accepted`, `status`, `date_added`, `date_modified`) VALUES
-(1, 41, 20, '50', 3, 1, 1, 1, '2020-11-02 08:21:33', '2020-11-03 11:33:46');
+INSERT INTO `ci_project_bids` (`bid_id`, `project_id`, `freelancer_id`, `employer_id`, `quote`, `delivery`, `selected`, `accepted`, `description`, `status`, `date_added`, `date_modified`) VALUES
+(1, 41, 20, 0, '50', 3, 1, 1, '', 1, '2020-11-02 08:21:33', '2020-11-03 11:33:46'),
+(2, 0, 0, 0, '0', 0, 0, 0, '', 0, '2020-11-12 18:19:54', '0000-00-00 00:00:00'),
+(3, 0, 0, 0, '0', 0, 0, 0, '', 0, '2020-11-12 18:20:48', '0000-00-00 00:00:00'),
+(4, 0, 0, 0, '0', 0, 0, 0, '', 0, '2020-11-12 18:22:37', '0000-00-00 00:00:00'),
+(5, 0, 0, 0, '0', 0, 0, 0, '', 0, '2020-11-12 18:24:50', '0000-00-00 00:00:00'),
+(6, 0, 0, 0, '0', 0, 0, 0, '', 0, '2020-11-12 18:29:43', '0000-00-00 00:00:00'),
+(7, 0, 0, 0, '0', 0, 0, 0, '', 0, '2020-11-12 18:36:41', '0000-00-00 00:00:00'),
+(8, 45, 1, 0, '23', 2, 0, 0, 'esfafv', 1, '2020-11-12 18:43:26', '0000-00-00 00:00:00'),
+(9, 45, 1, 0, '23', 2, 0, 0, 'esfafv', 1, '2020-11-12 18:48:06', '0000-00-00 00:00:00'),
+(10, 45, 1, 0, '34', 3, 0, 0, 'rrrrr', 1, '2020-11-12 18:48:53', '0000-00-00 00:00:00'),
+(11, 45, 1, 0, '0', 3, 0, 0, 'dsfsaf', 1, '2020-11-12 18:49:54', '0000-00-00 00:00:00'),
+(12, 45, 1, 0, '34', 2, 0, 0, 'dfdfdfdff', 1, '2020-11-12 18:50:33', '0000-00-00 00:00:00'),
+(13, 45, 1, 0, '23', 2, 0, 0, 'adssdfsd', 1, '2020-11-12 18:52:24', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ci_project_bids_upgrade`
+--
+
+CREATE TABLE `ci_project_bids_upgrade` (
+  `upgrade_id` int(11) NOT NULL,
+  `bid_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `payer_id` int(11) NOT NULL,
+  `amount` decimal(15,4) NOT NULL,
+  `reason` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_project_bids_upgrade`
+--
+
+INSERT INTO `ci_project_bids_upgrade` (`upgrade_id`, `bid_id`, `project_id`, `payer_id`, `amount`, `reason`, `date_added`) VALUES
+(1, 13, 45, 1, '7.0000', 'Optional Upgrade', '2020-11-12 18:52:24');
 
 -- --------------------------------------------------------
 
@@ -1535,6 +1571,7 @@ CREATE TABLE `ci_project_description` (
 INSERT INTO `ci_project_description` (`project_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
 (1, 1, 'My First Test Project', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '', '', ''),
 (2, 1, 'My Second Test Project', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '', '', ''),
+(45, 1, 'What is Lorem Ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n\r\n', '', '', ''),
 (44, 1, 'test another thing here', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.', '', '', ''),
 (43, 1, 'test the upload thing again', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.', '', '', ''),
 (42, 1, 'test the upload thing ', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.', '', '', ''),
@@ -1563,10 +1600,17 @@ CREATE TABLE `ci_project_message` (
 --
 
 INSERT INTO `ci_project_message` (`message_id`, `project_id`, `sender_id`, `receiver_id`, `message`, `seen`, `date_added`, `date_modified`) VALUES
-(1, 0, 20, 1, 'Hi john-1, I noticed your profile and would like to offer you my project. We can discuss any details over chat.', 1, '2020-11-09 21:18:44', '2020-11-10 09:02:46'),
-(2, 1, 20, 1, 'hi John 1 again', 1, '2020-11-09 21:23:28', '2020-11-10 09:02:46'),
-(3, 1, 20, 1, 'hi john 2', 1, '2020-11-09 21:35:24', '2020-11-10 09:02:46'),
-(4, 1, 1, 1, 'hi john 1', 1, '2020-11-09 21:35:44', '2020-11-10 09:02:46');
+(1, 0, 20, 1, 'Hi john-1, I noticed your profile and would like to offer you my project. We can discuss any details over chat.', 1, '2020-11-09 21:18:44', '2020-11-11 20:57:49'),
+(2, 1, 20, 1, 'hi John 1 again', 1, '2020-11-09 21:23:28', '2020-11-11 20:57:49'),
+(3, 1, 20, 1, 'hi john 2', 1, '2020-11-09 21:35:24', '2020-11-11 20:57:49'),
+(4, 1, 1, 1, 'hi john 1', 1, '2020-11-09 21:35:44', '2020-11-11 20:57:49'),
+(5, 1, 1, 1, 'ggg', 1, '2020-11-11 12:45:43', '2020-11-11 20:57:49'),
+(6, 1, 1, 1, 'ggg', 1, '2020-11-11 12:45:56', '2020-11-11 20:57:49'),
+(7, 1, 1, 1, 'gg', 1, '2020-11-11 12:46:38', '2020-11-11 20:57:49'),
+(8, 1, 1, 1, 'ggg', 1, '2020-11-11 12:46:48', '2020-11-11 20:57:49'),
+(9, 1, 1, 1, 'hhh', 1, '2020-11-11 12:47:10', '2020-11-11 20:57:49'),
+(10, 1, 1, 1, 'ggg', 1, '2020-11-11 13:12:27', '2020-11-11 20:57:49'),
+(11, 1, 1, 1, 'ffff', 1, '2020-11-11 13:14:03', '2020-11-11 20:57:49');
 
 -- --------------------------------------------------------
 
@@ -1643,7 +1687,8 @@ INSERT INTO `ci_project_to_category` (`project_id`, `category_id`) VALUES
 (41, 1),
 (42, 1),
 (43, 1),
-(44, 1);
+(44, 1),
+(45, 1);
 
 -- --------------------------------------------------------
 
@@ -1750,6 +1795,22 @@ INSERT INTO `ci_project_to_upload` (`upload_id`, `project_id`, `freelancer_id`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ci_revenue`
+--
+
+CREATE TABLE `ci_revenue` (
+  `revenue_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `payer_id` int(11) NOT NULL,
+  `payer` varchar(50) NOT NULL,
+  `amount` decimal(15,4) NOT NULL,
+  `reason` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ci_review`
 --
 
@@ -1773,7 +1834,7 @@ CREATE TABLE `ci_review` (
 --
 
 INSERT INTO `ci_review` (`review_id`, `project_id`, `freelancer_id`, `employer_id`, `comment`, `rating`, `recommended`, `ontime`, `submitted_by`, `status`, `date_added`, `date_modified`) VALUES
-(1, 1, 20, 1, 'done', 5, 1, 1, 1, 0, '2020-11-03 21:45:26', '2020-11-03 21:45:26'),
+(1, 1, 20, 1, 'done', 5, 1, 1, 1, 1, '2020-11-03 21:45:26', '2020-11-11 21:35:55'),
 (2, 1, 20, 1, 'ttttt', 5, 1, 0, 20, 0, '2020-11-03 21:45:58', '2020-11-03 21:45:58');
 
 -- --------------------------------------------------------
@@ -1831,7 +1892,8 @@ INSERT INTO `ci_seo_url` (`seo_url_id`, `site_id`, `language_id`, `query`, `keyw
 (110, 0, 1, 'category_id=24', 'api'),
 (111, 0, 1, 'category_id=25', 'angular-material'),
 (112, 0, 1, 'category_id=26', 'app-developer'),
-(113, 0, 1, 'category_id=27', 'bigcommerce');
+(113, 0, 1, 'category_id=27', 'bigcommerce'),
+(114, 0, 1, 'project_id=45', 'what-is-lorem-ipsum');
 
 -- --------------------------------------------------------
 
@@ -1940,7 +2002,35 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('fbe7bf776820d1335c269799f50deb489f4f0e19', '::1', 1605006458, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353030363435383b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d7658343667566a42577a325a5975306e77456452624371783733445535466b4b223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227658343667566a42577a325a5975306e77456452624371783733445535466b4b223b),
 ('8695b94d05769f91c567dc6f630ae73380ee31a5', '::1', 1605006561, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353030363435383b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d7658343667566a42577a325a5975306e77456452624371783733445535466b4b223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227658343667566a42577a325a5975306e77456452624371783733445535466b4b223b),
 ('8e4855dd490e91513343b05be73b38f15bdf6481', '::1', 1605017912, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353031373931323b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d46347763677830384a39367342556a61797172597662315647445237704e4c4f223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2246347763677830384a39367342556a61797172597662315647445237704e4c4f223b),
-('569d47f97a15959586244c0735fe21d3ffb443f5', '::1', 1605017912, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353031373931323b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d46347763677830384a39367342556a61797172597662315647445237704e4c4f223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2246347763677830384a39367342556a61797172597662315647445237704e4c4f223b);
+('569d47f97a15959586244c0735fe21d3ffb443f5', '::1', 1605017912, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353031373931323b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d46347763677830384a39367342556a61797172597662315647445237704e4c4f223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2246347763677830384a39367342556a61797172597662315647445237704e4c4f223b),
+('c809a393bffa8fa15355d929b30ab6fa646c625a', '::1', 1605129133, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353132393133333b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b),
+('d529fc9a499da6a041ba2bb0201456ca224bb0b5', '::1', 1605129440, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353132393434303b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f70726f6a6563743f757365725f746f6b656e3d306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b),
+('1de2b62d0b06e37ca9c5b959f7d59ffda5df4d45', '::1', 1605129752, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353132393735323b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f70726f6a6563743f757365725f746f6b656e3d306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b),
+('854d1103a8845e7ed15f679522f70f3b200efa88', '::1', 1605130060, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353133303036303b5f63695f70726576696f75735f75726c7c733a38353a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f7265766965773f757365725f746f6b656e3d306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b),
+('8756f00b5c369e7dc82a695bc6dd8eccf99d3abe', '::1', 1605130396, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353133303339363b5f63695f70726576696f75735f75726c7c733a3130323a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f7265766965772f656469743f757365725f746f6b656e3d306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431267265766965775f69643d31223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b),
+('cdb67bfb669fd6ea61e68c2c516d05dbdb8ed7e4', '::1', 1605130700, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353133303730303b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f70726f6a6563743f757365725f746f6b656e3d306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b),
+('f3b82b5f28640bdbc76ba0ef10d8269a443e1fce', '::1', 1605130921, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353133303730303b5f63695f70726576696f75735f75726c7c733a3130343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f646973707574652f656469743f757365725f746f6b656e3d306b6e67546835624a57557334744f386a764e5a594c3956666d58477953643126646973707574655f69643d31223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22306b6e67546835624a57557334744f386a764e5a594c3956666d584779536431223b),
+('2b5a94b65d28850b72f9cfc3e80e272c15678a7d', '::1', 1605168405, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353136383430353b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f646973707574653f757365725f746f6b656e3d583876306c6f634e66415039625679435251554d7344544f6148365349336e57223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22583876306c6f634e66415039625679435251554d7344544f6148365349336e57223b),
+('18a20dd458792a1d4a784ee4766917b1d9f5e477', '::1', 1605169390, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353136393339303b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f646973707574653f757365725f746f6b656e3d583876306c6f634e66415039625679435251554d7344544f6148365349336e57223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22583876306c6f634e66415039625679435251554d7344544f6148365349336e57223b),
+('2299d317f7311bc1c6a3c66ba60ec3003f9cca7e', '::1', 1605169637, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353136393339303b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d583876306c6f634e66415039625679435251554d7344544f6148365349336e57223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22583876306c6f634e66415039625679435251554d7344544f6148365349336e57223b),
+('26543f6a7cd6f26185a4373b339f73ebc757c1b1', '::1', 1605186156, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353138363035353b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d414e66477a68466f6365486d6e5357304f445a50544a6b627372703264344967223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22414e66477a68466f6365486d6e5357304f445a50544a6b627372703264344967223b737563636573737c733a32373a22596f752068617665206d6f6469666965642053657474696e677321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
+('26086d32b4c689d7b4a60e7d11c960e8698d0d97', '::1', 1605211039, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353231313033393b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a36363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e6725324673657474696e67223b),
+('995a48fc5eafe94e55418d68b7f6aee1e72ee032', '::1', 1605211351, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353231313335313b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72793f757365725f746f6b656e3d704679546941766d373371596b5349475a6451666548314e423874367743626c223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22704679546941766d373371596b5349475a6451666548314e423874367743626c223b),
+('6ba6830b0ad5675430fab5697aff50a09a1819cd', '::1', 1605211694, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353231313639343b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f70726f6a6563743f757365725f746f6b656e3d704679546941766d373371596b5349475a6451666548314e423874367743626c223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22704679546941766d373371596b5349475a6451666548314e423874367743626c223b),
+('0a760ea6d3235858277f72f740fe941f378eb3e7', '::1', 1605212038, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353231323033383b5f63695f70726576696f75735f75726c7c733a3130343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f70726f6a6563742f656469743f757365725f746f6b656e3d704679546941766d373371596b5349475a6451666548314e423874367743626c2670726f6a6563745f69643d31223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22704679546941766d373371596b5349475a6451666548314e423874367743626c223b),
+('e52b48032737cb468226b60ef3b5f90df746bf8f', '::1', 1605212758, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353231323735383b5f63695f70726576696f75735f75726c7c733a39303a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f696e666f726d6174696f6e3f757365725f746f6b656e3d704679546941766d373371596b5349475a6451666548314e423874367743626c223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22704679546941766d373371596b5349475a6451666548314e423874367743626c223b),
+('22f234375624627b539a61b1d7bd3c93f5f7e9f5', '::1', 1605213072, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353231333037323b5f63695f70726576696f75735f75726c7c733a3130343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f646973707574652f656469743f757365725f746f6b656e3d704679546941766d373371596b5349475a6451666548314e423874367743626c26646973707574655f69643d31223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22704679546941766d373371596b5349475a6451666548314e423874367743626c223b),
+('be748ee0ab71be7ad91ef7ebbff95745fdf2a551', '::1', 1605213412, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353231333431323b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f6576656e743f757365725f746f6b656e3d704679546941766d373371596b5349475a6451666548314e423874367743626c223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22704679546941766d373371596b5349475a6451666548314e423874367743626c223b),
+('bbd5d357ebb95aebfe5245410c70e1d19c771672', '::1', 1605213733, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353231333733333b5f63695f70726576696f75735f75726c7c733a38353a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f73656f5f75726c3f757365725f746f6b656e3d704679546941766d373371596b5349475a6451666548314e423874367743626c223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22704679546941766d373371596b5349475a6451666548314e423874367743626c223b),
+('21b731376c059efa88c58036df9435b08874c6e5', '::1', 1605213874, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353231333733333b5f63695f70726576696f75735f75726c7c733a38353a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f73656f5f75726c3f757365725f746f6b656e3d704679546941766d373371596b5349475a6451666548314e423874367743626c223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22704679546941766d373371596b5349475a6451666548314e423874367743626c223b),
+('5f4f9b9e4c7157e79e1e9922b13639a4739808f9', '::1', 1605251839, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235313833393b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f646973707574653f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('af3229009e787a15220ed9ab6bb557aca8ef5fdb', '::1', 1605252242, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235323234323b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('81b5f590d592f0720f1c680ddd9c68352d9680c1', '::1', 1605252818, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235323831383b5f63695f70726576696f75735f75726c7c733a3131393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65725f67726f75702f656469743f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b31483526637573746f6d65725f67726f75705f69643d32223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('01c0e6b6096813e5de7e9397c756b74ef282342f', '::1', 1605253493, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235333439333b5f63695f70726576696f75735f75726c7c733a39343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65725f67726f75703f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('6bad372309059a054b614f362bbdcd24e3af96d0', '::1', 1605253863, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235333836333b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('652b1a0acf9edefddb9a12fd90351653a09284ff', '::1', 1605254174, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235343137343b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('404a5890ad27e4db7f07317d087e48dc75bb5ab6', '::1', 1605254485, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235343438353b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b),
+('ed0c3cc1fb801a3c26a5cdf4af1401121ea7fd3d', '::1', 1605254605, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353235343438353b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d616d4f414371583442497a446266633276334e7038736e37515264474b314835223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22616d4f414371583442497a446266633276334e7038736e37515264474b314835223b);
 
 -- --------------------------------------------------------
 
@@ -1962,54 +2052,53 @@ CREATE TABLE `ci_setting` (
 --
 
 INSERT INTO `ci_setting` (`setting_id`, `site_id`, `code`, `name`, `setting`, `serialized`) VALUES
-(450, 0, 'config', 'config_maintenance', '0', 0),
-(449, 0, 'config', 'config_instagram', 'https://www.instagram.com/yallafreelancers/', 0),
-(448, 0, 'config', 'config_linkedin', 'https://www.linkedin.com/in/yallafreelancers/', 0),
-(447, 0, 'config', 'config_pintrest', 'https://www.pinterest.com/yallafreelancers/', 0),
-(446, 0, 'config', 'config_twitter', 'https://twitter.com/yallfreelancer', 0),
-(445, 0, 'config', 'config_facebook', 'https://www.facebook.com/Yallafreelancer/', 0),
-(444, 0, 'config', 'config_processing_fee', '2.3', 0),
-(443, 0, 'config', 'config_freelancer_fee', '', 0),
-(442, 0, 'config', 'config_customer_online', '1', 0),
-(441, 0, 'config', 'config_customer_activity', '1', 0),
-(440, 0, 'config', 'config_project_expired_status', '5', 0),
-(439, 0, 'config', 'config_project_completed_status', '2', 0),
-(324, 0, 'dashboard_activity', 'dashboard_activity_sort_order', '0', 0),
-(323, 0, 'dashboard_activity', 'dashboard_activity_width', '6', 0),
-(322, 0, 'dashboard_activity', 'dashboard_activity_status', '1', 0),
-(438, 0, 'config', 'config_project_status_id', '8', 0),
-(365, 0, 'dashboard_online', 'dashboard_online_sort_order', '0', 0),
+(485, 0, 'config', 'config_instagram', 'https://www.instagram.com/yallafreelancers/', 0),
+(486, 0, 'config', 'config_maintenance', '0', 0),
+(484, 0, 'config', 'config_linkedin', 'https://www.linkedin.com/in/yallafreelancers/', 0),
+(483, 0, 'config', 'config_pintrest', 'https://www.pinterest.com/yallafreelancers/', 0),
+(482, 0, 'config', 'config_twitter', 'https://twitter.com/yallfreelancer', 0),
+(481, 0, 'config', 'config_facebook', 'https://www.facebook.com/Yallafreelancer/', 0),
+(480, 0, 'config', 'config_upgrade_highlight', '2', 0),
+(479, 0, 'config', 'config_upgrade_sponser', '5', 0),
+(478, 0, 'config', 'config_processing_fee', '2.3', 0),
+(474, 0, 'config', 'config_project_expired_status', '5', 0),
+(475, 0, 'config', 'config_customer_activity', '1', 0),
+(476, 0, 'config', 'config_customer_online', '1', 0),
+(477, 0, 'config', 'config_freelancer_fee', '', 0),
+(473, 0, 'config', 'config_project_completed_status', '2', 0),
+(456, 0, 'dashboard_online', 'dashboard_online_sort_order', '0', 0),
 (102, 0, 'wallet_extension', 'wallet_extension_status', '1', 0),
 (25, 0, 'blog_extension', 'blog_extension_status', '1', 0),
 (26, 0, 'customer_wallet', 'customer_wallet_status', '1', 0),
 (27, 0, 'job_extension', 'job_extension_status', '1', 0),
 (453, 0, 'module_category', 'module_category_status', '1', 0),
-(437, 0, 'config', 'config_login_attempts', '5', 0),
+(472, 0, 'config', 'config_project_status_id', '8', 0),
 (99, 0, 'extension_wallet', 'extension_wallet_status', '1', 0),
 (344, 0, 'module_featured', 'module_featured_status', '1', 0),
 (343, 0, 'module_featured', 'module_featured_limit', '8', 0),
 (340, 0, 'theme_default', 'theme_default_status', '1', 0),
 (338, 0, 'theme_default', 'theme_default_directory', 'default', 0),
-(436, 0, 'config', 'config_admin_limit', '20', 0),
-(435, 0, 'config', 'config_currency', 'EGP', 0),
-(433, 0, 'config', 'config_language_id', '1', 0),
-(434, 0, 'config', 'config_admin_language_id', '1', 0),
-(432, 0, 'config', 'config_telephone', '+00 000-00-000', 0),
-(431, 0, 'config', 'config_email', 'admin@admin.com', 0),
-(430, 0, 'config', 'config_address', '6th Forrest Ray, London - 10001 UK', 0),
-(429, 0, 'config', 'config_owner', 'Ahmed Atwa', 0),
+(471, 0, 'config', 'config_login_attempts', '5', 0),
+(470, 0, 'config', 'config_admin_limit', '20', 0),
+(468, 0, 'config', 'config_admin_language_id', '1', 0),
+(469, 0, 'config', 'config_currency', 'EGP', 0),
+(467, 0, 'config', 'config_language_id', '1', 0),
+(465, 0, 'config', 'config_email', 'admin@admin.com', 0),
+(466, 0, 'config', 'config_telephone', '+00 000-00-000', 0),
+(464, 0, 'config', 'config_address', '6th Forrest Ray, London - 10001 UK', 0),
 (339, 0, 'theme_default', 'theme_default_color', 'red.css', 0),
-(428, 0, 'config', 'config_name', 'YallaFreelancer', 0),
-(427, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
-(426, 0, 'config', 'config_theme', 'default', 0),
-(425, 0, 'config', 'config_meta_keyword', '', 0),
-(423, 0, 'config', 'config_meta_title', 'Yallafreelancer | Freelance Services Marketplace for Businesses in Egypt', 0),
-(424, 0, 'config', 'config_meta_description', 'Yallafreelancer mission is to change how the world works together. Yallafreelancer connects businesses with freelancers offering digital services in 300+ categories.', 0),
+(463, 0, 'config', 'config_owner', 'Ahmed Atwa', 0),
+(462, 0, 'config', 'config_name', 'YallaFreelancer', 0),
+(461, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
+(460, 0, 'config', 'config_theme', 'default', 0),
+(457, 0, 'config', 'config_meta_title', 'Yallafreelancer | Freelance Services Marketplace for Businesses in Egypt', 0),
+(458, 0, 'config', 'config_meta_description', 'Yallafreelancer mission is to change how the world works together. Yallafreelancer connects businesses with freelancers offering digital services in 300+ categories.', 0),
+(459, 0, 'config', 'config_meta_keyword', '', 0),
+(454, 0, 'dashboard_online', 'dashboard_online_width', '4', 0),
 (331, 0, 'extension_bid', 'extension_bid_status', '1', 0),
 (452, 0, 'module_freelancer', 'module_freelancer_status', '1', 0),
 (451, 0, 'module_freelancer', 'module_freelancer_limit', '8', 0),
-(363, 0, 'dashboard_online', 'dashboard_online_status', '1', 0),
-(364, 0, 'dashboard_online', 'dashboard_online_width', '6', 0);
+(455, 0, 'dashboard_online', 'dashboard_online_status', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -2614,7 +2703,9 @@ INSERT INTO `ci_user_activity` (`activity_id`, `user_id`, `key`, `data`, `ip`, `
 (15, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-09 08:46:26'),
 (16, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-10 09:37:12'),
 (17, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-10 11:07:28'),
-(18, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-10 14:15:38');
+(18, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186', '2020-11-10 14:15:38'),
+(19, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', '2020-11-11 21:06:53'),
+(20, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', '2020-11-12 13:00:57');
 
 -- --------------------------------------------------------
 
@@ -2979,6 +3070,12 @@ ALTER TABLE `ci_project_bids`
   ADD PRIMARY KEY (`bid_id`);
 
 --
+-- Indexes for table `ci_project_bids_upgrade`
+--
+ALTER TABLE `ci_project_bids_upgrade`
+  ADD PRIMARY KEY (`upgrade_id`);
+
+--
 -- Indexes for table `ci_project_description`
 --
 ALTER TABLE `ci_project_description`
@@ -3036,6 +3133,12 @@ ALTER TABLE `ci_project_to_milestone`
 --
 ALTER TABLE `ci_project_to_upload`
   ADD PRIMARY KEY (`upload_id`);
+
+--
+-- Indexes for table `ci_revenue`
+--
+ALTER TABLE `ci_revenue`
+  ADD PRIMARY KEY (`revenue_id`);
 
 --
 -- Indexes for table `ci_review`
@@ -3230,7 +3333,7 @@ ALTER TABLE `ci_dispute_action`
 -- AUTO_INCREMENT for table `ci_dispute_history`
 --
 ALTER TABLE `ci_dispute_history`
-  MODIFY `dispute_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `dispute_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ci_dispute_reason`
@@ -3254,7 +3357,7 @@ ALTER TABLE `ci_download`
 -- AUTO_INCREMENT for table `ci_event`
 --
 ALTER TABLE `ci_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `ci_extension`
@@ -3314,7 +3417,7 @@ ALTER TABLE `ci_module`
 -- AUTO_INCREMENT for table `ci_project`
 --
 ALTER TABLE `ci_project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `ci_project_award`
@@ -3326,13 +3429,19 @@ ALTER TABLE `ci_project_award`
 -- AUTO_INCREMENT for table `ci_project_bids`
 --
 ALTER TABLE `ci_project_bids`
-  MODIFY `bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `ci_project_bids_upgrade`
+--
+ALTER TABLE `ci_project_bids_upgrade`
+  MODIFY `upgrade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ci_project_message`
 --
 ALTER TABLE `ci_project_message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `ci_project_proposal`
@@ -3371,6 +3480,12 @@ ALTER TABLE `ci_project_to_upload`
   MODIFY `upload_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `ci_revenue`
+--
+ALTER TABLE `ci_revenue`
+  MODIFY `revenue_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `ci_review`
 --
 ALTER TABLE `ci_review`
@@ -3380,13 +3495,13 @@ ALTER TABLE `ci_review`
 -- AUTO_INCREMENT for table `ci_seo_url`
 --
 ALTER TABLE `ci_seo_url`
-  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `ci_setting`
 --
 ALTER TABLE `ci_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=454;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=487;
 
 --
 -- AUTO_INCREMENT for table `ci_university`
@@ -3410,7 +3525,7 @@ ALTER TABLE `ci_user`
 -- AUTO_INCREMENT for table `ci_user_activity`
 --
 ALTER TABLE `ci_user_activity`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `ci_user_group`
