@@ -39,7 +39,7 @@
 											<td><?php echo $project['status']; ?></td>
 											<td class="text-center">
 													<span data-toggle="tooltip" data-placement="top" title="Leave Feedback">
-													<buton type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#rateModal" data-freelancer="<?php echo $project['freelancer']; ?>" data-projectid="<?php echo $project['project_id']; ?>" data-freelancerid="<?php echo $project['freelancer_id']; ?>" data-employerid="<?php echo $project['employer_id']; ?>"><i class="far fa-thumbs-up"></i></button>
+													<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#rateModal" data-freelancer="<?php echo $project['freelancer']; ?>" data-projectid="<?php echo $project['project_id']; ?>" data-freelancerid="<?php echo $project['freelancer_id']; ?>" data-employerid="<?php echo $project['employer_id']; ?>"><i class="far fa-thumbs-up"></i></button>
 													</span>
 												</td>
 											</tr>
