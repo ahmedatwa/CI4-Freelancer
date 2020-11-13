@@ -48,7 +48,7 @@
 	</div>
 <div class="row">
 	<!-- Content -->
-	<div class="col-sm-12 col-md-9 mb-4 shadow p-3 mb-5 bg-white rounded">
+	<div class="col-sm-12 col-md-9 mb-4 shadow-sm p-3 mb-5 bg-white rounded">
 		<!-- Page Content -->
 		<div class="single-page-section">
 			<h3 class="margin-bottom-25"><?php echo $text_about; ?></h3>
