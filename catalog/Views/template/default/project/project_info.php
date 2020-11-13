@@ -153,8 +153,8 @@
 					</div>
 				</div>
 				<?php } else { ?>
-					<div class="col-sm-12 col-md-9 mb-4 p-4">
-						<div class="single-page-section text-center">
+					<div class="text-center">
+						<div class="single-page-section">
 							<p class="lead mb-3">Not logged yet, please login to place bids</p>
 							<a href="<?php echo $login; ?>"role="button" class="button"><i class="fas fa-sign-in-alt"></i> Login</a>
 						</div>
