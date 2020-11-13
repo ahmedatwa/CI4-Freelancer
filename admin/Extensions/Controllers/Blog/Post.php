@@ -1,10 +1,12 @@
 <?php namespace Extensions\Controllers\Blog;
 
+use \Extensions\Models\Blog\BlogModel;
+
 class Post extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->blogs = new \Extensions\Models\Blog\BlogModel();
+        $blogModel = new BlogModel();
 
         $this->document->setTitle(lang('blog/post.list.heading_title'));
 
@@ -15,10 +17,10 @@ class Post extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('blog/post.list.text_add'));
 
-        $this->blogs = new \Extensions\Models\Blog\BlogModel();
+        $blogModel = new BlogModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->blogs->addPost($this->request->getPost());
+            $blogModel->addPost($this->request->getPost());
             return redirect()->to(base_url('index.php/extensions/blog/post?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('blog/post.text_success'));
         }
@@ -29,10 +31,10 @@ class Post extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('blog/post.list.text_edit'));
 
-        $this->blogs = new \Extensions\Models\Blog\BlogModel();
+        $blogModel = new BlogModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->blogs->editPost($this->request->getVar('post_id'), $this->request->getPost());
+            $blogModel->editPost($this->request->getVar('post_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/extensions/blog/post?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('blog/post.text_success'));
         }
@@ -43,13 +45,13 @@ class Post extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $this->blogs = new \Extensions\Models\Blog\BlogModel();
+        $blogModel = new BlogModel();
    
         $this->document->setTitle(lang('blog/post.list.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $post_id) {
-                $this->blogs->delete($post_id);
+                $blogModel->delete($post_id);
                 $json['success'] = lang('blog/post.text_success');
                 $json['redirect'] = 'index.php/extensions/blog/post?user_token=' . $this->request->getVar('user_token');
             }
@@ -64,24 +66,27 @@ class Post extends \Admin\Controllers\BaseController
 
         // Breadcrumbs
         $data['breadcrumbs'] = [];
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('setting/extension.list.heading_title'),
             'href' => base_url('index.php/setting/extensions?user_token=' . $this->request->getVar('user_token')),
-        );
+        ];
 
         $data['breadcrumbs'][] = array(
-            'text' => lang('extension/blog/post.list.heading_title'),
+            'text' => lang('blog/post.list.heading_title'),
             'href' => base_url('index.php/extensions/blog/post?user_token=' . $this->request->getVar('user_token')),
         );
 
         // Data
-        $data['posts'] = array();
-        $results = $this->blogs->findAll($this->registry->get('config_admin_limit'));
+        $blogModel = new BlogModel();
+
+        $data['posts'] = [];
+
+        $results = $blogModel->findAll($this->registry->get('config_admin_limit'));
 
         foreach ($results as $result) {
             $data['posts'][] = array(
@@ -113,7 +118,7 @@ class Post extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
         $data['user_token'] = $this->request->getGet('user_token');
@@ -163,8 +168,10 @@ class Post extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
+        $blogModel = new BlogModel();
+        
         if ($this->request->getVar('post_id') && ($this->request->getMethod() != 'post')) {
-            $post_info = $this->blogs->find($this->request->getVar('post_id'));
+            $post_info = $blogModel->find($this->request->getVar('post_id'));
         }
 
         if ($this->request->getPost('user_id')) {
@@ -265,7 +272,7 @@ class Post extends \Admin\Controllers\BaseController
         }
             
         if (! $this->user->hasPermission('modify', 'extensions/blog/post')) {
-            $this->session->setFlashdata('error_warning', lang('extension/blog/post.error_permission'));
+            $this->session->setFlashdata('error_warning', lang('blog/post.error_permission'));
             return false;
         } 
 

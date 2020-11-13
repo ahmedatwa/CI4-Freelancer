@@ -102,7 +102,7 @@ class Bid extends \Admin\Controllers\BaseController
                 $data['extensions'][] = [
                     'name'       => lang('bid/' . strtolower($basename) . '.list.heading_title'),
                     'status'     => ($this->registry->get('extension_bid_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                    'install'    => base_url('index.php/extension/bid/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
+                    'install'    => base_url('index.php//bid/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/bid/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'installed'  => in_array(strtolower($basename), $installedExtensions),
                     'edit'       => base_url('index.php/extensions/bid/' . strtolower($basename) .'?user_token=' . $this->request->getVar('user_token')),

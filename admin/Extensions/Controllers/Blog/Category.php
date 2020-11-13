@@ -1,40 +1,42 @@
 <?php namespace Extensions\Controllers\Blog;
 
+use \Extensions\Models\Blog\BlogModel;
+
 class Category extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->blogs = new \Admin\Models\Extension\Blog\Blogs();
+        $blogModel = new BlogModel();
 
-        $this->document->setTitle(lang('extension/blog/category.list.heading_title'));
+        $this->document->setTitle(lang('blog/category.list.heading_title'));
 
         $this->getList();
     }
 
     public function add()
     {
-        $this->document->setTitle(lang('extension/blog/category.list.text_add'));
+        $this->document->setTitle(lang('blog/category.list.text_add'));
 
-        $this->blogs = new \Admin\Models\Extension\Blog\Blogs();
+        $blogModel = new BlogModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->blogs->addcategory($this->request->getPost());
+            $blogModel->addcategory($this->request->getPost());
             return redirect()->to(base_url('index.php/extension/blog/category?user_token=' . $this->session->get('user_token')))
-                             ->with('success', lang('extension/blog/category.text_success'));
+                             ->with('success', lang('blog/category.text_success'));
         }
         $this->getForm();
     }
 
     public function edit()
     {
-        $this->document->setTitle(lang('extension/blog/category.list.text_edit'));
+        $this->document->setTitle(lang('blog/category.list.text_edit'));
 
-        $this->blogs = new \Admin\Models\Extension\Blog\Blogs();
+        $blogModel = new BlogModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->blogs->editCategory($this->request->getVar('category_id'), $this->request->getPost());
+            $blogModel->editCategory($this->request->getVar('category_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/extension/blog/category?user_token=' . $this->session->get('user_token')))
-                             ->with('success', lang('extension/blog/category.text_success'));
+                             ->with('success', lang('blog/category.text_success'));
         }
         $this->getForm();
     }
@@ -43,18 +45,18 @@ class Category extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $this->blogs = new \Admin\Models\Extension\Blog\Blogs();
+        $blogModel = new BlogModel();
    
-        $this->document->setTitle(lang('extension/blog/category.list.heading_title'));
+        $this->document->setTitle(lang('blog/category.list.heading_title'));
 
         if ($this->request->getcategory('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $category_id) {
-                $this->blogs->deleteCategory($category_id);
-                $json['success'] = lang('extension/blog/category.text_success');
+                $blogModel->deleteCategory($category_id);
+                $json['success'] = lang('blog/category.text_success');
                 $json['redirect'] = 'index.php/extension/blog/category?user_token=' . $this->session->get('user_token');
             }
         } else {
-            $json['error_warning'] = lang('extension/blog/category.error_permission');
+            $json['error_warning'] = lang('blog/category.error_permission');
         }
         return $this->response->setJSON($json);
     }
@@ -70,20 +72,23 @@ class Category extends \Admin\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('setting/extension.list.heading_title'),
-            'href' => base_url('index.php/setting/extensions?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/setting/extensions?user_token=' . $this->request->getVar('user_token')),
         ];
+
         $data['breadcrumbs'][] = [
-            'text' => lang('extension/extensions/blog.list.heading_title'),
+            'text' => lang('extension/blog.list.heading_title'),
             'href' => base_url('index.php/setting/extensions/?user_token=' . $this->session->get('user_token') . '&type=blog'),
         ];
         $data['breadcrumbs'][] = [
-            'text' => lang('extension/blog/category.list.heading_title'),
+            'text' => lang('blog/category.list.heading_title'),
             'href' => base_url('index.php/extension/blog/category?user_token=' . $this->session->get('user_token')),
         ];
 
         // Data
+        $blogModel = new BlogModel();
+
         $data['categories'] = [];
-        $results = $this->blogs->getCategories($this->registry->get('config_admin_limit'));
+        $results =  $blogModel->getCategories($this->registry->get('config_admin_limit'));
 
         foreach ($results as $result) {
             $data['categories'][] = [
@@ -142,11 +147,11 @@ class Category extends \Admin\Controllers\BaseController
             'href' => base_url('index.php/setting/extensions/?user_token=' . $this->session->get('user_token') . '&type=blog'),
         ];
         $data['breadcrumbs'][] = [
-            'text' => lang('extension/blog/category.list.heading_title'),
+            'text' => lang('blog/category.list.heading_title'),
             'href' => base_url('index.php/extension/blog/category/edit?user_token=' . $this->session->get('user_token')),
         ];
 
-        $data['text_form'] = !$this->request->getVar('category_id') ? lang('extension/blog/category.list.text_add') : lang('extension/blog/category.list.text_edit');
+        $data['text_form'] = !$this->request->getVar('category_id') ? lang('blog/category.list.text_add') : lang('blog/category.list.text_edit');
 
         $data['cancel'] = base_url('index.php/extension/blog/category?user_token=' . $this->session->get('user_token'));
 
@@ -168,8 +173,10 @@ class Category extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
+        $blogModel = new BlogModel();
+        
         if ($this->request->getVar('category_id') && ($this->request->getMethod() != 'category')) {
-             $category_info = $this->blogs->getCategory($this->request->getVar('category_id'));
+             $category_info = $blogModel->getCategory($this->request->getVar('category_id'));
         }
 
         if ($this->request->getPost('name')) {

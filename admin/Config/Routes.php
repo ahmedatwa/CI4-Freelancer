@@ -55,6 +55,11 @@ $routes->group('extensions', ['namespace' => 'Extensions\Controllers'], function
     $routes->add('blog/post/add', 'Blog\Post::add');
     $routes->add('blog/post/edit', 'Blog\Post::edit');
     $routes->add('blog/post/delete', 'Blog\Post::delete');
+    // Categiry
+    $routes->add('blog/category', 'Blog\Category::index');
+    $routes->add('blog/category/add', 'Blog\Category::add');
+    $routes->add('blog/category/edit', 'Blog\Category::edit');
+    $routes->add('blog/category/delete', 'Blog\Category::delete');
 
 });
 
