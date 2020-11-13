@@ -192,7 +192,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	          $('#nav-user-main #message-list').append(html);
 	        }
 	    } else {
-	    	$('#nav-user-main #message-list').append('<p class="text-center p-4">No New Messages!</p>');
+	    	$('#nav-user-main #message-list').append('<p class="text-center p-3">No New Messages!</p>');
 	      }
 	    }
 	    });
