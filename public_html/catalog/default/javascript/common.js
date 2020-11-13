@@ -175,6 +175,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	      success: function(json) {
 	      	var html = '';
 
+	      	if (json.length > 0) {
 	          for (var i = 0; json.length > i; i++) {
 
 	           html = '<li class="notifications-not-read" id="'+json[i].message_id+'">';
@@ -190,7 +191,10 @@ $(document).on('click', '.dropdown-menu', function (e) {
 
 	          $('#nav-user-main #message-list').append(html);
 	        }
+	    } else {
+	    	$('#nav-user-main #message-list').append('<p class="text-center p-4">No New Messages!</p>');
 	      }
+	    }
 	    });
 	  }
     /*--------------------------------------------------*/
