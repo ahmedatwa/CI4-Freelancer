@@ -123,7 +123,25 @@
       <!-- Messages -->
       <ul class="navbar-nav">
             <li class="nav-item ml-3 d-none d-lg-block">
-             <div class="header-notifications">
+            <div class="header-notifications" id="header-notifications">
+            <!-- Trigger -->
+            <div class="header-notifications-trigger">
+              <a href="#"><i class="icon-feather-bell" id="notifications-count"></i></a>
+            </div>
+            <!-- Dropdown -->
+            <div class="header-notifications-dropdown">
+              <div class="header-notifications-headline">
+                <h4>Notifications</h4>
+              </div>
+
+              <div class="header-notifications-content">
+                <div class="header-notifications-scroll">
+                 <ul id="notifications-list"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+             <div class="header-notifications" id="header-messages">
               <div class="header-notifications-trigger">
                <a href="#"><i class="icon-feather-mail" id="message-count"></i></a>
              </div>

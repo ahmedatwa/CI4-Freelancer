@@ -197,6 +197,12 @@ class ProjectModel extends \CodeIgniter\Model
             $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
         }
 
+        // Dshboard Projects
+        if (isset($data['status_id']) && !empty($data['status_id'])) {
+            $status_id = explode(',', $data['status_id']);
+            $builder->whereIn('p.status_id', $status_id);
+        }
+
         // Budget Filter 
         if (isset($data['filter_budget']) && !empty($data['filter_budget'])) {
             $parts  = explode('_', $data['filter_budget']);
@@ -226,7 +232,7 @@ class ProjectModel extends \CodeIgniter\Model
         if (isset($data['sort_by']) && in_array('p.' . $data['sort_by'], $sortData)) {
             $builder->orderBy($data['sort_by'], $data['order_by']);
         } else {
-            $builder->orderBy('p.date_added', 'ASC');
+            $builder->orderBy('p.date_added', 'DESC');
         }
 
         if (isset($data['start']) || isset($data['limit'])) {

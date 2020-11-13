@@ -152,15 +152,62 @@ $(document).on('click', '.dropdown-menu', function (e) {
         }
     });
  }totalUnseen();
+// get Live Notification Alerts
+function totalNotifications(data) {
+   $.ajax({
+      url: 'account/notifications/getTotalNotifications',
+      dataType: 'json',
+      success: function(json) {
+          if (json['total']) {
+               $('#notifications-count').html('<span>' + json['total'] + '</span>');
+           } 
+        }
+    });
+ }totalNotifications();
 
 	setInterval(function(){
 	   totalUnseen();
+	   totalNotifications();
 	}, 5000);
 
-	$('#nav-user-main .header-notifications').on('click', function() {
+	$('#nav-user-main #header-messages').on('click', function() {
 	  loadMessages();
 	});
-	 
+	$('#nav-user-main #header-notifications').on('click', function() {
+	  loadNotifications();
+	});
+	
+	// Check for new Notifications
+	function loadNotifications() {
+	   $.ajax({
+	      url: 'account/notifications/getNotifications',
+	      dataType: 'json',
+	      beforeSend: function() {
+	          $('#message-list').html('<p class="text-center m-3"><div class="spinner-grow text-info" role="status"><span class="sr-only">Loading...</span></div></p>');
+	          $('#message-count').html('');
+	      },
+	      complete: function () {
+	          $('.spinner-grow').remove();
+	      },
+	      success: function(json) {
+	      	var html = '';
+
+	      	if (json.length > 0) {
+	          for (var i = 0; json.length > i; i++) {
+	           html = '<li class="notifications-not-read p-3">';
+	           html += '<span class="notification-icon"><i class="icon-material-outline-group"></i></span>';
+	           html +=' <span class="notification-text"> ' + json[i].comment + '</span>';
+	           html +=' </li>';
+
+	          $('#nav-user-main #notifications-list').append(html);
+	        }
+	    } else {
+	    	$('#nav-user-main #notifications-list').append('<p class="text-center p-3">No New Notifications!</p>');
+	      }
+	    }
+	    });
+	  }
+	// check for new Messages
 	function loadMessages() {
 	   $.ajax({
 	      url: 'common/header/getMessages',

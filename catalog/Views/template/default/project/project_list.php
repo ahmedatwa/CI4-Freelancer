@@ -126,7 +126,7 @@
 									<ul class="task-icons">
 										<li><i class="icon-material-outline-access-time"></i> <?php echo $project['date_added']; ?></li>
 									</ul>
-									<p class="task-listing-text"><?php echo $project['description']; ?></p>
+									<p class="col task-listing-text text-wrap"><?php echo $project['description']; ?></p>
 									<?php if ($project['meta_keyword']) { ?>
 										<div class="task-tags">
 											<?php foreach ($project['meta_keyword'] as $meta_keyword) { ?>

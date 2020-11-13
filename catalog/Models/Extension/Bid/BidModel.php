@@ -99,7 +99,7 @@ class BidModel extends \CodeIgniter\Model
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($bid_data);
         // trigger Bid Emailto Employer
-        \CodeIgniter\Events\Events::trigger('mail_bid_add', $data);
+        \CodeIgniter\Events\Events::trigger('project_bid_add', $data);
 
         if (isset($data['fee'])) {
             

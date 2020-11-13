@@ -129,7 +129,6 @@ class Message extends \Catalog\Controllers\BaseController
         $json = ['total' => $total];
         
         return $this->response->setJSON($json);
-
     }
 
     public function sendMessage()

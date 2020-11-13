@@ -338,14 +338,13 @@ button.mark-as-read:hover {
 .header-notifications-content ul li a {
 	color: #666;
 	position: relative;
-	padding: 22px 25px;
-	display: block;
+	display: inline-block;
 }
 
 .header-notifications-content p { margin: 0; padding: 0; }
 
 .header-notifications-content ul li a {
-	display: flex;
+	display: inline-block;
 	flex-wrap: wrap;
 	align-items: center;
 }

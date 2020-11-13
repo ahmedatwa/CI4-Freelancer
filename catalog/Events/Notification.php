@@ -66,6 +66,20 @@ class Notification
         $activityModel->addActivity('project_milestone_create', $activity_data);
     }
 
+    // Catalog\Models\Extensions\Bid\BidModel::insertMilestone
+    public static function addBid(array $data = [])
+    {
+        $activityModel = new ActivityModel();
+
+        $activity_data = [
+            'customer_id' => 0,
+            'project_id'  => $data['project_id'],
+            'employer_id'  => $data['employer_id'],
+        ];
+
+        $activityModel->addActivity('project_bid_add', $activity_data);
+    }
+
 
     // --------------------------------------------------
 }

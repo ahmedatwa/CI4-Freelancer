@@ -385,7 +385,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $results = $bidModel->getBids($filter_data);
         $total = $bidModel->getTotalBidsByProjectId($project_id);
-        $reviewModel = new \Catalog\Models\Catalog\ReviewModel();
+        $reviewModel = new \Catalog\Models\Account\ReviewModel();
 
 
         foreach ($results as $result) {

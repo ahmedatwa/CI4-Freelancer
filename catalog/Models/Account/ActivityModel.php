@@ -1,9 +1,7 @@
 <?php namespace Catalog\Models\Account;
 
-
 class ActivityModel extends \CodeIgniter\Model
 {
-
     protected $table      = 'customer_activity';
     protected $primaryKey = 'customer_activity_id';
     protected $returnType = 'array';
@@ -14,8 +12,17 @@ class ActivityModel extends \CodeIgniter\Model
         $builder->select();
         $builder->where('freelancer_id', $customer_id);
         $builder->orWhere('employer_id', $customer_id);
+        //$builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
         $query = $builder->get();
         return $query->getResultArray();
+    }
+
+    public function getTotalActivitiesByCustomerID($customer_id)
+    {
+        $builder = $this->db->table('customer_activity');
+        $builder->where('freelancer_id', $customer_id);
+        $builder->orWhere('employer_id', $customer_id);
+        return $builder->countAllResults();
     }
 
     public function getFreelancerUserName($freelancer_id)
