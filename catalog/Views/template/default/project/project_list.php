@@ -304,9 +304,7 @@ $('input[name^=\'filter_type\']').on('click', function() {
 }); 
 
 // <!-- // Filter Budget -->
-var mySlider = $("input[name=\'filter_budget\']").slider({
-	'tooltip': 'always',
-});
+var mySlider = $("input[name=\'filter_budget\']").slider();
 
 mySlider.on('slideStop', function(e){
 	var filter = e.value;
