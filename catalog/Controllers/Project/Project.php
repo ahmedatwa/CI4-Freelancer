@@ -246,6 +246,12 @@ class Project extends \Catalog\Controllers\BaseController
             $project_id = 0;
         }
 
+        if ($this->session->getFlashdata('success')) {
+        	$data['success'] = $this->session->getFlashdata('success');
+        } else {
+        	$data['success'] = '';
+        }
+
         $this->template->setTitle($keyword .' | '. $this->registry->get('config_name'));
 
         $data['breadcrumbs'] = [];
@@ -378,16 +384,23 @@ class Project extends \Catalog\Controllers\BaseController
     {
         if (! $this->customer->isLogged()) {
             return redirect()->to(route_to('account_login') ? route_to('account_login') : base_url('account/login'));
+            // Set the previous url in session
+            $this->session->set('redirect_url', current_url());
         }
 
         $this->template->setTitle(lang('account/dashboard.heading_title'));
 
         $projectModel = new ProjectModel();
 
+        $seoUrl = service('seo_url');
+
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $projectModel->addProject($this->request->getPost());
-            return redirect()->to(route_to('add-project') ? route_to('add-project') : base_url('project/project/add'))
-                             ->with('success', lang('project/project.text_success'));
+            $project_id = $projectModel->addProject($this->request->getPost());
+
+            $keyword = $seoUrl->getKeywordByQuery('project_id=' . $project_id);
+
+            return redirect()->to(route_to('single_project', $keyword))
+                             ->with('success', lang('project/project.success_new_project'));
         }
 
         $this->getForm();

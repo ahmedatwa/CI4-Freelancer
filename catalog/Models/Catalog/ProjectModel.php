@@ -90,6 +90,8 @@ class ProjectModel extends \CodeIgniter\Model
                 $project_category_table->insert($project_category_data);
             }
         }
+        
+        return $project_id;
     }
     
     public function editProject($project_id, $data)

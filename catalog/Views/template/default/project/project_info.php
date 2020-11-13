@@ -53,7 +53,7 @@
 		</div>
 	</div>
 		<!-- Page Content-->
-			<div class="row">
+			<div class="row align-items-start">
 				<div class="col-sm-12 col-md-9 mb-4 p-4 shadow-sm rounded border bg-white">
 					<div class="single-page-section">
 						<h3><?php echo $text_description; ?></h3>
@@ -284,4 +284,27 @@ $('#bid-container').load("extension/bid/bid?pid=<?php echo $project_id; ?>");
 	});
 	
 </script>
+<?php if ($success) { ?>
+<script type="text/javascript">
+	$.notify({
+	// options
+	icon: 'fas fa-check-circle',
+	title: 'Success:',
+	message: "<?php echo $success; ?>",
+},{
+	// settings
+	element: 'body',
+	type: "success",
+	allow_dismiss: false,
+	placement: {
+		from: "top",
+		align: "center"
+	},
+	animate: {
+		enter: 'animate__animated animate__fadeInDown',
+		exit: 'animate__animated animate__fadeOutUp'
+	},
+});	
+</script>	
+<?php } ?>
 <?php echo $footer; ?>
