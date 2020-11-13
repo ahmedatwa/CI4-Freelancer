@@ -4123,6 +4123,8 @@ span.blog-item-tag {
 	margin: 15px 0 0 0;
 	padding: 0;
 	color: #666;
+	text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .task-listing h3.task-listing-title a,
