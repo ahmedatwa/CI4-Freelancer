@@ -122,7 +122,7 @@ class Message extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        $messageModel = new \Catalog\Models\Account\MessageModel();
+        $messageModel = new MessageModel();
 
         $total = $messageModel->getTotalUnseen($this->session->get('customer_id'));
        

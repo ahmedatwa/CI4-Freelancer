@@ -15,10 +15,6 @@
 					<a href="<?php echo $f['href']; ?>" class="job-listing with-apply-button">
 						<!-- Job Listing Details -->
 						<div class="job-listing-details">
-							<!-- Logo -->
-							<div class="job-listing-company-logo">
-								<img src="images/company-logo-01.png" alt="">
-							</div>
 							<!-- Details -->
 							<div class="job-listing-description">
 								<h3 class="job-listing-title"><?php echo $f['name']; ?></h3>

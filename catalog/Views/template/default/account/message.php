@@ -1,11 +1,13 @@
 <?php echo $header; ?><?php echo $dashboard_menu; ?>
 	<!-- Dashboard Content -->
-	<div class="dashboard-content-container" data-simplebar>
-		<div class="dashboard-content-inner" >
-			<div class="dashboard-headline">
-				<h3>Messages</h3>
-			</div>
-			<div class="container">
+	<div class="dashboard-content-container container">
+		<section class="gray">
+			<div class="dashboard-content-inner">
+		<!-- Dashboard Headline -->
+		<div class="dashboard-headline">
+			<h3><?php echo $heading_title; ?></h3>
+		</div>
+		<div class="row">
 				<div class="messages-container margin-top-0">
 					<div class="messages-container-inner">
 						<!-- Messages -->
@@ -63,9 +65,8 @@
 			</div>
 			<!-- Messages Container / End -->
 			</div>
-		</div>
+		</section>
 	</div>
-
 <!-- Scripts -->
 <script type="text/javascript">
 // Enable pusher logging - don't include this in production

@@ -180,7 +180,7 @@ function totalNotifications(data) {
 	// Check for new Notifications
 	function loadNotifications() {
 	   $.ajax({
-	      url: 'account/notifications/getNotifications',
+	      url: 'account/notifications/getNotifications?seen=yes',
 	      dataType: 'json',
 	      beforeSend: function() {
 	          $('#message-list').html('<p class="text-center m-3"><div class="spinner-grow text-info" role="status"><span class="sr-only">Loading...</span></div></p>');

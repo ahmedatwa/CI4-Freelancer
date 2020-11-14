@@ -214,7 +214,7 @@
 			</div>
 	</div> <!---- content-wrapper ---->
 <script type="text/javascript">
-$('#button-place-bid').on('click', function(){
+$('#button-place-bid').on('click', function() {
 bootbox.confirm({
 	message: "Are you sure?",
     className: 'animate__animated animate__fadeInDown',
@@ -270,6 +270,7 @@ bootbox.confirm({
 				if(json['success']) {
 					$('#bidding-form').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 					$('#bid-container').load("extension/bid/bid?pid=<?php echo $project_id; ?>");
+					$('#bidding-form').trigger('reset');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

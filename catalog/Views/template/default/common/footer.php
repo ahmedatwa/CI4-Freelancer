@@ -146,11 +146,12 @@ function gSignOut() {
 			url: 'account/logout',
 			dataType: 'json',
 			success: function(json) {
-			    gSignOut();
-
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
+				var auth2 = gapi.auth2.getAuthInstance();
+				console.log(auth2)
+    			
 			}
 		});
 	});

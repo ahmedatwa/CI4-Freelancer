@@ -18,6 +18,10 @@ class Notifications extends \Catalog\Controllers\BaseController
 
         $activityModel = new ActivityModel();
 
+        if ($this->request->getVar('seen')) {
+            $activityModel->set(['seen' => 1])->update();
+        }
+
         $results = $activityModel->getActivitiesByCustomerID($customer_id);
 
         foreach ($results as $result) {

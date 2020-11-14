@@ -29,7 +29,7 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/dashboard.heading_title'),
-            'href' => route_to('account/dashboard?customer_id=' . $customer_id),
+            'href' => route_to('account_dashboard'),
         ];
 
         $customerModel = new CustomerModel();
@@ -37,8 +37,6 @@ class Dashboard extends \Catalog\Controllers\BaseController
         if ($customer_id) {
             $customer_info = $customerModel->getCustomer($customer_id);
         }
-
-        $data['profile_views'] = $customerModel->getCustomerProfileView($customer_id);
 
         // news Feed
         $data['news_feeds'] = [];
@@ -81,12 +79,14 @@ class Dashboard extends \Catalog\Controllers\BaseController
                 'comment'    => str_replace($find, $replace, $comment),
                 'date_added' => $this->dateDifference($result['date_added'])
             ];
-
-
         }
 
+        $data['profile_views']  = $customerModel->getCustomerProfileView($customer_id);
+        $data['projects_total'] = $customerModel->getTotalProjectsByCustomerId($customer_id);
+        $data['balance']        = $customerModel->getBalanceByCustomerID($customer_id);
+
         $data['text_dashboard'] = lang('account/dashboard.text_dashboard');
-       // $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $customer_info['firstname'] ." " . $customer_info['lastname']);
+        $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $this->customer->getCustomerName());
         $data['heading_title']  = lang('account/dashboard.heading_title');
         $data['text_news_feed'] = lang('account/dashboard.text_news_feed');
 

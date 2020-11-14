@@ -5,6 +5,7 @@ class ActivityModel extends \CodeIgniter\Model
     protected $table      = 'customer_activity';
     protected $primaryKey = 'customer_activity_id';
     protected $returnType = 'array';
+    protected $allowedFields = ['seen'];
 
     public function getActivitiesByCustomerID($customer_id)
     {
@@ -22,6 +23,7 @@ class ActivityModel extends \CodeIgniter\Model
         $builder = $this->db->table('customer_activity');
         $builder->where('freelancer_id', $customer_id);
         $builder->orWhere('employer_id', $customer_id);
+        $builder->where('seen', 0);
         return $builder->countAllResults();
     }
 

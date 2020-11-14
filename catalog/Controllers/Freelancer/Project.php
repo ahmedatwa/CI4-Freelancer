@@ -492,7 +492,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $results = $projectModel->getProjectMessagesById($filter_data);
 
-        $customerModel = new \Catalog\Models\Account\customerModel();
+        $customerModel = new \Catalog\Models\Account\CustomerModel();
 
         foreach ($results as $result) {
             $data['project_messages'][] = [
@@ -500,13 +500,14 @@ class Project extends \Catalog\Controllers\BaseController
                 'receiver_id' => $result['receiver_id'],
                 'sender_id'   => $result['sender_id'],
                 'project_id'  => $result['project_id'],
-                'sender'  => $customerModel->where('customer_id', $result['sender_id'])->findColumn('username'),
+                'sender'      => $customerModel->where('customer_id', $result['sender_id'])->findColumn('username'),
                 'receiver'    =>  $customerModel->where('customer_id', $result['receiver_id'])->findColumn('username'),
                 'date_added'  => $this->dateDifference($result['date_added']),
             ];
         }  
 
         $data['customer_id'] = $this->session->get('customer_id'); 
+        $data['sender_id'] = $results[0]['sender_id'];
 
         $data['heading_title'] = lang('project/project.text_manage_bidders');
 

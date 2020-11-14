@@ -5,11 +5,13 @@
 		<div class="dashboard-headline">
 			<h3><?php echo $name; ?></h3>
 		</div>
-        <h4>Project Details: </h4>
-        <ul class="list-group list-group-flush mb-4 col-4">
-              <li class="list-group-item list-group-item-light"><strong>Budget: </strong><?php echo $budget; ?></li>
-              <li class="list-group-item list-group-item-light"><strong>Type: </strong><?php echo $type; ?></li>
+        <div class="col-12 mb-4">
+        <h4 class="mb-2">Project Details: </h4>
+            <ul class="list-group list-group-flush mb-4 col-6">
+                  <li class="list-group-item list-group-item-light"><strong>Budget: </strong><?php echo $budget; ?></li>
+                  <li class="list-group-item list-group-item-light"><strong>Type: </strong><?php echo $type; ?></li>
             </ul>
+        </div>
 		<div class="row">
 			<div class="col-12">
 			<ul class="nav nav-tabs" id="project-info" role="tablist">
@@ -289,6 +291,9 @@ $(document).on('click',"#send-message-button", function() {
                 beforeSend: function() {
                     $('.text-danger').remove();
                 },
+                complete: function() {
+
+                },
                 success: function(json) {
                     if (json['error']) {
                         $('textarea[name=\'message\']').after('<p class="text-danger">' + json['error'] + '</p>')
@@ -308,6 +313,8 @@ $(document).on('click',"#send-message-button", function() {
                         },
                         type: 'success'
                         });
+                      $('#messages').load('freelancer/project/getProjectMessages?pid=<?php echo $project_id; ?>&customer_id=<?php echo $employer_id; ?>');
+                      $('#send-message-modal-form').trigger('reset');
                     }                        
                 },
                 error: function(xhr, ajaxOptions, thrownError) {

@@ -564,10 +564,19 @@ class CustomerModel extends \CodeIgniter\Model
         if ($total) {
             return $total;
         } else {    
-            return false;
+            return '0.00';
         }  
     }
     
+
+    // for Dahsboard Widget
+    public function getTotalProjectsByCustomerId($customer_id)
+    {
+        $builder = $this->db->table('project');
+        $builder->where('employer_id', $customer_id);
+        return $builder->countAllResults();
+
+    }
 
     // -----------------------------------------------------------------
 }
