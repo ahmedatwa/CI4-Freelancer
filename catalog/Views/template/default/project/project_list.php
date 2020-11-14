@@ -98,7 +98,7 @@
 			</div>
 			<div class="col-sm-12 col-md-9 mb-4">
 				<!-- Tasks Container -->
-				<div class="tasks-list-container compact-list shadow mb-5 bg-white rounded">
+				<div class="tasks-list-container compact-list shadow-sm mb-5 bg-white rounded border">
 					<div class="notify-box">
 						<h3 class="float-left mx-4 mt-2"><?php echo $text_found ;?></h3>
 						<div class="col-md-3 float-right">
