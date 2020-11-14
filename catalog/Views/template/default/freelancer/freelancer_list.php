@@ -59,7 +59,7 @@
 			</div>
 			<div class="col-sm-12 col-md-9 mb-4">
 			<!-- Freelancers List Container -->
-			<div class="freelancers-container freelancers-list-layout compact-list shadow p-3 mb-5 bg-white rounded">
+			<div class="freelancers-container freelancers-list-layout compact-list shadow-sm p-3 mb-5 bg-white rounded border">
 				<div class="notify-box">
 						<h3 class="float-left mx-4 mt-2"><?php echo $text_found ;?></h3>
 						<div class="col-md-3 float-right"></div>
