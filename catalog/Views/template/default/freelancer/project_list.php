@@ -210,7 +210,7 @@
 							  	<td><?php echo $work['type']; ?></td>
 							  	<td><?php echo $work['status']; ?></td>
 							  	<td><a href="<?php echo $work['view']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="view"><i class="far fa-eye"></i></a>
-							    <button type="button" onclick="confirm('Are You Sure') ? markComeplete(<?php echo $work['project_id']; ?>) : false;" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Mark As Complete" id="button-complete-status"><i class="fas fa-check"></i></a>
+							    <button type="button" onclick="bootbox.confirm('Are You Sure?', function(result){ if (result) {markComeplete(<?php echo $work['project_id']; ?>)}});" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Mark As Complete" id="button-complete-status"><i class="fas fa-check"></i></a>
 							    </td>
 							  </tr>
 							 <?php } ?>

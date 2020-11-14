@@ -36,6 +36,8 @@
   <script src="catalog/default/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
   <script src="catalog/default/javascript/jquery.counterup.min.js"></script>
   <script src="catalog/default/vendor/select2/js/select2.min.js"></script> 
+    <script src="catalog/default/vendor/bootbox/bootbox.min.js"></script> 
+
   <!-- Pusher -->
   <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
   <script src="catalog/default/javascript/common.js"></script>

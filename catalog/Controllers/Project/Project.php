@@ -608,6 +608,18 @@ class Project extends \Catalog\Controllers\BaseController
                     'label' => 'Delivery Time',
                     'rules' => 'required|numeric'
                 ],
+                "filter_category" => [
+                    'label' => 'Skills',
+                    'rules' => 'required'
+                ],
+                "budget_min" => [
+                    'label' => 'Minimum Budget',
+                    'rules' => 'required'
+                ],
+                "budget_max" => [
+                    'label' => 'Maximum Budget',
+                    'rules' => 'required'
+                ],
                 ])) {
                 return false;
             }

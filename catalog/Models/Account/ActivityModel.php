@@ -12,7 +12,7 @@ class ActivityModel extends \CodeIgniter\Model
         $builder->select();
         $builder->where('freelancer_id', $customer_id);
         $builder->orWhere('employer_id', $customer_id);
-        //$builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
+        $builder->where('seen', 0);
         $query = $builder->get();
         return $query->getResultArray();
     }

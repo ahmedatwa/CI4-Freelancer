@@ -151,7 +151,7 @@
 									</tbody>
 								</table> 
 						<!-- Button -->
-					<button id="button-place-bid" onclick="confirm('Are you sure') ? placeBid() : false;" class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right"><?php echo $button_bid; ?></button>
+					<button id="button-place-bid" onclick="" class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right"><?php echo $button_bid; ?></button>
 					</div>
 				</div>
 				<?php } else { ?>
@@ -214,47 +214,73 @@
 			</div>
 	</div> <!---- content-wrapper ---->
 <script type="text/javascript">
-function placeBid() {
-	$.ajax({
-		url: 'extension/bid/bid/placeBid',
-		method:'post',
-		data: $('#bidding-form').serialize(),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-place-bid').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
-			$('.alert').remove();
-		},
-		complete: function() {
-  		    $('#button-place-bid').html('<?php echo $button_bid; ?>');
-		},
-		success: function(json) {
-			
-			if (json['error']) {
-                for (i in json['error']) {
-                 var element = $('#input-' + i.replace('_', '-'));
-
-                 if (element.parent().hasClass('input-group')) {
-                   $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
-                 } else {
-                  $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
-                }
-              }
-            }
-
-			if (json['no_allawed']) {
-				$('#bidding-form').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> ' + json['no_allawed'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-			}
-
-			if(json['success']) {
-				$('#bidding-form').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-				$('#bid-container').load("extension/bid/bid?pid=<?php echo $project_id; ?>");
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError);
+$('#button-place-bid').on('click', function(){
+bootbox.confirm({
+	message: "Are you sure?",
+    className: 'animate__animated animate__fadeInDown',
+    buttons: {
+        cancel: {
+            label: '<i class="fa fa-times"></i> Cancel',
+            className: 'btn-danger'
+        },
+        confirm: {
+            label: '<i class="fa fa-check"></i> Confirm',
+            className: 'btn-success'
+        }
+    },
+    onShow: function(e) {
+		var fee = $('input[name=\'fee\']').val();
+		if (fee !== '') {
+			$(this).find('.modal-body').before('<div class="modal-header"><h5 class="modal-title">Are you sure?</h5><button type="button" class="bootbox-close-button close" aria-hidden="true">×</button></div>')
+			$(this).find('.modal-body').text(fee + '.00 EGP will be deducted from your balance' )
 		}
-	});
-}
+    },
+    callback: function (result) {
+    if (result) {
+		$.ajax({
+			url: 'extension/bid/bid/placeBid',
+			method:'post',
+			data: $('#bidding-form').serialize(),
+			dataType: 'json',
+			beforeSend: function() {
+				$('.bootbox-accept').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+				$('.alert').remove();
+			},
+			complete: function() {
+	  		    $('.bootbox-accept').html('<?php echo $button_bid; ?>');
+			},
+			success: function(json) {
+				
+				if (json['error']) {
+	                for (i in json['error']) {
+	                 var element = $('#input-' + i.replace('_', '-'));
+
+	                 if (element.parent().hasClass('input-group')) {
+	                   $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+	                 } else {
+	                  $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+	                }
+	              }
+	            }
+
+				if (json['no_allawed']) {
+					$('#bidding-form').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> ' + json['no_allawed'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+
+				if(json['success']) {
+					$('#bidding-form').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('#bid-container').load("extension/bid/bid?pid=<?php echo $project_id; ?>");
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError);
+			}
+		});
+	   } // if end
+    } // callback end
+   });  // bootbox end
+});	
+
 </script>
 <script type='text/javascript'>
 <?php if (service('registry')->get('extension_bid_status')) { ?>
@@ -272,19 +298,15 @@ $('#bid-container').load("extension/bid/bid?pid=<?php echo $project_id; ?>");
 <?php } ?>
 </script>
 <script type="text/javascript">
-	$("#upgrade-options-table input[type='checkbox']").on('change', function() {
+$("#upgrade-options-table input[type='checkbox']").on('change', function() {
+	var total = 0;
+	$('#upgrade-options-table input:checkbox:checked').each(function() { 
+        total += isNaN(parseInt($(this).val())) ? 0 : parseInt($(this).val());
+    });   
 
-		var total = 0;
-
-		$('#upgrade-options-table input:checkbox:checked').each(function() { 
-            total += isNaN(parseInt($(this).val())) ? 0 : parseInt($(this).val());
-        });   
-
-		$('#button-place-bid').html('place bid and pay ' + total + '.00 EGP');
-		$('input[name=\'fee\']').val(total);
-
-	});
-	
+	$('#button-place-bid').html('Place bid and Pay ' + total + '.00 EGP');
+	$('input[name=\'fee\']').val(total);
+});
 </script>
 <?php if ($success) { ?>
 <script type="text/javascript">

@@ -57,6 +57,7 @@
 											<?php } ?>
 										<?php } ?>
 									</select>
+									<?php echo formError("filter_category"); ?>
 								</div>
 							</div>
 							<div class="form-group row align-items-center mb-3">
@@ -68,6 +69,7 @@
 											<div class="input-group-text"><?php echo $config_currency;?></div>
 										</div>
 										<input type="text" class="form-control" placeholder="<?php echo $entry_min;?>" name="budget_min">
+										<?php echo formError("budget_min"); ?>
 									</div>
 								</div>
 								<div class="col">
@@ -77,6 +79,7 @@
 											<div class="input-group-text"><?php echo $config_currency;?></div>
 										</div>
 										<input type="text" class="form-control" placeholder="<?php echo $entry_max;?>" name="budget_max">
+										<?php echo formError("budget_max"); ?>
 									</div>
 								</div>
 							</div>
@@ -107,14 +110,14 @@
 							<div class="form-group row">
 								<label for="date-end" class="col-sm-3 col-form-label"><?php echo $entry_delivery_time; ?><span data-toggle="tooltip" title="<?php echo $help_delivery; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col-sm-9">
-									<input type="number" class="form-control" name="delivery_time" value="" min="1" max="30">
+									<input type="number" class="form-control" name="delivery_time" value="1" min="1" max="30">
 									<?php echo formError("delivery_time"); ?>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="date-end" class="col-sm-3 col-form-label"><?php echo $entry_run_time; ?><span data-toggle="tooltip" title="<?php echo $help_bidding_duration; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col-sm-9">
-									<input type="number" class="form-control" name="runtime" value="" min="1" max="30">
+									<input type="number" class="form-control" name="runtime" value="7" min="1" max="30">
 								</div>
 							</div>
 							<div class="padding-top-20 text-right padding-bottom-30">
