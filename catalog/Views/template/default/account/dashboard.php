@@ -2,12 +2,14 @@
 <!-- Dashboard Content -->
 <div class="dashboard-content-container container">
 	<section class="gray">
-	<div class="dashboard-content-inner">
+	<div class="m-4">
 		<!-- Dashboard Headline -->
 			<div class="dashboard-headline">
 				<h3><?php echo $text_greeting; ?></h3>
 			</div>
-			<div class="d-flex justify-content-center mb-4">
+			
+			<div class="row justify-content-center mb-4">
+				<div class="col-auto mb-3">
 				<div class="card mx-2">
 					<div class="card-body row">
 						<div class="col-9">
@@ -19,6 +21,8 @@
 						<div class="col-12"><h1 class="text-center"><?php echo $profile_views; ?></h1></div>
 					</div>
 				</div>
+			   </div>
+			   <div class="col-auto mb-3">
 				<div class="card mx-2">
 				<div class="card-body row">
 						<div class="col-9">
@@ -30,6 +34,8 @@
 						<div class="col-12"><h1 class="text-center"><?php echo $projects_total; ?></h1></div>
 					</div>
 				</div>
+			   </div>
+			   <div class="col-auto mb-3">
 				<div class="card mx-2">
 					<div class="card-body row">
 						<div class="col-9">
@@ -42,6 +48,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 		<div class="row">
 			<!-- Dashboard Box -->
 			<div class="col">
