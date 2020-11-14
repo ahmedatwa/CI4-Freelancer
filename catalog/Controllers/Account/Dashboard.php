@@ -83,7 +83,7 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $data['profile_views']  = $customerModel->getCustomerProfileView($customer_id);
         $data['projects_total'] = $customerModel->getTotalProjectsByCustomerId($customer_id);
-        $data['balance']        = $customerModel->getBalanceByCustomerID($customer_id);
+        $data['balance']        = $this->currencyFormat($customerModel->getBalanceByCustomerID($customer_id));
 
         $data['text_dashboard'] = lang('account/dashboard.text_dashboard');
         $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $this->customer->getCustomerName());
