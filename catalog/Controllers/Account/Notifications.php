@@ -80,7 +80,9 @@ class Notifications extends \Catalog\Controllers\BaseController
 
         $total = $activityModel->getTotalActivitiesByCustomerID($customer_id);
        
-        $json = ['total' => $total];
+        $json = [
+            'total' => $total
+        ];
         
         return $this->response->setJSON($json);
     }

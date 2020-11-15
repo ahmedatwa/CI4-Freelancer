@@ -2,9 +2,9 @@
 
 class ActivityModel extends \CodeIgniter\Model
 {
-    protected $table      = 'customer_activity';
-    protected $primaryKey = 'customer_activity_id';
-    protected $returnType = 'array';
+    protected $table         = 'customer_activity';
+    protected $primaryKey    = 'customer_activity_id';
+    protected $returnType    = 'array';
     protected $allowedFields = ['seen'];
 
     public function getActivitiesByCustomerID($customer_id)
@@ -39,15 +39,13 @@ class ActivityModel extends \CodeIgniter\Model
     public function getTotalActivitiesByCustomerID($customer_id)
     {
         $builder = $this->db->table($this->table);
-
+        $builder->distinct();
         $builder->where('seen', 0);
-        $builder->having([
-            'employer_id' => $customer_id,
-        ]);
+        $builder->having('freelancer_id', $customer_id);
         $builder->orHaving([
-            'sender_id'   => $customer_id,
-            'receiver_id' => $customer_id,
-            'freelancer_id' => $customer_id
+            'sender_id'     => $customer_id,
+            'receiver_id'   => $customer_id,
+            'employer_id'   => $customer_id
         ]);
 
         return $builder->countAllResults();
@@ -74,7 +72,7 @@ class ActivityModel extends \CodeIgniter\Model
     public function addActivity($key, $data)
     {
         $builder = $this->db->table($this->table);
-        
+
         $request = \Config\Services::request();
 
         $activity_data = [

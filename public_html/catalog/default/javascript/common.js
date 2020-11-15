@@ -158,9 +158,7 @@ function totalNotifications(data) {
       url: 'account/notifications/getTotalNotifications',
       dataType: 'json',
       success: function(json) {
-          if (json['total']) {
-               $('#notifications-count').html('<span>' + json['total'] + '</span>');
-           } 
+            $('#notifications-count').html('<span>' + json['total'] + '</span>');
         }
     });
  }totalNotifications();
