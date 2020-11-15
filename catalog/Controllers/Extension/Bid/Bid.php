@@ -31,8 +31,6 @@ class Bid extends \Catalog\Controllers\BaseController
         }
 
         $filter_data = [
-            'orderBy'    => 'p.date_added',
-            'sortBy'     => 'DESC',
             'project_id' => $project_id,
             'limit'      => $limit,
             'start'      => ($page - 1) * $limit,
@@ -43,11 +41,11 @@ class Bid extends \Catalog\Controllers\BaseController
         $results = $bidModel->getBids($filter_data);
         $total = $bidModel->getTotalBids($filter_data);
         $reviewModel = new \Catalog\Models\Account\ReviewModel();
-        
+
         foreach ($results as $result) {
             $data['bids'][] = [
                 'bid_id'     => $result['bid_id'],
-                'freelancer' => $result['freelancer'],
+                'freelancer' => $result['username'],
                 'quote'      => $this->currencyFormat($result['quote']),
                 'delivery'   => $result['delivery'] . ' ' . lang($this->locale . '.text_days'),
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
@@ -80,9 +78,11 @@ class Bid extends \Catalog\Controllers\BaseController
 
         $balance = $customerModel->getBalanceByCustomerID($this->session->get('customer_id'));
 
-        // Emploer Balance Validation
-        if (($balance == 0) || $this->request->getPost('fee') > $balance) {
-              $json['error'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
+        // Employer Balance Validation
+        if (!empty($this->request->getPost('fee'))) {
+            if (($balance == 0) || $this->request->getPost('fee') > $balance) {
+                  $json['error'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
+            }
         }
 
         if (!$json) {

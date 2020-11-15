@@ -25,7 +25,7 @@ class BidModel extends \CodeIgniter\Model
     public function getBids(array $data =[])
     {
         $builder = $this->db->table('project_bids pb');
-        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS freelancer, c.email, pb.quote, pb.bid_id, pb.status, pb.delivery, c.image, c.customer_id, pb.freelancer_id, ');
+        $builder->select('c.username, c.email, pb.quote, pb.bid_id, pb.status, pb.delivery, c.image, c.customer_id, pb.freelancer_id, ');
         $builder->join('customer c', 'pb.freelancer_id = c.customer_id', 'left');
         $builder->join('project_description pd', 'pb.project_id = pd.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
@@ -38,11 +38,8 @@ class BidModel extends \CodeIgniter\Model
             $builder->where('pb.freelancer_id', $data['freelancer_id']);
         }
 
-        if (isset($data['orderBy']) && $data['orderBy'] == 'DESC') {
-            $builder->orderBy($data['orderBy'], 'DESC');
-        } else {
-            $builder->orderBy('pb.date_added', 'ASC');
-        }
+        $builder->orderBy('pb.date_added', 'ASC');
+        
 
         if (isset($data['start']) || isset($data['limit'])) {
             if ($data['start'] < 0) {
@@ -90,6 +87,7 @@ class BidModel extends \CodeIgniter\Model
         $bid_data = [
             'project_id'    => $data['project_id'],
             'freelancer_id' => $data['freelancer_id'],
+            'employer_id'   => $data['employer_id'],
             'quote'         => $data['quote'],
             'delivery'      => $data['delivery'],
             'description'   => $data['description'],

@@ -27,9 +27,11 @@ class Register extends \Catalog\Controllers\BaseController
 
             // Clear any previous login attempts for unregistered accounts.
             $customerModel->deleteLoginAttempts($this->request->getPost('email'));
-            //helper('text');
-            //$customerModel->editCode($this->request->getPost('email'), random_string('alnum', 40));
-            $this->session->setFlashdata('success', lang('account/register.text_success'));
+
+            $this->customer->login($this->request->getPost('email'), $this->request->getPost('password'));
+
+            return redirect()->to('success')
+                             ->with('success', lang('account/register.text_success'));
         }
 
         $data['entry_email']     = lang('account/register.entry_email');

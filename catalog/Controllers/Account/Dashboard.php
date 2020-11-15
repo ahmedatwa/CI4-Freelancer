@@ -13,14 +13,6 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $this->template->setTitle(lang('account/dashboard.heading_title'));
         
-        if($this->request->getVar('cid')) {
-            $customer_id = $this->request->getVar('cid');
-        } elseif($this->session->get('customer_id')) {
-            $customer_id = $this->session->get('customer_id');
-        } else {
-            $customer_id = 0;
-        }
-
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang($this->locale . '.text_home'),
@@ -34,8 +26,8 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $customerModel = new CustomerModel();
 
-        if ($customer_id) {
-            $customer_info = $customerModel->getCustomer($customer_id);
+        if ($this->customer->getCustomerId()) {
+            $customer_info = $customerModel->getCustomer($this->customer->getCustomerId());
         }
 
         // news Feed
@@ -43,7 +35,7 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $activityModel = new ActivityModel();
 
-        $results = $activityModel->getActivitiesByCustomerID($customer_id);
+        $results = $activityModel->getDashboardActivitiesByCustomerId($this->customer->getCustomerId());
 
         foreach ($results as $result) {
 
@@ -81,9 +73,9 @@ class Dashboard extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['profile_views']  = $customerModel->getCustomerProfileView($customer_id);
-        $data['projects_total'] = $customerModel->getTotalProjectsByCustomerId($customer_id);
-        $data['balance']        = $this->currencyFormat($customerModel->getBalanceByCustomerID($customer_id));
+        $data['profile_views']  = $customerModel->getCustomerProfileView($this->customer->getCustomerId());
+        $data['projects_total'] = $customerModel->getTotalProjectsByCustomerId($this->customer->getCustomerId());
+        $data['balance']        = $this->currencyFormat($customerModel->getBalanceByCustomerID($this->customer->getCustomerId()));
 
         $data['text_dashboard'] = lang('account/dashboard.text_dashboard');
         $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $this->customer->getCustomerName());

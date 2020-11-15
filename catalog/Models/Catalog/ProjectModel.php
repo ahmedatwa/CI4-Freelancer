@@ -554,7 +554,7 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->insert($message_data);
 
         // trigget new direct message event
-        \CodeIgniter\Events\Events::trigger('customer_new_message', $message_data);
+        \CodeIgniter\Events\Events::trigger('project_new_message', $message_data);
     }
 
 
@@ -579,7 +579,7 @@ class ProjectModel extends \CodeIgniter\Model
         $projects->update();
 
         // trigget new direct message event
-        \CodeIgniter\Events\Events::trigger('offer_selected', $data);
+        \CodeIgniter\Events\Events::trigger('project_offer_selected', $data);
     }
 
     // project Private Messages

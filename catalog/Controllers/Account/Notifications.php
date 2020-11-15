@@ -18,10 +18,6 @@ class Notifications extends \Catalog\Controllers\BaseController
 
         $activityModel = new ActivityModel();
 
-        if ($this->request->getVar('seen')) {
-            $activityModel->set(['seen' => 1])->update();
-        }
-
         $results = $activityModel->getActivitiesByCustomerID($customer_id);
 
         foreach ($results as $result) {
@@ -61,7 +57,6 @@ class Notifications extends \Catalog\Controllers\BaseController
 
         }
 
-
         return $this->response->setJSON($json);
     }
 
@@ -82,6 +77,26 @@ class Notifications extends \Catalog\Controllers\BaseController
         $json = ['total' => $total];
         
         return $this->response->setJSON($json);
+    }
+
+    public function markRead()
+    {
+       $json = [];
+
+        $activityModel = new ActivityModel();
+
+        if ($this->customer->getCustomerId()) {
+            $customer_id = $this->customer->getCustomerId();
+        } else {
+            $customer_id = 0;
+        }
+
+        $activityModel->where('employer_id', $customer_id)
+                               ->orWhere('freelancer_id', $customer_id)
+                               ->set('seen', 1)
+                               ->update();
+       
+        return $this->response->setJSON($json);  
     }
 
     

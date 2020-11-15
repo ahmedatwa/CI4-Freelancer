@@ -16,25 +16,26 @@ class FreelancerModel extends \CodeIgniter\Model
     public function getFreelancerBidsById($freelancer_id)
     {
         $builder = $this->db->table('project_bids pb');
-        $builder->select('pb.quote, pb.delivery, pb.date_added, pd.name, pb.project_id, pb.selected, pb.accepted');
+        $builder->select('pb.quote, pb.delivery, pb.date_added, pd.name, pb.project_id, pb.selected, pb.accepted, pb.bid_id, pb.employer_id');
         $builder->join('project_description pd', 'pb.project_id = pd.project_id', 'left');
         $builder->where('pb.freelancer_id', $freelancer_id);
         $query = $builder->get();
         return $query->getResultArray();
     }
 
-    public function acceptOffer(int $freelancer_id, int $project_id)
+    public function acceptOffer(int $freelancer_id, int $project_id, int $bid_id, int $employer_id)
     {
         $builder = $this->db->table('project_bids');
         $builder->where([
             'freelancer_id' => $freelancer_id,
             'project_id'    => $project_id,
+            'bid_id'        => $bid_id,
         ]);
 
         $builder->set('accepted', 1);
         $builder->update();
 
-        \CodeIgniter\Events\Events::trigger('offer_accepted', $freelancer_id, $project_id);
+        \CodeIgniter\Events\Events::trigger('project_offer_accepted', $freelancer_id, $project_id, $bid_id, $employer_id);
 
         // Update Project Status
         $projects = $this->db->table('project');

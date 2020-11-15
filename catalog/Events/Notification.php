@@ -6,47 +6,48 @@ use Catalog\Models\Account\CustomerModel;
 class Notification
 {
     // Catalog\Models\Project\ProjectModel::addMessage
-    public static function newMessage(array $data)
+    public static function addMessage(array $data)
     {
         $activityModel = new ActivityModel();
 
         $activity_data = [
-            'customer_id' => 0,
             'sender_id'   => $data['sender_id'],
             'receiver_id' => $data['receiver_id'],
             'project_id'  => $data['project_id'],
             'message'     => $data['message'],
         ];
 
-        $activityModel->addActivity('customer_new_message', $activity_data);
+        $activityModel->addActivity('project_new_message', $activity_data);
     }
 
 
     // Catalog\Models\Project\ProjectModel::addWinner
-    public static function winnerSelected(array $data)
+    public static function addWinner(array $data = [])
     {
         $activityModel = new ActivityModel();
 
         $activity_data = [
-            'freelancer_id'  => $data['freelancer_id'],
+            'freelancer_id' => $data['freelancer_id'],
             'project_id'    => $data['project_id'],
             'bid_id'        => $data['bid_id'],
         ];
 
-        $activityModel->addActivity('offer_selected', $activity_data);
+        $activityModel->addActivity('project_offer_selected', $activity_data);
     }
 
     // Catalog\Models\Freelancer\FreelanceModel::acceptOffer
-    public static function winnerAccepted(int $freelancer_id, int $project_id)
+    public static function acceptOffer(int $freelancer_id, int $project_id, int $bid_id, int $employer_id)
     {
         $activityModel = new ActivityModel();
 
         $activity_data = [
+            'freelancer_id' => $freelancer_id,
+            'employer_id'   => $employer_id,
             'project_id'    => $project_id,
-            'customer_id'   => $freelancer_id,
+            'bid_id'        => $bid_id,
         ];
 
-        $activityModel->addActivity('offer_accepted', $activity_data);
+        $activityModel->addActivity('project_offer_accepted', $activity_data);
     }
 
 

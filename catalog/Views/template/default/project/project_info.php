@@ -164,7 +164,7 @@
 				<?php } ?>
 			<?php } ?>
 
-			<div id="bid-container mt-4"></div>	
+			<div id="bid-container" class="mt-4"></div>	
 				</div>
 				<!-- Sidebar -->
 				<div class="col-sm-12 col-md-3">

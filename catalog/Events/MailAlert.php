@@ -37,8 +37,8 @@ class MailAlert
         $config->send();
     }
 
-    // Catalog\Model\Account\CustomerModel\AddCustomer
-    public static function registerMail(string $email, string $code)
+    // Catalog\Model\Account\CustomerModel\addCustomer
+    public static function registerMail(string $email)
     {
         $config = \Config\Services::email();
 
@@ -121,7 +121,7 @@ class MailAlert
 
         $data['text_subject']    = sprintf(lang('mail/bid_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
         $data['text_bid']        = lang('mail/bid_alert.text_bid');
-        $data['text_login']      = sprintf(lang('mail/bid_alert.text_login');
+        $data['text_login']      = sprintf(lang('mail/bid_alert.text_login'));
 
         $data['config_name']      = service('registry')->get('config_name');
         $data['config_address']   = service('registry')->get('config_address');

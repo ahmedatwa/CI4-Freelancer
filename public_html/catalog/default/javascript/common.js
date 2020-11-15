@@ -180,11 +180,11 @@ function totalNotifications(data) {
 	// Check for new Notifications
 	function loadNotifications() {
 	   $.ajax({
-	      url: 'account/notifications/getNotifications?seen=yes',
+	      url: 'account/notifications/getNotifications',
 	      dataType: 'json',
 	      beforeSend: function() {
-	          $('#message-list').html('<p class="text-center m-3"><div class="spinner-grow text-info" role="status"><span class="sr-only">Loading...</span></div></p>');
-	          $('#message-count').html('');
+	          $('#nav-user-main #notifications-list').html('<p class="text-center m-3"><div class="spinner-grow text-info" role="status"><span class="sr-only">Loading...</span></div></p>');
+	          $('#nav-user-main #notifications-list').html('');
 	      },
 	      complete: function () {
 	          $('.spinner-grow').remove();
@@ -202,11 +202,21 @@ function totalNotifications(data) {
 	          $('#nav-user-main #notifications-list').append(html);
 	        }
 	    } else {
-	    	$('#nav-user-main #notifications-list').append('<p class="text-center p-3">No New Notifications!</p>');
+	    	$('#nav-user-main #notifications-list').html('<p class="text-center p-3">No New Notifications!</p>');
 	      }
 	    }
 	    });
 	  }
+	  // Mark Read Notification button
+	$('#notifications-read #mark-read-button').on('click', function() {
+	  $.ajax({
+		url: 'account/notifications/markRead',
+		dataType: 'json',
+		success: function(json) {
+			loadNotifications();
+	     }
+		});
+	});
 	// check for new Messages
 	function loadMessages() {
 	   $.ajax({
@@ -239,7 +249,7 @@ function totalNotifications(data) {
 	          $('#nav-user-main #message-list').append(html);
 	        }
 	    } else {
-	    	$('#nav-user-main #message-list').append('<p class="text-center p-3">No New Messages!</p>');
+	    	$('#nav-user-main #message-list').html('<p class="text-center p-3">No New Messages!</p>');
 	      }
 	    }
 	    });

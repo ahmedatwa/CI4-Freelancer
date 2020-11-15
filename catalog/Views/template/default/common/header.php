@@ -125,26 +125,29 @@
       <!-- Messages -->
       <ul class="navbar-nav">
             <li class="nav-item ml-3 d-none d-lg-block">
-            <div class="header-notifications" id="header-notifications">
+            <div class="header-notifications">
             <!-- Trigger -->
-            <div class="header-notifications-trigger">
+            <div class="header-notifications-trigger" id="header-notifications">
               <a href="#"><i class="icon-feather-bell" id="notifications-count"></i></a>
             </div>
             <!-- Dropdown -->
             <div class="header-notifications-dropdown">
-              <div class="header-notifications-headline">
+              <div class="header-notifications-headline" id="notifications-read">
                 <h4>Notifications</h4>
+                <button id="mark-read-button" type="button" class="btn btn-danger btn-sm float-right" title="Mark all as read" data-placement="left" data-toggle="tooltip">
+                  <i class="icon-feather-check-square"></i>
+                </button>
               </div>
 
               <div class="header-notifications-content">
-                <div class="header-notifications-scroll">
+                <div class="header-notifications-scroll" data-simplebar>
                  <ul id="notifications-list"></ul>
                 </div>
               </div>
             </div>
           </div>
-             <div class="header-notifications" id="header-messages">
-              <div class="header-notifications-trigger">
+             <div class="header-notifications">
+              <div class="header-notifications-trigger" id="header-messages">
                <a href="#"><i class="icon-feather-mail" id="message-count"></i></a>
              </div>
              <div class="header-notifications-dropdown">
@@ -153,7 +156,7 @@
                 <small class="ml-4"><a href="<?php echo $all_messages; ?>" class="btn btn-link">View All Messages</a></small>
               </div>
               <div class="header-notifications-content">
-                <div class="header-notifications-scroll text-center">
+                <div class="header-notifications-scroll text-center" data-simplebar>
                   <ul id="message-list"></ul>
                 </div>
               </div>

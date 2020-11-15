@@ -360,7 +360,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
         return $this->response->setJSON($json);
    }
 
-     // getProjects
+     // get Freelancer Bids
     public function getFreelancerBids()
     {
         $freelancerModel = new FreelancerModel();
@@ -379,7 +379,9 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         foreach ($results as $result) {
             $data['bids'][] = [
+                'bid_id'     => $result['bid_id'],
                 'project_id' => $result['project_id'],
+                'employer_id' => $result['employer_id'],
                 'name'       => $result['name'],
                 'quote'      => $this->currencyFormat($result['quote']),
                 'delivery'   => $result['delivery'],
@@ -413,9 +415,21 @@ class Freelancer extends \Catalog\Controllers\BaseController
                $project_id = 0;
             }
 
+            if ($this->request->getVar('bid_id')) {
+               $bid_id = $this->request->getVar('bid_id');
+            } else {
+               $bid_id = 0;
+            }
+
+            if ($this->request->getVar('employer_id')) {
+               $employer_id = $this->request->getVar('employer_id');
+            } else {
+               $employer_id = 0;
+            }
+
             $freelancerModel = new FreelancerModel();
 
-            $freelancerModel->acceptOffer($freelancer_id, $project_id);
+            $freelancerModel->acceptOffer($freelancer_id, $project_id, $bid_id, $employer_id);
 
             $json['success'] = lang('freelancer/freelancer.text_offer_accepted');
         }

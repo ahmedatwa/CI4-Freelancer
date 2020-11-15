@@ -329,6 +329,8 @@ class Project extends \Catalog\Controllers\BaseController
             $data['status'] = $projectModel->getStatusByProjectId($project_info['project_id']);
 
             // more Employer projects
+            $data['other_projects'] = [];
+            
             $filter_data = [
                 'start' => 0,
                 'limit' => 5,

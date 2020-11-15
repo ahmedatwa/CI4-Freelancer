@@ -12,8 +12,24 @@ class ActivityModel extends \CodeIgniter\Model
         $builder = $this->db->table('customer_activity');
         $builder->select();
         $builder->where('freelancer_id', $customer_id);
-        $builder->orWhere('employer_id', $customer_id);
+        $builder->orWhere([
+            'employer_id' => $customer_id,
+            'sender_id'   => $customer_id,
+            'receiver_id' => $customer_id,
+        ]);
+
         $builder->where('seen', 0);
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
+    public function getDashboardActivitiesByCustomerId($customer_id)
+    {
+        $builder = $this->db->table('customer_activity');
+        $builder->select();
+        $builder->where('freelancer_id', $customer_id);
+        $builder->orWhere('employer_id', $customer_id);
+        $builder->like('date_added', Date('Y-m-d'));
         $query = $builder->get();
         return $query->getResultArray();
     }
@@ -54,6 +70,9 @@ class ActivityModel extends \CodeIgniter\Model
             'customer_id'   => $data['customer_id'] ?? 0,
             'freelancer_id' => $data['freelancer_id'] ?? 0,
             'employer_id'   => $data['employer_id'] ?? 0,
+            'project_id'    => $data['project_id'] ?? 0,
+            'sender_id'     => $data['sender_id'] ?? 0,
+            'receiver_id'   => $data['receiver_id'] ?? 0,
             'key'           => $key,
             'data'          => json_encode($data),
             'ip'            => $request->getIPAddress(),

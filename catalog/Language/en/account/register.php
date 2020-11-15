@@ -2,7 +2,7 @@
         
 return [
     'text_warning'      => 'Please check the form for errors.',
-    'text_success'      => 'Your Account Has Been Created!, Please Check Your Email for activation',
+    'text_success'      => 'Your Account Has Been Created!',
     'heading_title'     => 'Register',
     // Text
     'text_register'     => 'Let\'s create your account!',

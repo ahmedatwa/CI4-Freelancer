@@ -435,9 +435,9 @@ $('#freelancer a[href="#freelancer-bids"]').on('click', function () {
 $('#freelancer a[href="#freelancer-bids').trigger('click') // Select first tab
 
 // Freelancer to accept offer
-function acceptOffer(project_id) {
+function acceptOffer(project_id, bid_id, employer_id) {
 	$.ajax({
-		url: 'freelancer/freelancer/acceptOffer?freelancer_id=<?php echo $customer_id; ?>&project_id=' + project_id,
+		url: 'freelancer/freelancer/acceptOffer?freelancer_id=<?php echo $customer_id; ?>&project_id=' + project_id + '&bid_id=' + bid_id + '&employer_id=' + employer_id,
 		dataType: 'json',
 		beforeSend: function() {
            $('#button-offer-accept').html(' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');

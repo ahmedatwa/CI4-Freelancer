@@ -392,7 +392,7 @@ class Project extends \Catalog\Controllers\BaseController
             $data['bidders'][] = [
                 'bid_id'        => $result['bid_id'],
                 'freelancer_id' => $result['freelancer_id'],
-                'freelancer'    => $result['freelancer'],
+                'freelancer'    => $result['username'],
                 'email'         => $result['email'],
                 'price'         => $this->currencyFormat($result['quote']),
                 'delivery'      => $result['delivery'] . ' ' . lang($this->locale . '.text_days'),
@@ -507,7 +507,7 @@ class Project extends \Catalog\Controllers\BaseController
         }  
 
         $data['customer_id'] = $this->session->get('customer_id'); 
-        $data['sender_id'] = $results[0]['sender_id'];
+        $data['sender_id'] = $results[0]['sender_id'] ?? 0;
 
         $data['heading_title'] = lang('project/project.text_manage_bidders');
 
