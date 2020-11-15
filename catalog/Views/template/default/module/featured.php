@@ -1,3 +1,4 @@
+<?php if ($featured) { ?>
 <!-- Features Jobs -->
 <div class="section gray padding-top-20 padding-bottom-75">
 	<div class="container">
@@ -40,3 +41,4 @@
 	</div>
 </div>
 <!-- Featured Jobs / End -->
+<?php } ?>

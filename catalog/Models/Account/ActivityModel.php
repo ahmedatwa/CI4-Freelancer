@@ -10,15 +10,17 @@ class ActivityModel extends \CodeIgniter\Model
     public function getActivitiesByCustomerID($customer_id)
     {
         $builder = $this->db->table('customer_activity');
-        $builder->select();
-        $builder->where('freelancer_id', $customer_id);
-        $builder->orWhere([
+        $builder->distinct();
+        $builder->where('seen', 0);
+        $builder->having([
             'employer_id' => $customer_id,
+        ]);
+        $builder->orHaving([
             'sender_id'   => $customer_id,
             'receiver_id' => $customer_id,
+            'freelancer_id' => $customer_id
         ]);
 
-        $builder->where('seen', 0);
         $query = $builder->get();
         return $query->getResultArray();
     }
@@ -29,7 +31,7 @@ class ActivityModel extends \CodeIgniter\Model
         $builder->select();
         $builder->where('freelancer_id', $customer_id);
         $builder->orWhere('employer_id', $customer_id);
-        $builder->like('date_added', Date('Y-m-d'));
+        $builder->like('date_added', Date('Y-m-d'), 'after');
         $query = $builder->get();
         return $query->getResultArray();
     }

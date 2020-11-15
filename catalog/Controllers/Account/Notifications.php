@@ -19,7 +19,7 @@ class Notifications extends \Catalog\Controllers\BaseController
         $activityModel = new ActivityModel();
 
         $results = $activityModel->getActivitiesByCustomerID($customer_id);
-
+        var_dump($results);
         foreach ($results as $result) {
 
             $info = json_decode($result['data'], true);
@@ -33,7 +33,13 @@ class Notifications extends \Catalog\Controllers\BaseController
             ];
 
             $seo_url = service('seo_url');
-            $keyword = $seo_url->getKeywordByQuery('project_id=' . $info['project_id']);
+
+            if (isset($info['project_id'])) {
+               $keyword = $seo_url->getKeywordByQuery('project_id=' . $info['project_id']);
+            } else {
+                $keyword = '';
+            }
+            
 
             if (isset($info['employer_id'])) {
                $employer = $activityModel->getEmployerUserName($info['employer_id']);
