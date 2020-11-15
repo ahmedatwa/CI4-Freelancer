@@ -19,7 +19,7 @@ class Notifications extends \Catalog\Controllers\BaseController
         $activityModel = new ActivityModel();
 
         $results = $activityModel->getActivitiesByCustomerID($customer_id);
-        var_dump($results);
+
         foreach ($results as $result) {
 
             $info = json_decode($result['data'], true);
