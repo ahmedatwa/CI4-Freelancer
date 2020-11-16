@@ -44,5 +44,6 @@ return [
     'text_finance'         => 'Finance',
     'text_withdrawal'      => 'Withdrawal',
     'text_wallet'          => 'Wallet',
+    'text_withdraw_status'  => 'Withdrawal Statuses',
 
 ];

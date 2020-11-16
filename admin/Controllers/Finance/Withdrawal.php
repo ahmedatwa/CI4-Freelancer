@@ -78,12 +78,12 @@ class Withdrawal extends \Admin\Controllers\BaseController
             $data['withdrawals'][] = [
                 'withdraw_id'    => $result['withdraw_id'],
                 'customer'       => $result['username'],
-                'status'        =>  $result['status'],
-                'amount'        =>  currency_format($result['amount']),
-                'date_added'    => $result['date_added'],
-                'date_processed'    => $result['date_processed'],
-                'edit'          => base_url('index.php/finance/withdrawal/edit?user_token=' . $this->session->get('user_token') . '&withdraw_id=' . $result['withdraw_id']),
-                'delete'        => base_url('index.php/finance/withdrawal/delete?user_token=' . $this->session->get('user_token') . '&withdraw_id=' . $result['withdraw_id']),
+                'status'         =>  $result['status'],
+                'amount'         =>  currency_format($result['amount']),
+                'date_added'     => DateShortFormat($result['date_added']),
+                'date_processed' => DateShortFormat($result['date_processed']),
+                'edit'           => base_url('index.php/finance/withdrawal/edit?user_token=' . $this->session->get('user_token') . '&withdraw_id=' . $result['withdraw_id']),
+                'delete'         => base_url('index.php/finance/withdrawal/delete?user_token=' . $this->session->get('user_token') . '&withdraw_id=' . $result['withdraw_id']),
             ];
         }
 
@@ -107,6 +107,8 @@ class Withdrawal extends \Admin\Controllers\BaseController
         } else {
             $data['selected'] = [];
         }
+
+        $data['withdraw_statuses'] = $withdrawalModel->getWithdrawStatuses();
 
         $this->document->output('finance/withdrawal_list', $data);
     }
@@ -144,49 +146,39 @@ class Withdrawal extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        $disputeModel = new Disputes();
+        $withdrawalModel = new WithdrawalModel();
 
         if ($this->request->getVar('withdraw_id') && ($this->request->getMethod() != 'post')) {
-            $dispute_info = $disputeModel->find($this->request->getVar('withdraw_id'));
+            $withdrawal_info = $withdrawalModel->find($this->request->getVar('withdraw_id'));
         }
         
-        $data['dispute_actions'] = $disputeModel->getDisputeActions();
+        $data['withdraw_statuses'] = $withdrawalModel->getWithdrawStatuses();
 
-        if ($this->request->getPost('dispute_action_id')) {
-            $data['dispute_action_id'] = $this->request->getPost('dispute_action_id');
-        } elseif (!empty($dispute_info)) {
-            $data['dispute_action_id'] = $dispute_info['dispute_action_id'];
+        if ($this->request->getPost('withdraw_status_id')) {
+            $data['withdraw_status_id'] = $this->request->getPost('withdraw_status_id');
+        } elseif (!empty($withdrawal_info)) {
+            $data['withdraw_status_id'] = $withdrawal_info['withdraw_status_id'];
         } else {
-            $data['dispute_action_id'] = 0;
+            $data['withdraw_status_id'] = 0;
         }
 
-        $data['dispute_statuses'] = $disputeModel->getDisputeStatuses();
-
-        if ($this->request->getPost('dispute_status_id')) {
-            $data['dispute_status_id'] = $this->request->getPost('dispute_status_id');
-        } elseif (!empty($dispute_info)) {
-            $data['dispute_status_id'] = $dispute_info['dispute_status_id'];
-        } else {
-            $data['dispute_status_id'] = 0;
-        }
-
-        if ($this->request->getVar('withdraw_id')) {
-           $data['withdraw_id'] = $this->request->getVar('withdraw_id');
+        if (!empty($withdrawal_info['withdraw_id'])) {
+           $data['withdraw_id'] = $withdrawal_info['withdraw_id'];
         } else {
            $data['withdraw_id'] = 0; 
         }
 
-        if ($dispute_info) {
-            $customerModel = new \Admin\Models\Customer\Customers();
-
-            $projectModel = new \Admin\Models\Catalog\Projects();
-
-            $data['freelancer'] = $customerModel->where('customer_id', $dispute_info['freelancer_id'])->findColumn('username')[0];
-            $data['employer']   = $customerModel->where('customer_id', $dispute_info['employer_id'])->findColumn('username')[0];
-            $data['comment']    = $dispute_info['comment'];
-            $data['project']    = $projectModel->getProject($dispute_info['project_id'])['name'];
+        if (!empty($withdrawal_info['amount'])) {
+           $data['amount'] = $withdrawal_info['amount'];
+        } else {
+           $data['amount'] = 0; 
         }
 
+        if (!empty($withdrawal_info['customer_id'])) {
+           $data['customer_id'] = $withdrawal_info['customer_id'];
+        } else {
+           $data['customer_id'] = 0; 
+        }
 
         $this->document->output('finance/withdrawal_form', $data);
     }
@@ -195,9 +187,9 @@ class Withdrawal extends \Admin\Controllers\BaseController
 
         $data['histories'] = [];
 
-        $disputeModel = new Disputes();
+        $withdrawalModel = new WithdrawalModel();
 
-        $results = $disputeModel->getDisputeHistories($this->request->getVar('withdraw_id'));
+        $results = $withdrawalModel->getWithdrawHistories($this->request->getVar('withdraw_id'));
 
         foreach ($results as $result) {
             $data['histories'][] = [
@@ -225,9 +217,9 @@ class Withdrawal extends \Admin\Controllers\BaseController
         }
 
         if (! $json) {
-            $disputeModel = new Disputes();
+            $withdrawalModel = new WithdrawalModel();
 
-            $disputeModel->addDisputeHistory($this->request->getVar('withdraw_id'), $this->request->getPost('dispute_status_id'), $this->request->getPost('comment'), $this->request->getPost('notify'));
+            $withdrawalModel->addWithdrawHistory($this->request->getVar('withdraw_id'), $this->request->getPost('withdraw_status_id'), $this->request->getPost('comment'), $this->request->getPost('notify'), $this->request->getPost('amount'), $this->request->getPost('customer_id'));
 
             $json['success'] = lang('finance/withdrawal.text_success');
           }

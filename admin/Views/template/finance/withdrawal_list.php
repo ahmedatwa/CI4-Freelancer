@@ -32,8 +32,9 @@
                 <label for="input_status"><?php echo $entry_status; ?></label>
                 <select name="filter_status" class="form-control">
                     <option value=""><?php echo $text_select; ?></option>
-                    <option value="Disabled"><?php echo $text_disabled; ?></option>
-                    <option value="Enabled"><?php echo $text_enabled; ?></option>
+                    <?php foreach ($withdraw_statuses as $status) { ?> 
+                    <option value="<?php echo $status['name']; ?>"><?php echo $status['name']; ?></option>
+                <?php } ?>
                 </select>
             </div>
         </div>
@@ -108,8 +109,8 @@
         "lengthMenu": [15, 20, 25, 30]
     });
 // Search
-$('input[name=\'filter_name\']').on( 'keyup', function () {
-    table.columns(0).search( this.value ).draw();
+$('input[name=\'filter_withdrawal_id\']').on( 'keyup', function () {
+    table.columns(1).search( this.value ).draw();
 });
 var filter_status = $('select[name=\'filter_status\']').val();
 if (filter_status !== '*') {
@@ -117,9 +118,7 @@ $('select[name=\'filter_status\']').on( 'change', function () {
     table.column(4).search( $(this).val()).draw();
 });
 }
-$('input[name=\'filter_employer\']').on( 'keyup', function () {
-    table.columns(3).search( this.value ).draw();
-});
+
 </script>
 <!-- // delete method -->
 <script type="text/javascript">

@@ -212,6 +212,19 @@ class Column_left extends \Admin\Controllers\BaseController
             'href'     => base_url('index.php/localisation/disputes?user_token=' . $this->request->getVar('user_token')),
             'children' => $disputes,
         ];
+        $withdraw = [];
+        $withdraw[] = [
+            'id'       => 'menu-withdraw',
+            'name'     => lang('common/column_left.text_withdraw_status'),
+            'href'     => base_url('index.php/localisation/withdraw_status?user_token=' . $this->request->getVar('user_token')),
+            'children' => [],
+        ];
+        $localisation[] = [
+            'id'       => 'menu-withdraw',
+            'name'     => lang('common/column_left.text_withdrawal'),
+            'href'     => '',
+            'children' => $withdraw,
+        ];
         $system[] = [
             'id'       => 'menu-localisation',
             'name'     => lang('common/column_left.text_localisation'),

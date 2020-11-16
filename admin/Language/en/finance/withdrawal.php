@@ -12,10 +12,10 @@ return [
 	'text_add'             => 'Add Withdrawal',
 	'text_edit'            => 'Edit Withdrawal',
 	'text_history'         => 'History',
-	'text_history_add'     => 'Add History',
+	'text_history_add'     => 'Process',
 	'text_details'         => 'Project Details:',
 	'text_history'         => 'History',
-	'text_add_history'     => 'Add History',
+	'text_add_history'     => 'Process Request',
 	
 	// Column
 	'column_withdrawal_id'  => 'Withdrawal ID',
@@ -42,7 +42,7 @@ return [
 	'entry_date_modified'     => 'Date Modified',
 	// Help
 	'help_list' => 'Manage All Withdrawal requests by Customers',
-	'help_form' => 'Update the Dispute Action Taken, then send status update to both Employer/Freelancer by ticking notify checkbox',
+	'help_form' => 'Process Withdrawal Request and notify customer by email',
 
  ]
 ];
