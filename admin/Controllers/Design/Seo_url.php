@@ -1,6 +1,6 @@
 <?php namespace Admin\Controllers\Design;
 
-use \Admin\Models\Design\seo_urls;
+use \Admin\Models\Design\Seo_urls;
 
 class Seo_url extends \Admin\Controllers\BaseController
 {
@@ -8,7 +8,7 @@ class Seo_url extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('design/seo_url.list.heading_title'));
 
-        $seoUrlsModel = new seo_urls();
+        $seoUrlsModel = new Seo_urls();
 
         $this->getList();
     }
@@ -17,7 +17,7 @@ class Seo_url extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('design/seo_url.list.heading_title'));
 
-        $seoUrlsModel = new seo_urls();
+        $seoUrlsModel = new Seo_urls();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $seoUrlsModel->insert($this->request->getPost());
@@ -31,7 +31,7 @@ class Seo_url extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('design/seo_url.list.heading_title'));
 
-        $seoUrlsModel = new seo_urls();
+        $seoUrlsModel = new Seo_urls();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $seoUrlsModel->update($this->request->getVar('seo_url_id'), $this->request->getPost());
@@ -47,7 +47,7 @@ class Seo_url extends \Admin\Controllers\BaseController
 
         $this->document->setTitle(lang('design/seo_url.list.heading_title'));
    
-        $seoUrlsModel = new seo_urls();
+        $seoUrlsModel = new Seo_urls();
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $seo_url_id) {
@@ -63,7 +63,7 @@ class Seo_url extends \Admin\Controllers\BaseController
 
     protected function getList()
     {
-        $seoUrlsModel = new seo_urls();
+        $seoUrlsModel = new Seo_urls();
 
         $data['breadcrumbs'] = [];
 
@@ -152,8 +152,10 @@ class Seo_url extends \Admin\Controllers\BaseController
 
         $data['cancel'] = base_url('design/seo_url?user_token=' . $this->request->getVar('user_token'));
 
+        $seoUrlsModel = new Seo_urls();
+
         if ($this->request->getVar('seo_url_id') && ($this->request->getMethod() != 'post')) {
-            $seo_url_info = $this->seo_urls->find($this->request->getVar('seo_url_id'));
+            $seo_url_info = $seoUrlsModel->find($this->request->getVar('seo_url_id'));
         }
         
         if ($this->request->getPost('query')) {
