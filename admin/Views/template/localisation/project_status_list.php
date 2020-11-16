@@ -65,7 +65,7 @@
 var table = $('#table-location').DataTable({
     "dom": 'lrtp',
     "order":[[ 1, "asc" ]],
-    "lengthMenu": [15, 20, 25, 30]
+    "lengthMenu": [20, 25, 30]
 });
 </script>
 <!-- // delete method -->

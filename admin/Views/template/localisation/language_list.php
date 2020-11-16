@@ -66,7 +66,7 @@
 <script type="text/javascript">
 $('#table-location').DataTable( {
         "order": [[ 1, "asc" ]],
-        "lengthMenu": [[15, 20, 25, 30], [15, 20, 25, 30]],
+        "lengthMenu": [20, 25, 30]
     }); 
 </script>
 <!-- // delete method -->
