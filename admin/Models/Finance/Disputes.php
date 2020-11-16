@@ -1,4 +1,4 @@
-<?php namespace Admin\Models\Localisation;
+<?php namespace Admin\Models\Finance;
 
 use CodeIgniter\Model;
 

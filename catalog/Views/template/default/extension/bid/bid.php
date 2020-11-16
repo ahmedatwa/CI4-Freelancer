@@ -19,7 +19,7 @@
 				<div class="freelancer-name">
 					<h4><a href="<?php echo $bid['profile']; ?>"><?php echo $bid['freelancer']; ?></a></h4>
 					<div class="rating">
-						<ul>
+						<ul class="pl-0">
 							<?php for ($i=1; $i <= 5; $i++) { ?>
 								<?php if ($bid['rating'] < $i) { ?>
 									<li><span class="fa-stack"><i class="far fa-star fa-stack-1x"></i></span></li>

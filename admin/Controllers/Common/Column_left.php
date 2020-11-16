@@ -41,12 +41,6 @@ class Column_left extends \Admin\Controllers\BaseController
             'href'     => base_url('index.php/catalog/information?user_token=' . $this->request->getVar('user_token')),
             'children' => [],
         ];
-        $catalog[] = [
-            'id'       => 'menu-catalog',
-            'name'     => lang('common/column_left.text_disputes'),
-            'href'     => base_url('index.php/catalog/dispute?user_token=' . $this->request->getVar('user_token')),
-            'children' => [],
-        ];
         $data['menus'][] = [
             'id'           => 'menu-catalog',
             'icon'         => 'fas fa-tags',
@@ -124,6 +118,26 @@ class Column_left extends \Admin\Controllers\BaseController
             'icon'         => 'fas fa-users',
             'name'         => lang('common/column_left.text_customers'),
             'children'     => $customers,
+        ];
+        // finance Level 1
+        $finance = [];
+        $finance[] = [
+            'id'       => 'menu-finance',
+            'name'     => lang('common/column_left.text_disputes'),
+            'href'     => base_url('index.php/finance/dispute?user_token=' . $this->request->getVar('user_token')),
+            'children' => [],
+        ];
+        $finance[] = [
+            'id'       => 'menu-finance',
+            'name'     => lang('common/column_left.text_withdrawal'),
+            'href'     => base_url('index.php/finance/withdrawal?user_token=' . $this->request->getVar('user_token')),
+            'children' => [],
+        ];
+        $data['menus'][] = [
+            'id'           => 'menu-finance',
+            'icon'         => 'fas fa-hand-holding-usd',
+            'name'         => lang('common/column_left.text_finance'),
+            'children'     => $finance,
         ];
         // system
         $system = [];
@@ -220,12 +234,6 @@ class Column_left extends \Admin\Controllers\BaseController
             'href'         => base_url('index.php/tool/log?user_token=' . $this->request->getVar('user_token')),
             'children'     => [],
         ];
-        // $tools[] = [
-        //     'id'           => 'menu-tools',
-        //     'name'         => lang('common/column_left.text_translation'),
-        //     'href'         => base_url('index.php/tool/translation?user_token=' . $this->request->getVar('user_token')),
-        //     'children'     => [],
-        // ];
         $system[] = [
             'id'       => 'menu-tools',
             'name'     => lang('common/column_left.text_tools'),

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 15, 2020 at 06:25 PM
+-- Generation Time: Nov 16, 2020 at 10:37 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -607,12 +607,12 @@ INSERT INTO `ci_customer_activity` (`customer_activity_id`, `customer_id`, `free
 (2, 1, 0, 0, 0, 0, 0, 'customer_register', '{\"customer_id\":1,\"username\":\"customer\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-15 11:59:09'),
 (3, 1, 0, 0, 0, 0, 0, 'customer_register', '{\"customer_id\":1,\"username\":\"customer\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-15 12:00:19'),
 (4, 2, 0, 0, 0, 0, 0, 'customer_register', '{\"customer_id\":2,\"username\":\"customer_2\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-15 12:03:14'),
-(14, 0, 2, 1, 0, 0, 0, 'project_offer_accepted', '{\"freelancer_id\":2,\"employer_id\":1,\"project_id\":1,\"bid_id\":1}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-15 14:00:41'),
-(12, 0, 2, 0, 0, 0, 0, 'project_offer_selected', '{\"freelancer_id\":\"2\",\"project_id\":\"1\",\"bid_id\":\"1\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-15 13:54:57'),
-(11, 0, 0, 1, 0, 0, 0, 'project_bid_add', '{\"customer_id\":0,\"project_id\":\"1\",\"employer_id\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-15 13:28:46'),
-(16, 0, 2, 1, 0, 0, 0, 'project_offer_accepted', '{\"freelancer_id\":2,\"employer_id\":1,\"project_id\":1,\"bid_id\":1}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-15 14:06:29'),
-(26, 0, 0, 0, 1, 2, 1, 'project_new_message', '{\"sender_id\":\"1\",\"receiver_id\":\"2\",\"project_id\":\"1\",\"message\":\"ssss\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-15 17:19:35'),
-(27, 0, 0, 0, 1, 2, 1, 'project_new_message', '{\"sender_id\":\"1\",\"receiver_id\":\"2\",\"project_id\":\"1\",\"message\":\"ssss\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-15 17:19:35');
+(14, 0, 2, 1, 0, 0, 0, 'project_offer_accepted', '{\"freelancer_id\":2,\"employer_id\":1,\"project_id\":1,\"bid_id\":1}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 1, '2020-11-15 14:00:41'),
+(12, 0, 2, 0, 0, 0, 0, 'project_offer_selected', '{\"freelancer_id\":\"2\",\"project_id\":\"1\",\"bid_id\":\"1\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 1, '2020-11-15 13:54:57'),
+(11, 0, 0, 1, 0, 0, 0, 'project_bid_add', '{\"customer_id\":0,\"project_id\":\"1\",\"employer_id\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 1, '2020-11-15 13:28:46'),
+(16, 0, 2, 1, 0, 0, 0, 'project_offer_accepted', '{\"freelancer_id\":2,\"employer_id\":1,\"project_id\":1,\"bid_id\":1}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 1, '2020-11-15 14:06:29'),
+(26, 0, 0, 0, 1, 2, 1, 'project_new_message', '{\"sender_id\":\"1\",\"receiver_id\":\"2\",\"project_id\":\"1\",\"message\":\"ssss\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 1, '2020-11-15 17:19:35'),
+(27, 0, 0, 0, 1, 2, 1, 'project_new_message', '{\"sender_id\":\"1\",\"receiver_id\":\"2\",\"project_id\":\"1\",\"message\":\"ssss\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 1, '2020-11-15 17:19:35');
 
 -- --------------------------------------------------------
 
@@ -717,8 +717,8 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 1, 'http://ci4.localhost/account/dashboard', 'http://ci4.localhost/account/dashboard', '2020-11-15 17:23:49'),
-('127.0.0.1', 2, 'http://ci4.localhost/account/dashboard', 'http://ci4.localhost/account/dashboard', '2020-11-15 17:15:53');
+('::1', 1, 'http://ci4.localhost/service/what-is-lorem-ipsum', 'http://ci4.localhost/projects?sort_by=budget_min&order_by=DESC&sort_b=budget_min', '2020-11-16 08:53:21'),
+('127.0.0.1', 2, 'http://ci4.localhost/service/what-is-lorem-ipsum', 'http://ci4.localhost/service/what-is-lorem-ipsum', '2020-11-16 09:35:19');
 
 -- --------------------------------------------------------
 
@@ -733,11 +733,20 @@ CREATE TABLE `ci_customer_to_balance` (
   `income` decimal(15,4) NOT NULL,
   `withdrawn` decimal(15,4) NOT NULL,
   `used` decimal(15,4) NOT NULL,
-  `available` decimal(15,4) NOT NULL,
-  `pending` decimal(15,4) NOT NULL,
+  `available` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `pending` decimal(15,4) NOT NULL DEFAULT 0.0000,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_customer_to_balance`
+--
+
+INSERT INTO `ci_customer_to_balance` (`balance_id`, `customer_id`, `project_id`, `income`, `withdrawn`, `used`, `available`, `pending`, `date_added`, `date_modified`) VALUES
+(1, 1, 1, '600.0000', '200.0000', '20.0000', '0.0000', '0.0000', '2020-10-07 08:32:34', '2020-10-08 08:32:34'),
+(2, 1, 1, '900.0000', '200.0000', '20.0000', '0.0000', '0.0000', '2020-11-16 08:32:34', '2020-10-08 08:32:34'),
+(3, 1, 1, '200.0000', '200.0000', '20.0000', '0.0000', '0.0000', '2020-09-01 08:32:34', '2020-10-08 08:32:34');
 
 -- --------------------------------------------------------
 
@@ -932,7 +941,7 @@ INSERT INTO `ci_event` (`event_id`, `code`, `action`, `description`, `status`, `
 (17, 'project_offer_selected', 'Catalog\\Events\\Notification::addWinner', '', 1, 0),
 (6, 'user_activity_add', 'Admin\\Events\\Activity::afterInsert', 'Log Activity After Insert to DB', 1, 0),
 (8, 'customer_register', 'Catalog\\Events\\Activity::customerRegister', 'Add Activity for new Customers', 1, 0),
-(9, 'mail_register', 'Catalog\\Events\\MailAlert::registerMail', 'Trigger the Activation Email for new Customers', 1, 0),
+(9, 'mail_register', 'Catalog\\Events\\MailAlert::addCustomer', 'Trigger the Activation Email for new Customers', 1, 0),
 (11, 'mail_forgotten', 'Catalog\\Events\\MailAlert::forgottenMail', 'trigger Forgotton email activation', 1, 0),
 (22, 'customer_transfer_funds', 'Catalog\\Events\\Activity::transferFunds', '', 1, 0),
 (13, 'project_new_message', 'Catalog\\Events\\Notification::addMessage', 'Trigger notification when project message has been received ', 1, 0),
@@ -1317,7 +1326,7 @@ CREATE TABLE `ci_project` (
 --
 
 INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`) VALUES
-(1, 1, 2, '34.0000', '67.0000', 1, 1, 7, 45, '', 0, 4, 0, 0, '2020-11-15 12:01:45', '2020-11-15 12:01:45');
+(1, 1, 2, '34.0000', '67.0000', 1, 1, 7, 52, '', 0, 4, 0, 0, '2020-11-15 12:01:45', '2020-11-15 12:01:45');
 
 -- --------------------------------------------------------
 
@@ -1656,7 +1665,8 @@ CREATE TABLE `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
-('db009327ddb4322fa1d53d67a377cd5d5861b317', '::1', 1605447169, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353434373135363b5f63695f70726576696f75735f75726c7c733a39373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d566e545a4e6f5369574f623243677458487566796133777a4c476b734534654126747970653d626964223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22566e545a4e6f5369574f623243677458487566796133777a4c476b7345346541223b);
+('db009327ddb4322fa1d53d67a377cd5d5861b317', '::1', 1605447169, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353434373135363b5f63695f70726576696f75735f75726c7c733a39373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d566e545a4e6f5369574f623243677458487566796133777a4c476b734534654126747970653d626964223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22566e545a4e6f5369574f623243677458487566796133777a4c476b7345346541223b),
+('3cba679bbfce11f2e105e95c536db55dd2bab9a4', '::1', 1605510894, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353531303839333b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e67253246657874656e73696f6e223b);
 
 -- --------------------------------------------------------
 
@@ -2884,7 +2894,7 @@ ALTER TABLE `ci_customer_login`
 -- AUTO_INCREMENT for table `ci_customer_to_balance`
 --
 ALTER TABLE `ci_customer_to_balance`
-  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_certificate`

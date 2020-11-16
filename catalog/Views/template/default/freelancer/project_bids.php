@@ -14,7 +14,7 @@
 								</div>
 								<!-- Name -->
 								<div class="freelancer-name">
-									<h4><a href="<?php echo $bidder['profile']; ?>"><?php echo $bidder['freelancer']; ?> <img class="flag" src="images/flags/de.svg" alt="" title="Germany" data-tippy-placement="top"></a></h4>
+									<h4><a href="<?php echo $bidder['profile']; ?>"><?php echo $bidder['freelancer']; ?> <img class="flag" src="images/flags/de.svg" alt="" title="Germany" data-placement="top" data-toggle="tooltip"></a></h4>
 									<!-- Details -->
 									<span class="freelancer-detail-item"><a href="#"><i class="icon-feather-mail"></i> <?php echo $bidder['email']; ?></a></span>
 									<!-- Rating -->

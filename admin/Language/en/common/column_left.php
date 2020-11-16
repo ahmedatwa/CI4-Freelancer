@@ -41,5 +41,8 @@ return [
     'text_dispute_action'  => 'Dispute Actions',
     'text_dispute_reason'  => 'Dispute Reasons',
     'text_dispute_status'  => 'Dispute Statuses',
+    'text_finance'         => 'Finance',
+    'text_withdrawal'      => 'Withdrawal',
+    'text_wallet'          => 'Wallet',
 
 ];

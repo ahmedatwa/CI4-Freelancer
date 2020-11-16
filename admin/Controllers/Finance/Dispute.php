@@ -1,6 +1,6 @@
-<?php namespace Admin\Controllers\Catalog;
+<?php namespace Admin\Controllers\Finance;
 
-use \Admin\Models\Localisation\Disputes;
+use \Admin\Models\Finance\Disputes;
 
 class Dispute extends \Admin\Controllers\BaseController
 {
@@ -8,21 +8,21 @@ class Dispute extends \Admin\Controllers\BaseController
     {
         $disputeModel = new Disputes();
 
-        $this->document->setTitle(lang('catalog/dispute.list.heading_title'));
+        $this->document->setTitle(lang('finance/dispute.list.heading_title'));
 
         $this->getList();
     }
 
     public function edit()
     {
-        $this->document->setTitle(lang('catalog/dispute.list.text_edit'));
+        $this->document->setTitle(lang('finance/dispute.list.text_edit'));
 
         $disputeModel = new Disputes(); 
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $disputeModel->update($this->request->getGet('dispute_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/catalog/dispute?user_token=' . $this->session->get('user_token')))
-                              ->with('success', lang('catalog/dispute.text_success'));
+            return redirect()->to(base_url('index.php/finance/dispute?user_token=' . $this->session->get('user_token')))
+                              ->with('success', lang('finance/dispute.text_success'));
         }
         $this->getForm();
     }
@@ -33,16 +33,16 @@ class Dispute extends \Admin\Controllers\BaseController
 
         $disputeModel = new Disputes(); 
    
-        $this->document->setTitle(lang('catalog/dispute.list.heading_title'));
+        $this->document->setTitle(lang('finance/dispute.list.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $dispute_id) {
                 $disputeModel->delete($dispute_id);
-                $json['success'] = lang('catalog/dispute.text_success');
-                $json['redirect'] = 'index.php/catalog/dispute?user_token=' . $this->session->get('user_token');
+                $json['success'] = lang('finance/dispute.text_success');
+                $json['redirect'] = 'index.php/finance/dispute?user_token=' . $this->session->get('user_token');
             }
         } else {
-            $json['error_warning'] = lang('catalog/dispute.error_permission');
+            $json['error_warning'] = lang('finance/dispute.error_permission');
         }
         return $this->response->setJSON($json);
     }
@@ -57,8 +57,8 @@ class Dispute extends \Admin\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('catalog/dispute.list.heading_title'),
-            'href' => base_url('index.php/catalog/dispute?user_token=' . $this->session->get('user_token')),
+            'text' => lang('finance/dispute.list.heading_title'),
+            'href' => base_url('index.php/finance/dispute?user_token=' . $this->session->get('user_token')),
         ];
 
         // Data
@@ -84,13 +84,13 @@ class Dispute extends \Admin\Controllers\BaseController
                 'employer'      => $customerModel->where('customer_id', $result['employer_id'])->findColumn('username')[0],
                 'status'        => $result['status'],
                 'date_added'    => $result['date_added'],
-                'edit'          => base_url('index.php/catalog/dispute/edit?user_token=' . $this->session->get('user_token') . '&dispute_id=' . $result['dispute_id']),
-                'delete'        => base_url('index.php/catalog/dispute/delete?user_token=' . $this->session->get('user_token') . '&dispute_id=' . $result['dispute_id']),
+                'edit'          => base_url('index.php/finance/dispute/edit?user_token=' . $this->session->get('user_token') . '&dispute_id=' . $result['dispute_id']),
+                'delete'        => base_url('index.php/finance/dispute/delete?user_token=' . $this->session->get('user_token') . '&dispute_id=' . $result['dispute_id']),
             ];
         }
 
-        $data['add'] = base_url('index.php/catalog/dispute/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/catalog/dispute/delete?user_token=' . $this->session->get('user_token'));
+        $data['add'] = base_url('index.php/finance/dispute/add?user_token=' . $this->session->get('user_token'));
+        $data['delete'] = base_url('index.php/finance/dispute/delete?user_token=' . $this->session->get('user_token'));
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -110,7 +110,7 @@ class Dispute extends \Admin\Controllers\BaseController
             $data['selected'] = [];
         }
 
-        $this->document->output('catalog/dispute_list', $data);
+        $this->document->output('finance/dispute_list', $data);
     }
 
     protected function getForm()
@@ -124,20 +124,20 @@ class Dispute extends \Admin\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('catalog/dispute.list.heading_title'),
-            'href' => base_url('index.php/catalog/dispute/edit?user_token=' . $this->session->get('user_token')),
+            'text' => lang('finance/dispute.list.heading_title'),
+            'href' => base_url('index.php/finance/dispute/edit?user_token=' . $this->session->get('user_token')),
         ];
 
-        $data['text_form'] = !$this->request->getGet('dispute_id') ? lang('catalog/dispute.list.text_add') : lang('catalog/dispute.list.text_edit');
+        $data['text_form'] = !$this->request->getGet('dispute_id') ? lang('finance/dispute.list.text_add') : lang('finance/dispute.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/catalog/dispute?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/finance/dispute?user_token=' . $this->session->get('user_token'));
 
         $data['user_token'] = $this->request->getGet('user_token');
 
         if (!$this->request->getGet('dispute_id')) {
-            $data['action'] = base_url('index.php/catalog/dispute/add?user_token=' . $this->session->get('user_token'));
+            $data['action'] = base_url('index.php/finance/dispute/add?user_token=' . $this->session->get('user_token'));
         } else {
-            $data['action'] = base_url('index.php/catalog/dispute/edit?user_token=' . $this->session->get('user_token') . '&dispute_id=' . $this->request->getGet('dispute_id'));
+            $data['action'] = base_url('index.php/finance/dispute/edit?user_token=' . $this->session->get('user_token') . '&dispute_id=' . $this->request->getGet('dispute_id'));
         }
 
         if ($this->session->getFlashdata('error_warning')) {
@@ -190,7 +190,7 @@ class Dispute extends \Admin\Controllers\BaseController
         }
 
 
-        $this->document->output('catalog/dispute_form', $data);
+        $this->document->output('finance/dispute_form', $data);
     }
 
     public function history() {
@@ -210,20 +210,20 @@ class Dispute extends \Admin\Controllers\BaseController
             ];
         }
 
-        $data['column_date_added'] = lang('catalog/dispute.list.column_date_added');
-        $data['column_comment']    = lang('catalog/dispute.list.column_comment');
-        $data['column_status']     = lang('catalog/dispute.list.column_status');
-        $data['column_notify']     = lang('catalog/dispute.list.column_notify');
+        $data['column_date_added'] = lang('finance/dispute.list.column_date_added');
+        $data['column_comment']    = lang('finance/dispute.list.column_comment');
+        $data['column_status']     = lang('finance/dispute.list.column_status');
+        $data['column_notify']     = lang('finance/dispute.list.column_notify');
 
-         return view('catalog/dispute_history', $data);
+         return view('finance/dispute_history', $data);
     }
     
     public function addHistory() {
 
         $json = [];
 
-        if (! $this->user->hasPermission('modify', 'catalog/dispute')) {
-            $json['error'] = lang('catalog/dispute.error_permission');
+        if (! $this->user->hasPermission('modify', 'finance/dispute')) {
+            $json['error'] = lang('finance/dispute.error_permission');
         }
 
         if (! $json) {
@@ -231,7 +231,7 @@ class Dispute extends \Admin\Controllers\BaseController
 
             $disputeModel->addDisputeHistory($this->request->getVar('dispute_id'), $this->request->getPost('dispute_status_id'), $this->request->getPost('comment'), $this->request->getPost('notify'));
 
-            $json['success'] = lang('catalog/dispute.text_success');
+            $json['success'] = lang('finance/dispute.text_success');
           }
 
         return $this->response->setJSON($json);
@@ -256,7 +256,7 @@ class Dispute extends \Admin\Controllers\BaseController
         }
 
         if (! $this->user->hasPermission('modify', $this->getRoute())) {
-            $this->session->setFlashdata('error_warning', lang('catalog/dispute.error_permission'));
+            $this->session->setFlashdata('error_warning', lang('finance/dispute.error_permission'));
             return false;
         }
 
@@ -266,7 +266,7 @@ class Dispute extends \Admin\Controllers\BaseController
     protected function validateDelete()
     {
         if (!$this->user->hasPermission('modify', $this->getRoute())) {
-            $this->session->setFlashdata('error_warning', lang('catalog/dispute.error_permission'));
+            $this->session->setFlashdata('error_warning', lang('finance/dispute.error_permission'));
             return false;
         } 
         return true;
