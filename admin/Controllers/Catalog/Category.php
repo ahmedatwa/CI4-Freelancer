@@ -76,13 +76,8 @@ class Category extends \Admin\Controllers\BaseController
         ];
 
         // Data
-        $filter_data = [
-            'start' => 0,
-            'limit' => $this->registry->get('config_admin_limit'),
-        ];
-
         $data['categories'] = [];
-        $results = $this->categories->getCategories($filter_data);
+        $results = $this->categories->getCategories();
 
         foreach ($results as $result) {
             $data['categories'][] = [

@@ -70,7 +70,7 @@ class Category extends \Catalog\Controllers\BaseController
                 'icon'        => $result['icon'],
                 'description' => $result['description'],
                 'href'        => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project?gid=' . $result['category_id']),
-                'children' => $categoryModel->getChildrenByCategoryId($result['category_id']),
+                'children'    => $categoryModel->getChildrenByCategoryId($result['category_id']),
             ];
         }
 

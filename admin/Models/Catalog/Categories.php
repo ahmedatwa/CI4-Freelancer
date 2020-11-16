@@ -157,7 +157,7 @@ class Categories extends Model
         $builder = $this->db->table('category c');
         $builder->distinct('cd.category_id, cd.name, c.sort_order, c.status');
         $builder->join('category_description cd', 'c.category_id = cd.category_id', 'left');
-        $builder->where('language_id', service('registry')->get('config_language_id'));
+        //$builder->where('language_id', service('registry')->get('config_language_id'));
 
         if (!empty($data['filter_name'])) {
             $builder->like('cd.name', $data['filter_name'], 'after');
