@@ -32,19 +32,18 @@ Events::on('pre_system', function () {
 		});
 	}
 	
-// Fetch Events from DB
-$eventsModel = new \Catalog\Models\Setting\EventsModel();
-$results = $eventsModel->where(['status' => 1])->findAll();
-foreach ($results as $result) {
-    if ((substr($result['action'], 0, 8) == 'Catalog\\')) {
-        if ($result['priority'] > 0) {
-            Events::on($result['code'], $result['action'], $result['priority']);
-        } else {
-            Events::on($result['code'], $result['action']);
-        }
-    }
-}
-
+	// Fetch Events from DB
+	$eventsModel = new \Catalog\Models\Setting\EventsModel();
+	$results = $eventsModel->where(['status' => 1])->findAll();
+	foreach ($results as $result) {
+	    if ((substr($result['action'], 0, 8) == 'Catalog\\')) {
+	        if ($result['priority'] > 0) {
+	            Events::on($result['code'], $result['action'], $result['priority']);
+	        } else {
+	            Events::on($result['code'], $result['action']);
+	        }
+	    }
+	}
 	/*
 	 * --------------------------------------------------------------------
 	 * Debug Toolbar Listeners.

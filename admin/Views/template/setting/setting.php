@@ -266,6 +266,7 @@
 												<?php } ?>
 											</div>
 										</div>
+									
 									</fieldset>
 									<fieldset>
 										<legend><?php echo $text_fees; ?></legend>

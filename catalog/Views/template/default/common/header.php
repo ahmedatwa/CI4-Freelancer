@@ -134,8 +134,8 @@
             <div class="header-notifications-dropdown">
               <div class="header-notifications-headline" id="notifications-read">
                 <h4>Notifications</h4>
-                <button id="mark-read-button" type="button" class="btn btn-danger btn-sm float-right" title="Mark all as read" data-placement="left" data-toggle="tooltip">
-                  <i class="icon-feather-check-square"></i>
+                <button id="mark-read-button" type="button" class="btn btn-sm float-right rounded-pill" title="Mark all as read" data-placement="left" data-toggle="tooltip">
+                  <i class="icon-feather-check-square text-danger"></i>
                 </button>
               </div>
 

@@ -15,6 +15,8 @@ class Customer
     public function __construct()
     {
         $this->db = \Config\Database::connect();
+        // Set the default time zone
+        $this->db->query("SET time_zone = " . $this->db->escape(date('P')));
 
         $this->session = \Config\Services::session();
 
