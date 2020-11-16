@@ -49,9 +49,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="content">
+		<div class="content mt-4">
 			<!-- Chart -->
 			<div class="chart">
+				<h3 class="mb-3"><i class="fas fa-chart-line text-danger"></i> Balance Monthly</h3>
 				<canvas id="chart" width="100" height="45"></canvas>
 			</div>
 		</div>
@@ -99,14 +100,14 @@
 
 		// The data for our dataset
 		data: {
-			labels: ["January", "February", "March", "April", "May", "June"],
+			labels: [],
 			// Information about the dataset
 	   		datasets: [{
-				label: "Views",
+				label: "Balance",
 				backgroundColor: 'rgba(42,65,232,0.08)',
 				borderColor: '#2a41e8',
 				borderWidth: "3",
-				data: [196,132,215,362,210,252],
+				data: [],
 				pointRadius: 5,
 				pointHoverRadius:5,
 				pointHitRadius: 10,
@@ -155,10 +156,18 @@
 		      intersect: false
 		    }
 		},
+    });
 
+    ajax_chart(chart, 'account/dashboard/chart');
+    // function to update our chart
+    function ajax_chart(chart, url, data) {
+        var data = data || {};
 
-});
-
+        $.getJSON('account/dashboard/chart', data).done(function(response) {
+            chart.data.labels = response.labels;
+            chart.data.datasets[0].data = response.data.total;
+            chart.update(); 
+        });
+    }
 </script>
-
 <?php echo $footer; ?>

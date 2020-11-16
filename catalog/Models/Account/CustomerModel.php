@@ -20,7 +20,6 @@ class CustomerModel extends \CodeIgniter\Model
 
     protected function hashPassword(array $data)
     {
-
         if (isset($data['data']['password']) && !empty($data['data']['password'])) {
             $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
         } else {
@@ -33,8 +32,8 @@ class CustomerModel extends \CodeIgniter\Model
     {
         if (isset($data['data']['firstname'])) {
             //\CodeIgniter\Events\Events::trigger('customer_activity_update', $data['id'], $name);
-        } 
-       return $data;  
+        }
+        return $data;
     }
 
     protected function afterUpdateEvent(array $data)
@@ -42,8 +41,8 @@ class CustomerModel extends \CodeIgniter\Model
         if (isset($data['data']['firstname']) || isset($data['data']['lastname']) || isset($data['data']['tag_line'])) {
             $name  = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
             \CodeIgniter\Events\Events::trigger('customer_activity_update', $data['id'], $name);
-        } 
-       return $data;  
+        }
+        return $data;
     }
 
 
@@ -81,19 +80,19 @@ class CustomerModel extends \CodeIgniter\Model
        
         if (isset($data['filter_rate'])) {
             switch ($data['filter_rate']) {
-                case '10': 
+                case '10':
                    $builder->where('c.rate <=', 10);
                    break;
-                case '10_20': 
+                case '10_20':
                    $builder->where('c.rate >=', 10)->where('c.rate <=', 20);
                    break;
-                case '20_30': 
+                case '20_30':
                    $builder->where('c.rate >=', 20)->where('c.rate <=', 30);
                    break;
-                case '30_40': 
+                case '30_40':
                    $builder->where('c.rate >=', 30)->where('c.rate <=', 40);
                    break;
-                case '40': 
+                case '40':
                    $builder->where('c.rate >=', 40);
                    break;
             }
@@ -148,19 +147,19 @@ class CustomerModel extends \CodeIgniter\Model
        
         if (isset($data['filter_rate'])) {
             switch ($data['filter_rate']) {
-                case '10': 
+                case '10':
                    $builder->where('c.rate <=', 10);
                    break;
-                case '10_20': 
+                case '10_20':
                    $builder->where('c.rate >=', 10)->where('c.rate <=', 20);
                    break;
-                case '20_30': 
+                case '20_30':
                    $builder->where('c.rate >=', 20)->where('c.rate <=', 30);
                    break;
-                case '30_40': 
+                case '30_40':
                    $builder->where('c.rate >=', 30)->where('c.rate <=', 40);
                    break;
-                case '40': 
+                case '40':
                    $builder->where('c.rate >=', 40);
                    break;
             }
@@ -515,14 +514,16 @@ class CustomerModel extends \CodeIgniter\Model
         \CodeIgniter\Events\Events::trigger('mail_forgotten', $email, $code);
     }
 
-    public function editPassword($email, $password) {
+    public function editPassword($email, $password)
+    {
         $builder = $this->db->table($this->table);
         $builder->where('email', $email);
         $builder->set('password', password_hash($password, PASSWORD_BCRYPT));
         $builder->update();
     }
 
-    public function getCustomerByCode($code) {
+    public function getCustomerByCode($code)
+    {
         $builder = $this->db->table($this->table);
         $builder->select('customer_id, firstname, lastname, email');
         $builder->where('code', $code);
@@ -544,9 +545,9 @@ class CustomerModel extends \CodeIgniter\Model
 
     public function setOnlineStatus(int $status)
     {
-         $builder = $this->db->table($this->table);
-         $builder->set('online', $status);
-         $builder->update();
+        $builder = $this->db->table($this->table);
+        $builder->set('online', $status);
+        $builder->update();
     }
 
     public function getBalanceByCustomerID($customer_id)
@@ -556,26 +557,42 @@ class CustomerModel extends \CodeIgniter\Model
         $builder->where('customer_id', $customer_id);
         $query = $builder->get()
                          ->getResultArray();
-
         foreach ($query as $result) {
-           $total = ($result['available'] + $result['income']) - ($result['used'] + $result['withdrawn']);   
+            $total = ($result['available'] + $result['income']) - ($result['used'] + $result['withdrawn']);
         }
         
         if ($total) {
             return $total;
-        } else {    
+        } else {
             return '0.00';
-        }  
+        }
     }
     
-
     // for Dahsboard Widget
     public function getTotalProjectsByCustomerId($customer_id)
     {
         $builder = $this->db->table('project');
         $builder->where('employer_id', $customer_id);
         return $builder->countAllResults();
+    }
 
+    public function getBalanceByMonth($customer_id)
+    {
+        $balance_data = [];
+
+        $builder = $this->db->table('customer_to_balance');
+        $builder->select('SUM(used) AS used, SUM(withdrawn) As withdrawn, SUM(income) AS income, available, MONTHNAME(date_added) as month');
+        $builder->where('customer_id', $customer_id);
+        $builder->groupBy('date_added');
+        $query = $builder->get();
+        foreach ($query->getResultArray() as $result) {
+            $balance_data[] = [
+                'month'   => $result['month'],
+                'total'   => ($result['available'] + $result['income']) - ($result['used'] + $result['withdrawn'])
+            ];
+        }
+
+        return $balance_data;
     }
 
     // -----------------------------------------------------------------

@@ -76,13 +76,21 @@ class Bid extends \Catalog\Controllers\BaseController
 
         $customerModel = new \Catalog\Models\Account\CustomerModel();
 
-        $balance = $customerModel->getBalanceByCustomerID($this->session->get('customer_id'));
+        $balance = $customerModel->getBalanceByCustomerID($this->customer->getCustomerId());
 
         // Employer Balance Validation
         if (!empty($this->request->getPost('fee'))) {
             if (($balance == 0) || $this->request->getPost('fee') > $balance) {
-                  $json['error'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
+                  $json['fee'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
             }
+        }
+
+        $bidModel = new BidModel();
+
+        $isUnique = $bidModel->uniqueBid($this->customer->getCustomerId(), $this->request->getPost('project_id'));
+
+        if ($isUnique) {
+            $json['no_allawed'] = lang('freelancer/freelancer.error_unique');
         }
 
         if (!$json) {

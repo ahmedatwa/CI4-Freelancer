@@ -1,3 +1,4 @@
+<?php if ($freelancers) { ?>
 <div class="section gray padding-top-65 padding-bottom-70 full-width-carousel-fix">
   <div class="container">
     <div class="row">
@@ -64,3 +65,4 @@
     </div>
   </div>
 </div>
+<?php } ?>

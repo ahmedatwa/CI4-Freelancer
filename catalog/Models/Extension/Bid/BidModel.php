@@ -150,6 +150,21 @@ class BidModel extends \CodeIgniter\Model
         }
     }
 
+    public function uniqueBid($freelancer_id, $project_id)
+    {
+        $builder = $this->db->table('project_bids');
+        $builder->where([
+            'freelancer_id' => $freelancer_id,
+            'project_id' => $project_id,
+        ]);
+
+        if ($builder->countAllResults() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     // -----------------------------------------------------------------
 }

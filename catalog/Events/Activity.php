@@ -42,8 +42,8 @@ class Activity
         $activityModel->addActivity('customer_update', $data);
     }
 
-    // Catalog\Models\Account\Register::addCustomer
-    public static function customerRegister(int $customer_id, string $username)
+   // Catalog\Model\Account\CustomerModel\addCustomer
+    public static function addCustomer(int $customer_id, string $username)
     {
         $activityModel = new ActivityModel;
         $data = [

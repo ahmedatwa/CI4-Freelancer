@@ -163,9 +163,9 @@
 					</div>
 				<?php } ?>
 			<?php } ?>
-
-			<div id="bid-container" class="mt-4"></div>	
-				</div>
+			<div class="clearfix"></div>
+			<div id="bid-container" class="my-4"></div>	
+			</div>
 				<!-- Sidebar -->
 				<div class="col-sm-12 col-md-3">
 					<div class="sidebar-container p-3 mb-5 bg-white">
@@ -265,6 +265,10 @@ bootbox.confirm({
 
 				if (json['no_allawed']) {
 					$('#bidding-form').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> ' + json['no_allawed'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+
+				if (json['fee']) {
+					$('#bidding-form').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> ' + json['fee'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 				}
 
 				if(json['success']) {

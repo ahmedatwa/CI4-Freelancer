@@ -88,5 +88,21 @@ class Dashboard extends \Catalog\Controllers\BaseController
         $this->template->output('account/dashboard', $data);
     }
 
+    public function chart()
+    {
+        $json = [];
+
+        $customerModel = new CustomerModel();
+
+        $results = $customerModel->getBalanceByMonth($this->customer->getCustomerId());
+
+        foreach ($results as $key => $value) {
+            $json['labels'][] = $value['month'];
+            $json['data']['total'][] =  $value['total'];
+        }
+
+     return $this->response->setJSON($json);   
+    }
+
     //--------------------------------------------------------------------
 }

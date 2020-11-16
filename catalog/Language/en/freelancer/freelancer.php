@@ -30,5 +30,6 @@ return [
     'text_30_40'          => '30-40 /hour',
     'text_40'             => '> 40 /hour',
     'text_transaction'    => 'Transaction is completed successfully',
-    'error_balance'       => 'Transaction unsuccessfull, please <a class="text-secondary"href="%s">deposit funds</a>'
+    'error_balance'       => 'Transaction unsuccessfull, please <a class="text-secondary"href="%s">deposit funds</a>',
+    'error_unique'        => 'You have placed a bid previously on this project',
 ];

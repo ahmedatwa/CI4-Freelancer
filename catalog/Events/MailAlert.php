@@ -38,19 +38,18 @@ class MailAlert
     }
 
     // Catalog\Model\Account\CustomerModel\addCustomer
-    public static function registerMail(string $email)
+    public static function addCustomer(string $email)
     {
         $config = \Config\Services::email();
 
         $data['text_subject'] = sprintf(lang('mail/register.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
-        $data['text_welcome'] = lang('mail/register.text_welcome');
+        $data['text_welcome'] = sprintf(lang('mail/register.text_welcome', html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
         $data['text_login']   = lang('mail/register.text_login');
         $data['text_service'] = lang('mail/register.text_service');
         $data['text_thanks']  = lang('mail/register.text_thanks');
 
         $data['config_name']      = service('registry')->get('config_name');
         $data['config_address']   = service('registry')->get('config_address');
-
 
         $config->setFrom(service('registry')->get('config_email'));
 
@@ -89,7 +88,6 @@ class MailAlert
     // Catalog\Model\Account\CustomerModel\AddCustomer
     public static function PaymentMail(array $data)
     {
-
         $config = \Config\Services::email();
         $customerModel = new CustomerModel();
 
@@ -115,7 +113,6 @@ class MailAlert
     // Catalog\Model\Extension\Bid\BidModel::addBid
     public static function addBid(array $data)
     {
-
         $config = \Config\Services::email();
         $customerModel = new CustomerModel();
 

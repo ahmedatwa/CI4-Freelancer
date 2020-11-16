@@ -8,7 +8,7 @@
 			<h3><?php echo $heading_title; ?></h3>
 		</div>
 		<div class="row">
-				<div class="messages-container margin-top-0">
+				<div class="messages-container margin-top-0 w-100">
 					<div class="messages-container-inner">
 						<!-- Messages -->
 						<div class="messages-inbox">
