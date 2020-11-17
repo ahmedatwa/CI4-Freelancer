@@ -9,6 +9,13 @@ class ProjectModel extends \CodeIgniter\Model
     protected $createdField  = 'date_added';
     protected $updatedField  = 'date_modified';
 
+    protected $afterUpdate = ['status_update'];
+
+    protected function status_update(array $data)
+    {
+        // Trigger an email to employer about the project status
+        \CodeIgniter\Events\Events::trigger('mail_project_status_update', $data['id'][0]);
+    }
 
     public function addProject($data)
     {
@@ -47,6 +54,8 @@ class ProjectModel extends \CodeIgniter\Model
                 ];
                 $project_description_table->insert($project_description);
 
+                // Mail Alert
+                \CodeIgniter\Events\Events::trigger('mail_project_add', $data['employer_id'], $value['name']);
                 // Trigger Pusher Notification event 
                 $options = ['cluster' => 'eu', 'useTLS' => true];
 

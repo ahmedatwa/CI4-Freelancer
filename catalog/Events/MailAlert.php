@@ -43,10 +43,11 @@ class MailAlert
         $config = \Config\Services::email();
 
         $data['text_subject'] = sprintf(lang('mail/register.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
-        $data['text_welcome'] = sprintf(lang('mail/register.text_welcome', html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_welcome'] = sprintf(lang('mail/register.text_welcome'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
         $data['text_login']   = lang('mail/register.text_login');
         $data['text_service'] = lang('mail/register.text_service');
         $data['text_thanks']  = lang('mail/register.text_thanks');
+        $data['text_signature']  = sprintf(lang('mail/register.text_signature'), service('registry')->get('config_name'));
 
         $data['config_name']      = service('registry')->get('config_name');
         $data['config_address']   = service('registry')->get('config_address');
@@ -56,20 +57,52 @@ class MailAlert
         $config->setTo($email);
 
         $config->setSubject(html_entity_decode(sprintf(lang('mail/register.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+
         $config->setMessage(view('mail/register', $data));
 
         $config->send();
     }
     
-    // Catalog\Model\Account\CustomerModel\AddCustomer
-    public static function projectAlert(string $email, string $code)
+    // Catalog\Model\Catalog\ProjectModel\addProject
+    public static function addProject(int $employer_id, string $name)
     {
         $config = \Config\Services::email();
+        $customerModel = new CustomerModel();
+        $customer_info = $customerModel->getCustomer($employer_id);
+
+        $data['text_new_subject'] = sprintf(lang('mail/project_alert.text_new_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_new']         = sprintf(lang('mail/project_alert.text_new'), $name);
+        $data['text_thank']       = lang('mail/project_alert.text_thank');
+        $data['text_signature']   = sprintf(lang('mail/project_alert.text_signature'), service('registry')->get('config_name'));
+        
+        $data['config_name']      = service('registry')->get('config_name');
+        $data['config_address']   = service('registry')->get('config_address');
+        
+
+        $config->setFrom(service('registry')->get('config_email'));
+
+        $config->setTo($customer_info['email']);
+
+        $config->setSubject(html_entity_decode(sprintf(lang('mail/project_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        $config->setMessage(view('mail/new_project_alert', $data));
+
+        $config->send();
+    }
+
+
+    // Catalog\Model\Catalog\ProjectModel::update
+    public static function projectStatusUpdate(int $project_id)
+    {
+        $config = \Config\Services::email();
+        $seo_url = service('seo_url');
+
+        $keyword = $seo_url->getKeywordByQuery('project_id=' . $project_id);
 
         $data['text_subject']    = sprintf(lang('mail/project_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
-        $data['text_received']   = lang('mail/project_alert.text_received');
+        $data['text_received']   = sprintf(lang('mail/project_alert.text_received'), route_to('single_project', $keyword));
         $data['text_pay']        = lang('mail/project_alert.text_pay');
-        $data['text_project_id'] = lang('mail/project_alert.text_project_id');
+        $data['text_thank']      = lang('mail/project_alert.text_thank');
+        $data['text_signature']  = sprintf(lang('mail/project_alert.text_signature'), service('registry')->get('config_name'));
 
         $data['config_name']      = service('registry')->get('config_name');
         $data['config_address']   = service('registry')->get('config_address');
@@ -77,10 +110,10 @@ class MailAlert
 
         $config->setFrom(service('registry')->get('config_email'));
 
-        $config->setTo($email);
+        $config->setTo($customer_info['email']);
 
         $config->setSubject(html_entity_decode(sprintf(lang('mail/project_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
-        $config->setMessage(view('mail/project_alert', $data));
+        $config->setMessage(view('mail/project_status_alert', $data));
 
         $config->send();
     }

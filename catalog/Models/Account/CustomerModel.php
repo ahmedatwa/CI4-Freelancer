@@ -58,6 +58,7 @@ class CustomerModel extends \CodeIgniter\Model
         ];
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($customer_data);
+        // Events
         \CodeIgniter\Events\Events::trigger('customer_register', $this->db->insertID(), explode('@', $data['email'])[0]);
         \CodeIgniter\Events\Events::trigger('mail_register', $data['email']);
     }

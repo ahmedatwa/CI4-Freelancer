@@ -263,15 +263,17 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $projectModel = new \Catalog\Models\Catalog\ProjectModel();
 
         if ($customer_info) {
+
             $data['text_hire_me']     = sprintf(lang('freelancer/freelancer.text_hire_me'), $customer_info['username']);
             $data['text_canned']      = sprintf(lang('freelancer/freelancer.text_canned'), $customer_info['username']);
 
+            $name = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
 
-            $data['name']          = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
+            $data['name']          = (strlen($name) > 1) ? $name : '@'.$customer_info['username'];
             $data['freelancer_id'] = $customer_info['customer_id'];
             $data['about']         = $customer_info['about'];
             $data['rate']          = $customer_info['rate'];
-            $data['tag_line']      = $customer_info['tag_line'];
+            $data['tag_line']      = ($customer_info['tag_line'] == 'NULL') ? '' : $customer_info['tag_line'];
 
             $data['image'] = $customer_info['image'] ? $this->resize($customer_info['image'], 130, 130) : $this->resize('catalog/avatar.jpg', 130, 130);
             // Widgets

@@ -7,4 +7,5 @@ return [
 
 'text_service'        => 'Upon logging in, you will be able to access other services including managing project, hire and editing your account information.',
 'text_thanks'         => 'Thanks,',
+'text_signature'      => '%s Team'
 ];

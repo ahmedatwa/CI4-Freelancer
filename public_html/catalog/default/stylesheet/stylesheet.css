@@ -2280,7 +2280,7 @@ body #backtotop a {
 .single-page-header .header-image {
     height: 140px;
     flex: 0 0 140px;
-    margin-right: 35px;
+    margin-right: 20px;
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 3px 12px rgba(0,0,0,0.1);
@@ -2363,6 +2363,7 @@ body #backtotop a {
 	list-style: none;
 	line-height: 24px;
 	margin-bottom: -7px;
+	margin-top: 10px;
 }
 
 .single-page-header .header-details li {

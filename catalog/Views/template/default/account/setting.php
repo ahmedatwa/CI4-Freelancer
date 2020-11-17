@@ -756,9 +756,10 @@ $('#skills-list').on('click', 'button[id^=\'button-delete-skill\']', function() 
 $("#avatar-1").fileinput({
 	uploadUrl: 'account/setting/avatarUpload',
     maxFileSize: 1500,
+    overwriteInitial: true,
     showClose: false,
     showCaption: false,
-    showUpload: false,
+    showUpload: true,
     showBrowse: false,
     theme: 'fas',
     browseOnZoneClick: true,
@@ -774,13 +775,10 @@ $("#avatar-1").fileinput({
     uploadExtraData: {
             '<?php echo csrf_token(); ?>': '<?php echo csrf_hash(); ?>', 
     },
-    //showRemove: false,
+    showRemove: true,
     elErrorContainer: '#kv-avatar-errors',
     msgErrorClass: 'alert alert-block alert-danger',
-    defaultPreviewContent: '<img src="images/catalog/avatar.jpg" style="height:260px;"alt="Your Avatar"><h6 class="text-muted">Click to select</h6>',
-    overwriteInitial: true,
-    initialPreviewAsData: true,
-    initialPreview: ['<?php echo base_url('images/catalog/' . $thumb); ?>'],
+    defaultPreviewContent: '<?php echo $thumb; ?>',
     allowedFileExtensions: ["jpg", "png", "gif"]
 });
 </script>
