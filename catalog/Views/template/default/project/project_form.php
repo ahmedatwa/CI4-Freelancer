@@ -3,49 +3,47 @@
 	<div class="container-fluid">
 		<h3 class="display-5"><?php echo $text_tell_us; ?></h3><br />
 		<p class="lead"><?php echo $text_sub; ?></p>
-</div>
+	</div>
 </div>
 <div class="section padding-bottom-60 full-width-carousel-fix">
 <div class="container">	
 		<div class="row justify-content-center">
-			<!-- Dashboard Box -->
 			<div class="col-md-12">
-				<div class="add-project-box margin-top-30 shadow p-3 mb-5 bg-white rounded">
-					<!-- Headline -->
+				<div class="add-project-box margin-top-30 shadow-sm p-3 mb-5 bg-white rounded border">
 					<div class="headline mb-2">
 						<h3 class=""><i class="icon-feather-folder-plus"></i> <?php echo $text_form; ?></h3>
 						<hr />
 					</div>
 					<div class="content with-padding padding-bottom-10">
-						<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" accept-charset="utf-8"> 
+						<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" accept-charset="utf-8" id="form-project-add"> 
 							<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 							<input type="hidden" name="employer_id" value="<?= $employer_id ?>" />
-							<div class="form-group row">
-								<label for="staticEmail" class="col-sm-3 col-form-label"><?php echo $entry_name; ?></label>
+							<div class="form-group row required">
+								<label for="input-name" class="col-sm-3 col-form-label"><?php echo $entry_name; ?></label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control" placeholder="e.g. build me a website" name="project_description[<?php echo $language_id;?>][name]" value="<?php echo $project_description[$language_id]['name'] ?? ''; ?>" id="input-name">
 									<?php echo formError("project_description." . $language_id.".name"); ?>
 								</div>
 							</div>
-							<div class="form-group row">
-								<label for="staticEmail" class="col-sm-3 col-form-label"><?php echo $entry_description; ?></label>
+							<div class="form-group row required">
+								<label for="input-description" class="col-sm-3 col-form-label"><?php echo $entry_description; ?></label>
 								<div class="col-sm-9">
 									<textarea rows="10" style="height:100%;" id="input-description" class="form-control" name="project_description[<?php echo $language_id;?>][description]"><?php echo $project_description[$language_id]['description'] ?? ''; ?></textarea>
 									<?php echo formError("project_description." . $language_id.".description"); ?>
 								</div>
 							</div>
 							<div class="form-group row margin-top-30">
-							<label for="staticEmail" class="col-sm-3 col-form-label"><?php echo $entry_upload; ?><span data-toggle="tooltip" title="<?php echo $help_upload; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
+							<label for="input-upload" class="col-sm-3 col-form-label"><?php echo $entry_upload; ?><span data-toggle="tooltip" title="<?php echo $help_upload; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col-sm-9">
 									<input type="file" class="form-control" name="file" id="input-upload" value="">
 									<input type="hidden" name="download_id" value="">
 									<div id="kartik-file-errors"></div>
 								</div>
 							</div>
-						</div>
+						
 							<div class="clearfix"></div>
-							<div class="form-group row ">
-								<label for="staticEmail" class="col-sm-3 col-form-label"><?php echo $entry_category; ?></label>
+							<div class="form-group row required">
+								<label for="input-category" class="col-sm-3 col-form-label"><?php echo $entry_skills; ?></label>
 								<div class="col-sm-9">
 									<select class="form-control" name="filter_category[]" data-width="100%" multiple="multiple">
 										<option></option>
@@ -60,8 +58,8 @@
 									<?php echo formError("filter_category"); ?>
 								</div>
 							</div>
-							<div class="form-group row align-items-center mb-3">
-								<label for="staticEmail" class="col-sm-3 col-form-label"><?php echo $text_budget; ?><span data-toggle="tooltip" title="<?php echo $help_budget; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
+							<div class="form-group row align-items-center mb-3 required">
+								<label for="input-budget" class="col-sm-3 col-form-label"><?php echo $text_budget; ?><span data-toggle="tooltip" title="<?php echo $help_budget; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col">
 									<label class="sr-only" for="inlineFormInput"><?php echo $entry_min;?></label>
 									<div class="input-group mb-2">
@@ -84,7 +82,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="staticEmail" class="col-sm-3 col-form-label"><?php echo $text_type; ?></label>
+								<label for="input-type" class="col-sm-3 col-form-label"><?php echo $text_type; ?></label>
 								<div class="col-sm-9">
 									<?php if ($type == 1) { ?>
 										<div class="form-check form-check-inline">
@@ -107,7 +105,7 @@
 									<?php } ?>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="form-group row required">
 								<label for="date-end" class="col-sm-3 col-form-label"><?php echo $entry_delivery_time; ?><span data-toggle="tooltip" title="<?php echo $help_delivery; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col-sm-9">
 									<input type="number" class="form-control" name="delivery_time" value="1" min="1" max="30">
@@ -123,6 +121,7 @@
 							<div class="padding-top-20 text-right padding-bottom-30">
 								<button type="submit" class="button btn-sm ripple-effect"><i class="icon-material-outline-add"></i> <?php echo $button_save; ?></button>
 							</div>	
+						</div>
 						</div>
 					</form>
 				</div>
@@ -162,6 +161,7 @@ placeholder: '<?php echo $text_select; ?>',
 allowClear: true,
 minimumResultsForSearch: 5
 });
+
 </script>
 <script type="text/javascript">
 $("#input-upload").fileinput({
@@ -210,8 +210,8 @@ $('#input-name').textcounter({
 	type: "danger",
 	allow_dismiss: false,
 	placement: {
-		from: "bottom",
-		align: "left"
+		from: "top",
+		align: "center"
 	},
 	animate: {
 		enter: 'animate__animated animate__fadeInDown',

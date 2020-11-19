@@ -459,7 +459,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['entry_meta_keywords']   = lang('project/project.entry_meta_keywords');
         $data['entry_days_open']       = lang('project/project.entry_days_open');
         $data['entry_name']            = lang('project/project.entry_name');
-        $data['entry_category']        = lang('project/project.entry_category');
+        $data['entry_skills']          = lang('project/project.entry_skills');
         $data['entry_min']             = lang('project/project.entry_min');
         $data['entry_max']             = lang('project/project.entry_max');
         $data['entry_status']          = lang('en.entry_status');

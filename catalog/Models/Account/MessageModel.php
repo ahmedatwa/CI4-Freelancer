@@ -51,10 +51,8 @@ class MessageModel extends \CodeIgniter\Model
     // get Chat Members by Customer ID
     public function getMembersByCustomerId($customer_id)
     {
-        $users = [];
-
         $builder = $this->db->table($this->table);
-        $builder->select('receiver_id, sender_id');
+        $builder->select('message_id, receiver_id, message, sender_id');
         $builder->where('sender_id', $customer_id);
         $builder->orWhere('receiver_id', $customer_id);
         $builder->groupBy('receiver_id');
@@ -93,7 +91,7 @@ class MessageModel extends \CodeIgniter\Model
         foreach ($query->getResultArray() as $result) {
            $messages[] = [
             'message_id'  => $result['message_id'],
-            'customer_id' => $result['receiver_id'],
+            'receiver_id' => $result['receiver_id'],
             'sender_id'   => $result['sender_id'],
             'image'       => $this->getCustomer($result['receiver_id'])['image'],
             'name'        => $this->getCustomer($result['receiver_id'])['name'],

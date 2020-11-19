@@ -127,11 +127,11 @@
             <li class="nav-item ml-3 d-none d-lg-block">
             <div class="header-notifications">
             <!-- Trigger -->
-            <div class="header-notifications-trigger" id="header-notifications">
+            <div class="header-notifications-trigger " id="header-notifications">
               <a href="#"><i class="icon-feather-bell" id="notifications-count"></i></a>
             </div>
             <!-- Dropdown -->
-            <div class="header-notifications-dropdown">
+            <div class="header-notifications-dropdown animate__animated animate__pulse">
               <div class="header-notifications-headline" id="notifications-read">
                 <h4>Notifications</h4>
                 <button id="mark-read-button" type="button" class="btn btn-sm float-right rounded-pill" title="Mark all as read" data-placement="left" data-toggle="tooltip">
@@ -141,7 +141,7 @@
 
               <div class="header-notifications-content">
                 <div class="header-notifications-scroll" data-simplebar>
-                 <ul id="notifications-list"></ul>
+                 <ul id="notifications-list" class="text-left"></ul>
                 </div>
               </div>
             </div>
@@ -150,14 +150,14 @@
               <div class="header-notifications-trigger" id="header-messages">
                <a href="#"><i class="icon-feather-mail" id="message-count"></i></a>
              </div>
-             <div class="header-notifications-dropdown">
+             <div class="header-notifications-dropdown animate__animated animate__pulse">
                <div class="header-notifications-headline">
                 <h4 class="mr-4">Messages</h4>
-                <small class="ml-4"><a href="<?php echo $all_messages; ?>" class="btn btn-link">View All Messages</a></small>
+                <p class="ml-4 float-right"><a href="<?php echo $all_messages; ?>" class="btn btn-link">View All Messages</a></p>
               </div>
               <div class="header-notifications-content">
                 <div class="header-notifications-scroll text-center" data-simplebar>
-                  <ul id="message-list"></ul>
+                  <ul id="message-list" class="text-left"></ul>
                 </div>
               </div>
             </div>
@@ -168,7 +168,7 @@
       <li class="nav-item dropdown d-none d-lg-block">
         <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> <?php echo $username; ?>
-        </a>
+          </a>
           <div class="row justify-content-md-center">
             <div class="dropdown-menu multi-column" aria-labelledby="headerLoginDropdown">
               <div class="multi-column-dropdown col-6 border-right">

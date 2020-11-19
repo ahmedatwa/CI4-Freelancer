@@ -73,7 +73,7 @@ class BidModel extends \CodeIgniter\Model
         return $builder->countAllResults();
     }
 
-     public function getTotalBidsByProjectId($project_id)
+    public function getTotalBidsByProjectId($project_id)
     {
         $builder = $this->db->table('project_bids');
         $builder->where('project_id', $project_id);
@@ -82,7 +82,6 @@ class BidModel extends \CodeIgniter\Model
 
     public function addBid(array $data)
     {
-        
         $builder = $this->db->table('project_bids');
         $bid_data = [
             'project_id'    => $data['project_id'],
@@ -96,16 +95,16 @@ class BidModel extends \CodeIgniter\Model
 
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($bid_data);
+        $bid_id = $this->db->insertID();
         // trigger Bid Emailto Employer
         \CodeIgniter\Events\Events::trigger('project_bid_add', $data);
 
         if (isset($data['fee'])) {
-            
             $revenue = $this->db->table('project_bids_upgrade');
             $revenue_data = [
                 'project_id' => $data['project_id'],
                 'payer_id'   => $data['freelancer_id'],
-                'bid_id'     => $this->db->insertID(),
+                'bid_id'     => $bid_id,
                 'amount'     => $data['fee'],
                 'reason'     => 'Optional Upgrade',
             ];
@@ -117,11 +116,11 @@ class BidModel extends \CodeIgniter\Model
 
     public function isAwarded($freelancer_id)
     {
-       $builder = $this->db->table('project_bids');
-       $builder->select('selected');
-       $builder->where('freelancer_id', $freelancer_id);
-       $row = $builder->get()->getRow();
-       if ($row->selected != 0) {
+        $builder = $this->db->table('project_bids');
+        $builder->select('selected');
+        $builder->where('freelancer_id', $freelancer_id);
+        $row = $builder->get()->getRow();
+        if ($row->selected != 0) {
             return true;
         } else {
             return false;
@@ -132,18 +131,22 @@ class BidModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table('project_bids');
         $builder->select();
-        $builder->where('project_id', $project_id);
+        $builder->where([
+            'project_id' => $project_id,
+            'selected'   => 1,
+            'accepted'   => 1
+        ]);
         $query = $builder->get();
         return $query->getRowArray();
     }
 
     public function isAccepted($freelancer_id)
     {
-       $builder = $this->db->table('project_bids');
-       $builder->select('accepted');
-       $builder->where('freelancer_id', $freelancer_id);
-       $row = $builder->get()->getRow();
-       if ($row->accepted != 0) {
+        $builder = $this->db->table('project_bids');
+        $builder->select('accepted');
+        $builder->where('freelancer_id', $freelancer_id);
+        $row = $builder->get()->getRow();
+        if ($row->accepted != 0) {
             return true;
         } else {
             return false;

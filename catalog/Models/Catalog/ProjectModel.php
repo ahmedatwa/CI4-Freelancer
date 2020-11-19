@@ -377,8 +377,11 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, p.status_id, p.viewed, p.download_id');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('customer c', 'p.employer_id = c.customer_id', 'left');
-        $builder->where('p.project_id', $project_id);
-        $builder->where('pd.language_id', service('registry')->get('config_language_id'));
+        $builder->where([
+            'p.project_id'   => $project_id,
+            'pd.language_id' => service('registry')->get('config_language_id')
+        ]);
+
         $query = $builder->get();
         return $query->getRowArray();
     }
@@ -549,7 +552,7 @@ class ProjectModel extends \CodeIgniter\Model
    // Send Message
     public function addMessage(array $data)
     {
-        $builder = $this->db->table('project_to_message');
+        $builder = $this->db->table('project_message');
 
         $message_data = [
             'sender_id'   => $data['sender_id'],
@@ -564,31 +567,6 @@ class ProjectModel extends \CodeIgniter\Model
 
         // trigget new direct message event
         \CodeIgniter\Events\Events::trigger('project_new_message', $message_data);
-    }
-
-
-    // Send Message
-    public function addWinner($data)
-    {
-        $builder = $this->db->table('project_bids');
-        $builder->set('selected', 1);
-        $builder->where([
-            'freelancer_id' =>  $data['freelancer_id'],
-            'project_id'    =>  $data['project_id'],
-            'bid_id'        =>  $data['bid_id']
-        ]);
-
-        $builder->set('date_modified', 'NOW()', false);
-        $builder->update();
-
-        // Update Project Status
-        $projects = $this->db->table('project');
-        $projects->where('project_id', $data['project_id']);
-        $projects->set('status_id', 6);
-        $projects->update();
-
-        // trigget new direct message event
-        \CodeIgniter\Events\Events::trigger('project_offer_selected', $data);
     }
 
     // project Private Messages
@@ -608,36 +586,8 @@ class ProjectModel extends \CodeIgniter\Model
         return $query->getResultArray();
     }
 
-    // project Private Messages
-    public function getMilestonesByProjectId($project_id)
-    {
-        $builder = $this->db->table('project_to_milestone');
-        $builder->select();
-        $builder->where('project_id', $project_id);
-        $builder->orderBy('date_added', 'DESC');
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
-
-    // insert Milestone
-    public function insertMilestone($data)
-    {
-        $builder = $this->db->table('project_to_milestone');
-        $data = [
-            'project_id'  => $data['project_id'],
-            'amount'      => $data['amount'],
-            'description' => $data['description'],
-            'deadline'    => $data['deadline'],
-        ];
-
-        $builder->set('date_added', 'NOW()', false);
-        $builder->insert($data);
-
-        // trigget new direct message event
-        \CodeIgniter\Events\Events::trigger('project_milestone_create', $data['project_id'], $data['amount'], $data['description'], $data['deadline']);
-
-    }
-
+    
+    
     // Freelancer In-progress Projects
     public function getfreelancerProjects($freelancer_id)
     {

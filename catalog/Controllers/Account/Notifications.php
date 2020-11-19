@@ -20,45 +20,48 @@ class Notifications extends \Catalog\Controllers\BaseController
 
         $results = $activityModel->getActivitiesByCustomerID($customer_id);
 
+        $customerModel = new CustomerModel();
+
         foreach ($results as $result) {
 
             $info = json_decode($result['data'], true);
 
             $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
-
-            $find = [
-                'project_id=',
-                'employer_id=',
-                'freelancer_id=',
-            ];
-
-            $seo_url = service('seo_url');
-
-            if (isset($info['project_id'])) {
-               $keyword = $seo_url->getKeywordByQuery('project_id=' . $info['project_id']);
-            } else {
-                $keyword = '';
-            }
             
-
-            if (isset($info['employer_id'])) {
-               $employer = $activityModel->getEmployerUserName($info['employer_id']);
-            }
+            $username  = '';
 
             if (isset($info['freelancer_id'])) {
-                $freelancer = $activityModel->getFreelancerUserName($info['freelancer_id']);
+                $username = $customerModel->where('customer_id', $info['freelancer_id'])->findColumn('username')[0];
+            } elseif (isset($info['employer_id'])) {
+                $username = $customerModel->where('customer_id', $info['employer_id'])->findColumn('username')[0];
             }
 
+            $milestone_status = '';
+
+            switch (isset($info['milestone_status'])) {
+                case 0: $milestone_status = 'Pending'; break;
+                case 1: $milestone_status = 'Approved'; break;
+                case 2: $milestone_status = 'Paid'; break;
+                case 3: $milestone_status = 'Canceled'; break;
+                default: $milestone_status = 'Pending'; break;
+            }
+
+            $find = [
+                'url=',
+                'freelancer_id=',
+                'milestone_status=',
+            ];
+
             $replace = [
-                'service/' . $keyword,
-                $employer['username'] ?? '',
-                $freelancer['username'] ?? '',
+                isset($info['url']) ? $info['url'] : '',
+                '@' . $username,
+                $milestone_status,
+                
             ];
 
 
             $json[] = [
-                'comment'    => str_replace($find, $replace, $comment),
-                'date_added' => $this->dateDifference($result['date_added'])
+                'comment' => str_replace($find, $replace, $comment),
             ];
 
         }
@@ -99,8 +102,7 @@ class Notifications extends \Catalog\Controllers\BaseController
             $customer_id = 0;
         }
 
-        $activityModel->where('employer_id', $customer_id)
-                               ->orWhere('freelancer_id', $customer_id)
+        $activityModel->where('customer_id', $customer_id)
                                ->set('seen', 1)
                                ->update();
        

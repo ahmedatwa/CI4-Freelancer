@@ -550,24 +550,6 @@ class CustomerModel extends \CodeIgniter\Model
         $builder->set('online', $status);
         $builder->update();
     }
-
-    public function getBalanceByCustomerID($customer_id)
-    {
-        $builder = $this->db->table('customer_to_balance');
-        $builder->select('SUM(used) AS used, SUM(withdrawn) As withdrawn, SUM(income) AS income, available');
-        $builder->where('customer_id', $customer_id);
-        $query = $builder->get()
-                         ->getResultArray();
-        foreach ($query as $result) {
-            $total = ($result['available'] + $result['income']) - ($result['used'] + $result['withdrawn']);
-        }
-        
-        if ($total) {
-            return $total;
-        } else {
-            return '0.00';
-        }
-    }
     
     // for Dahsboard Widget
     public function getTotalProjectsByCustomerId($customer_id)

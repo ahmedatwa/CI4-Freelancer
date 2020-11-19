@@ -87,7 +87,7 @@
 				<div class="single-page-section">
 						<div class="bidding-headline"><h3><?php echo $text_bid; ?></h3>
 							<p class="mb-4"><?php echo $text_bid_detail; ?></p></div>
-						<form action="" enctype="multipart/form-data" id="bidding-form" accept-charset="utf-8"> 
+						<form action="" enctype="multipart/form-data" id="bidding-form" accept-charset="UTF-8"> 
 							<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 							<input type="hidden" name="project_id" value="<?php echo $project_id; ?>" />
 							<input type="hidden" name="freelancer_id" value="<?php echo $freelancer_id; ?>" />
@@ -221,7 +221,7 @@ bootbox.confirm({
     buttons: {
         cancel: {
             label: '<i class="fa fa-times"></i> Cancel',
-            className: 'btn-danger'
+            className: 'btn-dark'
         },
         confirm: {
             label: '<i class="fa fa-check"></i> Confirm',
@@ -244,7 +244,7 @@ bootbox.confirm({
 			dataType: 'json',
 			beforeSend: function() {
 				$('.bootbox-accept').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
-				$('.alert').remove();
+				$('.alert, .text-danger').remove();
 			},
 			complete: function() {
 	  		    $('.bootbox-accept').html('<?php echo $button_bid; ?>');
@@ -261,20 +261,33 @@ bootbox.confirm({
 	                  $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
 	                }
 	              }
+	              $('html, body').animate({
+                         scrollTop: $('.bidding-headline').offset().top
+                   }, 1000, 'linear');
 	            }
 
 				if (json['no_allawed']) {
 					$('#bidding-form').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> ' + json['no_allawed'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('html, body').animate({
+                         scrollTop: $('.bidding-headline').offset().top
+                    }, 1000, 'linear');
 				}
 
 				if (json['fee']) {
 					$('#bidding-form').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> ' + json['fee'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('html, body').animate({
+                         scrollTop: $('.bidding-headline').offset().top
+                    }, 1000, 'linear');
 				}
 
 				if(json['success']) {
 					$('#bidding-form').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 					$('#bid-container').load("extension/bid/bid?pid=<?php echo $project_id; ?>");
+					// Reset the Form 
 					$('#bidding-form').trigger('reset');
+					$('html, body').animate({
+                         scrollTop: $('.bidding-headline').offset().top
+                    }, 1000, 'linear');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

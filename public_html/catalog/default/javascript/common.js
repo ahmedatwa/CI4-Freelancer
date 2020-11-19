@@ -235,9 +235,9 @@ function totalNotifications(data) {
 	      	if (json.length > 0) {
 	          for (var i = 0; json.length > i; i++) {
 
-	           html = '<li class="notifications-not-read" id="'+json[i].message_id+'">';
-	           html += '<a href="account/message#v-pills-'+json[i].sender_id+'">';
-	           html += '<span class="notification-avatar status-online"><img src="'+json[i].image+'" alt=""></span>';
+	           html = '<li class="notifications-not-read px-3" id="'+json[i].message_id+'">';
+	           html += '<a href="account/message#v-pills-'+json[i].receiver_id+'">';
+	           html += '<span class="notification-avatar status-online float-left"><img src="'+json[i].image+'" alt=""></span>';
 	           html += '<div class="notification-text">';
 	           html += '<strong>' + json[i].name + '</strong>';
 	           html += '<p class="notification-msg-text">' + json[i].message + '</p>';
@@ -245,6 +245,7 @@ function totalNotifications(data) {
 	           html += '</div>';
 	           html += '</a>';
 	           html += '</li>';
+	           html += '<div class="dropdown-divider"></div>';
 
 	          $('#nav-user-main #message-list').append(html);
 	        }

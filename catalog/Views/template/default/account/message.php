@@ -54,7 +54,7 @@
 								<div class="message-reply">
 									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 									<input type="hidden" name="receiver_id" value="" id="input-receiver-id" />
-									<input type="hidden" name="sender_id" value="" id="input-sender-id" />
+									<input type="hidden" name="sender_id" value="<?php echo $customer_id; ?>" id="input-sender-id" />
 									<textarea cols="1" rows="1" placeholder="Your Message" name="message" id="input-message" class="form-control"></textarea>
 									<button class="button ripple-effect" type="button" id="button-send">Send</button>
 								</div> <!-- message-reply -->
@@ -149,7 +149,7 @@ $(document).ready(function(){
     $("#v-pills-tabContent").html(tab_content);
 
     $("#form-message #input-receiver-id").val(receiver_id);
-    $("#form-message #input-sender-id-id").val(sender_id);
+    //$("#form-message #input-sender-id").val(sender_id);
 
 }
 
@@ -210,7 +210,6 @@ function markRead(message_id) {
       }
   });
 }
-
 </script>
 
 <script type="text/javascript">

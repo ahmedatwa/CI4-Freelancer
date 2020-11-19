@@ -43,7 +43,6 @@
 							    	<th><?php echo $column_avg_bids; ?></th>
 							    	<th><?php echo $column_expiry; ?></th>
 							    	<th><?php echo $column_status; ?></th>
-							    	<th><?php echo $column_action; ?></th>
 							    </tr>
 							</thead>
 							 <tbody>
@@ -61,9 +60,6 @@
 							  	<td><?php echo $open['avgBids']; ?></td>
 							  	<td><?php echo $open['expiry']; ?></td>
 							  	<td><?php echo $open['status']; ?></td>
-							  	<td>
-							  	<a href="<?php echo $open['view']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="view"><i class="far fa-eye"></i></a>
-						      </td>
 							  </tr>
 							 <?php } ?>
 							<?php } else { ?>
@@ -436,11 +432,26 @@ $('#freelancer a[href="#freelancer-bids').trigger('click') // Select first tab
 
 // Freelancer to accept offer
 function acceptOffer(project_id, bid_id, employer_id) {
+	bootbox.confirm({
+    message: "Are you sure?",
+    className: 'animate__animated animate__fadeInDown',
+    buttons: {
+        cancel: {
+            label: '<i class="fa fa-times"></i> Cancel',
+            className: 'btn-dark'
+        },
+        confirm: {
+            label: '<i class="fa fa-check"></i> Confirm',
+            className: 'btn-success'
+        }
+    },
+    callback: function (result) {
+   if (result) {
 	$.ajax({
 		url: 'freelancer/freelancer/acceptOffer?freelancer_id=<?php echo $customer_id; ?>&project_id=' + project_id + '&bid_id=' + bid_id + '&employer_id=' + employer_id,
 		dataType: 'json',
 		beforeSend: function() {
-           $('#button-offer-accept').html(' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+           $('#button-offer-accept').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
 	    },
 	    complete: function() {
 	       $('#button-offer-accept').html('<i class="fas fa-check"></i>');
@@ -459,15 +470,19 @@ function acceptOffer(project_id, bid_id, employer_id) {
 	            },
                type: 'success'
              });
+	        // Reload the Bids Tab
+	        $('#active-bids-list').load('freelancer/freelancer/getFreelancerBids?customer_id=<?php echo $customer_id; ?>');
 	        }
 
 	    },
 	    error: function(xhr, ajaxOptions, thrownError) {
 	        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 	    }
-
-		});
-    }
+         });
+      } // if end
+    } // callback end
+   });  // bootbox end
+}
 </script>
 <!-- Freelancer to complete project  -->
 <script type="text/javascript">
@@ -515,6 +530,17 @@ var url = document.URL;
 var hash = url.substring(url.indexOf('#'));
 
 $(".nav-tabs").find("li a").each(function(key, val) {
+    if (hash == $(val).attr('href')) {
+        $(val).click();
+    }
+    
+    $(val).click(function(ky, vl) {
+        location.hash = $(this).attr('href');
+    });
+});
+
+// Main tabs
+$(".nav-pills").find("li a").each(function(key, val) {
     if (hash == $(val).attr('href')) {
         $(val).click();
     }

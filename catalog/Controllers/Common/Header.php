@@ -1,5 +1,11 @@
 <?php namespace Catalog\Controllers\Common;
 
+use \Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Catalog\Informations;
+use \Catalog\Models\Catalog\CategoryModel;
+use \Catalog\Models\Account\MessageModel;
+use \Catalog\Models\Freelancer\BalanceModel;
+
 class Header extends \Catalog\Controllers\BaseController
 {
     public function index()
@@ -25,16 +31,16 @@ class Header extends \Catalog\Controllers\BaseController
         $data['text_profile']     = lang('common/header.text_profile');
         $data['text_add_project'] = lang('common/header.text_add_project');
 
-        $customerModel = new \Catalog\Models\Account\CustomerModel();
+        $balanceModel = new BalanceModel();
 
         helper('number');
 
-        $customer_balance = $customerModel->getBalanceByCustomerID($this->session->get('customer_id'));
+        $customer_balance = $balanceModel->getBalanceByCustomerID($this->session->get('customer_id'));
 
         $data['text_finance']              = lang('common/header.text_finance');
         $data['text_account']              = lang('common/header.text_account');
         $data['text_balances']             = lang('common/header.text_balances');
-        $data['customer_balance'] = number_to_currency($customer_balance, $this->session->get('customer_currency') ?? $this->registry->get('config_currency'));
+        $data['customer_balance']          = number_to_currency($customer_balance, $this->session->get('customer_currency') ?? $this->registry->get('config_currency'));
         $data['text_deposite_funds']       = lang('common/header.text_deposite_funds');
         $data['text_withdraw_funds']       = lang('common/header.text_withdraw_funds');
         $data['text_transactions_history'] = lang('common/header.text_transactions_history');
@@ -66,7 +72,7 @@ class Header extends \Catalog\Controllers\BaseController
 
         $data['informations'] = [];
         
-        $informations = new \Catalog\Models\Catalog\Informations();
+        $informations = new Informations();
         $seo_url = service('seo_url');
 
         foreach ($informations->getInformations() as $result) {
@@ -82,7 +88,7 @@ class Header extends \Catalog\Controllers\BaseController
 
         $data['categories'] = [];
 
-        $categoryModel = new \Catalog\Models\Catalog\CategoryModel();
+        $categoryModel = new CategoryModel();
 
         $filter_data = [
             'limit' => 4,
@@ -170,7 +176,7 @@ class Header extends \Catalog\Controllers\BaseController
            $viewed = ''; 
         }
 
-        $messageModel = new \Catalog\Models\Account\MessageModel();
+        $messageModel = new MessageModel();
 
         $results = $messageModel->getMessageByCustomerId($viewed, $this->session->get('customer_id'));
 
@@ -179,7 +185,7 @@ class Header extends \Catalog\Controllers\BaseController
         foreach ($results as $result) {
             $json[] = [
                 'message_id'  => $result['message_id'],
-                'customer_id' => $result['customer_id'],
+                'receiver_id' => $result['receiver_id'],
                 'sender_id'   => $result['sender_id'],
                 'name'        => $result['name'],
                 'image'       => ($result['image']) ? $this->resize($result['image'], 42, 42) : $this->resize('catalog/avatar.jpg', 42, 42),

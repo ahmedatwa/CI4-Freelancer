@@ -37,14 +37,15 @@
 										<li><strong><?php echo $bidder['price']; ?></strong><span><?php echo $bidder['type']; ?></span></li>
 										<li><strong><?php echo $bidder['delivery']; ?></strong><span>Delivery Time</span></li>
 									</ul>
+
 									<!-- Buttons -->
 									<div class="buttons-to-right always-visible margin-top-25 margin-bottom-0" id="bidders-button-wrapper">
 									<?php if ($bidder['isSelected']) { ?>
-										<button type="button" id="award-freelancer-button" class="btn btn-success btn-sm" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" data-bid-id="<?php echo $bidder['bid_id']; ?>" disabled><i class="icon-material-outline-check"></i>Awarded</button>
+										<button type="button" id="award-freelancer-button" class="btn btn-success btn-sm" disabled><i class="icon-material-outline-check"></i>Awarded</button>
 									<?php } else { ?>
-										<button type="button" id="award-freelancer-button" class="btn btn-danger btn-sm" data-freelancer-id="<?php echo $bidder['freelancer_id']; ?>" data-bid-id="<?php echo $bidder['bid_id']; ?>" ><i class="icon-material-outline-check"></i>Award Freelancer</button>
+										<button type="button" id="award-freelancer-button" class="btn btn-danger btn-sm" onclick="awardFreelancer(<?php echo $bidder['freelancer_id']; ?>, <?php echo $bidder['bid_id']; ?>);" ><i class="icon-material-outline-check"></i>Award Freelancer</button>
 									<?php } ?>
-										<button type="button" id="send-message-button" class="btn btn-dark btn-sm" data-senderid="<?php echo $customer_id; ?>" data-receiverid="<?php echo $bidder['freelancer_id']; ?>"><i class="icon-feather-mail"></i> Send Message</button>
+										<button type="button" id="send-message-button" class="btn btn-dark btn-sm" data-senderid="" data-receiverid="" onclick="sendMessage(<?php echo $customer_id; ?>, <?php echo $bidder['freelancer_id']; ?>);"><i class="icon-feather-mail"></i> Send Message</button>
 									</div>
 								</div>
 							</div>

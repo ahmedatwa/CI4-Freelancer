@@ -2,6 +2,7 @@
 
 use Catalog\Models\Account\CustomerModel;
 use Catalog\Models\Account\ActivityModel;
+use \Catalog\Models\Freelancer\BalanceModel;
 
 class Dashboard extends \Catalog\Controllers\BaseController
 {
@@ -25,6 +26,7 @@ class Dashboard extends \Catalog\Controllers\BaseController
         ];
 
         $customerModel = new CustomerModel();
+        $balanceModel = new BalanceModel();
 
         if ($this->customer->getCustomerId()) {
             $customer_info = $customerModel->getCustomer($this->customer->getCustomerId());
@@ -44,26 +46,11 @@ class Dashboard extends \Catalog\Controllers\BaseController
             $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
 
             $find = [
-                'project_id=',
-                'employer_id=',
-                'freelancer_id=',
+                'url=',
             ];
 
-            $seo_url = service('seo_url');
-            $keyword = $seo_url->getKeywordByQuery('project_id=' . $info['project_id']);
-
-            if (isset($info['employer_id'])) {
-               $employer = $activityModel->getEmployerUserName($info['employer_id']);
-            }
-
-            if (isset($info['freelancer_id'])) {
-                $freelancer = $activityModel->getFreelancerUserName($info['freelancer_id']);
-            }
-
             $replace = [
-                'service/' . $keyword,
-                $employer['username'] ?? '',
-                $freelancer['username'] ?? '',
+                isset($info['url']) ? $info['url'] : '',
             ];
 
 
@@ -75,7 +62,7 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $data['profile_views']  = $customerModel->getCustomerProfileView($this->customer->getCustomerId());
         $data['projects_total'] = $customerModel->getTotalProjectsByCustomerId($this->customer->getCustomerId());
-        $data['balance']        = $this->currencyFormat($customerModel->getBalanceByCustomerID($this->customer->getCustomerId()));
+        $data['balance']        = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId()));
 
         $data['text_dashboard'] = lang('account/dashboard.text_dashboard');
         $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $this->customer->getCustomerName());

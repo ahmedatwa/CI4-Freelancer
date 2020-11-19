@@ -1,9 +1,11 @@
 <?php namespace Catalog\Controllers\Freelancer;
 
-use Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Account\CustomerModel;
 use \Catalog\Models\Catalog\CategoryModel;
 use \Catalog\Models\Freelancer\FreelancerModel;
-use  \Catalog\Models\Account\ReviewModel;
+use \Catalog\Models\Account\ReviewModel;
+use \Catalog\Models\Freelancer\BalanceModel;
+use \Catalog\Models\freelancer\DisputeModel;
 
 class Freelancer extends \Catalog\Controllers\BaseController
 {
@@ -445,7 +447,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         $this->template->setTitle(lang('freelancer/freelancer.heading_title'));
 
-        $disputeModel = new \Catalog\Models\freelancer\DisputeModel();
+        $disputeModel = new DisputeModel();
 
         if ($this->request->getMethod() == 'post') {
 
@@ -460,15 +462,11 @@ class Freelancer extends \Catalog\Controllers\BaseController
     {   
         $json = [];
 
-        $this->template->setTitle(lang('freelancer/freelancer.heading_title'));
-
-        $freelancerModel = new FreelancerModel();
-
         if ($this->request->getMethod() == 'post') {
 
-            $customerModel = new \Catalog\Models\Account\CustomerModel();
+            $balanceModel = new BalanceModel();
 
-            $balance = $customerModel->getBalanceByCustomerID($this->session->get('customer_id'));
+            $balance = $balanceModel->getBalanceByCustomerID($this->session->get('customer_id'));
 
             // Emploer Balance Validation
             if (($balance == 0) || $this->request->getPost('amount') > $balance) {
@@ -477,11 +475,12 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
             if (!$json) {
 
-            $freelancerModel->transferProjectFunds($this->request->getPost());
+            $balanceModel->transferProjectFunds($this->request->getPost());
 
             $json['success'] = lang('freelancer/freelancer.text_transaction');
           }
         }
+
         return $this->response->setJSON($json);
     }
 

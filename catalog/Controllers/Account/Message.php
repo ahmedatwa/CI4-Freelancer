@@ -18,8 +18,8 @@ class Message extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('cid')) {
             $customer_id = $this->request->getVar('cid');
-        } elseif ($this->session->get('customer_id')) {
-            $customer_id = $this->session->get('customer_id');
+        } elseif ($this->customer->getCustomerId()) {
+            $customer_id = $this->customer->getCustomerId();
         } else {
             $customer_id = 0;
         }
