@@ -7,9 +7,7 @@
 		<div class="dashboard-headline">
 			<h3><?php echo $text_greeting; ?></h3>
 		</div>
-		
-		<div class="row justify-content-center mb-4">
-			<div class="col-auto mb-3">
+		<div class="mb-4 card-deck">
 				<div class="card mx-2">
 					<div class="card-body row">
 						<div class="col-9">
@@ -21,8 +19,6 @@
 						<div class="col-12"><h1 class="text-center"><?php echo $profile_views; ?></h1></div>
 					</div>
 				</div>
-			</div>
-			<div class="col-auto mb-3">
 				<div class="card mx-2">
 					<div class="card-body row">
 						<div class="col-9">
@@ -34,8 +30,6 @@
 						<div class="col-12"><h1 class="text-center"><?php echo $projects_total; ?></h1></div>
 					</div>
 				</div>
-			</div>
-			<div class="col-auto mb-3">
 				<div class="card mx-2">
 					<div class="card-body row">
 						<div class="col-9">
@@ -47,7 +41,7 @@
 						<div class="col-12"><h1 class="text-center"><?php echo $balance; ?></h1></div>
 					</div>
 				</div>
-			</div>
+			
 		</div>
 		<div class="content mt-4">
 			<!-- Chart -->
@@ -63,7 +57,7 @@
 					<div class="headline">
 						<h3><i class="icon-material-baseline-notifications-none"></i> <?php echo $text_news_feed; ?></h3>
 					</div>
-					<div class="content shadow-sm p-4 m-2 border">
+					<div class="content shadow-sm m-2 border">
 						<?php if ($news_feeds) { ?>
 						<ul class="dashboard-box-list">
 							<?php foreach ($news_feeds as $news_feed) { ?>

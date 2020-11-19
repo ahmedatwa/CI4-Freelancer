@@ -8,8 +8,8 @@ class Dashboard extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        if (! $this->session->get('customer_id') && ! $this->customer->isLogged() ) {
-             return redirect('account_login');
+        if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
+            return redirect('account_login');
         }
 
         $this->template->setTitle(lang('account/dashboard.heading_title'));
@@ -25,11 +25,17 @@ class Dashboard extends \Catalog\Controllers\BaseController
             'href' => route_to('account_dashboard'),
         ];
 
+        if ($this->customer->getCustomerId()) {
+            $customer_id = $this->customer->getCustomerId();
+        } else {
+            $customer_id = 0;
+        }
+
         $customerModel = new CustomerModel();
         $balanceModel = new BalanceModel();
 
-        if ($this->customer->getCustomerId()) {
-            $customer_info = $customerModel->getCustomer($this->customer->getCustomerId());
+        if ($customer_id) {
+            $customer_info = $customerModel->getCustomer($customer_id);
         }
 
         // news Feed
@@ -37,20 +43,42 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $activityModel = new ActivityModel();
 
-        $results = $activityModel->getDashboardActivitiesByCustomerId($this->customer->getCustomerId());
+        $results = $activityModel->getActivitiesByCustomerID($customer_id);
 
         foreach ($results as $result) {
-
             $info = json_decode($result['data'], true);
 
             $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
+            
+            $username  = '';
+
+            if (isset($info['freelancer_id'])) {
+                $username = $customerModel->where('customer_id', $info['freelancer_id'])->findColumn('username')[0];
+            } elseif (isset($info['employer_id'])) {
+                $username = $customerModel->where('customer_id', $info['employer_id'])->findColumn('username')[0];
+            }
+
+            $milestone_status = '';
+
+            switch (isset($info['milestone_status'])) {
+                case 0: $milestone_status = 'Pending'; break;
+                case 1: $milestone_status = 'Approved'; break;
+                case 2: $milestone_status = 'Paid'; break;
+                case 3: $milestone_status = 'Canceled'; break;
+                default: $milestone_status = 'Pending'; break;
+            }
 
             $find = [
                 'url=',
+                'freelancer_id=',
+                'milestone_status=',
             ];
 
             $replace = [
                 isset($info['url']) ? $info['url'] : '',
+                '@' . $username,
+                $milestone_status,
+                
             ];
 
 
@@ -88,7 +116,7 @@ class Dashboard extends \Catalog\Controllers\BaseController
             $json['data']['total'][] =  $value['total'];
         }
 
-     return $this->response->setJSON($json);   
+        return $this->response->setJSON($json);
     }
 
     //--------------------------------------------------------------------

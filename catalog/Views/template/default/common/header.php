@@ -29,7 +29,6 @@
   <script src="catalog/default/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="catalog/default/vendor/bootstrap-slider/dist/bootstrap-slider.min.js"></script> 
 
-  <script src="catalog/default/javascript/simplebar.min.js"></script>
   <script src="catalog/default/vendor/slick/slick.min.js"></script>
   <script src="catalog/default/javascript/magnific-popup.min.js"></script>
   <!-- Notify JS -->
@@ -66,7 +65,7 @@
     <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> <?php echo $username; ?></a>
       <div class="row justify-content-md-center">
-        <div class="dropdown-menu multi-column" aria-labelledby="headerLoginDropdown">
+        <div class="dropdown-menu multi-column animate slideIn" aria-labelledby="headerLoginDropdown">
           <div class="multi-column-dropdown col-6 border-right">
             <h4><?php echo $text_finance; ?></h4>
             <div class="dropdown-divider"></div>
@@ -123,54 +122,45 @@
       <li class="nav-item d-none d-lg-block"><a class="nav-link" href="<?php echo $register; ?>"> <?php echo $text_register; ?> </a></li>
     <?php } else { ?>
       <!-- Messages -->
-      <ul class="navbar-nav">
-            <li class="nav-item ml-3 d-none d-lg-block">
-            <div class="header-notifications">
-            <!-- Trigger -->
-            <div class="header-notifications-trigger " id="header-notifications">
-              <a href="#"><i class="icon-feather-bell" id="notifications-count"></i></a>
+      <ul class="navbar-nav" id="notifications">
+        <li class="nav-item d-none d-lg-block my-auto">
+          <div class="dropdown" id="notifications-dropdown">
+           <a class="dropdown-toggle" href="#" role="button" id="header-notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="icon-feather-bell fa-lg text-dark" id="notifications-count"></i>
+          </a>
+          <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-notifications">
+            <div class="d-flex w-100 justify-content-between">
+              <h3 class="mb-1">Notifications</h3>
+              <small><button id="mark-read-button" type="button" class="btn btn-sm float-right rounded-pill mark-as-read" title="Mark all as read" data-placement="left" data-toggle="tooltip">
+              <i class="icon-feather-check-square text-danger"></i>
+            </button></small>
             </div>
-            <!-- Dropdown -->
-            <div class="header-notifications-dropdown animate__animated animate__pulse">
-              <div class="header-notifications-headline" id="notifications-read">
-                <h4>Notifications</h4>
-                <button id="mark-read-button" type="button" class="btn btn-sm float-right rounded-pill" title="Mark all as read" data-placement="left" data-toggle="tooltip">
-                  <i class="icon-feather-check-square text-danger"></i>
-                </button>
-              </div>
-
-              <div class="header-notifications-content">
-                <div class="header-notifications-scroll" data-simplebar>
-                 <ul id="notifications-list" class="text-left"></ul>
-                </div>
-              </div>
-            </div>
+            <ul id="notifications-list" class="text-left list-group list-group-flush"></ul>
           </div>
-             <div class="header-notifications">
-              <div class="header-notifications-trigger" id="header-messages">
-               <a href="#"><i class="icon-feather-mail" id="message-count"></i></a>
-             </div>
-             <div class="header-notifications-dropdown animate__animated animate__pulse">
-               <div class="header-notifications-headline">
-                <h4 class="mr-4">Messages</h4>
-                <p class="ml-4 float-right"><a href="<?php echo $all_messages; ?>" class="btn btn-link">View All Messages</a></p>
-              </div>
-              <div class="header-notifications-content">
-                <div class="header-notifications-scroll text-center" data-simplebar>
-                  <ul id="message-list" class="text-left"></ul>
-                </div>
-              </div>
+        </div>
+      </li>
+      <li class="nav-item mx-3 d-none d-lg-block my-auto">
+        <div class="dropdown" id="notifications-dropdown">
+          <a class="dropdown-toggle" href="#" role="button" id="header-messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="icon-feather-mail fa-lg text-dark" id="message-count"></i>
+          </a>
+          <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-messages">
+            <div class="d-flex w-100 justify-content-between">
+              <h3 class="mb-1">Messages</h3>
+              <small><a href="<?php echo $all_messages; ?>">View All Messages</a></small>
             </div>
-          </div> 
-        </li>
-      </ul>
+            <ul id="message-list" class="text-left list-group list-group-flush"></ul>
+          </div>
+        </div>
+      </li>
+    </ul>
       <!-- Messages -->
       <li class="nav-item dropdown d-none d-lg-block">
         <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> <?php echo $username; ?>
+          <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> @<?php echo $username; ?>
           </a>
           <div class="row justify-content-md-center">
-            <div class="dropdown-menu multi-column" aria-labelledby="headerLoginDropdown">
+            <div class="dropdown-menu multi-column  animate slideIn" aria-labelledby="headerLoginDropdown">
               <div class="multi-column-dropdown col-6 border-right">
                 <h4><?php echo $text_finance; ?></h4>
                 <div class="dropdown-divider"></div>
@@ -191,6 +181,6 @@
         </li>
 
       <?php } ?>
-      <li class="mt-lg-2 ml-4 d-none d-lg-block"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
+      <li class="mt-lg-3 ml-4 d-none d-lg-block"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
     </ul>  
   </nav>

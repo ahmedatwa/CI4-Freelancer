@@ -194,7 +194,7 @@ function totalNotifications(data) {
 
 	      	if (json.length > 0) {
 	          for (var i = 0; json.length > i; i++) {
-	           html = '<li class="notifications-not-read p-3">';
+	           html = '<li class="list-group-item">';
 	           html += '<span class="notification-icon"><i class="icon-material-outline-group"></i></span>';
 	           html +=' <span class="notification-text"> ' + json[i].comment + '</span>';
 	           html +=' </li>';
@@ -235,7 +235,7 @@ function totalNotifications(data) {
 	      	if (json.length > 0) {
 	          for (var i = 0; json.length > i; i++) {
 
-	           html = '<li class="notifications-not-read px-3" id="'+json[i].message_id+'">';
+	           html = '<li class="list-group-item" id="'+json[i].message_id+'">';
 	           html += '<a href="account/message#v-pills-'+json[i].receiver_id+'">';
 	           html += '<span class="notification-avatar status-online float-left"><img src="'+json[i].image+'" alt=""></span>';
 	           html += '<div class="notification-text">';
@@ -250,7 +250,7 @@ function totalNotifications(data) {
 	          $('#nav-user-main #message-list').append(html);
 	        }
 	    } else {
-	    	$('#nav-user-main #message-list').html('<p class="text-center p-3">No New Messages!</p>');
+	    	$('#nav-user-main #message-list').html('<li class="text-center list-group-item">No New Messages!</li>');
 	      }
 	    }
 	    });

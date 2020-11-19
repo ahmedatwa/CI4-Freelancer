@@ -8,14 +8,14 @@
 			<h3><?php echo $heading_title; ?></h3>
 		</div>
 		<div class="row">
-				<div class="messages-container margin-top-0 w-100">
+				<div class="messages-container margin-top-0 w-100 border mb-4">
 					<div class="messages-container-inner">
 						<!-- Messages -->
 						<div class="messages-inbox">
 							<!-- Customer Online -->
  							<div class="nav flex-column nav-pills" id="online-list" role="tablist" aria-orientation="vertical">
 							<?php foreach ($members as $member) { ?>
-  							<a class="nav-link text-dark" id="v-pills-<?php echo $member['receiver_id']; ?>-tab" data-toggle="pill" href="#v-pills-<?php echo $member['receiver_id']; ?>" role="tab" aria-controls="v-pills-<?php echo $member['receiver_id']; ?>" aria-selected="true" onClick="openChat(<?php echo $member['receiver_id']; ?>, <?php echo $member['sender_id']; ?>);"> 
+  							<a class="nav-link text-dark border-bottom rounded-0" id="v-pills-<?php echo $member['receiver_id']; ?>-tab" data-toggle="pill" href="#v-pills-<?php echo $member['receiver_id']; ?>" role="tab" aria-controls="v-pills-<?php echo $member['receiver_id']; ?>" aria-selected="true" onClick="openChat(<?php echo $member['receiver_id']; ?>, <?php echo $member['sender_id']; ?>);"> 
   							
   								<div class="message-avatar">
   									<?php if ($member['online']) { ?>
