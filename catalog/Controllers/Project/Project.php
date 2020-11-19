@@ -85,6 +85,8 @@ class Project extends \Catalog\Controllers\BaseController
             $page = 1;
         }
 
+        helper('text');
+
         $filter_data = [
              'filter_category_id' => $filter_category_id,
              'filter_type'        => $filter_type,
@@ -119,7 +121,7 @@ class Project extends \Catalog\Controllers\BaseController
             $data['projects'][] = [
                 'project_id'  => $result['project_id'],
                 'name'        => $result['name'],
-                'description' => substr($result['description'], 0, 100) . '...',
+                'description' => word_limiter($result['description'], 50),
                 'meta_keyword'=> ($result['meta_keyword']) ? explode(',', $result['meta_keyword']) : '',
                 'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
                 'type'        => ($result['type'] == 1) ? lang('en.text_fixed_price') : lang('en.text_per_hour'),
