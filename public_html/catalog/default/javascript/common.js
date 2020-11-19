@@ -183,11 +183,11 @@ function totalNotifications(data) {
 	      url: 'account/notifications/getNotifications',
 	      dataType: 'json',
 	      beforeSend: function() {
-	          $('#nav-user-main #notifications-list').html('<p class="text-center m-3"><div class="spinner-grow text-info" role="status"><span class="sr-only">Loading...</span></div></p>');
+	          $('#message-list').html('<li class="text-center list-group-item" id="preloading"><div class="spinner-border" role="status"><span></span></div> Loading...</li>');
 	          $('#nav-user-main #notifications-list').html('');
 	      },
 	      complete: function () {
-	          $('.spinner-grow').remove();
+	          $('#preloading').remove();
 	      },
 	      success: function(json) {
 	      	var html = '';
@@ -223,11 +223,11 @@ function totalNotifications(data) {
 	      url: 'common/header/getMessages',
 	      dataType: 'json',
 	      beforeSend: function() {
-	          $('#message-list').html('<p class="text-center m-3"><div class="spinner-grow text-info" role="status"><span class="sr-only">Loading...</span></div></p>');
+	          $('#message-list').html('<li class="text-center list-group-item" id="preloading"><div class="spinner-border" role="status"><span></span></div> Loading...</li>');
 	          $('#message-count').html('');
 	      },
 	      complete: function () {
-	          $('.spinner-grow').remove();
+	          $('#preloading').remove();
 	      },
 	      success: function(json) {
 	      	var html = '';
@@ -245,7 +245,6 @@ function totalNotifications(data) {
 	           html += '</div>';
 	           html += '</a>';
 	           html += '</li>';
-	           html += '<div class="dropdown-divider"></div>';
 
 	          $('#nav-user-main #message-list').append(html);
 	        }

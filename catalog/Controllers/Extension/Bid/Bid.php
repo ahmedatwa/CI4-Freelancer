@@ -1,6 +1,7 @@
 <?php namespace Catalog\Controllers\Extension\Bid;
 
 use \Catalog\Models\Extension\Bid\BidModel;
+use \Catalog\Models\Freelancer\BalanceModel;
 
 class Bid extends \Catalog\Controllers\BaseController
 {
@@ -74,9 +75,9 @@ class Bid extends \Catalog\Controllers\BaseController
             $json['error'] = $this->validator->getErrors();
         }
 
-        $customerModel = new \Catalog\Models\Account\CustomerModel();
+        $balanceModel = new BalanceModel();
 
-        $balance = $customerModel->getBalanceByCustomerID($this->customer->getCustomerId());
+        $balance = $balanceModel->getBalanceByCustomerID($this->customer->getCustomerId());
 
         // Employer Balance Validation
         if (!empty($this->request->getPost('fee'))) {

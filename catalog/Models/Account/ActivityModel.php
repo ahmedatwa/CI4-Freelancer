@@ -15,6 +15,7 @@ class ActivityModel extends \CodeIgniter\Model
             'seen' => 0,
             'customer_id' => $customer_id
         ]);
+        $builder->orderBy('date_added', 'DESC');
         $query = $builder->get();
         return $query->getResultArray();
     }

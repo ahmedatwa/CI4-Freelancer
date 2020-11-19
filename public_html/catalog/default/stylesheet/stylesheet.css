@@ -14180,6 +14180,23 @@ ul.dashboard-box-list > li:hover {
 	position: relative;
 }
 
+#message-count span {
+    position: absolute;
+    display: inline-block;
+    top: -15px;
+    margin-left: -10px;
+    font-weight: 700;
+    height: 19px;
+    width: 19px;
+    line-height: 19px;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    background-color: #e53038;
+    border-radius: 50%;
+    position: relative;   
+}
+
 
 #nav-user-main .dropdown-toggle::after{
 	display: none !important;

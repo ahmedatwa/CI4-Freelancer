@@ -8,6 +8,7 @@
         <div class="col-12 mb-4">
         <h4 class="mb-2">Project Details: </h4>
             <ul class="list-group list-group-flush mb-4 col-6">
+                  <li class="list-group-item list-group-item-light"><strong>Project ID: </strong><?php echo $project_id; ?></li>
                   <li class="list-group-item list-group-item-light"><strong>Budget: </strong><?php echo $budget; ?></li>
                   <li class="list-group-item list-group-item-light"><strong>Type: </strong><?php echo $type; ?></li>
                   <li class="list-group-item list-group-item-light"><strong>Freelancer: </strong>@<a href="<?php echo $freelancer_profile; ?>"><?php echo $freelancer; ?></a></li>
@@ -19,7 +20,7 @@
 			<ul class="nav nav-tabs" id="project-info" role="tablist">
                  <?php if ($employer_id == $customer_id) { ?>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="bids-tab" data-toggle="tab" href="#bids" role="tab" aria-controls="bids" aria-selected="true">Bids <span class="badge badge-success"><?php echo $total_bids; ?></span></a>
+                    <a class="nav-link" id="bids-tab" data-toggle="tab" href="#bids" role="tab" aria-controls="bids" aria-selected="true">Bids <span class="badge badge-success"><?php echo $total_bids; ?></span></a>
                 </li>
                 <?php } ?>
 				<li class="nav-item" role="presentation">
@@ -34,7 +35,7 @@
 			</ul>
 
 			<div class="tab-content mt-4" id="myTabContent">
-                <div class="tab-pane fade show active" id="bids" role="tabpanel" aria-labelledby="bids-tab"></div> <!-- </div> bids-tab  -->
+                <div class="tab-pane fade" id="bids" role="tabpanel" aria-labelledby="bids-tab"></div> <!-- </div> bids-tab  -->
 				<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab"></div> <!-- </div> messages-tab  -->
 				<div class="tab-pane fade" id="milestones" role="tabpanel" aria-labelledby="milestones-tab">
                 <div id="milestones-list"></div>
@@ -167,7 +168,7 @@ $('#project-info a[href="#messages"]').on('click', function (e) {
  });
 }); 
 
-//$('#project-info li:first-child a').tab('show') // Select first tab
+$('#project-info li:first-child a').tab('show') // Select first tab
 
 $('#project-info li:first-child a').trigger('click') // Select first tab
 

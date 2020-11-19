@@ -1,7 +1,7 @@
 <?php namespace Catalog\Controllers\freelancer;
 
-use Catalog\Models\Catalog\ProjectModel;
-use Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Catalog\ProjectModel;
+use \Catalog\Models\Account\CustomerModel;
 use \Catalog\Models\Catalog\MileStoneModel;
 use \Catalog\Models\Extension\Bid\BidModel;
 use \Catalog\Models\Freelancer\BalanceModel;
@@ -460,7 +460,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $results = $projectModel->getProjectMessagesById($filter_data);
 
-        $customerModel = new \Catalog\Models\Account\CustomerModel();
+        $customerModel = new CustomerModel();
 
         foreach ($results as $result) {
             $data['project_messages'][] = [
