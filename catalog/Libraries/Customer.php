@@ -15,13 +15,12 @@ class Customer
     public function __construct()
     {
         $this->db = \Config\Database::connect();
-        // Set the default time zone
+        // Sync PHP and DB time zones
         $this->db->query("SET time_zone = " . $this->db->escape(date('P')));
 
         $this->session = \Config\Services::session();
 
         if ($this->session->get('customer_id')) {
-
             $builder = $this->db->table($this->db->prefixTable('customer'));
 
             $builder->where([
@@ -47,7 +46,11 @@ class Customer
     {
         // From Table Users
         $builder = $this->db->table($this->db->prefixTable('customer'));
-        $builder->where(['email' => $email, 'status' => 1]);
+        $builder->where([
+            'email'  => $email,
+            'status' => 1
+        ]);
+        
         $query = $builder->get();
         if ($builder->countAllResults() > 0) {
             $row = $query->getRowArray();
@@ -91,17 +94,17 @@ class Customer
 
     public function getCustomerId()
     {
-        return $this->customer_id;
+        return $this->customer_id ?? 0;
     }
 
     public function getCustomerName()
     {
-        return $this->customer_name;
+        return $this->customer_name ?? '';
     }
 
     public function getCustomerUserName()
     {
-        return $this->customer_username;
+        return $this->customer_username ?? '';
     }
 
     public function logout()
@@ -110,7 +113,6 @@ class Customer
         $builder->set('online', 0)
                 ->where('customer_id', $this->session->get('customer_id'))
                 ->update();
-
         $this->customer_id = '';
         $this->customer_name = '';
         $this->customer_group_id = '';
@@ -119,20 +121,18 @@ class Customer
 
     public function isLogged()
     {
-        return $this->customer_id;
+        return $this->customer_id ?? false;
     }
 
     public function getcustomerGroupId()
     {
-        return $this->customer_group_id;
+        return $this->customer_group_id ?? 0;
     }
 
     public function getcustomerImage()
     {
-        return $this->customer_image;
+        return $this->customer_image ?? '';
     }
-
-
 
     // _________________________________________________
 }

@@ -156,5 +156,43 @@ function gSignOut() {
 		});
 	});
 </script>
+<!-- New Project Global Alert -->
+
+<script type="text/javascript">
+var pusher = new Pusher('b4093000fa8e8cab989a', {
+  cluster: 'eu'
+});
+
+var channel = pusher.subscribe('global-channel');
+
+channel.bind('new-project-event', function(data) {
+if (<?php echo $customer_id; ?> != data.employer_id) {
+$.notify({
+   // options
+	icon: 'fas fa-desktop',
+	title: data.name,
+	message: data.budget,
+	url: data.href,
+	target: '_blank'
+    },{
+	// settings
+	newest_on_top: true,
+	placement: {
+		from: "bottom",
+		align: "left"
+	},
+	offset: 20,
+	spacing: 10,
+	z_index: 1031,
+	delay: 8000,
+	timer: 1000,
+	animate: {
+		enter: 'animate__animated animate__fadeInUpBig',
+		exit: 'animate__animated animate__fadeOutDownBig'
+	},
+  });
+ }
+});	
+</script>
 </body>
 </html>

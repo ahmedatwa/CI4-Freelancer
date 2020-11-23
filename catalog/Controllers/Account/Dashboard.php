@@ -88,12 +88,14 @@ class Dashboard extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['profile_views']  = $customerModel->getCustomerProfileView($this->customer->getCustomerId());
-        $data['projects_total'] = $customerModel->getTotalProjectsByCustomerId($this->customer->getCustomerId());
-        $data['balance']        = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId()));
+        $data['total_views']    = $customerModel->getCustomerProfileView($this->customer->getCustomerId());
+        $data['total_projects'] = $customerModel->getTotalProjectsByCustomerId($this->customer->getCustomerId());
+        $data['total_balance']  = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId()));
+        $data['total_withdrawn']  = $this->currencyFormat($balanceModel->getWithdrawnByCustomerID($this->customer->getCustomerId()));
+        $data['total_used']  = $this->currencyFormat($balanceModel->getUsedByCustomerID($this->customer->getCustomerId()));
 
         $data['text_dashboard'] = lang('account/dashboard.text_dashboard');
-        $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $this->customer->getCustomerName());
+        $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $this->session->get('username'));
         $data['heading_title']  = lang('account/dashboard.heading_title');
         $data['text_news_feed'] = lang('account/dashboard.text_news_feed');
 

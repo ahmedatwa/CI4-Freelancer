@@ -11996,6 +11996,10 @@ ul.dashboard-box-list {
 	margin: 0;
 }
 
+ul.dashboard-box-list .notification-text {
+    text-align: left !important;
+}
+
 ul.dashboard-box-list > li {
 	border-bottom: 1px solid #e4e4e4;
 	padding: 0;

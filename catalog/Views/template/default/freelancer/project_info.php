@@ -11,18 +11,12 @@
                   <li class="list-group-item list-group-item-light"><strong>Project ID: </strong><?php echo $project_id; ?></li>
                   <li class="list-group-item list-group-item-light"><strong>Budget: </strong><?php echo $budget; ?></li>
                   <li class="list-group-item list-group-item-light"><strong>Type: </strong><?php echo $type; ?></li>
-                  <li class="list-group-item list-group-item-light"><strong>Freelancer: </strong>@<a href="<?php echo $freelancer_profile; ?>"><?php echo $freelancer; ?></a></li>
                   <li class="list-group-item list-group-item-light"><strong>Bid Quote: </strong><?php echo $bid_amount; ?></li>
             </ul>
         </div>
 		<div class="row">
 			<div class="col-12">
 			<ul class="nav nav-tabs" id="project-info" role="tablist">
-                 <?php if ($employer_id == $customer_id) { ?>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="bids-tab" data-toggle="tab" href="#bids" role="tab" aria-controls="bids" aria-selected="true">Bids <span class="badge badge-success"><?php echo $total_bids; ?></span></a>
-                </li>
-                <?php } ?>
 				<li class="nav-item" role="presentation">
 					<a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
 				</li>
@@ -35,7 +29,6 @@
 			</ul>
 
 			<div class="tab-content mt-4" id="myTabContent">
-                <div class="tab-pane fade" id="bids" role="tabpanel" aria-labelledby="bids-tab"></div> <!-- </div> bids-tab  -->
 				<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab"></div> <!-- </div> messages-tab  -->
 				<div class="tab-pane fade" id="milestones" role="tabpanel" aria-labelledby="milestones-tab">
                 <div id="milestones-list"></div>
@@ -60,7 +53,7 @@
             '<?= csrf_token() ?>': '<?= csrf_hash() ?>', 
         },
         maxFileCount: 3,
-        allowedFileExtensions: ['zip','txt','png','jpe','jpeg','jpg','gif','bmp','ico','tiff','tif','svg','svgz','rar','mp3','mov','pdf','psd','ai','doc'],    // allow only images
+        allowedFileExtensions: <?php echo json_encode($allowedFileExtensions); ?>, 
         showCancel: true,
         initialPreviewAsData: true,
         overwriteInitial: false,
@@ -128,7 +121,7 @@
 <!-- // load the bidders List Table-->
 <script type="text/javascript">
 
-$('#project-info a[href="#bids"]').on('click', function (e) {
+$('#project-info #bids-tab').on('click', function (e) {
  $.ajax({
     url: 'freelancer/project/bids?pid=<?php echo $project_id; ?>',
     dataType: 'html',
@@ -149,9 +142,9 @@ $('#project-info a[href="#bids"]').on('click', function (e) {
 
 
 // Messages
-$('#project-info a[href="#messages"]').on('click', function (e) {
+$('#project-info #messages-tab').on('click', function (e) {
  $.ajax({
-    url: 'freelancer/project/getProjectMessages?pid=<?php echo $project_id; ?>&customer_id=<?php echo $employer_id; ?>',
+    url: 'account/message/getProjectMessages?pid=<?php echo $project_id; ?>&customer_id=<?php echo $employer_id; ?>',
     dataType: 'html',
     beforeSend: function() {
         $('#messages').html('<p id="loader-div" class="text-center"><i class="fas fa-spinner fa-spin fa-lg"></i> Retrieving Data...</p>');
@@ -168,133 +161,16 @@ $('#project-info a[href="#messages"]').on('click', function (e) {
  });
 }); 
 
-$('#project-info li:first-child a').tab('show') // Select first tab
-
-$('#project-info li:first-child a').trigger('click') // Select first tab
-
-</script>
-<!-- accept Offer -->
-<script type="text/javascript">
- // Award the Freelancer 
-function awardFreelancer(freelancer_id, bid_id) {
-   bootbox.confirm({
-    message: "Are you sure?",
-    className: 'animate__animated animate__fadeInDown',
-    buttons: {
-        cancel: {
-            label: '<i class="fa fa-times"></i> Cancel',
-            className: 'btn-dark'
-        },
-        confirm: {
-            label: '<i class="fa fa-check"></i> Confirm',
-            className: 'btn-success'
-        }
-    },
-    callback: function (result) {
-    if (result) {
-         $.ajax({
-            url: 'freelancer/project/awardWinner?pid=<?php echo $project_id; ?>',
-            dataType: 'json',
-            method: 'post',
-            data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'freelancer_id': freelancer_id, 'bid_id': bid_id, 'project_id' :  <?php echo $project_id; ?>},
-            success: function(json) {
-               if (json['success']) {
-                    $.notify({
-                        icon: 'fas fa-check-circle',
-                        title: 'Success',
-                        message: json['success']
-                    },{
-                        animate: {
-                            enter: 'animate__animated animate__lightSpeedInRight',
-                            exit: 'animate__animated animate__lightSpeedOutRight'
-                        },
-                        type: 'success'
-                    });
-                    // Reload the Bids Tab
-                    $('#bids').load('freelancer/project/bids?pid=<?php echo $project_id; ?>'); 
-                }  
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-         });
-      } // if end
-    } // callback end
-   });  // bootbox end
-}
-
-// <!-- Send Private  Message -->
-function sendMessage(sender_id, receiver_id) {
-   bootbox.prompt({
-    title: 'Send A Message',
-    message: "",
-    className: 'animate__animated animate__fadeInDown',
-    inputType: 'textarea',
-    buttons: {
-        cancel: {
-            label: '<i class="fa fa-times"></i> Cancel',
-            className: 'btn-dark'
-        },
-        confirm: {
-            label: '<i class="fa fa-check"></i> Confirm',
-            className: 'btn-success'
-        }
-    },
-    callback: function (result) {
-    if (result) {
-         $.ajax({
-            url: 'freelancer/project/sendMessage?pid=<?php echo $project_id; ?>',
-            dataType: 'json',
-            method: 'post',
-            data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'sender_id': sender_id, 'receiver_id': receiver_id, 'message': $('.bootbox-input-textarea').val(), 'project_id': <?php echo $project_id; ?>},
-            beforeSend: function() {
-                $('.text-danger, .alert').remove();
-            },
-            complete: function() {
-
-            },
-            success: function(json) {
-                if (json['error']) {
-                    $('textarea[name=\'message\']').after('<p class="text-danger">' + json['error'] + '</p>')
-                }
-
-                if (json['success']) {
-                    $.notify({
-                        icon: 'fas fa-check-circle',
-                        title: 'Success',
-                        message: json['success']
-                    },{
-                     animate: {
-                        enter: 'animate__animated animate__lightSpeedInRight',
-                        exit: 'animate__animated animate__lightSpeedOutRight'
-                    },
-                    type: 'success'
-                    });
-                  $('#messages').load('freelancer/project/getProjectMessages?pid=<?php echo $project_id; ?>&customer_id=<?php echo $employer_id; ?>');
-                  $('#send-message-modal-form').trigger('reset');
-                }                        
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-          });
-      } // if end
-    } // callback end
-   });  // bootbox end
-}
-</script>
-<!-- MileStones -->
-<script type="text/javascript">
-$('#project-info a[href="#milestones"]').on('click', function (e) {
+$('#project-info #milestones-tab').on('click', function (e) {
  $.ajax({
-    url: 'freelancer/project/getProjectMilestones?project_id=<?php echo $project_id; ?>',
+    url: 'freelancer/milestone?project_id=<?php echo $project_id; ?>',
     dataType: 'html',
     beforeSend: function() {
         $('.alert').remove();
-        $('#milestones-list').html('<p id="loader-div" class="text-center"><i class="fas fa-spinner fa-spin fa-lg"></i> Retrieving Data...</p>');
+        $('#milestones-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
     },
     complete: function() {
-        $('#loader-div').remove();
+        $('#spinner').remove();
     },
     success: function(html) {
         $('#milestones-list').html(html);
@@ -305,192 +181,8 @@ $('#project-info a[href="#milestones"]').on('click', function (e) {
  });
 }); 
 
- function addMilestone() {
-   bootbox.confirm({
-    title: 'Create Milestone',
-    message: '<form id="milestone-modal-form"><input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" /><input type="hidden" name="project_id" value="<?php echo $project_id; ?>" /><input type="hidden" name="created_by" value="<?php echo $customer_id; ?>" /><input type="hidden" name="created_for" value="<?php echo $created_for; ?>" /><div class="form-group"><label for="input-message">Amount</label><input type="number" min="1" class="form-control" name="amount"></div><div class="form-group"><label for="input-message">Description</label><textarea type="text" cols="3" row="4" class="form-control" name="description"></textarea></div><div class="form-group"><label for="input-message">Completed in</label><input type="number" min="1" max="30" class="form-control" name="deadline"></div></form>',
-    className: 'animate__animated animate__fadeInDown',
-    buttons: {
-        cancel: {
-            label: '<i class="fa fa-times"></i> Cancel',
-            className: 'btn-dark'
-        },
-        confirm: {
-            label: '<i class="fa fa-check"></i> Confirm',
-            className: 'btn-success'
-        }
-    },
-    callback: function (result) {
-    if (result) {
-             $.ajax({
-                url: 'freelancer/project/addMilestone?pid=<?php echo $project_id; ?>',
-                dataType: 'json',
-                method: 'post',
-                data: $('#milestone-modal-form').serialize(),
-                beforeSend: function() {
-                    $('.text-danger, .alert').remove();
-                },
-                success: function(json) {
-                    if (json['error']) {
-                        $('textarea[name=\'message\']').after('<p class="text-danger">' + json['error'] + '</p>')
-                    }
+$('#project-info li:first-child a').tab('show') // Select first tab
 
-                    if (json['success']) {
-                        $('#milestones-list').load('freelancer/project/getProjectMilestones?project_id=<?php echo $project_id; ?>');   
-                        $('#milestones-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                    }                        
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
-          });
-      } // if end
-    } // callback end
-   });  // bootbox end
-}
-
-// Cancel MileStone
-function cancelMilestone(milestone_id) {
-    bootbox.confirm({
-    message: 'Are You Sure',
-    className: 'animate__animated animate__fadeInDown',
-    size:'small',
-    buttons: {
-        cancel: {
-            label: '<i class="fa fa-times"></i> Cancel',
-            className: 'btn-dark'
-        },
-        confirm: {
-            label: '<i class="fa fa-check"></i> Confirm',
-            className: 'btn-success'
-        }
-    },
-    callback: function (result) {
-    if (result) {
-    $.ajax({
-        url: 'freelancer/project/cancelMilestone',
-        dataType: 'json',
-        method: 'post',
-        data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'milestone_id': milestone_id},
-        beforeSend: function() {
-            $('.text-danger, .alert').remove();
-        },
-        success: function(json) {
-            if (json['success']) {
-            
-             $('#milestones-list').load('freelancer/project/getProjectMilestones?project_id=<?php echo $project_id; ?>');   
-             $('#milestones-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            }                        
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-  });
-  } // if end
-} // callback end
-});  // bootbox end
-}
-
-// Approve MileStone
-function approveMilestone(milestone_id) {
-    bootbox.confirm({
-    message: 'Are You Sure',
-    className: 'animate__animated animate__fadeInDown',
-    size:'small',
-    buttons: {
-        cancel: {
-            label: '<i class="fa fa-times"></i> Cancel',
-            className: 'btn-dark'
-        },
-        confirm: {
-            label: '<i class="fa fa-check"></i> Confirm',
-            className: 'btn-success'
-        }
-    },
-    callback: function (result) {
-    if (result) {
-    $.ajax({
-        url: 'freelancer/project/approveMilestone',
-        dataType: 'json',
-        method: 'post',
-        data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'milestone_id': milestone_id},
-        beforeSend: function() {
-            $('.text-danger, .alert').remove();
-        },
-        success: function(json) {
-            if (json['success']) {
-            
-             $('#milestones-list').load('freelancer/project/getProjectMilestones?project_id=<?php echo $project_id; ?>');   
-             $('#milestones-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            }                        
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-  });
-  } // if end
-} // callback end
-});  // bootbox end
-}
-
-// Pay MileStone
-function payMilestone(milestone_id, amount, employer_id, freelancer_id) {
-    bootbox.confirm({
-    title: 'Are You Sure',
-    message: 'Are You Sure',
-    className: 'animate__animated animate__fadeInDown',
-    buttons: {
-        cancel: {
-            label: '<i class="fa fa-times"></i> Cancel',
-            className: 'btn-dark'
-        },
-        confirm: {
-            label: '<i class="fa fa-check"></i> Confirm',
-            className: 'btn-success'
-        }
-    },
-    onShown: function(e) {
-        $(this).find('.modal-body').text(amount + '.00 EGP will be deducted from your Balance');
-    },
-    callback: function (result) {
-    if (result) {
-    $.ajax({
-        url: 'freelancer/project/payMilestone',
-        dataType: 'json',
-        method: 'post',
-        data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'milestone_id': milestone_id, 'amount': amount, 'employer_id': employer_id, 'freelancer_id': freelancer_id},
-        beforeSend: function() {
-            $('.text-danger, .alert').remove();
-        },
-        success: function(json) {
-            if (json['success']) {
-            
-             $('#milestones-list').load('freelancer/project/getProjectMilestones?project_id=<?php echo $project_id; ?>');   
-             $('#milestones-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            }                        
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-  });
-  } // if end
-} // callback end
-});  // bootbox end
-}
-</script>
-<script type="text/javascript">
-var url = document.URL;
-var hash = url.substring(url.indexOf('#'));
-
-$('#project-info').find("li a").each(function(key, val) {
-    if (hash == $(val).attr('href')) {
-        $(val).click();
-    }
-    
-    $(val).click(function(ky, vl) {
-        location.hash = $(this).attr('href');
-    });
-});
-
+$('#project-info li:first-child a').trigger('click') // Select first tab
 </script>
 <?php echo $footer; ?>

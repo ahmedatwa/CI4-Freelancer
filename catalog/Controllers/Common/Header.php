@@ -66,7 +66,6 @@ class Header extends \Catalog\Controllers\BaseController
             $data['profile']     = route_to('freelancer_profile', $this->session->get('customer_id'), $this->session->get('username')) ? route_to('freelancer_profile', $this->session->get('customer_id'), $this->session->get('username')) : base_url('freelancer/freelancer?cid=' . $this->session->get('customer_id'));
             $data['setting']     = route_to('account_setting') ? route_to('account_setting') : base_url('account/setting?cid=' . $this->session->get('customer_id'));
             $data['dashboard']   = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard?cid=' . $this->session->get('customer_id'));
-
         }
 
 
@@ -118,15 +117,16 @@ class Header extends \Catalog\Controllers\BaseController
 
         // customer Menu
         $data['text_dashboard']   = lang('account/menu.text_dashboard');
-        $data['dashoard']         = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
         $data['text_my_projects'] = lang('account/menu.text_my_projects');
+
+        $data['dashoard']         = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
         $data['account_project']  = route_to('account_project') ? route_to('account_project') : base_url('account/project');
         
         $data['text_messages']    = lang('account/menu.text_messages');
         $data['account_message']  = route_to('account_message') ? route_to('account_message') : base_url('account/message');
         $data['text_reviews']     = lang('account/menu.text_reviews');
         $data['account_review']   = route_to('account_review') ? route_to('account_review') : base_url('account/review');
-        
+        // finance menu
         $data['deposit']          = route_to('freelancer_deposit') ? route_to('freelancer_deposit') : base_url('freelancer/deposit');
         $data['withdraw']         = route_to('freelancer_withdraw') ? route_to('freelancer_withdraw') : base_url('freelancer/withdraw');
         $data['balance']          = route_to('freelancer_balance') ? route_to('freelancer_balance') : base_url('freelancer/balance');
@@ -138,17 +138,16 @@ class Header extends \Catalog\Controllers\BaseController
 
         if (is_file(DIR_IMAGE . $this->customer->getcustomerImage())) {
             $data['image'] = slash_item('baseURL')  . 'images/' . $this->customer->getcustomerImage();
-        } elseif($this->session->get('customer_image')) {
+        } elseif ($this->session->get('customer_image')) {
             $data['image'] = $this->session->get('customer_image');
-        } else {    
-            $data['image'] = base_url()  . '/images/profile.png';
+        } else {
+            $data['image'] = base_url() . '/images/profile.png';
         }
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
         $data['defaut_color_scheme'] = $this->registry->get('theme_default_color') ?? 'red.css';
-        $data['all_messages'] = route_to('account_messages') ? route_to('account_messages') : base_url('account/message');
-
+        $data['all_messages']        = route_to('account_messages') ? route_to('account_messages') : base_url('account/message');
 
         // Logged Menu
         $data['text_dashboard']   = lang('account/menu.text_dashboard');
@@ -157,7 +156,7 @@ class Header extends \Catalog\Controllers\BaseController
         $data['text_reviews']     = lang('account/menu.text_reviews');
         
         $data['dashboard']        = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
-        $data['my_projects']      = route_to('freelancer_project') ? route_to('freelancer_project') : base_url('freelancer/project');
+        $data['my_projects']      = route_to('account_project') ? route_to('account_project') : base_url('account/project');
         $data['messages']         = route_to('account_message') ? route_to('account_message') : base_url('account/message');
         $data['reviews']          = route_to('account_review') ? route_to('account_review') : base_url('account/review');
 
@@ -169,21 +168,20 @@ class Header extends \Catalog\Controllers\BaseController
         $json = [];
 
         if ($this->session->get('customer_id')) {
+            if ($this->request->getVar('view')) {
+                $viewed = $this->request->getVar('view');
+            } else {
+                $viewed = '';
+            }
 
-        if ($this->request->getVar('view')) {
-           $viewed = $this->request->getVar('view');
-        } else {
-           $viewed = ''; 
-        }
+            $messageModel = new MessageModel();
 
-        $messageModel = new MessageModel();
+            $results = $messageModel->getMessageByCustomerId($viewed, $this->session->get('customer_id'));
 
-        $results = $messageModel->getMessageByCustomerId($viewed, $this->session->get('customer_id'));
+            helper('text');
 
-        helper('text');
-
-        foreach ($results as $result) {
-            $json[] = [
+            foreach ($results as $result) {
+                $json[] = [
                 'message_id'  => $result['message_id'],
                 'receiver_id' => $result['receiver_id'],
                 'sender_id'   => $result['sender_id'],
@@ -195,8 +193,7 @@ class Header extends \Catalog\Controllers\BaseController
                 'href'        => base_url('account/inbox?message_id=' . $result['message_id']),
 
             ];
-        }
-            
+            }
         }
 
         return $this->response->setJSON($json);

@@ -32,7 +32,7 @@
                    <table id="table-location" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th width="1%" class="no-sort"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                            <th width="1%" class="no-sort"><input id="selectAll" type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
                             <th width="30%"><?php echo $column_title; ?></th>
                             <th><?php echo $column_code; ?></th>
                             <th><?php echo $column_value; ?></th>

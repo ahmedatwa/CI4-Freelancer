@@ -6,6 +6,7 @@ use \Catalog\Models\Freelancer\FreelancerModel;
 use \Catalog\Models\Account\ReviewModel;
 use \Catalog\Models\Freelancer\BalanceModel;
 use \Catalog\Models\freelancer\DisputeModel;
+use \Catalog\Models\Account\MessageModel;
 
 class Freelancer extends \Catalog\Controllers\BaseController
 {
@@ -20,7 +21,6 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
     public function index()
     {
-
         $this->template->setTitle(lang('freelancer/freelancer.heading_title'));
 
         $customerModel = new CustomerModel();
@@ -89,12 +89,11 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $total = $customerModel->getTotalCustomers($filter_data);
 
         foreach ($results as $result) {
-
             if ($result['image']) {
-                    $image = $this->resize($result['image'], 110, 110);
-                } else {
-                    $image = $this->resize('catalog/avatar.jpg', 110, 110);
-                }
+                $image = $this->resize($result['image'], 110, 110);
+            } else {
+                $image = $this->resize('catalog/avatar.jpg', 110, 110);
+            }
 
             $data['freelancers'][] = [
                 'image'    => $image,
@@ -221,7 +220,6 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
 
         $this->template->output('freelancer/freelancer_list', $data);
-
     }
 
     public function profile()
@@ -231,11 +229,11 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $customerModel = new CustomerModel();
 
         if ($this->request->getVar('cid')) {
-           $customer_id = $this->request->getVar('cid');
+            $customer_id = $this->request->getVar('cid');
         } elseif ($this->request->uri->getSegment(2)) {
-           $customer_id = substr($this->request->uri->getSegment(2), 1);
+            $customer_id = substr($this->request->uri->getSegment(2), 1);
         } else {
-           $customer_id = 0;
+            $customer_id = 0;
         }
 
         $data['customer_profile_id'] = $customer_id;
@@ -243,7 +241,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
        
         if ($customer_id) {
             $customer_info = $customerModel->getCustomer($customer_id);
-        } 
+        }
 
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -265,7 +263,6 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $projectModel = new \Catalog\Models\Catalog\ProjectModel();
 
         if ($customer_info) {
-
             $data['text_hire_me']     = sprintf(lang('freelancer/freelancer.text_hire_me'), $customer_info['username']);
             $data['text_canned']      = sprintf(lang('freelancer/freelancer.text_canned'), $customer_info['username']);
 
@@ -347,88 +344,33 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $this->template->output('freelancer/freelancer_info', $data);
     }
 
-   public function hireMe()
-   {
-        $json = [];
-
-        if ($this->request->getMethod() == 'post') {
-
-        $messageModel = new \Catalog\Models\Account\MessageModel();
-
-        $messageModel->addMessage($this->request->getPost());
-
-        $json['success'] = lang('freelancer/freelancer.text_success');
-
-        }
-
-        return $this->response->setJSON($json);
-   }
-
-     // get Freelancer Bids
-    public function getFreelancerBids()
-    {
-        $freelancerModel = new FreelancerModel();
-
-        if ($this->request->getVar('customer_id')) {
-            $freelancer_id = $this->request->getVar('customer_id');
-        } elseif ($this->session->get('customer_id')) {
-            $freelancer_id = $this->session->get('customer_id');
-        } else {
-            $freelancer_id = 0;
-        }
-
-        $data['bids'] = [];
-
-        $results = $freelancerModel->getFreelancerBidsById($freelancer_id);
-
-        foreach ($results as $result) {
-            $data['bids'][] = [
-                'bid_id'     => $result['bid_id'],
-                'project_id' => $result['project_id'],
-                'employer_id' => $result['employer_id'],
-                'name'       => $result['name'],
-                'quote'      => $this->currencyFormat($result['quote']),
-                'delivery'   => $result['delivery'],
-                'selected'   => ($result['selected']) ? 'Awarded' : '',
-                'accepted'   => $result['accepted'],
-                'status'     => ($result['accepted']) ? 'Accepted' : $result['selected'],
-                'date_added' => $this->dateDifference($result['date_added']),
-                'href'       => base_url('project/project/project?pid=' . $result['project_id'])
-            ];
-        }
-
-        return view ('freelancer/bids_list', $data);
-    }  
-
-
     public function acceptOffer()
     {
         $json = [];
 
         if ($this->request->getVar('freelancer_id')) {
-
             if ($this->request->getVar('freelancer_id')) {
-               $freelancer_id = $this->request->getVar('freelancer_id');
+                $freelancer_id = $this->request->getVar('freelancer_id');
             } else {
-               $freelancer_id = 0;
+                $freelancer_id = 0;
             }
 
             if ($this->request->getVar('project_id')) {
-               $project_id = $this->request->getVar('project_id');
+                $project_id = $this->request->getVar('project_id');
             } else {
-               $project_id = 0;
+                $project_id = 0;
             }
 
             if ($this->request->getVar('bid_id')) {
-               $bid_id = $this->request->getVar('bid_id');
+                $bid_id = $this->request->getVar('bid_id');
             } else {
-               $bid_id = 0;
+                $bid_id = 0;
             }
 
             if ($this->request->getVar('employer_id')) {
-               $employer_id = $this->request->getVar('employer_id');
+                $employer_id = $this->request->getVar('employer_id');
             } else {
-               $employer_id = 0;
+                $employer_id = 0;
             }
 
             $freelancerModel = new FreelancerModel();
@@ -439,10 +381,94 @@ class Freelancer extends \Catalog\Controllers\BaseController
         }
 
         return $this->response->setJSON($json);
-   }
+    }
+
+    public function getDisputes()
+    {
+        if ($this->request->getVar('customer_id')) {
+            $customer_id = $this->request->getVar('customer_id');
+        } elseif ($this->customer->getCustomerId()) {
+            $customer_id = $this->customer->getCustomerId();
+        } else {
+            $customer_id = 0;
+        }
+
+        if ($this->request->getVar('sort_by')) {
+            $sort_by = $this->request->getVar('sort_by');
+        } else {
+            $sort_by = 'p.date_added';
+        }
+
+        if ($this->request->getVar('order_by')) {
+            $order_by = $this->request->getVar('order_by');
+        } else {
+            $order_by = 'DESC';
+        }
+
+        if ($this->request->getVar('limit')) {
+            $limit = $this->request->getVar('limit');
+        } else {
+            $limit = $this->registry->get('theme_default_projects_limit') ?? 15;
+        }
+
+        if ($this->request->getVar('page')) {
+            $page = $this->request->getVar('page');
+        } else {
+            $page = 1;
+        }
+
+        $filter_data = [
+         'created_by' => $customer_id,
+         'sort_by'     => $sort_by,
+         'order_by'    => $order_by,
+         'limit'       => $limit,
+         'start'       => ($page - 1) * $limit,
+        ];
+
+        $data['disputes'] = [];
+
+        $disputeModel = new DisputeModel();
+        $customerModel = new CustomerModel;
+
+        $results = $disputeModel->getDisputes($filter_data);
+        $total = $disputeModel->getTotalDisputes($filter_data);
+
+        foreach ($results as $result) {
+
+            $dispute_action = $disputeModel->getDisputeAction($result['dispute_action_id']);
+            $name = $customerModel->where('customer_id', $result['employer_id'])->findColumn('username');
+
+            $data['disputes'][] = [
+                'dispute_id' => $result['project_id'],
+                'employer' => $name[0],
+                'project_id' => $result['project_id'],
+                'comment'    => $result['comment'],
+                'status'     => $result['status'],
+                'action'     => $dispute_action ?? '-',
+                'date_added' => lang('en.longDate', [strtotime($result['date_added'])]),
+
+            ];
+        }
+
+        $data['column_project_id']    = lang('employer/employer.column_project_id');
+        $data['column_freelancer_id'] = lang('employer/employer.column_freelancer_id');
+        $data['column_employer_id']   = lang('employer/employer.column_employer_id');
+        $data['column_comment']       = lang('employer/employer.column_comment');
+        $data['column_status']        = lang('employer/employer.column_status');
+        $data['column_action']        = lang('employer/employer.column_action');
+        $data['column_date_added']    = lang('employer/employer.column_date_added');
+
+        $data['customer_id'] = $customer_id;
+
+        // Pagination
+        $pager = \Config\Services::pager();
+        $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
+
+        return view('freelancer/dispute_list', $data);
+    }
 
     public function openDispute()
-    {   
+    {
         $json = [];
 
         $this->template->setTitle(lang('freelancer/freelancer.heading_title'));
@@ -450,40 +476,24 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $disputeModel = new DisputeModel();
 
         if ($this->request->getMethod() == 'post') {
+           
+            if (! $json) {
+                $dispute_data = [
+                    'created_by'        => $this->request->getPost('freelancer_id'),
+                    'employer_id'       => $this->request->getPost('employer_id'),
+                    'freelancer_id'     => $this->request->getPost('freelancer_id'),
+                    'project_id'        => $this->request->getPost('project_id'),
+                    'comment'           => $this->request->getPost('comment'),
+                    'dispute_reason_id' => $this->request->getPost('dispute_reason_id'),
+                ];
 
-            $disputeModel->insert($this->request->getPost());
+                $disputeModel->insert($dispute_data);
 
-            $json['success'] = lang('freelancer/dispute.text_success');
-        }
-        return $this->response->setJSON($json);
-    }
-
-    public function transferFunds()
-    {   
-        $json = [];
-
-        if ($this->request->getMethod() == 'post') {
-
-            $balanceModel = new BalanceModel();
-
-            $balance = $balanceModel->getBalanceByCustomerID($this->session->get('customer_id'));
-
-            // Emploer Balance Validation
-            if (($balance == 0) || $this->request->getPost('amount') > $balance) {
-                  $json['error'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
+                $json['success'] = lang('freelancer/dispute.text_success');
             }
-
-            if (!$json) {
-
-            $balanceModel->transferProjectFunds($this->request->getPost());
-
-            $json['success'] = lang('freelancer/freelancer.text_transaction');
-          }
         }
-
+        
         return $this->response->setJSON($json);
     }
-
-
     //--------------------------------------------------------------------
 }

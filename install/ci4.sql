@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 18, 2020 at 09:42 PM
+-- Generation Time: Nov 21, 2020 at 09:50 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -109,9 +109,8 @@ CREATE TABLE `ci_blog_post` (
 --
 
 INSERT INTO `ci_blog_post` (`post_id`, `user_id`, `category_id`, `title`, `body`, `tags`, `image`, `featured`, `trending`, `status`, `date_added`, `date_modified`) VALUES
-(1, 0, 1, 'What is Lorem Ipsum?', '<p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', '', '', 1, 1, 1, '2020-09-23 21:17:17', '2020-10-16 11:02:10'),
+(1, 0, 1, 'What is Lorem Ipsum?111', '\">\">', '', '', 1, 1, 1, '2020-09-23 21:17:17', '2020-11-19 18:17:54'),
 (2, 1, 1, 'What is Lorem Ipsum?', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>\">', '', '', 1, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17'),
-(3, 1, 1, 'What is Lorem Ipsum?', '<p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', '', '', 0, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17'),
 (4, 1, 1, 'What is Lorem Ipsum?', '<p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', '', '', 0, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17'),
 (5, 1, 1, 'What is Lorem Ipsum?', '<p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', '', '', 0, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17'),
 (6, 1, 1, 'What is Lorem Ipsum?', '<p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', '', '', 0, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17'),
@@ -164,7 +163,7 @@ CREATE TABLE `ci_category` (
 --
 
 INSERT INTO `ci_category` (`category_id`, `parent_id`, `icon`, `top`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
-(1, 0, 'fas fa-laptop-code', 0, 0, 1, '2020-10-19 12:42:10', '2020-10-19 13:38:11'),
+(1, 0, 'fas fa-laptop-code', 0, 0, 1, '2020-10-19 12:42:10', '2020-11-19 11:27:27'),
 (2, 0, 'fas fa-mobile-alt', 0, 0, 1, '2020-10-19 12:42:29', '2020-10-19 13:32:54'),
 (3, 0, 'fas fa-chalkboard-teacher', 0, 0, 1, '2020-10-19 12:42:41', '2020-10-19 13:26:39'),
 (4, 0, 'fas fa-palette', 0, 0, 1, '2020-10-19 12:42:56', '2020-10-19 13:34:34'),
@@ -573,8 +572,8 @@ CREATE TABLE `ci_customer` (
 --
 
 INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
-(1, 1, '', '', 'customer', 'customer@customer.com', '', '$2y$10$Oyhm1w5Gw2.8pEVZ04yv4ueNnGMbyJLvKQFdgM6lvaRzb3RNZEW6a', '', 20, 1, '', '', 0, NULL, 'NULL', 0, '', 1, '', '', '', '', '2020-11-15 12:00:19', '2020-11-17 07:47:58'),
-(2, 1, '', '', 'customer_2', 'customer_2@demo.com', '', '$2y$10$1zyoqELnzmI4E0b56kc5iOkynJr3QrSEbwyXDJiauXY9beb6oaMyO', '', 1, 1, '', '', 0, NULL, 'NULL', 0, '', 0, '', '', '', '', '2020-11-15 12:03:14', '0000-00-00 00:00:00');
+(1, 1, '', '', 'customer', 'customer@customer.com', '', '$2y$10$Oyhm1w5Gw2.8pEVZ04yv4ueNnGMbyJLvKQFdgM6lvaRzb3RNZEW6a', '', 21, 1, '', '', 0, NULL, 'NULL', 0, '', 1, '', '', '', '', '2020-11-15 12:00:19', '2020-11-17 07:47:58'),
+(2, 1, '', '', 'customer_2', 'customer_2@demo.com', '', '$2y$10$1zyoqELnzmI4E0b56kc5iOkynJr3QrSEbwyXDJiauXY9beb6oaMyO', '', 1, 1, '', '', 0, NULL, 'NULL', 0, '', 1, '', '', '', '', '2020-11-15 12:03:14', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -598,27 +597,18 @@ CREATE TABLE `ci_customer_activity` (
 --
 
 INSERT INTO `ci_customer_activity` (`customer_activity_id`, `customer_id`, `key`, `data`, `ip`, `user_agent`, `seen`, `date_added`) VALUES
-(1, 1, 'project_milestone_update', '{\"milestone_id\":2,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"milestone_status\":\"3\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 18:13:21'),
-(2, 2, 'project_milestone_create', '{\"milestone_id\":4,\"customer_id\":2,\"created_by\":1,\"created_for\":2,\"project_id\":3,\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3&cid=2#milestones\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:84.0) Gecko/20100101 Firefox/84.0', 0, '2020-11-18 19:10:26'),
-(3, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"1\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 19:14:47'),
-(4, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 19:56:18'),
-(5, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 19:56:47'),
-(6, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:02:15'),
-(7, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:05:04'),
-(8, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:08:10'),
-(9, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:09:07'),
-(10, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:10:49'),
-(11, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:22:32'),
-(12, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:22:45'),
-(13, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:23:28'),
-(14, 1, 'customer_balance_update', '{\"customer_id\":1,\"balance_id\":10,\"project_id\":3}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:23:28'),
-(15, 2, 'customer_balance_update', '{\"customer_id\":2,\"balance_id\":11,\"project_id\":3}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:23:28'),
-(16, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:24:09'),
-(17, 1, 'customer_balance_update', '{\"customer_id\":1,\"balance_id\":12,\"project_id\":3}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:24:09'),
-(18, 2, 'customer_balance_update', '{\"customer_id\":2,\"balance_id\":13,\"project_id\":3}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:24:09'),
-(19, 2, 'project_milestone_update', '{\"milestone_id\":4,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=3#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:24:42'),
-(20, 1, 'customer_balance_update', '{\"customer_id\":1,\"balance_id\":14,\"project_id\":3}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:24:42'),
-(21, 2, 'customer_balance_update', '{\"customer_id\":2,\"balance_id\":15,\"project_id\":3}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-18 20:24:42');
+(1, 1, 'project_bid_add', '{\"customer_id\":\"1\",\"project_id\":\"1\",\"freelancer_id\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/employer\\/project\\/view?pid=1&cid=1\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-21 19:12:21'),
+(36, 2, 'project_milestone_update', '{\"milestone_id\":11,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"project_id\":\"1\",\"milestone_status\":\"1\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-21 20:49:45'),
+(35, 2, 'project_milestone_update', '{\"milestone_id\":10,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"project_id\":\"1\",\"milestone_status\":\"3\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-21 20:49:39'),
+(34, 2, 'project_milestone_create', '{\"milestone_id\":11,\"customer_id\":2,\"created_by\":1,\"created_for\":2,\"project_id\":1,\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1&cid=2#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:46:55'),
+(33, 2, 'project_milestone_create', '{\"milestone_id\":10,\"customer_id\":2,\"created_by\":1,\"created_for\":2,\"project_id\":1,\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1&cid=2#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:46:18'),
+(32, 2, 'customer_milestone_payment', '{\"customer_id\":2,\"balance_id\":33,\"project_id\":1}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:28:27'),
+(31, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:28:27'),
+(30, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:27:42'),
+(29, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:22:51'),
+(28, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:22:13'),
+(26, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:19:49'),
+(27, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:21:23');
 
 -- --------------------------------------------------------
 
@@ -731,7 +721,8 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 1, 'http://ci4.localhost/images/user-avatar-small-01.jpg', 'http://ci4.localhost/', '2020-11-18 20:40:34');
+('::1', 1, 'http://ci4.localhost/employer/project/bootstrap.bundle.min.js.map', 'http://ci4.localhost/employer/project/view?pid=1&cid=1', '2020-11-21 20:46:19'),
+('127.0.0.1', 2, 'http://ci4.localhost/freelancer/project/getProjectMessages', 'http://ci4.localhost/freelancer/project/view?pid=1&cid=2', '2020-11-21 20:49:59');
 
 -- --------------------------------------------------------
 
@@ -757,19 +748,13 @@ CREATE TABLE `ci_customer_to_balance` (
 --
 
 INSERT INTO `ci_customer_to_balance` (`balance_id`, `customer_id`, `project_id`, `income`, `withdrawn`, `used`, `available`, `pending`, `date_added`, `date_modified`) VALUES
-(1, 1, 1, '600.0000', '200.0000', '20.0000', '0.0000', '0.0000', '2020-10-07 08:32:34', '2020-10-08 08:32:34'),
-(2, 1, 1, '900.0000', '200.0000', '20.0000', '0.0000', '0.0000', '2020-11-16 08:32:34', '2020-10-08 08:32:34'),
-(5, 1, 3, '0.0000', '0.0000', '3.0000', '0.0000', '0.0000', '2020-11-18 20:09:07', '2020-11-18 20:09:07'),
-(6, 2, 3, '3.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-18 20:09:07', '2020-11-18 20:09:07'),
-(7, 1, 3, '0.0000', '0.0000', '3.0000', '0.0000', '0.0000', '2020-11-18 20:10:49', '2020-11-18 20:10:49'),
-(8, 1, 3, '0.0000', '0.0000', '3.0000', '0.0000', '0.0000', '2020-11-18 20:22:32', '2020-11-18 20:22:32'),
-(9, 1, 3, '0.0000', '0.0000', '3.0000', '0.0000', '0.0000', '2020-11-18 20:22:45', '2020-11-18 20:22:45'),
-(10, 1, 3, '0.0000', '0.0000', '3.0000', '0.0000', '0.0000', '2020-11-18 20:23:28', '2020-11-18 20:23:28'),
-(11, 2, 3, '3.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-18 20:23:28', '2020-11-18 20:23:28'),
-(12, 1, 3, '0.0000', '0.0000', '3.0000', '0.0000', '0.0000', '2020-11-18 20:24:09', '2020-11-18 20:24:09'),
-(13, 2, 3, '3.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-18 20:24:09', '2020-11-18 20:24:09'),
-(14, 1, 3, '0.0000', '0.0000', '3.0000', '0.0000', '0.0000', '2020-11-18 20:24:42', '2020-11-18 20:24:42'),
-(15, 2, 3, '3.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-18 20:24:42', '2020-11-18 20:24:42');
+(1, 1, 1, '0.0000', '0.0000', '0.0000', '4200.0000', '0.0000', '2020-10-07 08:32:34', '2020-10-08 08:32:34'),
+(2, 1, 1, '0.0000', '200.0000', '20.0000', '0.0000', '0.0000', '2020-11-16 08:32:34', '2020-10-08 08:32:34'),
+(28, 0, 0, '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-21 20:21:23', '2020-11-21 20:21:23'),
+(30, 2, 1, '26.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-21 20:27:42', '2020-11-21 20:27:42'),
+(31, 2, 1, '0.0000', '0.0000', '26.0000', '0.0000', '0.0000', '2020-11-21 20:27:42', '2020-11-21 20:27:42'),
+(32, 2, 1, '26.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-21 20:28:27', '2020-11-21 20:28:27'),
+(33, 2, 1, '0.0000', '0.0000', '26.0000', '0.0000', '0.0000', '2020-11-21 20:28:27', '2020-11-21 20:28:27');
 
 -- --------------------------------------------------------
 
@@ -961,25 +946,27 @@ CREATE TABLE `ci_event` (
 INSERT INTO `ci_event` (`event_id`, `code`, `action`, `description`, `status`, `priority`) VALUES
 (1, 'activity_user_login', 'Admin\\Events\\Activity::login', 'Record User Login Activity', 1, 0),
 (2, 'login_attempts', 'Admin\\Events\\Activity::loginAttempts', 'Record Login Attempts to Admin Area', 1, 0),
-(17, 'project_offer_selected', 'Catalog\\Events\\Notification::addWinner', '', 1, 0),
+(17, 'project_offer_selected', 'Catalog\\Events\\Activity::addWinner', '', 1, 0),
 (6, 'user_activity_add', 'Admin\\Events\\Activity::afterInsert', 'Log Activity After Insert to DB', 1, 0),
 (8, 'customer_register', 'Catalog\\Events\\Activity::addCustomer', 'Add Activity for new Customers', 1, 0),
 (9, 'mail_register', 'Catalog\\Events\\MailAlert::addCustomer', 'Trigger the Activation Email for new Customers', 1, 0),
 (11, 'mail_forgotten', 'Catalog\\Events\\MailAlert::forgottenMail', 'trigger Forgotton email activation', 1, 0),
 (22, 'customer_transfer_funds', 'Catalog\\Events\\Activity::transferFunds', '', 1, 0),
-(30, 'customer_balance_update', 'Catalog\\Events\\Notification::balanceUpdate', '', 1, 0),
-(29, 'project_milestone_update', 'Catalog\\Events\\Notification::milestoneUpdate', '', 1, 0),
+(30, 'customer_milestone_payment', 'Catalog\\Events\\Activity::payMilestone', '', 1, 0),
+(29, 'project_milestone_update', 'Catalog\\Events\\Activity::milestoneUpdate', '', 1, 0),
 (16, 'customer_withdraw', 'Catalog\\Events\\Activity::CustomerActivityWithdraw', '', 1, 0),
 (15, 'customer_update', 'Catalog\\Events\\Activity::CustomerActivityUpdate', '', 1, 0),
-(18, 'project_milestone_create', 'Catalog\\Events\\Notification::createMilestone', '', 1, 0),
-(19, 'project_offer_accepted', 'Catalog\\Events\\Notification::acceptOffer', '', 1, 0),
+(18, 'project_milestone_create', 'Catalog\\Events\\Activity::createMilestone', '', 1, 0),
+(19, 'project_offer_accepted', 'Catalog\\Events\\Activity::acceptOffer', '', 1, 0),
 (20, 'project_transfer_funds', 'Catalog\\Events\\Notification::freelancerPayment', '', 1, 0),
 (21, 'mail_payment', 'Catalog\\Events\\MailAlert::PaymentMail', 'Trigger the Activation Email for new Customers', 1, 0),
 (23, 'customer_dispute_notify', 'Admin\\Events\\Mail::customer_dispute_notify', 'Notify Customers About dispute status', 1, 0),
-(24, 'project_bid_add', 'Catalog\\Events\\Notification::addBid', '', 1, 0),
+(24, 'project_bid_add', 'Catalog\\Events\\Activity::addBid', '', 1, 0),
 (25, 'customer_withdraw_notify', 'Admin\\Events\\Mail::addWithdrawHistory', 'Notify Customer About withdraw status', 1, 0),
 (26, 'mail_project_add', 'Catalog\\Events\\MailAlert::addProject', 'Send confirmation email to employer when new project posted', 1, 0),
-(27, 'mail_project_status_update', 'Catalog\\Events\\MailAlert::projectStatusUpdate', 'Send an email to employer when project status completed ', 1, 0);
+(27, 'mail_project_status_update', 'Catalog\\Events\\MailAlert::updateProjectStatus', 'Send an email to employer when project status completed ', 1, 0),
+(31, 'customer_review_add', 'Catalog\\Events\\Activity::addReview', '', 1, 0),
+(32, 'project_status_update', 'Catalog\\Events\\Activity::updateProjectStatus', 'Trigger Notification to employer when project status completed ', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1002,6 +989,7 @@ INSERT INTO `ci_extension` (`extension_id`, `type`, `code`) VALUES
 (53, 'blogger', 'post'),
 (52, 'blogger', 'category'),
 (72, 'module', 'category'),
+(81, 'dashboard', 'activity'),
 (63, 'module', 'carousel'),
 (60, 'module', 'featured'),
 (64, 'module', 'html'),
@@ -1302,6 +1290,30 @@ INSERT INTO `ci_layout_route` (`layout_route_id`, `layout_id`, `site_id`, `route
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ci_message`
+--
+
+CREATE TABLE `ci_message` (
+  `message_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `receiver_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `seen` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_message`
+--
+
+INSERT INTO `ci_message` (`message_id`, `project_id`, `sender_id`, `receiver_id`, `message`, `seen`, `date_added`, `date_modified`) VALUES
+(1, 4, 1, 2, 'eeeee', 0, '2020-11-21 11:10:19', '2020-11-21 11:10:19');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ci_module`
 --
 
@@ -1353,9 +1365,7 @@ CREATE TABLE `ci_project` (
 --
 
 INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`) VALUES
-(1, 1, 2, '34.0000', '67.0000', 1, 1, 7, 61, '', 0, 2, 0, 0, '2020-11-15 12:01:45', '2020-11-15 12:01:45'),
-(2, 1, 0, '34.0000', '45.0000', 1, 1, 7, 0, '', 0, 8, 0, 0, '2020-11-17 19:11:04', '2020-11-17 19:11:04'),
-(3, 1, 2, '34.0000', '45.0000', 1, 1, 7, 45, '', 0, 4, 0, 0, '2020-11-17 19:12:26', '2020-11-17 19:12:26');
+(1, 1, 2, '20.0000', '60.0000', 1, 3, 7, 2, '', 0, 4, 0, 0, '2020-11-21 19:03:49', '2020-11-21 19:03:49');
 
 -- --------------------------------------------------------
 
@@ -1403,7 +1413,7 @@ CREATE TABLE `ci_project_bids` (
 --
 
 INSERT INTO `ci_project_bids` (`bid_id`, `project_id`, `freelancer_id`, `employer_id`, `quote`, `delivery`, `selected`, `accepted`, `description`, `status`, `date_added`, `date_modified`) VALUES
-(3, 3, 2, 1, '33', 3, 1, 1, 'ssdfdf', 1, '2020-11-18 10:28:29', '2020-11-18 11:14:01');
+(1, 1, 2, 1, '40', 2, 1, 1, 'new proposel ', 1, '2020-11-21 19:12:21', '2020-11-21 19:21:36');
 
 -- --------------------------------------------------------
 
@@ -1426,33 +1436,7 @@ CREATE TABLE `ci_project_bids_upgrade` (
 --
 
 INSERT INTO `ci_project_bids_upgrade` (`upgrade_id`, `bid_id`, `project_id`, `payer_id`, `amount`, `reason`, `date_added`) VALUES
-(1, 5, 1, 2, '0.0000', 'Optional Upgrade', '2020-11-15 12:07:16'),
-(2, 11, 1, 2, '0.0000', 'Optional Upgrade', '2020-11-15 13:28:46'),
-(3, 28, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 19:19:57'),
-(4, 29, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 19:20:52'),
-(5, 30, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 19:26:46'),
-(6, 31, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 19:40:32'),
-(7, 32, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 19:41:13'),
-(8, 33, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 19:42:07'),
-(9, 34, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 19:42:35'),
-(10, 35, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 19:56:54'),
-(11, 36, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 19:57:40'),
-(12, 37, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 19:58:02'),
-(13, 38, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:00:11'),
-(14, 39, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:01:19'),
-(15, 40, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:01:44'),
-(16, 41, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:02:13'),
-(17, 42, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:02:36'),
-(18, 43, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:03:31'),
-(19, 44, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:03:55'),
-(20, 45, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:04:32'),
-(21, 46, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:05:07'),
-(22, 1, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:08:42'),
-(23, 2, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 20:12:11'),
-(24, 3, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-17 21:21:31'),
-(25, 2, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-18 08:22:14'),
-(26, 2, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-18 08:25:22'),
-(27, 3, 3, 2, '0.0000', 'Optional Upgrade', '2020-11-18 10:28:29');
+(1, 1, 1, 2, '0.0000', 'Optional Upgrade', '2020-11-21 19:12:21');
 
 -- --------------------------------------------------------
 
@@ -1475,35 +1459,7 @@ CREATE TABLE `ci_project_description` (
 --
 
 INSERT INTO `ci_project_description` (`project_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
-(1, 1, 'What is Lorem Ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '', '', ''),
-(2, 1, 'What is Lorem Ipsum?333www', 'What is Lorem Ipsum?stry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letra', '', '', ''),
-(3, 1, 'What is Lorem Ipsum?333www', 'What is Lorem Ipsum?stry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letra', '', '', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ci_project_message`
---
-
-CREATE TABLE `ci_project_message` (
-  `message_id` int(11) NOT NULL,
-  `project_id` int(11) NOT NULL,
-  `sender_id` int(11) NOT NULL,
-  `receiver_id` int(11) NOT NULL,
-  `message` text NOT NULL,
-  `seen` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL DEFAULT current_timestamp(),
-  `date_modified` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `ci_project_message`
---
-
-INSERT INTO `ci_project_message` (`message_id`, `project_id`, `sender_id`, `receiver_id`, `message`, `seen`, `date_added`, `date_modified`) VALUES
-(1, 3, 1, 2, 'ffffff', 1, '2020-11-18 11:15:28', '2020-11-18 20:31:17'),
-(2, 1, 2, 2, 'rrrrr', 1, '2020-11-18 11:15:40', '2020-11-18 20:31:17'),
-(3, 1, 1, 2, 'hi', 0, '2020-11-18 20:31:22', '0000-00-00 00:00:00');
+(1, 1, 'What is Lorem Ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1566,8 +1522,7 @@ CREATE TABLE `ci_project_to_category` (
 --
 
 INSERT INTO `ci_project_to_category` (`project_id`, `category_id`) VALUES
-(1, 1),
-(3, 1);
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -1629,7 +1584,14 @@ CREATE TABLE `ci_project_to_milestone` (
 INSERT INTO `ci_project_to_milestone` (`milestone_id`, `project_id`, `created_by`, `created_for`, `amount`, `description`, `status`, `deadline`, `date_added`, `date_modified`) VALUES
 (2, 3, 2, 1, '20.0000', 'sssss', '3', 3, '2020-11-18 17:58:58', '2020-11-18 18:13:21'),
 (3, 3, 1, 2, '5.0000', 'sdasdsdad', '3', 4, '2020-11-18 18:00:50', '2020-11-18 18:08:52'),
-(4, 3, 1, 2, '3.0000', 'ccccc', '2', 3, '2020-11-18 19:10:26', '2020-11-18 20:24:42');
+(4, 3, 1, 2, '3.0000', 'ccccc', '2', 3, '2020-11-18 19:10:26', '2020-11-18 20:24:42'),
+(5, 3, 1, 2, '2.0000', 'yyy', '', 3, '2020-11-19 21:14:15', '2020-11-19 21:14:15'),
+(6, 4, 1, 0, '20.0000', 'dddd', '3', 2, '2020-11-21 11:13:23', '2020-11-21 11:15:35'),
+(7, 4, 1, 0, '45.0000', 'ssss', '3', 3, '2020-11-21 11:15:03', '2020-11-21 11:17:37'),
+(8, 1, 1, 2, '2.0000', 'ssss', '2', 2, '2020-11-21 19:22:58', '2020-11-21 19:42:35'),
+(9, 1, 2, 1, '26.0000', 'ddddd', '2', 3, '2020-11-21 19:32:02', '2020-11-21 20:28:27'),
+(10, 1, 1, 2, '2.0000', 'aaaa', '3', 3, '2020-11-21 20:46:18', '2020-11-21 20:49:39'),
+(11, 1, 1, 2, '2.0000', 'rttt', '1', 2, '2020-11-21 20:46:55', '2020-11-21 20:49:45');
 
 -- --------------------------------------------------------
 
@@ -1705,11 +1667,15 @@ CREATE TABLE `ci_seo_url` (
 --
 
 INSERT INTO `ci_seo_url` (`seo_url_id`, `site_id`, `language_id`, `query`, `keyword`) VALUES
-(1, 0, 1, 'project_id=1', 'what-is-lorem-ipsum'),
+(10, 0, 1, 'project_id=1', 'what-is-lorem-ipsum'),
 (2, 0, 1, 'category_id=28', 'test'),
 (3, 0, 1, 'category_id=29', 'test'),
 (4, 0, 1, 'category_id=10', 'business-accounting-human-resources-legal'),
-(5, 0, 1, 'project_id=3', 'what-is-lorem-ipsum333www');
+(5, 0, 1, 'project_id=3', 'what-is-lorem-ipsum333www'),
+(6, 0, 1, 'category_id=1', 'websites-it-software'),
+(7, 0, 1, 'post_id=1', 'what-is-lorem-ipsum'),
+(8, 0, 1, 'post_id=1', 'what-is-lorem-ipsum111'),
+(9, 0, 1, 'project_id=4', 'let-me-see-new-code');
 
 -- --------------------------------------------------------
 
@@ -1763,7 +1729,36 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('ae182bfc9facc4be5a85fa5843cb2c8a313a010e', '::1', 1605610189, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353631303138393b5f63695f70726576696f75735f75726c7c733a36363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e6725324673657474696e67223b),
 ('795d699cecea1818fd6879533ea7ece1b03e6c90', '::1', 1605640203, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353634303230333b5f63695f70726576696f75735f75726c7c733a36363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e6725324673657474696e67223b),
 ('090a068265fbe3e0e67644a3cdfc84d724ef2d5b', '::1', 1605682945, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353638323934343b5f63695f70726576696f75735f75726c7c733a36363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e6725324673657474696e67223b),
-('5fd00cee8072e64e0ae523dc5fbfa4d023f5e96c', '::1', 1605706162, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353730363136323b5f63695f70726576696f75735f75726c7c733a36363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e6725324673657474696e67223b);
+('5fd00cee8072e64e0ae523dc5fbfa4d023f5e96c', '::1', 1605706162, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353730363136323b5f63695f70726576696f75735f75726c7c733a36363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e6725324673657474696e67223b),
+('7e90e8f741dac8307c6d36ecb900470ebd111907', '::1', 1605769435, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353736393433353b5f63695f70726576696f75735f75726c7c733a36363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e6725324673657474696e67223b),
+('1900fc0742daeb34bc7a672c398900015d9ea0a8', '::1', 1605790976, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353739303937363b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72793f757365725f746f6b656e3d42797469594f656d70505438713647614e4a5872455273316853355139466344223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2242797469594f656d70505438713647614e4a5872455273316853355139466344223b737563636573737c733a33383a22537563636573733a20596f752068617665206d6f6469666965642063617465676f7269657321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
+('8e5ffa49adba2d288e207f5f21addf04636a1f92', '::1', 1605790976, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353739303937363b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72793f757365725f746f6b656e3d42797469594f656d70505438713647614e4a5872455273316853355139466344223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2242797469594f656d70505438713647614e4a5872455273316853355139466344223b),
+('7d88a120fc4f4a4cbab999399e353909f573da40', '::1', 1605809864, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353830393836343b5f63695f70726576696f75735f75726c7c733a39313a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f626c6f672f706f73743f757365725f746f6b656e3d6a6d746f697a67684677666e5772455258626b5347595a4a715037344c6c6549223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226a6d746f697a67684677666e5772455258626b5347595a4a715037344c6c6549223b),
+('46304f79f28c112068c341106179d3a7b6f4ec45', '::1', 1605813048, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831333034383b5f63695f70726576696f75735f75726c7c733a39313a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f626c6f672f706f73743f757365725f746f6b656e3d6a6d746f697a67684677666e5772455258626b5347595a4a715037344c6c6549223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226a6d746f697a67684677666e5772455258626b5347595a4a715037344c6c6549223b),
+('66833499addb662768e3dbb105e37321cc36ca6e', '::1', 1605813570, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831333537303b5f63695f70726576696f75735f75726c7c733a39313a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f626c6f672f706f73743f757365725f746f6b656e3d6a6d746f697a67684677666e5772455258626b5347595a4a715037344c6c6549223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226a6d746f697a67684677666e5772455258626b5347595a4a715037344c6c6549223b),
+('cc1a29f8270881de03ebfd7fece428d7f04d22ea', '::1', 1605813739, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831333537303b5f63695f70726576696f75735f75726c7c733a39313a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f626c6f672f706f73743f757365725f746f6b656e3d6a6d746f697a67684677666e5772455258626b5347595a4a715037344c6c6549223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226a6d746f697a67684677666e5772455258626b5347595a4a715037344c6c6549223b),
+('588033af56a0592039395a8d954e2fecd1ba32ff', '::1', 1605814751, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831343735313b5f63695f70726576696f75735f75726c7c733a39313a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f626c6f672f706f73743f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('2211950e6f8290ad3f23fc5c2ba93c6b2aa1b05c', '::1', 1605815356, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831353335363b5f63695f70726576696f75735f75726c7c733a38393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f6269642f6269643f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('0a19c9e608f911123354191ac7a95586b2faf541', '::1', 1605815763, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831353736333b5f63695f70726576696f75735f75726c7c733a39373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a26747970653d626964223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('76426f38018d75b77d9e3c74b6959b48f8983de1', '::1', 1605816203, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831363230333b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('882910300778ebd292b07035a88f38cf27dc7cbd', '::1', 1605816572, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831363537323b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('fece23015e2a4233f92d9b9fd67709f6e203eecf', '::1', 1605816900, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831363930303b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('519a8c5d13171e3e2cc882c426f3364e4a0bf95f', '::1', 1605817211, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831373231313b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('76a6883b04b0716cca369b09cf50b4d76fdfc775', '::1', 1605817516, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353831373531363b5f63695f70726576696f75735f75726c7c733a39383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f64617368626f6172642f6f6e6c696e653f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('221c9d98f3e370bf0f372ae156ece7ea4f216cf3', '::1', 1605820467, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353832303436373b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b6572726f725f7761726e696e677c733a36353a225761726e696e673a20596f7520646f206e6f742068617665207065726d697373696f6e20746f206d6f646966792064617368626f61726420616374697669747921223b5f5f63695f766172737c613a313a7b733a31333a226572726f725f7761726e696e67223b733a333a226f6c64223b7d),
+('4792de535b689e35cfaa060e0c32334186f9fa4d', '::1', 1605820919, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353832303931393b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('fbe7a4bc78c363ec5cca34553813fcc9f1295161', '::1', 1605821234, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353832313233343b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f6576656e743f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('c8df8bfadc9551e901e11aaa7f0e8200d9f159c6', '::1', 1605821743, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353832313734333b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('00fc66eb9856ea9820e7d22779fec9a814e0fd56', '::1', 1605822164, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353832323136343b5f63695f70726576696f75735f75726c7c733a39313a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72792f6164643f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('0226253c40d8d6e29594b72ad20417e110f99fa7', '::1', 1605822188, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353832323136343b5f63695f70726576696f75735f75726c7c733a39303a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f696e666f726d6174696f6e3f757365725f746f6b656e3d426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22426c32576b6f496e45556246354e6639516770545865534c475675343144364a223b),
+('806e1af5304fc01301b072b6ea801e2aeaa85ce8', '::1', 1605873445, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353837333434353b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a37303a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d636174616c6f67253246696e666f726d6174696f6e223b),
+('da2746b9796f4c7dc355a95dac98ed7ac7c09eeb', '::1', 1605891483, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353839313438333b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b),
+('208d218838d5718d3977ee814094636c10b4bef7', '::1', 1605891801, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353839313830313b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b),
+('f7eac54498e4ad8b594f9d50038c6c15a85da884', '::1', 1605892504, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353839323530343b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b),
+('1607fe9e78b3323346b0b874fff4f3002c1d00ed', '::1', 1605893169, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353839333136393b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b),
+('01b879d1ab614ac60e37b1ff4f191b769568c4d6', '::1', 1605893769, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353839333736393b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b),
+('a5aeba945428214e1950447db960ec92b5f77679', '::1', 1605893803, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353839333736393b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22414f4239566d526c504733306744556865774d6159766f454964434b755a3263223b),
+('e235c13eb9cee3a690f0ec7f29a386116047222b', '::1', 1605950331, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630353935303333313b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a36363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e6725324673657474696e67223b);
 
 -- --------------------------------------------------------
 
@@ -1785,8 +1780,11 @@ CREATE TABLE `ci_setting` (
 --
 
 INSERT INTO `ci_setting` (`setting_id`, `site_id`, `code`, `name`, `setting`, `serialized`) VALUES
+(488, 0, 'dashboard_activity', 'dashboard_activity_width', '6', 0),
+(489, 0, 'dashboard_activity', 'dashboard_activity_sort_order', '0', 0),
 (485, 0, 'config', 'config_instagram', 'https://www.instagram.com/yallafreelancers/', 0),
 (486, 0, 'config', 'config_maintenance', '0', 0),
+(487, 0, 'dashboard_activity', 'dashboard_activity_status', '1', 0),
 (484, 0, 'config', 'config_linkedin', 'https://www.linkedin.com/in/yallafreelancers/', 0),
 (483, 0, 'config', 'config_pintrest', 'https://www.pinterest.com/yallafreelancers/', 0),
 (482, 0, 'config', 'config_twitter', 'https://twitter.com/yallfreelancer', 0),
@@ -1799,7 +1797,7 @@ INSERT INTO `ci_setting` (`setting_id`, `site_id`, `code`, `name`, `setting`, `s
 (476, 0, 'config', 'config_customer_online', '1', 0),
 (477, 0, 'config', 'config_freelancer_fee', '', 0),
 (473, 0, 'config', 'config_project_completed_status', '2', 0),
-(456, 0, 'dashboard_online', 'dashboard_online_sort_order', '0', 0),
+(495, 0, 'dashboard_online', 'dashboard_online_sort_order', '0', 0),
 (102, 0, 'wallet_extension', 'wallet_extension_status', '1', 0),
 (25, 0, 'blog_extension', 'blog_extension_status', '1', 0),
 (26, 0, 'customer_wallet', 'customer_wallet_status', '1', 0),
@@ -1827,11 +1825,13 @@ INSERT INTO `ci_setting` (`setting_id`, `site_id`, `code`, `name`, `setting`, `s
 (457, 0, 'config', 'config_meta_title', 'Yallafreelancer | Freelance Services Marketplace for Businesses in Egypt', 0),
 (458, 0, 'config', 'config_meta_description', 'Yallafreelancer mission is to change how the world works together. Yallafreelancer connects businesses with freelancers offering digital services in 300+ categories.', 0),
 (459, 0, 'config', 'config_meta_keyword', '', 0),
-(454, 0, 'dashboard_online', 'dashboard_online_width', '4', 0),
+(496, 0, 'config', 'config_file_ext_allowed', 'zip\r\ntxt\r\npng\r\njpe\r\njpeg\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc', 0),
 (331, 0, 'extension_bid', 'extension_bid_status', '1', 0),
 (452, 0, 'module_freelancer', 'module_freelancer_status', '1', 0),
 (451, 0, 'module_freelancer', 'module_freelancer_limit', '8', 0),
-(455, 0, 'dashboard_online', 'dashboard_online_status', '1', 0);
+(494, 0, 'dashboard_online', 'dashboard_online_status', '1', 0),
+(493, 0, 'dashboard_online', 'dashboard_online_width', '4', 0),
+(497, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\n&quot;application/zip&quot;\r\napplication/x-zip\r\n&quot;application/x-zip&quot;\r\napplication/x-zip-compressed\r\n&quot;application/x-zip-compressed&quot;\r\napplication/rar\r\n&quot;application/rar&quot;\r\napplication/x-rar\r\n&quot;application/x-rar&quot;\r\napplication/x-rar-compressed\r\n&quot;application/x-rar-compressed&quot;\r\napplication/octet-stream\r\n&quot;application/octet-stream&quot;\r\naudio/mpeg\r\nvideo/quicktime\r\napplication/pdf', 0);
 
 -- --------------------------------------------------------
 
@@ -2434,7 +2434,7 @@ CREATE TABLE `ci_user_group` (
 
 INSERT INTO `ci_user_group` (`user_group_id`, `name`, `permission`, `date_added`, `date_modified`) VALUES
 (2, 'Demonstration', '{\"access\":[\"extension\\/dashboard\",\"extension\\/module\",\"localisation\\/language\",\"catalog\\/information\",\"user\\/user\",\"user\\/user_group\",\"common\\/filemanager\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/setting\",\"tool\\/log\",\"blog\\/post\",\"module\\/featured\",\"module\\/information\",\"module\\/special\",\"module\\/slideshow\",\"module\\/html\",\"module\\/carousel\",\"module\\/bestseller\",\"dashboard\\/sale\",\"dashboard\\/order\",\"dashboard\\/recent\",\"dashboard\\/map\",\"dashboard\\/chart\",\"dashboard\\/customer\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\"],\"modify\":[\"extension\\/dashboard\",\"extension\\/module\",\"localisation\\/language\",\"catalog\\/information\",\"user\\/user\",\"user\\/user_group\",\"common\\/filemanager\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/setting\",\"tool\\/log\",\"blog\\/post\",\"module\\/featured\",\"module\\/information\",\"module\\/special\",\"module\\/slideshow\",\"module\\/html\",\"module\\/carousel\",\"module\\/bestseller\",\"dashboard\\/sale\",\"dashboard\\/order\",\"dashboard\\/recent\",\"dashboard\\/map\",\"dashboard\\/chart\",\"dashboard\\/customer\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\"]}', '2020-07-21 21:45:31', '2020-07-21 21:45:31'),
-(1, 'Administrator', '{\"access\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job_\\/job.php_\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet_\\/wallet\"],\"modify\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job_\\/job.php_\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet_\\/wallet\"]}', '2020-08-07 11:33:45', '2020-11-16 12:59:21');
+(1, 'Administrator', '{\"access\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job_\\/job.php_\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet_\\/wallet\"],\"modify\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job_\\/job.php_\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet_\\/wallet\"]}', '2020-08-07 11:33:45', '2020-11-19 19:57:48');
 
 -- --------------------------------------------------------
 
@@ -2766,6 +2766,13 @@ ALTER TABLE `ci_layout_route`
   ADD PRIMARY KEY (`layout_route_id`);
 
 --
+-- Indexes for table `ci_message`
+--
+ALTER TABLE `ci_message`
+  ADD PRIMARY KEY (`message_id`),
+  ADD KEY `project_id` (`project_id`) USING BTREE;
+
+--
 -- Indexes for table `ci_module`
 --
 ALTER TABLE `ci_module`
@@ -2801,13 +2808,6 @@ ALTER TABLE `ci_project_bids_upgrade`
 ALTER TABLE `ci_project_description`
   ADD PRIMARY KEY (`project_id`,`language_id`),
   ADD KEY `name` (`name`);
-
---
--- Indexes for table `ci_project_message`
---
-ALTER TABLE `ci_project_message`
-  ADD PRIMARY KEY (`message_id`),
-  ADD KEY `project_id` (`project_id`) USING BTREE;
 
 --
 -- Indexes for table `ci_project_proposal`
@@ -2999,7 +2999,7 @@ ALTER TABLE `ci_customer`
 -- AUTO_INCREMENT for table `ci_customer_activity`
 --
 ALTER TABLE `ci_customer_activity`
-  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_deposit`
@@ -3029,7 +3029,7 @@ ALTER TABLE `ci_customer_login`
 -- AUTO_INCREMENT for table `ci_customer_to_balance`
 --
 ALTER TABLE `ci_customer_to_balance`
-  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_certificate`
@@ -3083,13 +3083,13 @@ ALTER TABLE `ci_download`
 -- AUTO_INCREMENT for table `ci_event`
 --
 ALTER TABLE `ci_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `ci_extension`
 --
 ALTER TABLE `ci_extension`
-  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `ci_information`
@@ -3134,6 +3134,12 @@ ALTER TABLE `ci_layout_route`
   MODIFY `layout_route_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
+-- AUTO_INCREMENT for table `ci_message`
+--
+ALTER TABLE `ci_message`
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `ci_module`
 --
 ALTER TABLE `ci_module`
@@ -3143,7 +3149,7 @@ ALTER TABLE `ci_module`
 -- AUTO_INCREMENT for table `ci_project`
 --
 ALTER TABLE `ci_project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ci_project_award`
@@ -3155,19 +3161,13 @@ ALTER TABLE `ci_project_award`
 -- AUTO_INCREMENT for table `ci_project_bids`
 --
 ALTER TABLE `ci_project_bids`
-  MODIFY `bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ci_project_bids_upgrade`
 --
 ALTER TABLE `ci_project_bids_upgrade`
-  MODIFY `upgrade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
--- AUTO_INCREMENT for table `ci_project_message`
---
-ALTER TABLE `ci_project_message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `upgrade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ci_project_proposal`
@@ -3197,7 +3197,7 @@ ALTER TABLE `ci_project_to_message`
 -- AUTO_INCREMENT for table `ci_project_to_milestone`
 --
 ALTER TABLE `ci_project_to_milestone`
-  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `ci_project_to_upload`
@@ -3221,13 +3221,13 @@ ALTER TABLE `ci_review`
 -- AUTO_INCREMENT for table `ci_seo_url`
 --
 ALTER TABLE `ci_seo_url`
-  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `ci_setting`
 --
 ALTER TABLE `ci_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=487;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=498;
 
 --
 -- AUTO_INCREMENT for table `ci_university`

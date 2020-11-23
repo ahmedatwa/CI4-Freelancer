@@ -83,6 +83,7 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['config_name'] = $this->registry->get('config_name');
 
         $data['logged'] = $this->customer->isLogged();
+        $data['customer_id'] = $this->customer->getCustomerId();
 
         
         if (is_file(DIR_IMAGE . $this->registry->get('config_logo'))) {

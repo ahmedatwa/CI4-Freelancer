@@ -564,17 +564,17 @@ class CustomerModel extends \CodeIgniter\Model
         $balance_data = [];
 
         $builder = $this->db->table('customer_to_balance');
-        $builder->select('SUM(used) AS used, SUM(withdrawn) As withdrawn, SUM(income) AS income, available, MONTHNAME(date_added) as month');
+        $builder->select('SUM(used) AS total_used, SUM(withdrawn) As total_withdrawn, SUM(income) AS total_income, MONTHNAME(date_added) AS month');
         $builder->where('customer_id', $customer_id);
-        $builder->groupBy('date_added');
+        $builder->groupBy('month');
         $query = $builder->get();
         foreach ($query->getResultArray() as $result) {
             $balance_data[] = [
                 'month'   => $result['month'],
-                'total'   => ($result['available'] + $result['income']) - ($result['used'] + $result['withdrawn'])
+                'total'   => ($result['total_used'] + $result['total_withdrawn']) - $result['total_income']
             ];
         }
-
+        
         return $balance_data;
     }
 

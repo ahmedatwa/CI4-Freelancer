@@ -1,12 +1,16 @@
 <?php namespace Extensions\Controllers\Dashboard;
 
+use \Extensions\Models\Dashboard\Activities;
+use \Admin\Models\Setting\Settings;
+use \Admin\Models\Customer\Customers;
+
 class Activity extends \Admin\Controllers\BaseController
 {
     public function index()
     {
         $this->document->setTitle(lang('dashboard/activity.list.heading_title'));
   
-        $settingModel = new \Admin\Models\Setting\Settings();
+        $settingModel = new Settings();
   
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $settingModel->editSetting('dashboard_activity', $this->request->getPost());
@@ -88,20 +92,27 @@ class Activity extends \Admin\Controllers\BaseController
   
         $data['activities'] = [];
   
-        $activityModel = new \Extensions\Models\Dashboard\Activities();
-  
-        $results = $activityModel->where('customer_id !=', 0)->findAll(5);
+        $activityModel = new Activities();
+        $customerModel = new Customers();
+
+        $results = $activityModel->findAll(5);
 
         foreach ($results as $result) {
+
+            $username = $customerModel->where('customer_id', $result['customer_id'])->findColumn('username');
+
             $text = vsprintf(lang('dashboard/activity.list.text_activity_' . $result['key']), json_decode($result['data'], true));
-  
+
             $find = [
               'customer_id=',
-              'order_id=',
+              'name=',
+              'project_id=',
          ];
   
             $replace = [
               base_url('index.php/customer/customer/edit?user_token=' . $this->request->getVar('user_token') . '&customer_id='),
+              $username[0],
+              base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id='),
         ];
   
             $data['activities'][] = [

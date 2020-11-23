@@ -13,11 +13,35 @@ class BalanceModel extends \CodeIgniter\Model
     protected $createdField = 'date_added';
     protected $updatedField = 'date_modified';
 
-    protected $afterInsert = ['afterInsert'];
-
-    protected function afterInsert(array $data)
+    public function payMilestone(array $data, $project_id)
     {
-        \CodeIgniter\Events\Events::trigger('customer_balance_update', $data['data']['customer_id'], $data['data']['project_id'], $data['id']);
+      $builder = $this->db->table($this->table);
+
+      if (isset($data['freelancer_id'])) {
+            $freelancer_data = [
+                'customer_id' => $data['freelancer_id'],
+                'project_id'  => $project_id,
+                'income'      => $data['amount'],
+            ];
+
+        $builder->set('date_added', 'NOW()', false);
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->insert($freelancer_data);
+      }  
+      // Employer Balance
+      if (isset($data['employer_id'])) {
+            $employer_data = [
+                'customer_id' => $data['freelancer_id'],
+                'project_id'  => $project_id,
+                'used'        => $data['amount'],
+            ];
+
+        $builder->set('date_added', 'NOW()', false);
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->insert($employer_data);
+        $balance_id = $this->db->insertID();
+        \CodeIgniter\Events\Events::trigger('customer_milestone_payment', $data['freelancer_id'], $project_id, $balance_id);
+      }  
     }
 
     public function transferProjectFunds($data)
@@ -27,14 +51,16 @@ class BalanceModel extends \CodeIgniter\Model
 
         if (isset($data['freelancer_id'])) {
             $builder->where([
-            'customer_id'   => $data['freelancer_id'],
-            'project_id'    => $data['project_id'],
-        ]);
+                'customer_id'   => $data['freelancer_id'],
+                'project_id'    => $data['project_id'],
+            ]);
+
             $amount_data = [
-            'customer_id' => $data['freelancer_id'],
-            'project_id'  => $data['project_id'],
-            'income'      => $data['amount'],
-        ];
+                'customer_id' => $data['freelancer_id'],
+                'project_id'  => $data['project_id'],
+                'income'      => $data['amount'],
+            ];
+            
             $builder->set('date_modified', 'NOW()', false);
             $builder->replace($amount_data);
         }
@@ -44,7 +70,7 @@ class BalanceModel extends \CodeIgniter\Model
             $builder->where([
             'customer_id'   => $data['employer_id'],
             'project_id'    => $data['project_id'],
-        ]);
+            ]);
 
             $amount_data = [
             'customer_id' => $data['employer_id'],
@@ -60,18 +86,11 @@ class BalanceModel extends \CodeIgniter\Model
         $project_bid->where([
             'freelancer_id' => $data['freelancer_id'],
             'project_id'    => $data['project_id'],
+            'selected'      => 1,
+            'accepted'      => 1,
         ]);
 
-        $project_bid->select('quote');
-        $row = $project_bid->get()->getRow();
-
-        if ($data['amount'] == $row->quote) {
-            $project_bid->set('status', 1)
-                 ->update();
-        } elseif ($data['amount'] < $row->quote) {
-            $project_bid->set('status', 2)
-                 ->update();
-        }
+        $project_bid->set('paid', 1)->update();
 
         \CodeIgniter\Events\Events::trigger('customer_transfer_funds', $data);
         \CodeIgniter\Events\Events::trigger('mail_payment', $data);
@@ -90,6 +109,34 @@ class BalanceModel extends \CodeIgniter\Model
         
         if ($total) {
             return $total;
+        } else {
+            return '0.00';
+        }
+    }
+
+    public function getWithdrawnByCustomerID($customer_id)
+    {
+        $builder = $this->db->table('customer_to_balance');
+        $builder->selectSum('withdrawn', 'total');
+        $builder->where('customer_id', $customer_id);
+        $query = $builder->get();
+        $row = $query->getRowArray();   
+        if ($row['total']) {
+            return $row['total'];
+        } else {
+            return '0.00';
+        }
+    }
+
+    public function getUsedByCustomerID($customer_id)
+    {
+        $builder = $this->db->table('customer_to_balance');
+        $builder->selectSum('used', 'total');
+        $builder->where('customer_id', $customer_id);
+        $query = $builder->get();
+        $row = $query->getRowArray();   
+        if ($row['total']) {
+            return $row['total'];
         } else {
             return '0.00';
         }

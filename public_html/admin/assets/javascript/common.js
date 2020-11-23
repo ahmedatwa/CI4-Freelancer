@@ -47,7 +47,7 @@ $(document).ready(function() {
     });
 
     // Disable delete Button 
-    $( "input[name^=\'selected\']" ).click(function() {
+    $( "input[name^=\'selected\'], #selectAll" ).on('click', function() {
         if ($(this).is(":checked" )) {
             $('#button-delete').prop('disabled', false);
         } else {

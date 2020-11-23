@@ -19,6 +19,14 @@ return [
 'text_activity_address_delete' => '<a href="customer_id=%d">%s</a> deleted one of their addresses.',
 'text_activity_order_account'  => '<a href="customer_id=%d">%s</a> added a <a href=>"order_id=>%d">new order</a>.',
 
+
+ 'text_activity_customer_balance_update' => '<a href="customer_id=%d">name=</a> Balance updated',
+'text_activity_project_offer_selected'   => '<a href="customer_id=%d">name=</a> received a proposal for <a href="project_id=%d"><strong>project</strong></a>',
+'text_activity_project_offer_accepted'   => '<a href="customer_id=%d">name=</a> Accepted the job proposal for <a href="project_id=%d"><strong>project</strong></a>',
+'text_activity_project_bid_add'          => '<a href="customer_id=%d">name=</a> have received new bid for <a href="project_id=%d"><strong>project</strong></a>.',
+'text_activity_project_milestone_create' => '<a href="customer_id=%d">name=</a> created a Milestone for <a href="project_id=%d"><strong>project</strong></a>.',
+'text_activity_project_milestone_update' => '<a href="customer_id=%d">name=</a> Milestone status updates for <a href="project_id=%d"><strong>project</strong></a>.',
+
 // Entry
 'entry_status'                 => 'Status',
 'entry_sort_order'             => 'Sort Order',

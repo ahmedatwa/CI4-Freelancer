@@ -45,12 +45,12 @@ return [
     'entry_image'                    => 'Image',
     'entry_language'                 => 'Language',
     'entry_admin_language'           => 'Admin Language',
-    'entry_currency'                 => 'currency',
+    'entry_currency'                 => 'Currency',
     'entry_admin_limit'              => 'Default Items per page (Admin)',
     'entry_customer_activity'        => 'Customer Activity',
     'entry_customer_online'          => 'Customer Online',
     'entry_login_attempts'           => 'Max Login Attempts',
-    'entry_project_status'           => 'Project status',
+    'entry_project_status'           => 'Project Open status',
     'entry_project_completed_status' => 'Project Completed status',
     'entry_project_expired_status'   => 'Project Expired status',
     'entry_logo'                     => 'Logo',
@@ -62,8 +62,11 @@ return [
     'entry_maintenance'              => 'Maintenance Mode',
     'entry_freelancer_fee'           => '%s Fee',
     'entry_processing_fee'           => 'Despoit Processing Fee',
-    'entry_upgrade_sponser'          => 'Sponsored Fee',
-    'entry_upgrade_highlight'        => 'Highlight Fee',
+    'entry_upgrade_sponser'          => 'Sponsored Bid Fee',
+    'entry_upgrade_highlight'        => 'Highlight Bid Fee',
+    'entry_file_ext_allowed'         => 'Allowed File Extensions',
+    'entry_file_mime_allowed'        => 'Allowed File Mime Types',
+
 
     // Help
     'help_user_activity'             => 'Allow system to track user activity',
@@ -74,5 +77,9 @@ return [
     'help_compress_output'           => 'Enables Gzip output compression for faster page loads.',
     'help_cache'                     => 'If you change this configuration options that might affect your output, you have to manually delete your cache files.',
     'help_cache_ttl'                 => 'TTL Help',
- ]
+    'help_login_attempts'            => 'Maximum login attempts allowed before the account is locked for 1 hour. Customer and affliate accounts can be unlocked on the customer or affliate admin pages.',
+    'help_file_ext_allowed'          => 'Add which file extensions are allowed to be uploaded. Use a new line for each value.',
+    'help_file_mime_allowed'         => 'Add which file mime types are allowed to be uploaded. Use a new line for each value.',
+
+  ]
 ];

@@ -155,28 +155,36 @@
 									<div class="form-group row">
 										<label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?> </label>
 										<div class="col-sm-10">
-											<input type="text" id="input-currency" name="config_currency" class="form-control" placeholder="<?php echo $entry_currency; ?>" value="<?php echo $config_currency; ?>">
+											<select name="config_currency" class="form-control">
+												<?php foreach($currencies as $currency) { ?>
+													<?php if ($currency['code'] == $config_currency) { ?>
+														<option value="<?php echo $currency['code']; ?>" selected><?php echo $currency['title']; ?></option>	
+													<?php } else { ?>
+														<option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>	
+													<?php } ?>
+												<?php } ?>
+											</select>
 										</div>
 									</div>
 								</div><!-- ./End tab_option -->
 								<div role="tabpanel" class="tab-pane fade mt-3" id="nav-option" aria-labelledby="nav-option-tab">
 									<div class="form-group row required">
-										<label class="col-sm-2 control-label" for="input-config-admin-limit"><?php echo $entry_admin_limit; ?> </label>
-										<div class="col-sm-10">
+										<label class="col-sm-3 control-label" for="input-config-admin-limit"><?php echo $entry_admin_limit; ?> </label>
+										<div class="col-sm-9">
 											<input type="text" id="input-admin-limit" name="config_admin_limit" class="form-control" placeholder="<?php echo $entry_admin_limit; ?>" value="<?php echo $config_admin_limit; ?>">
 											<?php echo form_error('config_admin_limit'); ?>
 										</div>
 									</div>
 									<div class="form-group row required">
-										<label class="col-sm-2 control-label" for="input-login-attempts"><?php echo $entry_login_attempts; ?> </label>
-										<div class="col-sm-10">
+										<label class="col-sm-3 control-label" for="input-login-attempts"><?php echo $entry_login_attempts; ?> <span data-toggle="tooltip" data-placement="top" title="<?php echo $help_login_attempts; ?>"> <i class="fas fa-question-circle"></i></span></label>
+										<div class="col-sm-9">
 											<input type="text" id="input-login-attempts" name="config_login_attempts" class="form-control" placeholder="<?php echo $entry_login_attempts; ?>" value="<?php echo $config_login_attempts; ?>">
 											<?php echo form_error('config_login_attempts'); ?>
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-sm-2 control-label" for="input-project-status"><?php echo $entry_project_status; ?> </label>
-										<div class="col-sm-10">
+										<label class="col-sm-3 control-label" for="input-project-status"><?php echo $entry_project_status; ?> </label>
+										<div class="col-sm-9">
 											<select name="config_project_status_id" class="form-control">
 												<?php foreach($project_statuses as $project_status) { ?>
 													<?php if ($project_status['status_id'] == $config_project_status_id) { ?>
@@ -189,8 +197,8 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-sm-2 control-label" for="input-project-status"><?php echo $entry_project_completed_status; ?> </label>
-										<div class="col-sm-10">
+										<label class="col-sm-3 control-label" for="input-project-status"><?php echo $entry_project_completed_status; ?> </label>
+										<div class="col-sm-9">
 											<select name="config_project_completed_status" class="form-control">
 												<?php foreach($project_statuses as $project_status) { ?>
 													<?php if ($project_status['status_id'] == $config_project_completed_status) { ?>
@@ -203,8 +211,8 @@
 										</div>
 									</div>									
 									<div class="form-group row">
-										<label class="col-sm-2 control-label" for="input-project-status"><?php echo $entry_project_expired_status; ?> </label>
-										<div class="col-sm-10">
+										<label class="col-sm-3 control-label" for="input-project-status"><?php echo $entry_project_expired_status; ?> </label>
+										<div class="col-sm-9">
 											<select name="config_project_expired_status" class="form-control">
 												<?php foreach($project_statuses as $project_status) { ?>
 													<?php if ($project_status['status_id'] == $config_project_expired_status) { ?>
@@ -219,8 +227,8 @@
 									<fieldset>
 										<legend><?php echo $text_customer; ?></legend>
 										<div class="form-group row">
-											<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_customer_activity; ?> </label>
-											<div class="col-sm-10">
+											<label class="col-sm-3 control-label" for="input-customer-activity"><?php echo $entry_customer_activity; ?> </label>
+											<div class="col-sm-9">
 												<?php if ($config_customer_activity == 1)	 { ?>
 													<div class="form-check form-check-inline">
 														<input class="form-check-input" type="radio" name="config_customer_activity" value="1" checked>
@@ -243,8 +251,8 @@
 											</div>
 										</div>
 										<div class="form-group row">
-											<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_customer_online; ?> </label>
-											<div class="col-sm-10">
+											<label class="col-sm-3 control-label" for="input-customer-activity"><?php echo $entry_customer_online; ?> </label>
+											<div class="col-sm-9">
 												<?php if ($config_customer_online == 1)	 { ?>
 													<div class="form-check form-check-inline">
 														<input class="form-check-input" type="radio" name="config_customer_online" value="1" checked>
@@ -271,14 +279,14 @@
 									<fieldset>
 										<legend><?php echo $text_fees; ?></legend>
 										<div class="form-group row">
-											<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_freelancer_fee; ?> </label>
-											<div class="col-sm-10">
+											<label class="col-sm-3 control-label" for="input-customer-activity"><?php echo $entry_freelancer_fee; ?> </label>
+											<div class="col-sm-9">
 												<input type="text" class="form-control" name="config_freelancer_fee" value="<?php echo $config_freelancer_fee; ?>">
 											</div>
 										</div>
 										<div class="form-group row">
-											<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_processing_fee; ?> </label>
-											<div class="col-sm-10">
+											<label class="col-sm-3 control-label" for="input-customer-activity"><?php echo $entry_processing_fee; ?> </label>
+											<div class="col-sm-9">
 												<div class="input-group mb-3">
 													<input type="text" class="form-control" name="config_processing_fee" value="<?php echo $config_processing_fee; ?>" aria-label="" aria-describedby="basic-addon2">
 													<div class="input-group-append">
@@ -288,8 +296,8 @@
 											</div>
 										</div>
 										<div class="form-group row">
-											<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_upgrade_sponser; ?> </label>
-											<div class="col-sm-10">
+											<label class="col-sm-3 control-label" for="input-customer-activity"><?php echo $entry_upgrade_sponser; ?> </label>
+											<div class="col-sm-9">
 												<div class="input-group mb-3">
 													<input type="text" class="form-control" name="config_upgrade_sponser" value="<?php echo $config_upgrade_sponser; ?>" aria-label="" aria-describedby="basic-addon2">
 													<div class="input-group-append">
@@ -299,8 +307,8 @@
 											</div>
 										</div>
 										<div class="form-group row">
-											<label class="col-sm-2 control-label" for="input-customer-activity"><?php echo $entry_upgrade_highlight; ?> </label>
-											<div class="col-sm-10">
+											<label class="col-sm-3 control-label" for="input-customer-activity"><?php echo $entry_upgrade_highlight; ?> </label>
+											<div class="col-sm-9">
 												<div class="input-group mb-3">
 													<input type="text" class="form-control" name="config_upgrade_highlight" value="<?php echo $config_upgrade_highlight; ?>" aria-label="" aria-describedby="basic-addon2">
 													<div class="input-group-append">
@@ -349,8 +357,8 @@
 									<!-- ./tab_server -->
 									<div role="tabpanel" class="tab-pane fade mt-3" id="nav-server" aria-labelledby="nav-server-tab">
 										<div class="form-group row">
-											<label for="input-maintenance" class="col-sm-2 col-form-label"><?php echo $entry_maintenance; ?></label>
-											<div class="col-sm-10">
+											<label for="input-maintenance" class="col-sm-3 col-form-label"><?php echo $entry_maintenance; ?></label>
+											<div class="col-sm-9">
 												<?php if ($config_maintenance == 1)	 { ?>
 													<div class="form-check form-check-inline">
 														<input class="form-check-input" type="radio" name="config_maintenance" value="1" checked>
@@ -372,6 +380,18 @@
 												<?php } ?>
 											</div>
 										</div>
+										<div class="form-group row">
+						                  <label class="col-sm-3 control-label" for="input-file-ext-allowed"><?php echo $entry_file_ext_allowed; ?> <span data-toggle="tooltip" title="<?php echo $help_file_ext_allowed; ?>"><i class="fas fa-question-circle"></i></span></label>
+						                  <div class="col-sm-9">
+						                    <textarea name="config_file_ext_allowed" rows="5" placeholder="<?php echo $entry_file_ext_allowed; ?>" id="input-file-ext-allowed" class="form-control"><?php echo $config_file_ext_allowed; ?></textarea>
+						                  </div>
+						                </div>
+						                  <div class="form-group row">
+						                  <label class="col-sm-3 control-label" for="input-file-mime-allowed"><?php echo $entry_file_mime_allowed; ?> <span data-toggle="tooltip" title="<?php echo $help_file_mime_allowed; ?>"><i class="fas fa-question-circle"></i></span></label>
+						                  <div class="col-sm-9">
+						                    <textarea name="config_file_mime_allowed" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed" class="form-control"><?php echo $config_file_mime_allowed; ?></textarea>
+						                  </div>
+						                </div> 
 									</div>  <!-- ./End tab_server -->
 								</div> <!-- End of Nav Tabs -->
 							</form>

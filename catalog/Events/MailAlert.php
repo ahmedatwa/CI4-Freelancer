@@ -90,11 +90,16 @@ class MailAlert
     }
 
 
-    // Catalog\Model\Catalog\ProjectModel::update
-    public static function projectStatusUpdate(int $project_id)
+    // Catalog\Model\Freelancer\FreelancerModel::updateProjectStatus
+    public static function updateProjectStatus(int $project_id, int $freelancer_id, int $employer_id)
     {
         $config = \Config\Services::email();
+
+        $customerModel = new CustomerModel();
         $seo_url = service('seo_url');
+
+        $customer_info = $customerModel->getCustomer($employer_id);
+        
 
         $keyword = $seo_url->getKeywordByQuery('project_id=' . $project_id);
 

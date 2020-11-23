@@ -49,7 +49,7 @@ class Post extends \Admin\Controllers\BaseController
    
         $this->document->setTitle(lang('blog/post.list.heading_title'));
 
-        if ($this->request->getPost('selected') && $this->validateDelete()) {
+        if ($this->request->getPost('selected') ) {
             foreach ($this->request->getPost('selected') as $post_id) {
                 $blogModel->delete($post_id);
                 $json['success'] = lang('blog/post.text_success');
@@ -76,10 +76,10 @@ class Post extends \Admin\Controllers\BaseController
             'href' => base_url('index.php/setting/extensions?user_token=' . $this->request->getVar('user_token')),
         ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('blog/post.list.heading_title'),
             'href' => base_url('index.php/extensions/blog/post?user_token=' . $this->request->getVar('user_token')),
-        );
+        ];
 
         // Data
         $blogModel = new BlogModel();
@@ -89,18 +89,17 @@ class Post extends \Admin\Controllers\BaseController
         $results = $blogModel->findAll($this->registry->get('config_admin_limit'));
 
         foreach ($results as $result) {
-            $data['posts'][] = array(
+            $data['posts'][] = [
                 'post_id'    => $result['post_id'],
                 'title'      => $result['title'],
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'date_added' => DateShortFormat($result['date_added']),
                 'edit'       => base_url('index.php/extensions/blog/post/edit?user_token=' . $this->request->getVar('user_token') . '&post_id=' . $result['post_id']),
                 'delete'     => base_url('index.php/extensions/blog/post/delete?user_token=' . $this->request->getVar('user_token') . '&post_id=' . $result['post_id']),
-            );
+            ];
         }
 
-        $data['add'] = base_url('index.php/extensions/blog/post/add?user_token=' . $this->request->getVar('user_token'));
-        $data['delete'] = base_url('index.php/extensions/blog/post/delete?user_token=' . $this->request->getVar('user_token'));
+        $data['add']    = base_url('index.php/extensions/blog/post/add?user_token=' . $this->request->getVar('user_token'));
         $data['cancel'] = base_url('index.php/setting/extension?user_token=' . $this->request->getVar('user_token') . '&type=blog');
 
         if ($this->session->getFlashdata('success')) {
@@ -196,7 +195,7 @@ class Post extends \Admin\Controllers\BaseController
             $data['body'] = '';
         }
 
-        $data['categories'] = $this->blogs->getCategories();
+        $data['categories'] = $blogModel->getCategories();
 
         if ($this->request->getPost('category_id')) {
             $data['category_id'] = $this->request->getPost('category_id');
@@ -263,8 +262,8 @@ class Post extends \Admin\Controllers\BaseController
     protected function validateForm()
     {
         if (! $this->validate([
-                    'title'    => 'required',
-                    'body'     => 'required',
+                    'title'       => 'required',
+                    'body'        => 'required',
                     'category_id' => 'required',
                     ])) {
             $this->session->setFlashdata('error_warning', lang('en.error.error_form'));

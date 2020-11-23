@@ -13,6 +13,13 @@ class ReviewModel extends \CodeIgniter\Model
     protected $createdField  = 'date_added';
     protected $updatedField  = 'date_modified';
 
+    protected $afterInsert = ['afterInsert'];
+
+    protected function afterInsert(array $data)
+    {
+        \CodeIgniter\Events\Events::trigger('customer_review_add', $data['data']['customer_id'], $data['data']['project_id'], $data['id']);
+    }
+
     public function getAvgReviewByFreelancerId($freelancer_id)
     {
         $builder = $this->db->table($this->table);

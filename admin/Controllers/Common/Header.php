@@ -1,5 +1,8 @@
 <?php namespace Admin\Controllers\Common;
 
+use \Admin\Models\User\Users;
+use \Admin\Models\Catalog\Projects;
+
 class Header extends \Admin\Controllers\BaseController
 {
     public function index()
@@ -31,7 +34,7 @@ class Header extends \Admin\Controllers\BaseController
 
         $data['logged'] = $this->user->isLogged();
         
-        $users_model = new \Admin\Models\User\Users();
+        $users_model = new Users();
 
         if (! is_null($this->user->isLogged()) || $this->user->isLogged() != false) {
             $user_info = $users_model->find($this->user->getUserId());
@@ -55,7 +58,7 @@ class Header extends \Admin\Controllers\BaseController
             }
         }
 
-        $projects_model = new \Admin\Models\Catalog\Projects();
+        $projects_model = new Projects();
 
         $data['notifications'] = [];
         

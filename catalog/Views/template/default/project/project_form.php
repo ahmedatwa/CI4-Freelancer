@@ -128,8 +128,9 @@
 				<!-- Row / End -->
 			</div>
 		</div>
-		</div>
+	</div>
 </div>
+
 <script src="catalog/default/vendor/jQuery-Text-Counter/textcounter.min.js"></script> 
 <link href="catalog/default/vendor/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css">
 <script src="catalog/default/vendor/bootstrap-fileinput/js/fileinput.min.js"></script>
@@ -176,7 +177,7 @@ $("#input-upload").fileinput({
     showCancel: true,
     autoReplace: true,
     elErrorContainer: '#kartik-file-errors',
-    allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+    allowedFileExtensions: <?php echo json_encode($allowedFileExtensions); ?>,
  }).on('fileuploaded', function(event, data, previewId, index) {
  	   var response = data.response, reader = data.reader;
        $('input[name=\'download_id\']').val(response.download_id);

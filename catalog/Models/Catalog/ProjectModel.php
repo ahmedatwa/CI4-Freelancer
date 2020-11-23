@@ -9,14 +9,6 @@ class ProjectModel extends \CodeIgniter\Model
     protected $createdField  = 'date_added';
     protected $updatedField  = 'date_modified';
 
-    protected $afterUpdate = ['status_update'];
-
-    protected function status_update(array $data)
-    {
-        // Trigger an email to employer about the project status
-        \CodeIgniter\Events\Events::trigger('mail_project_status_update', $data['id'][0]);
-    }
-
     public function addProject($data)
     {
         $builder = $this->db->table($this->table);
@@ -65,11 +57,15 @@ class ProjectModel extends \CodeIgniter\Model
                     '1047280',
                     $options
                 );
-
+                // SEO URL
+                $seoUrl = service('seo_url');
+                $keyword = $seoUrl->getKeywordByQuery('project_id=' . $project_id);
+                
                 $pusher_data = [
-                    'name' => $value['name'],
-                    'budget' => $data['budget_min'] . ' - ' . $data['budget_max'],
-                    'href' => base_url('project/project/project?pid=' . $project_id),
+                    'name'        => $value['name'],
+                    'employer_id' => $data['employer_id'],
+                    'budget'      => $data['budget_min'] . ' - ' . $data['budget_max'],
+                    'href'        => route_to('single_project', $keyword)
                 ];
 
              $event = $pusher->trigger('global-channel', 'new-project-event', $pusher_data);
@@ -548,44 +544,6 @@ class ProjectModel extends \CodeIgniter\Model
 
         return json_encode($config_data);
     }
-
-   // Send Message
-    public function addMessage(array $data)
-    {
-        $builder = $this->db->table('project_message');
-
-        $message_data = [
-            'sender_id'   => $data['sender_id'],
-            'receiver_id' => $data['receiver_id'],
-            'project_id'  => $data['project_id'],
-            'message'     => $data['message'],
-        ];
-
-        $builder->set('date_added', 'NOW()', false);
-        $builder->set('date_modified', 'NOW()', false);
-        $builder->insert($message_data);
-
-        // trigget new direct message event
-        \CodeIgniter\Events\Events::trigger('project_new_message', $message_data);
-    }
-
-    // project Private Messages
-    public function getProjectMessagesById(array $data = [])
-    {
-        $builder = $this->db->table('project_to_message');
-        $builder->select();
-        $builder->where('project_id', $data['project_id']);
-
-        if (isset($data['customer_id'])) {
-            $builder->where('sender_id', $data['customer_id']);
-            $builder->orWhere('receiver_id', $data['customer_id']);
-        }
-
-        $builder->orderBy('date_added', 'ASC');
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
-
     
     
     // Freelancer In-progress Projects

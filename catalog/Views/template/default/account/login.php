@@ -4,7 +4,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-5 offset-xl-3">
+				<?php if ($error_warning) { ?>
+				<div class="login-register-page shadow p-3 mb-5 bg-white rounded animate__animated animate__shakeX">
+				<?php } else { ?>
 				<div class="login-register-page shadow p-3 mb-5 bg-white rounded">
+				<?php } ?>	
 					<!-- Welcome Text -->
 					<div class="welcome-text">
 						<h3><?php echo $text_login; ?></h3>
@@ -14,7 +18,7 @@
 					<form method="post" action="<?php echo $action; ?>" enctype="multipart/form-data" accept-charset="utf-8">
 						<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="X-CSRF-TOKEN" />
 						<div class="form-group">
-							<div class="input-group is-invalid">
+							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="icon-material-baseline-mail-outline"></i></span>
 								</div>
@@ -31,7 +35,7 @@
 							</div>
 							<?php echo formError('password'); ?>
 						</div>
-						<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit"><?php echo $button_login; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
+						<button class="button btn-block" type="submit"><?php echo $button_login; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
 					</form>
 					<p class="mt-3">
 						<a href="<?php echo $forgotton; ?>" class="forgot-password text-secondary"><?php echo $text_forgotten; ?></a>
@@ -39,8 +43,8 @@
 
 					<!-- Social Login -->
 					<div class="social-login-separator"><span>or</span></div>
-					<div class="social-login-buttons align-content-center">
-						<div id="my-signin2" class="mt-auto"></div>
+					<div class="social-login-buttons d-flex justify-content-center">
+						<div id="my-signin2" class="mt-auto my-auto"></div>
                       <!--<a id="linkedin-button" class="btn btn-block btn-primary mt-3">
 						  <i class="fab fa-linkedin"></i> Sign in with Linkedin
 					</a>-->

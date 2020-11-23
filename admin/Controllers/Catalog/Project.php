@@ -1,10 +1,14 @@
 <?php namespace Admin\Controllers\Catalog;
 
+use \Admin\Models\Catalog\Projects;
+use \Admin\Models\Customer\Customers;
+use \Admin\Models\Localisation\Languages;
+
 class Project extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->projects = new \Admin\Models\Catalog\Projects();
+        $projectModel = new Projects();
 
         $this->document->setTitle(lang('catalog/project.list.heading_title'));
 
@@ -15,10 +19,10 @@ class Project extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/project.list.text_add'));
 
-        $this->projects = new \Admin\Models\Catalog\Projects();
+        $projectModel = new Projects();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->projects->addProject($this->request->getPost());
+            $projectModel->addProject($this->request->getPost());
             return redirect()->to(base_url('index.php/catalog/project?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('catalog/project.text_success'));
         }
@@ -29,10 +33,10 @@ class Project extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/project.list.text_edit'));
 
-        $this->projects = new \Admin\Models\Catalog\Projects();
+        $projectModel = new Projects();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->projects->update($this->request->getVar('project_id'), $this->request->getPost());
+            $projectModel->update($this->request->getVar('project_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/catalog/project?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('catalog/project.text_success'));
         }
@@ -43,13 +47,13 @@ class Project extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $this->projects = new \Admin\Models\Catalog\Projects();
+        $projectModel = new Projects();
    
         $this->document->setTitle(lang('catalog/project.list.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $project_id) {
-                $this->projects->deleteProject($project_id);
+                $projectModel->deleteProject($project_id);
                 $json['success'] = lang('catalog/project.text_success');
                 $json['redirect'] = 'index.php/catalog/project?user_token=' . $this->request->getVar('user_token');
             }
@@ -73,14 +77,18 @@ class Project extends \Admin\Controllers\BaseController
             'href' => base_url('index.php/catalog/project?user_token=' . $this->request->getVar('user_token')),
         ];
 
+        $projectModel = new Projects();
+
+        $data['projects'] = [];
+
         // Data
         $filter_data = [
             'start'    => 0,
             'limit'    => $this->registry->get('config_admin_limit'),
         ];
 
-        $data['projects'] = [];
-        $results = $this->projects->getProjects($filter_data);
+        
+        $results = $projectModel->getProjects($filter_data);
 
         foreach ($results as $result) {
             if ($result['type'] == 1) {
@@ -92,7 +100,7 @@ class Project extends \Admin\Controllers\BaseController
             $data['projects'][] = [
                 'project_id' => $result['project_id'],
                 'name'       => $result['name'],
-                'employer'   => $this->projects->getEmployerByProjectId($result['project_id']),
+                'employer'   => $projectModel->getEmployerByProjectId($result['project_id']),
                 'price'      => number_format($result['budget_min'], 2) . ' - ' . number_format($result['budget_max'], 2) . $this->registry->get('config_currency'),
                 'type'       => $type,
                 'status'     => $result['status'],
@@ -158,14 +166,16 @@ class Project extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
+        $projectModel = new Projects();
+
         if ($this->request->getVar('project_id') && ($this->request->getMethod() != 'post')) {
-            $project_info = $this->projects->getProject($this->request->getVar('project_id'));
+            $project_info = $projectModel->getProject($this->request->getVar('project_id'));
         }
 
         if ($this->request->getPost('project_description')) {
             $data['project_description'] = $this->request->getPost('project_description');
         } elseif ($this->request->getVar('project_id')) {
-            $data['project_description'] = $this->projects->getProjectDescription($this->request->getVar('project_id'));
+            $data['project_description'] = $projectModel->getProjectDescription($this->request->getVar('project_id'));
         } else {
             $data['project_description'] = [];
         }
@@ -213,7 +223,7 @@ class Project extends \Admin\Controllers\BaseController
         $data['placeholder'] = resizeImage('no_image.jpg', 100, 100);
 
         // Employer
-        $customers_model = new \Admin\Models\Customer\Customers();
+        $customers_model = new Customers();
         $data['customers'] = $customers_model->getCustomers();
 
         if ($this->request->getPost('employer_id')) {
@@ -224,7 +234,7 @@ class Project extends \Admin\Controllers\BaseController
             $data['employer_id'] = 0;
         }
 
-        $languages = new \Admin\Models\Localisation\Languages();
+        $languages = new Languages();
         $data['languages'] = $languages->where('status', 1)->findAll();
         
         $this->document->output('catalog/project_form', $data);
@@ -248,7 +258,7 @@ class Project extends \Admin\Controllers\BaseController
             }
         }
 
-        if (! $this->user->hasPermission('modify', $this->getRoute())) {
+        if (! $this->user->hasPermission('modify', 'catalog/project')) {
             $this->session->setFlashdata('error_warning', lang('catalog/project.error_permission'));
             return false;
         }
@@ -258,7 +268,7 @@ class Project extends \Admin\Controllers\BaseController
 
     protected function validateDelete()
     {
-        if (!$this->user->hasPermission('modify', $this->getRoute())) {
+        if (!$this->user->hasPermission('modify', 'catalog/project')) {
             $this->session->setFlashdata('error_warning', lang('catalog/project.error_permission'));
             return false;
         } 

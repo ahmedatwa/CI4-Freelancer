@@ -96,7 +96,7 @@
 <script type="text/javascript">
 var table = $('#table-location').DataTable({
     "dom": 'lrtp',
-    "order":[[ 1, "asc" ]],
+    "order":[[ 2, "asc" ]],
     "lengthMenu": [20, 25, 30]
 });
 </script>

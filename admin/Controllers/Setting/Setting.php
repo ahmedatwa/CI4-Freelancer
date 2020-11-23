@@ -1,15 +1,21 @@
 <?php namespace Admin\Controllers\Setting;
 
+use \Admin\Models\Setting\Settings;
+use \Admin\Models\Setting\Extensions;
+use \Admin\Models\Localisation\Languages;
+use \Admin\Models\Localisation\Project_statuses;
+use \Admin\Models\Localisation\Currencies;
+
 class Setting extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->settings = new \Admin\Models\Setting\Settings();
+        $settingModel = new Settings();
 
         $this->document->setTitle(lang('setting/setting.text_title'));
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->settings->editSetting('config', $this->request->getPost());
+            $settingModel->editSetting('config', $this->request->getPost());
             return redirect()->to(base_url('index.php/setting/setting?user_token=' . $this->request->getVar('user_token')))
                              ->with('success', lang('setting/setting.text_success'));
         }
@@ -18,9 +24,9 @@ class Setting extends \Admin\Controllers\BaseController
 
     protected function getForm()
     {
-
         // Breadcrumbs
         $data['breadcrumbs'] = [];
+        
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
@@ -45,8 +51,10 @@ class Setting extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
+        $settingModel = new Settings();
+
         if ($this->request->getMethod() != 'post') {
-            $setting_info = $this->settings->getSetting();
+            $setting_info = $settingModel->getSetting();
         }
         
         // General
@@ -84,9 +92,9 @@ class Setting extends \Admin\Controllers\BaseController
 
         $data['themes'] = [];
 
-        $extensions_model = new \Admin\Models\Setting\Extensions();
+        $extensionModel = new Extensions();
 
-        $extensions = $extensions_model->getInstalled('theme');
+        $extensions = $extensionModel->getInstalled('theme');
 
         foreach ($extensions as $code) {
             $data['themes'][] = [
@@ -132,7 +140,7 @@ class Setting extends \Admin\Controllers\BaseController
         }
 
         // Local
-        $languages = new \Admin\Models\Localisation\Languages();
+        $languages = new Languages();
         $data['languages'] = $languages->where('status', 1)->findAll();
 
         if ($this->request->getPost('config_language_id')) {
@@ -150,6 +158,9 @@ class Setting extends \Admin\Controllers\BaseController
         } else {
             $data['config_admin_language_id'] = '';
         }
+
+        $currencyModel = new Currencies;
+        $data['currencies'] = $currencyModel->where('status', 1)->findAll();
 
         if ($this->request->getPost('config_currency')) {
             $data['config_currency'] = $this->request->getPost('config_currency');
@@ -191,8 +202,8 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_login_attempts'] = '';
         }
 
-        $project_status_model = new \Admin\Models\Localisation\Project_statuses();
-        $data['project_statuses'] = $project_status_model->findAll();
+        $projectStatusModel = new Project_statuses();
+        $data['project_statuses'] = $projectStatusModel->findAll();
 
         if ($this->request->getPost('config_project_status_id')) {
             $data['config_project_status_id'] = $this->request->getPost('config_project_status_id');
@@ -275,6 +286,18 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_maintenance'] = $setting_info['config_maintenance'];
         } else {
             $data['config_maintenance'] = 0;
+        }
+
+        if ($this->request->getPost('config_file_ext_allowed')) {
+            $data['config_file_ext_allowed'] = $this->request->getPost('config_file_ext_allowed');
+        } else {
+            $data['config_file_ext_allowed'] = $setting_info['config_file_ext_allowed'];
+        }
+
+        if ($this->request->getPost('config_file_mime_allowed')) {
+            $data['config_file_mime_allowed'] = $this->request->getPost('config_file_mime_allowed');
+        }  else {
+            $data['config_file_mime_allowed'] = $setting_info['config_file_mime_allowed'];
         }
 
         // Social Networks
@@ -363,15 +386,12 @@ class Setting extends \Admin\Controllers\BaseController
             return false;
         }
 
-        if (! $this->user->hasPermission('modify', $this->getRoute())) {
+        if (! $this->user->hasPermission('modify', 'setting/setting')) {
             $this->session->setFlashdata('error_warning', lang('setting/setting.error_permission'));
             return false;
         }
         return true;
     }
-
-
-
 
     //--------------------------------------------------------------------
 }

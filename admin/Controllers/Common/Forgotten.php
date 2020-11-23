@@ -37,7 +37,7 @@ class Forgotten extends \Admin\Controllers\BaseController
         }
 
         $data['action'] = base_url('index.php/common/forgotten');
-        $data['cancel']  = base_url('index.php/common/login');
+        $data['cancel'] = base_url('index.php/common/login');
 
         $this->document->output('common/forgotten', $data);
     }

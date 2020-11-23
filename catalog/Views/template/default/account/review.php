@@ -9,16 +9,16 @@
 		<!-- Row -->
 		<div class="row">
 			<div class="col-12 mb-4">
-				<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+				<ul class="nav nav-pills float-right mb-4" id="pills-tab" role="tablist">
 					<li class="nav-item" role="presentation">
-						<a class="nav-link active ripple-effect" id="pills-freelancer-tab" data-toggle="pill" href="#pills-freelancer" role="tab" aria-controls="pills-freelancer" aria-selected="true">Freelancer</a>
+						<a class="nav-link active ripple-effect" id="pills-freelancer-tab" data-toggle="pill" href="#freelancer-review" role="tab" aria-controls="freelancer-review" aria-selected="true">Freelancer</a>
 					</li>
 					<li class="nav-item" role="presentation">
-						<a class="nav-link" id="pills-employer-tab" data-toggle="pill" href="#pills-employer" role="tab" aria-controls="pills-employer" aria-selected="false">Employer</a>
+						<a class="nav-link" id="pills-employer-tab" data-toggle="pill" href="#employer-review" role="tab" aria-controls="employer-review" aria-selected="false">Employer</a>
 					</li>
 				</ul>
 				<div class="tab-content" id="pills-tabContent">
-					<div class="tab-pane fade show active" id="pills-freelancer" role="tabpanel" aria-labelledby="pills-freelancer-tab">
+					<div class="tab-pane fade show active" id="freelancer-review" role="tabpanel" aria-labelledby="freelancer-review-tab">
 						<div class="table-responsive">
 						<table id="table-location" class="table table-striped table-bordered">
 							<thead>
@@ -59,7 +59,7 @@
 						</div>
 						</div> <!--pills-freelancer-tab-->
 						<!-- Rate Freelancers -->
-						<div class="tab-pane fade" id="pills-employer" role="tabpanel" aria-labelledby="pills-employer-tab">
+						<div class="tab-pane fade" id="employer-review" role="tabpanel" aria-labelledby="employer-review-tab">
 							<div class="table-responsive">
 							<table id="table-location" class="table table-striped table-bordered">
 								<thead>
@@ -242,6 +242,20 @@ $('#rateModal').on('show.bs.modal', function (event) {
   	});
   });
 
+});
+</script>
+<script type="text/javascript">
+var url = document.URL;
+var hash = url.substring(url.indexOf('#'));
+
+$(".nav-pills").find("li a").each(function(key, val) {
+    if (hash == $(val).attr('href')) {
+        $(val).click();
+    }
+    
+    $(val).click(function(ky, vl) {
+        location.hash = $(this).attr('href');
+    });
 });
 </script>
 <?php echo $footer; ?>

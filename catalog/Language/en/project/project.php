@@ -13,7 +13,6 @@
     'text_budget'           => 'Estimated Budget',
     'text_projects'         => 'Projects',
     // Add From
-    'text_my_projects'      => 'My Projects',
     'text_warning'          => 'Please check the form for errors.',
     'success_new_project'          => 'Your Project is live now.',
     'text_projects'         => 'My Projects',

@@ -1,12 +1,13 @@
 <?php namespace Admin\Controllers\Catalog;
 
 use \Admin\Models\Catalog\Categories;
+use \Admin\Models\Localisation\Languages;
 
 class Category extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->categories = new Categories;
+        $categoryModel = new Categories;
 
         $this->document->setTitle(lang('catalog/category.list.heading_title'));
 
@@ -17,10 +18,10 @@ class Category extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/category.list.text_add'));
 
-        $this->categories = new \Admin\Models\Catalog\Categories();
+        $categoryModel = new Categories;
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->categories->addCategory($this->request->getPost());
+            $categoryModel->addCategory($this->request->getPost());
             return redirect()->to(base_url('index.php/catalog/category?user_token=' . $this->session->get('user_token')))
                               ->with('success', lang('catalog/category.text_success'));
         }
@@ -31,10 +32,10 @@ class Category extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/category.list.text_edit'));
 
-        $this->categories = new \Admin\Models\Catalog\Categories();
+        $categoryModel = new Categories;
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->categories->editCategory($this->request->getVar('category_id'), $this->request->getPost());
+            $categoryModel->editCategory($this->request->getVar('category_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/catalog/category?user_token=' . $this->session->get('user_token')))
                               ->with('success', lang('catalog/category.text_success'));
         }
@@ -45,13 +46,13 @@ class Category extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $this->categories = new \Admin\Models\Catalog\Categories();
+        $categoryModel = new Categories;
    
         $this->document->setTitle(lang('catalog/category.list.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $category_id) {
-                $this->categories->deleteCategory($category_id);
+                $categoryModel->deleteCategory($category_id);
                 $json['success'] = lang('catalog/category.text_success');
                 $json['redirect'] = 'index.php/catalog/category?user_token=' . $this->session->get('user_token');
             }
@@ -75,14 +76,16 @@ class Category extends \Admin\Controllers\BaseController
             'href' => base_url('index.php/catalog/category?user_token=' . $this->session->get('user_token')),
         ];
 
+        $categoryModel = new Categories;
         // Data
         $data['categories'] = [];
-        $results = $this->categories->getCategories();
+
+        $results = $categoryModel->getCategories();
 
         foreach ($results as $result) {
             $data['categories'][] = [
                 'category_id' => $result['category_id'],
-                'name'        => $this->categories->getParentByCategoryId($result['category_id']) . $result['name'],
+                'name'        => $categoryModel->getParentByCategoryId($result['category_id']) . $result['name'],
                 'sort_order'  => $result['sort_order'],
                 'status'      => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'edit'        => base_url('index.php/catalog/category/edit?user_token=' . $this->session->get('user_token') . '&category_id=' . $result['category_id']),
@@ -149,11 +152,13 @@ class Category extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
+        $categoryModel = new Categories;
+
         if ($this->request->getGet('category_id') && ($this->request->getMethod() != 'post')) {
-            $category_info = $this->categories->getCategory($this->request->getGet('category_id'));
+            $category_info = $categoryModel->getCategory($this->request->getGet('category_id'));
         }
 
-        $languages = new \Admin\Models\Localisation\Languages();
+        $languages = new Languages();
         $data['languages'] = $languages->where('status', 1)->findAll();
 
         if ($this->request->getPost('category_description')) {
@@ -172,7 +177,7 @@ class Category extends \Admin\Controllers\BaseController
             $data['sort_order'] = '';
         }
 
-        $data['parents'] = $this->categories->getCategoryParents();
+        $data['parents'] = $categoryModel->getCategoryParents();
 
         if ($this->request->getPost('parent_id')) {
             $data['parent_id'] = $this->request->getPost('parent_id');
@@ -206,26 +211,27 @@ class Category extends \Admin\Controllers\BaseController
         $json = [];
 
         if ($this->request->getVar('parent_id')) {
-            $categories = new \Admin\Models\Catalog\Categories();
+
+            $categoryModel = new Categories();
 
             if ($this->request->getVar('parent_id')) {
-                $filter_name = html_entity_decode($this->request->getVar('parent_id'), ENT_QUOTES, 'UTF-8');
+                $filter_name = $this->request->getVar('parent_id');
             } else {
                 $filter_name = null;
             }
 
             $filter_data = [
                 'filter_name' => $filter_name,
-                'start' => 0,
-                'limit' => 5,
+                'start'       => 0,
+                'limit'       => 5,
             ];
 
-            $results = $categories->getCategories($filter_data);
+            $results = $categoryModel->getCategories($filter_data);
 
             foreach ($results as $result) {
                 $json[] = [
                     'parent_id' => $result['category_id'],
-                    'name' => $result['name']
+                    'name'      => $result['name']
                 ];
             }
         }

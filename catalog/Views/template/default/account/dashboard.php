@@ -2,21 +2,21 @@
 <!-- Dashboard Content -->
 <div class="dashboard-content-container container">
 	<section class="gray">
-	<div class="m-4">
-		<!-- Dashboard Headline -->
-		<div class="dashboard-headline">
-			<h3><?php echo $text_greeting; ?></h3>
-		</div>
-		<div class="mb-4 card-deck">
+		<div class="m-4">
+			<!-- Dashboard Headline -->
+			<div class="dashboard-headline">
+				<h3><?php echo $text_greeting; ?></h3>
+			</div>
+			<div class="mb-4 card-deck">
 				<div class="card mx-2">
 					<div class="card-body row">
 						<div class="col-9">
 							<h2>Profile Views</h2>
 						</div>
 						<div class="col-3">
-							<span class="text-right"><i class="far fa-eye fa-2x text-success"></i></span>
+							<span class="text-right"><i class="far fa-eye fa-2x text-primary"></i></span>
 						</div>
-						<div class="col-12"><h1 class="text-center"><?php echo $profile_views; ?></h1></div>
+						<div class="col-12"><h1 class="text-center"><?php echo $total_views; ?></h1></div>
 					</div>
 				</div>
 				<div class="card mx-2">
@@ -27,7 +27,7 @@
 						<div class="col-3">
 							<span class="text-right"><i class="fas fa-briefcase fa-2x text-warning"></i></span>
 						</div>
-						<div class="col-12"><h1 class="text-center"><?php echo $projects_total; ?></h1></div>
+						<div class="col-12"><h1 class="text-center"><?php echo $total_projects; ?></h1></div>
 					</div>
 				</div>
 				<div class="card mx-2">
@@ -36,17 +36,42 @@
 							<h2>Balance</h2>
 						</div>
 						<div class="col-3">
-							<span class="text-right"><i class="fas fa-wallet fa-2x text-info"></i></span>
+							<span class="text-right"><i class="fas fa-wallet fa-2x text-success"></i></span>
 						</div>
-						<div class="col-12"><h1 class="text-center"><?php echo $balance; ?></h1></div>
+						<div class="col-12"><h1 class="text-center"><?php echo $total_balance; ?></h1></div>
+					</div>
+				</div>	
+			</div>
+			<div class="d-flex justify-content-center">
+			<div class="mb-4 card-deck">
+				<div class="card mx-2">
+					<div class="card-body row">
+						<div class="col-9">
+							<h2>Withdrawn</h2>
+						</div>
+						<div class="col-3">
+							<span class="text-right"><i class="fas fa-comment-dollar fa-2x text-danger"></i></span>
+						</div>
+						<div class="col-12"><h1 class="text-center"><?php echo $total_withdrawn; ?></h1></div>
 					</div>
 				</div>
-			
+				<div class="card mx-2">
+					<div class="card-body row">
+						<div class="col-9">
+							<h2>Balance Used</h2>
+						</div>
+						<div class="col-3">
+							<span class="text-right"><i class="fas fa-minus-square fa-2x text-secondary"></i></span>
+						</div>
+						<div class="col-12"><h1 class="text-center"><?php echo $total_used; ?></h1></div>
+					</div>
+				</div>
+			</div>	
 		</div>
 		<div class="content mt-4">
 			<!-- Chart -->
 			<div class="chart">
-				<h3 class="mb-3"><i class="fas fa-chart-line text-danger"></i> Balance Monthly</h3>
+				<h3 class="mb-3"><i class="fas fa-chart-line text-danger"></i> Income Monthly</h3>
 				<canvas id="chart" width="100" height="45"></canvas>
 			</div>
 		</div>
@@ -70,7 +95,9 @@
 							<?php } ?>
 						</ul>
 					<?php } else { ?>
-					<p class="text-center">No Feeds! </p>	
+						<div class="d-flex justify-content-center">
+					      <p class="text-center m-4">No Feeds! </p>	
+					    </div>
 				<?php } ?>
 					</div>
 				</div>
@@ -97,7 +124,7 @@
 			labels: [],
 			// Information about the dataset
 	   		datasets: [{
-				label: "Balance",
+				label: "income",
 				backgroundColor: 'rgba(42,65,232,0.08)',
 				borderColor: '#2a41e8',
 				borderWidth: "3",

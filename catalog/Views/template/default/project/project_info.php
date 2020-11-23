@@ -217,6 +217,7 @@
 $('#button-place-bid').on('click', function() {
 bootbox.confirm({
 	message: "Are you sure?",
+	size: 'small',
     className: 'animate__animated animate__fadeInDown',
     buttons: {
         cancel: {

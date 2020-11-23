@@ -2,7 +2,7 @@
 
 class MessageModel extends \CodeIgniter\Model
 {
-    protected $table          = 'project_message';
+    protected $table          = 'message';
     protected $primaryKey     = 'message_id';
     protected $returnType     = 'array';
     protected $allowedFields  = ['project_id', 'sender_id', 'receiver_id', 'message'];
@@ -130,23 +130,43 @@ class MessageModel extends \CodeIgniter\Model
     
     }
 
-    // public function updateMessage($project_id, $data)
-    // {
-    //     $builder = $this->db->table($this->table);
+    // Send Project Message
+    public function addProjectMessage(array $data)
+    {
+        $builder = $this->db->table($this->table);
 
-    //     $data = [
-    //         'from_id'       => $data['from_id'],
-    //         'from_username' => $data['from_username'],
-    //         'to_id'         => $data['to_id'],
-    //         'to_username'   => $data['to_username'],
-    //         'message'       => $data['message'],
-    //         'date_modified' => $data['date_added'],
-    //     ];
-    //     $builder->where('project_id', $project_id);
-    //     //$builder->set('date_modified', 'NOW()', false);
-    //     $builder->update($data);
+        $message_data = [
+            'sender_id'   => $data['sender_id'],
+            'receiver_id' => $data['receiver_id'],
+            'project_id'  => $data['project_id'],
+            'message'     => $data['message'],
+        ];
 
-    // }
+        $builder->set('date_added', 'NOW()', false);
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->insert($message_data);
+
+        // trigget new direct message event
+        \CodeIgniter\Events\Events::trigger('project_new_message', $message_data);
+    }
+
+    // project Private Messages
+    public function getProjectMessagesById(array $data = [])
+    {
+        $builder = $this->db->table($this->table);
+        $builder->select();
+        $builder->where('project_id', $data['project_id']);
+
+        if (isset($data['customer_id'])) {
+            $builder->where('sender_id', $data['customer_id']);
+            $builder->orWhere('receiver_id', $data['customer_id']);
+        }
+
+        $builder->orderBy('date_added', 'ASC');
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
     
     // -----------------------------------------------------------------
 }

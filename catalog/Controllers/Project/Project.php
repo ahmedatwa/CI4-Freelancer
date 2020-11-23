@@ -554,6 +554,15 @@ class Project extends \Catalog\Controllers\BaseController
             $data['download_id'] = 0;
         }
 
+        // upload extensions allowed
+        $file_ext_allowed = preg_replace('~\r?\n~', "\n", $this->registry->get('config_file_ext_allowed'));
+
+        $filetypes = explode("\n", $file_ext_allowed);
+        
+        foreach ($filetypes as $filetype) {
+            $data['allowedFileExtensions'][] = trim($filetype);
+        }
+
         $data['language_id'] = $this->registry->get('config_language_id');
         $data['config_currency'] = $this->session->get('currency') ?? $this->registry->get('config_currency');
 

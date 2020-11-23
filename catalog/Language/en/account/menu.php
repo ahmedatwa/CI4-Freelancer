@@ -7,8 +7,9 @@ return [
     'text_settings'        => 'Settings',
     'text_logout'          => 'Logout',
     'text_projects'        => 'Projects',
-    'text_my_projects'     => 'My Projects',
+    'text_dispute'         => 'Disputes',
+    'text_my_projects'     => 'Projects',
     'text_manage_bidders'  => 'Manage Bidders',
-    'text_active_bids'     => 'My Active Bids',
+    'text_active_bids'     => 'Active Bids',
     'text_post_project'    => 'Post a Project',
 ];

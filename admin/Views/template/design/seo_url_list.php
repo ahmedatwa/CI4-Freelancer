@@ -31,7 +31,7 @@
                <table id="table-location" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th width="1%" class="no-sort"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                        <th width="1%" class="no-sort"><input id="selectAll" type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
                         <th><?php echo $column_query; ?></th>
                         <th><?php echo $column_keyword; ?></th>
                         <th><?php echo $column_action; ?></th>

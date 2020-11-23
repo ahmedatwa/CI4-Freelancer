@@ -34,16 +34,28 @@ class Upload extends \Catalog\Controllers\BaseController
                 $json['error'] = lang('tool/upload.error_filename');
             }
 
-            $file_ext_allowed = ['zip','txt','png','jpe','jpeg','jpg','gif','bmp','ico','tiff','tif','svg','svgz','rar','mp3','mov','pdf','psd','ai','doc'];
+            $file_ext_allowed = preg_replace('~\r?\n~', "\n", $this->registry->get('config_file_ext_allowed'));
 
-            if (!in_array($file->getClientExtension(), $file_ext_allowed)) {
+            $filetypes = explode("\n", $file_ext_allowed);
+
+            foreach ($filetypes as $filetype) {
+                $allowed[] = trim($filetype);
+            }
+            
+            if (!in_array($file->getClientExtension(), $allowed)) {
                 $json['error'] = lang('tool/upload.error_filetype');
             }
 
             // Allowed file mime types
-            $file_mime_allowed = ['text/plain','image/png','image/jpeg','image/gif','image/bmp','image/tiff','image/svg+xml','application/zip','application/zip','application/x-zip','application/x-zip','application/x-zip-compressed','application/x-zip-compressed','application/rar','application/rar','application/x-rar','application/x-rar','application/x-rar-compressed','application/x-rar-compressed','application/octet-stream','application/octet-stream','audio/mpeg','video/quicktime','application/pdf'];
+            $file_mime_allowed = preg_replace('~\r?\n~', "\n", $this->registry->get('config_file_mime_allowed'));
 
-            if (!in_array($file->getClientMimeType(), $file_mime_allowed)) {
+            $filetypes = explode("\n", $file_mime_allowed);
+
+            foreach ($filetypes as $filetype) {
+                $allowed[] = trim($filetype);
+            }
+
+            if (!in_array($file->getClientMimeType(), $allowed)) {
                 $json['error'] = lang('tool/upload.error_filetype');
             }
 

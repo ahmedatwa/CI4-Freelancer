@@ -15,7 +15,7 @@ return [
 'column_status'   => 'Status',
 'column_priority' => 'Priority',
 // Help
- 'help_list' => 'Events are used to override the default functionality of your site. If you have issues you can disable or enable the events here.',
+ 'help_list' => 'Events are used to tap into and modify the inner workings of the framework without hacking core files. If you have issues you can disable or enable it here.',
 
 ],
 ];

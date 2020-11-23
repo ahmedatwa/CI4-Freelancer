@@ -30,7 +30,7 @@
                <table id="table-location" class="table table-striped table-bordered dt-responsive nowrap">
                 <thead>
                     <tr>
-                        <th width="1%" class="no-sort"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                        <th width="1%" class="no-sort"><input id="selectAll" type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
                         <th width="60%"><?php echo $column_title; ?></th>
                         <th><?php echo $column_status; ?></th>
                         <th><?php echo $column_date_added; ?></th>
@@ -88,7 +88,7 @@
         function(isConfirm) {
             if (isConfirm) {
                 $.ajax({
-                    url: 'index.php/blog/post/delete?user_token=<?php echo $user_token; ?>',
+                    url: 'index.php/extensions/blog/post/delete?user_token=<?php echo $user_token; ?>',
                     method:'post',
                     dataType: 'json',
                     data: $("input[type=\'hidden\'], input[name^=\'selected\']:checked").serialize(),

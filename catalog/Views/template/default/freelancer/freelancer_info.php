@@ -238,29 +238,27 @@
 
 <script type="text/javascript">
 $("#button-hire-me").on('click', function () {
-		$.ajax({
-			url: 'freelancer/freelancer/hireMe?cid=<?php echo $employer_id; ?>',
-			dataType: 'json',
-			method: 'post',
-		    data:$("#form-hire").serialize(),
-			beforeSend: function() {
-				$('.fas, .alert').remove();
-				$(this).prop("disabled", true);
-				$(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
-			},
-			complete: function() {
-				$(this).html('<?php echo $button_hire; ?>');
-			},
-			success : function (json){
-				if (json['success']) {
-					$('.modal-header').after('<div class="alert alert-success alert-dismissible fade show" role="alert">'+ json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-			 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	$.ajax({
+		url: 'account/message/hireMe?cid=<?php echo $employer_id; ?>',
+		dataType: 'json',
+		method: 'post',
+	    data:$("#form-hire").serialize(),
+		beforeSend: function() {
+			$('.fas, .alert').remove();
+			$(this).html('<button class="btn btn-primary" type="button" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...</button>');
+		},
+		complete: function() {
+			$(this).html('<?php echo $button_hire; ?>');
+		},
+		success : function (json){
+			if (json['success']) {
+				$('.modal-header').after('<div class="alert alert-success alert-dismissible fade show" role="alert">'+ json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+		 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-
-		});
+	});
 });
 </script>
 <?php echo $footer; ?>

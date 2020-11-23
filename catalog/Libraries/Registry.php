@@ -2,7 +2,7 @@
 
 class Registry
 {
-    protected static $data = [];
+    protected $data = [];
 
     public function __construct()
     {
@@ -15,18 +15,18 @@ class Registry
         $builder->where('site_id', 0);
         $query = $builder->get();
         foreach ($query->getResult() as $row) {
-            self::$data[$row->name] = $row->setting;
+            $this->data[$row->name] = $row->setting;
         }
         log_message('info', 'Registry class initialized');
     }
 
-    public static function get($key)
+    public function get($key)
     {
         if (is_array($key)) {
             $result = array();
 
             foreach ($key as $k) {
-                $result[$k] = self::get($k);
+                $result[$k] = $this->get($k);
             }
 
             return $result;
@@ -34,47 +34,47 @@ class Registry
 
         $key = (string) $key;
 
-        if ($key != '' && array_key_exists($key, self::$data)) {
-            return self::$data[$key];
+        if ($key != '' && array_key_exists($key, $this->data)) {
+            return $this->data[$key];
         }
 
         return null;
     }
 
-    public static function getAll()
+    public function getAll()
     {
-        return self::$data;
+        return $this->data;
     }
 
-    public static function set($key, string $value = null)
+    public function set($key, string $value = null)
     {
         if (is_array($key)) {
             foreach ($key as $k => $v) {
-                self::set($k, $v);
+                $this->set($k, $v);
             }
-            self::$data[$k] = $v;
+            $this->data[$k] = $v;
         } else {
-            self::$data[$key] = $value;
+            $this->data[$key] = $value;
         }
     }
 
-    public static function has($key)
+    public function has($key)
     {
         $key = (string) $key;
 
-        return $key != '' && array_key_exists($key, self::$data);
+        return $key != '' && array_key_exists($key, $this->data);
     }
 
-    public static function remove($key)
+    public function remove($key)
     {
         if (is_array($key)) {
             foreach ($key as $k) {
-                self::remove($k);
+                $this->remove($k);
             }
         }
 
-        if ($key != '' && array_key_exists($key, self::$data)) {
-            unset(self::$data[$key]);
+        if ($key != '' && array_key_exists($key, $this->data)) {
+            unset($this->data[$key]);
         }
     }
 

@@ -1,10 +1,13 @@
 <?php namespace Admin\Controllers\Catalog;
 
+use \Admin\Models\Catalog\Reviews;
+use \Admin\Models\Catalog\Projects;
+
 class Review extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->reviews = new \Admin\Models\Catalog\Reviews();
+        $reviewModel = new Reviews();
 
         $this->document->setTitle(lang('catalog/review.list.heading_title'));
 
@@ -15,10 +18,10 @@ class Review extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/review.list.text_add'));
 
-        $this->reviews = new \Admin\Models\Catalog\Reviews();
+        $reviewModel = new Reviews();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->reviews->insert($this->request->getPost());
+            $reviewModel->insert($this->request->getPost());
             return redirect()->to(base_url('index.php/catalog/review?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('catalog/review.text_success'));
         }
@@ -29,10 +32,10 @@ class Review extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/review.list.text_edit'));
 
-        $this->reviews = new \Admin\Models\Catalog\Reviews();
+        $reviewModel = new Reviews();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->reviews->update($this->request->getVar('review_id'), $this->request->getPost());
+            $reviewModel->update($this->request->getVar('review_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/catalog/review?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('catalog/review.text_success'));
         }
@@ -43,13 +46,13 @@ class Review extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $this->reviews = new \Admin\Models\Catalog\Reviews();
+        $reviewModel = new Reviews();
    
         $this->document->setTitle(lang('catalog/review.list.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $review_id) {
-                $this->reviews->delete($review_id);
+                $reviewModel->delete($review_id);
                 $json['success'] = lang('catalog/review.text_success');
                 $json['redirect'] = 'index.php/catalog/review?user_token=' . $this->request->getVar('user_token');
             }
@@ -73,6 +76,9 @@ class Review extends \Admin\Controllers\BaseController
             'href' => base_url('index.php/catalog/review?user_token=' . $this->request->getVar('user_token')),
         ];
 
+        $reviewModel = new Reviews();
+
+        $data['reviews'] = [];
         // Data
         $filter_data = [
             'start'    => 0,
@@ -81,8 +87,7 @@ class Review extends \Admin\Controllers\BaseController
             'limit'    => $this->registry->get('config_admin_limit')
         ];
 
-        $data['reviews'] = [];
-        $results = $this->reviews->getReviews($filter_data);
+        $results = $reviewModel->getReviews($filter_data);
 
         foreach ($results as $result) {
             $data['reviews'][] = [
@@ -153,14 +158,16 @@ class Review extends \Admin\Controllers\BaseController
             $data['error_warning'] = $this->session->getFlashdata('error_warning');
         } else {
             $data['error_warning'] = '';
-        }
+        }   
+
+        $reviewModel = new Reviews();
 
         if ($this->request->getVar('review_id') && ($this->request->getMethod() != 'post')) {
-            $review_info = $this->reviews->getReview($this->request->getVar('review_id'));
+            $review_info = $reviewModel->getReview($this->request->getVar('review_id'));
         }
 
-        $projects_model = new \Admin\Models\Catalog\Projects();
-        $data['projects'] = $projects_model->getProjects();
+        $projectModel = new Projects();
+        $data['projects'] = $projectModel->getProjects();
 
         if (!empty($review_info['project_id'])) {
             $data['project_id'] = $review_info['project_id'];
@@ -208,7 +215,7 @@ class Review extends \Admin\Controllers\BaseController
         $json = [];
 
         if ($this->request->getGet('project_id')) {
-            $reviews = new \Admin\Models\Catalog\Reviews();
+            $reviewModel = new Reviews();
 
             if ($this->request->getGet('project_id')) {
                 $filter_name = html_entity_decode($this->request->getGet('project_id'), ENT_QUOTES, 'UTF-8');
@@ -222,7 +229,7 @@ class Review extends \Admin\Controllers\BaseController
                 'limit' => 5,
             ];
 
-            $results = $reviews->getReviews($filter_data);
+            $results = $reviewModel->getReviews($filter_data);
 
             foreach ($results as $result) {
                 $json[] = [

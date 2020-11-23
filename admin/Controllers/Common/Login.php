@@ -1,5 +1,7 @@
 <?php namespace Admin\Controllers\Common;
 
+use \Admin\Models\User\Users;
+
 class Login extends \Admin\Controllers\BaseController
 {
     public function index()
@@ -80,7 +82,7 @@ class Login extends \Admin\Controllers\BaseController
     protected function validateFrom()
     {
         // Check how many login attempts have been made.
-        $users_model = new \Admin\Models\User\Users();
+        $users_model = new Users();
 
         $login_info = $users_model->getLoginAttempts($this->request->getPost('email'));
         if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {

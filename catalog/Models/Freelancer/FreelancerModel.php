@@ -69,7 +69,16 @@ class FreelancerModel extends \CodeIgniter\Model
         $projects->update();
     }
 
-    
+    public function updateProjectStatus(int $project_id, array $data)
+    {
+        $builder = $this->db->table('project');
+        $builder->where('project_id', $project_id);
+        $builder->set('status_id', 2);
+        $builder->update(); 
+
+        \CodeIgniter\Events\Events::trigger('mail_project_status_update', $project_id, $data['freelancer_id'], $data['employer_id']);
+        \CodeIgniter\Events\Events::trigger('project_status_update', $project_id, $data['freelancer_id'], $data['employer_id']);
+    }
 
     // -----------------------------------------------------------------
 }

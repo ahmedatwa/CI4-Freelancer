@@ -5,7 +5,7 @@ class BidModel extends \CodeIgniter\Model
     protected $table          = 'project_bids';
     protected $primaryKey     = 'bid_id';
     protected $returnType     = 'array';
-    protected $allowedFields = ['project_id', 'freelancer_id', 'quote', 'delivery', 'status'];
+    protected $allowedFields = ['project_id', 'freelancer_id', 'quote', 'delivery', 'status', 'paid'];
     // User Activity Events
     protected $afterInsert = ['afterInsertEvent'];
     // should use for keep data record create timestamp
@@ -25,7 +25,7 @@ class BidModel extends \CodeIgniter\Model
     public function getBids(array $data =[])
     {
         $builder = $this->db->table('project_bids pb');
-        $builder->select('c.username, c.email, pb.quote, pb.bid_id, pb.status, pb.delivery, c.image, c.customer_id, pb.freelancer_id, ');
+        $builder->select('c.username, c.email, pb.quote, pb.bid_id, pb.status, pb.delivery, c.image, c.customer_id, pb.freelancer_id, pb.project_id');
         $builder->join('customer c', 'pb.freelancer_id = c.customer_id', 'left');
         $builder->join('project_description pd', 'pb.project_id = pd.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
@@ -90,7 +90,8 @@ class BidModel extends \CodeIgniter\Model
             'quote'         => $data['quote'],
             'delivery'      => $data['delivery'],
             'description'   => $data['description'],
-            'status'        => 1
+            'status'        => 1,
+            'paid'          => 0
         ];
 
         $builder->set('date_added', 'NOW()', false);
@@ -99,7 +100,7 @@ class BidModel extends \CodeIgniter\Model
         // trigger Bid Emailto Employer
         \CodeIgniter\Events\Events::trigger('project_bid_add', $data);
 
-        if (isset($data['fee'])) {
+        if (isset($data['fee']) && !empty($data['fee'])) {
             $revenue = $this->db->table('project_bids_upgrade');
             $revenue_data = [
                 'project_id' => $data['project_id'],
@@ -114,11 +115,14 @@ class BidModel extends \CodeIgniter\Model
         }
     }
 
-    public function isAwarded($freelancer_id)
+    public function isAwarded($freelancer_id, $project_id)
     {
         $builder = $this->db->table('project_bids');
         $builder->select('selected');
-        $builder->where('freelancer_id', $freelancer_id);
+        $builder->where([
+            'freelancer_id' => $freelancer_id, 
+            'project_id' => $project_id, 
+        ]);
         $row = $builder->get()->getRow();
         if ($row->selected != 0) {
             return true;
@@ -126,6 +130,24 @@ class BidModel extends \CodeIgniter\Model
             return false;
         }
     }
+
+    public function isAccepted($freelancer_id, $project_id)
+    {
+        $builder = $this->db->table('project_bids');
+        $builder->select('accepted');
+        $builder->where([
+            'freelancer_id' => $freelancer_id, 
+            'project_id' => $project_id, 
+        ]);
+        $row = $builder->get()->getRow();
+        if ($row->accepted != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     public function getBidByProjectId($project_id)
     {
@@ -138,19 +160,6 @@ class BidModel extends \CodeIgniter\Model
         ]);
         $query = $builder->get();
         return $query->getRowArray();
-    }
-
-    public function isAccepted($freelancer_id)
-    {
-        $builder = $this->db->table('project_bids');
-        $builder->select('accepted');
-        $builder->where('freelancer_id', $freelancer_id);
-        $row = $builder->get()->getRow();
-        if ($row->accepted != 0) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public function uniqueBid($freelancer_id, $project_id)

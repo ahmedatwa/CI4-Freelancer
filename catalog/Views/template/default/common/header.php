@@ -130,9 +130,9 @@
           </a>
           <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-notifications">
             <div class="d-flex w-100 justify-content-between">
-              <h3 class="mb-1">Notifications</h3>
+              <h4 class="mb-1">Notifications</h4>
               <small><button id="mark-read-button" type="button" class="btn btn-sm float-right rounded-pill mark-as-read" title="Mark all as read" data-placement="left" data-toggle="tooltip">
-              <i class="icon-feather-check-square text-danger"></i>
+              <i class="icon-feather-check-square"></i>
             </button></small>
             </div>
             <ul id="notifications-list" class="text-left list-group list-group-flush"></ul>
@@ -146,8 +146,10 @@
           </a>
           <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-messages">
             <div class="d-flex w-100 justify-content-between">
-              <h3 class="mb-1">Messages</h3>
-              <small><a href="<?php echo $all_messages; ?>">View All Messages</a></small>
+              <h4 class="mb-1">Messages</h4>
+              <small><a type="button" href="<?php echo $all_messages; ?>" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
+              <i class="far fa-eye"></i>
+              </a></small>
             </div>
             <ul id="message-list" class="text-left list-group list-group-flush"></ul>
           </div>
@@ -161,26 +163,26 @@
           </a>
           <div class="row justify-content-md-center">
             <div class="dropdown-menu multi-column  animate slideIn" aria-labelledby="headerLoginDropdown">
-              <div class="multi-column-dropdown col-6 border-right">
+              <div class="multi-column-dropdown col-6">
                 <h4><?php echo $text_finance; ?></h4>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0);"> <?php echo $text_balances; ?> <span class="badge badge-secondary"><?php echo $customer_balance; ?></span></a>
                 <a class="dropdown-item" href="<?php echo $deposit; ?>"> <?php echo $text_deposite_funds; ?></a>
                 <a class="dropdown-item" href="<?php echo $withdraw; ?>"> <?php echo $text_withdraw_funds; ?></a>
               </div>
-              <div class="multi-column-dropdown col-6">
+              <div class="multi-column-dropdown col-6 border-left">
                 <h4><?php echo $text_account; ?></h4>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<?php echo $dashboard; ?>"> <?php echo $text_dashboard; ?></a>
                 <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_setting; ?></a>
+                <a class="dropdown-item" href="<?php echo $account_project; ?>"> <?php echo $text_my_projects; ?></a>
                 <a class="dropdown-item" href="<?php echo $profile; ?>"> <?php echo $text_profile; ?></a>
                 <a class="dropdown-item" href="#" id="button-logout"> <?php echo $text_logout; ?></a>
               </div>
             </div>
           </div>
         </li>
-
       <?php } ?>
-      <li class="mt-lg-3 ml-4 d-none d-lg-block"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
+      <li class="mt-lg-2 ml-4"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
     </ul>  
   </nav>

@@ -100,7 +100,7 @@ class Blog extends \Admin\Controllers\BaseController
                 
                 $data['extensions'][] = [
                     'name'       => lang('blog/' . strtolower($basename) . '.list.heading_title'),
-                    'status'     => ($this->registry->get('blog_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                    'status'     => ($this->registry->get('blog_extension_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'install'    => base_url('index.php/extension/blog/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/blog/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'installed'  => in_array(strtolower($basename), $installedExtensions),

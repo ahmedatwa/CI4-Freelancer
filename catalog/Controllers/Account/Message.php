@@ -1,7 +1,8 @@
 <?php namespace Catalog\Controllers\Account;
 
-use Catalog\Models\Account\MessageModel;
-use Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Account\MessageModel;
+use \Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Catalog\ProjectModel;
 
 class Message extends \Catalog\Controllers\BaseController
 {
@@ -22,6 +23,12 @@ class Message extends \Catalog\Controllers\BaseController
             $customer_id = $this->customer->getCustomerId();
         } else {
             $customer_id = 0;
+        }
+
+        if ($this->request->getVar('pid')) {
+            $project_id = $this->request->getVar('pid');
+        } else {
+            $project_id = 0;
         }
 
         $data['breadcrumbs'] = [];
@@ -167,5 +174,94 @@ class Message extends \Catalog\Controllers\BaseController
         }
         return $this->response->setJSON($json);
     }
+
+    // project 
+    public function sendProjectMessage()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post' && $this->request->getVar('pid')) {
+            $messageModel = new MessageModel();
+
+            if (! $this->validate([
+                'message'  => 'required'
+            ])) {
+                $json['error'] = $this->validator->getError('message');
+            }
+
+            if (!$json) {
+                $messageModel->addProjectMessage($this->request->getPost());
+
+                $json['success'] = lang('freelancer/project.text_success_pm');
+            }
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function hireMe()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post') {
+            $messageModel = new MessageModel();
+
+            $messageModel->addMessage($this->request->getPost());
+
+            $json['success'] = lang('freelancer/freelancer.text_success');
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    // get Project Messages
+    public function getProjectMessages()
+    {
+        if ($this->request->getVar('pid')) {
+            $project_id = $this->request->getVar('pid');
+        } else {
+            $project_id = 0;
+        }
+
+        if ($this->request->getVar('customer_id')) {
+            $customer_id = $this->request->getVar('customer_id');
+        } else {
+            $customer_id = 0;
+        }
+
+        $filter_data = [
+            'project_id'    => $project_id,
+            'customer_id'   => $customer_id,
+         ];
+
+        $messageModel = new MessageModel();
+         
+        $data['project_messages'] = [];
+
+        $results = $messageModel->getProjectMessagesById($filter_data);
+
+        $customerModel = new CustomerModel();
+
+        foreach ($results as $result) {
+            $data['project_messages'][] = [
+                'message'     => $result['message'],
+                'receiver_id' => $result['receiver_id'],
+                'sender_id'   => $result['sender_id'],
+                'project_id'  => $result['project_id'],
+                'sender'      => $customerModel->where('customer_id', $result['sender_id'])->findColumn('username'),
+                'receiver'    =>  $customerModel->where('customer_id', $result['receiver_id'])->findColumn('username'),
+                'date_added'  => $this->dateDifference($result['date_added']),
+            ];
+        }
+
+        $data['customer_id'] = $this->customer->getCustomerId();
+        $data['sender_id'] = $results[0]['sender_id'] ?? 0;
+        $data['project_id'] = $project_id;
+
+        $data['heading_title'] = lang('project/project.text_manage_bidders');
+
+        return view('freelancer/project_messages', $data);
+    }
+
     //--------------------------------------------------------------------
 }

@@ -42,7 +42,7 @@ $routes->add('contact', 'Information\Contact::index');
 // Blog
 $routes->group('blog', function ($routes) {
     $routes->add('/', 'Extension\Blog\Blog::index', ['as' => 'blog']);
-    $routes->add('view/(:any)', 'Extension\Blog\Blog::getPost/$1', ['as' => 'blog/post']);
+    $routes->add('p(:num)/(:any)', 'Extension\Blog\Blog::getPost/$1/$2', ['as' => 'blog_post']);
 });
 
 // Freelancers
@@ -50,7 +50,7 @@ $routes->add('freelancers', 'Freelancer\Freelancer::index');
 $routes->add('freelancer/u(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
 $routes->add('deposit', 'Freelancer\Deposit::index', ['as' => 'freelancer_deposit']);
 $routes->add('withdraw', 'Freelancer\Withdraw::index', ['as' => 'freelancer_withdraw']);
-$routes->add('manage/project', 'Freelancer\Project::index', ['as' => 'freelancer_project']);
+
 
 // Account
 $routes->group('account', function ($routes) {
@@ -63,6 +63,9 @@ $routes->group('account', function ($routes) {
 	$routes->add('forgotten', 'Account\Forgotten::index', ['as' => 'account_forgotten']);
 	$routes->add('reset', 'Account\Reset::index', ['as' => 'account_reset']);
 	$routes->add('logout', 'Account\Logout::index', ['as' => 'account_logout']);
+	$routes->add('projects', 'Account\Projects::index', ['as' => 'account_project']);
+	$routes->add('dispute', 'Account\Dispute::index', ['as' => 'account_dispute']);
+
 });
 
 // projects
@@ -75,6 +78,8 @@ $routes->add('service/(:any)', 'Project\Project::info/$1', ['as' => 'single_proj
 // Category
 $routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
 
+
+$routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
 /**
  * --------------------------------------------------------------------
  * Additional Routing

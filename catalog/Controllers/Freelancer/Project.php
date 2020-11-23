@@ -5,29 +5,18 @@ use \Catalog\Models\Account\CustomerModel;
 use \Catalog\Models\Catalog\MileStoneModel;
 use \Catalog\Models\Extension\Bid\BidModel;
 use \Catalog\Models\Freelancer\BalanceModel;
+use \Catalog\Models\Freelancer\FreelancerModel;
+use \Catalog\Models\Freelancer\DisputeModel;
 
 class Project extends \Catalog\Controllers\BaseController
 {
-    public function index()
-    {
-        if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
-            return redirect('account_login');
-        }
-
-        $projectModel = new ProjectModel();
-
-        $this->template->setTitle(lang('project/project.text_my_projects'));
-
-        $this->getList();
-    }
-
     public function view()
     {
         if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
             return redirect('account_login');
         }
 
-        $this->template->setTitle(lang('project/project.text_my_projects'));
+        $this->template->setTitle(lang('freelancer/project.text_my_projects'));
 
         if ($this->request->getVar('pid')) {
             $project_id = $this->request->getVar('pid');
@@ -88,12 +77,6 @@ class Project extends \Catalog\Controllers\BaseController
             $freelancer_info = $customerModel->getCustomer($bid_info['freelancer_id']);
 
             $data['freelancer'] = $freelancer_info['username'] ?? '';
-            
-            if ($bid_info['freelancer_id'] == $customer_id) {
-                $data['created_for'] = $project_info['employer_id'];
-            } else {
-                $data['created_for'] = $bid_info['freelancer_id'];
-            }
 
             $data['freelancer_id'] = $bid_info['freelancer_id'];
 
@@ -106,11 +89,19 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['upload'] = base_url('tool/upload');
         $data['customer_id'] = $customer_id;
-        $data['project_id'] = $project_id;
 
         $data['initial_preview_data'] = $projectModel->getFilesByProjectId($project_id);
 
         $data['initial_preview_config_data'] = $projectModel->getFilesPreviewConfig($project_id);
+
+        // upload extensions allowed
+        $file_ext_allowed = preg_replace('~\r?\n~', "\n", $this->registry->get('config_file_ext_allowed'));
+
+        $filetypes = explode("\n", $file_ext_allowed);
+        
+        foreach ($filetypes as $filetype) {
+            $data['allowedFileExtensions'][] = trim($filetype);
+        }
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
@@ -118,244 +109,32 @@ class Project extends \Catalog\Controllers\BaseController
         $this->template->output('freelancer/project_info', $data);
     }
 
-    public function getList()
+    public function getInProgressProjects()
     {
-        $projectModel = new ProjectModel();
-
-        $this->template->setTitle(lang('project/project.text_my_projects'));
-            
-        $data['breadcrumbs'] = [];
-        $data['breadcrumbs'][] = [
-            'text' => lang($this->locale . '.text_home'),
-            'href' => base_url(),
-        ];
-
-        $data['breadcrumbs'][] = [
-            'text' => lang('account/dashboard.heading_title'),
-            'href' => base_url('account/dashboard'),
-        ];
-
-        $data['breadcrumbs'][] = [
-            'text' => lang('project/project.text_my_projects'),
-            'href' => base_url('freelancer/project'),
-        ];
-
-        if ($this->request->getVar('cid')) {
-            $customer_id = $this->request->getVar('cid');
-        } elseif ($this->session->get('customer_id')) {
-            $customer_id = $this->session->get('customer_id');
-        } else {
-            $customer_id = 0;
-        }
-
-
-        $filter_data = [
-            'employer_id' => $customer_id,
-            'status_id'   => '8,6',
-            'sortBy'      => 'p.date_added',
-            'orderBy'     => 'DESC',
-            'limit'       => 20,
-            'start'       => 0,
-        ];
-    
-        $data['open_projects'] = [];
-        
-        $results = $projectModel->getProjects($filter_data);
-        $projects_total = $projectModel->getTotalProjects();
-
-        foreach ($results as $result) {
-            $data['open_projects'][] = [
-                'project_id' => $result['project_id'],
-                'name'       => $result['name'],
-                'budget'     => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
-                'date_added' => $this->dateDifference($result['date_added']),
-                'total_bids' => $projectModel->getTotalBidsByProjectId($result['project_id']),
-                'expiry'     => $this->addDays($result['date_added'], $result['runtime']),
-                'avgBids'    => $projectModel->getAvgBidsByProjectId($result['project_id']),
-                'status'     => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
-                'expired'    => $result['runtime'],
-                'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-                'bidders'    => base_url('freelancer/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-            ];
-        }
-
-        // in progress
-        $filter_data = [
-            'employer_id' => $customer_id,
-            'status_id'   => '4',
-            'sortBy'      => 'p.date_added',
-            'orderBy'     => 'DESC',
-            'limit'       => 20,
-            'start'       => 0,
-        ];
-    
-        $data['work_projects'] = [];
-        
-        $results = $projectModel->getProjects($filter_data);
-        $projects_total = $projectModel->getTotalProjects();
-
-        foreach ($results as $result) {
-            $data['work_projects'][] = [
-                'project_id' => $result['project_id'],
-                'employer_id' => $result['employer_id'],
-                'freelancer_id' => $result['freelancer_id'],
-                'name'       => $result['name'],
-                'budget'     => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
-                'date_added' => $this->dateDifference($result['date_added']),
-                'total_bids' => $projectModel->getTotalBidsByProjectId($result['project_id']),
-                'expiry'     => $this->addDays($result['date_added'], $result['runtime']),
-                'avgBids'    => $projectModel->getAvgBidsByProjectId($result['project_id']),
-                'status'     => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
-                'expired'    => $result['runtime'],
-                'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-                'bidders'    => base_url('freelancer/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-            ];
-        }
-
-        // Past
-        $filter_data = [
-            'employer_id' => $customer_id,
-            'status_id'   => '5,7,1,2',
-            'sortBy'      => 'p.date_added',
-            'orderBy'     => 'DESC',
-            'limit'       => 20,
-            'start'       => 0,
-        ];
-    
-        $data['past_projects'] = [];
-
-        $bidModel = new BidModel();
-        
-        $results = $projectModel->getProjects($filter_data);
-
-        $projects_total = $projectModel->getTotalProjects();
-
-        foreach ($results as $result) {
-            $paidStatus = (int) $bidModel->where('project_id', $result['project_id'])->findColumn('status')[0];
-
-            if ($paidStatus == 0) {
-                $paid = lang('freelancer/project.text_unpaid');
-            } elseif ($paidStatus == 1) {
-                $paid = lang('freelancer/project.text_paid');
-            } else {
-                $paid = lang('freelancer/project.text_partial');
-            }
-
-
-            $amount = (int) $bidModel->where('project_id', $result['project_id'])->findColumn('quote')[0];
-
-            $data['past_projects'][] = [
-                'project_id' => $result['project_id'],
-                'employer_id' => $result['employer_id'],
-                'freelancer_id' => $result['freelancer_id'],
-                'name'       => $result['name'],
-                'budget'     => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
-                'date_added' => $this->dateDifference($result['date_added']),
-                'total_bids' => $projectModel->getTotalBidsByProjectId($result['project_id']),
-                'expiry'     => $this->addDays($result['date_added'], $result['runtime']),
-                'avgBids'    => $projectModel->getAvgBidsByProjectId($result['project_id']),
-                'status'     => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
-                'expired'    => $result['runtime'],
-                'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-                'bidders'    => base_url('freelancer/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-                'amount'     => $amount,
-                'paid'       => ($amount == 0) ? '-' : $paid
-            ];
-        }
-
-        // Freelancer in Progress
-        $data['freelancer_progress_projects'] = [];
-        
-        $results = $results = $projectModel->getFreelancerProjects($customer_id);
-        foreach ($results as $result) {
-            $data['freelancer_progress_projects'][] = [
-                'project_id' => $result['project_id'],
-                'name'       => $result['name'],
-                'budget'     => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
-                'status'     => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
-                'view'       => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-            ];
-        }
-
-        // Status
-        $data['project_statuses'] = [];
-        $projectStatusesModel = new \Catalog\Models\Localization\ProjectStatusModel();
-        $projectStatuses = $projectStatusesModel->getProjectSatuses();
-        foreach ($projectStatuses as $status) {
-            $data['project_statuses'][] = [
-                'status_id' => $status['status_id'],
-                'name' => $status['name']
-            ];
-        }
-
-        // Dispute Reasons
-        $data['dispute_reasons'] = [];
-        $disputeModel = new \Catalog\Models\Freelancer\DisputeModel();
-        $dispute_reasons = $disputeModel->getDisputeReasons();
-        foreach ($dispute_reasons as $reason) {
-            $data['dispute_reasons'][] = [
-                'dispute_reason_id' => $reason['dispute_reason_id'],
-                'name'              => $reason['name']
-            ];
-        }
-    
-        $data['heading_title']     = lang('freelancer/project.text_my_projects');
-        $data['button_view']       = lang('freelancer/project.button_view');
-        $data['button_cancel']     = lang('freelancer/project.button_cancel');
-        
-        $data['column_freelancer'] = lang('freelancer/project.column_freelancer');
-        $data['column_budget']     = lang('freelancer/project.column_budget');
-        $data['column_bids']       = lang('freelancer/project.column_bids');
-        $data['column_avg_bids']   = lang('freelancer/project.column_avg_bids');
-        $data['column_expiry']     = lang('freelancer/project.column_expiry');
-        $data['column_type']       = lang('freelancer/project.column_type');
-        $data['column_status']     = lang('freelancer/project.column_status');
-        $data['column_action']     = lang('freelancer/project.column_action');
-        $data['column_name']       = lang('freelancer/project.column_name');
-        $data['column_amount']     = lang('freelancer/project.column_amount');
-        $data['column_paid']       = lang('freelancer/project.column_paid');
-
-        $data['entry_name']        = lang('freelancer/project.entry_name');
-        $data['entry_status']      = lang('freelancer/project.entry_status');
-        $data['text_select']       = lang('en.text_select');
-
-        $data['customer_id'] = $customer_id;
-        $data['pid'] = $customer_id;
-
-        $balanceModel = new BalanceModel();
-
-        $data['balance'] = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->session->get('customer_id')));
-        
-        $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
-
-        $this->template->output('freelancer/project_list', $data);
-    }
-
-    // Account Dashboard
-    public function bids()
-    {
-        if ($this->request->getVar('pid')) {
-            $project_id = $this->request->getVar('pid');
-        } else {
-            $project_id = 0;
-        }
-
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
-        } elseif ($this->session->get('customer_id')) {
-            $customer_id = $this->session->get('customer_id');
+        } elseif ($this->customer->getCustomerId()) {
+            $customer_id = $this->customer->getCustomerId();
         } else {
             $customer_id = 0;
+        }
+
+        if ($this->request->getVar('sort_by')) {
+            $sort_by = $this->request->getVar('sort_by');
+        } else {
+            $sort_by = 'p.date_added';
+        }
+
+        if ($this->request->getVar('order_by')) {
+            $order_by = $this->request->getVar('order_by');
+        } else {
+            $order_by = 'DESC';
         }
 
         if ($this->request->getVar('limit')) {
             $limit = $this->request->getVar('limit');
         } else {
-            $limit = 20;
+            $limit = $this->registry->get('theme_default_projects_limit') ?? 15;
         }
 
         if ($this->request->getVar('page')) {
@@ -364,322 +143,220 @@ class Project extends \Catalog\Controllers\BaseController
             $page = 1;
         }
 
-        $data['breadcrumbs'] = [];
-        $data['breadcrumbs'][] = [
-            'text' => lang($this->locale . '.text_home'),
-            'href' => base_url(),
-        ];
-
-        $data['breadcrumbs'][] = [
-            'text' => lang('project/project.heading_title'),
-            'href' => base_url('account/dashboard?cid=' . $customer_id),
-        ];
-
-        $data['breadcrumbs'][] = [
-            'text' => lang('project/project.text_manage_bidders'),
-            'href' => base_url('account/dashboard/project?pid=' . $project_id . '&cid=' . $customer_id),
-        ];
-
         $filter_data = [
-            'orderBy'       => 'p.date_added',
-            'sortBy'        => 'DESC',
-            'project_id'    => $project_id,
-            'limit'         => $limit,
-            'start'         => ($page - 1) * $limit,
-         ];
+         'freelancer_id' => $customer_id,
+         'status_id'   => '4',
+         'sort_by'    => $sort_by,
+         'order_by'   => $order_by,
+         'limit'      => $limit,
+         'start'      => ($page - 1) * $limit,
+        ];
 
-        if ($project_id) {
-            $projectModel = new ProjectModel();
-            $project_info = $projectModel->getProject($project_id);
-        }
+        $data['progress_projects'] = [];
 
-        $data['name'] = $project_info['name'];
-        $data['href'] = base_url('freelancer/project&pid=' . $project_id);
-         
-        $bidModel = new BidModel();
+        $projectModel = new ProjectModel();
 
-        $data['bidders'] = [];
-
-        $results = $bidModel->getBids($filter_data);
-        $total = $bidModel->getTotalBidsByProjectId($project_id);
-        $reviewModel = new \Catalog\Models\Account\ReviewModel();
-
+        $results = $projectModel->getProjects($filter_data);
+        $total = $projectModel->getTotalProjects($filter_data);
 
         foreach ($results as $result) {
-            $data['bidders'][] = [
-                'bid_id'        => $result['bid_id'],
+            $data['progress_projects'][] = [
+                'project_id'    => $result['project_id'],
                 'freelancer_id' => $result['freelancer_id'],
-                'freelancer'    => $result['username'],
-                'email'         => $result['email'],
-                'price'         => $this->currencyFormat($result['quote']),
-                'delivery'      => $result['delivery'] . ' ' . lang($this->locale . '.text_days'),
-                'status'        => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'profile'       => route_to('freelancers/profile', $result['customer_id']),
-                'type'          => ($result['status'] == 1) ? lang('project/project.list.text_fixed_price') : lang('project/project.list.text_per_hour'),
-                'image'         => ($result['image']) ? $this->resize($result['image'], 80, 80) : $this->resize('catalog/avatar.jpg', 80, 80),
-                'rating'        => $reviewModel->getAvgReviewByFreelancerId($result['freelancer_id']),
-                'isSelected'      => $bidModel->isAwarded($result['freelancer_id']),
+                'employer_id'   => $result['employer_id'],
+                'name'          => $result['name'],
+                'budget'        => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
+                'type'          => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
+                'status'        => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
+                'status_id'     => $result['status_id'],
+                'view'          => base_url('freelancer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
             ];
         }
 
-        $data['heading_title'] = lang('project/project.text_manage_bidders');
-        $data['text_total_bidders'] = sprintf(lang('project/project.text_total_bidders'), $total);
+        $data['column_name']       = lang('freelancer/project.column_name');
+        $data['column_project_id'] = lang('freelancer/project.column_project_id');
+        $data['column_budget']     = lang('freelancer/project.column_budget');
+        $data['column_type']       = lang('freelancer/project.column_type');
+        $data['column_bids']       = lang('freelancer/project.column_bids');
+        $data['column_avg_bids']   = lang('freelancer/project.column_avg_bids');
+        $data['column_expiry']     = lang('freelancer/project.column_expiry');
+        $data['column_status']     = lang('freelancer/project.column_status');
+        $data['column_action']     = lang('freelancer/project.column_action');
 
-        $data['customer_id'] = $customer_id;
-
+        $data['config_project_completed_status'] = $this->registry->get('config_project_completed_status');
         // Pagination
         $pager = \Config\Services::pager();
-        $data['pagination'] = $pager->makeLinks($page, $limit, $total);
+        $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
 
-        return view('freelancer/project_bids', $data);
+        return view('freelancer/progress_project_list', $data);
     }
- 
-    // get Project Messages
-    public function getProjectMessages()
+
+        public function getPastProjects()
     {
-        $projectModel = new ProjectModel();
-
-        if ($this->request->getVar('pid')) {
-            $project_id = $this->request->getVar('pid');
-        } else {
-            $project_id = 0;
-        }
-
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
+        } elseif ($this->customer->getCustomerId()) {
+            $customer_id = $this->customer->getCustomerId();
         } else {
             $customer_id = 0;
         }
 
+        if ($this->request->getVar('sort_by')) {
+            $sort_by = $this->request->getVar('sort_by');
+        } else {
+            $sort_by = 'p.date_added';
+        }
+
+        if ($this->request->getVar('order_by')) {
+            $order_by = $this->request->getVar('order_by');
+        } else {
+            $order_by = 'DESC';
+        }
+
+        if ($this->request->getVar('limit')) {
+            $limit = $this->request->getVar('limit');
+        } else {
+            $limit = $this->registry->get('theme_default_projects_limit') ?? 15;
+        }
+
+        if ($this->request->getVar('page')) {
+            $page = $this->request->getVar('page');
+        } else {
+            $page = 1;
+        }
+
         $filter_data = [
-            'project_id'    => $project_id,
-            'customer_id'   => $customer_id,
-         ];
-         
-        $data['project_messages'] = [];
+         'freelancer_id' => $customer_id,
+         'status_id'   => '2',
+         'sort_by'     => $sort_by,
+         'order_by'    => $order_by,
+         'limit'       => $limit,
+         'start'       => ($page - 1) * $limit,
+        ];
 
-        $results = $projectModel->getProjectMessagesById($filter_data);
+        $data['past_projects'] = [];
 
-        $customerModel = new CustomerModel();
+        $projectModel = new ProjectModel();
+        $bidModel = new BidModel();
+        $disputeModel = new DisputeModel();
+
+        $results = $projectModel->getProjects($filter_data);
+        $total = $projectModel->getTotalProjects($filter_data);
 
         foreach ($results as $result) {
-            $data['project_messages'][] = [
-                'message'     => $result['message'],
-                'receiver_id' => $result['receiver_id'],
-                'sender_id'   => $result['sender_id'],
-                'project_id'  => $result['project_id'],
-                'sender'      => $customerModel->where('customer_id', $result['sender_id'])->findColumn('username'),
-                'receiver'    =>  $customerModel->where('customer_id', $result['receiver_id'])->findColumn('username'),
-                'date_added'  => $this->dateDifference($result['date_added']),
+            $paidStatus = $bidModel->where('project_id', $result['project_id'])->findColumn('status');
+
+            if ($paidStatus[0] == 0) {
+                $paid = lang('employer/project.text_unpaid');
+            } elseif ($paidStatus[0] == 1) {
+                $paid = lang('employer/project.text_paid');
+            } else {
+                $paid = lang('employer/project.text_partial');
+            }
+            
+            $amount = $bidModel->where('project_id', $result['project_id'])->findColumn('quote');
+
+            $inDispute =  $disputeModel->inDispute($result['project_id']);
+
+            $data['past_projects'][] = [
+                'project_id'    => $result['project_id'],
+                'employer_id'   => $result['employer_id'],
+                'freelancer_id'   => $result['freelancer_id'],
+                'name'          => $result['name'],
+                'budget'        => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
+                'type'          => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
+                'date_added'    => $this->dateDifference($result['date_added']),
+                'amount'        => $amount[0],
+                'paid'          => ($amount[0] == 0) ? '-' : $paid,
+                'status'        => $projectModel->getStatusByProjectId($result['project_id']) ?? 'Open',
+                'inDispute'     => $inDispute,
+
             ];
         }
 
-        $data['customer_id'] = $this->session->get('customer_id');
-        $data['sender_id'] = $results[0]['sender_id'] ?? 0;
+        // Dispute Reasons
+        $data['dispute_reasons'] = [];
+        $disputeModel = new DisputeModel();
+        $dispute_reasons = $disputeModel->getDisputeReasons();
+        foreach ($dispute_reasons as $reason) {
+            $data['dispute_reasons'][] = [
+                'dispute_reason_id' => $reason['dispute_reason_id'],
+                'name'              => $reason['name']
+            ];
+        }
 
-        $data['heading_title'] = lang('project/project.text_manage_bidders');
+        $data['column_name']       = lang('freelancer/project.column_name');
+        $data['column_project_id'] = lang('freelancer/project.column_project_id');
+        $data['column_budget']     = lang('freelancer/project.column_budget');
+        $data['column_type']       = lang('freelancer/project.column_type');
+        $data['column_bids']       = lang('freelancer/project.column_bids');
+        $data['column_avg_bids']   = lang('freelancer/project.column_avg_bids');
+        $data['column_status']     = lang('freelancer/project.column_status');
+        $data['column_status']     = lang('freelancer/project.column_status');
+        $data['column_amount']     = lang('freelancer/project.column_amount');
+        $data['column_paid']       = lang('freelancer/project.column_paid');
+        $data['column_action']     = lang('freelancer/project.column_action');
 
-        return view('freelancer/project_messages', $data);
+        $balanceModel = new BalanceModel();
+        $data['balance'] = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId()));
+
+        // Pagination
+        $pager = \Config\Services::pager();
+        $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
+
+        return view('freelancer/past_project_list', $data);
     }
 
-    // get Project Milestone
-    public function getProjectMilestones()
+    // get Freelancer Bids
+    public function getFreelancerBids()
     {
-        if ($this->request->getVar('project_id')) {
-            $project_id = $this->request->getVar('project_id');
+        $freelancerModel = new FreelancerModel();
+
+        $seoUrl = service('seo_url');
+
+        if ($this->request->getVar('customer_id')) {
+            $freelancer_id = $this->request->getVar('customer_id');
+        } elseif ($this->customer->getCustomerId()) {
+            $freelancer_id = $this->customer->getCustomerId()   ;
         } else {
-            $project_id = 0;
+            $freelancer_id = 0;
         }
 
-        $milestoneModel = new MileStoneModel();
-         
-        $data['project_milestones'] = [];
+        $data['bids'] = [];
 
-        $results = $milestoneModel->where('project_id', $project_id)->findAll();
-
+        $results = $freelancerModel->getFreelancerBidsById($freelancer_id);
+        
         foreach ($results as $result) {
-            switch ($result['status']) {
-                case 0: $status = 'Pending'; break;
-                case 1: $status = 'Approved'; break;
-                case 2: $status = 'Paid'; break;
-                case 3: $status = 'Canceled'; break;
-                default: $status = 'Pending'; break;
-            }
-
-            $data['project_milestones'][] = [
-                'milestone_id' => $result['milestone_id'],
-                'created_by'   => $result['created_by'],
-                'project_id'   => $result['project_id'],
-                'amount'       => number_format($result['amount'], 2),
-                'description'  => $result['description'],
-                'status'       => $status,
-                'date_added'   => lang('en.longDate', [strtotime($result['date_added'])]),
-                'deadline'     => lang('en.longDate', [strtotime($this->addDays($result['date_added'], $result['deadline']))]),
+            $data['bids'][] = [
+                'bid_id'        => $result['bid_id'],
+                'project_id'    => $result['project_id'],
+                'employer_id'   => $result['employer_id'],
+                'name'          => $result['name'],
+                'quote'         => $this->currencyFormat($result['quote']),
+                'delivery'      => $result['delivery'],
+                'selected'      => ($result['selected']) ? 'Awarded' : '',
+                'accepted'      => $result['accepted'],
+                'status'        => ($result['accepted']) ? 'Accepted' : 'Awarded',
+                'date_added'    => $this->dateDifference($result['date_added']),
+                'href'          => route_to('single_project', $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']))
             ];
         }
 
-        $bidModel = new BidModel();
-
-        $bid_info = $bidModel->getBidByProjectId($project_id);
-
-        $data['bid_quote']     = $bid_info['quote'];
-        $data['employer_id']   = $bid_info['employer_id'];
-        $data['freelancer_id'] = $bid_info['freelancer_id'];
-        
         $data['customer_id'] = $this->customer->getCustomerId();
 
-        $data['heading_title'] = lang('project/project.text_manage_bidders');
-
-        return view('freelancer/project_milestone', $data);
+        return view('freelancer/bids_list', $data);
     }
 
-    public function approveMilestone()
-    {
-        $json = [];
-
-        if ($this->request->getMethod() == 'post') {
-            $milestoneModel = new MileStoneModel();
-
-            $data = [
-            'status' => 1
-            ];
-
-            $milestoneModel->update($this->request->getPost('milestone_id'), $data);
-
-            $json['success'] = 'Milestone has been approved!';
-        }
-
-        return $this->response->setJSON($json);
-    }
-
-    public function cancelMilestone()
-    {
-        $json = [];
-
-        if ($this->request->getMethod() == 'post') {
-            $milestoneModel = new MileStoneModel();
-            $data = [
-             'status' => 3
-            ];
-
-            $milestoneModel->update($this->request->getPost('milestone_id'), $data);
-
-            $json['success'] = 'Milestone has been canceled!';
-        }
-
-        return $this->response->setJSON($json);
-    }
-
-    public function payMilestone()
-    {
-        $json = [];
-
-        if ($this->request->getMethod() == 'post') {
-            if ($this->request->getPost('milestone_id')) {
-                $milestone_id = $this->request->getPost('milestone_id');
-            } else {
-                $milestone_id = 0;
-            }
-
-            $milestoneModel = new MileStoneModel();
-
-            $milestone_info = $milestoneModel->find($milestone_id);
-
-            $data = [
-             'status' => 2
-            ];
-
-            $milestoneModel->update($milestone_id, $data);
-            // update customer balance
-            $balanceModel = new BalanceModel();
-            //update employer balance
-            if ($this->request->getPost('employer_id')) {
-                $balance_data = [
-                    'customer_id' => $this->request->getPost('employer_id'),
-                    'project_id'  => $milestone_info['project_id'],
-                    'used'        => $this->request->getPost('amount'),
-                ];
-
-                $balanceModel->insert($balance_data);
-            }
-            // update freelancer balance
-            if ($this->request->getPost('freelancer_id')) {
-                $balance_data = [
-                    'customer_id' => $this->request->getPost('freelancer_id'),
-                    'project_id'  => $milestone_info['project_id'],
-                    'income'      => $this->request->getPost('amount'),
-                ];
-
-                $balanceModel->insert($balance_data);
-            }
-           
-
-            $json['success'] = 'Milestone has been been paid!';
-        }
-
-        return $this->response->setJSON($json);
-    }
-
-    public function addMilestone()
-    {
-        $json = [];
-
-        if ($this->request->getMethod() == 'post' && $this->request->getVar('pid')) {
-            $milestoneModel = new MileStoneModel();
-
-            $milestoneModel->insert($this->request->getPost());
-
-            $json['success'] = lang('freelancer/project.text_success_milestone');
-        }
-
-        return $this->response->setJSON($json);
-    }
-
-
-    public function awardWinner()
-    {
-        $json = [];
-
-        if ($this->request->getMethod() == 'post' && $this->request->getVar('pid')) {
-            $freelancerModel = new \Catalog\Models\Freelancer\FreelancerModel();
-            $freelancerModel->addWinner($this->request->getPost());
-            $json['success'] = lang('freelancer/project.text_success_winner');
-        }
-
-        return $this->response->setJSON($json);
-    }
-
- 
-    public function sendMessage()
-    {
-        $json = [];
-
-        if ($this->request->getMethod() == 'post' && $this->request->getVar('pid')) {
-            $projectModel = new ProjectModel();
-
-            if (! $this->validate([
-                'message'  => 'required'
-            ])) {
-                $json['error'] = $this->validator->getError('message');
-            }
-
-            if (!$json) {
-                $projectModel->addMessage($this->request->getPost());
-                $json['success'] = lang('freelancer/project.text_success_pm');
-            }
-        }
-
-        return $this->response->setJSON($json);
-    }
 
     public function completeProject()
     {
         $json = [];
 
-        if ($this->request->getVar('project_id')) {
-            $projectModel = new ProjectModel();
+        if ($this->request->getMethod() == 'post') {
 
-            $projectModel->update($this->request->getVar('project_id'), ['status_id' => 2]);
+            $freelancerModel = new FreelancerModel();
+
+            $freelancerModel->updateProjectStatus($this->request->getVar('project_id'), $this->request->getPost());
 
             $json['success'] = lang('freelancer/project.text_success_complete');
         }
@@ -687,6 +364,5 @@ class Project extends \Catalog\Controllers\BaseController
         return $this->response->setJSON($json);
     }
 
-    
     //--------------------------------------------------------------------
 }

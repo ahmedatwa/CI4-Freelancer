@@ -6,12 +6,11 @@ class Blog extends \Catalog\Controllers\BaseController
 {
     public function view()
     {
-      $this->template->setTitle(lang('extension/blog/blog.heading_title'));
+        $this->template->setTitle(lang('extension/blog/blog.heading_title'));
 
-      $blogModel = new BlogModel();
+        $blogModel = new BlogModel();
 
-      $this->getPost();
-
+        $this->getPost();
     }
 
     public function index()
@@ -82,7 +81,7 @@ class Blog extends \Catalog\Controllers\BaseController
                 'title' => $result['title'],
                 'image' => $image,
                 'body'  => word_limiter($result['body'], 80),
-                'href'  => ($keyword) ? route_to('blog/post', $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
+                'href'  => ($keyword) ? route_to('blog_post', $result['post_id'], $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
                 'date_added' => $this->dateDifference($result['date_added']),
             ];
         }
@@ -131,16 +130,19 @@ class Blog extends \Catalog\Controllers\BaseController
     {
         if ($this->request->getGet('post_id')) {
             $post_id = $this->request->getGet('post_id');
-        } elseif($this->request->getVar('post_id')) {
-            $post_id = $this->request->getVar('post_id');
+        } elseif ($this->request->uri->getSegment(2)) {
+            $post_id = substr($this->request->uri->getSegment(2), 1);
         } else {
             $post_id = 0;
         }
 
         $blogModel = new BlogModel();
-        $post_info = $blogModel->getPost($post_id);
         $seo_url = service('seo_url');
 
+        if ($post_id) {
+            $post_info = $blogModel->getPost($post_id);
+        }
+        
         // Breadcrumbs
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -162,7 +164,7 @@ class Blog extends \Catalog\Controllers\BaseController
             $data['title']      = $post_info['title'];
             $data['category']   = $post_info['category'];
             $data['body']       = $post_info['body'];
-            $data['date_added'] = $post_info['date_added'];
+            $data['date_added'] = lang('en.longDate', [strtotime($post_info['date_added'])]);
             $data['image']      = ($post_info['image']) ? $this->resize($post_info['image'], 777, 380) : $this->resize('no_image.jpg', 777, 380);
             $data['post_id']    = $post_info['post_id'];
         } else {
@@ -171,6 +173,7 @@ class Blog extends \Catalog\Controllers\BaseController
             $data['body']       = '';
             $data['image']      = '';
             $data['date_added'] = '';
+            $data['post_id']    = '';
         }
 
         $data['heading_title']    = lang('extension/blog/blog.heading_title');
@@ -204,6 +207,16 @@ class Blog extends \Catalog\Controllers\BaseController
                 'date_added' => $this->dateDifference($result['date_added']),
             ];
         }
+
+
+        // Social
+        $data['facebook']      = $this->registry->get('config_facebook');
+        $data['twitter']       = $this->registry->get('config_twitter');
+        $data['pintrest']      = $this->registry->get('config_pintrest');
+        $data['linkedin']      = $this->registry->get('config_linkedin');
+        $data['instagram']     = $this->registry->get('config_instagram');
+
+
         $this->template->output('extension/blog/post', $data);
     }
 
