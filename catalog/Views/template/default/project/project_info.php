@@ -125,7 +125,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td width="20%">
+											<td width="11%">
 												<div class="form-check">
 													<input class="form-check-input" name="checkbox" type="checkbox" value="<?php echo number_format($config_upgrade_sponser, 2); ?>" id="sponsor">
 													<label class="form-check-label" for="input-sponser">
@@ -137,7 +137,7 @@
 											<td>Bids that are sponsored are 80% more likely to be awarded. Stand out from the rest of the freelancers, by being pinned to the top of the employer's bid list. There is only one sponsored bid per project.</td>
 										</tr>
 										<tr>
-											<td width="20%">
+											<td width="11%">
 												<div class="form-check">
 													<input class="form-check-input" name="checkbox" type="checkbox" value="<?php echo number_format($config_upgrade_highlight, 2); ?>" id="upgrade-fee">
 													<label class="form-check-label" for="input-highlight">

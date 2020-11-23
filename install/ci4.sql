@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2020 at 09:50 PM
+-- Generation Time: Nov 23, 2020 at 09:35 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -592,24 +592,6 @@ CREATE TABLE `ci_customer_activity` (
   `date_added` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `ci_customer_activity`
---
-
-INSERT INTO `ci_customer_activity` (`customer_activity_id`, `customer_id`, `key`, `data`, `ip`, `user_agent`, `seen`, `date_added`) VALUES
-(1, 1, 'project_bid_add', '{\"customer_id\":\"1\",\"project_id\":\"1\",\"freelancer_id\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/employer\\/project\\/view?pid=1&cid=1\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-21 19:12:21'),
-(36, 2, 'project_milestone_update', '{\"milestone_id\":11,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"project_id\":\"1\",\"milestone_status\":\"1\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-21 20:49:45'),
-(35, 2, 'project_milestone_update', '{\"milestone_id\":10,\"customer_id\":\"2\",\"created_by\":\"1\",\"created_for\":\"2\",\"project_id\":\"1\",\"milestone_status\":\"3\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-21 20:49:39'),
-(34, 2, 'project_milestone_create', '{\"milestone_id\":11,\"customer_id\":2,\"created_by\":1,\"created_for\":2,\"project_id\":1,\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1&cid=2#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:46:55'),
-(33, 2, 'project_milestone_create', '{\"milestone_id\":10,\"customer_id\":2,\"created_by\":1,\"created_for\":2,\"project_id\":1,\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1&cid=2#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:46:18'),
-(32, 2, 'customer_milestone_payment', '{\"customer_id\":2,\"balance_id\":33,\"project_id\":1}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:28:27'),
-(31, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:28:27'),
-(30, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:27:42'),
-(29, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:22:51'),
-(28, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:22:13'),
-(26, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:19:49'),
-(27, 1, 'project_milestone_update', '{\"milestone_id\":9,\"customer_id\":\"1\",\"created_by\":\"2\",\"created_for\":\"1\",\"project_id\":\"1\",\"milestone_status\":\"2\",\"url\":\"http:\\/\\/ci4.localhost\\/freelancer\\/project\\/view?pid=1#milestones\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-21 20:21:23');
-
 -- --------------------------------------------------------
 
 --
@@ -699,8 +681,7 @@ CREATE TABLE `ci_customer_login` (
 --
 
 INSERT INTO `ci_customer_login` (`customer_login_id`, `email`, `ip`, `total`, `date_added`, `date_modified`) VALUES
-(2, 'admin@admin.com', '::1', 2, '2020-11-16 20:02:58', '2020-11-16 20:03:07'),
-(3, 'customer_2@customer.com', '::1', 1, '2020-11-18 13:41:35', '0000-00-00 00:00:00');
+(1, 'admin@admin.com', '::1', 1, '2020-11-23 07:09:31', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -721,8 +702,8 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 1, 'http://ci4.localhost/employer/project/bootstrap.bundle.min.js.map', 'http://ci4.localhost/employer/project/view?pid=1&cid=1', '2020-11-21 20:46:19'),
-('127.0.0.1', 2, 'http://ci4.localhost/freelancer/project/getProjectMessages', 'http://ci4.localhost/freelancer/project/view?pid=1&cid=2', '2020-11-21 20:49:59');
+('::1', 1, 'http://ci4.localhost/images/user-avatar-small-01.jpg', 'http://ci4.localhost/', '2020-11-23 08:32:40'),
+('127.0.0.1', 2, 'http://ci4.localhost/account/projects', 'http://ci4.localhost/account/projects', '2020-11-23 08:21:49');
 
 -- --------------------------------------------------------
 
@@ -750,11 +731,10 @@ CREATE TABLE `ci_customer_to_balance` (
 INSERT INTO `ci_customer_to_balance` (`balance_id`, `customer_id`, `project_id`, `income`, `withdrawn`, `used`, `available`, `pending`, `date_added`, `date_modified`) VALUES
 (1, 1, 1, '0.0000', '0.0000', '0.0000', '4200.0000', '0.0000', '2020-10-07 08:32:34', '2020-10-08 08:32:34'),
 (2, 1, 1, '0.0000', '200.0000', '20.0000', '0.0000', '0.0000', '2020-11-16 08:32:34', '2020-10-08 08:32:34'),
-(28, 0, 0, '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-21 20:21:23', '2020-11-21 20:21:23'),
-(30, 2, 1, '26.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-21 20:27:42', '2020-11-21 20:27:42'),
-(31, 2, 1, '0.0000', '0.0000', '26.0000', '0.0000', '0.0000', '2020-11-21 20:27:42', '2020-11-21 20:27:42'),
-(32, 2, 1, '26.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-21 20:28:27', '2020-11-21 20:28:27'),
-(33, 2, 1, '0.0000', '0.0000', '26.0000', '0.0000', '0.0000', '2020-11-21 20:28:27', '2020-11-21 20:28:27');
+(70, 2, 1, '24.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0000-00-00 00:00:00', '2020-11-22 11:51:43'),
+(71, 1, 1, '0.0000', '0.0000', '24.0000', '0.0000', '0.0000', '0000-00-00 00:00:00', '2020-11-22 11:51:43'),
+(72, 2, 1, '2.0000', '0.0000', '0.0000', '0.0000', '0.0000', '2020-11-23 07:46:35', '2020-11-23 07:46:35'),
+(73, 2, 1, '0.0000', '0.0000', '2.0000', '0.0000', '0.0000', '2020-11-23 07:46:35', '2020-11-23 07:46:35');
 
 -- --------------------------------------------------------
 
@@ -823,6 +803,7 @@ CREATE TABLE `ci_dispute` (
   `project_id` int(11) NOT NULL,
   `freelancer_id` int(11) NOT NULL,
   `employer_id` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
   `comment` text NOT NULL,
   `dispute_status_id` int(1) NOT NULL,
   `dispute_reason_id` int(11) NOT NULL,
@@ -1304,13 +1285,6 @@ CREATE TABLE `ci_message` (
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `ci_message`
---
-
-INSERT INTO `ci_message` (`message_id`, `project_id`, `sender_id`, `receiver_id`, `message`, `seen`, `date_added`, `date_modified`) VALUES
-(1, 4, 1, 2, 'eeeee', 0, '2020-11-21 11:10:19', '2020-11-21 11:10:19');
-
 -- --------------------------------------------------------
 
 --
@@ -1365,7 +1339,7 @@ CREATE TABLE `ci_project` (
 --
 
 INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`) VALUES
-(1, 1, 2, '20.0000', '60.0000', 1, 3, 7, 2, '', 0, 4, 0, 0, '2020-11-21 19:03:49', '2020-11-21 19:03:49');
+(1, 1, 2, '20.0000', '50.0000', 1, 3, 7, 3, '', 0, 8, 0, 0, '2020-11-22 18:45:15', '2020-11-22 18:45:15');
 
 -- --------------------------------------------------------
 
@@ -1404,16 +1378,10 @@ CREATE TABLE `ci_project_bids` (
   `accepted` tinyint(1) NOT NULL,
   `description` text NOT NULL,
   `status` tinyint(1) NOT NULL,
+  `paid` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `ci_project_bids`
---
-
-INSERT INTO `ci_project_bids` (`bid_id`, `project_id`, `freelancer_id`, `employer_id`, `quote`, `delivery`, `selected`, `accepted`, `description`, `status`, `date_added`, `date_modified`) VALUES
-(1, 1, 2, 1, '40', 2, 1, 1, 'new proposel ', 1, '2020-11-21 19:12:21', '2020-11-21 19:21:36');
 
 -- --------------------------------------------------------
 
@@ -1430,13 +1398,6 @@ CREATE TABLE `ci_project_bids_upgrade` (
   `reason` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
   `date_added` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `ci_project_bids_upgrade`
---
-
-INSERT INTO `ci_project_bids_upgrade` (`upgrade_id`, `bid_id`, `project_id`, `payer_id`, `amount`, `reason`, `date_added`) VALUES
-(1, 1, 1, 2, '0.0000', 'Optional Upgrade', '2020-11-21 19:12:21');
 
 -- --------------------------------------------------------
 
@@ -1459,7 +1420,7 @@ CREATE TABLE `ci_project_description` (
 --
 
 INSERT INTO `ci_project_description` (`project_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
-(1, 1, 'What is Lorem Ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '', '', '');
+(1, 1, 'Where does it come from?', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\r\n\r\n', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1577,22 +1538,6 @@ CREATE TABLE `ci_project_to_milestone` (
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `ci_project_to_milestone`
---
-
-INSERT INTO `ci_project_to_milestone` (`milestone_id`, `project_id`, `created_by`, `created_for`, `amount`, `description`, `status`, `deadline`, `date_added`, `date_modified`) VALUES
-(2, 3, 2, 1, '20.0000', 'sssss', '3', 3, '2020-11-18 17:58:58', '2020-11-18 18:13:21'),
-(3, 3, 1, 2, '5.0000', 'sdasdsdad', '3', 4, '2020-11-18 18:00:50', '2020-11-18 18:08:52'),
-(4, 3, 1, 2, '3.0000', 'ccccc', '2', 3, '2020-11-18 19:10:26', '2020-11-18 20:24:42'),
-(5, 3, 1, 2, '2.0000', 'yyy', '', 3, '2020-11-19 21:14:15', '2020-11-19 21:14:15'),
-(6, 4, 1, 0, '20.0000', 'dddd', '3', 2, '2020-11-21 11:13:23', '2020-11-21 11:15:35'),
-(7, 4, 1, 0, '45.0000', 'ssss', '3', 3, '2020-11-21 11:15:03', '2020-11-21 11:17:37'),
-(8, 1, 1, 2, '2.0000', 'ssss', '2', 2, '2020-11-21 19:22:58', '2020-11-21 19:42:35'),
-(9, 1, 2, 1, '26.0000', 'ddddd', '2', 3, '2020-11-21 19:32:02', '2020-11-21 20:28:27'),
-(10, 1, 1, 2, '2.0000', 'aaaa', '3', 3, '2020-11-21 20:46:18', '2020-11-21 20:49:39'),
-(11, 1, 1, 2, '2.0000', 'rttt', '1', 2, '2020-11-21 20:46:55', '2020-11-21 20:49:45');
-
 -- --------------------------------------------------------
 
 --
@@ -1667,7 +1612,7 @@ CREATE TABLE `ci_seo_url` (
 --
 
 INSERT INTO `ci_seo_url` (`seo_url_id`, `site_id`, `language_id`, `query`, `keyword`) VALUES
-(10, 0, 1, 'project_id=1', 'what-is-lorem-ipsum'),
+(12, 0, 1, 'project_id=1', 'where-does-it-come-from'),
 (2, 0, 1, 'category_id=28', 'test'),
 (3, 0, 1, 'category_id=29', 'test'),
 (4, 0, 1, 'category_id=10', 'business-accounting-human-resources-legal'),
@@ -1675,7 +1620,8 @@ INSERT INTO `ci_seo_url` (`seo_url_id`, `site_id`, `language_id`, `query`, `keyw
 (6, 0, 1, 'category_id=1', 'websites-it-software'),
 (7, 0, 1, 'post_id=1', 'what-is-lorem-ipsum'),
 (8, 0, 1, 'post_id=1', 'what-is-lorem-ipsum111'),
-(9, 0, 1, 'project_id=4', 'let-me-see-new-code');
+(9, 0, 1, 'project_id=4', 'let-me-see-new-code'),
+(11, 0, 1, 'project_id=2', '2nd-peoject-for-test');
 
 -- --------------------------------------------------------
 
@@ -2999,7 +2945,7 @@ ALTER TABLE `ci_customer`
 -- AUTO_INCREMENT for table `ci_customer_activity`
 --
 ALTER TABLE `ci_customer_activity`
-  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_deposit`
@@ -3023,13 +2969,13 @@ ALTER TABLE `ci_customer_history`
 -- AUTO_INCREMENT for table `ci_customer_login`
 --
 ALTER TABLE `ci_customer_login`
-  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_balance`
 --
 ALTER TABLE `ci_customer_to_balance`
-  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_certificate`
@@ -3047,7 +2993,7 @@ ALTER TABLE `ci_customer_to_education`
 -- AUTO_INCREMENT for table `ci_dispute`
 --
 ALTER TABLE `ci_dispute`
-  MODIFY `dispute_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `dispute_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `ci_dispute_action`
@@ -3137,7 +3083,7 @@ ALTER TABLE `ci_layout_route`
 -- AUTO_INCREMENT for table `ci_message`
 --
 ALTER TABLE `ci_message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_module`
@@ -3167,7 +3113,7 @@ ALTER TABLE `ci_project_bids`
 -- AUTO_INCREMENT for table `ci_project_bids_upgrade`
 --
 ALTER TABLE `ci_project_bids_upgrade`
-  MODIFY `upgrade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `upgrade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ci_project_proposal`
@@ -3197,7 +3143,7 @@ ALTER TABLE `ci_project_to_message`
 -- AUTO_INCREMENT for table `ci_project_to_milestone`
 --
 ALTER TABLE `ci_project_to_milestone`
-  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `milestone_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_project_to_upload`
@@ -3221,7 +3167,7 @@ ALTER TABLE `ci_review`
 -- AUTO_INCREMENT for table `ci_seo_url`
 --
 ALTER TABLE `ci_seo_url`
-  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `ci_setting`

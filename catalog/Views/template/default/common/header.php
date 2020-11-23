@@ -56,11 +56,45 @@
       <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top" loading="lazy">
     </a>
     <!-- ./Logo -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto" id="nav-user-main">
       <?php if (! $logged) { ?>
         <li class="nav-item"><a class="nav-link" href="<?php echo $login; ?>"><?php echo $text_login; ?> </a></li>
         <li class="nav-item"><a class="nav-link" href="<?php echo $register; ?>"> <?php echo $text_register; ?> </a></li>
       <?php } else { ?>
+       <ul class="navbar-nav" id="notifications">
+        <li class="nav-item my-auto">
+          <div class="dropdown" id="notifications-dropdown">
+           <a class="dropdown-toggle" href="#" role="button" id="header-notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="icon-feather-bell fa-lg text-dark" id="notifications-count"></i>
+          </a>
+          <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-notifications">
+            <div class="d-flex w-100 justify-content-between">
+              <h4 class="mb-1">Notifications</h4>
+              <small><button id="mark-read-button" type="button" class="btn btn-sm float-right rounded-pill mark-as-read" title="Mark all as read" data-placement="left" data-toggle="tooltip">
+              <i class="icon-feather-check-square"></i>
+            </button></small>
+            </div>
+            <ul id="notifications-list" class="text-left list-group list-group-flush"></ul>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item mx-3 my-auto">
+        <div class="dropdown" id="notifications-dropdown">
+          <a class="dropdown-toggle" href="#" role="button" id="header-messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="icon-feather-mail fa-lg text-dark" id="message-count"></i>
+          </a>
+          <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-messages">
+            <div class="d-flex w-100 justify-content-between">
+              <h4 class="mb-1">Messages</h4>
+              <small><a role="button" href="<?php echo $all_messages; ?>" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
+              <i class="far fa-eye"></i>
+              </a></small>
+            </div>
+            <ul id="message-list" class="text-left list-group list-group-flush"></ul>
+          </div>
+        </div>
+      </li>
+    </ul>
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> <?php echo $username; ?></a>
@@ -147,7 +181,7 @@
           <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-messages">
             <div class="d-flex w-100 justify-content-between">
               <h4 class="mb-1">Messages</h4>
-              <small><a type="button" href="<?php echo $all_messages; ?>" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
+              <small><a role="button" href="<?php echo $all_messages; ?>" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
               <i class="far fa-eye"></i>
               </a></small>
             </div>
@@ -156,7 +190,6 @@
         </div>
       </li>
     </ul>
-      <!-- Messages -->
       <li class="nav-item dropdown d-none d-lg-block">
         <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" class="rounded-circle" width="42px" height="42px" loading="lazy"> @<?php echo $username; ?>
