@@ -188,7 +188,7 @@ function totalNotifications(data) {
 	      url: 'account/notifications/getNotifications',
 	      dataType: 'json',
 	      beforeSend: function() {
-	          $('#notifications-list').html('<li class="text-center list-group-item" id="preloading"><div class="spinner-border" role="status"><span></span></div> Loading...</li>');
+	          $('#notifications-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 	          $('#nav-user-main #notifications-list').html('');
 	      },
 	      complete: function () {
@@ -218,10 +218,8 @@ function totalNotifications(data) {
 		url: 'account/notifications/markRead',
 		dataType: 'json',
 		beforeSend: function() {
-	        $('#notifications-list').html('<li class="text-center list-group-item" id="preloading"><div class="spinner-border" role="status"><span></span></div> Loading...</li>');
+	        $('#notifications-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 	        $('#notifications-count').html('');
-	        // destroy the tooltip
-	        $(this).tooltip('dispose');
 	    },
 	    complete: function () {
 	        $('#preloading').remove();
@@ -237,7 +235,7 @@ function totalNotifications(data) {
 	      url: 'common/header/getMessages',
 	      dataType: 'json',
 	      beforeSend: function() {
-	          $('#message-list').html('<li class="text-center list-group-item" id="preloading"><div class="spinner-border" role="status"><span></span></div> Loading...</li>');
+	          $('#message-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 	          $('#message-count').html('');
 	      },
 	      complete: function () {

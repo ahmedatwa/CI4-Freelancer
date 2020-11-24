@@ -109,6 +109,7 @@ $(document).ready(function(){
 			html += '<div class="clearfix"></div>'; 
 			html += '</div>'; 
 			$('#v-pills-tabContent #v-pills-' + data.sender_id).append(html);
+			$(".tab-content").animate({ scrollTop: $(document).height() }, 1000);
 		}
 	}
 	// trigger enter keydown
@@ -127,9 +128,7 @@ $(document).ready(function(){
 	      url: 'account/message/sendMessage',
 	      type: 'post',
 	      data:$("#form-message").serialize(),
-	      success:function() { 
-	      	console.log('ok')
-	      }    
+	      success:function() {}    
 	  	});
 	    }
      });

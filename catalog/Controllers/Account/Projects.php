@@ -13,7 +13,7 @@ class Projects extends \Catalog\Controllers\BaseController
 
         $projectModel = new ProjectModel();
 
-        $this->template->setTitle(lang('account/myprojects.heading_title'));
+        $this->template->setTitle(lang('account/projects.heading_title'));
             
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -27,7 +27,7 @@ class Projects extends \Catalog\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('account/myprojects.heading_title'),
+            'text' => lang('account/projects.heading_title'),
             'href' => base_url('account_project'),
         ];
 
@@ -50,7 +50,7 @@ class Projects extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['heading_title'] = lang('account/myprojects.heading_title');
+        $data['heading_title'] = lang('account/projects.heading_title');
 
         $data['customer_id'] = $customer_id;
         $data['pid'] = $customer_id;

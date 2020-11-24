@@ -9,8 +9,8 @@ class Milestone extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        if ($this->request->getVar('project_id')) {
-            $project_id = $this->request->getVar('project_id');
+        if ($this->request->getVar('pid')) {
+            $project_id = $this->request->getVar('pid');
         } else {
             $project_id = 0;
         }
@@ -73,6 +73,7 @@ class Milestone extends \Catalog\Controllers\BaseController
         $data['customer_id'] = $this->customer->getCustomerId();
 
         $data['heading_title'] = lang('project/project.text_manage_bidders');
+        $data['help_milestone'] = lang('freelancer/milestone.help_milestone');
 
         return view('freelancer/milestone', $data);
     }

@@ -3,7 +3,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-5 offset-xl-3">
+				<?php if ($error_warning) { ?>
+				<div class="login-register-page shadow p-3 mb-5 bg-white rounded animate__animated animate__shakeX">
+				<?php } else { ?>
 				<div class="login-register-page shadow p-3 mb-5 bg-white rounded">
+				<?php } ?>	
 					<!-- Welcome Text -->
 					<div class="welcome-text">
 						<h3 style="font-size: 26px;"><?php echo $text_register; ?></h3>

@@ -110,10 +110,11 @@
           <div class="multi-column-dropdown col-6">
             <h4><?php echo $text_account; ?></h4>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<?php echo $dashboard; ?>"> <?php echo $text_dashboard; ?></a>
-            <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_setting; ?></a>
-            <a class="dropdown-item" href="<?php echo $profile; ?>"> <?php echo $text_profile; ?></a>
-            <a role="button" id="button-logout" class="dropdown-item"> <?php echo $text_logout; ?></a>
+                <a class="dropdown-item" href="<?php echo $dashboard; ?>"> <?php echo $text_dashboard; ?></a>
+                <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_setting; ?></a>
+                <a class="dropdown-item" href="<?php echo $account_project; ?>"> <?php echo $text_my_projects; ?></a>
+                <a class="dropdown-item" href="<?php echo $profile; ?>"> <?php echo $text_profile; ?></a>
+                <a class="dropdown-item" href="#" id="button-logout"> <?php echo $text_logout; ?></a>
           </div>
         </div>
       </div>

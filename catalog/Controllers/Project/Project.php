@@ -2,6 +2,8 @@
 
 use \Catalog\Models\Catalog\ProjectModel;
 use \Catalog\Models\Catalog\CategoryModel;
+use \Catalog\Models\Account\ReviewModel;
+use \Catalog\Models\Tool\DownloadModel;
 
 class Project extends \Catalog\Controllers\BaseController
 {
@@ -104,7 +106,7 @@ class Project extends \Catalog\Controllers\BaseController
         
         $results = $projectModel->getProjects($filter_data);
         $total = $projectModel->getTotalProjects($filter_data);
-        $reviewModel = new \Catalog\Models\Account\ReviewModel();
+        $reviewModel = new ReviewModel();
 
         foreach ($results as $result) {
             // SEO Query
@@ -296,7 +298,7 @@ class Project extends \Catalog\Controllers\BaseController
 
 
         if ($project_info) {
-            $reviewModel = new \Catalog\Models\Account\ReviewModel();
+            $reviewModel = new ReviewModel();
 
             $data['project_id']  = $project_info['project_id'];
             $data['name']        = $project_info['name'];
@@ -306,7 +308,7 @@ class Project extends \Catalog\Controllers\BaseController
             $data['viewed']      = $project_info['viewed'];
 
             // attachments
-            $downloadModel = new \Catalog\Models\Tool\DownloadModel();
+            $downloadModel = new DownloadModel();
             $data['download']        = base_url('tool/download?download_id=' . $project_info['download_id']);
             $data['attachment']      = $downloadModel->where('download_id', $project_info['download_id'])->findColumn('filename')[0];
             $data['attachment_ext'] =  strtoupper($downloadModel->where('download_id', $project_info['download_id'])->findColumn('ext')[0]);
@@ -326,7 +328,7 @@ class Project extends \Catalog\Controllers\BaseController
             $data['runtime'] = $project_info['runtime'];
             
             $data['rating']      = round($reviewModel->getAvgReviewByEmployerId($project_info['employer_id']));
-            $data['employer']    = $project_info['employer'];
+            $data['employer']    = ($project_info['employer'] == '') ? $project_info['employer'] : '@' . $project_info['username'];
             $data['employer_id'] = $project_info['employer_id'];
             $data['status'] = $projectModel->getStatusByProjectId($project_info['project_id']);
 

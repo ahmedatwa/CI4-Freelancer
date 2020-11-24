@@ -257,6 +257,7 @@ class Message extends \Catalog\Controllers\BaseController
         $data['customer_id'] = $this->customer->getCustomerId();
         $data['sender_id'] = $results[0]['sender_id'] ?? 0;
         $data['project_id'] = $project_id;
+        $data['help_messages'] = lang('account/message.help_message');
 
         $data['heading_title'] = lang('project/project.text_manage_bidders');
 

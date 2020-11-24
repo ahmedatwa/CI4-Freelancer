@@ -1,8 +1,14 @@
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+  <i class="fas fa-info-circle"></i> <?php echo $help_messages; ?>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <?php if ($project_messages) { ?>
 	<div class="header-notifications-content">
 		<div class="header-notifications-scroll">
 			<span class="ml-4 float-right">
-                <button type="button" class="btn btn-dark btn-sm" onclick="sendMessage(<?php echo $customer_id; ?>, <?php echo $sender_id; ?>);" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fas fa-reply"> Reply</i></button></span>
+                <button type="button" class="btn btn-dark btn-sm" onclick="sendMessage(<?php echo $customer_id; ?>, <?php echo $sender_id; ?>);" data-toggle="tooltip" data-placement="top" title="Send Message"><i class="icon-feather-mail"> Send Message</i></button></span>
 			<ul class="list-unstyled">
 				<!-- Notification -->
 				<?php foreach ($project_messages as $value) { ?>

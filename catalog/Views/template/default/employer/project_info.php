@@ -8,12 +8,12 @@
         <div class="col-12 mb-4">
         <h4 class="mb-2">Project Details: </h4>
             <ul class="list-group list-group-flush mb-4 col-6">
-                  <li class="list-group-item list-group-item-light"><strong>Project ID: </strong><?php echo $project_id; ?></li>
-                  <li class="list-group-item list-group-item-light"><strong>Budget: </strong><?php echo $budget; ?></li>
-                  <li class="list-group-item list-group-item-light"><strong>Type: </strong><?php echo $type; ?></li>
+                  <li class="list-group-item"><strong>Project ID: </strong><?php echo $project_id; ?></li>
+                  <li class="list-group-item"><strong>Budget: </strong><?php echo $budget; ?></li>
+                  <li class="list-group-item"><strong>Type: </strong><?php echo $type; ?></li>
                   <?php if ($freelancer) { ?>
-                  <li class="list-group-item list-group-item-light"><strong>Freelancer: </strong>@<a href="<?php echo $freelancer_profile; ?>"><?php echo $freelancer; ?></a></li>
-                  <li class="list-group-item list-group-item-light"><strong>Bid Quote: </strong><?php echo $bid_amount; ?></li>
+                  <li class="list-group-item"><strong>Freelancer: </strong>@<a href="<?php echo $freelancer_profile; ?>"><?php echo $freelancer; ?></a></li>
+                  <li class="list-group-item"><strong>Bid Quote: </strong><?php echo $bid_amount; ?></li>
               <?php } ?>
             </ul>
         </div>

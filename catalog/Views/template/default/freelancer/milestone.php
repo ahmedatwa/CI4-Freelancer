@@ -1,5 +1,15 @@
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+  <i class="fas fa-info-circle"></i> <?php echo $help_milestone; ?>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <div class="table-responsive" id="milestone-table">
-	<button class="button my-4" id="milestone-button-add" onclick="addMilestone();">Create Milestone </button>
+    <?php if ($project_id) { ?>
+	<button class="btn btn-primary my-4" id="milestone-button-add" onclick="addMilestone();">Create Milestone </button>
+    <?php } else { ?>
+    <button class="btn btn-primary my-4" id="milestone-button-add" disabled>Create Milestone </button>
+    <?php } ?>
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
