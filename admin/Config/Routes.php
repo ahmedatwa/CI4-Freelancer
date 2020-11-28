@@ -42,10 +42,10 @@ $routes->group('extensions', ['namespace' => 'Extensions\Controllers'], function
     $routes->add('dashboard/activity', 'Dashboard\Activity::index');
     $routes->add('dashboard/online', 'Dashboard\Online::index');
     
-    $routes->add('job', 'Job\Job::index');
-    $routes->add('job/add', 'Job\Job::add');
-    $routes->add('job/edit', 'Job\Job::edit');
-    $routes->add('job/delete', 'Job\Job::delete');
+    $routes->add('job/job', 'Job\Job::index');
+    $routes->add('job/job/add', 'Job\Job::add');
+    $routes->add('job/job/edit', 'Job\Job::edit');
+    $routes->add('job/job/delete', 'Job\Job::delete');
     // Wallet
     $routes->add('wallet/wallet', 'Wallet\Wallet::index');
     // Themes

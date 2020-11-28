@@ -11,6 +11,7 @@ return [
 	'text_dashboard'            => 'Dashboard',
 	'text_setting'              => 'Settings',
 	'text_blog'                 => 'Blog',
+	'text_job'                  => 'Browse Local Jobs',
 	'text_add_project'          => 'Post a Project',
 	'text_profile'              => 'View Profile',
 	'text_finance'              => 'Finance',

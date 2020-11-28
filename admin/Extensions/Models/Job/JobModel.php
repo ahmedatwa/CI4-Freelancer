@@ -34,9 +34,9 @@ class JobModel extends \CodeIgniter\Model
     }
 
 
-	public function getJobs(array $data = [])
+    public function getJobs(array $data = [])
     {
-		$builder = $this->db->table('job j');
+        $builder = $this->db->table('job j');
         $builder->select('j.job_id, jd.name AS name, j.status, j.date_added, j.salary, CONCAT(c.firstname, " ",c.lastname) AS employer, j.type');
         $builder->join('job_description jd', 'j.job_id = jd.job_id', 'LEFT');
         $builder->join('customer c', 'j.employer_id = c.customer_id', 'LEFT');
@@ -46,9 +46,9 @@ class JobModel extends \CodeIgniter\Model
             $builder->where('p.date_added', $data['filter_date_added']);
         }
 
-        $sorting_data = array(
+        $sorting_data = [
             'jd.name',
-        );
+        ];
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
             $data['order_by'] = 'DESC';
@@ -72,7 +72,7 @@ class JobModel extends \CodeIgniter\Model
 
     public function getJob($job_id)
     {
-		$builder = $this->db->table('job j');
+        $builder = $this->db->table('job j');
         $builder->select();
         $query = $builder->get();
         return $query->getRowArray();
@@ -87,27 +87,27 @@ class JobModel extends \CodeIgniter\Model
         $builder->where('job_id', $job_id);
         $query = $builder->get();
         foreach ($query->getResultArray() as $result) {
-             $job_description = array(
+            $job_description = [
                 'name'             => $result['name'],
                 'description'      => $result['description'],
                 'meta_title'       => $result['meta_title'],
                 'meta_description' => $result['meta_description'],
                 'meta_keyword'     => $result['meta_keyword'],
-             );
-         }
-         return $job_description;
+             ];
+        }
+        return $job_description;
     }
-	
+    
     public function addJob($data)
     {
         $builder = $this->db->table($this->table);
-        $job_data = array(
+        $job_data = [
             'sort_order' => $data['sort_order'],
             'status'     => $data['status'],
             'type'       => $data['type'],
             'salary'     => $data['salary'],
-            'employer_id'=> $data['employer_id'],
-        );
+            'employer_id'=> $data['customer_id'],
+        ];
 
         $builder->set('date_added', 'NOW()', false);
         $builder->set('date_modified', 'NOW()', false);
@@ -118,44 +118,38 @@ class JobModel extends \CodeIgniter\Model
         // job_description Query
         if (isset($data['job_description'])) {
             $job_description_table = $this->db->table('job_description');
-                $job_description_data = array(
+            $job_description_data = [
                     'job_id'           => $job_id,
                     'name'             => $data['job_description']['name'],
                     'description'      => $data['job_description']['description'],
                     'meta_title'       => $data['job_description']['meta_title'],
                     'meta_description' => $data['job_description']['meta_description'],
                     'meta_keyword'     => $data['job_description']['meta_keyword'],
-                );
-                $job_description_table->insert($job_description_data);
+                ];
+            $job_description_table->insert($job_description_data);
         }
         // Seo Url
-        if (isset($data['seo_url'])) {
-            $seo_url = $this->db->table('seo_url');
-            foreach ($data['seo_url'] as $language_id => $keyword) {
-                if (!empty($keyword)) {
-                    $seo_url_data = array(
-                            'site_id'     => 0,
-                            'language_id' => $language_id,
-                            'query'       => 'job_id=' . $job_id,
-                            'keyword'     => $keyword,
-                        );
-                    $seo_url->insert($seo_url_data);
-                }
-            }
-        }
+        $seo_url = $this->db->table('seo_url');
+        $seo_url_data = [
+            'site_id'     => 0,
+            'language_id' => 1,
+            'query'       => 'job_id=' . $job_id,
+            'keyword'     => generateSeoUrl($data['job_description']['name']),
+        ];
+        $seo_url->insert($seo_url_data);
     }
     
     public function editJob($job_id, $data)
     {
         $builder = $this->db->table($this->table);
-        $job_data = array(
+        $job_data = [
             'sort_order' => $data['sort_order'],
             'status'     => $data['status'],
             'type'       => $data['type'],
             'salary'     => $data['salary'],
-            'employer_id'=> $data['employer_id'],
+            'employer_id'=> $data['customer_id'],
 
-        );
+        ];
         
         $builder->set('date_modified', 'NOW()', false);
         $builder->where('job_id', $job_id);
@@ -165,43 +159,120 @@ class JobModel extends \CodeIgniter\Model
         if (isset($data['job_description'])) {
             $job_description_table = $this->db->table('job_description');
             $job_description_table->delete(['job_id' => $job_id]);
-                $job_description_data = array(
+            $job_description_data = [
                     'job_id'           => $job_id,
                     'name'             => $data['job_description']['name'],
                     'description'      => $data['job_description']['description'],
                     'meta_title'       => $data['job_description']['meta_title'],
                     'meta_description' => $data['job_description']['meta_description'],
                     'meta_keyword'     => $data['job_description']['meta_keyword'],
-                );
+                ];
             $job_description_table->insert($job_description_data);
         }
         // Seo Url
-        if (isset($data['seo_url'])) {
-            $seo_url = $this->db->table('seo_url');
-            foreach ($data['seo_url'] as $language_id => $keyword) {
-                if (!empty($keyword)) {
-                    $seo_url_data = array(
-                            'site_id'     => 0,
-                            'language_id' => $language_id,
-                            'query'       => 'job_id=' . $job_id,
-                            'keyword'     => $keyword,
-                        );
-                    $seo_url->insert($seo_url_data);
-                }
-            }
-        }
+        $seo_url = $this->db->table('seo_url');
+        $seo_url_data = [
+            'site_id'     => 0,
+            'language_id' => 1,
+            'query'       => 'job_id=' . $job_id,
+            'keyword'     => generateSeoUrl($data['job_description']['name']),
+        ];
+        $seo_url->insert($seo_url_data);
     }
 
-	public function deleteJob($job_id)
+    public function deleteJob($job_id)
     {
-		$builder = $this->db->table($this->table);
-		$builder->delete(['job_id' => $job_id]);
+        $builder = $this->db->table($this->table);
+        $builder->delete(['job_id' => $job_id]);
 
-		$builder_description = $this->db->table('job_description');
+        $builder_description = $this->db->table('job_description');
         $builder_description->delete(['job_id' => $job_id]);
     }
 
 
+    public function install()
+    {
+        $forge = \Config\Database::forge();
+
+        $job_post = [
+        'job_id' => [
+                'type'  => 'INT',
+                'constraint'     => '11',
+                'auto_increment' => true
+        ],
+        'employer_id' => [
+                'type' => 'INT',
+                'constraint' => '11',
+        ],
+        'salary' => [
+                'type' =>'DECIMAL',
+                'constraint' => 15,4,
+        ],
+        'type' => [
+                'type' => 'TINYINT',
+                'constraint' => 1,
+        ],
+        'viewed' => [
+                'type' => 'INT',
+                'constraint' => '5',
+        ],
+        'sort_order' => [
+                'type'  => 'INT',
+                'constraint' => '11',
+        ],
+        'status' => [
+                'type' => 'TINYINT',
+                'constraint' => 1,
+        ],
+        'date_added' => [
+                'type' => 'DATETIME',
+        ],
+        'date_modified' => [
+                'type' => 'DATETIME',
+        ],
+      ];
+
+        $forge->addField($job_post);
+        $forge->addPrimaryKey('job_id');
+        $forge->createTable('job', true);
+
+        $job_description = [
+        'job_id' => [
+                'type'       => 'INT',
+                'constraint' => '11',
+        ],
+        'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 100,
+        ],
+        'description' => [
+                'type'       => 'TEXT',
+        ],
+        'meta_title' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+        ],
+        'meta_description' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+        ],
+        'meta_keyword' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+        ],
+      ];
+
+        $forge->addField($job_description);
+        $forge->addPrimaryKey('job_id');
+        $forge->createTable('job_description', true);
+    }
+
+    public function uninstall()
+    {
+        $forge = \Config\Database::forge();
+        $forge->dropTable('job', true);
+        $forge->dropTable('job_description', true);
+    }
 
 
     // -----------------------------------------------------------------

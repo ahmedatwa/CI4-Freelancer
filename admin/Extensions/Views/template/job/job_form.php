@@ -82,40 +82,14 @@
 							<div class="form-group row">
 								<label class="col-md-2 col-form-label"><?php echo $entry_employer; ?></label>
 								<div class="col-md-10">
-									<select class="form-control" name="employer_id" data-width="100%">
+									<select class="form-control" name="customer_id" data-width="100%">
 										<option></option>
-										<?php foreach($employers as $employer) { ?>
-										<?php if ($employer['customer_id'] == $employer_id) { ?> 
-											<option value="<?php echo $employer['customer_id']; ?>" selected><?php echo $employer['name']; ?></option>
+										<?php foreach($customers as $customer) { ?>
+										<?php if ($customer['customer_id'] == $customer_id) { ?> 
+											<option value="<?php echo $customer['customer_id']; ?>" selected><?php echo $customer['name']; ?></option>
 										<?php } else { ?>
-											<option value="<?php echo $employer['customer_id']; ?>"><?php echo $employer['name']; ?></option>
+											<option value="<?php echo $customer['customer_id']; ?>"><?php echo $customer['name']; ?></option>
 										<?php } ?>
-										<?php } ?>
-									</select>
-								</div>
-							</div> 
-							<div class="form-group row">
-								<label for="input-seo-url" class="col-md-2 col-form-label"><?php echo $entry_seo_url; ?></label>
-								<div class="col-md-10">
-									<input class="form-control" type="text" id="input-seo-url" name="seo_url[1][keyword]" value="<?php echo $seo_url[1]['keyword'] ?? ''; ?>">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="input-sort-order" class="col-md-2 col-form-label"><?php echo $entry_sort_order; ?></label>
-								<div class="col-md-10">
-									<input class="form-control" type="text" id="input-sort-order" name="sort_order" value="<?php echo $sort_order; ?>">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-2 col-form-label"><?php echo $entry_status; ?></label>
-								<div class="col-md-10">
-									<select class="form-control" name="status">
-										<?php if ($status) { ?> 
-											<option value="1" selected><?php echo $text_enabled; ?></option>
-											<option value="0"><?php echo $text_disabled; ?></option>
-										<?php } else { ?>
-											<option value="1"><?php echo $text_enabled; ?></option>
-											<option value="0" selected><?php echo $text_disabled; ?></option>
 										<?php } ?>
 									</select>
 								</div>
@@ -154,6 +128,26 @@
 									<input class="form-control" type="text" id="input-salary" name="salary" value="<?php echo $salary; ?>">
 								</div>
 							</div>
+							<div class="form-group row">
+								<label for="input-sort-order" class="col-md-2 col-form-label"><?php echo $entry_sort_order; ?></label>
+								<div class="col-md-10">
+									<input class="form-control" type="text" id="input-sort-order" name="sort_order" value="<?php echo $sort_order; ?>">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-2 col-form-label"><?php echo $entry_status; ?></label>
+								<div class="col-md-10">
+									<select class="form-control" name="status">
+										<?php if ($status) { ?> 
+											<option value="1" selected><?php echo $text_enabled; ?></option>
+											<option value="0"><?php echo $text_disabled; ?></option>
+										<?php } else { ?>
+											<option value="1"><?php echo $text_enabled; ?></option>
+											<option value="0" selected><?php echo $text_disabled; ?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div> 
 						</div>
 					</div>
 				</form>
@@ -169,32 +163,32 @@
 <link href="assets/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css">
 <script src="assets/vendor/select2/js/select2.min.js"></script> 
 <script type="text/javascript">
-$('select[name=\'employer_id\']').select2({
-		ajax: {
-			url: "index.php/employer/employer/autocomplete?user_token=<?php echo $user_token; ?>",
-			dataType: 'json',
-			delay: 250,
-			data: function (params) {
-				return {
-					employer_id: params.term,
-				};
-			},
-			processResults: function (data, params) {
-				var results = $.map(data, function (item) {
-					item.id = item.employer_id;
-					item.text = item.name;
-					return item;
-				});
-				return {
-					results: results,
-				};
-			},
-			cache: true
-		},
-	minimumInputLength: 3,
-	placeholder: '<?php echo $text_select; ?>',
-	allowClear: true,
-	minimumResultsForSearch: 5
+$('select[name=\'customer_id\']').select2({
+ajax: {
+	url: "index.php/customer/customer/autocomplete?user_token=<?php echo $user_token; ?>",
+	dataType: 'json',
+	delay: 250,
+	data: function (params) {
+		return {
+			filter_name: params.term,
+		};
+	},
+	processResults: function (data, params) {
+		var results = $.map(data, function (item) {
+			item.id = item.customer_id;
+			item.text = item.name;
+			return item;
+		});
+		return {
+			results: results,
+		};
+	},
+	cache: true
+},
+minimumInputLength: 1,
+placeholder: '<?php echo $text_select; ?>',
+allowClear: true,
+minimumResultsForSearch: 5
 });
 </script>
 <!-- // tags input -->
@@ -203,13 +197,6 @@ $('select[name=\'employer_id\']').select2({
 		maxTags: 5,
 		trimValue: true,
 		confirmKeys: [13, 44, 32]
-	});
-</script>
-<script type="text/javascript">
-	$("#input-name").keyup(function(){
-		var $input = $(this).val().trim();
-		var keyword = $input.replace(/[\W_]+/g,"-").toLowerCase();
-		$("#input-seo-url").val(keyword);
 	});
 </script>
 <?php echo $footer; ?>

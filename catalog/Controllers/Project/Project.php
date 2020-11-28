@@ -602,8 +602,7 @@ class Project extends \Catalog\Controllers\BaseController
             $json['uri'] = (string) $uri;
 
         }
-
-
+        
         return $this->response->setJSON($json);
     }
 

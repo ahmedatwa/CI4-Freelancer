@@ -71,7 +71,7 @@ class Online extends \Admin\Controllers\BaseController
 
     protected function validateForm()
     {
-        if (!$this->user->hasPermission('modify', 'dashboard/online')) {
+        if (!$this->user->hasPermission('modify', 'extensions/dashboard/online')) {
             $this->session->setFlashdata('error_warning', lang('dashboard/online.error_permission'));
         }
         return true;

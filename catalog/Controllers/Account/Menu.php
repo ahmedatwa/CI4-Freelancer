@@ -26,6 +26,15 @@ class Menu extends \Catalog\Controllers\BaseController
         ];
 
         $data['menus'][] = [
+            'id'       => 'menu-manage',
+            'icon'     => 'fas fa-briefcase',
+            'class'    => '',
+            'name'     => lang('account/menu.text_my_local_jobs'),
+            'href'     => route_to('account_jobs') ? route_to('account_jobs') : base_url('account/jobs'),
+            'children' => [],
+        ];
+
+        $data['menus'][] = [
             'id'       => 'menu-start',
             'icon'     => 'icon-material-outline-question-answer',
             'class'    => '',

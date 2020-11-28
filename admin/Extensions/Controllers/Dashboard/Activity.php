@@ -76,7 +76,7 @@ class Activity extends \Admin\Controllers\BaseController
   
     protected function validateForm()
     {
-        if (!$this->user->hasPermission('modify', 'dashboard/activity')) {
+        if (!$this->user->hasPermission('modify', 'extensions/dashboard/activity')) {
             $this->session->setFlashdata('error_warning', lang('dashboard/activity.error_permission'));
             return false;
         }

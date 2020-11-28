@@ -7,6 +7,7 @@ return [
     'text_settings'        => 'Settings',
     'text_logout'          => 'Logout',
     'text_projects'        => 'Projects',
+    'text_my_local_jobs'   => 'Local Jobs',
     'text_dispute'         => 'Disputes',
     'text_my_projects'     => 'Projects',
     'text_manage_bidders'  => 'Manage Bidders',

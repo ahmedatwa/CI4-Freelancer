@@ -36,13 +36,20 @@ $routes->set404Override(function () {
 
 $routes->add('/', 'Common/Home::index');
 // Information
-$routes->add('information/(:any)', 'Information\Information::index/$1', ['as' => 'information']);
+$routes->group('information', function ($routes) {
+  $routes->add('i(:num)/(:any)', 'Information\Information::index/$1/$2', ['as' => 'information']);
+});
 $routes->add('contact', 'Information\Contact::index');
 
 // Blog
 $routes->group('blog', function ($routes) {
     $routes->add('/', 'Extension\Blog\Blog::index', ['as' => 'blog']);
     $routes->add('p(:num)/(:any)', 'Extension\Blog\Blog::getPost/$1/$2', ['as' => 'blog_post']);
+});
+// Local Jobs
+$routes->group('local', function ($routes) {
+    $routes->add('jobs/', 'Extension\Job\Job::index', ['as' => 'local_jobs']);
+    $routes->add('jobs/j(:num)/(:any)', 'Extension\Job\Job::info/$1/$2', ['as' => 'local_job']);
 });
 
 // Freelancers
@@ -65,6 +72,7 @@ $routes->group('account', function ($routes) {
 	$routes->add('logout', 'Account\Logout::index', ['as' => 'account_logout']);
 	$routes->add('projects', 'Account\Projects::index', ['as' => 'account_project']);
 	$routes->add('dispute', 'Account\Dispute::index', ['as' => 'account_dispute']);
+	$routes->add('jobs', 'Account\Jobs::index', ['as' => 'account_job']);
 
 });
 
@@ -74,11 +82,7 @@ $routes->add('add-project', 'Project\Project::add');
 $routes->add('category/c(:num)/(:any)', 'Project\Project::index', ['as' => 'category']);
 $routes->add('projects', 'Project\Project::index', ['as' => 'projects']);
 $routes->add('service/(:any)', 'Project\Project::info/$1', ['as' => 'single_project']);
-
 // Category
-$routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
-
-
 $routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
 /**
  * --------------------------------------------------------------------

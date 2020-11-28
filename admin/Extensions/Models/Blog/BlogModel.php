@@ -9,8 +9,6 @@ class BlogModel extends \CodeIgniter\Model
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
     // Password Hashing Events
-    // protected $beforeInsert = ['hashPassword'];
-    // protected $beforeUpdate = ['hashPassword'];
     // User Activity Events
     protected $afterInsert = ['afterInsertEvent'];
     protected $afterUpdate = ['afterUpdateEvent'];

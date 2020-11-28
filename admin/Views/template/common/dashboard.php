@@ -15,7 +15,6 @@
           </nav>	
       </div>
   </div>
-
   <div class="container-fluid dashboard-tiles">
     <?php if ($error_install) { ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -29,15 +28,10 @@
         <div id="dashboard-tiles">                            
         <div class="row">
         <?php foreach($dashboards as $dashboard) { ?>
-            <?php if ($dashboard['width'] <= 3 ) {  ?>
-                <div class="col-md-<?php echo $dashboard['width']; ?>">
-                    <?php echo $dashboard['output']; ?>
-                </div>
-            <?php } else { ?>
                 <div class="col-<?php echo $dashboard['width']; ?>">
                     <?php echo $dashboard['output']; ?>
                 </div>
-            <?php } ?> 
+            
         <?php } ?> 
         </div>
        </div> 

@@ -2,11 +2,12 @@
 
 class Customer
 {
-    protected $customer_id;
-    protected $customer_group_id;
-    protected $customer_name;
-    protected $customer_image;
-    protected $customer_username;
+    protected $customerID;
+    protected $customerGroupID;
+    protected $customerName;
+    protected $customerImage;
+    protected $customerUsername;
+    protected $customerEmail;
     protected $permission = [];
     protected $session;
     protected $db;
@@ -28,14 +29,14 @@ class Customer
                 'status'      => 1
             ]);
 
-            $row = $builder->get()
-                           ->getRowArray();
+            $row = $builder->get()->getRowArray();
             if ($row) {
-                $this->customer_id       = $row['customer_id'];
-                $this->customer_group_id = $row['customer_group_id'];
-                $this->customer_name     = $row['firstname'] . ' ' . $row['lastname'];
-                $this->customer_username = $row['username'];
-                $this->customer_image    = $row['image'];
+                $this->customerID       = $row['customer_id'];
+                $this->customerGroupID  = $row['customer_group_id'];
+                $this->customerName     = $row['firstname'] . ' ' . $row['lastname'];
+                $this->customerUsername = $row['username'];
+                $this->customerImage    = $row['image'];
+                $this->customerEmail    = $row['email'];
             } else {
                 $this->logout();
             }
@@ -57,7 +58,7 @@ class Customer
             // Verify stored hash against DB password
             if (password_verify($password, $row['password'])) {
                 // The cost parameter can change over time as hardware improves
-                $options = array('cost' => 11);
+                $options = ['cost' => 11];
                 // Check if a newer hashing algorithm is available
                 // or the cost has changed
                 if (password_needs_rehash($row['password'], PASSWORD_BCRYPT, $options)) {
@@ -65,17 +66,19 @@ class Customer
                     $newHash = password_hash($password, PASSWORD_BCRYPT, $options);
                 }
               
-                $this->customer_id       = $row['customer_id'];
-                $this->customer_group_id = $row['customer_group_id'];
-                $this->customer_name     = $row['firstname'] . ' ' . $row['lastname'];
-                $this->customer_username = $row['username'];
-                $this->customer_image    = $row['image'];
-                // Build User Data Session Array
+                $this->customerID       = $row['customer_id'];
+                $this->customerGroupID  = $row['customer_group_id'];
+                $this->customerName     = $row['firstname'] . ' ' . $row['lastname'];
+                $this->customerUsername = $row['username'];
+                $this->customerImage    = $row['image'];
+                $this->customerEmail    = $row['email'];
+                // Build User Data Session []
                 $session_data = [
                     'customer_id'       => $row['customer_id'],
                     'customer_name'     => $row['firstname'] . ' ' . $row['lastname'],
                     'username'          => $row['username'],
                     'customer_group_id' => $row['customer_group_id'],
+                    'customer_email'    => $row['email'],
                     'isLogged'          => (bool) true,
                 ];
                 // close any open sessions
@@ -94,17 +97,17 @@ class Customer
 
     public function getCustomerId()
     {
-        return $this->customer_id ?? 0;
+        return $this->customerID ?? 0;
     }
 
     public function getCustomerName()
     {
-        return $this->customer_name ?? '';
+        return $this->customerName ?? '';
     }
 
     public function getCustomerUserName()
     {
-        return $this->customer_username ?? '';
+        return $this->customerUsername ?? '';
     }
 
     public function logout()
@@ -113,25 +116,30 @@ class Customer
         $builder->set('online', 0)
                 ->where('customer_id', $this->session->get('customer_id'))
                 ->update();
-        $this->customer_id = '';
-        $this->customer_name = '';
-        $this->customer_group_id = '';
+        $this->customerID = '';
+        $this->customerName = '';
+        $this->customerGroupIDroupID = '';
         $this->session->destroy();
     }
 
     public function isLogged()
     {
-        return $this->customer_id ?? false;
+        return $this->customerID ?? false;
     }
 
-    public function getcustomerGroupId()
+    public function getCustomerGroupId()
     {
-        return $this->customer_group_id ?? 0;
+        return $this->customerGroupID ?? 0;
     }
 
-    public function getcustomerImage()
+    public function getCustomerImage()
     {
-        return $this->customer_image ?? '';
+        return $this->customerImage ?? '';
+    }
+
+    public function getCustomerEmail()
+    {
+        return $this->customerEmail ?? '';
     }
 
     // _________________________________________________

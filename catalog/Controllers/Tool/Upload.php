@@ -60,7 +60,7 @@ class Upload extends \Catalog\Controllers\BaseController
             }
 
             if (! $file->isValid()) {
-                $json['error'] = $file->getErrorString().'('.$file->getError().')';
+                $json['error'] = $file->getErrorString() . '(' . $file->getError() . ')';
             }
 
             if (!$json) {
@@ -81,7 +81,6 @@ class Upload extends \Catalog\Controllers\BaseController
                             'fileId'   => $newName,    // file identifier
                             'size'     => $newName,    // file size
                             'downloadUrl' => '',
-                            //'zoomData' => base_url('images/' . $file->getClientName()), // separate larger zoom data
                     ];
 
                     $json['append'] = true;

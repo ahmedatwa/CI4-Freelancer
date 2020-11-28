@@ -188,7 +188,7 @@ class Category extends \Admin\Controllers\BaseController
         }
 
         if ($this->request->getPost('icon')) {
-            $data['icon'] = $this->request->getPost('icon');
+            $data['icon'] = str_replace(array('<i class="', '>'), '', $this->request->getPost('icon'));
         } elseif (!empty($category_info)) {
             $data['icon'] = $category_info['icon'];
         } else {

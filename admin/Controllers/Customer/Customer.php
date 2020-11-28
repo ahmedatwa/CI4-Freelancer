@@ -316,11 +316,11 @@ class Customer extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->request->getVar('customer_id')) {
+        if ($this->request->getVar('filter_name')) {
              $customersModel = new Customers();
 
-            if ($this->request->getVar('customer_id')) {
-                $filter_name = html_entity_decode($this->request->getVar('customer_id'), ENT_QUOTES, 'UTF-8');
+            if ($this->request->getVar('filter_name')) {
+                $filter_name = html_entity_decode($this->request->getVar('filter_name'), ENT_QUOTES, 'UTF-8');
             } else {
                 $filter_name = null;
             }

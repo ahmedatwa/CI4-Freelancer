@@ -1,6 +1,8 @@
 <?php namespace Admin\Controllers\Extension;
 
-use Admin\Models\Setting\Extensions;
+use \Admin\Models\Setting\Extensions;
+use \Extensions\Models\Job\JobModel;
+use \Admin\Models\User\Users_group;
 
 class Job extends \Admin\Controllers\BaseController
 {
@@ -22,7 +24,7 @@ class Job extends \Admin\Controllers\BaseController
         if ($this->validateForm()) {
             $extensionsModel->install('job', $this->request->getVar('extension'));
 
-            $userGroupModel = new \Admin\Models\User\Users_group();
+            $userGroupModel = new Users_group();
 
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/job/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/job/' . $this->request->getVar('extension'));
@@ -30,7 +32,7 @@ class Job extends \Admin\Controllers\BaseController
             $settingModel = new \Admin\Models\Setting\Settings();
             $settingModel->editSetting('job_extension', ['job_extension_status' => 1]);
             // Call install Method is exists
-            $jobModel = new \Extensions\Models\Job\JobModel();
+            $jobModel = new JobModel();
             if (method_exists($jobModel, 'install')) {
                 $jobModel->install();
             }
@@ -51,7 +53,7 @@ class Job extends \Admin\Controllers\BaseController
             $extensionsModel->uninstall('job', $this->request->getVar('extension'));
 
             // Call uninstall Method is exists
-            $jobModel = new \Extensions\Models\Job\JobModel();
+            $jobModel = new JobModel();
             if (method_exists($jobModel, 'install')) {
                 $jobModel->uninstall();
             }
@@ -88,7 +90,7 @@ class Job extends \Admin\Controllers\BaseController
             }
         }
 
-        $data['extensions'] = array();
+        $data['extensions'] = [];
         
         helper('filesystem');
 
@@ -98,14 +100,14 @@ class Job extends \Admin\Controllers\BaseController
             foreach ($files as $file) {
                 $basename = basename($file, '.php');
                 
-                $data['extensions'][] = array(
+                $data['extensions'][] = [
                     'name'       => lang('job/' . strtolower($basename) . '.list.heading_title'),
                     'status'     => ($this->registry->get('job_extension_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'install'    => base_url('index.php/extension/job/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/job/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'installed'  => in_array(strtolower($basename), $installedExtensions),
                     'edit'       => base_url('index.php/extensions/job/' . strtolower($basename) .'?user_token=' . $this->request->getVar('user_token')),
-                );
+                ];
             }
         }
 

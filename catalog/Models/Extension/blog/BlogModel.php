@@ -1,4 +1,4 @@
-<?php namespace Catalog\Models\Extension\blog;
+<?php namespace Catalog\Models\Extension\Blog;
 
 class BlogModel extends \CodeIgniter\Model
 {

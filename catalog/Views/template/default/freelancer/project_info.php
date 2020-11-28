@@ -10,7 +10,7 @@
             <ul class="list-group list-group-flush mb-4 col-6">
                   <li class="list-group-item"><strong>Project ID: </strong><?php echo $project_id; ?></li>
                   <li class="list-group-item"><strong>Budget: </strong><?php echo $budget; ?></li>
-                  <li class="list-group-itemt"><strong>Type: </strong><?php echo $type; ?></li>
+                  <li class="list-group-item"><strong>Type: </strong><?php echo $type; ?></li>
                   <li class="list-group-item"><strong>Bid Quote: </strong><?php echo $bid_amount; ?></li>
             </ul>
         </div>

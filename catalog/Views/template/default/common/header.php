@@ -134,11 +134,12 @@
 <a class="navbar-brand pt-0 d-none d-lg-block ml-3" href="<?php echo $home; ?>">
  <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top" loading="lazy"></a>
  <!-- Logo End -->
- <ul class="navbar-nav p-md-2">
+ <ul class="navbar-nav p-md-3">
   <?php foreach ($informations as $information) { ?>
    <li class="nav-item"><a class="nav-link" href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
  <?php }  ?>
  <li class="nav-item"><a class="nav-link" href="<?php echo $blog; ?>"> <?php echo $text_blog; ?></a></li>
+ <li class="nav-item"><a class="nav-link" href="<?php echo $local_jobs; ?>"> <?php echo $text_job; ?></a></li>
 <li><a class="nav-link" href="<?php echo $projects; ?>"><?php echo $text_projects; ?></a></li>
 <?php if($logged) { ?>
 <ul class="list-unstyled d-lg-none mt-3">

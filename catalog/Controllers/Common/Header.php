@@ -80,7 +80,7 @@ class Header extends \Catalog\Controllers\BaseController
                 $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
-                'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/Information?fid=' . $result['information_id']),
+                'href'           => ($keyword) ? route_to('information', $result['information_id'], $keyword) : base_url('information/Information?fid=' . $result['information_id']),
             ];
             }
         }
@@ -115,6 +115,14 @@ class Header extends \Catalog\Controllers\BaseController
             $data['blog'] = '';
         }
 
+        // Local Jobs
+        if ($this->registry->get('job_extension_status')) {
+            $data['text_job'] = lang('common/header.text_job');
+            $data['local_jobs'] = route_to('local_jobs') ? route_to('local_jobs') : base_url('extension/job/job');
+        } else {
+            $data['text_job'] = '';
+            $data['local_jobs'] = '';
+        }
         // customer Menu
         $data['text_dashboard']   = lang('account/menu.text_dashboard');
         $data['text_my_projects'] = lang('account/menu.text_my_projects');

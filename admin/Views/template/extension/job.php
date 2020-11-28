@@ -1,6 +1,5 @@
-<!-- <fieldset>
+<fieldset>
   <legend><?php echo $heading_title; ?></legend>
- -->  
  <?php if ($error_warning) { ?>
   <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -43,4 +42,4 @@
       </tbody>
     </table>
   </div>
-<!-- </fieldset> -->
+</fieldset> 

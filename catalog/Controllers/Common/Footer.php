@@ -19,7 +19,7 @@ class Footer extends \Catalog\Controllers\BaseController
                 $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
-                'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/information?fid=' . $result['information_id']),
+                'href'           => ($keyword) ? route_to('information', $result['information_id'], $keyword) : base_url('information/information?fid=' . $result['information_id']),
             ];
             }
         }

@@ -305,10 +305,8 @@ $('input[name^=\'filter_type\']').on('click', function() {
 
 // <!-- // Filter Budget -->
 var mySlider = $("input[name=\'filter_budget\']").slider();
-
 mySlider.on('slideStop', function(e){
 	var filter = e.value;
-	
 	$.ajax({
 		url: 'project/project/filter?url=' + encodeURIComponent(uri),
 		dataType: 'json',

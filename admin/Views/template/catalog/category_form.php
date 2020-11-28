@@ -19,7 +19,6 @@
 			</nav>	
 		</div>
 	</div>
-	
 	<!-- Page Heaedr End -->
 	<div class="container-fluid">
 		<div class="alert alert-info" role="alert"><i class="fas fa-info-circle"></i> <?php echo $help_form; ?></div>
@@ -95,7 +94,7 @@
 						</div>
 						<div class="tab-pane" id="<?php echo $tab_data; ?>" role="tabpanel" aria-labelledby="<?php echo $tab_data; ?>-tab">
 							<div class="form-group row">
-								<label for="input-sort-order" class="col-md-2 col-form-label"><span data-toggle="tooltip" data-placement="top" title="<?php echo $help_icon; ?>"><?php echo $entry_icon; ?> <i class="fas fa-info-circle"></i></span></label>
+								<label for="input-sort-order" class="col-md-2 col-form-label"><?php echo $entry_icon; ?> <span data-toggle="tooltip" data-placement="top" title="<?php echo $help_icon; ?>"><i class="fas fa-info-circle"></i></span></label>
 								<div class="col-md-10">
 									<input class="form-control" type="text" placeholder="fas fa-sign-in-alt" id="input-icon" name="icon" value="<?php echo $icon; ?>">
 								</div>

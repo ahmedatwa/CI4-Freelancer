@@ -9,8 +9,8 @@ class Milestone extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        if ($this->request->getVar('pid')) {
-            $project_id = $this->request->getVar('pid');
+        if ($this->request->getVar('project_id')) {
+            $project_id = $this->request->getVar('project_id');
         } else {
             $project_id = 0;
         }
