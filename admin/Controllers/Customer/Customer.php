@@ -287,7 +287,7 @@ class Customer extends \Admin\Controllers\BaseController
             $customer_id = 0;
         }
 
-        $wallet_model = new \Admin\Models\Extension\Wallet\Wallets();
+        $walletModel = new \Extensions\Models\Wallet\WalletModel();
 
         $data['column_customer'] = lang('extension/wallet/wallet.list.column_customer');
         $data['column_total']    = lang('extension/wallet/wallet.list.column_total');
@@ -299,7 +299,7 @@ class Customer extends \Admin\Controllers\BaseController
         ];
 
         $data['wallets'] = [];
-        $results = $wallet_model->getCustomerWallet($filter_data);
+        $results = $walletModel->getCustomerWallet($filter_data);
 
         foreach ($results as $result) {
             $data['wallets'][] = [

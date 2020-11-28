@@ -345,7 +345,7 @@ class JobModel extends \CodeIgniter\Model
     public function getJobCandidates(array $data)
     {
         $builder = $this->db->table('job j');
-        $builder->select('ja.job_id, ja.date_added, ja.status, CONCAT(c.firstname, " ",c.lastname) AS name, j.type, c.email, ja.download_id');
+        $builder->select('ja.job_id, ja.job_applicant_id, ja.date_added, ja.status, CONCAT(c.firstname, " ",c.lastname) AS name, j.type, c.email, ja.download_id');
         $builder->join('job_applicants ja', 'j.job_id = ja.job_id', 'left');
         $builder->join('customer c', 'ja.customer_id = c.customer_id', 'left');
 
@@ -439,6 +439,14 @@ class JobModel extends \CodeIgniter\Model
         } else {
             return false;
         }
+    }
+
+    public function setApplicantStatus(int $job_applicant_id, int $status)
+    {
+        $builder = $this->db->table('job_applicants');
+        $builder->where('job_applicant_id', $job_applicant_id);
+        $builder->set('status', $status);
+        $builder->update();
     }
 
     // -----------------------------------------------------------------

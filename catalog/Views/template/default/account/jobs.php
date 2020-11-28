@@ -116,8 +116,8 @@ $('#myTab #employer-tab').on('click', function (e) {
 		    $('#employer-job-list').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError);
-		}
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
 });
 
@@ -146,8 +146,8 @@ $('#myTab #applicant-tab').on('click', function (e) {
 		    $('#applicant-job-list').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError);
-		}
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
 });
 

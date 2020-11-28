@@ -332,22 +332,41 @@ class jobs extends \Catalog\Controllers\BaseController
             }
 
             $data['candidates'][] = [
-                'job_id'     => $result['job_id'],
-                'name'       => $result['name'],
-                'email'      => $result['email'],
-                'download'   => base_url('tool/download?download_id=' . $result['download_id']),
-                'date_added' => lang('en.mediumDate', [strtotime($result['date_added'])]),
+                'job_applicant_id' => $result['job_applicant_id'],
+                'job_id'           => $result['job_id'],
+                'name'             => $result['name'],
+                'email'            => $result['email'],
+                'status'           => $status,
+                'download'         => base_url('tool/download?download_id=' . $result['download_id']),
+                'date_added'       => lang('en.mediumDate', [strtotime($result['date_added'])]),
             ];
         }
 
         $data['job_name'] = $jobModel->getJobNameByID($job_id);
         $data['total_candidates'] = $jobModel->getTotalApplicantsByJobID($job_id);
+
+        $data['text_under_review'] = lang('extension/job/job.text_under_review');
+        $data['text_screened'] = lang('extension/job/job.text_screened');
+        $data['text_short_listed'] = lang('extension/job/job.text_short_listed');
+
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
         // Pagination
         $pager = \Config\Services::pager();
         $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
 
         $this->template->output('extension/job/candidates-list', $data);
+    }
+
+    public function setJobApplicationStatus()
+    {
+        $json = [];
+        if ($this->request->getMethod() == 'post')
+        {
+            $jobModel = new JobModel();
+            $jobModel->setApplicantStatus($this->request->getPost('job_applicant_id'), $this->request->getPost('status'));
+            $json['success'] = lang('Success! Job Application status has been changed.');
+        }
+        return $this->response->setJSON($json);
     }
 
     public function add()

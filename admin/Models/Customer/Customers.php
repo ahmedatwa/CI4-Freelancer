@@ -105,10 +105,10 @@ class customers extends \CodeIgniter\Model
 
     public function getReviews(array $data = [])
     {
-        $builder = $this->db->table('customer_review cr');
-        $builder->select('cr.review_id, cr.rating, cr.status, cr.date_added, CONCAT(c.firstname, " ", c.lastname) AS employer, pd.name');
-        $builder->join('project_description pd', 'cr.project_id = pd.project_id', 'LEFT');
-        $builder->join('customer c', 'cr.employer_id = c.customer_id', 'LEFT');
+        $builder = $this->db->table('review r');
+        $builder->select('r.review_id, r.rating, r.status, r.date_added, CONCAT(c.firstname, " ", c.lastname) AS employer, pd.name');
+        $builder->join('project_description pd', 'r.project_id = pd.project_id', 'LEFT');
+        $builder->join('customer c', 'r.employer_id = c.customer_id', 'LEFT');
         $builder->where('pd.language_id', \Admin\Libraries\Registry::get('config_language_id'));
        
         if (!empty($data['filter_date_added'])) {
@@ -116,7 +116,7 @@ class customers extends \CodeIgniter\Model
         }
 
         $sorting_data = [
-            'cr.date_added',
+            'r.date_added',
         ];
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
