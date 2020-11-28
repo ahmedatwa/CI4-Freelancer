@@ -7,75 +7,75 @@
             <a href="<?php echo $add; ?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="<?php echo $button_add; ?>"><i class="fas fa-plus"></i></a>
             <button type="button" id="button-delete" data-toggle="tooltip" data-placement="top" class="btn btn-danger" title="<?php echo $button_delete;?>" disabled><i class="fa fa-trash"></i></button>
             <a href="<?php echo $cancel; ?>" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="<?php echo $button_cancel; ?>"><i class="fas fa-reply"></i></a>
-            </div>
-            <h1><?php echo $heading_title; ?> </h1>
-            <nav aria-label="breadcrumb" id="breadcrumb">
-               <ol class="breadcrumb">
-                   <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                      <li class="breadcrumb-item">
-                          <a href="<?php echo $breadcrumb['href']; ?>" class="breadcrumb-link"><?php echo $breadcrumb['text']; ?></a>
-                      </li>
-                  <?php } ?>
-              </ol>
-          </nav>	
-      </div>
-  </div>
-  <!-- Page Heaedr End -->
-  <div class="container-fluid">
+        </div>
+        <h1><?php echo $heading_title; ?> </h1>
+        <nav aria-label="breadcrumb" id="breadcrumb">
+         <ol class="breadcrumb">
+             <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+              <li class="breadcrumb-item">
+                  <a href="<?php echo $breadcrumb['href']; ?>" class="breadcrumb-link"><?php echo $breadcrumb['text']; ?></a>
+              </li>
+          <?php } ?>
+      </ol>
+  </nav>	
+</div>
+</div>
+<!-- Page Heaedr End -->
+<div class="container-fluid">
     <div class="card">
         <div class="card-header"><i class="far fa-edit"></i> <?php echo $text_list; ?></div>
         <div class="card-body">
             <form class="form-horizontal" enctype="multipart/form-data" id="form-location">
                 <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
                 <div class="table-responsive">
-                <table id="table-location" class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th width="1%" class="no-sort"><input type="checkbox"
-                            onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
-                        </th>
-                        <th width="60%"><?php echo $column_name; ?></th>
-                        <th><?php echo $column_type; ?></th>
-                        <th><?php echo $column_status; ?></th>
-                        <th><?php echo $column_action; ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($jobs) { ?>
-                        <?php foreach ($jobs as $job) { ?>
+                    <table id="table-location" class="table table-striped table-bordered">
+                        <thead>
                             <tr>
-                                <th scope="row">
-                                    <?php if (in_array($job['job_id'], $selected)) { ?>
-                                        <input type="checkbox" name="selected[]"
-                                        value="<?php echo $job['job_id']; ?>"
-                                        checked="checked" />
-                                    <?php } else { ?>
-                                        <input type="checkbox" name="selected[]"
-                                        value="<?php echo $job['job_id']; ?>" />
-                                    <?php } ?>
-                                </div>
-                            </th>
-                            <td><?php echo $job['name']; ?></td>
-                            <td><?php echo $job['type']; ?></td>
-                            <td><?php echo $job['status']; ?></td>
-                            <td class="text-center">
-                                <a href="<?php echo $job['edit']; ?>" class="btn btn-primary btn-sm"
-                                    data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>"><i
-                                    class="far fa-edit"></i></a></td>
-                                </tr>
-                            <?php } ?>
-                        <?php } else { ?>
-                            <tr>
-                                <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+                                <th width="1%" class="no-sort"><input type="checkbox"
+                                    onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                                </th>
+                                <th width="60%"><?php echo $column_name; ?></th>
+                                <th><?php echo $column_type; ?></th>
+                                <th><?php echo $column_status; ?></th>
+                                <th><?php echo $column_action; ?></th>
                             </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
-            </form>
-        </div><!-- Card Body -->
-    </div><!-- Card -->
-</div><!-- container-fluid -->
+                        </thead>
+                        <tbody>
+                            <?php if ($jobs) { ?>
+                                <?php foreach ($jobs as $job) { ?>
+                                    <tr>
+                                        <th scope="row">
+                                            <?php if (in_array($job['job_id'], $selected)) { ?>
+                                                <input type="checkbox" name="selected[]"
+                                                value="<?php echo $job['job_id']; ?>"
+                                                checked="checked" />
+                                            <?php } else { ?>
+                                                <input type="checkbox" name="selected[]"
+                                                value="<?php echo $job['job_id']; ?>" />
+                                            <?php } ?>
+                                        </div>
+                                    </th>
+                                    <td><?php echo $job['name']; ?></td>
+                                    <td><?php echo $job['type']; ?></td>
+                                    <td><?php echo $job['status']; ?></td>
+                                    <td class="text-center">
+                                        <a href="<?php echo $job['edit']; ?>" class="btn btn-primary btn-sm"
+                                            data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>"><i
+                                            class="far fa-edit"></i></a></td>
+                                        </tr>
+                                    <?php } ?>
+                                <?php } else { ?>
+                                    <tr>
+                                        <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div><!-- Card Body -->
+        </div><!-- Card -->
+    </div><!-- container-fluid -->
 </div>
 <link href="assets/vendor/DataTables/datatables.min.css" rel="stylesheet" type="text/css">
 <script src="assets/vendor/DataTables/datatables.min.js"></script>
@@ -105,7 +105,7 @@ $('#button-delete').on('click', function(e) {
         function(isConfirm) {
             if (isConfirm) {
                 $.ajax({
-                    url: 'index.php/blog/post/delete?user_token=<?php echo $user_token; ?>',
+                    url: 'index.php/extensions/job/job/delete?user_token=<?php echo $user_token; ?>',
                     method: 'post',
                     dataType: 'json',
                     data: $("input[type=\'hidden\'], input[name^=\'selected\']:checked").serialize(),
