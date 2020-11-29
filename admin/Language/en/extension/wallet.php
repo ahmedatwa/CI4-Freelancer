@@ -9,7 +9,11 @@ return [
 'text_list'         => 'Wallet List',
 // Column
 'column_name'       => 'Name',
-'column_status'     => 'Status',
+'column_income'     => 'Income',
+'column_withdrawn'  => 'Withdrawn',
+'column_available'  => 'Available',
+'column_used'       => 'Used',
+'column_date_added' => 'Date Added',
 'column_action'     => 'Action',
   ],
 ];

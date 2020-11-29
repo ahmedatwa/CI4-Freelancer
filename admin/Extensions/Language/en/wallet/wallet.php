@@ -10,6 +10,6 @@ return [
 	// Column
 	'column_customer'  => 'Customer',
 	'column_total'     => 'Total',
-	'column_status'    => 'status',
+	'column_status'     => 'Status',
    ]
 ];

@@ -103,16 +103,20 @@ class customers extends \CodeIgniter\Model
         $customer_reviews->delete(['customer_id' => $customer_id]);
     }
 
-    public function getReviews(array $data = [])
+    public function getReviews(array $data)
     {
         $builder = $this->db->table('review r');
-        $builder->select('r.review_id, r.rating, r.status, r.date_added, CONCAT(c.firstname, " ", c.lastname) AS employer, pd.name');
+        $builder->select('r.review_id, r.rating, r.status, r.date_added, pd.name, r.employer_id, r.freelancer_id, r.submitted_by');
         $builder->join('project_description pd', 'r.project_id = pd.project_id', 'LEFT');
-        $builder->join('customer c', 'r.employer_id = c.customer_id', 'LEFT');
-        $builder->where('pd.language_id', \Admin\Libraries\Registry::get('config_language_id'));
+        $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
         if (!empty($data['filter_date_added'])) {
             $builder->where('p.date_added', $data['filter_date_added']);
+        }
+
+        if (!empty($data['customer_id'])) {
+            $builder->where('r.employer_id', $data['customer_id']);
+            $builder->orWhere('r.freelancer_id', $data['customer_id']);
         }
 
         $sorting_data = [

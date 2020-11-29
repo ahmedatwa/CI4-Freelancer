@@ -2,18 +2,22 @@
     <table id="table-location" class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th><?php echo $column_customer; ?></th>
-                <th><?php echo $column_total; ?></th>
-                <th><?php echo $column_status; ?></th>
+                <th><?php echo $column_income; ?></th>
+                <th><?php echo $column_withdrawn; ?></th>
+                <th><?php echo $column_used; ?></th>
+                <th><?php echo $column_available; ?></th>
+                <th><?php echo $column_date_added; ?></th>
             </tr>
         </thead>
         <tbody>
             <?php if ($wallets) { ?>
                 <?php foreach ($wallets as $wallet) { ?>
                     <tr>
-                    <td><?php echo $wallet['customer']; ?></td>
-                    <td><?php echo $wallet['total']; ?></td>
-                    <td><?php echo $wallet['status']; ?></td>
+                    <td><?php echo $wallet['income']; ?></td>
+                    <td><?php echo $wallet['withdrawn']; ?></td>
+                    <td><?php echo $wallet['used']; ?></td>
+                    <td><?php echo $wallet['available']; ?></td>
+                    <td><?php echo $wallet['date_added']; ?></td>
                     </tr>
                     <?php } ?>
                 <?php } ?>
@@ -25,7 +29,7 @@
 <!-- // DataTables -->
 <script type="text/javascript">
 $('#table-location').DataTable({
-    "order": [[ 1, "asc" ]],
+    "order": [[ 3, "asc" ]],
     "lengthMenu": [15, 20, 25, 30],
 }); 
 </script>

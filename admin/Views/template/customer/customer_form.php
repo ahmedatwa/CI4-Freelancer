@@ -152,7 +152,7 @@
 </div><!-- container-fluid -->
 </div>
 <script type="text/javascript">
-  $('#review-content').load("index.php/customer/customer/review?user_token=<?php echo $user_token;?>");
+  $('#review-content').load("index.php/customer/customer/review?user_token=<?php echo $user_token;?>&customer_id=<?php echo $customer_id; ?>");
   $('#wallet-content').load("index.php/customer/customer/wallet?user_token=<?php echo $user_token;?>&customer_id=<?php echo $customer_id; ?>");
 </script>
 <?php echo $footer; ?>

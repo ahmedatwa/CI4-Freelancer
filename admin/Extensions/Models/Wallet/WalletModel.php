@@ -2,8 +2,8 @@
 
 class WalletModel extends \CodeIgniter\Model
 {
-    protected $table          = 'wallet';
-    protected $primaryKey     = 'wallet_id';
+    protected $table          = 'customer_to_balance';
+    protected $primaryKey     = 'balance_id';
     protected $returnType     = 'array';
     // User Activity Events
     protected $afterInsert = ['afterInsertEvent'];

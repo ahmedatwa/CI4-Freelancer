@@ -82,8 +82,8 @@ class Customer extends \Admin\Controllers\BaseController
         ];
 
         $data['customers'] = [];
-        $customersModel = new Customers();
-        $results = $customersModel->getCustomers($filter_data);
+        $customerModel = new Customers();
+        $results = $customerModel->getCustomers($filter_data);
 
         foreach ($results as $result) {
             $data['customers'][] = [
@@ -155,10 +155,10 @@ class Customer extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-         $customersModel = new Customers();
+         $customerModel = new Customers();
 
         if ($this->request->getVar('customer_id') && ($this->request->getMethod() != 'post')) {
-            $customer_info = $customersModel->find($this->request->getVar('customer_id'));
+            $customer_info = $customerModel->find($this->request->getVar('customer_id'));
         }
 
         if (!empty($customer_info['customer_id'])) {
@@ -245,33 +245,42 @@ class Customer extends \Admin\Controllers\BaseController
 
     public function review()
     {
-         $customersModel = new Customers();
+        $customerModel = new Customers();
 
-        $data['column_project']  = lang('catalog/review.list.column_project');
-        $data['column_employer'] = lang('catalog/review.list.column_employer');
-        $data['column_rating']   = lang('catalog/review.list.column_status');
-        $data['column_status']   = lang('catalog/review.list.column_status');
-        $data['column_action']   = lang('en.list.column_action');
-        $data['button_approve']  = lang('en.list.button_approve');
-        $data['button_view']     = lang('en.list.button_view');
+        $data['column_project']    = lang('catalog/review.list.column_project');
+        $data['column_employer']   = lang('catalog/review.list.column_employer');
+        $data['column_freelancer'] = lang('catalog/review.list.column_freelancer');
+        $data['column_rated_by']   = lang('catalog/review.list.column_rated_by');
+        $data['column_rating']     = lang('catalog/review.list.column_rating');
+        $data['column_status']     = lang('catalog/review.list.column_status');
+        $data['column_action']     = lang('en.list.column_action');
+
+        $data['entry_rated_by']    = lang('catalog/review.list.entry_rated_by'); 
+
+        $data['button_approve']    = lang('en.list.button_approve');
+        $data['button_view']       = lang('en.list.button_view');
 
         $filter_data = [
+            'customer_id' => $this->request->getVar('customer_id') ?? 0,
             'start' => 0,
             'limit' => 5,
         ];
 
         $data['reviews'] = [];
-        $results = $customersModel->getReviews($filter_data);
+        $results = $customerModel->getReviews($filter_data);
 
         foreach ($results as $result) {
+
             $data['reviews'][] = [
-                'review_id' => $result['review_id'],
-                'name'      => $result['name'],
-                'employer'  => $result['employer'],
-                'rating'    => $result['rating'],
-                'status'    => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'approve'   => base_url('index.php/customer/customers/approve?user_token=' . $this->request->getVar('user_token') . '&review_id=' . $result['review_id']),
-                'view'      => base_url('index.php/catalog/review/edit?user_token=' . $this->request->getVar('user_token') . '&review_id=' . $result['review_id']),
+                'review_id'    => $result['review_id'],
+                'name'         => $result['name'],
+                'employer'     => $customerModel->where('customer_id', $result['employer_id'])->findColumn('username')[0],
+                'freelancer'   => $customerModel->where('customer_id', $result['freelancer_id'])->findColumn('username')[0],
+                'submitted_by' => $customerModel->where('customer_id', $result['submitted_by'])->findColumn('username')[0],
+                'rating'       => $result['rating'],
+                'status'       => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                'approve'      => base_url('index.php/customer/customers/approve?user_token=' . $this->request->getVar('user_token') . '&review_id=' . $result['review_id']),
+                'view'         => base_url('index.php/catalog/review/edit?user_token=' . $this->request->getVar('user_token') . '&review_id=' . $result['review_id']),
 
             ];
         }
@@ -288,24 +297,35 @@ class Customer extends \Admin\Controllers\BaseController
         }
 
         $walletModel = new \Extensions\Models\Wallet\WalletModel();
+        $customerModel = new Customers();
 
-        $data['column_customer'] = lang('extension/wallet/wallet.list.column_customer');
-        $data['column_total']    = lang('extension/wallet/wallet.list.column_total');
-        $data['column_status']   = lang('extension/wallet/wallet..list.column_status');
-        $data['column_action']   = lang('en.list.column_action');
-
-        $filter_data = [
-            'customer_id' => $customer_id,
-        ];
+        $data['column_income']    = lang('extension/wallet.list.column_income');
+        $data['column_withdrawn'] = lang('extension/wallet.list.column_withdrawn');
+        $data['column_available'] = lang('extension/wallet.list.column_available');
+        $data['column_date_added'] = lang('extension/wallet.list.column_date_added');
+        $data['column_used']      = lang('extension/wallet.list.column_used');
+        $data['column_action']    = lang('en.list.column_action');
 
         $data['wallets'] = [];
-        $results = $walletModel->getCustomerWallet($filter_data);
+
+        $results = $walletModel->where('customer_id', $customer_id)->findAll();
+        $income = 0;
+        $withdrawn = 0;
+        $used = 0;
+        $available = 0;
 
         foreach ($results as $result) {
+            $income    += $result['income'];
+            $withdrawn += $result['withdrawn'];
+            $used      += $result['used'];
+            $available += $result['available'];
+
             $data['wallets'][] = [
-                'customer' => $result['customer'],
-                'total'    => $result['total'],
-                'status'   => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                'income'     => $result['income'],
+                'withdrawn'  => $result['withdrawn'],
+                'used'       => $result['used'],
+                'available'  => ($available + $income) - ($withdrawn + $used),
+                'date_added' => DateShortFormat($result['date_added']),
             ];
         }
         

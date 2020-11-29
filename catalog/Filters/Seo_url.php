@@ -11,6 +11,8 @@ class Seo_url implements FilterInterface
         
         $data = [];
 
+        $slug = '';
+
         $segments = explode('/', uri_string());
 
         $slug = end($segments);
