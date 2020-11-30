@@ -212,7 +212,7 @@ selectionContainer: $('.keywords-list'),
 $('input[name^=\'filter_type\']').on('click', function() {
 
     var filter = [];
-    
+
     $('input[name^=\'filter_type\']:checked').each(function(element) {
         filter.push(this.value);
     });
@@ -234,7 +234,10 @@ $('input[name^=\'filter_type\']').on('click', function() {
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError);
 		}
-	})
+	});
+	
+	
+
 }); 
 </script>
 <?php echo $footer; ?>

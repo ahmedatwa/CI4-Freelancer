@@ -114,13 +114,13 @@ class Job extends \Catalog\Controllers\BaseController
 
         $data['sorts'][] = [
             'text'  => lang('common/search.text_newest'),
-            'value' => 'p.budget_min-ASC',
-            'href'  => $uri->addQuery('sort_by', 'budget_min')->addQuery('order_by', 'ASC')
+            'value' => 'j.date_added-ASC',
+            'href'  => $uri->addQuery('sort_by', 'date_added')->addQuery('order_by', 'ASC')
         ];
 
         $data['sorts'][] = [
             'text'  => lang('common/search.text_oldest'),
-            'value' => 'p.budget_min-DESC',
+            'value' => 'j.date_added-DESC',
             'href'  => $uri->addQuery('sort_by', 'date_added')->addQuery('order_by', 'DESC')
         ];
 

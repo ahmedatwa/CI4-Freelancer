@@ -8,6 +8,7 @@ return [
 'text_sort'         => 'Sort By:',
 'text_default'      => 'Default',
 'text_newest'       => 'Newest',
+'text_oldest'       => 'Oldest',
 'text_lowest'       => 'Lowest Budget',
 'text_highest'      => 'Highest budget',
 'text_limit'        => 'Show:',

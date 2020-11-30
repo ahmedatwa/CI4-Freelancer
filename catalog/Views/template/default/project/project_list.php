@@ -224,7 +224,6 @@ selectionContainer: $('.keywords-list'),
   
 }).on('select2:unselect', function (e) {
 	  var select_val = $(e.currentTarget).val();
-	  console.log(select_val)
 
 	  $.ajax({
 		url: 'project/project/filter?url=' + encodeURIComponent(uri),

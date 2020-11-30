@@ -37,6 +37,7 @@ class JobModel extends \CodeIgniter\Model
 
         $sorting_data = [
             'jd.name',
+            'j.date_added',
         ];
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
