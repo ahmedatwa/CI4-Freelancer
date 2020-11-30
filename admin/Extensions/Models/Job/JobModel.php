@@ -194,7 +194,7 @@ class JobModel extends \CodeIgniter\Model
     {
         $forge = \Config\Database::forge();
 
-        $job_post = [
+        $job = [
         'job_id' => [
                 'type'  => 'INT',
                 'constraint'     => '11',
@@ -206,7 +206,7 @@ class JobModel extends \CodeIgniter\Model
         ],
         'salary' => [
                 'type' =>'DECIMAL',
-                'constraint' => 15,4,
+                'constraint' => '15,4',
         ],
         'type' => [
                 'type' => 'TINYINT',
@@ -222,7 +222,7 @@ class JobModel extends \CodeIgniter\Model
         ],
         'status' => [
                 'type' => 'TINYINT',
-                'constraint' => 1,
+                'constraint' => '1',
         ],
         'date_added' => [
                 'type' => 'DATETIME',
@@ -232,9 +232,42 @@ class JobModel extends \CodeIgniter\Model
         ],
       ];
 
-        $forge->addField($job_post);
+        $forge->addField($job);
         $forge->addPrimaryKey('job_id');
         $forge->createTable('job', true);
+
+        $job_applicants = [
+        'job_applicant_id' => [
+                'type'       => 'INT',
+                'constraint' => '11',
+        ],
+        'job_id' => [
+                'type'       => 'INT',
+                'constraint' => '11',
+        ],
+        'customer_id' => [
+                'type'       => 'INT',
+                'constraint' => '11',
+        ],
+        'download_id' => [
+                'type'       => 'INT',
+                'constraint' => '11',
+        ],
+        'status' => [
+                'type' => 'TINYINT',
+                'constraint' => '1',
+        ],
+        'date_added' => [
+                'type' => 'DATETIME',
+        ],
+        'date_modified' => [
+                'type' => 'DATETIME',
+        ],
+      ];
+
+        $forge->addField($job_applicants);
+        $forge->addPrimaryKey('job_applicant_id');
+        $forge->createTable('job_applicants', true);
 
         $job_description = [
         'job_id' => [
@@ -263,6 +296,7 @@ class JobModel extends \CodeIgniter\Model
       ];
 
         $forge->addField($job_description);
+        $forge->addKey('name');
         $forge->addPrimaryKey('job_id');
         $forge->createTable('job_description', true);
     }
@@ -272,6 +306,7 @@ class JobModel extends \CodeIgniter\Model
         $forge = \Config\Database::forge();
         $forge->dropTable('job', true);
         $forge->dropTable('job_description', true);
+        $forge->dropTable('job_applicants', true);
     }
 
 
