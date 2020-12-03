@@ -79,4 +79,14 @@
 <script src="assets/vendor/summernote/summernote-bs4.js"></script> 
 <script src="assets/vendor/summernote/image-manager.js"></script> 
 <link href="assets/vendor/summernote/summernote-bs4.css" rel="stylesheet">
+<?php if ($success) { ?>
+<!-- Success SweetAlert -->
+<script type="text/javascript">
+    swal({
+        title: 'Success!',
+        text: '<?php echo $success; ?>',
+        type: "success",
+    }); 
+</script>
+<?php } ?>
 <?php echo $footer; ?>

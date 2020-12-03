@@ -258,7 +258,7 @@ class Filemanager extends \Admin\Controllers\BaseController
 
     public function delete()
     {
-        $json = array();
+        $json = [];
 
         // Check user has permission
         if (!$this->user->hasPermission('modify', 'common/filemanager')) {

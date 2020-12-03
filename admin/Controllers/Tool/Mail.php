@@ -10,21 +10,27 @@ class Mail extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         );
 
         $data['breadcrumbs'][] = array(
             'text' => lang('tool/mail.list.heading_title'),
-            'href' => base_url('index.php/tool/mail?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/tool/mail?user_token=' . $this->request->getVar('user_token')),
         );
 
-        $data['action'] = base_url('index.php/tool/mail/clear?user_token=' . $this->session->get('user_token'));
-        $data['cancel'] = base_url('index.php/tool/mail?user_token=' . $this->session->get('user_token'));
+        $data['action'] = base_url('index.php/tool/mail/send?user_token=' . $this->request->getVar('user_token'));
+        $data['cancel'] = base_url('index.php/tool/mail?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->session->getFlashdata('error_warning')) {
             $data['error_warning'] = $this->session->getFlashdata('error_warning');
         } else {
             $data['error_warning'] = '';
+        }
+
+        if ($this->session->getFlashdata('success')) {
+            $data['success'] = $this->session->getFlashdata('success');
+        } else {
+            $data['success'] = '';
         }
 
         if ($this->request->getPost('from')) {
@@ -58,13 +64,39 @@ class Mail extends \Admin\Controllers\BaseController
             $data['message'] = '';
         }
 
-
         return $this->document->output('tool/mail', $data);
+    }
+
+    public function send()
+    {
+        $email = \Config\Services::email();
+
+        $email->setFrom($this->registry->get('config_email'));
+        $email->setTo($this->request->getPost('to', FILTER_SANITIZE_EMAIL));
+
+            $message  = '<html dir="ltr" lang="en">' . "\n";
+            $message .= '  <head>' . "\n";
+            $message .= '    <title>' . $this->request->getPost('subject') . '</title>' . "\n";
+            $message .= '    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
+            $message .= '  </head>' . "\n";
+            $message .= '  <body>' . html_entity_decode($this->request->getPost('message'), ENT_QUOTES, 'UTF-8') . '</body>' . "\n";
+            $message .= '</html>' . "\n";
+
+        $email->setSubject($this->request->getPost('subject'));
+
+        $email->setMessage($message);
+
+        if (! $email->send(false)) {
+            $email->printDebugger();
+        } else {
+            return redirect()->to(base_url('index.php/tool/mail?user_token=' . $this->request->getVar('user_token')))
+                             ->with('success', lang('tool/mail.text_success'));
+        }                
     }
 
     protected function validateForm()
     {
-        if (!$this->user->hasPermission('modify', $this->getRoute())) {
+        if (!$this->user->hasPermission('modify', 'tool/mail')) {
             $this->session->setFlashdata('error_warning', lang('tool/mail.error_permission'));
             return false;
         }

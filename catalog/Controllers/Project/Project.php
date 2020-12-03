@@ -211,6 +211,8 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
         $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
+        $this->session->set('redirect_url', current_url());
+
 
         $data['filter_type']   = $filter_type;
         $data['filter_state']  = $filter_state;
@@ -233,7 +235,7 @@ class Project extends \Catalog\Controllers\BaseController
     {
         $projectModel = new ProjectModel();
         $seoUrl = service('seo_url');
-        $categoryModel = new \Catalog\Models\Catalog\CategoryModel();
+        $categoryModel = new CategoryModel();
 
 
         if ($this->request->uri->getSegment(2)) {
@@ -491,7 +493,7 @@ class Project extends \Catalog\Controllers\BaseController
         }
 
         // Employer
-        $categoryModel = new \Catalog\Models\Catalog\CategoryModel;
+        $categoryModel = new CategoryModel;
         $data['categories'] = $categoryModel->getCategories();
 
         if ($this->request->getPost('category_id')) {

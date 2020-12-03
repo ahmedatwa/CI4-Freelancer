@@ -3,6 +3,7 @@
 use \Admin\Models\Setting\Extensions;
 use \Extensions\Models\Job\JobModel;
 use \Admin\Models\User\Users_group;
+use \Admin\Models\Setting\Settings;
 
 class Job extends \Admin\Controllers\BaseController
 {
@@ -29,7 +30,7 @@ class Job extends \Admin\Controllers\BaseController
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/job/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/job/' . $this->request->getVar('extension'));
 
-            $settingModel = new \Admin\Models\Setting\Settings();
+            $settingModel = new Settings();
             $settingModel->editSetting('job_extension', ['job_extension_status' => 1]);
             // Call install Method is exists
             $jobModel = new JobModel();
@@ -54,9 +55,12 @@ class Job extends \Admin\Controllers\BaseController
 
             // Call uninstall Method is exists
             $jobModel = new JobModel();
-            if (method_exists($jobModel, 'install')) {
+            if (method_exists($jobModel, 'uninstall')) {
                 $jobModel->uninstall();
             }
+
+            $settingModel = new Settings();
+            $settingModel->editSetting('job_extension', ['job_extension_status' => 0]);
 
             $this->session->setFlashdata('success', lang('extension/job.text_success'));
         }

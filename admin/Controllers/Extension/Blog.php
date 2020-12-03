@@ -1,6 +1,9 @@
 <?php namespace Admin\Controllers\Extension;
 
-use Admin\Models\Setting\Extensions;
+use \Admin\Models\Setting\Extensions;
+use \Extensions\Models\Blog\BlogModel;
+use \Admin\Models\User\Users_group;
+use \Admin\Models\Setting\Settings;
 
 class Blog extends \Admin\Controllers\BaseController
 {
@@ -23,16 +26,16 @@ class Blog extends \Admin\Controllers\BaseController
 
             $extensionsModel->install('blogger', $this->request->getVar('extension'));
 
-            $userGroupModel = new \Admin\Models\User\Users_group();
+            $userGroupModel = new Users_group();
 
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/blog/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/blog/' . $this->request->getVar('extension'));
 
-            $settingModel = new \Admin\Models\Setting\Settings();
+            $settingModel = new Settings();
             $settingModel->editSetting('blog_extension', ['blog_extension_status' => 1]);
 
             // Call install Method is exists
-            $blogModel = new \Extensions\Models\Blog\BlogModel();
+            $blogModel = new BlogModel();
             if (method_exists($blogModel, 'install')) {
                 $blogModel->install();
             }
@@ -52,10 +55,13 @@ class Blog extends \Admin\Controllers\BaseController
         if ($this->validateForm()) {
             $extensionsModel->uninstall('blogger', $this->request->getVar('extension'));
             // Call uninstall Method is exists
-            $blogModel = new \Extensions\Models\Blog\BlogModel();
+            $blogModel = new BlogModel();
             if (method_exists($blogModel, 'uninstall')) {
                 $blogModel->uninstall();
             }
+
+            $settingModel = new Settings();
+            $settingModel->editSetting('blog_extension', ['blog_extension_status' => 0]);
 
             $this->session->setFlashdata('success', lang('extension/blog.text_success'));
         }

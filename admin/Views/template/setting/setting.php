@@ -274,7 +274,7 @@
 												<?php } ?>
 											</div>
 										</div>
-									
+										
 									</fieldset>
 									<fieldset>
 										<legend><?php echo $text_fees; ?></legend>
@@ -381,17 +381,17 @@
 											</div>
 										</div>
 										<div class="form-group row">
-						                  <label class="col-sm-3 control-label" for="input-file-ext-allowed"><?php echo $entry_file_ext_allowed; ?> <span data-toggle="tooltip" title="<?php echo $help_file_ext_allowed; ?>"><i class="fas fa-question-circle"></i></span></label>
-						                  <div class="col-sm-9">
-						                    <textarea name="config_file_ext_allowed" rows="5" placeholder="<?php echo $entry_file_ext_allowed; ?>" id="input-file-ext-allowed" class="form-control"><?php echo $config_file_ext_allowed; ?></textarea>
-						                  </div>
-						                </div>
-						                  <div class="form-group row">
-						                  <label class="col-sm-3 control-label" for="input-file-mime-allowed"><?php echo $entry_file_mime_allowed; ?> <span data-toggle="tooltip" title="<?php echo $help_file_mime_allowed; ?>"><i class="fas fa-question-circle"></i></span></label>
-						                  <div class="col-sm-9">
-						                    <textarea name="config_file_mime_allowed" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed" class="form-control"><?php echo $config_file_mime_allowed; ?></textarea>
-						                  </div>
-						                </div> 
+											<label class="col-sm-3 control-label" for="input-file-ext-allowed"><?php echo $entry_file_ext_allowed; ?> <span data-toggle="tooltip" title="<?php echo $help_file_ext_allowed; ?>"><i class="fas fa-question-circle"></i></span></label>
+											<div class="col-sm-9">
+												<textarea name="config_file_ext_allowed" rows="5" placeholder="<?php echo $entry_file_ext_allowed; ?>" id="input-file-ext-allowed" class="form-control"><?php echo $config_file_ext_allowed; ?></textarea>
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-sm-3 control-label" for="input-file-mime-allowed"><?php echo $entry_file_mime_allowed; ?> <span data-toggle="tooltip" title="<?php echo $help_file_mime_allowed; ?>"><i class="fas fa-question-circle"></i></span></label>
+											<div class="col-sm-9">
+												<textarea name="config_file_mime_allowed" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed" class="form-control"><?php echo $config_file_mime_allowed; ?></textarea>
+											</div>
+										</div> 
 									</div>  <!-- ./End tab_server -->
 								</div> <!-- End of Nav Tabs -->
 							</form>
