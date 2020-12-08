@@ -35,7 +35,13 @@ class Header extends \Catalog\Controllers\BaseController
 
         helper('number');
 
-        $customer_balance = $balanceModel->getBalanceByCustomerID($this->session->get('customer_id'));
+        if ($this->customer->getCustomerID()) {
+           $customer_id = $this->customer->getCustomerID();
+        } else {
+            $customer_id = 0;
+        }
+
+        $customer_balance = $balanceModel->getBalanceByCustomerID($customer_id);
 
         $data['text_finance']              = lang('common/header.text_finance');
         $data['text_account']              = lang('common/header.text_account');

@@ -8,10 +8,11 @@ use Catalog\Models\Localization\LanguageModel;
 
 class Localization implements FilterInterface
 {
-    public function before(RequestInterface $request)
+    public function before(RequestInterface $request, $arguments = null)
     {
 
         $languageModel = new LanguageModel();
+        
         $registry = service('registry');
 
         $supportedLocales = $request->config->supportedLocales;
@@ -33,7 +34,7 @@ class Localization implements FilterInterface
 
     //--------------------------------------------------------------------
 
-    public function after(RequestInterface $request, ResponseInterface $response)
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         // Do something here
     }

@@ -96,14 +96,15 @@ class BalanceModel extends \CodeIgniter\Model
         \CodeIgniter\Events\Events::trigger('mail_payment', $data);
     }
 
-    public function getBalanceByCustomerID($customer_id)
+    public function getBalanceByCustomerID(int $customer_id)
     {
         $builder = $this->db->table('customer_to_balance');
         $builder->select('SUM(used) AS used, SUM(withdrawn) As withdrawn, SUM(income) AS income, available');
         $builder->where('customer_id', $customer_id);
-        $query = $builder->get()
-                         ->getResultArray();
-        foreach ($query as $result) {
+
+        $query = $builder->get();
+
+        foreach ($query->getResultArray() as $result) {
             $total = ($result['available'] + $result['income']) - ($result['used'] + $result['withdrawn']);
         }
         
