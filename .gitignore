@@ -7,3 +7,4 @@ storage/session/*
 storage/uploads/*
 
 .env
+.DS_Store
