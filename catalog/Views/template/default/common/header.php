@@ -27,15 +27,15 @@
   <script src="catalog/default/javascript/jquery-ui/jquery-ui.js"></script>
   <script src="catalog/default/javascript/moment.js"></script>
   <script src="catalog/default/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script defer src="catalog/default/vendor/bootstrap-slider/js/bootstrap-slider.js"></script> 
+  <script src="catalog/default/vendor/bootstrap-slider/js/bootstrap-slider.js"></script> 
 
   <script src="catalog/default/vendor/slick/slick.min.js"></script>
   <script src="catalog/default/javascript/magnific-popup.min.js"></script>
   <!-- Notify JS -->
-  <script defer src="catalog/default/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
-  <script defer src="catalog/default/javascript/jquery.counterup.min.js"></script>
-  <script defer src="catalog/default/vendor/select2/js/select2.min.js"></script> 
-  <script defer src="catalog/default/vendor/bootbox/bootbox.min.js"></script> 
+  <script src="catalog/default/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <script src="catalog/default/javascript/jquery.counterup.min.js"></script>
+  <script src="catalog/default/vendor/select2/js/select2.min.js"></script> 
+  <script src="catalog/default/vendor/bootbox/bootbox.min.js"></script> 
 
   <!-- Pusher -->
   <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
