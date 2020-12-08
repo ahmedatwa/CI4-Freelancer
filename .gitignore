@@ -1,19 +1,7 @@
-*/config/development
-*/logs/log-*.php
-*/cache/*
-!*/logs/index.html
-*/logs/index.html
-!*/cache/index.html
-!*/cache/.htaccess
 **/.DS_Store
-
 # Storage
 storage/cache/*
 storage/debugbar/*
 storage/logs/*
 storage/session/*
 storage/uploads/*
-storage/uploads/*
-!application/logs/index.html
-!application/logs/.htaccess
-/vendor/
