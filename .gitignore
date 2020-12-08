@@ -1,10 +1,10 @@
 **/.DS_Store
 # Storage
-storage/cache/!*.html
+!*/storage/cache/indexhtml
 storage/debugbar/*.json
 storage/logs/*.log
-storage/session/!*.html
-storage/uploads/!*.html
+!*/storage/session/index.html
+!*/storage/uploads/index.html
 
 
 .env
