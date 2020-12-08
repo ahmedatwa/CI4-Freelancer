@@ -27,7 +27,7 @@
   <script src="catalog/default/javascript/jquery-ui/jquery-ui.js"></script>
   <script src="catalog/default/javascript/moment.js"></script>
   <script src="catalog/default/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script defer src="catalog/default/vendor/bootstrap-slider/dist/bootstrap-slider.min.js"></script> 
+  <script defer src="catalog/default/vendor/bootstrap-slider/js/bootstrap-slider.js"></script> 
 
   <script src="catalog/default/vendor/slick/slick.min.js"></script>
   <script src="catalog/default/javascript/magnific-popup.min.js"></script>
