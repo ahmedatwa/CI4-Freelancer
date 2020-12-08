@@ -7,7 +7,7 @@ use Config\Services;
 
 class Permission implements FilterInterface
 {
-    public function before(RequestInterface $request)
+    public function before(RequestInterface $request, $arguments = null)
     {
         // Override / Page
         if (current_url() == slash_item('baseURL')) {
@@ -70,7 +70,7 @@ class Permission implements FilterInterface
         }
     }
 
-    public function after(RequestInterface $request, ResponseInterface $response)
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         // Nothing here
     }

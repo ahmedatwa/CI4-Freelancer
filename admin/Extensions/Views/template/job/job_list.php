@@ -31,9 +31,7 @@
                     <table id="table-location" class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th width="1%" class="no-sort"><input type="checkbox"
-                                    onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
-                                </th>
+                                <th width="1%" class="no-sort"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
                                 <th width="60%"><?php echo $column_name; ?></th>
                                 <th><?php echo $column_type; ?></th>
                                 <th><?php echo $column_status; ?></th>
@@ -41,7 +39,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if ($jobs) { ?>
                                 <?php foreach ($jobs as $job) { ?>
                                     <tr>
                                         <th scope="row">
@@ -64,11 +61,6 @@
                                             class="far fa-edit"></i></a></td>
                                         </tr>
                                     <?php } ?>
-                                <?php } else { ?>
-                                    <tr>
-                                        <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
-                                    </tr>
-                                <?php } ?>
                             </tbody>
                         </table>
                     </div>

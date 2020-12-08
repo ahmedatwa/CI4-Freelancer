@@ -9,7 +9,7 @@ class Language implements FilterInterface
 {
     protected $LangData = [];
 
-    public function before(RequestInterface $request)
+    public function before(RequestInterface $request, $arguments = null)
     {
         $view = \Config\Services::renderer();
 
@@ -68,8 +68,9 @@ class Language implements FilterInterface
                     
     }
 
-    public function after(RequestInterface $request, ResponseInterface $response)
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+        // Nothing Here
     }
 
     // ----------------------------------------------------
