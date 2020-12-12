@@ -23,30 +23,26 @@ class Login extends \Catalog\Controllers\BaseController
             'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
         ];
 
-        // if (($this->session->get('_ci_previous_url') != base_url('account/login')) || ($this->session->get('_ci_previous_url') != base_url())) {
-        //     $this->session->set('redirect_url', $this->session->get('_ci_previous_url'));
-        // }
-
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             // Trigger Pusher Online Event
-            $options = [
-                'cluster' => 'eu',
-                'useTLS' => true
-            ];
+            // $options = [
+            //     'cluster' => 'eu',
+            //     'useTLS' => true
+            // ];
 
-            $pusher = new \Pusher\Pusher(
-                'b4093000fa8e8cab989a',
-                'fb4bfd2d78aac168d918',
-                '1047280',
-                $options
-            );
+            // $pusher = new \Pusher\Pusher(
+            //     'b4093000fa8e8cab989a',
+            //     'fb4bfd2d78aac168d918',
+            //     '1047280',
+            //     $options
+            // );
 
-            $data['message'] = [
-                'customer_id' => $this->customer->getCustomerId(),
-                'username'    => $this->customer->getCustomerUserName()
-            ];
+            // $data['message'] = [
+            //     'customer_id' => $this->customer->getCustomerId(),
+            //     'username'    => $this->customer->getCustomerUserName()
+            // ];
 
-            $pusher->trigger('chat-channel', 'online-event', $data);
+            // $pusher->trigger('chat-channel', 'online-event', $data);
 
             if ($this->session->get('redirect_url')) {
                 return redirect()->to((string) $this->session->get('redirect_url'));
@@ -169,8 +165,7 @@ class Login extends \Catalog\Controllers\BaseController
                 }
             }
         }
-
-
+        
         return $this->response->setJSON($json);
     }
 

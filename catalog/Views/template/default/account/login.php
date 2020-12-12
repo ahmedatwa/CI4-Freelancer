@@ -9,12 +9,10 @@
 				<?php } else { ?>
 				<div class="login-register-page shadow p-3 mb-5 bg-white rounded">
 				<?php } ?>	
-					<!-- Welcome Text -->
 					<div class="welcome-text">
 						<h3><?php echo $text_login; ?></h3>
 						<span><?php echo $text_register; ?></span>
 					</div>
-					<!-- Form -->
 					<form method="post" action="<?php echo $action; ?>" enctype="multipart/form-data" accept-charset="utf-8">
 						<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="X-CSRF-TOKEN" />
 						<div class="form-group">
@@ -78,8 +76,7 @@ function onSuccess(googleUser) {
   });
 }
 
-function onFailure(error) {
-}
+function onFailure(error) {}
 function renderButton() {
   gapi.signin2.render('my-signin2', {
     'scope': 'profile email',
