@@ -16,12 +16,12 @@
 !/storage/logs/index.html
 
 # Session Files
-storage/session/!*
+storage/session*
 !/storage/session/index.html
 
 # Upload Files
-/storage/uploads/*
-!/storage/upload/index.html
+storage/uploads*
+!storage/upload/index.html
 
 # Download Files
 /storage/download/*
