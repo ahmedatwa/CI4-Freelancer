@@ -471,9 +471,14 @@ class Freelancer extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        $this->template->setTitle(lang('freelancer/freelancer.heading_title'));
-
         $disputeModel = new DisputeModel();
+
+        if (! $this->validate([
+           'comment' => "required|min_length[20]",
+        ]))
+        {
+         $json['error'] = $this->validator->getErrors();
+        }
 
         if ($this->request->getMethod() == 'post') {
            

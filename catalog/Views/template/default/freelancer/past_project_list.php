@@ -48,7 +48,7 @@
 <!-- // open Dispute -->
 <script type="text/javascript">
 function openDispute(employer_id, freelancer_id, project_id) {
-  bootbox.confirm({
+  var dialog = bootbox.confirm({
     title: 'Claim Dispute',
     message: '<form id="open-dispute-form"><input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" /><input type="hidden" name="freelancer_id" value="'+freelancer_id+'" /><input type="hidden" name="project_id" value="'+project_id+'" /><input type="hidden" name="employer_id" value="'+employer_id+'" /><div class="form-group"><label for="input-comment">Comment</label><textarea type="text" class="form-control" id="comment" name="comment"></textarea></div><div class="form-group"><label for="message-text" class="col-form-label">Reason:</label><select class="custom-select" name="dispute_reason_id" id="dispute_reason_id"><?php foreach ($dispute_reasons as $reason) { ?><option value="<?php echo $reason['dispute_reason_id']; ?>"><?php echo $reason['name']; ?></option><?php } ?></select></div></form>',
     className: 'animate__animated animate__fadeInDown',
@@ -63,13 +63,9 @@ function openDispute(employer_id, freelancer_id, project_id) {
         }
     },
     callback: function (result) {
-      $('#comment').removeClass('is-invalid')
-      $('.is-invalid, .invalid-feedback').remove();
-    if (result === '') { 
-        $(this).find('#comment').addClass('is-invalid');
-        $(this).find('#comment').after('<div class="invalid-feedback"><i class="fas fa-exclamation-triangle"></i> The comment field is required.</div>'); 
-        return false;
-    } else {  
+      if (result === false) {
+        dialog.modal('hide');
+      } else { 
       $.ajax({
             url: 'freelancer/freelancer/openDispute',
             dataType: 'json',
@@ -77,25 +73,36 @@ function openDispute(employer_id, freelancer_id, project_id) {
             data: $('#open-dispute-form').serialize(),
             beforeSend: function() {
                 $('#freelancer-past-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
-                $('.alert').remove();
+                $('.alert, .invalid-feedback').remove();
+                $('#comment').removeClass('is-invalid');
             },
             complete: function() {
                 $('#spinner').remove();
             },
-            success: function(json) {                  
-                  
-                if (json['success']) {
-                    $('#freelancer-past-list').load('freelancer/project/getPastProjects');
+            success: function(json) { 
 
-                    $('#freelancer-past-projects').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'); 
-                } 
+              if (json['error']) {
+                for (i in json['error']) {
+                    $('#comment').addClass('is-invalid');
+                    $('#comment').after('<div class="invalid-feedback"><i class="fas fa-exclamation-triangle"></i>' + json['error']['comment'] + '</div>'); 
+                }
+               }                 
+                  
+              if (json['success']) {
+                dialog.modal('hide');
+
+                $('#freelancer-past-list').load('freelancer/project/getPastProjects');
+
+                $('#freelancer-past-projects').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'); 
+              } 
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-      } 
-    } 
+       } 
+      return false;
+    } // Callback
    });
 }
 </script>

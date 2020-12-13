@@ -448,7 +448,6 @@ class Project extends \Catalog\Controllers\BaseController
             $amount = $bidModel->where('project_id', $result['project_id'])->findColumn('quote');
 
             $inDispute =  $disputeModel->inDispute($result['project_id']);
-            var_dump($inDispute);
 
             $data['past_projects'][] = [
                 'project_id'    => $result['project_id'],
