@@ -65,7 +65,7 @@ class Permission implements FilterInterface
         // Check Access Permission
         if ($route) {
             if (!in_array($route, $ignore) && !$user->hasPermission('access', rtrim($route, '/'))) {
-                return redirect()->to(base_url('index.php/error/permission?user_token='.$session->get('user_token')));
+                return redirect()->to(base_url('index.php/error/permission?user_token=' . $session->get('user_token')));
             }
         }
     }

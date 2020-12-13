@@ -1,11 +1,32 @@
 **/.DS_Store
-# Storage
-!*/storage/cache/indexhtml
-storage/debugbar/*.json
-storage/logs/*.log
-!*/storage/session/index.html
-!*/storage/uploads/index.html
-
-
 .env
 .DS_Store
+
+
+# Image Cache Files
+/public_html/images/cache/*
+!/public_html/images/cache/index.html
+
+# Cache Files
+/storage/cache/*
+!/storage/cache/index.html
+
+# Log Files
+/storage/logs/*
+!/storage/logs/index.html
+
+# Session Files
+/storage/session/*
+!/storage/session/index.html
+
+# Upload Files
+/storage/uploads/*
+!/storage/upload/index.html
+
+# Download Files
+/storage/download/*
+!/storage/download/index.html
+
+# Debugbar Files
+/storage/debugbar/*
+!/storage/debugbar/index.html
