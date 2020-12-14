@@ -83,7 +83,7 @@
 					<hr />
 				    <?php } ?>
 				<?php if ($freelancer_id != $employer_id) { ?>
-				<?php if ($days_left > 0 && $isLogged) { ?>
+				<?php if ($days_left > 0) { ?>
 				<div class="single-page-section">
 						<div class="bidding-headline"><h3><?php echo $text_bid; ?></h3>
 							<p class="mb-4"><?php echo $text_bid_detail; ?></p></div>
@@ -154,7 +154,7 @@
 					<button id="button-place-bid" onclick="" class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right"><?php echo $button_bid; ?></button>
 					</div>
 				</div>
-				<?php } else { ?>
+				<?php } if(!$logged) { ?>
 					<div class="text-center">
 						<div class="single-page-section">
 							<p class="lead mb-3">Not logged yet, please login to place bids</p>

@@ -40,6 +40,7 @@ class Dispute extends \Catalog\Controllers\BaseController
         }
 
         $data['heading_title'] = lang('account/dispute.heading_title');
+
         $data['customer_id'] = $customer_id;
         
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');

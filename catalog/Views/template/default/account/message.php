@@ -15,7 +15,7 @@
 							<!-- Customer Online -->
  							<div class="nav flex-column nav-pills" id="online-list" role="tablist" aria-orientation="vertical">
 							<?php foreach ($members as $member) { ?>
-  							<a class="nav-link text-dark border-bottom rounded-0" id="v-pills-<?php echo $member['receiver_id']; ?>-tab" data-toggle="pill" href="#v-pills-<?php echo $member['receiver_id']; ?>" role="tab" aria-controls="v-pills-<?php echo $member['receiver_id']; ?>" aria-selected="true" onClick="openChat(<?php echo $member['receiver_id']; ?>, <?php echo $member['sender_id']; ?>);"> 
+  							<a class="nav-link text-dark border-bottom rounded-0" id="v-pills-<?php echo $member['thread_id']; ?>-tab" data-toggle="pill" href="#v-pills-<?php echo $member['thread_id']; ?>" role="tab" aria-controls="v-pills-<?php echo $member['thread_id']; ?>" aria-selected="true" onClick="openChat('<?php echo $member['thread_id']; ?>', <?php echo $member['receiver_id']; ?>);"> 
   							
   								<div class="message-avatar">
   									<?php if ($member['online']) { ?>
@@ -39,7 +39,6 @@
 							</div>
 						</div>
 						<!-- Messages / End -->
-
 						<!-- Message Content -->
 						<div class="message-content">
 							<div class="messages-headline">
@@ -55,6 +54,8 @@
 									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 									<input type="hidden" name="receiver_id" value="" id="input-receiver-id" />
 									<input type="hidden" name="sender_id" value="<?php echo $customer_id; ?>" id="input-sender-id" />
+								    <input type="hidden" name="thread_id" value="" id="input-thread-id" />
+								    <div id="user-is-typing"></div>
 									<textarea cols="1" rows="1" placeholder="Your Message" name="message" id="input-message" class="form-control"></textarea>
 									<button class="button ripple-effect" type="button" id="button-send">Send</button>
 								</div> <!-- message-reply -->
@@ -72,14 +73,13 @@
 // Enable pusher logging - don't include this in production
 $(document).ready(function(){
 
-
 	var pusher = new Pusher('b4093000fa8e8cab989a', {
       cluster: 'eu'
     });
 
 	var channel = pusher.subscribe('chat-channel');
 
-	channel.bind('my-event', function(data) {
+	channel.bind('chat-event', function(data) {
 		sendMessage(data);
 	});
 
@@ -96,7 +96,7 @@ $(document).ready(function(){
 			html += '</div>';
 			html += '<div class="clearfix"></div>';
 			html += '</div>';
-			$('#v-pills-tabContent #v-pills-' + data.receiver_id).append(html);
+			$('#v-pills-tabContent #v-pills-' + data.thread_id).append(html);
 			$('#input-message').val("");
 			$(".tab-content").animate({ scrollTop: $(document).height() }, 1000);
 		} 
@@ -108,54 +108,60 @@ $(document).ready(function(){
 			html += '</div>'; 
 			html += '<div class="clearfix"></div>'; 
 			html += '</div>'; 
-			$('#v-pills-tabContent #v-pills-' + data.sender_id).append(html);
+			$('#v-pills-tabContent #v-pills-' + data.thread_id).append(html);
 			$(".tab-content").animate({ scrollTop: $(document).height() }, 1000);
 		}
 	}
-	// trigger enter keydown
+
+	//trigger enter keydown
 	$('.message-reply #input-message').on('keydown', function(e) {
 		if ($(this).val() !== '') {
-		if (e.keyCode == 13) {
-		    $('#button-send').trigger('click');
-		}
-	}
-    });
-
-	// Send Message Form
-	$('#button-send').on('click', function(){
-	if ($('#input-message').val() !== '') {
-	    $.ajax({
-	      url: 'account/message/sendMessage',
-	      type: 'post',
-	      data:$("#form-message").serialize(),
-	      success:function() {}    
-	  	});
+			if (e.keyCode == 13) {
+			    $('#button-send').trigger('click');
+			}
 	    }
-     });
-	
-});
+    });
+    
+
+	//Send Message Form
+	$('#button-send').on('click', function() {
+		if ($('#input-message').val() !== '') {
+		    $.ajax({
+		      url: 'account/message/sendMessage',
+		      type: 'post',
+		      data:$("#form-message").serialize(),
+		      success:function() {}    
+		  	});
+		}
+	});
+ });    
 </script>	
 
  <!-- Open the Chat Tab window -->
 <script type="text/javascript">
- function openChat (receiver_id, sender_id) {
+ function openChat(thread_id, receiver_id) {
 
     $(".messages-headline").html('<h4></h4>');
 
-    tab_content = '<div class="tab-pane fade show active" id="v-pills-'+receiver_id+'" role="tabpanel" aria-labelledby="v-pills-'+receiver_id+'-tab">';
-	fetchChatHistory(sender_id, receiver_id);
+    tab_content = '<div class="tab-pane fade show active" id="v-pills-' + thread_id + '" role="tabpanel" aria-labelledby="v-pills-' + thread_id + '-tab">';
+
+	fetchChatHistory(thread_id);
+
 	tab_content += '</div>';
+
     $("#v-pills-tabContent").html(tab_content);
 
     $("#form-message #input-receiver-id").val(receiver_id);
-    //$("#form-message #input-sender-id").val(sender_id);
+    $("#form-message #input-thread-id").val(thread_id);
 
 }
+</script>
 
+<script type="text/javascript">
 // get the chat history from DB
-function fetchChatHistory (sender_id, receiver_id) {
+function fetchChatHistory (thread_id) {
     $.ajax({
-      url: 'account/message/getChatHistory?receiver_id=' + receiver_id + '&sender_id=' + sender_id,
+      url: 'account/message/getChatHistory?thread_id=' + thread_id,
       dataType:'json',
       beforeSend: function() {
       	$('#v-pills-tabContent').html('<i class="fas fa-spinner fa-spin"></i>');	
@@ -168,7 +174,7 @@ function fetchChatHistory (sender_id, receiver_id) {
       	var html = '';
 
         $.map(json, function(val, i) {
-      		     	
+
       	if (json[i].sender_id == <?php echo $customer_id; ?>) {
       		html = '<div class="message-time-sign">';
 			html += '<span> ' + json[i].date_added + ' </span>'; 
@@ -176,7 +182,7 @@ function fetchChatHistory (sender_id, receiver_id) {
           	html += '<div class="message-bubble me">';							
 			html += '<div class="message-bubble-inner">';							
 			html += '<div class="message-avatar"><img src="images/catalog/avatar.jpg" alt="" /></div>';	
-			html += '<div class="message-text"><p>'+json[i].message+'</p></div>';	
+			html += '<div class="message-text"><p>'+json[i].message.text+'</p></div>';	
 			html += '</div>'
 			html += '<div class="clearfix"></div>';
 			html += '</div>';		
@@ -185,15 +191,14 @@ function fetchChatHistory (sender_id, receiver_id) {
 			html += '<div class="message-bubble">';
 			html += '<div class="message-bubble-inner">';
 			html += '<div class="message-avatar"><img src="images/catalog/avatar.jpg" alt="" /></div>';
-			html += '<div class="message-text"><p>'+json[i].message+'</p></div>';
+			html += '<div class="message-text"><p>'+ json[i].message.text +'</p></div>';
 			html += '</div>';
 			html += '<div class="clearfix"></div>';
 			html += '</div>';
 	    }  // else 
-          $('#v-pills-' + receiver_id).append(html);
+          $('#v-pills-' + thread_id).append(html);
             markRead(json[i].message_id);
            	$(".tab-content").animate({ scrollTop: $(document).height() }, 1000);
-
 	});
    } // success  
  });

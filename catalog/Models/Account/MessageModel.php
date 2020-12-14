@@ -10,25 +10,12 @@ class MessageModel extends \CodeIgniter\Model
     protected $createdField = 'date_added';
     protected $updatedField = 'date_modified';
 
-    public function getMessages(array $data = [])
+    public function getMessages(string $thread_id)
     {
         $builder = $this->db->table($this->table);
         $builder->select();
-
-        if (isset($data['sender_id']) && isset($data['receiver_id'])) {
-            $builder->where('sender_id', $data['sender_id']);
-            $builder->where('receiver_id', $data['receiver_id']);
-            $builder->orWhere('sender_id', $data['receiver_id']);
-            $builder->orWhere('receiver_id', $data['sender_id']);
-        }
-
-        if (isset($data['project_id'])) {
-            $builder->where('project_id', $data['project_id']);
-        }
-
+        $builder->where('thread_id', $thread_id);
         $builder->orderBy('date_added', 'ASC');
-        //$builder->groupBy('sender_id');
-
         $query = $builder->get();
         return $query->getResultArray();
     }
@@ -52,28 +39,12 @@ class MessageModel extends \CodeIgniter\Model
     public function getMembersByCustomerId($customer_id)
     {
         $builder = $this->db->table($this->table);
-        $builder->select('message_id, receiver_id, message, sender_id');
+        $builder->select();
         $builder->where('sender_id', $customer_id);
         $builder->orWhere('receiver_id', $customer_id);
-        $builder->groupBy('receiver_id');
+        $builder->groupBy('thread_id');
         $query = $builder->get();
         return $query->getResultArray();
-    }
-
-    public function addMessage($data)
-    {
-        $builder = $this->db->table($this->table);
-        $data = [
-            'project_id'  => $data['project_id'] ?? 0,
-            'sender_id'   => $data['sender_id'],
-            'receiver_id' => $data['receiver_id'],
-            'message'     => $data['message'],
-        ];
-
-        $builder->set('date_added', 'NOW()', false);
-        $builder->insert($data);
-        // Trigger Notification Event
-        //\CodeIgniter\Events\Events::trigger('customer_new_message', $data['sender_id'], $data['receiver_id'], $this->getCustomer($data['sender_id'])['name'], $data['message']);
     }
 
     public function getMessageByCustomerId($viewed, $customer_id)
@@ -131,41 +102,102 @@ class MessageModel extends \CodeIgniter\Model
     }
 
     // Send Project Message
-    public function addProjectMessage(array $data)
+    // public function addProjectMessage(array $data)
+    // {
+    //     $builder = $this->db->table($this->table);
+    //     helper('text');
+
+    //     if (!empty($data)) {
+    //         $rand = random_string('alnum', 10). '-' . $data['sender_id'] . '_' . $data['receiver_id'];
+    //     }
+    //     var_dump($rand);die;
+    //     $message_data = [
+    //         'sender_id'       => $data['sender_id'],
+    //         'thread'          => $rand,
+    //         'receiver_id'     => $data['receiver_id'],
+    //         'project_id'      => $data['project_id'],
+    //         'message'         => $data['message'],
+    //     ];
+
+    //     $builder->set('date_added', 'NOW()', false);
+    //     $builder->set('date_modified', 'NOW()', false);
+    //     $builder->insert($message_data);
+
+    //     // trigget new direct message event
+    //     \CodeIgniter\Events\Events::trigger('project_new_message', $message_data);
+    // }
+
+
+
+   // New Start From Here
+    public function addMessage(array $data)
     {
         $builder = $this->db->table($this->table);
+        $builder->select('thread_id');
+        $builder->where([
+            'sender_id'   => $data['sender_id'],
+            'receiver_id' => $data['receiver_id']
+        ]);
+        $builder->orWhere([
+            'sender_id'   => $data['receiver_id'],
+            'receiver_id' => $data['sender_id']
+        ]);
 
+        if ($builder->countAllResults() > 0) {
+            $row = $builder->get()->getRowArray();
+            $rand = $row['thread_id'];
+        } else {
+            helper('text');
+            $rand = random_string('crypto', 10);
+        }
+        
+        
         $message_data = [
+            'project_id'  => $data['project_id'] ?? 0,
+            'thread_id'   => $rand,
             'sender_id'   => $data['sender_id'],
             'receiver_id' => $data['receiver_id'],
-            'project_id'  => $data['project_id'],
-            'message'     => $data['message'],
+            'message'     => json_encode([
+                'sender_id'   => $data['sender_id'], 
+                'receiver_id' => $data['receiver_id'],
+                'text'        => $data['message']
+            ]),
         ];
 
         $builder->set('date_added', 'NOW()', false);
         $builder->set('date_modified', 'NOW()', false);
         $builder->insert($message_data);
+    }
 
-        // trigget new direct message event
-        \CodeIgniter\Events\Events::trigger('project_new_message', $message_data);
+    public function editMessage(string $thread_id, array $data)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->where('thread_id', $thread_id);
+
+        $message_data = [
+            'message' => json_encode([
+                'sender_id'   => $data['sender_id'], 
+                'receiver_id' => $data['receiver_id'],
+                'message'     => $data['message']
+            ]),
+        ];
+
+        $builder->set('date_added', 'NOW()', false);
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->insert($message_data);
     }
 
     // project Private Messages
-    public function getProjectMessagesById(array $data = [])
-    {
-        $builder = $this->db->table($this->table);
-        $builder->select();
-        $builder->where('project_id', $data['project_id']);
+    // public function getMessagesByThreadID(string $thread_id)
+    // {
+    //     $builder = $this->db->table($this->table);
+    //     $builder->select();
+    //     $builder->where('thread_id', $thread_id);
 
-        if (isset($data['customer_id'])) {
-            $builder->where('sender_id', $data['customer_id']);
-            $builder->orWhere('receiver_id', $data['customer_id']);
-        }
-
-        $builder->orderBy('date_added', 'ASC');
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
+    //     $builder->orderBy('date_added', 'ASC');
+    //     $query = $builder->get();
+    //     return $query->getResultArray();
+    // }
 
     
     // -----------------------------------------------------------------

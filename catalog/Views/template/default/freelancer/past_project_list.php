@@ -84,7 +84,7 @@ function openDispute(employer_id, freelancer_id, project_id) {
               if (json['error']) {
                 for (i in json['error']) {
                     $('#comment').addClass('is-invalid');
-                    $('#comment').after('<div class="invalid-feedback"><i class="fas fa-exclamation-triangle"></i>' + json['error']['comment'] + '</div>'); 
+                    $('#comment').after('<div class="invalid-feedback"><i class="fas fa-exclamation-triangle"></i>' + json['error'][i] + '</div>'); 
                 }
                }                 
                   

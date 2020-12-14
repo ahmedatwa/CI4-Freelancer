@@ -418,7 +418,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
         }
 
         $filter_data = [
-         'created_by' => $customer_id,
+         'freelancer_id' => $customer_id,
          'sort_by'     => $sort_by,
          'order_by'    => $order_by,
          'limit'       => $limit,
@@ -440,7 +440,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
             $data['disputes'][] = [
                 'dispute_id' => $result['project_id'],
-                'employer' => $name[0],
+                'employer'   => $name[0],
                 'project_id' => $result['project_id'],
                 'comment'    => $result['comment'],
                 'status'     => $result['status'],

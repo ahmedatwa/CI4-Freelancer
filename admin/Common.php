@@ -25,7 +25,7 @@
 if (!function_exists('token')) {
     function token(string $type, int $len)
     {
-        if (!$type || !$len) {
+        if (! $type || ! $len) {
             throw new \Exception("Token Type or length isn't specified");
         }
 

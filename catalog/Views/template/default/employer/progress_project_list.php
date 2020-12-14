@@ -31,7 +31,5 @@
 	</table>
 </div>  <!-- table-responsive ./div --->
 <div class="clearfix">
-	<div class="float-right">
-	<?php echo $pagination; ?>
-    </div>
+	<div class="float-right"><?php echo $pagination; ?></div>
 </div>

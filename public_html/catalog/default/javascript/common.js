@@ -142,38 +142,38 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	});
 
 
- /*--------------------------------------------------*/
+/*--------------------------------------------------*/
 	/*  Notification Messages
-	/*--------------------------------------------------*/
-// refresh notification count
-  function totalUnseen(data) {
-   $.ajax({
-      url: 'account/message/getTotalUnseenMessages',
-      dataType: 'json',
-      success: function(json) {
-          if (json['total']) {
-               $('#message-count').html('<span>' + json['total'] + '</span>');
-           } 
-        }
-    });
- }totalUnseen();
-// get Live Notification Alerts
-function totalNotifications(data) {
-   $.ajax({
-      url: 'account/notifications/getTotalNotifications',
-      dataType: 'json',
-      success: function(json) {
-          if (json['total']) {
-               $('#notifications-count').html('<span>' + json['total'] + '</span>');
-           } 
-        }
-    });
- }totalNotifications();
+/*--------------------------------------------------*/
+	// refresh notification count
+	  function totalUnseen(data) {
+	   $.ajax({
+	      url: 'account/message/getTotalUnseenMessages',
+	      dataType: 'json',
+	      success: function(json) {
+	          if (json['total']) {
+	               $('#nav-user-main #message-count').html('<span>' + json['total'] + '</span>');
+	           } 
+	        }
+	    });
+	 }totalUnseen();
+	// get Live Notification Alerts
+	function totalNotifications(data) {
+	   $.ajax({
+	      url: 'account/notifications/getTotalNotifications',
+	      dataType: 'json',
+	      success: function(json) {
+	          if (json['total']) {
+	               $('#nav-user-main #notifications-count').html('<span>' + json['total'] + '</span>');
+	           } 
+	        }
+	    });
+	 }totalNotifications();
 
 	setInterval(function(){
 	   totalUnseen();
 	   totalNotifications();
-	}, 5000);
+	}, 7000);
 
 	$('#nav-user-main #header-messages').on('click', function() {
 	  loadMessages();
@@ -236,6 +236,7 @@ function totalNotifications(data) {
 	      dataType: 'json',
 	      beforeSend: function() {
 	          $('#message-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+	          $('#nav-user-main #message-list').html('');
 	          $('#message-count').html('');
 	      },
 	      complete: function () {

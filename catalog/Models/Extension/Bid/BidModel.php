@@ -147,9 +147,7 @@ class BidModel extends \CodeIgniter\Model
         }
     }
 
-
-
-    public function getBidByProjectId($project_id)
+    public function getBidByProjectId(int $project_id)
     {
         $builder = $this->db->table('project_bids');
         $builder->select();

@@ -25,9 +25,9 @@
                     <a class="nav-link" id="bids-tab" data-toggle="tab" href="#bids" role="tab" aria-controls="bids" aria-selected="true">Bids <?php if ($total_bids > 0) { ?><span class="badge badge-success"><?php echo $total_bids; ?></span><?php } ?></a>
                 </li>
                 <?php } ?>
-				<li class="nav-item" role="presentation">
+				<!-- <li class="nav-item" role="presentation">
 					<a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
-				</li>
+				</li> -->
 				<li class="nav-item" role="presentation">
 					<a class="nav-link" id="milestones-tab" data-toggle="tab" href="#milestones" role="tab" aria-controls="milestones" aria-selected="false">Milestone</a>
 				</li>
@@ -152,7 +152,7 @@ $('#project-info #bids-tab').on('click', function (e) {
 // Messages
 $('#project-info #messages-tab').on('click', function (e) {
  $.ajax({
-    url: 'account/message/getProjectMessages?pid=<?php echo $project_id; ?>&customer_id=<?php echo $employer_id; ?>',
+    url: 'account/message/getProjectMessages?project_id=<?php echo $project_id; ?>&employer_id=<?php echo $employer_id; ?>&freelancer_id=<?php echo $freelancer_id; ?>',
     dataType: 'html',
     beforeSend: function() {
         $('#messages-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');

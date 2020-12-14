@@ -65,11 +65,11 @@ class Employer extends \Catalog\Controllers\BaseController
         }
 
         $filter_data = [
-         'created_by' => $customer_id,
-         'sort_by'     => $sort_by,
-         'order_by'    => $order_by,
-         'limit'       => $limit,
-         'start'       => ($page - 1) * $limit,
+         'employer_id'   => $customer_id,
+         'sort_by'       => $sort_by,
+         'order_by'      => $order_by,
+         'limit'         => $limit,
+         'start'         => ($page - 1) * $limit,
         ];
 
         $data['disputes'] = [];

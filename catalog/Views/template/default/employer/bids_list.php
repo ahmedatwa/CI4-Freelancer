@@ -99,8 +99,8 @@ function awardFreelancer(freelancer_id, bid_id) {
 </script>
 <!-- Send message -->
 <script type="text/javascript">
-function sendMessage(sender_id, receiver_id, project_id) {
-   bootbox.prompt({
+function sendMessage(sender_id, receiver_id) {
+  var dialog = bootbox.prompt({
     title: 'Send A Message',
     message: "",
     className: 'animate__animated animate__fadeInDown',
@@ -116,32 +116,33 @@ function sendMessage(sender_id, receiver_id, project_id) {
         }
     },
     callback: function (result) {
-      $('.bootbox-input-textarea').removeClass('is-invalid')
-      $('.is-invalid, .invalid-feedback').remove();
-    if (result === '') {
-		$(this).find('.modal-body .bootbox-input-textarea').addClass('is-invalid');
-        $(this).find('.modal-body .bootbox-input-textarea').after('<div class="invalid-feedback"><i class="fas fa-exclamation-triangle"></i> The comment field is required.</div>'); 
-        return false;
-	} else {
+      if (result === null) {
+        dialog.modal('hide');
+      } else {
          $.ajax({
-            url: 'account/message/sendMessage?pid=' + project_id,
+            url: 'account/message/sendMessage',
             dataType: 'json',
             method: 'post',
-            data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'sender_id': sender_id, 'receiver_id': receiver_id, 'message': $('.bootbox-input-textarea').val(), 'project_id': project_id},
+            data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'sender_id': sender_id, 'receiver_id': receiver_id, 'message': $('.bootbox-input-textarea').val(), 'project_id': <?php echo $project_id; ?>},
             beforeSend: function() {
-                $('.text-danger, .alert, .is-invalid, .invalid-feedback').remove();
+               $('.bootbox-input-textarea').removeClass('is-invalid')
+               $('.text-danger, .alert, .invalid-feedback').remove();
             },
             complete: function() {
 
             },
             success: function(json) {
                 if (json['error']) {
-                    $('textarea[name=\'message\']').after('<p class="text-danger">' + json['error'] + '</p>')
+                    for (i in json['error']) {
+                        $('.modal-body .bootbox-input-textarea').addClass('is-invalid');
+                        $('.modal-body .bootbox-input-textarea').after('<div class="invalid-feedback"><i class="fas fa-exclamation-triangle"></i>'+json['error'][i]+'</div>'); 
+                    }
                 }
 
                 if (json['success']) {
+                    dialog.modal('hide');
                   $('#bids').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                  $('#messages').load('account/message/getProjectMessages?pid=' +project_id+ '&customer_id=<?php echo $customer_id; ?>');
+                  $('#messages').load('account/message/getProjectMessages?project_id=' +project_id+ '&customer_id=<?php echo $customer_id; ?>');
                   $('#send-message-modal-form').trigger('reset');
                 }                        
             },
@@ -150,6 +151,7 @@ function sendMessage(sender_id, receiver_id, project_id) {
             }
           });
       } 
+    return false;
     } 
    });
 }

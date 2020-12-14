@@ -1,7 +1,6 @@
 <?php echo $header; ?><?php echo $dashboard_menu ;?>
 <div class="dashboard-content-container container margin-top-40 shadow-sm p-3 mb-5 bg-white rounded border">
 	<div class="dashboard-content-inner">
-		<!-- Dashboard Headline -->
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>
 			<ul class="nav nav-pills float-right" id="myTab" role="tablist">
@@ -14,28 +13,24 @@
 			</ul>
 		</div>
 		<div class="row">
-			<!-- Dashboard Box -->
 			<div class="col-xl-12">
 				<div class="tab-content mt-4" id="myTabContent">
 					<div class="tab-pane fade show active" id="employer" role="tabpanel" aria-labelledby="employer-tab">
 						<div id="employer-dispute-list"></div>
 					</div> 
-					<!--========== tab-employer END ==========-->
 					<div class="tab-pane fade" id="freelancer" role="tabpanel" aria-labelledby="freelancer-tab">
 						<div id="freelancer-dispute-list"></div>
-					</div> <!-- tab-freelancer -->
-				</div> <!-- tab-content -->
+					</div>
+				</div>
 			</div>
 		</div>
-		<!-- Row / End -->
 	</div>
 </div>
-
 <!-- // Employer  -->
 <script type="text/javascript">
 $('#myTab #employer-tab').on('click', function (e) {
 	$.ajax({
-		url: 'employer/employer/getDisputes',
+		url: 'employer/employer/getDisputes?employer_id=<?php echo $customer_id; ?>',
 		dataType: 'html',
 		beforeSend: function() {
 			$('#employer-dispute-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
@@ -61,7 +56,7 @@ $('#employer-dispute-list').on('click', '.pagination a', function(e) {
 
 $('#myTab #freelancer-tab').on('click', function (e) {
 	$.ajax({
-		url: 'freelancer/freelancer/getDisputes',
+		url: 'freelancer/freelancer/getDisputes?freelancer_id=<?php echo $customer_id; ?>',
 		dataType: 'html',
 		beforeSend: function() {
 			$('#freelancer-dispute-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');

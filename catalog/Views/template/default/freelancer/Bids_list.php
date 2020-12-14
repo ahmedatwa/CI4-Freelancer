@@ -23,7 +23,7 @@
 	     <?php } else {  ?>
 	      <button type="button" class="btn btn-danger btn-sm disabled" data-toggle="tooltip" title="Accepted" data-placement="top"><i class="fas fa-check"></i></button>
 	     <?php } ?>
-	     <button type="button" class="btn btn-dark btn-sm" data-toggle="tooltip" title="Send A Message" data-placement="top" onclick="sendMessage(<?php echo $customer_id; ?>, <?php echo $bid['project_id']; ?>);"><i class="icon-feather-mail"></i></button>
+	     <button type="button" class="btn btn-dark btn-sm" data-toggle="tooltip" title="Send A Message" data-placement="top" onclick="sendMessage(<?php echo $customer_id; ?>, <?php echo $bid['employer_id']; ?>, <?php echo $bid['project_id']; ?>);"><i class="icon-feather-mail"></i></button>
 		</div>	
 	<?php } ?>
 	<?php } else { ?>
@@ -102,7 +102,7 @@ function sendMessage(sender_id, receiver_id, project_id) {
             return false;
 	} else { 
          $.ajax({
-            url: 'account/message/sendMessage?pid=' + project_id,
+            url: 'account/message/sendMessage',
             dataType: 'json',
             method: 'post',
             data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'sender_id': sender_id, 'receiver_id': receiver_id, 'message': $('.bootbox-input-textarea').val(), 'project_id': project_id},

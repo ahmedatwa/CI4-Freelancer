@@ -1,5 +1,5 @@
 <div class="table-responsive">		
-<table class="table table-striped table-bordered w-100" id="table-openprojects-tab">
+<table class="table table-striped table-bordered w-100" id="table-disputes-freelancer">
 	<thead>
 		<tr>
 			<th><?php echo $column_project_id; ?></th>
@@ -32,7 +32,5 @@
 	</table>
 </div>  <!-- table-responsive ./div --->
 <div class="clearfix">
-	<div class="float-right">
-	<?php echo $pagination; ?>
-    </div>
+	<div class="float-right"><?php echo $pagination; ?></div>
 </div>

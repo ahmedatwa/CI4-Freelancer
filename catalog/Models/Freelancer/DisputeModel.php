@@ -11,13 +11,6 @@ class DisputeModel extends \CodeIgniter\Model
     protected $createdField = 'date_added';
     protected $updatedField = 'date_modified';
 
-    //protected $afterInsert = ['afterInsert'];
-
-    // protected function afterInsert(array $data)
-    // {
-    
-    // }
-
     public function getDisputeReasons()
     {
         $builder = $this->db->table('dispute_reason');
@@ -53,8 +46,16 @@ class DisputeModel extends \CodeIgniter\Model
         $builder->join('dispute_status ds', 'd.dispute_status_id = d.dispute_status_id', 'left');
         $builder->groupBy('d.dispute_status_id');
 
-        if (isset($data['created_by'])) {
+        if (isset($data['created_by']) && !empty($data['created_by'])) {
             $builder->where('created_by', $data['created_by']);
+        }
+
+        if (isset($data['freelancer_id']) && !empty($data['freelancer_id'])) {
+            $builder->where('freelancer_id', $data['freelancer_id']);
+        }
+
+        if (isset($data['employer_id']) && !empty($data['employer_id'])) {
+            $builder->where('employer_id', $data['employer_id']);
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {

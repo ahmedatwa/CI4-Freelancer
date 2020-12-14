@@ -5,6 +5,7 @@ return [
 // general
  'text_activity_customer_update'         => 'Your account details have been updated.',
  'text_activity_customer_password'       => 'Your account password has been updated.',
+ 'text_activity_customer_register'       => 'Your account has been created.',
 
 // // Finance
 // 'text_activity_customer_transfer_funds' => 'employer_id= transfered freelancer_id= funds for <a href="project_id="><strong class="text-danger">project</strong></a>.',

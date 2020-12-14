@@ -113,10 +113,16 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $results = $customerModel->getBalanceByMonth($this->customer->getCustomerId());
 
-        foreach ($results as $key => $value) {
-            $json['labels'][] = $value['month'];
-            $json['data']['total'][] =  $value['total'];
+        if ($results) {
+            foreach ($results as $key => $value) {
+                $json['labels'][] = $value['month'];
+                $json['data']['total'][] =  $value['total'];
+            }
+        } else {
+            $json['labels'][] = 0;
+            $json['data']['total'][] = 0;
         }
+        
 
         return $this->response->setJSON($json);
     }

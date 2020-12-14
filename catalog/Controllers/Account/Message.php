@@ -59,6 +59,7 @@ class Message extends \Catalog\Controllers\BaseController
 
             $data['members'][] = [
                 'sender_id'   => $result['sender_id'],
+                'thread_id'   => $result['thread_id'],
                 'online'      => $customer_info['online'],
                 'receiver_id' => $result['receiver_id'],
                 'receiver'    => $customer_info['username'],
@@ -82,17 +83,11 @@ class Message extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->request->getVar('receiver_id') && $this->request->getVar('sender_id')) {
+        if ($this->request->getVar('thread_id')) {
             
             $messageModel = new MessageModel();
 
-            $filter_data = [
-                'sender_id'   => $this->request->getVar('sender_id'),
-                'receiver_id' => $this->request->getVar('receiver_id'),
-                'project_id'  => 1,
-            ];
-
-            $results = $messageModel->getMessages($filter_data);
+            $results = $messageModel->getMessages($this->request->getVar('thread_id'));
               
             foreach ($results as $result) {
                 $json[] = [
@@ -100,11 +95,12 @@ class Message extends \Catalog\Controllers\BaseController
                     'project_id'  => $result['project_id'],
                     'sender_id'   => $result['sender_id'],
                     'receiver_id' => $result['receiver_id'],
-                    'message'     => $result['message'],
+                    'message'     => json_decode($result['message'], true),
                     'date_added'  => $result['date_added'],
                 ];
             }
         }
+
 
         return $this->response->setJSON($json);
     }
@@ -147,8 +143,8 @@ class Message extends \Catalog\Controllers\BaseController
             $messageModel = new MessageModel();
 
             $options = [
-            'cluster' => 'eu',
-            'useTLS' => true
+               'cluster' => 'eu',
+               'useTLS' => true
             ];
 
             $pusher = new \Pusher\Pusher(
@@ -158,46 +154,48 @@ class Message extends \Catalog\Controllers\BaseController
                 $options
             );
 
-            $data = [
-                'project_id'  => 1,
-                'sender_id'   => $this->customer->getCustomerId(),
-                'receiver_id' => $this->request->getPost('receiver_id'),
-                'message'     => $this->request->getPost('message'),
-                'date_added'  => date('H:i A'),
-            ];
+            if (! $this->validate([
+                'message'  => 'required'
+            ])) {
+                $json['error'] = $this->validator->getErrors();
+            }
 
+            if (!$json) {
+                $messageModel->addMessage($this->request->getPost());
 
-            $messageModel->addMessage($data);
-        
-            $event = $pusher->trigger('chat-channel', 'my-event', $data);
+                $json['success'] = lang('freelancer/project.text_success_pm');
 
+                $event = $pusher->trigger('chat-channel', 'chat-event', $this->request->getPost());
+
+            }
         }
+
         return $this->response->setJSON($json);
     }
 
     // project 
-    public function sendProjectMessage()
-    {
-        $json = [];
+    // public function sendProjectMessage()
+    // {
+    //     $json = [];
 
-        if ($this->request->getMethod() == 'post' && $this->request->getVar('pid')) {
-            $messageModel = new MessageModel();
+    //     if ($this->request->getMethod() == 'post' && $this->request->getVar('pid')) {
+    //         $messageModel = new MessageModel();
 
-            if (! $this->validate([
-                'message'  => 'required'
-            ])) {
-                $json['error'] = $this->validator->getError('message');
-            }
+    //         if (! $this->validate([
+    //             'message'  => 'required'
+    //         ])) {
+    //             $json['error'] = $this->validator->getError('message');
+    //         }
 
-            if (!$json) {
-                $messageModel->addProjectMessage($this->request->getPost());
+    //         if (!$json) {
+    //             $messageModel->addProjectMessage($this->request->getPost());
 
-                $json['success'] = lang('freelancer/project.text_success_pm');
-            }
-        }
+    //             $json['success'] = lang('freelancer/project.text_success_pm');
+    //         }
+    //     }
 
-        return $this->response->setJSON($json);
-    }
+    //     return $this->response->setJSON($json);
+    // }
 
     public function hireMe()
     {
@@ -217,8 +215,8 @@ class Message extends \Catalog\Controllers\BaseController
     // get Project Messages
     public function getProjectMessages()
     {
-        if ($this->request->getVar('pid')) {
-            $project_id = $this->request->getVar('pid');
+        if ($this->request->getVar('project_id')) {
+            $project_id = $this->request->getVar('project_id');
         } else {
             $project_id = 0;
         }
@@ -229,16 +227,17 @@ class Message extends \Catalog\Controllers\BaseController
             $customer_id = 0;
         }
 
-        $filter_data = [
-            'project_id'    => $project_id,
-            'customer_id'   => $customer_id,
-         ];
+        if ($this->request->getVar('thread_id')) {
+            $thread_id = $this->request->getVar('thread_id');
+        } else {
+            $thread_id = 0;
+        }
 
         $messageModel = new MessageModel();
          
         $data['project_messages'] = [];
 
-        $results = $messageModel->getProjectMessagesById($filter_data);
+        $results = $messageModel->getMessagesByThreadID($thread_id);
 
         $customerModel = new CustomerModel();
 
@@ -249,7 +248,7 @@ class Message extends \Catalog\Controllers\BaseController
                 'sender_id'   => $result['sender_id'],
                 'project_id'  => $result['project_id'],
                 'sender'      => $customerModel->where('customer_id', $result['sender_id'])->findColumn('username'),
-                'receiver'    =>  $customerModel->where('customer_id', $result['receiver_id'])->findColumn('username'),
+                'receiver'    => $customerModel->where('customer_id', $result['receiver_id'])->findColumn('username'),
                 'date_added'  => $this->dateDifference($result['date_added']),
             ];
         }

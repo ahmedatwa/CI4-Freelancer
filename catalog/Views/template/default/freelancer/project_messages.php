@@ -32,7 +32,7 @@
 <?php } ?>
 <!-- Send message -->
 <script type="text/javascript">
-function sendMessage(sender_id, receiver_id, project_id) {
+function sendMessage(sender_id, receiver_id) {
    bootbox.prompt({
     title: 'Send A Message',
     message: "",
@@ -57,10 +57,10 @@ function sendMessage(sender_id, receiver_id, project_id) {
         return false;
     } else {
          $.ajax({
-            url: 'account/message/sendMessage?pid=' + project_id,
+            url: 'account/message/sendMessage?pid=' + <?php echo $project_id; ?>,
             dataType: 'json',
             method: 'post',
-            data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'sender_id': sender_id, 'receiver_id': receiver_id, 'message': $('.bootbox-input-textarea').val(), 'project_id': project_id},
+            data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'sender_id': sender_id, 'receiver_id': receiver_id, 'message': $('.bootbox-input-textarea').val(), 'project_id': <?php echo $project_id; ?>},
             beforeSend: function() {
                 $('.text-danger, .alert').remove();
             },
@@ -71,7 +71,7 @@ function sendMessage(sender_id, receiver_id, project_id) {
                 if (json['success']) {
                     console.log('ok')
                   $('.header-notifications-content').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                  $('#messages #messages-list').load('account/message/getProjectMessages?pid=' +project_id+ '&customer_id=<?php echo $customer_id; ?>');
+                  $('#messages #messages-list').load('account/message/getProjectMessages?pid=' +<?php echo $project_id; ?>+ '&customer_id=<?php echo $customer_id; ?>');
                   $('#send-message-modal-form').trigger('reset');
                 }                        
             },
