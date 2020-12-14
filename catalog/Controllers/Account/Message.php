@@ -8,8 +8,8 @@ class Message extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        if (! $this->session->get('customer_id') && ! $this->customer->isLogged() ) {
-             return redirect('account_login');
+        if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
+            return redirect('account_login');
         }
 
         $this->template->setTitle(lang('account/message.heading_title'));
@@ -47,13 +47,12 @@ class Message extends \Catalog\Controllers\BaseController
             'href' => base_url('account/message?cid=' . $customer_id),
         ];
 
-       // Chat Memebers
+        // Chat Memebers
         $data['members'] = [];
 
         $members = $messageModel->getMembersByCustomerId($customer_id);
 
         foreach ($members as $result) {
-
             $customer_info = $customerModel->getCustomer($result['receiver_id']);
             $sender_info = $customerModel->getCustomer($result['sender_id']);
 
@@ -84,7 +83,6 @@ class Message extends \Catalog\Controllers\BaseController
         $json = [];
 
         if ($this->request->getVar('thread_id')) {
-            
             $messageModel = new MessageModel();
 
             $results = $messageModel->getMessages($this->request->getVar('thread_id'));
@@ -106,18 +104,17 @@ class Message extends \Catalog\Controllers\BaseController
     }
 
 
-    public function markRead() 
+    public function markRead()
     {
         $json = [];
         
         if ($this->request->getVar('message_id')) {
-
             $messageModel = new MessageModel();
 
             $messageModel->markSeen($this->request->getVar('message_id'));
         }
         
-         return $this->response->setJSON($json);
+        return $this->response->setJSON($json);
     }
 
 
@@ -139,7 +136,6 @@ class Message extends \Catalog\Controllers\BaseController
         $json = [];
 
         if ($this->request->getMethod() == 'post') {
-
             $messageModel = new MessageModel();
 
             $options = [
@@ -161,19 +157,19 @@ class Message extends \Catalog\Controllers\BaseController
             }
 
             if (!$json) {
+
                 $messageModel->addMessage($this->request->getPost());
 
                 $json['success'] = lang('freelancer/project.text_success_pm');
 
                 $event = $pusher->trigger('chat-channel', 'chat-event', $this->request->getPost());
-
             }
         }
 
         return $this->response->setJSON($json);
     }
 
-    // project 
+    // project
     // public function sendProjectMessage()
     // {
     //     $json = [];

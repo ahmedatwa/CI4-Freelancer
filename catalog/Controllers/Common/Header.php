@@ -111,7 +111,6 @@ class Header extends \Catalog\Controllers\BaseController
             ];
         }
 
-
         // Blog
         if ($this->registry->get('blog_extension_status')) {
             $data['text_blog'] = lang('common/header.text_blog');
@@ -196,12 +195,13 @@ class Header extends \Catalog\Controllers\BaseController
 
             foreach ($results as $result) {
                 $json[] = [
+                'thread_id'   => $result['thread_id'],
                 'message_id'  => $result['message_id'],
                 'receiver_id' => $result['receiver_id'],
                 'sender_id'   => $result['sender_id'],
                 'name'        => $result['name'],
                 'image'       => ($result['image']) ? $this->resize($result['image'], 42, 42) : $this->resize('catalog/avatar.jpg', 42, 42),
-                'message'     => word_limiter($result['message'], 10),
+                'message'     => word_limiter(json_decode($result['message'], true)['text'], 10),
                 'date_added'  => $this->dateDifference($result['date_added']),
                 'count'       => $result['total'],
                 'href'        => base_url('account/inbox?message_id=' . $result['message_id']),

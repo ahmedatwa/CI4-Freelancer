@@ -249,12 +249,11 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	          for (var i = 0; json.length > i; i++) {
 
 	           html = '<li class="list-group-item" id="'+json[i].message_id+'">';
-	           html += '<a href="account/message#v-pills-'+json[i].receiver_id+'">';
+	           html += '<a href="account/message#v-pills-'+json[i].thread_id+'">';
 	           html += '<span class="notification-avatar status-online float-left"><img src="'+json[i].image+'" alt=""></span>';
 	           html += '<div class="notification-text">';
 	           html += '<strong>' + json[i].name + '</strong>';
-	           html += '<p class="notification-msg-text">' + json[i].message + '</p>';
-	           html += '<span class="color">' + json[i].date_added + '</span>';
+	           html += '<p class="notification-msg-text">' + json[i].message + '<span class="color">' + json[i].date_added + '</span></p>';
 	           html += '</div>';
 	           html += '</a>';
 	           html += '</li>';

@@ -119,21 +119,29 @@ header.fullwidth .container {
 .fullwidth .header-widget:last-of-type { padding-right: 5px; margin-right: 0; }
 
 /* Notification Avatar*/
-.header-notifications-content .notification-avatar {
+#message-list .notification-avatar {
 	height: 42px;
 	width: 42px;
 	max-width: 42px;
 	display: inline-block;
 	border-radius: 50%;
 	overflow: hidden;
+    margin-right: 10px;
 }
 
-.notification-text {
-    text-align: right;
-    display: inline-block;
+#message-list li .notification-text {
+    color: #333;
+}
+
+.message-avatar .notification-text {
     padding-left: 10px;
+    color: #333;
+    display: inline-block;
 }
 
+#message-list .notification-text span {
+    float: right;
+}
 /* Sign In Button */
 .header-widget .log-in-button {
 	position: relative;

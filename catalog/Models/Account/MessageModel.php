@@ -49,7 +49,6 @@ class MessageModel extends \CodeIgniter\Model
 
     public function getMessageByCustomerId($viewed, $customer_id)
     {
-
         $messages = [];
 
         $builder = $this->db->table($this->table);
@@ -60,7 +59,8 @@ class MessageModel extends \CodeIgniter\Model
         $query = $builder->get();
 
         foreach ($query->getResultArray() as $result) {
-           $messages[] = [
+            $messages[] = [
+            'thread_id'  => $result['thread_id'],
             'message_id'  => $result['message_id'],
             'receiver_id' => $result['receiver_id'],
             'sender_id'   => $result['sender_id'],
@@ -70,7 +70,7 @@ class MessageModel extends \CodeIgniter\Model
             'date_added'  => $result['date_added'],
             'total'       => $this->getTotalUnseen($result['receiver_id']),
         ];
-        } 
+        }
 
         return $messages;
     }
@@ -84,11 +84,11 @@ class MessageModel extends \CodeIgniter\Model
 
     public function getCustomer($customer_id)
     {
-       $builder = $this->db->table('customer'); 
-       $builder->select('CONCAT(firstname, " ", lastname) as name, image, username');
-       $builder->where('customer_id', $customer_id);
-       $query = $builder->get();
-       return $query->getRowArray(); 
+        $builder = $this->db->table('customer');
+        $builder->select('CONCAT(firstname, " ", lastname) as name, image, username');
+        $builder->where('customer_id', $customer_id);
+        $query = $builder->get();
+        return $query->getRowArray();
     }
 
     public function markSeen($message_id)
@@ -98,7 +98,6 @@ class MessageModel extends \CodeIgniter\Model
         $builder->set('seen', 1);
         $builder->set('date_modified', 'NOW()', false);
         $builder->update();
-    
     }
 
     // Send Project Message
@@ -129,36 +128,29 @@ class MessageModel extends \CodeIgniter\Model
 
 
 
-   // New Start From Here
+    // New Start From Here
     public function addMessage(array $data)
     {
         $builder = $this->db->table($this->table);
-        $builder->select('thread_id');
-        $builder->where([
-            'sender_id'   => $data['sender_id'],
-            'receiver_id' => $data['receiver_id']
-        ]);
-        $builder->orWhere([
-            'sender_id'   => $data['receiver_id'],
-            'receiver_id' => $data['sender_id']
-        ]);
 
-        if ($builder->countAllResults() > 0) {
-            $row = $builder->get()->getRowArray();
-            $rand = $row['thread_id'];
+        if (isset($data['thread_id']) && !empty($data['thread_id'])) {
+            $builder->select('thread_id');
+            $builder->where('thread_id', $data['thread_id']);
+            $query = $builder->get();
+            $row = $query->getRowArray();
+            $thread_id = $row['thread_id'];
         } else {
             helper('text');
-            $rand = random_string('crypto', 10);
+            $thread_id = random_string('crypto', 10);
         }
-        
-        
+
         $message_data = [
             'project_id'  => $data['project_id'] ?? 0,
-            'thread_id'   => $rand,
+            'thread_id'   => $thread_id,
             'sender_id'   => $data['sender_id'],
             'receiver_id' => $data['receiver_id'],
             'message'     => json_encode([
-                'sender_id'   => $data['sender_id'], 
+                'sender_id'   => $data['sender_id'],
                 'receiver_id' => $data['receiver_id'],
                 'text'        => $data['message']
             ]),
@@ -176,7 +168,7 @@ class MessageModel extends \CodeIgniter\Model
 
         $message_data = [
             'message' => json_encode([
-                'sender_id'   => $data['sender_id'], 
+                'sender_id'   => $data['sender_id'],
                 'receiver_id' => $data['receiver_id'],
                 'message'     => $data['message']
             ]),

@@ -15,7 +15,7 @@
 							<!-- Customer Online -->
  							<div class="nav flex-column nav-pills" id="online-list" role="tablist" aria-orientation="vertical">
 							<?php foreach ($members as $member) { ?>
-  							<a class="nav-link text-dark border-bottom rounded-0" id="v-pills-<?php echo $member['thread_id']; ?>-tab" data-toggle="pill" href="#v-pills-<?php echo $member['thread_id']; ?>" role="tab" aria-controls="v-pills-<?php echo $member['thread_id']; ?>" aria-selected="true" onClick="openChat('<?php echo $member['thread_id']; ?>', <?php echo $member['receiver_id']; ?>);"> 
+  							<a class="nav-link text-dark border-bottom rounded-0" id="v-pills-<?php echo $member['thread_id']; ?>-tab" data-toggle="pill" href="#v-pills-<?php echo $member['thread_id']; ?>" role="tab" aria-controls="v-pills-<?php echo $member['thread_id']; ?>" aria-selected="true" onClick="openChat('<?php echo $member['thread_id']; ?>', <?php echo $member['receiver_id']; ?>, <?php echo $member['sender_id']; ?>);"> 
   							
   								<div class="message-avatar">
   									<?php if ($member['online']) { ?>
@@ -52,9 +52,9 @@
 							<form enctype="multipart/form-data" method="post" action="" id="form-message" accept-charset="utf-8" > 
 								<div class="message-reply">
 									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-									<input type="hidden" name="receiver_id" value="" id="input-receiver-id" />
-									<input type="hidden" name="sender_id" value="<?php echo $customer_id; ?>" id="input-sender-id" />
-								    <input type="hidden" name="thread_id" value="" id="input-thread-id" />
+									<input type="hidden" name="receiver_id" id="input-receiver-id" />
+									<input type="hidden" name="sender_id" id="input-sender-id" />
+								    <input type="hidden" name="thread_id" id="input-thread-id" />
 								    <div id="user-is-typing"></div>
 									<textarea cols="1" rows="1" placeholder="Your Message" name="message" id="input-message" class="form-control"></textarea>
 									<button class="button ripple-effect" type="button" id="button-send">Send</button>
@@ -84,10 +84,10 @@ $(document).ready(function(){
 	});
 
 	function sendMessage(data) {
-
+		console.log(data)
 		if(data.sender_id == <?php echo $customer_id; ?>) {
 			html = '<div class="message-time-sign">';
-			html += '<span> ' + data.date_added + ' </span>'; 
+			html += '<span> ' + new Date().toLocaleString(); + ' </span>'; 
 			html += '</div>';
 			html += ' <div class="message-bubble me">'; 
 			html += '<div class="message-bubble-inner">'; 
@@ -122,7 +122,6 @@ $(document).ready(function(){
 	    }
     });
     
-
 	//Send Message Form
 	$('#button-send').on('click', function() {
 		if ($('#input-message').val() !== '') {
@@ -130,7 +129,9 @@ $(document).ready(function(){
 		      url: 'account/message/sendMessage',
 		      type: 'post',
 		      data:$("#form-message").serialize(),
-		      success:function() {}    
+		      success:function() {
+		      	$('#input-message').val('');
+		      }    
 		  	});
 		}
 	});
@@ -139,7 +140,7 @@ $(document).ready(function(){
 
  <!-- Open the Chat Tab window -->
 <script type="text/javascript">
- function openChat(thread_id, receiver_id) {
+ function openChat(thread_id, receiver_id, sender_id) {
 
     $(".messages-headline").html('<h4></h4>');
 
@@ -152,6 +153,7 @@ $(document).ready(function(){
     $("#v-pills-tabContent").html(tab_content);
 
     $("#form-message #input-receiver-id").val(receiver_id);
+    $("#form-message #input-sender-id").val(sender_id);
     $("#form-message #input-thread-id").val(thread_id);
 
 }
