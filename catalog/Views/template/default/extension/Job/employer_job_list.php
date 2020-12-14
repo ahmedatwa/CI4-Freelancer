@@ -84,7 +84,6 @@ $('#button-new-job').on('click', function() {
 </script>
 
 <script type="text/javascript">
-
 function ceaseJob(job_id) {
   bootbox.confirm({
     message: "Are You Sure",

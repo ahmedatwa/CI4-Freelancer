@@ -87,7 +87,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
   $('.summernote').summernote({
-	height: 350,
+	height: 250,
 	toolbar: [
           ['style', ['style']],
           ['font', ['bold', 'underline', 'clear']],
@@ -95,7 +95,7 @@ $(document).ready(function() {
           ['para', ['ul', 'ol', 'paragraph']],
           ['table', ['table']],
           ['insert', ['picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
+          ['view', ['fullscreen', 'codeview']]
         ]
   });
 });

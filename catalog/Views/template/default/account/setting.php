@@ -6,10 +6,10 @@
 			<h3><?php echo $heading_title; ?></h3>
 		</div>
 		<div class="row">
-		<div class="col-12">
-			<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" id="form-location" accept-charset="utf-8"> 
-				<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-			   <div class="shadow-sm p-3 mb-5 bg-white rounded">
+			<div class="col-12">
+				<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" id="form-location" accept-charset="utf-8"> 
+					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+					<div class="shadow-sm p-3 mb-5 bg-white rounded">
 						<div class="mb-4">
 							<h3><i class="icon-material-outline-account-circle"></i> <?php echo $text_account; ?></h3>
 						</div>
@@ -54,303 +54,303 @@
 								</div>
 							</div>
 						</div>
-						<div class="dropdown-divider"></div>
-						<div class="headline mt-4">
-							<h3><i class="icon-material-outline-face"></i> <?php echo $text_profile; ?></h3>
-						</div>
-						<div class="content">
-							<ul class="fields-ul">
-								<li>
-									<div class="row">
-										<div class="col-xl-6">
-											<div class="submit-field">
-													<span class="bidding-detail"><?php echo $text_hourly_rate; ?> : <?php echo $currency; ?></span>
-													<input class="range-slider" type="text" value="" data-provide="slider" data-slider-currency="$" data-slider-min="5" data-slider-max="150" data-slider-step="5" data-slider-value="<?php echo $rate; ?>" name="rate"/>
-											</div>
-										</div>
-									</div>
-								</li>
-								<li>
-									<div class="row">
-										<div class="col-xl-6">
-											<div class="submit-field">
-												<h5><?php echo $entry_tagline; ?></h5>
-												<input type="text" class="form-control" name="tag_line" value="<?php echo $tag_line; ?>">
-											</div>
-										</div>
-										<div class="col-xl-12">
-											<div class="submit-field">
-												<h5><?php echo $text_about; ?></h5>
-												<textarea cols="30" rows="5" name="about" class="form-control"><?php echo $about; ?></textarea>
-											</div>
-										</div>
-										<legend>
-											<div class="dropdown-divider"></div>
-											<h4><?php echo $text_social; ?></h4>
-										</legend>
-										<div class="col-xl-6">
-											<div class="submit-field">
-												<h5><?php echo $entry_facebook; ?></h5>
-												<input type="text" class="form-control" name="facebook" value="<?php echo $facebook; ?>">
-											</div>
-										</div>
-										<div class="col-xl-6">
-											<div class="submit-field">
-												<h5><?php echo $entry_twitter; ?></h5>
-												<input type="text" class="form-control" name="twitter" value="<?php echo $twitter; ?>">
-											</div>
-										</div>
-										<div class="col-xl-6">
-											<div class="submit-field">
-												<h5><?php echo $entry_linkedin; ?></h5>
-												<input type="text" class="form-control" name="linkedin" value="<?php echo $linkedin; ?>">
-											</div>
-										</div>
-										<div class="col-xl-6">
-											<div class="submit-field">
-												<h5><?php echo $entry_github; ?></h5>
-												<input type="text" class="form-control" name="github" value="<?php echo $github; ?>">
-											</div>
-										</div>
-										
-								   <div class="col-12">
-									<button type="submit" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
-									</div>
-									</div>
-								</li>
-							</ul>
-						</div>
-				</div>
+					</div>
 				</div>	
-				</form>
-				<!-- Dashboard Box -->
-				<div class="col-12">
-					<div class="shadow-sm p-3 mb-5 bg-white rounded" id="password-form">
-						<div class="headline mb-4">
-							<h3><i class="icon-material-outline-lock"></i> <?php echo $text_password_security; ?></h3>
-						</div>
-						<div class="content with-padding">
-							<div class="row">
-								<div class="col-xl-4">
-									<div class="submit-field required">
-										<h5><?php echo $entry_current_password; ?></h5>
-										<input type="password" class="form-control" id="input-current" name="current">
-									</div>
+			</form>
+			<!-- Dashboard Box -->
+			<div class="col-12">
+				<div class="shadow-sm p-3 mb-5 bg-white rounded" id="password-form">
+					<div class="headline mb-4">
+						<h3><i class="icon-material-outline-lock"></i> <?php echo $text_password_security; ?></h3>
+					</div>
+					<div class="content with-padding">
+						<div class="row">
+							<div class="col-xl-4">
+								<div class="submit-field required">
+									<h5><?php echo $entry_current_password; ?></h5>
+									<input type="password" class="form-control" id="input-current" name="current">
 								</div>
-								<div class="col-xl-4">
-									<div class="submit-field required">
-										<h5><?php echo $entry_password; ?></h5>
-										<input type="password" class="form-control" id="input-password" name="password">
-										<?php echo formError('password'); ?>
-									</div>
+							</div>
+							<div class="col-xl-4">
+								<div class="submit-field required">
+									<h5><?php echo $entry_password; ?></h5>
+									<input type="password" class="form-control" id="input-password" name="password">
+									<?php echo formError('password'); ?>
 								</div>
-								<div class="col-xl-4">
-									<div class="submit-field required">
-										<h5><?php echo $entry_confirm; ?></h5>
-										<input type="password" class="form-control" id="input-confirm" name="confirm">
-										<?php echo formError('confirm'); ?>
-									</div>										
-								</div>
-								<div class="col-12">
-									<button type="button" id="password-form-button" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
-								</div>
+							</div>
+							<div class="col-xl-4">
+								<div class="submit-field required">
+									<h5><?php echo $entry_confirm; ?></h5>
+									<input type="password" class="form-control" id="input-confirm" name="confirm">
+									<?php echo formError('confirm'); ?>
+								</div>										
+							</div>
+							<div class="col-12">
+								<button type="button" id="password-form-button" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
 							</div>
 						</div>
 					</div>
 				</div>
+			</div>
 			<div class="col-12">
 				<div class="shadow-sm p-3 mb-5 bg-white rounded">
+					<div class="headline mb-4">
+						<h3><i class="icon-material-outline-face"></i> <?php echo $text_profile; ?></h3>
+						<small>Complete the information below to be considered as a Freelancer!</small>
+					</div>
+					<div class="content">
+						<ul class="fields-ul">
+							<li>
+								<div class="row">
+									<div class="col-xl-6">
+										<div class="submit-field">
+											<span class="bidding-detail"><?php echo $text_hourly_rate; ?> : <?php echo $currency; ?></span>
+											<input class="range-slider" type="text" value="" data-provide="slider" data-slider-currency="$" data-slider-min="5" data-slider-max="150" data-slider-step="5" data-slider-value="<?php echo $rate; ?>" name="rate"/>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="row">
+									<div class="col-xl-6">
+										<div class="submit-field">
+											<h5><?php echo $entry_tagline; ?></h5>
+											<input type="text" class="form-control" name="tag_line" value="<?php echo $tag_line; ?>">
+										</div>
+									</div>
+									<div class="col-xl-12">
+										<div class="submit-field">
+											<h5><?php echo $text_about; ?></h5>
+											<textarea cols="30" rows="5" name="about" class="form-control"><?php echo $about; ?></textarea>
+										</div>
+									</div>
+									<legend>
+										<div class="dropdown-divider"></div>
+										<h4><?php echo $text_social; ?></h4>
+									</legend>
+									<div class="col-xl-6">
+										<div class="submit-field">
+											<h5><?php echo $entry_facebook; ?></h5>
+											<input type="text" class="form-control" name="facebook" value="<?php echo $facebook; ?>">
+										</div>
+									</div>
+									<div class="col-xl-6">
+										<div class="submit-field">
+											<h5><?php echo $entry_twitter; ?></h5>
+											<input type="text" class="form-control" name="twitter" value="<?php echo $twitter; ?>">
+										</div>
+									</div>
+									<div class="col-xl-6">
+										<div class="submit-field">
+											<h5><?php echo $entry_linkedin; ?></h5>
+											<input type="text" class="form-control" name="linkedin" value="<?php echo $linkedin; ?>">
+										</div>
+									</div>
+									<div class="col-xl-6">
+										<div class="submit-field">
+											<h5><?php echo $entry_github; ?></h5>
+											<input type="text" class="form-control" name="github" value="<?php echo $github; ?>">
+										</div>
+									</div>
+									
+									<div class="col-12">
+										<button type="submit" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
 					<div class="headline">
-							<h3><i class="fab fa-leanpub"></i> <?php echo $text_professional_heading; ?></h3>
-							<small><?php echo $text_professional_sub; ?></small>
-						</div>
+						<h3><i class="fab fa-leanpub"></i> <?php echo $text_professional_heading; ?></h3>
+						<small><?php echo $text_professional_sub; ?></small>
+					</div>
 					<div class="content with-padding">
-						 <!-- Certificates BEGIN -->
+						<!-- Certificates BEGIN -->
 						<div class="accordion" id="certificatesAccordion">
 							<div class="card-header" id="headingOne">
 								<h2 class="mb-0">
 									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#certificates" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-certificate"></i> <?php echo $tab_certificates; ?></button>
 								</h2>
-                            </div>
-                            <div class="card-body">
-							<div id="certificates" class="collapse" aria-labelledby="headingOne" data-parent="#certificatesAccordion">
-								<div class="accordion-body__contents">
-									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="csrf_token" />
-									<input type="hidden" name="freelancer_id" value="<?php echo $customer_id; ?>" />
-									<div class="form-row">
-										<div class="form-group col-md-6">
-											<label for="input-name"><?php echo $entry_certification; ?></label>
-											<input type="text" class="form-control" id="input-name" name="name" value=""
-											placeholder="Certificate or Award">
-											<small id="error_certificate_name" class="form-text text-muted"></small>
-										</div>
-										<div class="form-group col-md-6">
-											<label for="input-certificate-year"><?php echo $entry_year; ?></label>
-											<select id="certificate_year" class="form-control" name="certificate_year">
-												<?php foreach (seller_graduation_year() as $year) { ?>
-													<option value="<?php echo $year['id']; ?>">
-														<?php echo $year['text']; ?></option>
-													<?php } ?>
-												</select>
-												<span class="lnr lnr-chevron-down"></span>
-												<small id="error_certificate_year" class="form-text text-muted"></small>
+							</div>
+							<div class="card-body">
+								<div id="certificates" class="collapse" aria-labelledby="headingOne" data-parent="#certificatesAccordion">
+									<div class="accordion-body__contents">
+										<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="csrf_token" />
+										<input type="hidden" name="freelancer_id" value="<?php echo $customer_id; ?>" />
+										<div class="form-row">
+											<div class="form-group col-md-6">
+												<label for="input-name"><?php echo $entry_certification; ?></label>
+												<input type="text" class="form-control" id="input-name" name="name" value=""
+												placeholder="Certificate or Award">
+												<small id="error_certificate_name" class="form-text text-muted"></small>
 											</div>
-											<div class="col-md-12">
-												<button class="button ripple-effect float-right" id="add-certificate" data-loading-text="<?php echo $text_loading; ?>"
-													type="button"><i class="icon-material-outline-add"></i> <?php echo $button_add;?></button>  
+											<div class="form-group col-md-6">
+												<label for="input-certificate-year"><?php echo $entry_year; ?></label>
+												<select id="certificate_year" class="form-control" name="certificate_year">
+													<?php foreach (seller_graduation_year() as $year) { ?>
+														<option value="<?php echo $year['id']; ?>">
+															<?php echo $year['text']; ?></option>
+														<?php } ?>
+													</select>
+													<span class="lnr lnr-chevron-down"></span>
+													<small id="error_certificate_year" class="form-text text-muted"></small>
 												</div>
-											</div> 
+												<div class="col-md-12">
+													<button class="button ripple-effect float-right" id="add-certificate" data-loading-text="<?php echo $text_loading; ?>"
+														type="button"><i class="icon-material-outline-add"></i> <?php echo $button_add;?></button>  
+													</div>
+												</div> 
 
-											<hr />         
-											<div id="certificates-list"></div>    
+												<hr />         
+												<div id="certificates-list"></div>    
+											</div>
 										</div>
 									</div>
-                                    </div>
-                                </div>
-									<!-- Certificates END -->
+								</div>
+								<!-- Certificates END -->
 								<div class="accordion" id="educationAccordion">
-								<div class="card-header" id="headingTwo">
-								<h2 class="mb-0">
-									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#education" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-university"></i> <?php echo $tab_education; ?></button>
-								</h2>
-                            </div>	
-                            <div class="card-body">
-								<div id="education" class="collapse" aria-labelledby="headingTwo" data-parent="#educationAccordion">
-								<div class="accordion-body__contents">
-									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="csrf_token" />
-									<input type="hidden" name="freelancer_id" value="<?php echo $customer_id; ?>" />
-									<div class="form-row">
-										<div class="form-group col-md-6">
-		                                <label for="filter_university"><?php echo $entry_university; ?></label>
-		                                <input type="text" class="form-control" id="filter_university" name="filter_university" value="" placeholder="<?php echo $entry_university; ?>">
-		                                <input name="university_id" type="hidden">
-		                                <small class="form-text text-muted" id="error_filter_university"></small>
-		                            </div>
-		                             <div class="form-group col-md-4">
-                                <label for="country"><?php echo $entry_country; ?></label>
-                                <input type="text" class="form-control" id="education_country" name="education_country" value="">
-                                 </div>
-								<div class="form-group col-md-3">
-                                <label for="major_title"><?php echo $entry_uni_title; ?></label>
-                                    <select id="major_title" class="form-control" name="major_title">
-                                        <option value=""><?php echo $text_select; ?></option>
-                                        <?php foreach($education_titles as $title) { ?>
-                                        <option value="<?php echo $title['value']; ?>">
-                                            <?php echo $title['text']; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <span class="lnr lnr-chevron-down"></span>
-                                <small class="form-text text-muted" id="error_major_title"></small>
-                            </div>
-                             <div class="form-group col-md-6">
-                                <label for="filter_major"><?php echo $entry_major; ?></label>
-                                <input name="major_id" type="hidden">
-                                <input type="text" class="form-control" id="filter_major" name="filter_major" value="">
-                                <small id="error_filter_major" class="form-text text-muted"></small>
-                            </div>
-                                 <div class="form-group col-md-3">
-                                <label for="major_year"><?php echo $entry_year; ?></label>
-                                    <select id="major_year" class="form-control" name="major_year">
-                                        <?php foreach (seller_graduation_year() as $year) { ?>
-                                        <option value="<?php echo $year['id']; ?>">
-                                            <?php echo $year['text']; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <span class="lnr lnr-chevron-down"></span>
-                           			 </div>
-											<div class="col-md-12">
-												<button class="button ripple-effect float-right" id="add-education" data-loading-text="<?php echo $text_loading; ?>"
-													type="button"><i class="icon-material-outline-add"></i> <?php echo $button_add;?></button>  
-												</div>
-											</div> 
+									<div class="card-header" id="headingTwo">
+										<h2 class="mb-0">
+											<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#education" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-university"></i> <?php echo $tab_education; ?></button>
+										</h2>
+									</div>	
+									<div class="card-body">
+										<div id="education" class="collapse" aria-labelledby="headingTwo" data-parent="#educationAccordion">
+											<div class="accordion-body__contents">
+												<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="csrf_token" />
+												<input type="hidden" name="freelancer_id" value="<?php echo $customer_id; ?>" />
+												<div class="form-row">
+													<div class="form-group col-md-6">
+														<label for="filter_university"><?php echo $entry_university; ?></label>
+														<input type="text" class="form-control" id="filter_university" name="filter_university" value="" placeholder="<?php echo $entry_university; ?>">
+														<input name="university_id" type="hidden">
+														<small class="form-text text-muted" id="error_filter_university"></small>
+													</div>
+													<div class="form-group col-md-4">
+														<label for="country"><?php echo $entry_country; ?></label>
+														<input type="text" class="form-control" id="education_country" name="education_country" value="">
+													</div>
+													<div class="form-group col-md-3">
+														<label for="major_title"><?php echo $entry_uni_title; ?></label>
+														<select id="major_title" class="form-control" name="major_title">
+															<option value=""><?php echo $text_select; ?></option>
+															<?php foreach($education_titles as $title) { ?>
+																<option value="<?php echo $title['value']; ?>">
+																	<?php echo $title['text']; ?></option>
+																<?php } ?>
+															</select>
+															<span class="lnr lnr-chevron-down"></span>
+															<small class="form-text text-muted" id="error_major_title"></small>
+														</div>
+														<div class="form-group col-md-6">
+															<label for="filter_major"><?php echo $entry_major; ?></label>
+															<input name="major_id" type="hidden">
+															<input type="text" class="form-control" id="filter_major" name="filter_major" value="">
+															<small id="error_filter_major" class="form-text text-muted"></small>
+														</div>
+														<div class="form-group col-md-3">
+															<label for="major_year"><?php echo $entry_year; ?></label>
+															<select id="major_year" class="form-control" name="major_year">
+																<?php foreach (seller_graduation_year() as $year) { ?>
+																	<option value="<?php echo $year['id']; ?>">
+																		<?php echo $year['text']; ?></option>
+																	<?php } ?>
+																</select>
+																<span class="lnr lnr-chevron-down"></span>
+															</div>
+															<div class="col-md-12">
+																<button class="button ripple-effect float-right" id="add-education" data-loading-text="<?php echo $text_loading; ?>"
+																	type="button"><i class="icon-material-outline-add"></i> <?php echo $button_add;?></button>  
+																</div>
+															</div> 
 
-											<hr />         
-											<div id="educations-list"></div>    
-										</div>
-                                    </div>
-                                </div>
-								</div>
-			                <!-- Education EDD  -->
-			                <div class="accordion" id="languageAccordion">
-								<div class="card-header" id="headingTwo">
-								<h2 class="mb-0">
-									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#language" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-language"></i> <?php echo $tab_languages; ?></button>
-								</h2>
-							</div>	
-							<div class="card-body">
-			                <div id="language" class="collapse" aria-labelledby="headingTwo" data-parent="#languageAccordion">
-								<div class="accordion-body__contents">
-									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="csrf_token" />
-									<input type="hidden" name="freelancer_id" value="<?php echo $customer_id; ?>" />
-									<div class="form-row">
-											<div class="form-group col-md-6">
-												<label for="filter_language"><?php echo $entry_language; ?></label>
-												<input type="hidden" name="language_id" value="">
-												<input type="text" class="form-control" id="filter_language" name="filter_language"
-												placeholder="<?php echo $text_add_language; ?>">
-												<small id="error_filter_language" class="form-text text-muted"></small>
+															<hr />         
+															<div id="educations-list"></div>    
+														</div>
+													</div>
+												</div>
 											</div>
-											<div class="form-group col-md-6">
-												<label for="language_level"><?php echo $entry_language_level; ?></label>
-													<select id="language_level" class="form-control" name="language_level">
-														<option value=""><?php echo $text_select; ?></option>
-														<option value="1"><?php echo $text_basic; ?></option>
-														<option value="2"><?php echo $text_conversational; ?>
-													</option>
-													<option value="3"><?php echo $text_fluent; ?></option>
-													<option value="4"><?php echo $text_native_or_bilingual; ?></option>
-												</select>
-												<span class="lnr lnr-chevron-down"></span>
-											<small id="error_language_level" class="form-text text-muted"></small>
-										</div>
-											<div class="col-md-12">
-												<button class="button ripple-effect float-right" id="add-language" data-loading-text="<?php echo $text_loading; ?>"
-													type="button"><i class="icon-material-outline-add"></i> <?php echo $button_add;?></button>  
-												</div>
-											</div> 
+											<!-- Education EDD  -->
+											<div class="accordion" id="languageAccordion">
+												<div class="card-header" id="headingTwo">
+													<h2 class="mb-0">
+														<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#language" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-language"></i> <?php echo $tab_languages; ?></button>
+													</h2>
+												</div>	
+												<div class="card-body">
+													<div id="language" class="collapse" aria-labelledby="headingTwo" data-parent="#languageAccordion">
+														<div class="accordion-body__contents">
+															<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="csrf_token" />
+															<input type="hidden" name="freelancer_id" value="<?php echo $customer_id; ?>" />
+															<div class="form-row">
+																<div class="form-group col-md-6">
+																	<label for="filter_language"><?php echo $entry_language; ?></label>
+																	<input type="hidden" name="language_id" value="">
+																	<input type="text" class="form-control" id="filter_language" name="filter_language"
+																	placeholder="<?php echo $text_add_language; ?>">
+																	<small id="error_filter_language" class="form-text text-muted"></small>
+																</div>
+																<div class="form-group col-md-6">
+																	<label for="language_level"><?php echo $entry_language_level; ?></label>
+																	<select id="language_level" class="form-control" name="language_level">
+																		<option value=""><?php echo $text_select; ?></option>
+																		<option value="1"><?php echo $text_basic; ?></option>
+																		<option value="2"><?php echo $text_conversational; ?>
+																	</option>
+																	<option value="3"><?php echo $text_fluent; ?></option>
+																	<option value="4"><?php echo $text_native_or_bilingual; ?></option>
+																</select>
+																<span class="lnr lnr-chevron-down"></span>
+																<small id="error_language_level" class="form-text text-muted"></small>
+															</div>
+															<div class="col-md-12">
+																<button class="button ripple-effect float-right" id="add-language" data-loading-text="<?php echo $text_loading; ?>"
+																	type="button"><i class="icon-material-outline-add"></i> <?php echo $button_add;?></button>  
+																</div>
+															</div> 
 
-											<hr />         
-											<div id="languages-list"></div>    
+															<hr />         
+															<div id="languages-list"></div>    
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- Language EDD  -->
+											<div class="accordion" id="skillsAccordion">
+												<div class="card-header" id="headingTwo">
+													<h2 class="mb-0">
+														<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#skills" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-chalkboard-teacher"></i> <?php echo $tab_skill; ?></button>
+													</h2>
+												</div>
+												<div class="card-body">
+													<div id="skills" class="collapse" aria-labelledby="headingTwo" data-parent="#skillsAccordion">
+														<div class="accordion-body__contents">
+															<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="skills_csrf_token" />
+															<input type="hidden" name="freelancer_id" value="<?php echo $customer_id; ?>" />
+															<input type="hidden" name="category_id" value="" />
+															<div class="form-row">
+																<label for="input-filter_skill"><?php echo $entry_skill; ?></label>
+																<div class="input-group mb-3">
+																	<input type="text" class="form-control" id="input-filter-skill" name="filter_category" placeholder="<?php echo $text_add_skill; ?>" value="">
+																	<div class="input-group-append">
+																		<button class="btn btn-primary" type="button" id="button-add-skill"><i class="icon-material-outline-add"></i></button>
+																	</div>
+																	
+																</div>
+																<small id="category_error" class="form-text text-muted"></small>
+															</div>
+															<hr />         
+															<div id="skills-list"></div>    
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
-								</div>
-								<!-- Language EDD  -->
-								<div class="accordion" id="skillsAccordion">
-								<div class="card-header" id="headingTwo">
-								<h2 class="mb-0">
-									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#skills" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-chalkboard-teacher"></i> <?php echo $tab_skill; ?></button>
-								</h2>
-							</div>
-							<div class="card-body">
-							<div id="skills" class="collapse" aria-labelledby="headingTwo" data-parent="#skillsAccordion">
-								<div class="accordion-body__contents">
-									<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" id="skills_csrf_token" />
-									<input type="hidden" name="freelancer_id" value="<?php echo $customer_id; ?>" />
-									<input type="hidden" name="category_id" value="" />
-									<div class="form-row">
-										<label for="input-filter_skill"><?php echo $entry_skill; ?></label>
-										<div class="input-group mb-3">
-											<input type="text" class="form-control" id="input-filter-skill" name="filter_category" placeholder="<?php echo $text_add_skill; ?>" value="">
-											<div class="input-group-append">
-												<button class="btn btn-primary" type="button" id="button-add-skill"><i class="icon-material-outline-add"></i></button>
-											</div>
-											
-										</div>
-										<small id="category_error" class="form-text text-muted"></small>
-									</div>
-									<hr />         
-									<div id="skills-list"></div>    
-								</div>
-							</div>
-						</div>
+							</div> <!--row-->
 						</div>
 					</div>
-				</div>
-			</div>
-		</div> <!--row-->
-	</div>
-</div>
 <!-- Certifications START -->
 <script type="text/javascript">
 $('#add-certificate').on('click', function(){
