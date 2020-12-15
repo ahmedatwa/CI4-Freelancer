@@ -24,7 +24,7 @@
 					<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit"><?php echo $button_reset; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
 				</form>
 				<p class="mt-3">
-				<a href="<?php echo $login; ?>" class="forgot-password text-secondary"><i class="fas fa-long-arrow-alt-right"></i> <?php echo $text_login; ?></a>
+				<a href="<?php echo $login; ?>" class="forgot-password text-secondary"><?php echo $text_login; ?></a>
 			    </p>
 			</div>
 		</div>

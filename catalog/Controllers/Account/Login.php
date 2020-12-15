@@ -4,6 +4,8 @@ use Catalog\Models\Account\CustomerModel;
 
 class Login extends \Catalog\Controllers\BaseController
 {
+    private $error = [];
+
     public function index()
     {
         if ($this->customer->isLogged() && $this->session->get('customer_id')) {
@@ -23,35 +25,6 @@ class Login extends \Catalog\Controllers\BaseController
             'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
         ];
 
-        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            // Trigger Pusher Online Event
-            // $options = [
-            //     'cluster' => 'eu',
-            //     'useTLS' => true
-            // ];
-
-            // $pusher = new \Pusher\Pusher(
-            //     'b4093000fa8e8cab989a',
-            //     'fb4bfd2d78aac168d918',
-            //     '1047280',
-            //     $options
-            // );
-
-            // $data['message'] = [
-            //     'customer_id' => $this->customer->getCustomerId(),
-            //     'username'    => $this->customer->getCustomerUserName()
-            // ];
-
-            // $pusher->trigger('chat-channel', 'online-event', $data);
-
-            if ($this->session->get('redirect_url')) {
-                return redirect()->to((string) $this->session->get('redirect_url'));
-            } else {
-                return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
-            }
-        }
-        
-
         $data['heading_title']  = lang('account/login.heading_title');
         $data['text_login']     = lang('account/login.text_login');
         $data['text_forgotten'] = lang('account/login.text_forgotten');
@@ -61,40 +34,59 @@ class Login extends \Catalog\Controllers\BaseController
         $data['button_login']   = lang('account/login.button_login');
 
 
-        if ($this->request->getPost('email')) {
-            $data['email'] = $this->request->getPost('email');
-        } else {
-            $data['email'] = '';
-        }
+        // if ($this->request->getPost('email')) {
+        //     $data['email'] = $this->request->getPost('email', FILTER_SANITIZE_EMAIL);
+        // } else {
+        //     $data['email'] = '';
+        // }
 
-        if ($this->request->getPost('password')) {
-            $data['password'] = $this->request->getPost('password');
-        } else {
-            $data['password'] = '';
-        }
+        // if ($this->request->getPost('password')) {
+        //     $data['password'] = $this->request->getPost('password');
+        // } else {
+        //     $data['password'] = '';
+        // }
 
-        if ($this->request->getVar('redirect')) {
-            $data['redirect'] = base_url($this->request->getVar('redirect'));
-        } else {
-            $data['redirect'] = '';
-        }
+        // if ($this->request->getVar('redirect')) {
+        //     $data['redirect'] = base_url($this->request->getVar('redirect'));
+        // } else {
+        //     $data['redirect'] = '';
+        // }
 
-        if ($this->session->getFlashdata('error_warning')) {
-            $data['error_warning'] = $this->session->getFlashdata('error_warning');
-        } else {
-            $data['error_warning'] = '';
-        }
+        // if ($this->session->getFlashdata('error_warning')) {
+        //     $data['error_warning'] = $this->session->getFlashdata('error_warning');
+        // } else {
+        //     $data['error_warning'] = '';
+        // }
 
-        if ($this->session->getFlashdata('success')) {
-            $data['success'] = $this->session->getFlashdata('success');
-        } else {
-            $data['success'] = '';
-        }
+        // if ($this->session->getFlashdata('success')) {
+        //     $data['success'] = $this->session->getFlashdata('success');
+        // } else {
+        //     $data['success'] = '';
+        // }
 
-        $data['action'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
+        //$data['action'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
         $data['forgotton'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
 
         $this->template->output('account/login', $data);
+    }
+
+    public function authLogin()
+    {
+       $json = [];
+
+       if (($this->request->getMethod() == 'post') && $this->validateForm()) {
+
+            if ($this->session->get('redirect_url')) {
+                $json['redirect'] = (string) $this->session->get('redirect_url');
+            } else {
+                $json['redirect'] = (route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
+            }
+        }
+
+        $json['error'] = $this->session->getFlashdata('error_warning');
+        $json['validator'] = $this->error;
+       
+       return $this->response->setJSON($json);  
     }
 
     public function googleAuth()
@@ -177,23 +169,24 @@ class Login extends \Catalog\Controllers\BaseController
             'password' => 'required|min_length[4]',
         ])) {
             $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
+            $this->error = $this->validator->getErrors();
         }
 
         $customerModel = new CustomerModel();
         // Check how many login attempts have been made.
-        $login_info = $customerModel->getLoginAttempts($this->request->getPost('email'));
+        $login_info = $customerModel->getLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
 
         if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
             $this->session->setFlashData('error_warning', lang('account/login.error_attempts'));
             return false;
         }
         
-        if (!$this->customer->login($this->request->getPost('email'), $this->request->getPost('password'))) {
+        if (!$this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'))) {
             $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
-            $customerModel->addLoginAttempt($this->request->getPost('email'), $this->request->getIPAddress());
+            $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
             return false;
         } else {
-            $customerModel->deleteLoginAttempts($this->request->getPost('email'));
+            $customerModel->deleteLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
         }
 
         return true;

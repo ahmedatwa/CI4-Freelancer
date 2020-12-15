@@ -14,7 +14,7 @@ class Forgotten extends \Catalog\Controllers\BaseController
 
             helper('text');
 
-            $customerModel->editCode($this->request->getPost('email'), random_string('alnum', 40));
+            $customerModel->editCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), random_string('alnum', 40));
 
             $this->session->setFlashdata('success', lang('account/forgotten.text_success'));
 
@@ -58,7 +58,6 @@ class Forgotten extends \Catalog\Controllers\BaseController
         }
 
         $data['action'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
-
         $data['login'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
 
         $this->template->output('account/forgotten', $data);
@@ -71,7 +70,7 @@ class Forgotten extends \Catalog\Controllers\BaseController
         
         if (! $this->validate([
               'email' => "required|valid_email",
-           ])  || ! $customerModel->getTotalCustomersByEmail($this->request->getPost('email')) ) {
+           ])  || ! $customerModel->getTotalCustomersByEmail($this->request->getPost('email', FILTER_SANITIZE_EMAIL)) ) {
 
                 $this->session->setFlashData('error_warning', lang('account/forgotten.error_email'));
 
