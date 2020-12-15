@@ -32,14 +32,6 @@ $('.intro-search-field input').on('keydown', function(e) {
 		$('#form-currency').submit();
 	});
 
-// Highlight any found errors
-$('.text-danger').each(function() {
-	var element = $(this).parent();
-    if (element.hasClass('input-group')) {
-        element.addClass('is-invalid');
-    }
-});
-
 $("[data-trigger]").on("click", function(e){
     e.preventDefault();
     e.stopPropagation();
@@ -213,13 +205,13 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	    });
 	  }
 	  // Mark Read Notification button
-	$('#mark-read-button').on('click', function() {
+	$('#button-mark-read').on('click', function() {
 	  $.ajax({
 		url: 'account/notifications/markRead',
 		dataType: 'json',
 		beforeSend: function() {
-	        $('#notifications-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
-	        $('#notifications-count').html('');
+	        $('#nav-user-main #notifications-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+	        $('#nav-user-main #notifications-count').html('');
 	    },
 	    complete: function () {
 	        $('#preloading').remove();
@@ -235,9 +227,9 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	      url: 'common/header/getMessages',
 	      dataType: 'json',
 	      beforeSend: function() {
-	          $('#message-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+	          $('#nav-user-main #message-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 	          $('#nav-user-main #message-list').html('');
-	          $('#message-count').html('');
+	          $('#nav-user-main #message-count').html('');
 	      },
 	      complete: function () {
 	          $('#preloading').remove();

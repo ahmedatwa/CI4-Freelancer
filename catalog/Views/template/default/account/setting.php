@@ -1,7 +1,7 @@
 <?php echo $header; ?><?php echo $dashboard_menu ;?>
 <!-- Dashboard Content -->
 <div class="dashboard-content-container container margin-top-20">
-	<div class="dashboard-content-inner" >
+	<div class="dashboard-content-inner">
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>
 		</div>
@@ -49,9 +49,12 @@
 												<input type="text" class="form-control" value="<?php echo $email; ?>" disabled>
 											</div>
 										</div>
-
+                                        
 									</div>
 								</div>
+								<div class="col-12">
+										<button type="submit" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
+									</div>
 							</div>
 						</div>
 					</div>
@@ -98,6 +101,8 @@
 						<h3><i class="icon-material-outline-face"></i> <?php echo $text_profile; ?></h3>
 						<small>Complete the information below to be considered as a Freelancer!</small>
 					</div>
+					<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" id="form-location-profile" accept-charset="utf-8"> 
+					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 					<div class="content">
 						<ul class="fields-ul">
 							<li>
@@ -105,7 +110,7 @@
 									<div class="col-xl-6">
 										<div class="submit-field">
 											<span class="bidding-detail"><?php echo $text_hourly_rate; ?> : <?php echo $currency; ?></span>
-											<input class="range-slider" type="text" value="" data-provide="slider" data-slider-currency="$" data-slider-min="5" data-slider-max="150" data-slider-step="5" data-slider-value="<?php echo $rate; ?>" name="rate"/>
+											<input class="range-slider" type="text" value="" data-provide="slider" data-slider-currency="$" data-slider-min="5" data-slider-max="150" data-slider-step="5" data-slider-value="<?php echo $rate; ?>" data-slider-tooltip="show" name="rate"/>
 										</div>
 									</div>
 								</div>
@@ -160,6 +165,7 @@
 							</li>
 						</ul>
 					</div>
+				</form>
 					<div class="headline">
 						<h3><i class="fab fa-leanpub"></i> <?php echo $text_professional_heading; ?></h3>
 						<small><?php echo $text_professional_sub; ?></small>
@@ -167,7 +173,7 @@
 					<div class="content with-padding">
 						<!-- Certificates BEGIN -->
 						<div class="accordion" id="certificatesAccordion">
-							<div class="card-header" id="headingOne">
+							<div class="card-header p-2" id="headingOne">
 								<h2 class="mb-0">
 									<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#certificates" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-certificate"></i> <?php echo $tab_certificates; ?></button>
 								</h2>
@@ -209,7 +215,7 @@
 								</div>
 								<!-- Certificates END -->
 								<div class="accordion" id="educationAccordion">
-									<div class="card-header" id="headingTwo">
+									<div class="card-header p-2" id="headingTwo">
 										<h2 class="mb-0">
 											<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#education" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-university"></i> <?php echo $tab_education; ?></button>
 										</h2>
@@ -272,7 +278,7 @@
 											</div>
 											<!-- Education EDD  -->
 											<div class="accordion" id="languageAccordion">
-												<div class="card-header" id="headingTwo">
+												<div class="card-header p-2" id="headingTwo">
 													<h2 class="mb-0">
 														<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#language" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-language"></i> <?php echo $tab_languages; ?></button>
 													</h2>
@@ -308,8 +314,6 @@
 																	type="button"><i class="icon-material-outline-add"></i> <?php echo $button_add;?></button>  
 																</div>
 															</div> 
-
-															<hr />         
 															<div id="languages-list"></div>    
 														</div>
 													</div>
@@ -317,7 +321,7 @@
 											</div>
 											<!-- Language EDD  -->
 											<div class="accordion" id="skillsAccordion">
-												<div class="card-header" id="headingTwo">
+												<div class="card-header p-2" id="headingTwo">
 													<h2 class="mb-0">
 														<button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#skills" aria-expanded="true" aria-controls="headingTwo"><i class="fas fa-chalkboard-teacher"></i> <?php echo $tab_skill; ?></button>
 													</h2>
@@ -333,13 +337,12 @@
 																<div class="input-group mb-3">
 																	<input type="text" class="form-control" id="input-filter-skill" name="filter_category" placeholder="<?php echo $text_add_skill; ?>" value="">
 																	<div class="input-group-append">
-																		<button class="btn btn-primary" type="button" id="button-add-skill"><i class="icon-material-outline-add"></i></button>
+																		<button class="btn btn-danger" type="button" id="button-add-skill"><i class="icon-material-outline-add"></i></button>
 																	</div>
 																	
 																</div>
 																<small id="category_error" class="form-text text-muted"></small>
-															</div>
-															<hr />         
+															</div>      
 															<div id="skills-list"></div>    
 														</div>
 													</div>
@@ -793,6 +796,7 @@ $("#avatar-1").fileinput({
 			data: $('#csrf_token, #password-form input[name=\'current\'], #password-form input[name=\'password\'], #password-form input[name=\'confirm\']'), 
 			beforeSend: function() {
 				$('.alert, .text-danger').remove();
+				$('#password-form input').removeClass('.is-invalid');
 				$(node).prop('disabled', true);
 				$(node).html('<p id="loading-state"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...</p>');
 			},
@@ -807,6 +811,7 @@ $("#avatar-1").fileinput({
 						var el = $('#input-' + i.replace('_', '-'));
 			            if (el) {
 							el.after('<div class="text-danger">' + json['error_required'][i] + '</div>');
+							el.addClass('is-invalid');
 						} 
 					}
 				}

@@ -70,7 +70,7 @@
           <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-notifications">
             <div class="d-flex w-100 justify-content-between">
               <h4 class="mb-1">Notifications</h4>
-              <small><button id="mark-read-button" type="button" class="btn btn-sm float-right rounded-pill mark-as-read" title="Mark all as read" data-placement="left" data-toggle="tooltip">
+              <small><button id="button-mark-read" type="button" class="btn btn-sm float-right rounded-pill mark-as-read" title="Mark all as read" data-placement="left" data-toggle="tooltip">
               <i class="icon-feather-check-square"></i>
             </button></small>
             </div>

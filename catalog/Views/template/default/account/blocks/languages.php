@@ -1,4 +1,5 @@
 <?php if ($languages) { ?>
+    <hr />
     <div class="table-responsive col-md-12">    
         <table class="table table-bordered" id="languages-table">
             <thead>
