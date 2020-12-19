@@ -7,16 +7,16 @@ class Mail extends \Admin\Controllers\BaseController
         $this->document->setTitle(lang('tool/mail.list.heading_title'));
 
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
-        );
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('tool/mail.list.heading_title'),
             'href' => base_url('index.php/tool/mail?user_token=' . $this->request->getVar('user_token')),
-        );
+        ];
 
         $data['action'] = base_url('index.php/tool/mail/send?user_token=' . $this->request->getVar('user_token'));
         $data['cancel'] = base_url('index.php/tool/mail?user_token=' . $this->request->getVar('user_token'));

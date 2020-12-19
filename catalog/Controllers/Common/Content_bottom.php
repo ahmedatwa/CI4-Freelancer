@@ -1,5 +1,8 @@
 <?php namespace Catalog\Controllers\Common;
 
+use \Catalog\Models\Design\Layouts;
+use \Catalog\Models\Setting\Modules;
+
 class Content_bottom extends \Catalog\Controllers\BaseController
 {
     public function index()
@@ -13,9 +16,8 @@ class Content_bottom extends \Catalog\Controllers\BaseController
              $route = 'common/home';
         }
             
-        $moduleModel = new \Catalog\Models\Setting\Modules();
-
-        $layoutModel = new \Catalog\Models\Design\Layouts();
+        $moduleModel = new Modules();
+        $layoutModel = new Layouts();
 
         $data['modules'] = [];
 

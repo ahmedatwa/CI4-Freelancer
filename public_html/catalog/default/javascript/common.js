@@ -1,9 +1,7 @@
-/* ----------------- Start Document ----------------- */
-(function($){
+(function($) {
 "use strict";
 
-$(document).ready(function(){
-	
+$(document).ready(function() {
 // Search 
 $('#search-container button').on('click', function() {
 
@@ -650,9 +648,6 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	        location.hash = $(this).attr('href');
 	    });
 	});
-
-// ------------------ End Document ------------------ //
 });
-
 })(this.jQuery);
 

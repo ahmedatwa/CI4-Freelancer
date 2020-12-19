@@ -100,34 +100,6 @@ class MessageModel extends \CodeIgniter\Model
         $builder->update();
     }
 
-    // Send Project Message
-    // public function addProjectMessage(array $data)
-    // {
-    //     $builder = $this->db->table($this->table);
-    //     helper('text');
-
-    //     if (!empty($data)) {
-    //         $rand = random_string('alnum', 10). '-' . $data['sender_id'] . '_' . $data['receiver_id'];
-    //     }
-    //     var_dump($rand);die;
-    //     $message_data = [
-    //         'sender_id'       => $data['sender_id'],
-    //         'thread'          => $rand,
-    //         'receiver_id'     => $data['receiver_id'],
-    //         'project_id'      => $data['project_id'],
-    //         'message'         => $data['message'],
-    //     ];
-
-    //     $builder->set('date_added', 'NOW()', false);
-    //     $builder->set('date_modified', 'NOW()', false);
-    //     $builder->insert($message_data);
-
-    //     // trigget new direct message event
-    //     \CodeIgniter\Events\Events::trigger('project_new_message', $message_data);
-    // }
-
-
-
     // New Start From Here
     public function addMessage(array $data)
     {
@@ -178,19 +150,6 @@ class MessageModel extends \CodeIgniter\Model
         $builder->set('date_modified', 'NOW()', false);
         $builder->insert($message_data);
     }
-
-    // project Private Messages
-    // public function getMessagesByThreadID(string $thread_id)
-    // {
-    //     $builder = $this->db->table($this->table);
-    //     $builder->select();
-    //     $builder->where('thread_id', $thread_id);
-
-    //     $builder->orderBy('date_added', 'ASC');
-    //     $query = $builder->get();
-    //     return $query->getResultArray();
-    // }
-
     
     // -----------------------------------------------------------------
 }

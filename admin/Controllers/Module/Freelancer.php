@@ -1,6 +1,6 @@
 <?php namespace Admin\Controllers\Module;
 
-use \Admin\Models\Setting\Settings;
+use \Admin\Models\Setting\SettingModel;
 
 class Freelancer extends \Admin\Controllers\BaseController
 {
@@ -8,10 +8,10 @@ class Freelancer extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('module/freelancer.list.heading_title'));
 
-        $setting_model = new Settings();
+        $settingModel = new SettingModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-                $setting_model->editSetting('module_freelancer', $this->request->getPost());
+                $settingModel->editSetting('module_freelancer', $this->request->getPost());
 
             return redirect()->to(base_url('index.php/setting/module?user_token=' . $this->request->getVar('user_token')))
                              ->with('success', lang('setting/module.text_success'));
@@ -58,7 +58,6 @@ class Freelancer extends \Admin\Controllers\BaseController
         if ($this->request->getVar('module_id') && ($this->request->getMethod() != 'post')) {
             $module_info = $modules->getModule($this->request->getVar('module_id'));
         }
-        //var_dump($module_info);
 
         if ($this->request->getPost('module_freelancer_status')) {
             $data['module_freelancer_status'] = $this->request->getPost('module_freelancer_status');

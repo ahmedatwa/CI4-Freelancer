@@ -1,8 +1,9 @@
 <?php namespace Admin\Controllers\Extension;
-/*----
-@ Extension to Extend Project to Apply Bidding System
-------*/
-use Admin\Models\Setting\Extensions;
+
+use \Admin\Models\Setting\ExtensionModel;
+use \Admin\Models\User\UserGroupModel;
+use \Admin\Models\Setting\SettingModel;
+use \Extensions\Models\Bid\BidModel;
 
 class Bid extends \Admin\Controllers\BaseController
 {
@@ -10,7 +11,7 @@ class Bid extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/bid.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionModel = new ExtensionModel();
 
         $this->getList();
     }
@@ -19,21 +20,21 @@ class Bid extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/bid.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionModel = new ExtensionModel();
 
         if ($this->validateForm()) {
-            $extensionsModel->install('project', $this->request->getVar('extension'));
+            $extensionModel->install('project', $this->request->getVar('extension'));
 
-            $userGroupModel = new \Admin\Models\User\Users_group();
+            $userGroupModel = new UserGroupModel();
 
-            $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/bid/' . $this->request->getVar('extension'));
-            $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/bid/' . $this->request->getVar('extension'));
+            $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'ExtensionModel()/bid/' . $this->request->getVar('extension'));
+            $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'ExtensionModel()/bid/' . $this->request->getVar('extension'));
             // Add Setting Key Since extension has no config Values
-            $settingModel = new \Admin\Models\Setting\Settings();
+            $settingModel = new SettingModel();
             $settingModel->editSetting('extension_bid', ['extension_bid_status' => 1]);
 
             // Call install Method is exists
-            $bidsModel = new \Extensions\Models\Bid\BidModel();
+            $bidsModel = new BidModel();
             if (method_exists($bidsModel, 'install')) {
                 $bidsModel->install();
             }
@@ -48,12 +49,12 @@ class Bid extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/bid.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionModel = new ExtensionModel();
 
         if ($this->validateForm()) {
-            $extensionsModel->uninstall('project', $this->request->getVar('extension'));
+            $extensionModel->uninstall('project', $this->request->getVar('extension'));
             // Call uninstall Method is exists
-            $bidsModel = new \Extensions\Models\Bid\BidModel();
+            $bidsModel = new BidModel();
             if (method_exists($bidsModel, 'uninstall')) {
                 $bidsModel->uninstall();
             }
@@ -66,8 +67,6 @@ class Bid extends \Admin\Controllers\BaseController
 
     protected function getList()
     {
-        $extensionsModel = new Extensions();
-
         if ($this->session->getFlashdata('warning')) {
             $data['error_warning'] = $this->session->getFlashdata('warning');
         } else {
@@ -80,32 +79,34 @@ class Bid extends \Admin\Controllers\BaseController
             $data['success'] = '';
         }
 
-        $installedExtensions = $extensionsModel->getInstalled('project');
+        $extensionModel = new ExtensionModel();
+
+        $installedExtensions = $extensionModel->getInstalled('project');
 
         foreach ($installedExtensions as $key => $value) {
             if (!is_file(APPPATH . 'Extensions/Controllers/bid/' . ucfirst($value) . '.php')) {
-                $extensionsModel->uninstall('project', $value);
+                $extensionModel->uninstall('project', $value);
                 unset($installedExtensions[$key]);
             }
         }
 
-        $data['extensions'] = [];
+        $data['ExtensionModel()'] = [];
         
         helper('filesystem');
 
-        $files = directory_map(APPPATH . 'Extensions/Controllers/Bid', 1);
+        $files = directory_map(APPPATH . 'ExtensionModel()/Controllers/Bid', 1);
 
         if ($files) {
             foreach ($files as $file) {
                 $basename = basename($file, '.php');
                 
-                $data['extensions'][] = [
+                $data['ExtensionModel()'][] = [
                     'name'       => lang('bid/' . strtolower($basename) . '.list.heading_title'),
                     'status'     => ($this->registry->get('extension_bid_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'install'    => base_url('index.php//bid/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/bid/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
-                    'installed'  => in_array(strtolower($basename), $installedExtensions),
-                    'edit'       => base_url('index.php/extensions/bid/' . strtolower($basename) .'?user_token=' . $this->request->getVar('user_token')),
+                    'installed'  => in_array(strtolower($basename), $installedExtensions,
+                    'edit'       => base_url('index.php/ExtensionModel()/bid/' . strtolower($basename) .'?user_token=' . $this->request->getVar('user_token')),
                 ];
             }
         }

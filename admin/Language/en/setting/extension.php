@@ -11,6 +11,6 @@ return [
 // Column
 'column_name'   => 'Extension Name',
 // Help
- 'help_list' => 'Override/extend the default functionality of site, wthout hacking the core files',
+ 'help_list' => 'Override/Extend the default functionality of system, without hacking the core files',
 ],
 ];

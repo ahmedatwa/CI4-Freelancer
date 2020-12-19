@@ -104,7 +104,7 @@ class Milestone extends \Catalog\Controllers\BaseController
             'status' => 1
             ];
 
-            $milestoneModel->update($this->request->getPost('milestone_id'), $data);
+            $milestoneModel->update($this->request->getVar('milestone_id'), $data);
 
             $json['success'] = 'Milestone has been approved!';
         }
@@ -123,7 +123,7 @@ class Milestone extends \Catalog\Controllers\BaseController
              'status' => 3
             ];
 
-            $milestoneModel->update($this->request->getPost('milestone_id'), $data);
+            $milestoneModel->update($this->request->getVar('milestone_id'), $data);
 
             $json['success'] = 'Milestone has been canceled!';
         }

@@ -1,5 +1,8 @@
 <?php namespace Catalog\Controllers\Common;
 
+use \Catalog\Models\Design\Layouts;
+use \Catalog\Models\Setting\Modules;
+
 class Column_left extends \Catalog\Controllers\BaseController
 {
     public function index()
@@ -12,9 +15,9 @@ class Column_left extends \Catalog\Controllers\BaseController
              $route = 'common/home';
         }
 
-        $layout_model = new \Catalog\Models\Design\Layouts();
+        $layout_model = new Layouts();
 
-        $module_model = new \Catalog\Models\Setting\Modules();
+        $module_model = new Modules();
 
         $layout_id = $layout_model->getLayout($route);
 

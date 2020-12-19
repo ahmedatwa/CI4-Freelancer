@@ -1,6 +1,6 @@
 <?php namespace Admin\Controllers\Common;
 
-use \Admin\Models\User\Users;
+use \Admin\Models\User\UserModel;
 
 class Login extends \Admin\Controllers\BaseController
 {
@@ -8,8 +8,8 @@ class Login extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('common/login.text_title'));
 
-        if ($this->user->isLogged() && $this->session->get('user_token') && $this->session->get('user_token')) {
-            return redirect()->to(base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')));
+        if ($this->user->isLogged() && $this->request->getVar('user_token') && $this->session->get('user_token')) {
+            return redirect()->to(base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')));
         }
 
         if (($this->request->getMethod() == 'post') && $this->validateFrom()) {
@@ -27,9 +27,9 @@ class Login extends \Admin\Controllers\BaseController
         }
 
         // user_token validation
-        if (($this->session->get('user_token') &&  ! $this->request->getGet('user_token')) || ($this->request->getGet('user_token') &&  $this->session->get('user_token') && $this->request->getGet('user_token') != $this->session->get('user_token'))) {
+        if (($this->request->getVar('user_token') &&  ! $this->request->getGet('user_token')) || ($this->request->getGet('user_token') &&  $this->request->getVar('user_token') && $this->request->getGet('user_token') != $this->request->getVar('user_token'))) {
             $this->session->setFlashData('warning', lang('en.error.error_token'));
-            // double check and clear session
+            //clear session
             $this->user->logout();
         }
 
@@ -50,7 +50,7 @@ class Login extends \Admin\Controllers\BaseController
 
         $data['base'] = slash_item('baseURL');
     
-        if (!empty($this->request->getPost('email'))) {
+        if (!empty($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
             $data['email'] = $this->request->getPost('email');
         } else {
             $data['email'] = '';
@@ -62,8 +62,8 @@ class Login extends \Admin\Controllers\BaseController
             $data['password'] = '';
         }
 
-        if ($this->request->getGet('redirect')) {
-            $data['redirect'] = base_url('index.php/' . $this->request->getGet('redirect'));
+        if ($this->request->getVar('redirect')) {
+            $data['redirect'] = base_url('index.php/' . $this->request->getVar('redirect'));
         } else {
             $data['redirect'] = '';
         }
@@ -82,23 +82,23 @@ class Login extends \Admin\Controllers\BaseController
     protected function validateFrom()
     {
         // Check how many login attempts have been made.
-        $users_model = new Users();
+        $userModel = new UserModel();
 
-        $login_info = $users_model->getLoginAttempts($this->request->getPost('email'));
+        $login_info = $userModel->getLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
         if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
             $this->session->setFlashData('warning', lang('common/login.error_attempts'));
             return false;
         } else {
-            $users_model->deleteLoginAttempts($this->request->getPost('email'));
+            $userModel->deleteLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
         }
 
         // Fields Validation Rules
         if (! $this->validate([
                 'email'    => 'required|valid_email',
                 'password' => 'required|min_length[4]'
-        ]) || !$this->user->login($this->request->getPost('email'), $this->request->getPost('password'))) {
+        ]) || !$this->user->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'))) {
             // Register Fail Login Event
-            \CodeIgniter\Events\Events::trigger('login_attempts', $this->request->getPost('email'));
+            \CodeIgniter\Events\Events::trigger('login_attempts', $this->request->getPost('email', FILTER_SANITIZE_EMAIL));
             $this->session->setFlashData('warning', lang('common/login.text_warning'));
             return false;
         }

@@ -1,6 +1,7 @@
 <?php namespace Admin\Controllers\Design;
 
-use \Admin\Models\Design\Seo_urls;
+use \Admin\Models\Design\SeoUrlModel;
+use \Admin\Models\Localisation\LanguageModel;
 
 class Seo_url extends \Admin\Controllers\BaseController
 {
@@ -8,7 +9,7 @@ class Seo_url extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('design/seo_url.list.heading_title'));
 
-        $seoUrlsModel = new Seo_urls();
+        $seoUrlModel = new SeoUrlModel();
 
         $this->getList();
     }
@@ -17,10 +18,10 @@ class Seo_url extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('design/seo_url.list.heading_title'));
 
-        $seoUrlsModel = new Seo_urls();
+        $seoUrlModel = new SeoUrlModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $seoUrlsModel->insert($this->request->getPost());
+            $seoUrlModel->insert($this->request->getPost());
             return redirect()->to(base_url('index.php/design/seo_url?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('design/seo_url.text_success'));
         }
@@ -31,10 +32,10 @@ class Seo_url extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('design/seo_url.list.heading_title'));
 
-        $seoUrlsModel = new Seo_urls();
+        $seoUrlModel = new SeoUrlModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $seoUrlsModel->update($this->request->getVar('seo_url_id'), $this->request->getPost());
+            $seoUrlModel->update($this->request->getVar('seo_url_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/design/seo_url?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('design/seo_url.text_success'));
         }
@@ -47,11 +48,11 @@ class Seo_url extends \Admin\Controllers\BaseController
 
         $this->document->setTitle(lang('design/seo_url.list.heading_title'));
    
-        $seoUrlsModel = new Seo_urls();
+        $seoUrlModel = new SeoUrlModel();
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $seo_url_id) {
-                $seoUrlsModel->delete($seo_url_id);
+                $seoUrlModel->delete($seo_url_id);
                 $json['success'] = lang('design/seo_url.text_success');
                 $json['redirect'] = 'index.php/design/seo_url?user_token=' . $this->request->getVar('user_token');
             }
@@ -63,7 +64,6 @@ class Seo_url extends \Admin\Controllers\BaseController
 
     protected function getList()
     {
-        $seoUrlsModel = new Seo_urls();
 
         $data['breadcrumbs'] = [];
 
@@ -82,7 +82,9 @@ class Seo_url extends \Admin\Controllers\BaseController
 
         $data['seo_urls'] = [];
 
-        $results = $seoUrlsModel->getSeoUrls();
+        $seoUrlModel = new SeoUrlModel();
+
+        $results = $seoUrlModel->getSeoUrls();
 
         foreach ($results as $result) {
             $data['seo_urls'][] = [
@@ -113,9 +115,9 @@ class Seo_url extends \Admin\Controllers\BaseController
         }
 
         
-        $languages = new \Admin\Models\Localisation\Languages();
+        $languageModel = new LanguageModel();
         
-        $data['languages'] = $languages->findAll($this->registry->get('config_admin_limit'));
+        $data['languages'] = $languageModel->findAll($this->registry->get('config_admin_limit'));
         
         $this->document->output('design/seo_url_list', $data);
     }
@@ -152,10 +154,10 @@ class Seo_url extends \Admin\Controllers\BaseController
 
         $data['cancel'] = base_url('design/seo_url?user_token=' . $this->request->getVar('user_token'));
 
-        $seoUrlsModel = new Seo_urls();
+        $seoUrlModel = new SeoUrlModel();
 
         if ($this->request->getVar('seo_url_id') && ($this->request->getMethod() != 'post')) {
-            $seo_url_info = $seoUrlsModel->find($this->request->getVar('seo_url_id'));
+            $seo_url_info = $seoUrlModel->find($this->request->getVar('seo_url_id'));
         }
         
         if ($this->request->getPost('query')) {
@@ -174,9 +176,9 @@ class Seo_url extends \Admin\Controllers\BaseController
             $data['keyword'] = '';
         }
          
-        $languages = new \Admin\Models\Localisation\Languages();
+        $languageModel = new LanguageModel();
         
-        $data['languages'] = $languages->findAll($this->registry->get('config_admin_limit'));
+        $data['languages'] = $languageModel->findAll($this->registry->get('config_admin_limit'));
 
         if ($this->request->getPost('language_id')) {
             $data['language_id'] = $this->request->getPost('language_id');

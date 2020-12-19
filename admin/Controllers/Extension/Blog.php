@@ -1,9 +1,9 @@
 <?php namespace Admin\Controllers\Extension;
 
-use \Admin\Models\Setting\Extensions;
+use \Admin\Models\Setting\ExtensionModel;
 use \Extensions\Models\Blog\BlogModel;
-use \Admin\Models\User\Users_group;
-use \Admin\Models\Setting\Settings;
+use \Admin\Models\User\UserGroupModel;
+use \Admin\Models\Setting\SettingModel;
 
 class Blog extends \Admin\Controllers\BaseController
 {
@@ -11,7 +11,7 @@ class Blog extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/blog.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         $this->getList();
     }
@@ -20,13 +20,13 @@ class Blog extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/blog.list.heading_title'));
         
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
 
             $extensionsModel->install('blogger', $this->request->getVar('extension'));
 
-            $userGroupModel = new Users_group();
+            $userGroupModel = new UserGroupModel();
 
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/blog/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/blog/' . $this->request->getVar('extension'));
@@ -50,7 +50,7 @@ class Blog extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('setting/extension.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             $extensionsModel->uninstall('blogger', $this->request->getVar('extension'));
@@ -71,7 +71,7 @@ class Blog extends \Admin\Controllers\BaseController
 
     protected function getList()
     {
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->session->getFlashdata('warning')) {
             $data['error_warning'] = $this->session->getFlashdata('warning');

@@ -1,4 +1,3 @@
-
 function getURLVar(key) {
     var value = [];
 
@@ -61,6 +60,8 @@ $(document).ready(function() {
     // ============================================================== 
     // Set last page opened on the menu
     $('#menu a[href]').on('click', function() {
+        // $(this).attr('aria-expanded', 'false');
+        // $('#menu ul').removeClass('show')
         sessionStorage.setItem('menu', $(this).attr('href'));
     });
 
@@ -72,9 +73,7 @@ $(document).ready(function() {
     }
     
     $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li > a').removeClass('collapsed');
-    
     $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
-    
     $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
     
 
@@ -96,19 +95,17 @@ $(document).ready(function() {
         $('body > .tooltip').remove();
     });
   
-     // ============================================================== 
+    // ============================================================== 
     // Image Manager
     // ============================================================== 
     $(document).on('click', 'a[data-toggle=\'image\']', function(e) {
         var $element = $(this);
-        var $popover = $element.data('bs.popover'); // element has bs popover?
+        var $popover = $element.data('bs.popover'); 
 
         e.preventDefault();
 
-        // destroy all image popovers
         $('a[data-toggle="image"]').popover('dispose');
 
-        // remove flickering (do not re-add popover when clicking for removal)
         if ($popover) {
             return;
         }
@@ -158,16 +155,9 @@ $(document).ready(function() {
 
         $('#button-clear').on('click', function() {
             $element.find('img').attr('src', $element.find('img').attr('data-placeholder'));
-
             $element.parent().find('input').val('');
-
             $element.popover('dispose');
         });
     });
-
-
-
-
-
 });
 

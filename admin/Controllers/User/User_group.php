@@ -1,10 +1,12 @@
 <?php namespace Admin\Controllers\User;
 
+use \Admin\Models\User\UserGroupModel;
+
 class User_group extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->users_group = new \Admin\Models\User\Users_group();
+        $userGroupModel = new UserGroupModel();
 
         $this->document->setTitle(lang('user/user_group.list.heading_title'));
 
@@ -15,11 +17,11 @@ class User_group extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('user/user_group.list.text_add'));
 
-        $this->users_group = new \Admin\Models\User\Users_group();
+        $userGroupModel = new UserGroupModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->users_group->addUserGroup($this->request->getPost());
-            return redirect()->to(base_url('index.php/user/user_group?user_token=' . $this->session->get('user_token')))
+            $userGroupModel->addUserGroup($this->request->getPost());
+            return redirect()->to(base_url('index.php/user/user_group?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('user/user_group.text_success'));
         }
         $this->getForm();
@@ -29,11 +31,11 @@ class User_group extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('user/user_group.list.text_edit'));
 
-        $this->users_group = new \Admin\Models\User\Users_group();
+        $userGroupModel = new UserGroupModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->users_group->editUserGroup($this->request->getVar('user_group_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/user/user_group?user_token=' . $this->session->get('user_token')))
+            $userGroupModel->editUserGroup($this->request->getVar('user_group_id'), $this->request->getPost());
+            return redirect()->to(base_url('index.php/user/user_group?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('user/user_group.text_success'));
         }
         $this->getForm();
@@ -43,15 +45,15 @@ class User_group extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $this->users_group = new \Admin\Models\User\Users_group();
+        $userGroupModel = new UserGroupModel();
    
         $this->document->setTitle(lang('user/user_group.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $user_group_id) {
-                $this->users_group->delete($user_group_id);
+                $userGroupModel->delete($user_group_id);
                 $json['success'] = lang('user/user_group.text_success');
-                $json['redirect'] = 'index.php/user/user_group?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/user/user_group?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('user/user.error_permission');
@@ -65,30 +67,32 @@ class User_group extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('user/user_group.list.heading_title'),
-            'href' => base_url('index.php/user/user_group?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/user/user_group?user_token=' . $this->request->getVar('user_token')),
         ];
 
         // Data
         $data['user_groups'] = [];
-        $results = $this->users_group->findAll($this->registry->get('config_admin_limit'));
+        $userGroupModel = new UserGroupModel();
+        
+        $results = $userGroupModel->findAll($this->registry->get('config_admin_limit'));
 
         foreach ($results as $result) {
             $data['user_groups'][] = [
-                'user_group_id'    => $result['user_group_id'],
-                'name'      => $result['name'],
-                'date_added' => DateShortFormat($result['date_added']),
-                'edit'       => base_url('index.php/user/user_group/edit?user_token=' . $this->session->get('user_token') . '&user_group_id=' . $result['user_group_id']),
-                'delete'     => base_url('index.php/user/user_group/delete?user_token=' . $this->session->get('user_token') . '&user_group_id=' . $result['user_group_id']),
+                'user_group_id' => $result['user_group_id'],
+                'name'          => $result['name'],
+                'date_added'    => DateShortFormat($result['date_added']),
+                'edit'          => base_url('index.php/user/user_group/edit?user_token=' . $this->request->getVar('user_token') . '&user_group_id=' . $result['user_group_id']),
+                'delete'        => base_url('index.php/user/user_group/delete?user_token=' . $this->request->getVar('user_token') . '&user_group_id=' . $result['user_group_id']),
             ];
         }
 
-        $data['add'] = base_url('index.php/user/user_group/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/user/user_group/delete?user_token=' . $this->session->get('user_token'));
+        $data['add'] = base_url('index.php/user/user_group/add?user_token=' . $this->request->getVar('user_token'));
+        $data['delete'] = base_url('index.php/user/user_group/delete?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -119,22 +123,22 @@ class User_group extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('user/user_group.list.heading_title'),
-            'href' => base_url('index.php/user/user_group/save?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/user/user_group/save?user_token=' . $this->request->getVar('user_token')),
         ];
 
-        $data['text_form'] = !$this->request->getGet('user_group_id') ? lang('user/user_group.list.text_add') : lang('user/user_group.list.text_edit');
+        $data['text_form'] = !$this->request->getVar('user_group_id') ? lang('user/user_group.list.text_add') : lang('user/user_group.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/user/user_group?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/user/user_group?user_token=' . $this->request->getVar('user_token'));
 
-        if (!$this->request->getGet('user_group_id')) {
-            $data['action'] = base_url('index.php/user/user_group/add?user_token=' . $this->session->get('user_token'));
+        if (!$this->request->getVar('user_group_id')) {
+            $data['action'] = base_url('index.php/user/user_group/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/user/user_group/edit?user_token=' . $this->session->get('user_token') . '&user_group_id=' . $this->request->getGet('user_group_id'));
+            $data['action'] = base_url('index.php/user/user_group/edit?user_token=' . $this->request->getVar('user_token') . '&user_group_id=' . $this->request->getVar('user_group_id'));
         }
 
         if ($this->session->getFlashdata('error_warning')) {
@@ -143,8 +147,8 @@ class User_group extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        if ($this->request->getGet('user_group_id') && ($this->request->getMethod() != 'post')) {
-            $user_group_info = $this->users_group->getUserGroup($this->request->getGet('user_group_id'));
+        if ($this->request->getVar('user_group_id') && ($this->request->getMethod() != 'post')) {
+            $user_group_info = $userGroupModel->getUserGroup($this->request->getVar('user_group_id'));
         }
 
         if ($this->request->getPost('name')) {
@@ -219,7 +223,7 @@ class User_group extends \Admin\Controllers\BaseController
             return false;
         }
 
-        if (! $this->user->hasPermission('modify', $this->getRoute())) {
+        if (! $this->user->hasPermission('modify', 'user/user_group')) {
             $this->session->setFlashdata('error_warning', lang('user/user_group.error_permission'));
             return false;
         }
@@ -228,7 +232,7 @@ class User_group extends \Admin\Controllers\BaseController
     
     protected function validateDelete()
     {
-        if (!$this->user->hasPermission('modify', $this->getRoute())) {
+        if (!$this->user->hasPermission('modify', 'user/user_group')) {
             $this->session->setFlashdata('error_warning', lang('user/user_group.error_permission'));
             return false;
         }

@@ -32,7 +32,7 @@ class Template
      */
     public function getTitle()
     {
-        return (string) $this->title;
+        return service('registry')->get('config_name') . ' | ' . (string) $this->title;
     }
 
     /**

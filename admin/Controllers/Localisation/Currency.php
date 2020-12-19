@@ -1,12 +1,12 @@
 <?php namespace Admin\Controllers\Localisation;
 
-use \Admin\Models\Localisation\Currencies;
+use \Admin\Models\Localisation\CurrencyModel;
 
 class Currency extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $currencyModel = new Currencies();
+        $currencyModel = new CurrencyModel();
 
         $this->document->setTitle(lang('localisation/currency.list.heading_title'));
 
@@ -17,7 +17,7 @@ class Currency extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('localisation/currency.list.text_add'));
 
-        $currencyModel = new Currencies();
+        $currencyModel = new CurrencyModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $currencyModel->addCurrency($this->request->getPost());
@@ -31,7 +31,7 @@ class Currency extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('localisation/currency.list.text_edit'));
 
-        $currencyModel = new Currencies();
+        $currencyModel = new CurrencyModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $currencyModel->editCurrency($this->request->getVar('currency_id'), $this->request->getPost());
@@ -45,7 +45,7 @@ class Currency extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $currencyModel = new Currencies();
+        $currencyModel = new CurrencyModel();
    
         $this->document->setTitle(lang('localisation/currency.list.heading_title'));
 
@@ -65,7 +65,7 @@ class Currency extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('localisation/currency.list.heading_title'));
 
-        $currencyModel = new Currencies();
+        $currencyModel = new CurrencyModel();
 
         if ($this->validateDelete()) {
             $currencyModel->refresh($this->registry->get('config_currency'));
@@ -79,7 +79,7 @@ class Currency extends \Admin\Controllers\BaseController
 
     protected function getList()
     {
-        $currencyModel = new Currencies();
+        $currencyModel = new CurrencyModel();
         // Breadcrumbs
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -98,14 +98,14 @@ class Currency extends \Admin\Controllers\BaseController
         $results = $currencyModel->findAll($this->registry->get('config_admin_limit'));
 
         foreach ($results as $result) {
-            $data['currencies'][] = array(
+            $data['currencies'][] = [
                 'currency_id'   => $result['currency_id'],
                 'title'         => $result['title'] . (($result['code'] == $this->registry->get('config_currency')) ? lang('en.text_default') : null),
                 'code'          => $result['code'],
                 'value'         => $result['value'],
                 'date_modified' => lang('en.medium_date', [strtotime($result['date_modified'])]),
                 'edit'          => base_url('index.php/localisation/currency/edit?user_token=' . $this->request->getVar('user_token') . '&currency_id=' . $result['currency_id']),
-            );
+            ];
         }
 
         $data['add'] = base_url('index.php/localisation/currency/add?user_token=' . $this->request->getVar('user_token'));
@@ -137,9 +137,9 @@ class Currency extends \Admin\Controllers\BaseController
 
     protected function getForm()
     {
-        $currencyModel = new Currencies();
         // Breadcrumbs
         $data['breadcrumbs'] = [];
+
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
@@ -167,53 +167,54 @@ class Currency extends \Admin\Controllers\BaseController
         }
 
         if ($this->request->getVar('currency_id') && ($this->request->getMethod() != 'post')) {
-            $user_info = $currencyModel->getCurrency($this->request->getVar('currency_id'));
+            $currencyModel = new CurrencyModel();
+            $currency_info = $currencyModel->getCurrency($this->request->getVar('currency_id'));
         }
 
         if ($this->request->getPost('title')) {
             $data['title'] = $this->request->getPost('title');
-        } elseif (!empty($user_info['title'])) {
-            $data['title'] = $user_info['title'];
+        } elseif (!empty($currency_info['title'])) {
+            $data['title'] = $currency_info['title'];
         } else {
             $data['title'] = '';
         }
 
         if ($this->request->getPost('code')) {
             $data['code'] = $this->request->getPost('code');
-        } elseif (!empty($user_info['code'])) {
-            $data['code'] = $user_info['code'];
+        } elseif (!empty($currency_info['code'])) {
+            $data['code'] = $currency_info['code'];
         } else {
             $data['code'] = '';
         }
 
         if ($this->request->getPost('symbol_left')) {
             $data['symbol_left'] = $this->request->getPost('symbol_left');
-        } elseif (!empty($user_info['symbol_left'])) {
-            $data['symbol_left'] = $user_info['symbol_left'];
+        } elseif (!empty($currency_info['symbol_left'])) {
+            $data['symbol_left'] = $currency_info['symbol_left'];
         } else {
             $data['symbol_left'] = '';
         }
 
         if ($this->request->getPost('symbol_right')) {
             $data['symbol_right'] = $this->request->getPost('symbol_right');
-        } elseif (!empty($user_info['symbol_right'])) {
-            $data['symbol_right'] = $user_info['symbol_right'];
+        } elseif (!empty($currency_info['symbol_right'])) {
+            $data['symbol_right'] = $currency_info['symbol_right'];
         } else {
             $data['symbol_right'] = '';
         }
 
         if ($this->request->getPost('value')) {
             $data['value'] = $this->request->getPost('value');
-        } elseif (!empty($user_info['value'])) {
-            $data['value'] = $user_info['value'];
+        } elseif (!empty($currency_info['value'])) {
+            $data['value'] = $currency_info['value'];
         } else {
             $data['value'] = '';
         }
 
         if ($this->request->getPost('status')) {
             $data['status'] = $this->request->getPost('status');
-        } elseif (!empty($user_info)) {
-            $data['status'] = $user_info['status'];
+        } elseif (!empty($currency_info)) {
+            $data['status'] = $currency_info['status'];
         } else {
             $data['status'] = 1;
         }
@@ -237,7 +238,7 @@ class Currency extends \Admin\Controllers\BaseController
             return false;
         }
 
-        if (! $this->user->hasPermission('modify', $this->getRoute())) {
+        if (! $this->user->hasPermission('modify', 'localisation/currency')) {
             $this->session->setFlashdata('error_warning', lang('localisation/currency.error_permission'));
             return false;
         }

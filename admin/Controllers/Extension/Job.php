@@ -1,9 +1,9 @@
 <?php namespace Admin\Controllers\Extension;
 
-use \Admin\Models\Setting\Extensions;
+use \Admin\Models\Setting\ExtensionModel;
 use \Extensions\Models\Job\JobModel;
-use \Admin\Models\User\Users_group;
-use \Admin\Models\Setting\Settings;
+use \Admin\Models\User\UserGroupModel;
+use \Admin\Models\Setting\SettingModel;
 
 class Job extends \Admin\Controllers\BaseController
 {
@@ -11,7 +11,7 @@ class Job extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/job.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         $this->getList();
     }
@@ -20,17 +20,18 @@ class Job extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/job.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             $extensionsModel->install('job', $this->request->getVar('extension'));
 
-            $userGroupModel = new Users_group();
+            $userGroupModel = new UserGroupModel();
 
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/job/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/job/' . $this->request->getVar('extension'));
 
-            $settingModel = new Settings();
+            $settingModel = new SettingModel();
+
             $settingModel->editSetting('job_extension', ['job_extension_status' => 1]);
             // Call install Method is exists
             $jobModel = new JobModel();
@@ -48,7 +49,7 @@ class Job extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('setting/extension.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             $extensionsModel->uninstall('job', $this->request->getVar('extension'));
@@ -59,7 +60,7 @@ class Job extends \Admin\Controllers\BaseController
                 $jobModel->uninstall();
             }
 
-            $settingModel = new Settings();
+            $settingModel = new SettingModel();
             $settingModel->editSetting('job_extension', ['job_extension_status' => 0]);
 
             $this->session->setFlashdata('success', lang('extension/job.text_success'));
@@ -70,8 +71,6 @@ class Job extends \Admin\Controllers\BaseController
 
     protected function getList()
     {        
-        
-        $extensionsModel = new Extensions();
 
         if ($this->session->getFlashdata('warning')) {
             $data['error_warning'] = $this->session->getFlashdata('warning');
@@ -85,6 +84,8 @@ class Job extends \Admin\Controllers\BaseController
             $data['success'] = '';
         }
 
+        $extensionsModel = new ExtensionModel();  
+        
         $installedExtensions = $extensionsModel->getInstalled('job');
 
         foreach ($installedExtensions as $key => $value) {

@@ -1,12 +1,12 @@
 <?php namespace Admin\Controllers\Localisation;
 
-use \Admin\Models\Localisation\Disputes;
+use \Admin\Models\Finance\DisputeModel;
 
 class Dispute_reason extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $disputeModel = new Disputes();
+        $disputeModel = new DisputeModel();
 
         $this->document->setTitle(lang('localisation/dispute_reason.list.heading_title'));
 
@@ -17,7 +17,7 @@ class Dispute_reason extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('localisation/dispute_reason.list.text_add'));
 
-        $disputeModel = new Disputes();
+        $disputeModel = new DisputeModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $disputeModel->addDisputeReason($this->request->getPost());
@@ -31,7 +31,7 @@ class Dispute_reason extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('localisation/dispute_reason.list.text_edit'));
 
-        $disputeModel = new Disputes();
+        $disputeModel = new DisputeModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $disputeModel->editDisputeReason($this->request->getVar('dispute_reason_id'), $this->request->getPost());
@@ -45,7 +45,7 @@ class Dispute_reason extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $disputeModel = new Disputes();
+        $disputeModel = new DisputeModel();
    
         $this->document->setTitle(lang('localisation/dispute_reason.list.heading_title'));
 
@@ -63,9 +63,9 @@ class Dispute_reason extends \Admin\Controllers\BaseController
 
     protected function getList()
     {
-        $disputeModel = new Disputes();
         // Breadcrumbs
         $data['breadcrumbs'] = [];
+
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
@@ -78,16 +78,17 @@ class Dispute_reason extends \Admin\Controllers\BaseController
 
         // Data
         $data['dispute_reasons'] = [];
+        $disputeModel = new DisputeModel();
 
         $results = $disputeModel->getDisputeReasons();
 
         foreach ($results as $result) {
-            $data['dispute_reasons'][] = array(
+            $data['dispute_reasons'][] = [
                 'dispute_reason_id' => $result['dispute_reason_id'],
                 'name'              => $result['name'],
                 'edit'              => base_url('index.php/localisation/dispute_reason/edit?user_token=' . $this->request->getVar('user_token') . '&dispute_reason_id=' . $result['dispute_reason_id']),
                 'delete'            => base_url('index.php/localisation/dispute_reason/delete?user_token=' . $this->request->getVar('user_token') . '&dispute_reason_id=' . $result['dispute_reason_id']),
-            );
+            ];
         }
 
         $data['add'] = base_url('index.php/localisation/dispute_reason/add?user_token=' . $this->request->getVar('user_token'));
@@ -108,7 +109,7 @@ class Dispute_reason extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
         $data['user_token'] = $this->request->getGet('user_token');
@@ -118,9 +119,9 @@ class Dispute_reason extends \Admin\Controllers\BaseController
 
     protected function getForm()
     {
-        $disputeModel = new Disputes();
         // Breadcrumbs
         $data['breadcrumbs'] = [];
+
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
@@ -148,6 +149,7 @@ class Dispute_reason extends \Admin\Controllers\BaseController
         }
 
         if (($this->request->getMethod() != 'post') && $this->request->getVar('dispute_reason_id')) {
+            $disputeModel = new DisputeModel();
             $dispute_info = $disputeModel->getDisputeAction($this->request->getVar('dispute_reason_id'));
         }
         
@@ -174,7 +176,7 @@ class Dispute_reason extends \Admin\Controllers\BaseController
                 return false;
         }
 
-        if (! $this->user->hasPermission('modify', $this->getRoute())) {
+        if (! $this->user->hasPermission('modify', 'localisation/dispute_reason')) {
             $this->session->setFlashdata('error_warning', lang('localisation/dispute_reason.error_permission'));
             return false;
         }

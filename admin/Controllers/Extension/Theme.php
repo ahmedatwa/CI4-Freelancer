@@ -1,6 +1,7 @@
 <?php namespace Admin\Controllers\Extension;
 
-use Admin\Models\Setting\Extensions;
+use \Admin\Models\Setting\ExtensionModel;
+use \Admin\Models\User\UserGroupModel;
 
 class Theme extends \Admin\Controllers\BaseController
 {
@@ -8,20 +9,20 @@ class Theme extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/theme.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         $this->getList();
     }
 
     public function install()
     {
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             
             $extensionsModel->install('theme', $this->request->getVar('extension'));
 
-            $userGroupModel = new \Admin\Models\User\Users_group();
+            $userGroupModel = new UserGroupModel();
 
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/theme/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/theme/' . $this->request->getVar('extension'));
@@ -36,7 +37,7 @@ class Theme extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/theme.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             $extensionsModel->uninstall('theme', $this->request->getVar('extension'));
@@ -49,8 +50,6 @@ class Theme extends \Admin\Controllers\BaseController
 
     protected function getList()
     {
-        $extensionsModel = new Extensions();
-
         if ($this->session->getFlashdata('warning')) {
             $data['error_warning'] = $this->session->getFlashdata('warning');
         } else {
@@ -63,6 +62,8 @@ class Theme extends \Admin\Controllers\BaseController
             $data['success'] = '';
         }
 
+        $extensionsModel = new ExtensionModel();
+        
         $installedExtensions = $extensionsModel->getInstalled('theme');
 
         foreach ($installedExtensions as $key => $value) {
@@ -72,7 +73,7 @@ class Theme extends \Admin\Controllers\BaseController
             }
         }
 
-        $data['extensions'] = array();
+        $data['extensions'] = [];
         
         helper('filesystem');
 

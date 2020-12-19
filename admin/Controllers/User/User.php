@@ -1,10 +1,13 @@
 <?php namespace Admin\Controllers\User;
 
+use \Admin\Models\User\UserModel;
+use \Admin\Models\User\UserGroupModel;
+
 class User extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->users = new \Admin\Models\User\Users();
+        $userModel = new UserModel();
 
         $this->document->setTitle(lang('user/user.list.heading_title'));
 
@@ -15,11 +18,11 @@ class User extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('user/user.list.text_add'));
 
-        $this->users = new \Admin\Models\User\Users();
+        $userModel = new UserModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->users->insert($this->request->getPost());
-            return redirect()->to(base_url('index.php/user/user?user_token=' . $this->session->get('user_token')))
+            $userModel->insert($this->request->getPost());
+            return redirect()->to(base_url('index.php/user/user?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('user/user.text_success'));
         }
         $this->getForm();
@@ -29,11 +32,11 @@ class User extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('user/user.list.text_edit'));
 
-        $this->users = new \Admin\Models\User\Users();
+        $userModel = new UserModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->users->update($this->request->getVar('user_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/user/user?user_token=' . $this->session->get('user_token')))
+            $userModel->update($this->request->getVar('user_id'), $this->request->getPost());
+            return redirect()->to(base_url('index.php/user/user?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('user/user.text_success'));
         }
         $this->getForm();
@@ -41,17 +44,17 @@ class User extends \Admin\Controllers\BaseController
 
     public function delete()
     {
-        $json = array();
+        $json = [];
 
-        $this->users = new \Admin\Models\User\Users();
+        $userModel = new UserModel();
    
         $this->document->setTitle(lang('user/user.list.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $user_id) {
-                $this->users->delete($user_id);
+                $userModel->delete($user_id);
                 $json['success'] = lang('user/user.text_success');
-                $json['redirect'] = 'index.php/user/user?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/user/user?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('user/user.error_permission');
@@ -62,34 +65,36 @@ class User extends \Admin\Controllers\BaseController
     protected function getList()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('user/user.list.heading_title'),
-            'href' => base_url('index.php/user/user?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/user/user?user_token=' . $this->request->getVar('user_token')),
+        ];
 
         // Data
-        $data['users'] = array();
-        $results = $this->users->findAll($this->registry->get('config_admin_limit'));
+        $data['users'] = [];
+        $userModel = new UserModel();
+
+        $results = $userModel->findAll($this->registry->get('config_admin_limit'));
 
         foreach ($results as $result) {
-            $data['users'][] = array(
+            $data['users'][] = [
                 'user_id'    => $result['user_id'],
                 'email'      => $result['email'],
                 'date_added' => DateShortFormat($result['date_added']),
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'edit'       => base_url('index.php/user/user/edit?user_token=' . $this->session->get('user_token') . '&user_id=' . $result['user_id']),
-                'delete'     => base_url('index.php/user/user/delete?user_token=' . $this->session->get('user_token') . '&user_id=' . $result['user_id']),
-            );
+                'edit'       => base_url('index.php/user/user/edit?user_token=' . $this->request->getVar('user_token') . '&user_id=' . $result['user_id']),
+                'delete'     => base_url('index.php/user/user/delete?user_token=' . $this->request->getVar('user_token') . '&user_id=' . $result['user_id']),
+            ];
         }
 
-        $data['add'] = base_url('index.php/user/user/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/user/user/delete?user_token=' . $this->session->get('user_token'));
+        $data['add'] = base_url('index.php/user/user/add?user_token=' . $this->request->getVar('user_token'));
+        $data['delete'] = base_url('index.php/user/user/delete?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -106,7 +111,7 @@ class User extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
         $data['user_token'] = $this->request->getGet('user_token');
@@ -117,25 +122,26 @@ class User extends \Admin\Controllers\BaseController
     protected function getForm()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('user/user.list.heading_title'),
-            'href' => base_url('index.php/user/user/edit?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/user/user/edit?user_token=' . $this->request->getVar('user_token')),
+        ];
 
-        $data['text_form'] = !$this->request->getGet('user_id') ? lang('user/user.list.text_add') : lang('user/user.list.text_edit');
+        $data['text_form'] = !$this->request->getVar('user_id') ? lang('user/user.list.text_add') : lang('user/user.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/user/user?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/user/user?user_token=' . $this->request->getVar('user_token'));
 
-        if (!$this->request->getGet('user_id')) {
-            $data['action'] = base_url('index.php/user/user/add?user_token=' . $this->session->get('user_token'));
+        if (!$this->request->getVar('user_id')) {
+            $data['action'] = base_url('index.php/user/user/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/user/user/edit?user_token=' . $this->session->get('user_token') . '&user_id=' . $this->request->getGet('user_id'));
+            $data['action'] = base_url('index.php/user/user/edit?user_token=' . $this->request->getVar('user_token') . '&user_id=' . $this->request->getVar('user_id'));
         }
 
         if ($this->session->getFlashdata('error_warning')) {
@@ -144,8 +150,9 @@ class User extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        if ($this->request->getGet('user_id') && ($this->request->getMethod() != 'post')) {
-            $user_info = $this->users->find($this->request->getGet('user_id'));
+        if ($this->request->getVar('user_id') && ($this->request->getMethod() != 'post')) {
+            $userModel = new UserModel();
+            $user_info = $userModel->find($this->request->getVar('user_id'));
         }
 
         if (!empty($user_info['user_id'])) {
@@ -170,8 +177,8 @@ class User extends \Admin\Controllers\BaseController
             $data['lastname'] = '';
         }
 
-        if ($this->request->getPost('email')) {
-            $data['email'] = $this->request->getPost('email');
+        if ($this->request->getPost('email', FILTER_SANITIZE_EMAIL)) {
+            $data['email'] = $this->request->getPost('email', FILTER_SANITIZE_EMAIL);
         } elseif (!empty($user_info)) {
             $data['email'] = $user_info['email'];
         } else {
@@ -209,9 +216,9 @@ class User extends \Admin\Controllers\BaseController
         $data['placeholder'] = resizeImage('no_image.jpg', 100, 100);
 
         // UserGroup
-        $users_group = new \Admin\Models\User\Users_group();
+        $userGroupModel = new UserGroupModel();
 
-        $data['user_groups'] = $users_group->findAll();
+        $data['user_groups'] = $userGroupModel->findAll();
         
         if ($this->request->getPost('user_group_id')) {
             $data['user_group_id'] = $this->request->getPost('user_group_id');
@@ -234,7 +241,7 @@ class User extends \Admin\Controllers\BaseController
 
     protected function validateForm()
     {
-        if (! $this->request->getGet('user_id')) {
+        if (! $this->request->getVar('user_id')) {
             if (! $this->validate([
                     'firstname' => 'required|alpha_numeric_space|min_length[3]',
                     'lastname'  => 'required|alpha_numeric_space|min_length[3]',
@@ -256,7 +263,7 @@ class User extends \Admin\Controllers\BaseController
             }
         }
 
-        if (! $this->user->hasPermission('modify', $this->getRoute())) {
+        if (! $this->user->hasPermission('modify', 'user/user')) {
             $this->session->setFlashdata('error_warning', lang('user/user.error_permission'));
             return false;
         }
@@ -265,7 +272,7 @@ class User extends \Admin\Controllers\BaseController
 
     protected function validateDelete()
     {
-        if (!$this->user->hasPermission('modify', $this->getRoute())) {
+        if (!$this->user->hasPermission('modify', 'user/user')) {
             $this->session->setFlashdata('error_warning', lang('user/user.error_permission'));
             return false;
         }

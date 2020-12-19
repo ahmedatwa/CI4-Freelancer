@@ -5,7 +5,7 @@ use \Catalog\Models\Catalog\CategoryModel;
 use \Catalog\Models\Freelancer\FreelancerModel;
 use \Catalog\Models\Account\ReviewModel;
 use \Catalog\Models\Freelancer\BalanceModel;
-use \Catalog\Models\freelancer\DisputeModel;
+use \Catalog\Models\Freelancer\DisputeModel;
 use \Catalog\Models\Account\MessageModel;
 
 class Freelancer extends \Catalog\Controllers\BaseController

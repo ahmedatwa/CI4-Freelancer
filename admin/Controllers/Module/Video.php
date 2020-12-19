@@ -1,6 +1,6 @@
 <?php namespace Admin\Controllers\Module;
 
-use \Admin\Models\Setting\Modules;
+use \Admin\Models\Setting\ModuleModel;
 
 class Video extends \Admin\Controllers\BaseController
 {
@@ -8,13 +8,13 @@ class Video extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('module/video.list.heading_title'));
 
-        $modules = new Modules();
+        $moduleModel = new ModuleModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
                if (! $this->request->getVar('module_id')) {
-                   $modules->addModule('video', $this->request->getPost());
+                   $moduleModel->addModule('video', $this->request->getPost());
             } else {
-                   $modules->editModule($this->request->getVar('module_id'), $this->request->getPost());
+                   $moduleModel->editModule($this->request->getVar('module_id'), $this->request->getPost());
             }
 
             return redirect()->to(base_url('index.php/setting/module?user_token=' . $this->request->getVar('user_token')))
@@ -60,7 +60,7 @@ class Video extends \Admin\Controllers\BaseController
         $data['cancel'] = base_url('index.php/setting/module?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->request->getVar('module_id') && ($this->request->getMethod() != 'post')) {
-            $module_info = $modules->getModule($this->request->getVar('module_id'));
+            $module_info = $moduleModel->getModule($this->request->getVar('module_id'));
         }
 
        if ($this->request->getPost('name')) {

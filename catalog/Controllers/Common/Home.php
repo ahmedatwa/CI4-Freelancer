@@ -1,6 +1,6 @@
 <?php namespace Catalog\Controllers\Common;
 
-use Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Account\CustomerModel;
 
 class Home extends \Catalog\Controllers\BaseController
 {

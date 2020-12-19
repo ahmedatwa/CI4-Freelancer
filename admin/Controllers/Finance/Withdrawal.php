@@ -21,7 +21,7 @@ class Withdrawal extends \Admin\Controllers\BaseController
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $withdrawalModel->update($this->request->getVar('withdraw_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/finance/withdrawal?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/finance/withdrawal?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('finance/withdrawal.text_success'));
         }
         $this->getForm();
@@ -39,7 +39,7 @@ class Withdrawal extends \Admin\Controllers\BaseController
             foreach ($this->request->getPost('selected') as $withdraw_id) {
                 $disputeModel->delete($withdraw_id);
                 $json['success'] = lang('finance/withdrawal.text_success');
-                $json['redirect'] = 'index.php/finance/withdrawal?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/finance/withdrawal?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('finance/withdrawal.error_permission');
@@ -53,12 +53,12 @@ class Withdrawal extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('finance/withdrawal.list.heading_title'),
-            'href' => base_url('index.php/finance/withdrawal?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/finance/withdrawal?user_token=' . $this->request->getVar('user_token')),
         ];
 
         // Data
@@ -78,17 +78,17 @@ class Withdrawal extends \Admin\Controllers\BaseController
             $data['withdrawals'][] = [
                 'withdraw_id'    => $result['withdraw_id'],
                 'customer'       => $result['username'],
-                'status'         =>  $result['status'],
-                'amount'         =>  currency_format($result['amount']),
+                'status'         => $result['status'],
+                'amount'         => currency_format($result['amount']),
                 'date_added'     => DateShortFormat($result['date_added']),
                 'date_processed' => DateShortFormat($result['date_processed']),
-                'edit'           => base_url('index.php/finance/withdrawal/edit?user_token=' . $this->session->get('user_token') . '&withdraw_id=' . $result['withdraw_id']),
-                'delete'         => base_url('index.php/finance/withdrawal/delete?user_token=' . $this->session->get('user_token') . '&withdraw_id=' . $result['withdraw_id']),
+                'edit'           => base_url('index.php/finance/withdrawal/edit?user_token=' . $this->request->getVar('user_token') . '&withdraw_id=' . $result['withdraw_id']),
+                'delete'         => base_url('index.php/finance/withdrawal/delete?user_token=' . $this->request->getVar('user_token') . '&withdraw_id=' . $result['withdraw_id']),
             ];
         }
 
-        $data['add'] = base_url('index.php/finance/withdrawal/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/finance/withdrawal/delete?user_token=' . $this->session->get('user_token'));
+        $data['add'] = base_url('index.php/finance/withdrawal/add?user_token=' . $this->request->getVar('user_token'));
+        $data['delete'] = base_url('index.php/finance/withdrawal/delete?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -120,24 +120,24 @@ class Withdrawal extends \Admin\Controllers\BaseController
         
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('finance/withdrawal.list.heading_title'),
-            'href' => base_url('index.php/finance/withdrawal/edit?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/finance/withdrawal/edit?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['text_form'] = !$this->request->getVar('withdraw_id') ? lang('finance/withdrawal.list.text_add') : lang('finance/withdrawal.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/finance/withdrawal?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/finance/withdrawal?user_token=' . $this->request->getVar('user_token'));
 
         $data['user_token'] = $this->request->getVar('user_token');
 
         if (!$this->request->getVar('withdraw_id')) {
-            $data['action'] = base_url('index.php/finance/withdrawal/add?user_token=' . $this->session->get('user_token'));
+            $data['action'] = base_url('index.php/finance/withdrawal/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/finance/withdrawal/edit?user_token=' . $this->session->get('user_token') . '&withdraw_id=' . $this->request->getVar('withdraw_id'));
+            $data['action'] = base_url('index.php/finance/withdrawal/edit?user_token=' . $this->request->getVar('user_token') . '&withdraw_id=' . $this->request->getVar('withdraw_id'));
         }
 
         if ($this->session->getFlashdata('error_warning')) {

@@ -1,15 +1,17 @@
 <?php namespace Admin\Controllers\Module;
 
+use \Admin\Models\Setting\SettingModel;
+
 class Category extends \Admin\Controllers\BaseController
 {
     public function index()
     {
         $this->document->setTitle(lang('module/category.list.heading_title'));
 
-        $setting_model = new \Admin\Models\Setting\Settings();
+        $settingModel = new SettingModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-                $setting_model->editSetting('module_category', $this->request->getPost());
+                $settingModel->editSetting('module_category', $this->request->getPost());
 
             return redirect()->to(base_url('index.php/setting/module?user_token=' . $this->session->get('user_token')))
                              ->with('success', lang('setting/module.text_success'));

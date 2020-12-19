@@ -1,14 +1,14 @@
 <?php namespace Admin\Controllers\Catalog;
 
-use \Admin\Models\Catalog\Projects;
-use \Admin\Models\Customer\Customers;
-use \Admin\Models\Localisation\Languages;
+use \Admin\Models\Catalog\ProjectModel;
+use \Admin\Models\Customer\CustomerModel;
+use \Admin\Models\Localisation\LanguageModel;
 
 class Project extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $projectModel = new Projects();
+        $projectModel = new ProjectModel();
 
         $this->document->setTitle(lang('catalog/project.list.heading_title'));
 
@@ -19,7 +19,7 @@ class Project extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/project.list.text_add'));
 
-        $projectModel = new Projects();
+        $projectModel = new ProjectModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $projectModel->addProject($this->request->getPost());
@@ -33,7 +33,7 @@ class Project extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/project.list.text_edit'));
 
-        $projectModel = new Projects();
+        $projectModel = new ProjectModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $projectModel->update($this->request->getVar('project_id'), $this->request->getPost());
@@ -47,7 +47,7 @@ class Project extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $projectModel = new Projects();
+        $projectModel = new ProjectModel();
    
         $this->document->setTitle(lang('catalog/project.list.heading_title'));
 
@@ -77,7 +77,7 @@ class Project extends \Admin\Controllers\BaseController
             'href' => base_url('index.php/catalog/project?user_token=' . $this->request->getVar('user_token')),
         ];
 
-        $projectModel = new Projects();
+        $projectModel = new ProjectModel();
 
         $data['projects'] = [];
 
@@ -166,7 +166,7 @@ class Project extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        $projectModel = new Projects();
+        $projectModel = new ProjectModel();
 
         if ($this->request->getVar('project_id') && ($this->request->getMethod() != 'post')) {
             $project_info = $projectModel->getProject($this->request->getVar('project_id'));
@@ -223,8 +223,8 @@ class Project extends \Admin\Controllers\BaseController
         $data['placeholder'] = resizeImage('no_image.jpg', 100, 100);
 
         // Employer
-        $customers_model = new Customers();
-        $data['customers'] = $customers_model->getCustomers();
+        $customerModel = new CustomerModel();
+        $data['customers'] = $customerModel->getCustomers();
 
         if ($this->request->getPost('employer_id')) {
             $data['employer_id'] = $this->request->getPost('employer_id');
@@ -234,8 +234,8 @@ class Project extends \Admin\Controllers\BaseController
             $data['employer_id'] = 0;
         }
 
-        $languages = new Languages();
-        $data['languages'] = $languages->where('status', 1)->findAll();
+        $languageModel = new LanguageModel();
+        $data['languages'] = $languageModel->where('status', 1)->findAll();
         
         $this->document->output('catalog/project_form', $data);
     }

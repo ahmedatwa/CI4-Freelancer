@@ -1,12 +1,14 @@
 <?php namespace Admin\Controllers\Customer;
 
-use \Admin\Models\Customer\Customers;
+use \Admin\Models\Customer\CustomerModel;
+use \Admin\Models\Customer\CustomerGroupModel;
+use \Extensions\Models\Wallet\WalletModel;
 
 class Customer extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $customersModel = new Customers();
+        $customerModel = new customerModel();
 
         $this->document->setTitle(lang('customer/customer.list.heading_title'));
 
@@ -17,10 +19,10 @@ class Customer extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('customer/customer.list.text_add'));
 
-         $customersModel = new Customers();
+         $customerModel = new customerModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $customersModel->insert($this->request->getPost());
+            $customerModel->insert($this->request->getPost());
             return redirect()->to(base_url('index.php/customer/customer?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('customer/customer.text_success'));
         }
@@ -31,10 +33,10 @@ class Customer extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('customer/customer.list.text_edit'));
 
-         $customersModel = new Customers();
+         $customerModel = new customerModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $customersModel->update($this->request->getVar('customer_id'), $this->request->getPost());
+            $customerModel->update($this->request->getVar('customer_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/customer/customer?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('customer/customer.text_success'));
         }
@@ -45,13 +47,13 @@ class Customer extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-         $customersModel = new Customers();
+         $customerModel = new customerModel();
    
         $this->document->setTitle(lang('customer/customer.list.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $customer_id) {
-                $customersModel->deleteCustomer($customer_id);
+                $customerModel->deleteCustomer($customer_id);
                 $json['success'] = lang('customer/customer.text_success');
                 $json['redirect'] = 'index.php/customer/customer?user_token=' . $this->request->getVar('user_token');
             }
@@ -82,8 +84,8 @@ class Customer extends \Admin\Controllers\BaseController
         ];
 
         $data['customers'] = [];
-        $customerModel = new Customers();
-        $results = $customerModel->getCustomers($filter_data);
+        $customerModel = new customerModel();
+        $results = $customerModel->getcustomers($filter_data);
 
         foreach ($results as $result) {
             $data['customers'][] = [
@@ -141,7 +143,7 @@ class Customer extends \Admin\Controllers\BaseController
 
         $data['cancel'] = base_url('index.php/customer/customer?user_token=' . $this->request->getVar('user_token'));
 
-        $data['user_token'] = $this->request->getGet('user_token');
+        $data['user_token'] = $this->request->getVar('user_token');
 
         if (!$this->request->getVar('customer_id')) {
             $data['action'] = base_url('index.php/customer/customer/add?user_token=' . $this->request->getVar('user_token'));
@@ -155,7 +157,7 @@ class Customer extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-         $customerModel = new Customers();
+         $customerModel = new customerModel();
 
         if ($this->request->getVar('customer_id') && ($this->request->getMethod() != 'post')) {
             $customer_info = $customerModel->find($this->request->getVar('customer_id'));
@@ -184,7 +186,7 @@ class Customer extends \Admin\Controllers\BaseController
         }
 
         if ($this->request->getPost('email')) {
-            $data['email'] = $this->request->getPost('email');
+            $data['email'] = $this->request->getPost('email', FILTER_SANITIZE_EMAIL);
         } elseif (!empty($customer_info)) {
             $data['email'] = $customer_info['email'];
         } else {
@@ -212,9 +214,9 @@ class Customer extends \Admin\Controllers\BaseController
         }
 
         // UserGroup
-        $customerGroupsModel = new \Admin\Models\Customer\Customers_group();
+        $CustomerGroupModel = new CustomerGroupModel();
 
-        $data['customer_groups'] = $customerGroupsModel->getCustomerGroups();
+        $data['customer_groups'] = $CustomerGroupModel->getCustomerGroups();
         
         if ($this->request->getPost('customer_group_id')) {
             $data['customer_group_id'] = $this->request->getPost('customer_group_id');
@@ -245,7 +247,7 @@ class Customer extends \Admin\Controllers\BaseController
 
     public function review()
     {
-        $customerModel = new Customers();
+        $customerModel = new customerModel();
 
         $data['column_project']    = lang('catalog/review.list.column_project');
         $data['column_employer']   = lang('catalog/review.list.column_employer');
@@ -279,7 +281,7 @@ class Customer extends \Admin\Controllers\BaseController
                 'submitted_by' => $customerModel->where('customer_id', $result['submitted_by'])->findColumn('username')[0],
                 'rating'       => $result['rating'],
                 'status'       => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'approve'      => base_url('index.php/customer/customers/approve?user_token=' . $this->request->getVar('user_token') . '&review_id=' . $result['review_id']),
+                'approve'      => base_url('index.php/customer/customerModel/approve?user_token=' . $this->request->getVar('user_token') . '&review_id=' . $result['review_id']),
                 'view'         => base_url('index.php/catalog/review/edit?user_token=' . $this->request->getVar('user_token') . '&review_id=' . $result['review_id']),
 
             ];
@@ -296,8 +298,8 @@ class Customer extends \Admin\Controllers\BaseController
             $customer_id = 0;
         }
 
-        $walletModel = new \Extensions\Models\Wallet\WalletModel();
-        $customerModel = new Customers();
+        $walletModel = new WalletModel();
+        $customerModel = new customerModel();
 
         $data['column_income']    = lang('extension/wallet.list.column_income');
         $data['column_withdrawn'] = lang('extension/wallet.list.column_withdrawn');
@@ -337,7 +339,7 @@ class Customer extends \Admin\Controllers\BaseController
         $json = [];
 
         if ($this->request->getVar('filter_name')) {
-             $customersModel = new Customers();
+             $customerModel = new customerModel();
 
             if ($this->request->getVar('filter_name')) {
                 $filter_name = html_entity_decode($this->request->getVar('filter_name'), ENT_QUOTES, 'UTF-8');
@@ -351,7 +353,7 @@ class Customer extends \Admin\Controllers\BaseController
                 'limit' => 5,
             ];
 
-            $results = $customersModel->getCustomers($filter_data);
+            $results = $customerModel->getcustomerModel($filter_data);
 
             foreach ($results as $result) {
                 $json[] = [

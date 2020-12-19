@@ -1,17 +1,20 @@
 <?php namespace Admin\Controllers\Module;
 
+use \Admin\Models\Setting\SettingModel;
+use \Admin\Models\Setting\ModuleModel;
+
 class Account extends \Admin\Controllers\BaseController
 {
     public function index()
     {
         $this->document->setTitle(lang('account.list.heading_title'));
 
-        $setting_model = new \Admin\Models\Setting\Settings();
+        $settingModel = new SettingModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-                $setting_model->editSetting('module_account', $this->request->getPost());
+            $settingModel->editSetting('module_account', $this->request->getPost());
 
-            return redirect()->to(base_url('index.php/setting/module?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/setting/module?user_token=' . $this->request->getVar('user_token')))
                              ->with('success', lang('setting/module.text_success'));
         }
 
@@ -25,35 +28,36 @@ class Account extends \Admin\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard', 'user_token=' . $this->session->get('user_token'))
+            'href' => base_url('index.php/common/dashboard', 'user_token=' . $this->request->getVar('user_token'))
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('module/account.list.text_module'),
-            'href' => base_url('index.php/setting/module?user_token=' . $this->session->get('user_token'))
+            'href' => base_url('index.php/setting/module?user_token=' . $this->request->getVar('user_token'))
         ];
 
         if (! $this->request->getVar('module_id')) {
             $data['breadcrumbs'][] = [
                 'text' => lang('module/account.list.heading_title'),
-                'href' => base_url('index.php/module/account?user_token=' . $this->session->get('user_token'))
+                'href' => base_url('index.php/module/account?user_token=' . $this->request->getVar('user_token'))
             ];
         } else {
             $data['breadcrumbs'][] = [
                 'text' => lang('heading_title'),
-                'href' => base_url('index.php/module/account?user_token=' . $this->session->get('user_token') . '&module_id=' . $this->request->getVar('module_id'))
+                'href' => base_url('index.php/module/account?user_token=' . $this->request->getVar('user_token') . '&module_id=' . $this->request->getVar('module_id'))
             ];
         }
 
         if (! $this->request->getVar('module_id')) {
-            $data['action'] = base_url('index.php/module/account?user_token=' . $this->session->get('user_token'));
+            $data['action'] = base_url('index.php/module/account?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/module/account?user_token=' . $this->session->get('user_token') . '&module_id=' . $this->request->getVar('module_id'));
+            $data['action'] = base_url('index.php/module/account?user_token=' . $this->request->getVar('user_token') . '&module_id=' . $this->request->getVar('module_id'));
         }
 
-        $data['cancel'] = base_url('index.php/setting/module?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/setting/module?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->request->getVar('module_id') && ($this->request->getMethod() != 'post')) {
+            $moduleModel = new ModuleModel();
             $module_info = $modules->getModule($this->request->getVar('module_id'));
         }
 

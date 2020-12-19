@@ -1,6 +1,8 @@
 <?php namespace Admin\Controllers\Extension;
 
-use Admin\Models\Setting\Extensions;
+use \Admin\Models\Setting\ExtensionModel;
+use \Admin\Models\User\UserGroupModel;
+use \Admin\Models\Setting\SettingModel;
 
 class Dashboard extends \Admin\Controllers\BaseController
 {
@@ -8,7 +10,7 @@ class Dashboard extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/dashboard.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         $this->getList();
     }
@@ -17,17 +19,17 @@ class Dashboard extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/dashboard.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             $extensionsModel->install('dashboard', $this->request->getVar('extension'));
 
-            $userGroupModel = new \Admin\Models\User\Users_group();
+            $userGroupModel = new UserGroupModel();
 
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/dashboard/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/dashboard/' . $this->request->getVar('extension'));
 
-            $settingModel = new \Admin\Models\Setting\Settings();
+            $settingModel = new SettingModel();
             $dashboard_data = [
                 'dashboard_' . $this->request->getVar('extension') . '_status' => 1,
                 'dashboard_' . $this->request->getVar('extension') . '_width' => 6,
@@ -46,7 +48,7 @@ class Dashboard extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('setting/extension.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             $extensionsModel->uninstall('dashboard', $this->request->getVar('extension'));
@@ -58,7 +60,6 @@ class Dashboard extends \Admin\Controllers\BaseController
 
     protected function getList()
     {      
-        $extensionsModel = new Extensions();  
         
         if ($this->session->getFlashdata('warning')) {
             $data['error_warning'] = $this->session->getFlashdata('warning');
@@ -72,6 +73,8 @@ class Dashboard extends \Admin\Controllers\BaseController
             $data['success'] = '';
         }
 
+        $extensionsModel = new ExtensionModel();  
+        
         $installedExtensions = $extensionsModel->getInstalled('dashboard');
 
         foreach ($installedExtensions as $key => $value) {
@@ -81,7 +84,7 @@ class Dashboard extends \Admin\Controllers\BaseController
             }
         }
 
-        $data['extensions'] = array();
+        $data['extensions'] = [];
         
         helper('filesystem');
 

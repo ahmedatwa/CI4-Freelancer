@@ -35,7 +35,7 @@ class Document
      */
     public function getTitle()
     {
-        return $this->title;
+        return service('registry')->get('config_name') . ' :: ' . $this->title;
     }
 
     /**

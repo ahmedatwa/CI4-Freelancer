@@ -1,6 +1,6 @@
 <?php namespace Catalog\Controllers\Account;
 
-use Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Account\CustomerModel;
 
 class Logout extends \Catalog\Controllers\BaseController
 {

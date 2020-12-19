@@ -24,9 +24,12 @@ class Menu extends \Catalog\Controllers\BaseController
             $children = $categoryModel->getCategories(['category_id' => $category['category_id']]);
 
             foreach ($children as $child) {
+
+                $childKeyword = $seoUrl->getKeywordByQuery('category_id=' . $child['category_id']);
+
                 $children_data[] = [
                     'name'  => $child['name'],
-                    'href'  => ($keyword) ? route_to('category', $child['category_id'], $keyword) : base_url('project/project?gid=' . $child['category_id']),
+                    'href'  => ($childKeyword) ? route_to('category', $child['category_id'], $childKeyword) : base_url('project/project?gid=' . $child['category_id']),
                     ];
                 }
 

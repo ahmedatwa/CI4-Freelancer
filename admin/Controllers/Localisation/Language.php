@@ -1,10 +1,12 @@
 <?php namespace Admin\Controllers\Localisation;
 
+use \Admin\Models\Localisation\LanguageModel;
+
 class Language extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->languages = new \Admin\Models\Localisation\Languages();
+        $languageModel = new LanguageModel();
 
         $this->document->setTitle(lang('localisation/language.list.heading_title'));
 
@@ -15,11 +17,11 @@ class Language extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('localisation/language.list.text_add'));
 
-        $this->languages = new \Admin\Models\Localisation\Languages();
+        $languageModel = new LanguageModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->languages->addLanguage($this->request->getPost());
-            return redirect()->to(base_url('index.php/localisation/language?user_token=' . $this->session->get('user_token')))
+            $languageModel->addLanguage($this->request->getPost());
+            return redirect()->to(base_url('index.php/localisation/language?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('localisation/language.text_success'));
         }
         $this->getForm();
@@ -29,11 +31,11 @@ class Language extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('localisation/language.list.text_edit'));
 
-        $this->languages = new \Admin\Models\Localisation\Languages();
+        $languageModel = new LanguageModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $this->languages->editLanguage($this->request->getVar('language_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/localisation/language?user_token=' . $this->session->get('user_token')))
+            $languageModel->editLanguage($this->request->getVar('language_id'), $this->request->getPost());
+            return redirect()->to(base_url('index.php/localisation/language?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('localisation/language.text_success'));
         }
         $this->getForm();
@@ -43,15 +45,15 @@ class Language extends \Admin\Controllers\BaseController
     {
         $json = array();
 
-        $this->languages = new \Admin\Models\Localisation\Languages();
+        $languageModel = new LanguageModel();
    
         $this->document->setTitle(lang('localisation/language.list.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $language_id) {
-                $this->languages->delete($language_id);
+                $languageModel->delete($language_id);
                 $json['success'] = lang('localisation/language.text_success');
-                $json['redirect'] = 'index.php/localisation/language?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/localisation/language?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('localisation/language.error_permission');
@@ -62,33 +64,36 @@ class Language extends \Admin\Controllers\BaseController
     protected function getList()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
-            'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+        $data['breadcrumbs'] = [];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
+            'text' => lang('en.text_home'),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
+        ];
+
+        $data['breadcrumbs'][] = [
             'text' => lang('localisation/language.list.heading_title'),
-            'href' => base_url('index.php/localisation/language?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/localisation/language?user_token=' . $this->request->getVar('user_token')),
+        ];
 
         // Data
-        $data['languages'] = array();
-        $results = $this->languages->findAll($this->registry->get('config_admin_limit'));
+        $data['languages'] = [];
+        $languageModel = new LanguageModel();
+
+        $results = $languageModel->findAll($this->registry->get('config_admin_limit'));
 
         foreach ($results as $result) {
-            $data['languages'][] = array(
+            $data['languages'][] = [
                 'language_id' => $result['language_id'],
                 'name'        => $result['name'],
                 'code'        => $result['name'],
-                'edit'        => base_url('index.php/localisation/language/edit?user_token=' . $this->session->get('user_token') . '&language_id=' . $result['language_id']),
-                'delete'      => base_url('index.php/localisation/language/delete?user_token=' . $this->session->get('user_token') . '&language_id=' . $result['language_id']),
-            );
+                'edit'        => base_url('index.php/localisation/language/edit?user_token=' . $this->request->getVar('user_token') . '&language_id=' . $result['language_id']),
+                'delete'      => base_url('index.php/localisation/language/delete?user_token=' . $this->request->getVar('user_token') . '&language_id=' . $result['language_id']),
+            ];
         }
 
-        $data['add'] = base_url('index.php/localisation/language/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/localisation/language/delete?user_token=' . $this->session->get('user_token'));
+        $data['add'] = base_url('index.php/localisation/language/add?user_token=' . $this->request->getVar('user_token'));
+        $data['delete'] = base_url('index.php/localisation/language/delete?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -105,10 +110,10 @@ class Language extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
-        $data['user_token'] = $this->request->getGet('user_token');
+        $data['user_token'] = $this->request->getVar('user_token');
 
         $this->document->output('localisation/language_list', $data);
     }
@@ -116,25 +121,26 @@ class Language extends \Admin\Controllers\BaseController
     protected function getForm()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('localisation/language.list.heading_title'),
-            'href' => base_url('index.php/localisation/language/edit?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/localisation/language/edit?user_token=' . $this->request->getVar('user_token')),
+        ];
 
-        $data['text_form'] = !$this->request->getGet('language_id') ? lang('localisation/language.list.text_add') : lang('localisation/language.list.text_edit');
+        $data['text_form'] = ! $this->request->getVar('language_id') ? lang('localisation/language.list.text_add') : lang('localisation/language.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/localisation/language?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/localisation/language?user_token=' . $this->request->getVar('user_token'));
 
-        if (!$this->request->getGet('language_id')) {
-            $data['action'] = base_url('index.php/localisation/language/add?user_token=' . $this->session->get('user_token'));
+        if (!$this->request->getVar('language_id')) {
+            $data['action'] = base_url('index.php/localisation/language/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/localisation/language/edit?user_token=' . $this->session->get('user_token') . '&language_id=' . $this->request->getGet('language_id'));
+            $data['action'] = base_url('index.php/localisation/language/edit?user_token=' . $this->request->getVar('user_token') . '&language_id=' . $this->request->getVar('language_id'));
         }
 
         if ($this->session->getFlashdata('error_warning')) {
@@ -143,53 +149,57 @@ class Language extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        if ($this->request->getGet('language_id') && ($this->request->getMethod() != 'post')) {
-            $user_info = $this->languages->find($this->request->getGet('language_id'));
+        if ($this->request->getVar('language_id') && ($this->request->getMethod() != 'post')) {
+            $languageModel = new LanguageModel();
+            $language_info = $languageModel->find($this->request->getVar('language_id'));
         }
 
         if ($this->request->getPost('name')) {
             $data['name'] = $this->request->getPost('name');
-        } elseif (!empty($user_info['name'])) {
-            $data['name'] = $user_info['name'];
+        } elseif (!empty($language_info['name'])) {
+            $data['name'] = $language_info['name'];
         } else {
             $data['name'] = '';
         }
 
         if ($this->request->getPost('code')) {
             $data['code'] = $this->request->getPost('code');
-        } elseif (!empty($user_info['code'])) {
-            $data['code'] = $user_info['code'];
+        } elseif (!empty($language_info['code'])) {
+            $data['code'] = $language_info['code'];
         } else {
             $data['code'] = '';
         }
 
         helper('filesystem');
+
         $languages = directory_map(APPPATH . 'Language', 1);
-        $data['languages'] = array();
+
+        $data['languages'] = [];
+
         foreach ($languages as $language) {
             $data['languages'][] = rtrim($language, '/');
         }
 
         if ($this->request->getPost('locale')) {
             $data['locale'] = $this->request->getPost('locale');
-        } elseif (!empty($user_info['locale'])) {
-            $data['locale'] = $user_info['locale'];
+        } elseif (!empty($language_info['locale'])) {
+            $data['locale'] = $language_info['locale'];
         } else {
             $data['locale'] = '';
         }
 
         if ($this->request->getPost('sort_order')) {
             $data['sort_order'] = $this->request->getPost('sort_order');
-        } elseif (!empty($user_info['sort_order'])) {
-            $data['sort_order'] = $user_info['sort_order'];
+        } elseif (!empty($language_info['sort_order'])) {
+            $data['sort_order'] = $language_info['sort_order'];
         } else {
             $data['sort_order'] = 1;
         }
 
         if ($this->request->getPost('status')) {
             $data['status'] = $this->request->getPost('status');
-        } elseif (!empty($user_info)) {
-            $data['status'] = $user_info['status'];
+        } elseif (!empty($language_info)) {
+            $data['status'] = $language_info['status'];
         } else {
             $data['status'] = 1;
         }
@@ -214,7 +224,7 @@ class Language extends \Admin\Controllers\BaseController
             return false;
         }
 
-        if (! $this->user->hasPermission('modify', $this->getRoute())) {
+        if (! $this->user->hasPermission('modify', 'localisation/language')) {
             $this->session->setFlashdata('error_warning', lang('localisation/language.error_permission'));
             return false;
         }
@@ -223,7 +233,7 @@ class Language extends \Admin\Controllers\BaseController
 
     protected function validateDelete()
     {
-        if (!$this->user->hasPermission('modify', $this->getRoute())) {
+        if (!$this->user->hasPermission('modify', 'localisation/language')) {
             $this->session->setFlashdata('error_warning', lang('localisation/language.error_permission'));
             return false;
         }

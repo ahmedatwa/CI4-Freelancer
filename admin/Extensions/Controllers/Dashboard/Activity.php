@@ -1,8 +1,8 @@
 <?php namespace Extensions\Controllers\Dashboard;
 
-use \Extensions\Models\Dashboard\Activities;
-use \Admin\Models\Setting\Settings;
-use \Admin\Models\Customer\Customers;
+use Extensions\Models\Dashboard\ActivityModel;
+use Admin\Models\Setting\SettingModel;
+use Admin\Models\Customer\CustomerModel;
 
 class Activity extends \Admin\Controllers\BaseController
 {
@@ -10,7 +10,7 @@ class Activity extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('dashboard/activity.list.heading_title'));
   
-        $settingModel = new Settings();
+        $settingModel = new SettingModel();
   
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $settingModel->editSetting('dashboard_activity', $this->request->getPost());
@@ -70,7 +70,6 @@ class Activity extends \Admin\Controllers\BaseController
             $data['dashboard_activity_sort_order'] = $this->registry->get('dashboard_activity_sort_order');
         }
   
-
         $this->document->moduleOutput('Extensions', 'dashboard\activity_form', $data);
     }
   
@@ -92,8 +91,8 @@ class Activity extends \Admin\Controllers\BaseController
   
         $data['activities'] = [];
   
-        $activityModel = new Activities();
-        $customerModel = new Customers();
+        $activityModel = new ActivityModel();
+        $customerModel = new CustomerModel();
 
         $results = $activityModel->findAll(5);
 
@@ -107,13 +106,13 @@ class Activity extends \Admin\Controllers\BaseController
               'customer_id=',
               'name=',
               'project_id=',
-         ];
+            ];
   
             $replace = [
               base_url('index.php/customer/customer/edit?user_token=' . $this->request->getVar('user_token') . '&customer_id='),
               $username[0],
               base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id='),
-        ];
+            ];
   
             $data['activities'][] = [
               'comment'    => str_replace($find, $replace, $text),

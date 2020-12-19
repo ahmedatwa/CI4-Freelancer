@@ -76,9 +76,8 @@ class Withdraw_status extends \Admin\Controllers\BaseController
         ];
 
         // Data
-        $withdrawalModel = new WithdrawalModel();
-
         $data['withdraw_statuses'] = [];
+        $withdrawalModel = new WithdrawalModel();
 
         $results = $withdrawalModel->getWithdrawStatuses();
 
@@ -109,10 +108,10 @@ class Withdraw_status extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
-        $data['user_token'] = $this->request->getGet('user_token');
+        $data['user_token'] = $this->request->getVar('user_token');
 
         $this->document->output('localisation/withdraw_status_list', $data);
     }
@@ -121,6 +120,7 @@ class Withdraw_status extends \Admin\Controllers\BaseController
     {
         // Breadcrumbs
         $data['breadcrumbs'] = [];
+
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
@@ -147,9 +147,8 @@ class Withdraw_status extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        $withdrawalModel = new WithdrawalModel();
-
         if (($this->request->getMethod() != 'post') && $this->request->getVar('withdraw_status_id')) {
+            $withdrawalModel = new WithdrawalModel();
             $withdraw_info = $withdrawModel->getDisputeAction($this->request->getVar('withdraw_status_id'));
         }
         
@@ -176,7 +175,7 @@ class Withdraw_status extends \Admin\Controllers\BaseController
                 return false;
         }
 
-        if (! $this->user->hasPermission('modify', $this->getRoute())) {
+        if (! $this->user->hasPermission('modify', 'localisation/withdraw_status')) {
             $this->session->setFlashdata('error_warning', lang('localisation/withdraw_status.error_permission'));
             return false;
         }

@@ -1,12 +1,14 @@
 <?php namespace Admin\Controllers\Finance;
 
-use \Admin\Models\Finance\Disputes;
+use \Admin\Models\Finance\DisputeModel;
+use \Admin\Models\Customer\CustomerModel;
+use \Admin\Models\Catalog\ProjectModel;
 
 class Dispute extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $disputeModel = new Disputes();
+        $disputeModel = new DisputeModel();
 
         $this->document->setTitle(lang('finance/dispute.list.heading_title'));
 
@@ -17,7 +19,7 @@ class Dispute extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('finance/dispute.list.text_edit'));
 
-        $disputeModel = new Disputes(); 
+        $disputeModel = new DisputeModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $disputeModel->update($this->request->getGet('dispute_id'), $this->request->getPost());
@@ -31,7 +33,7 @@ class Dispute extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $disputeModel = new Disputes(); 
+        $disputeModel = new DisputeModel();
    
         $this->document->setTitle(lang('finance/dispute.list.heading_title'));
 
@@ -51,6 +53,7 @@ class Dispute extends \Admin\Controllers\BaseController
     {
         // Breadcrumbs
         $data['breadcrumbs'] = [];
+
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
             'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
@@ -69,9 +72,9 @@ class Dispute extends \Admin\Controllers\BaseController
 
         $data['disputes'] = [];
 
-        $customerModel = new \Admin\Models\Customer\Customers();
+        $customerModel = new CustomerModel();
 
-        $disputeModel = new Disputes();
+        $disputeModel = new DisputeModel();
 
         $results = $disputeModel->getDisputes();
 
@@ -132,7 +135,7 @@ class Dispute extends \Admin\Controllers\BaseController
 
         $data['cancel'] = base_url('index.php/finance/dispute?user_token=' . $this->session->get('user_token'));
 
-        $data['user_token'] = $this->request->getGet('user_token');
+        $data['user_token'] = $this->request->getVar('user_token');
 
         if (!$this->request->getGet('dispute_id')) {
             $data['action'] = base_url('index.php/finance/dispute/add?user_token=' . $this->session->get('user_token'));
@@ -146,7 +149,7 @@ class Dispute extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        $disputeModel = new Disputes();
+        $disputeModel = new DisputeModel();
 
         if ($this->request->getGet('dispute_id') && ($this->request->getMethod() != 'post')) {
             $dispute_info = $disputeModel->find($this->request->getGet('dispute_id'));
@@ -173,15 +176,15 @@ class Dispute extends \Admin\Controllers\BaseController
         }
 
         if ($this->request->getVar('dispute_id')) {
-           $data['dispute_id'] = $this->request->getVar('dispute_id');
+            $data['dispute_id'] = $this->request->getVar('dispute_id');
         } else {
-           $data['dispute_id'] = 0; 
+            $data['dispute_id'] = 0;
         }
 
         if ($dispute_info) {
-            $customerModel = new \Admin\Models\Customer\Customers();
+            $customerModel = new CustomerModel();
 
-            $projectModel = new \Admin\Models\Catalog\Projects();
+            $projectModel = new ProjectModel();
 
             $data['freelancer'] = $customerModel->where('customer_id', $dispute_info['freelancer_id'])->findColumn('username')[0];
             $data['employer']   = $customerModel->where('customer_id', $dispute_info['employer_id'])->findColumn('username')[0];
@@ -193,11 +196,11 @@ class Dispute extends \Admin\Controllers\BaseController
         $this->document->output('finance/dispute_form', $data);
     }
 
-    public function history() {
-
+    public function history()
+    {
         $data['histories'] = [];
 
-        $disputeModel = new Disputes();
+        $disputeModel = new DisputeModel();
 
         $results = $disputeModel->getDisputeHistories($this->request->getVar('dispute_id'));
 
@@ -215,11 +218,11 @@ class Dispute extends \Admin\Controllers\BaseController
         $data['column_status']     = lang('finance/dispute.list.column_status');
         $data['column_notify']     = lang('finance/dispute.list.column_notify');
 
-         return view('finance/dispute_history', $data);
+        return view('finance/dispute_history', $data);
     }
     
-    public function addHistory() {
-
+    public function addHistory()
+    {
         $json = [];
 
         if (! $this->user->hasPermission('modify', 'finance/dispute')) {
@@ -227,12 +230,12 @@ class Dispute extends \Admin\Controllers\BaseController
         }
 
         if (! $json) {
-            $disputeModel = new Disputes();
+            $disputeModel = new DisputeModel();
 
             $disputeModel->addDisputeHistory($this->request->getVar('dispute_id'), $this->request->getPost('dispute_status_id'), $this->request->getPost('comment'), $this->request->getPost('notify'));
 
             $json['success'] = lang('finance/dispute.text_success');
-          }
+        }
 
         return $this->response->setJSON($json);
     }
@@ -255,7 +258,7 @@ class Dispute extends \Admin\Controllers\BaseController
             }
         }
 
-        if (! $this->user->hasPermission('modify', $this->getRoute())) {
+        if (! $this->user->hasPermission('modify', 'finance/dispute')) {
             $this->session->setFlashdata('error_warning', lang('finance/dispute.error_permission'));
             return false;
         }
@@ -265,10 +268,10 @@ class Dispute extends \Admin\Controllers\BaseController
 
     protected function validateDelete()
     {
-        if (!$this->user->hasPermission('modify', $this->getRoute())) {
+        if (!$this->user->hasPermission('modify', 'finance/dispute')) {
             $this->session->setFlashdata('error_warning', lang('finance/dispute.error_permission'));
             return false;
-        } 
+        }
         return true;
     }
         

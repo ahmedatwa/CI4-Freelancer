@@ -64,7 +64,7 @@ class BaseController extends \CodeIgniter\Controller
     {
         $route  = $this->request->uri->getSegment(1) . '/' . $this->request->uri->getSegment(2);
         if ($route) {
-            return (string)$route;
+            return (string) $route;
         }
     }
     /**

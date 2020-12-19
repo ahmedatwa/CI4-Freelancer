@@ -1,13 +1,13 @@
 <?php namespace Admin\Controllers\Catalog;
 
-use \Admin\Models\Catalog\Informations;
-use \Admin\Models\Localisation\Languages;
+use \Admin\Models\Catalog\InformationModel;
+use \Admin\Models\Localisation\LanguageModel;
 
 class Information extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $informationModel = new Informations();
+        $informationModel = new InformationModel();
 
         $this->document->setTitle(lang('catalog/information.list.heading_title'));
 
@@ -18,11 +18,11 @@ class Information extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/information.list.text_add'));
 
-        $informationModel = new Informations();
+        $informationModel = new InformationModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $informationModel->addInformation($this->request->getPost());
-            return redirect()->to(base_url('index.php/catalog/information?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/catalog/information?user_token=' . $this->request->getVar('user_token')))
                              ->with('success', lang('catalog/information.text_success'));
         }
         $this->getForm();
@@ -32,11 +32,11 @@ class Information extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/information.list.text_edit'));
 
-        $informationModel = new Informations();
+        $informationModel = new InformationModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $informationModel->editInformation($this->request->getGet('information_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/catalog/information?user_token=' . $this->session->get('user_token')))
+            $informationModel->editInformation($this->request->getVar('information_id'), $this->request->getPost());
+            return redirect()->to(base_url('index.php/catalog/information?user_token=' . $this->request->getVar('user_token')))
                              ->with('success', lang('catalog/information.text_success'));
         }
         $this->getForm();
@@ -46,7 +46,7 @@ class Information extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $informationModel = new Informations();
+        $informationModel = new InformationModel();
    
         $this->document->setTitle(lang('catalog/information.list.heading_title'));
 
@@ -54,7 +54,7 @@ class Information extends \Admin\Controllers\BaseController
             foreach ($this->request->getPost('selected') as $information_id) {
                 $informationModel->deleteInformation($information_id);
                 $json['success'] = lang('catalog/information.text_success');
-                $json['redirect'] = 'index.php/catalog/information?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/catalog/information?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('catalog/information.error_permission');
@@ -68,15 +68,15 @@ class Information extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('catalog/information.list.heading_title'),
-            'href' => base_url('index.php/catalog/information?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/catalog/information?user_token=' . $this->request->getVar('user_token')),
         ];
 
-        $informationModel = new Informations();
+        $informationModel = new InformationModel();
 
         $data['informations'] = [];
         // Data
@@ -93,13 +93,13 @@ class Information extends \Admin\Controllers\BaseController
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
                 'status'         => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'edit'           => base_url('index.php/catalog/information/edit?user_token=' . $this->session->get('user_token') . '&information_id=' . $result['information_id']),
-                'delete'         => base_url('index.php/catalog/information/delete?user_token=' . $this->session->get('user_token') . '&information_id=' . $result['information_id']),
+                'edit'           => base_url('index.php/catalog/information/edit?user_token=' . $this->request->getVar('user_token') . '&information_id=' . $result['information_id']),
+                'delete'         => base_url('index.php/catalog/information/delete?user_token=' . $this->request->getVar('user_token') . '&information_id=' . $result['information_id']),
             ];
         }
 
-        $data['add'] = base_url('index.php/catalog/information/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/catalog/information/delete?user_token=' . $this->session->get('user_token'));
+        $data['add'] = base_url('index.php/catalog/information/add?user_token=' . $this->request->getVar('user_token'));
+        $data['delete'] = base_url('index.php/catalog/information/delete?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -131,22 +131,22 @@ class Information extends \Admin\Controllers\BaseController
         
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('catalog/information.list.heading_title'),
-            'href' => base_url('index.php/catalog/information/edit?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/catalog/information/edit?user_token=' . $this->request->getVar('user_token')),
         ];
 
-        $data['text_form'] = !$this->request->getGet('information_id') ? lang('catalog/information.list.text_add') : lang('catalog/information.list.text_edit');
+        $data['text_form'] = !$this->request->getVar('information_id') ? lang('catalog/information.list.text_add') : lang('catalog/information.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/catalog/information?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/catalog/information?user_token=' . $this->request->getVar('user_token'));
 
-        if (!$this->request->getGet('information_id')) {
-            $data['action'] = base_url('index.php/catalog/information/add?user_token=' . $this->session->get('user_token'));
+        if (!$this->request->getVar('information_id')) {
+            $data['action'] = base_url('index.php/catalog/information/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/catalog/information/edit?user_token=' . $this->session->get('user_token') . '&information_id=' . $this->request->getGet('information_id'));
+            $data['action'] = base_url('index.php/catalog/information/edit?user_token=' . $this->request->getVar('user_token') . '&information_id=' . $this->request->getVar('information_id'));
         }
 
         if ($this->session->getFlashdata('error_warning')) {
@@ -155,18 +155,18 @@ class Information extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        $informationModel = new Informations();
+        $informationModel = new InformationModel();
 
-        if ($this->request->getGet('information_id') && ($this->request->getMethod() != 'post')) {
-            $information_info = $informationModel->getInformation($this->request->getGet('information_id'));
+        if ($this->request->getVar('information_id') && ($this->request->getMethod() != 'post')) {
+            $information_info = $informationModel->getInformation($this->request->getVar('information_id'));
         }
 
-        $languages = new Languages();
-        $data['languages'] = $languages->where('status', 1)->findAll();
+        $languageModel = new LanguageModel();
+        $data['languages'] = $languageModel->where('status', 1)->findAll();
 
         if ($this->request->getPost('information_description')) {
             $data['information_description'] = $this->request->getPost('information_description');
-        } elseif ($this->request->getGet('information_id')) {
+        } elseif ($this->request->getVar('information_id')) {
             $data['information_description'] = $informationModel->getInformationDescription($this->request->getVar('information_id'));
         } else {
             $data['information_description'] = [];

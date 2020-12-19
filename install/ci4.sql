@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 03, 2020 at 04:44 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.33
+-- Host: 127.0.0.1
+-- Generation Time: Dec 15, 2020 at 01:49 PM
+-- Server version: 5.7.23
+-- PHP Version: 7.3.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -53,7 +53,7 @@ CREATE TABLE `ci_banner_image` (
   `title` varchar(64) NOT NULL,
   `link` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `sort_order` int(3) NOT NULL DEFAULT 0
+  `sort_order` int(3) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -149,9 +149,9 @@ INSERT INTO `ci_blog_post_to_comment` (`comment_id`, `post_id`, `name`, `email`,
 
 CREATE TABLE `ci_category` (
   `category_id` int(11) NOT NULL,
-  `parent_id` int(11) NOT NULL DEFAULT 0,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
   `icon` varchar(250) NOT NULL,
-  `top` tinyint(1) NOT NULL DEFAULT 0,
+  `top` tinyint(1) NOT NULL DEFAULT '0',
   `sort_order` int(3) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
@@ -243,7 +243,7 @@ CREATE TABLE `ci_country` (
   `name` varchar(128) NOT NULL,
   `iso_code_2` varchar(2) NOT NULL,
   `iso_code_3` varchar(3) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1
+  `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -553,8 +553,8 @@ CREATE TABLE `ci_customer` (
   `status` tinyint(1) NOT NULL,
   `code` varchar(40) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `newsletter` tinyint(1) NOT NULL DEFAULT 0,
-  `about` text DEFAULT NULL,
+  `newsletter` tinyint(1) NOT NULL DEFAULT '0',
+  `about` text,
   `tag_line` varchar(64) DEFAULT 'NULL',
   `rate` int(11) NOT NULL,
   `origin` varchar(64) NOT NULL,
@@ -572,8 +572,9 @@ CREATE TABLE `ci_customer` (
 --
 
 INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
-(1, 1, 'employer', 'demo', 'customer', 'customer@customer.com', '', '$2y$10$Oyhm1w5Gw2.8pEVZ04yv4ueNnGMbyJLvKQFdgM6lvaRzb3RNZEW6a', '', 21, 1, '', '', 0, NULL, 'NULL', 0, '', 0, '', '', '', '', '2020-11-15 12:00:19', '2020-11-17 07:47:58'),
-(2, 1, 'freelancer', 'demo', 'customer_2', 'customer_2@demo.com', '', '$2y$10$1zyoqELnzmI4E0b56kc5iOkynJr3QrSEbwyXDJiauXY9beb6oaMyO', '', 1, 1, '', '', 0, NULL, 'NULL', 0, '', 0, '', '', '', '', '2020-11-15 12:03:14', '0000-00-00 00:00:00');
+(20, 1, 'employer', 'demo', 'customer', 'customer@customer.com', '', '$2y$10$Oyhm1w5Gw2.8pEVZ04yv4ueNnGMbyJLvKQFdgM6lvaRzb3RNZEW6a', '', 22, 1, '', '', 0, NULL, 'NULL', 0, '', 0, '', '', '', '', '2020-11-15 12:00:19', '2020-11-17 07:47:58'),
+(30, 1, 'freelancer', 'demo', 'customer_2', 'customer_2@demo.com', '', '$2y$10$1zyoqELnzmI4E0b56kc5iOkynJr3QrSEbwyXDJiauXY9beb6oaMyO', '', 1, 1, '', '', 0, NULL, 'NULL', 0, '', 0, '', '', '', '', '2020-11-15 12:03:14', '0000-00-00 00:00:00'),
+(31, 1, 'cust3', 'demo3', 'customer_3', 'customer_3@demo.com', '', '$2y$10$uMWVALi8btznHdC06HfVCe4qDKVBmxavbDs6rKzhWH6FVOF5JMyRy', '', 0, 1, '', '', 0, NULL, 'NULL', 0, '', 1, '', '', '', '', '2020-12-14 17:11:19', '2020-12-15 12:59:03');
 
 -- --------------------------------------------------------
 
@@ -597,9 +598,10 @@ CREATE TABLE `ci_customer_activity` (
 --
 
 INSERT INTO `ci_customer_activity` (`customer_activity_id`, `customer_id`, `key`, `data`, `ip`, `user_agent`, `seen`, `date_added`) VALUES
-(1, 1, 'project_bid_add', '{\"customer_id\":1,\"project_id\":1,\"freelancer_id\":2,\"url\":\"http:\\/\\/ci4.localhost\\/employer\\/project\\/view?pid=1&cid=1\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-25 12:19:54'),
-(2, 2, 'project_offer_selected', '{\"customer_id\":\"2\",\"project_id\":\"1\",\"url\":\"\\/account\\/projects#freelancer\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', 0, '2020-11-25 12:20:22'),
-(3, 1, 'project_offer_accepted', '{\"freelancer_id\":2,\"customer_id\":1,\"project_id\":1,\"bid_id\":3,\"url\":\"\\/account\\/projects#in-progress\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:83.0) Gecko/20100101 Firefox/83.0', 0, '2020-11-25 12:20:35');
+(1, 20, 'project_bid_add', '{\"customer_id\":20,\"project_id\":1,\"freelancer_id\":30,\"url\":\"http:\\/\\/ci4.localhost\\/employer\\/project\\/view?pid=1&cid=20\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 1, '2020-12-14 10:55:51'),
+(2, 30, 'project_offer_selected', '{\"customer_id\":\"30\",\"project_id\":\"1\",\"url\":\"\\/account\\/projects#freelancer\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', 0, '2020-12-14 10:56:42'),
+(3, 31, 'customer_register', '{\"customer_id\":31,\"username\":\"customer_3\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 0, '2020-12-14 17:11:19'),
+(4, 20, 'project_bid_add', '{\"customer_id\":20,\"project_id\":1,\"freelancer_id\":31,\"url\":\"http:\\/\\/ci4.localhost\\/employer\\/project\\/view?pid=1&cid=20\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 1, '2020-12-14 17:58:34');
 
 -- --------------------------------------------------------
 
@@ -635,7 +637,7 @@ CREATE TABLE `ci_customer_group` (
 --
 
 INSERT INTO `ci_customer_group` (`customer_group_id`, `approval`, `sort_order`) VALUES
-(1, 1, 2);
+(20, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -704,7 +706,7 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 0, 'http://ci4.localhost/images/user-avatar-placeholder.png', 'http://ci4.localhost/', '2020-12-03 09:24:00');
+('::1', 31, 'http://ci4.localhost/account/setting', 'http://ci4.localhost/account/dashboard', '2020-12-15 13:18:32');
 
 -- --------------------------------------------------------
 
@@ -716,11 +718,11 @@ CREATE TABLE `ci_customer_to_balance` (
   `balance_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
-  `income` decimal(15,4) NOT NULL DEFAULT 0.0000,
-  `withdrawn` decimal(15,4) NOT NULL DEFAULT 0.0000,
-  `used` decimal(15,4) NOT NULL DEFAULT 0.0000,
-  `available` decimal(15,4) NOT NULL DEFAULT 0.0000,
-  `pending` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `income` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `withdrawn` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `used` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `available` decimal(15,4) NOT NULL DEFAULT '0.0000',
+  `pending` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -730,9 +732,9 @@ CREATE TABLE `ci_customer_to_balance` (
 --
 
 INSERT INTO `ci_customer_to_balance` (`balance_id`, `customer_id`, `project_id`, `income`, `withdrawn`, `used`, `available`, `pending`, `date_added`, `date_modified`) VALUES
-(1, 1, 1, '0.0000', '0.0000', '0.0000', '4200.0000', '0.0000', '2020-10-07 08:32:34', '2020-10-08 08:32:34'),
-(2, 1, 1, '0.0000', '200.0000', '20.0000', '0.0000', '0.0000', '2020-11-16 08:32:34', '2020-10-08 08:32:34'),
-(70, 2, 1, '24.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0000-00-00 00:00:00', '2020-11-22 11:51:43');
+(1, 20, 1, '0.0000', '0.0000', '0.0000', '4200.0000', '0.0000', '2020-10-07 08:32:34', '2020-10-08 08:32:34'),
+(2, 20, 1, '0.0000', '200.0000', '20.0000', '0.0000', '0.0000', '2020-11-16 08:32:34', '2020-10-08 08:32:34'),
+(70, 30, 1, '24.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0000-00-00 00:00:00', '2020-11-22 11:51:43');
 
 -- --------------------------------------------------------
 
@@ -810,6 +812,13 @@ CREATE TABLE `ci_dispute` (
   `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `ci_dispute`
+--
+
+INSERT INTO `ci_dispute` (`dispute_id`, `project_id`, `freelancer_id`, `employer_id`, `created_by`, `comment`, `dispute_status_id`, `dispute_reason_id`, `dispute_action_id`, `date_added`, `date_modified`) VALUES
+(16, 1, 2, 1, 1, 'new items are nont as described, low quality', 0, 1, 0, '2020-12-14 07:39:54', '2020-12-14 07:39:54');
+
 -- --------------------------------------------------------
 
 --
@@ -818,7 +827,7 @@ CREATE TABLE `ci_dispute` (
 
 CREATE TABLE `ci_dispute_action` (
   `dispute_action_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL DEFAULT 0,
+  `language_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(64) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -854,7 +863,7 @@ CREATE TABLE `ci_dispute_history` (
 
 CREATE TABLE `ci_dispute_reason` (
   `dispute_reason_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL DEFAULT 0,
+  `language_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(128) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -865,8 +874,7 @@ CREATE TABLE `ci_dispute_reason` (
 INSERT INTO `ci_dispute_reason` (`dispute_reason_id`, `language_id`, `name`) VALUES
 (1, 1, 'Project Quality'),
 (2, 1, 'Not as Expected'),
-(3, 1, 'Other, please supply details'),
-(6, 1, 'test');
+(3, 1, 'Other, please supply details');
 
 -- --------------------------------------------------------
 
@@ -876,7 +884,7 @@ INSERT INTO `ci_dispute_reason` (`dispute_reason_id`, `language_id`, `name`) VAL
 
 CREATE TABLE `ci_dispute_status` (
   `dispute_status_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL DEFAULT 0,
+  `language_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(32) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -923,7 +931,7 @@ CREATE TABLE `ci_event` (
   `action` text NOT NULL,
   `description` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `priority` int(3) NOT NULL DEFAULT 0
+  `priority` int(3) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -984,7 +992,8 @@ INSERT INTO `ci_extension` (`extension_id`, `type`, `code`) VALUES
 (79, 'dashboard', 'online'),
 (77, 'module', 'video'),
 (80, 'module', 'freelancer'),
-(83, 'wallet', 'wallet');
+(83, 'wallet', 'wallet'),
+(92, 'job', 'job');
 
 -- --------------------------------------------------------
 
@@ -994,9 +1003,9 @@ INSERT INTO `ci_extension` (`extension_id`, `type`, `code`) VALUES
 
 CREATE TABLE `ci_information` (
   `information_id` int(11) NOT NULL,
-  `bottom` int(1) NOT NULL DEFAULT 0,
-  `sort_order` int(3) NOT NULL DEFAULT 0,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `bottom` int(1) NOT NULL DEFAULT '0',
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1041,6 +1050,55 @@ INSERT INTO `ci_information_description` (`information_id`, `language_id`, `titl
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ci_job`
+--
+
+CREATE TABLE `ci_job` (
+  `job_id` int(11) NOT NULL,
+  `employer_id` int(11) NOT NULL,
+  `salary` decimal(15,4) NOT NULL,
+  `type` tinyint(1) NOT NULL,
+  `viewed` int(5) NOT NULL,
+  `sort_order` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ci_job_applicants`
+--
+
+CREATE TABLE `ci_job_applicants` (
+  `job_applicant_id` int(11) NOT NULL,
+  `job_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `download_id` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ci_job_description`
+--
+
+CREATE TABLE `ci_job_description` (
+  `job_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_description` varchar(255) NOT NULL,
+  `meta_keyword` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ci_language`
 --
 
@@ -1049,7 +1107,7 @@ CREATE TABLE `ci_language` (
   `name` varchar(32) NOT NULL,
   `code` varchar(5) NOT NULL,
   `locale` varchar(255) NOT NULL,
-  `sort_order` int(3) NOT NULL DEFAULT 0,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1232,14 +1290,30 @@ INSERT INTO `ci_layout_route` (`layout_route_id`, `layout_id`, `site_id`, `route
 
 CREATE TABLE `ci_message` (
   `message_id` int(11) NOT NULL,
+  `thread_id` varchar(32) NOT NULL,
   `project_id` int(11) NOT NULL,
   `sender_id` int(11) NOT NULL,
   `receiver_id` int(11) NOT NULL,
   `message` text NOT NULL,
   `seen` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_message`
+--
+
+INSERT INTO `ci_message` (`message_id`, `thread_id`, `project_id`, `sender_id`, `receiver_id`, `message`, `seen`, `date_added`, `date_modified`) VALUES
+(1, 'e72572021e', 1, 20, 30, '{\"sender_id\":\"20\",\"receiver_id\":\"30\",\"text\":\"ssss\"}', 0, '2020-12-14 18:28:41', '2020-12-14 18:46:30'),
+(2, 'a12d4fb70a', 1, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"rrrr\"}', 1, '2020-12-14 18:28:55', '2020-12-14 19:55:52'),
+(8, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"fffff\"}', 1, '2020-12-14 18:39:19', '2020-12-14 19:55:52'),
+(9, 'e72572021e', 0, 20, 30, '{\"sender_id\":\"20\",\"receiver_id\":\"30\",\"text\":\"tttt\"}', 0, '2020-12-14 18:39:30', '2020-12-14 18:46:30'),
+(10, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"i have seen your profile and i\'m insterested to do business with you, reach out when you get my message \"}', 1, '2020-12-14 18:47:06', '2020-12-14 19:55:52'),
+(11, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"ffff\"}', 1, '2020-12-14 19:53:26', '2020-12-14 19:55:52'),
+(12, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"ssss\"}', 1, '2020-12-14 19:53:53', '2020-12-14 19:55:52'),
+(13, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"ssss\"}', 1, '2020-12-14 19:54:27', '2020-12-14 19:55:52'),
+(14, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"hhh\"}', 0, '2020-12-14 19:55:55', '2020-12-14 19:55:55');
 
 -- --------------------------------------------------------
 
@@ -1274,16 +1348,16 @@ INSERT INTO `ci_module` (`module_id`, `name`, `code`, `setting`) VALUES
 CREATE TABLE `ci_project` (
   `project_id` int(11) NOT NULL,
   `employer_id` int(11) NOT NULL,
-  `freelancer_id` int(11) NOT NULL DEFAULT 0,
-  `budget_min` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `freelancer_id` int(11) NOT NULL DEFAULT '0',
+  `budget_min` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `budget_max` decimal(15,4) NOT NULL,
   `type` tinyint(1) NOT NULL COMMENT '"1:Fixed", "2:Hour"',
   `delivery_time` int(11) NOT NULL,
   `runtime` int(11) NOT NULL,
-  `viewed` int(5) NOT NULL DEFAULT 0,
+  `viewed` int(5) NOT NULL DEFAULT '0',
   `image` varchar(255) NOT NULL,
   `sort_order` int(11) NOT NULL,
-  `status_id` tinyint(1) NOT NULL DEFAULT 0,
+  `status_id` tinyint(1) NOT NULL DEFAULT '0',
   `download_id` tinyint(1) NOT NULL,
   `draft` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
@@ -1296,7 +1370,7 @@ CREATE TABLE `ci_project` (
 --
 
 INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`, `date_delete`) VALUES
-(1, 1, 2, '20.0000', '50.0000', 1, 3, 7, 27, '', 0, 4, 0, 0, '2020-11-22 18:45:15', '2020-11-22 18:45:15', '0000-00-00 00:00:00');
+(1, 20, 0, '20.0000', '50.0000', 1, 3, 7, 39, '', 0, 6, 0, 0, '2020-12-14 18:45:15', '2020-11-22 18:45:15', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1339,6 +1413,14 @@ CREATE TABLE `ci_project_bids` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_project_bids`
+--
+
+INSERT INTO `ci_project_bids` (`bid_id`, `project_id`, `freelancer_id`, `employer_id`, `quote`, `delivery`, `selected`, `accepted`, `description`, `status`, `paid`, `date_added`, `date_modified`) VALUES
+(2, 1, 30, 20, '30', 5, 1, 0, 'thanks ', 1, 0, '2020-12-14 10:55:51', '2020-12-14 10:56:42'),
+(3, 1, 31, 20, '25', 3, 0, 0, 'thanks', 1, 0, '2020-12-14 17:58:34', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1472,7 +1554,7 @@ CREATE TABLE `ci_project_to_message` (
   `receiver_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `message` text NOT NULL,
-  `date_added` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1605,7 +1687,7 @@ INSERT INTO `ci_seo_url` (`seo_url_id`, `site_id`, `language_id`, `query`, `keyw
 CREATE TABLE `ci_sessions` (
   `id` varchar(128) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `data` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1649,7 +1731,31 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('d3bb7e3e03c531e6ed0b89fc27640aaa64f1a435', '::1', 1606764369, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630363736343136353b5f63695f70726576696f75735f75726c7c733a38303a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f746f6f6c2f6d61696c3f757365725f746f6b656e3d497167424562417377657554484b4c70316169596d6c6338374a79524e324f51223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22497167424562417377657554484b4c70316169596d6c6338374a79524e324f51223b),
 ('3f9245887020420e3c68ad44d460cea232d948d8', '::1', 1606850782, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630363835303738323b5f63695f70726576696f75735f75726c7c733a38303a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f746f6f6c2f6d61696c3f757365725f746f6b656e3d304c5a70576b687531776a53554b3449505844564a326354766269426e67596c223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22304c5a70576b687531776a53554b3449505844564a326354766269426e67596c223b),
 ('7a151b783cd6ab3960c070323d63599dcb3ab9a6', '::1', 1606851185, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630363835313138353b5f63695f70726576696f75735f75726c7c733a39373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d304c5a70576b687531776a53554b3449505844564a326354766269426e67596c26747970653d6a6f62223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22304c5a70576b687531776a53554b3449505844564a326354766269426e67596c223b737563636573737c733a33323a22537563636573733a20596f752068617665206d6f646966696564204a6f627321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226e6577223b7d),
-('bb483ffa409ae97bfc629baeca45088e8249f558', '::1', 1606851189, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630363835313138353b5f63695f70726576696f75735f75726c7c733a39373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d304c5a70576b687531776a53554b3449505844564a326354766269426e67596c26747970653d6a6f62223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22304c5a70576b687531776a53554b3449505844564a326354766269426e67596c223b737563636573737c733a33323a22537563636573733a20596f752068617665206d6f646966696564204a6f627321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226e6577223b7d);
+('bb483ffa409ae97bfc629baeca45088e8249f558', '::1', 1606851189, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630363835313138353b5f63695f70726576696f75735f75726c7c733a39373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d304c5a70576b687531776a53554b3449505844564a326354766269426e67596c26747970653d6a6f62223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22304c5a70576b687531776a53554b3449505844564a326354766269426e67596c223b737563636573737c733a33323a22537563636573733a20596f752068617665206d6f646966696564204a6f627321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226e6577223b7d),
+('9n95qlobt05cmve70cjc2iatfp51kvup', '::1', 1607456794, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373435363739343b5f63695f70726576696f75735f75726c7c733a39373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d597670573064776551796d6335755a474d4e676672745868555339316a6c546226747970653d6a6f62223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22597670573064776551796d6335755a474d4e676672745868555339316a6c5462223b),
+('ug5h5gn5cgrid1iv47nvkkv7b9sv0fj5', '::1', 1607456794, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373435363739343b5f63695f70726576696f75735f75726c7c733a39373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d597670573064776551796d6335755a474d4e676672745868555339316a6c546226747970653d6a6f62223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22597670573064776551796d6335755a474d4e676672745868555339316a6c5462223b),
+('1u7tepra6no2scq3nnu3sdc2p1s08jjt', '::1', 1607540282, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373534303238323b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e67253246657874656e73696f6e223b),
+('jt0f1tk50lourh23277r5qhkbosbvj9v', '::1', 1607600164, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373630303136343b5f63695f70726576696f75735f75726c7c733a39303a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f696e666f726d6174696f6e3f757365725f746f6b656e3d55536a374c69754f484b436c6e647059654d6663457247393674615767524a76223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2255536a374c69754f484b436c6e647059654d6663457247393674615767524a76223b),
+('8eqdeaj84tobm7cgkj8qv4k1jragkhpo', '::1', 1607600616, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373630303631363b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f70726f6a6563743f757365725f746f6b656e3d55536a374c69754f484b436c6e647059654d6663457247393674615767524a76223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2255536a374c69754f484b436c6e647059654d6663457247393674615767524a76223b),
+('4tjlgmljhoj4ugtj4j2sc6titg5ttupb', '::1', 1607607027, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373630373032373b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f66696e616e63652f646973707574653f757365725f746f6b656e3d55536a374c69754f484b436c6e647059654d6663457247393674615767524a76223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2255536a374c69754f484b436c6e647059654d6663457247393674615767524a76223b),
+('68e4e5i1hh7sisngrl552q0g9te1ojfn', '::1', 1607628018, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373632383031343b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d4370376861324a526c5859386d7548546b73714166334e49534f77347a633578223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224370376861324a526c5859386d7548546b73714166334e49534f77347a633578223b),
+('6c5en80r4bo65fciat5df11vr9cacpep', '::1', 1607793932, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739333933323b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b),
+('l84jh7v4iouff8ddor6frpcngr2n6g4l', '::1', 1607794403, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739343430333b5f63695f70726576696f75735f75726c7c733a3130383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f66696e616e63652f7769746864726177616c2f656469743f757365725f746f6b656e3d4c7747763064336e59695843653773314f6232555a524854797163515675724a2677697468647261775f69643d31223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224c7747763064336e59695843653773314f6232555a524854797163515675724a223b),
+('63qgfleftdugvlrnm0kiba5tvno6jgoq', '::1', 1607796528, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739363532383b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f70726f6a6563743f757365725f746f6b656e3d4c7747763064336e59695843653773314f6232555a524854797163515675724a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224c7747763064336e59695843653773314f6232555a524854797163515675724a223b),
+('ica6jj3v7ot7cdnnvc5c4ov0noobasoq', '::1', 1607796905, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739363930353b5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b),
+('b1n8k44p7vktopgus3l9pvsjdsn9iv3f', '::1', 1607797216, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739373231363b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d6173736574732532467374796c657368656574223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('l77b1sopkpbvr4vqld3eg7h4avrnqd8c', '::1', 1607797527, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739373532373b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d6173736574732532467374796c657368656574223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('pu5ec55tv71opdnsjsdnhp76k38cup26', '::1', 1607797560, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739373532373b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d6173736574732532467374796c657368656574223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('gjj0dfkgm4vshpidknen0aun4l1kd7nb', '::1', 1607798327, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739383332373b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d6173736574732532467374796c657368656574223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('gqphqek51s3aorlh83nbceeevrts5f6d', '::1', 1607798967, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739383936373b5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b),
+('2a349497aelo9nb17gjdk6mjrnroa5t6', '::1', 1607799436, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739393433363b5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b),
+('h8p6h3lqbh0ktjfeu9cj0ckk1hv5324g', '::1', 1607799616, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373739393436373b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d7066783774324a43494c694835775333426461506f395a556c7a6a3458477572223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227066783774324a43494c694835775333426461506f395a556c7a6a3458477572223b),
+('2oev2b1ju8m6f294olmo49b80vta494j', '::1', 1607886071, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373838363037313b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a36363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d73657474696e6725324673657474696e67223b),
+('kimonlv748p147co5aqlvhitdfq4fihr', '::1', 1607936842, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373933363736373b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d6173736574732532467374796c657368656574223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('j432el1g53o7md0s9rc9f9kpspnc2l58', '::1', 1607966875, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373936363837353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d6f6e6d69557571336164624e634431734d423479367a48456c4b527730545a43223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226f6e6d69557571336164624e634431734d423479367a48456c4b527730545a43223b),
+('v1mi9cqhn0h36b4edladh2v0ficct7bb', '::1', 1607966875, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630373936363837353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d6f6e6d69557571336164624e634431734d423479367a48456c4b527730545a43223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226f6e6d69557571336164624e634431734d423479367a48456c4b527730545a43223b),
+('qh13lck2sfovdmrt0d71ruf2ou9umh7q', '::1', 1608019161, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383031393136303b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b),
+('klm36dbdkpn6v5m83drja4e9aj1cbqbn', '::1', 1608035777, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383033353635333b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d33416f685647655949786b706a74306e794e534b453563443267383975345446223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2233416f685647655949786b706a74306e794e534b453563443267383975345446223b);
 
 -- --------------------------------------------------------
 
@@ -1659,7 +1765,7 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 
 CREATE TABLE `ci_setting` (
   `setting_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL DEFAULT 0,
+  `site_id` int(11) NOT NULL DEFAULT '0',
   `code` varchar(128) NOT NULL,
   `name` varchar(128) NOT NULL,
   `setting` text NOT NULL,
@@ -1691,7 +1797,7 @@ INSERT INTO `ci_setting` (`setting_id`, `site_id`, `code`, `name`, `setting`, `s
 (521, 0, 'wallet_extension', 'wallet_extension_status', '1', 0),
 (25, 0, 'blog_extension', 'blog_extension_status', '1', 0),
 (26, 0, 'customer_wallet', 'customer_wallet_status', '1', 0),
-(530, 0, 'job_extension', 'job_extension_status', '0', 0),
+(531, 0, 'job_extension', 'job_extension_status', '1', 0),
 (453, 0, 'module_category', 'module_category_status', '1', 0),
 (472, 0, 'config', 'config_project_status_id', '8', 0),
 (99, 0, 'extension_wallet', 'extension_wallet_status', '1', 0),
@@ -2310,7 +2416,25 @@ CREATE TABLE `ci_user_activity` (
 --
 
 INSERT INTO `ci_user_activity` (`activity_id`, `user_id`, `key`, `data`, `ip`, `user_agent`, `date_added`) VALUES
-(1, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', '2020-11-25 12:43:02');
+(1, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36 OPR/72.0.3815.320', '2020-11-25 12:43:02'),
+(2, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-08 19:38:12'),
+(3, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-10 19:20:17'),
+(4, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 17:25:32'),
+(5, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:29:08'),
+(6, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:33:01'),
+(7, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:42:33'),
+(8, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:42:39'),
+(9, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:49:27'),
+(10, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:50:30'),
+(11, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:50:56'),
+(12, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:52:42'),
+(13, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:54:19'),
+(14, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:54:37'),
+(15, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:54:54'),
+(16, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:57:14'),
+(17, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-12 18:57:50'),
+(18, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-14 17:21:44'),
+(19, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-15 12:34:39');
 
 -- --------------------------------------------------------
 
@@ -2322,7 +2446,7 @@ CREATE TABLE `ci_user_group` (
   `user_group_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `permission` text NOT NULL,
-  `date_added` datetime DEFAULT current_timestamp(),
+  `date_added` datetime DEFAULT CURRENT_TIMESTAMP,
   `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -2332,7 +2456,7 @@ CREATE TABLE `ci_user_group` (
 
 INSERT INTO `ci_user_group` (`user_group_id`, `name`, `permission`, `date_added`, `date_modified`) VALUES
 (2, 'Demonstration', '{\"access\":[\"extension\\/dashboard\",\"extension\\/module\",\"localisation\\/language\",\"catalog\\/information\",\"user\\/user\",\"user\\/user_group\",\"common\\/filemanager\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/setting\",\"tool\\/log\",\"blog\\/post\",\"module\\/featured\",\"module\\/information\",\"module\\/special\",\"module\\/slideshow\",\"module\\/html\",\"module\\/carousel\",\"module\\/bestseller\",\"dashboard\\/sale\",\"dashboard\\/order\",\"dashboard\\/recent\",\"dashboard\\/map\",\"dashboard\\/chart\",\"dashboard\\/customer\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\"],\"modify\":[\"extension\\/dashboard\",\"extension\\/module\",\"localisation\\/language\",\"catalog\\/information\",\"user\\/user\",\"user\\/user_group\",\"common\\/filemanager\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/setting\",\"tool\\/log\",\"blog\\/post\",\"module\\/featured\",\"module\\/information\",\"module\\/special\",\"module\\/slideshow\",\"module\\/html\",\"module\\/carousel\",\"module\\/bestseller\",\"dashboard\\/sale\",\"dashboard\\/order\",\"dashboard\\/recent\",\"dashboard\\/map\",\"dashboard\\/chart\",\"dashboard\\/customer\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\"]}', '2020-07-21 21:45:31', '2020-07-21 21:45:31'),
-(1, 'Administrator', '{\"access\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job_\\/job.php_\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet_\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/wallet\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\"],\"modify\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job_\\/job.php_\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet_\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/wallet\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\"]}', '2020-08-07 11:33:45', '2020-11-19 19:57:48');
+(1, 'Administrator', '{\"access\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job_\\/job.php_\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet_\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/wallet\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\"],\"modify\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job_\\/job.php_\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet_\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/wallet\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\"]}', '2020-08-07 11:33:45', '2020-11-19 19:57:48');
 
 -- --------------------------------------------------------
 
@@ -2354,7 +2478,7 @@ CREATE TABLE `ci_user_login` (
 --
 
 INSERT INTO `ci_user_login` (`user_login_id`, `email`, `ip`, `total`, `date_added`, `date_modified`) VALUES
-(1, 'customer@customer.com', '::1', 1, '2020-11-25 12:42:57', '2020-11-25 12:42:57');
+(0, 'customer@customer.com', '::1', 1, '2020-12-15 12:34:32', '2020-12-15 12:34:32');
 
 -- --------------------------------------------------------
 
@@ -2627,6 +2751,25 @@ ALTER TABLE `ci_information_description`
   ADD PRIMARY KEY (`information_id`,`language_id`);
 
 --
+-- Indexes for table `ci_job`
+--
+ALTER TABLE `ci_job`
+  ADD PRIMARY KEY (`job_id`);
+
+--
+-- Indexes for table `ci_job_applicants`
+--
+ALTER TABLE `ci_job_applicants`
+  ADD PRIMARY KEY (`job_applicant_id`);
+
+--
+-- Indexes for table `ci_job_description`
+--
+ALTER TABLE `ci_job_description`
+  ADD PRIMARY KEY (`job_id`),
+  ADD KEY `name` (`name`);
+
+--
 -- Indexes for table `ci_language`
 --
 ALTER TABLE `ci_language`
@@ -2804,14 +2947,6 @@ ALTER TABLE `ci_user_group`
   ADD PRIMARY KEY (`user_group_id`);
 
 --
--- Indexes for table `ci_user_login`
---
-ALTER TABLE `ci_user_login`
-  ADD PRIMARY KEY (`user_login_id`),
-  ADD KEY `email` (`email`),
-  ADD KEY `ip` (`ip`);
-
---
 -- Indexes for table `ci_withdraw`
 --
 ALTER TABLE `ci_withdraw`
@@ -2885,13 +3020,13 @@ ALTER TABLE `ci_currency`
 -- AUTO_INCREMENT for table `ci_customer`
 --
 ALTER TABLE `ci_customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_activity`
 --
 ALTER TABLE `ci_customer_activity`
-  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_deposit`
@@ -2903,7 +3038,7 @@ ALTER TABLE `ci_customer_deposit`
 -- AUTO_INCREMENT for table `ci_customer_group`
 --
 ALTER TABLE `ci_customer_group`
-  MODIFY `customer_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `customer_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_history`
@@ -2915,13 +3050,13 @@ ALTER TABLE `ci_customer_history`
 -- AUTO_INCREMENT for table `ci_customer_login`
 --
 ALTER TABLE `ci_customer_login`
-  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_balance`
 --
 ALTER TABLE `ci_customer_to_balance`
-  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_certificate`
@@ -2939,7 +3074,7 @@ ALTER TABLE `ci_customer_to_education`
 -- AUTO_INCREMENT for table `ci_dispute`
 --
 ALTER TABLE `ci_dispute`
-  MODIFY `dispute_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `dispute_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `ci_dispute_action`
@@ -2981,13 +3116,19 @@ ALTER TABLE `ci_event`
 -- AUTO_INCREMENT for table `ci_extension`
 --
 ALTER TABLE `ci_extension`
-  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `ci_information`
 --
 ALTER TABLE `ci_information`
   MODIFY `information_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `ci_job`
+--
+ALTER TABLE `ci_job`
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_language`
@@ -3023,7 +3164,7 @@ ALTER TABLE `ci_layout_route`
 -- AUTO_INCREMENT for table `ci_message`
 --
 ALTER TABLE `ci_message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `ci_module`
@@ -3047,13 +3188,13 @@ ALTER TABLE `ci_project_award`
 -- AUTO_INCREMENT for table `ci_project_bids`
 --
 ALTER TABLE `ci_project_bids`
-  MODIFY `bid_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ci_project_bids_upgrade`
 --
 ALTER TABLE `ci_project_bids_upgrade`
-  MODIFY `upgrade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `upgrade_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_project_proposal`
@@ -3113,7 +3254,7 @@ ALTER TABLE `ci_seo_url`
 -- AUTO_INCREMENT for table `ci_setting`
 --
 ALTER TABLE `ci_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=531;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=532;
 
 --
 -- AUTO_INCREMENT for table `ci_university`
@@ -3137,19 +3278,13 @@ ALTER TABLE `ci_user`
 -- AUTO_INCREMENT for table `ci_user_activity`
 --
 ALTER TABLE `ci_user_activity`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `ci_user_group`
 --
 ALTER TABLE `ci_user_group`
   MODIFY `user_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
---
--- AUTO_INCREMENT for table `ci_user_login`
---
-ALTER TABLE `ci_user_login`
-  MODIFY `user_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ci_withdraw`

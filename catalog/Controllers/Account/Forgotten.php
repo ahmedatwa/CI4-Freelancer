@@ -1,6 +1,6 @@
 <?php namespace Catalog\Controllers\Account;
 
-use Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Account\CustomerModel;
 
 class Forgotten extends \Catalog\Controllers\BaseController
 {

@@ -1,6 +1,6 @@
 <?php namespace Catalog\Controllers\Freelancer;
 
-use Catalog\Models\Freelancer\DepositModel;
+use \Catalog\Models\Freelancer\DepositModel;
 
 class Deposit extends \Catalog\Controllers\BaseController
 {

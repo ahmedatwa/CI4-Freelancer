@@ -25,6 +25,16 @@ class Not_found extends \Catalog\Controllers\BaseController
 			'href' => '',
 		];
 
+		if ($this->request->uri) 
+		{
+			$info = [
+				'uri'        => $this->request->uri,
+				'ip_address' => $this->request->getIPAddress()
+            ];
+
+            log_message('error', 'System failed to load URI: {uri} logged from IP Address {ip_address}', $info);
+		}
+
 	    $data['header'] = view_cell('\Catalog\Controllers\Common\Header::index');
         $data['footer'] = view_cell('\Catalog\Controllers\Common\Footer::index');
 

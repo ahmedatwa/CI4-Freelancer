@@ -1,7 +1,7 @@
 <?php namespace Catalog\Controllers\Account;
 
-use Catalog\Models\Catalog\ProjectModel;
-use Catalog\Models\Account\ReviewModel;
+use \Catalog\Models\Catalog\ProjectModel;
+use \Catalog\Models\Account\ReviewModel;
 
 class Review extends \Catalog\Controllers\BaseController
 {

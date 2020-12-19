@@ -7,29 +7,30 @@ class Log extends \Admin\Controllers\BaseController
         $this->document->setTitle(lang('tool/log.list.heading_title'));
 
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+        
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('tool/log.list.heading_title'),
-            'href' => base_url('index.php/tool/log?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/tool/log?user_token=' . $this->request->getVar('user_token')),
+        ];
 
-        $data['delete'] = base_url('index.php/tool/log/clear?user_token=' . $this->session->get('user_token'));
+        $data['delete'] = base_url('index.php/tool/log/clear?user_token=' . $this->request->getVar('user_token'));
 
         // Getting the Error Logs
         helper('filesystem');
 
         $logsDirectory = WRITEPATH . 'logs/';
         $map = get_filenames($logsDirectory);
-        $indexIgnore = array('index.html');
+        $indexIgnore = ['index.html'];
         // Remove index.html
         $LogFiles = array_diff($map, $indexIgnore);
         
-        $logs = array();
+        $logs = [];
 
         foreach ($LogFiles as $file) {
             $FileDir = $logsDirectory . $file;
@@ -49,7 +50,7 @@ class Log extends \Admin\Controllers\BaseController
 
     public function clear()
     {
-        $json = array();
+        $json = [];
 
         if (($this->request->getMethod() == 'post') && $this->validateDelete()) {
             helper('filesystem');
@@ -58,7 +59,7 @@ class Log extends \Admin\Controllers\BaseController
 
             $log_files = get_filenames($logs_dir, true);
             // need to ignore index as (delete_files) doesn't work properly
-            $ignore = array(WRITEPATH . 'logs/index.html');
+            $ignore = [WRITEPATH . 'logs/index.html'];
             $logs = array_diff($log_files, $ignore);
 
             if (is_array($logs) && !empty($logs)) {
@@ -67,7 +68,7 @@ class Log extends \Admin\Controllers\BaseController
                     if ($file_ext === 'log' && file_exists($log)) {
                         unlink($log);
                         $json['success'] = lang('user/user.text_success');
-                        $json['redirect'] = base_url('index.php/tool/log?user_token=' . $this->session->get('user_token'));
+                        $json['redirect'] = base_url('index.php/tool/log?user_token=' . $this->request->getVar('user_token'));
                     } else {
                         $json['error_warning'] = lang('error_warning', 'tool/log.error_delete');
                     }
@@ -84,7 +85,7 @@ class Log extends \Admin\Controllers\BaseController
 
     protected function validateDelete()
     {
-        if (!$this->user->hasPermission('modify', $this->getRoute())) {
+        if (!$this->user->hasPermission('modify', 'tool/log')) {
             $this->session->setFlashdata('error_warning', lang('tool/log.error_permission'));
             return false;
         }

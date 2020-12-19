@@ -1,6 +1,6 @@
 <?php namespace Admin\Controllers\Extension;
 
-use Admin\Models\Setting\Extensions;
+use \Admin\Models\Setting\Extensions;
 
 class Wallet extends \Admin\Controllers\BaseController
 {

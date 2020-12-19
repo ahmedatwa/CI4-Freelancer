@@ -1,6 +1,6 @@
 <?php namespace Admin\Controllers\Common;
 
-use \Admin\Models\Setting\Extensions;
+use \Admin\Models\Setting\ExtensionModel;
 
 class Dashboard extends \Admin\Controllers\BaseController
 {
@@ -12,18 +12,18 @@ class Dashboard extends \Admin\Controllers\BaseController
 
         $this->document->setTitle(lang('common/dashboard.list.heading_dashboard'));
 
-        $data['user_token'] = $this->session->get('user_token');
+        $data['user_token'] = $this->request->getVar('user_token');
         
         $data['breadcrumbs'] = [];
 
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('common/dashboard?user_token=' . $this->session->get('user_token'))
+            'href' => base_url('common/dashboard?user_token=' . $this->request->getVar('user_token'))
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('common/dashboard.list.heading_dashboard'),
-            'href' => base_url('common/dashboard?user_token=' . $this->session->get('user_token'))
+            'href' => base_url('common/dashboard?user_token=' . $this->request->getVar('user_token'))
         ];
         
 
@@ -37,7 +37,7 @@ class Dashboard extends \Admin\Controllers\BaseController
         // Dashboard Extensions
         $dashboards = [];
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         // Get a list of installed modules
         $extensions = $extensionsModel->getInstalled('dashboard');

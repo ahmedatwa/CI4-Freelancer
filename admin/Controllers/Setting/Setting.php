@@ -1,16 +1,16 @@
 <?php namespace Admin\Controllers\Setting;
 
-use \Admin\Models\Setting\Settings;
-use \Admin\Models\Setting\Extensions;
-use \Admin\Models\Localisation\Languages;
-use \Admin\Models\Localisation\Project_statuses;
-use \Admin\Models\Localisation\Currencies;
+use \Admin\Models\Setting\SettingModel;
+use \Admin\Models\Setting\ExtensionModel;
+use \Admin\Models\Localisation\LanguageModel;
+use \Admin\Models\Localisation\ProjectStatusModel;
+use \Admin\Models\Localisation\CurrencyModel;
 
 class Setting extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $settingModel = new Settings();
+        $settingModel = new SettingModel();
 
         $this->document->setTitle(lang('setting/setting.text_title'));
 
@@ -51,9 +51,8 @@ class Setting extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        $settingModel = new Settings();
-
         if ($this->request->getMethod() != 'post') {
+            $settingModel = new SettingModel();
             $setting_info = $settingModel->getSetting();
         }
         
@@ -92,7 +91,7 @@ class Setting extends \Admin\Controllers\BaseController
 
         $data['themes'] = [];
 
-        $extensionModel = new Extensions();
+        $extensionModel = new ExtensionModel();
 
         $extensions = $extensionModel->getInstalled('theme');
 
@@ -140,8 +139,8 @@ class Setting extends \Admin\Controllers\BaseController
         }
 
         // Local
-        $languages = new Languages();
-        $data['languages'] = $languages->where('status', 1)->findAll();
+        $languageModel = new LanguageModel();
+        $data['languages'] = $languageModel->where('status', 1)->findAll();
 
         if ($this->request->getPost('config_language_id')) {
             $data['config_language_id'] = $this->request->getPost('config_language_id');
@@ -159,7 +158,7 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_admin_language_id'] = '';
         }
 
-        $currencyModel = new Currencies;
+        $currencyModel = new CurrencyModel;
         $data['currencies'] = $currencyModel->where('status', 1)->findAll();
 
         if ($this->request->getPost('config_currency')) {
@@ -202,7 +201,7 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_login_attempts'] = '';
         }
 
-        $projectStatusModel = new Project_statuses();
+        $projectStatusModel = new ProjectStatusModel();
         $data['project_statuses'] = $projectStatusModel->findAll();
 
         if ($this->request->getPost('config_project_status_id')) {
@@ -296,7 +295,7 @@ class Setting extends \Admin\Controllers\BaseController
 
         if ($this->request->getPost('config_file_mime_allowed')) {
             $data['config_file_mime_allowed'] = $this->request->getPost('config_file_mime_allowed');
-        }  else {
+        } else {
             $data['config_file_mime_allowed'] = $setting_info['config_file_mime_allowed'];
         }
 

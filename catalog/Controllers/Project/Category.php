@@ -62,6 +62,7 @@ class Category extends \Catalog\Controllers\BaseController
         $total = $categoryModel->getTotalCategories();
 
         foreach ($results as $result) {
+            
             $keyword = $seoUrl->getKeywordByQuery('category_id=' . $result['category_id']);
 
             $data['categories'][] = [
@@ -117,7 +118,7 @@ class Category extends \Catalog\Controllers\BaseController
             foreach ($results as $result) {
                 $json[] = [
                     'category_id' => $result['category_id'],
-                    'name'        => $result['name']
+                    'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
                 ];
             }
        }

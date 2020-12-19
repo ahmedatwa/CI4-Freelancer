@@ -1,13 +1,17 @@
 <?php namespace Admin\Controllers\Setting;
 
+use \Admin\Models\Setting\ExtensionModel;
+use \Admin\Models\Setting\ModuleModel;
+use \Admin\Models\User\UserGroupModel;
+
 class Module extends \Admin\Controllers\BaseController
 {
     public function index()
     {
         $this->document->setTitle(lang('setting/extension.list.heading_title'));
 
-        $this->extensions = new \Admin\Models\Setting\Extensions();
-        $this->modules = new \Admin\Models\Setting\Modules();
+        $extensionModel = new ExtensionModel();
+        $moduleModel = new ModuleModel();
 
         $this->getList();
     }
@@ -16,17 +20,15 @@ class Module extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('setting/module.list.heading_title'));
 
-        $this->extensions = new \Admin\Models\Setting\Extensions();
-
-        $this->modules = new \Admin\Models\Setting\Modules();
+        $extensionModel = new ExtensionModel();
+        $moduleModel = new ModuleModel();
 
         if ($this->validateForm()) {
-            $this->extensions->install('module', $this->request->getGet('extension'));
+            $extensionModel->install('module', $this->request->getGet('extension'));
 
-            $userGroupModel = new \Admin\Models\User\Users_group();
+            $userGroupModel = new UserGroupModel();
 
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'module/' . $this->request->getVar('extension'));
-
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'module/' . $this->request->getVar('extension'));
 
             $this->session->setFlashdata('success', lang('setting/module.text_success'));
@@ -39,13 +41,12 @@ class Module extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('setting/module.list.heading_title'));
 
-        $this->extensions = new \Admin\Models\Setting\Extensions();
-        
-        $this->modules = new \Admin\Models\Setting\Modules();
+        $extensionModel = new ExtensionModel();
+        $moduleModel = new ModuleModel();
 
         if ($this->validateForm()) {
-            $this->extensions->uninstall('module', $this->request->getVar('extension'));
-            $this->modules->deleteModulesByCode($this->request->getVar('extension'));
+            $extensionModel->uninstall('module', $this->request->getVar('extension'));
+            $moduleModel->deleteModulesByCode($this->request->getVar('extension'));
 
             $this->session->setFlashdata('success', lang('setting/module.text_success'));
         }
@@ -55,14 +56,13 @@ class Module extends \Admin\Controllers\BaseController
 
     public function add()
     {
-        $this->extensions = new \Admin\Models\Setting\Extensions();
-        
-        $this->modules = new \Admin\Models\Setting\Modules();
+        $extensionModel = new ExtensionModel();
+        $moduleModel = new ModuleModel();
 
         if ($this->validate()) {
             $name = $this->request->getPost('extension');
             
-            $this->modules->addModule($this->request->getVar('extension'), lang("module/{$name}.list.heading_title"));
+            $moduleModel->addModule($this->request->getVar('extension'), lang("module/{$name}.list.heading_title"));
 
             $this->session->setFlashdata('success', lang('extenaion/extensions/module.text_success'));
         }
@@ -72,12 +72,11 @@ class Module extends \Admin\Controllers\BaseController
 
     public function delete()
     {
-        $this->extensions = new \Admin\Models\Setting\Extensions();
-        
-        $this->modules = new \Admin\Models\Setting\Modules();
+        $extensionModel = new ExtensionModel();
+        $moduleModel = new ModuleModel();
 
         if ($this->request->getVar('module_id') && $this->validateForm()) {
-            $this->modules->deleteModule($this->request->getVar('module_id'));
+            $moduleModel->deleteModule($this->request->getVar('module_id'));
 
             $this->session->setFlashdata('success', lang('setting/module.text_success'));
         }
@@ -114,11 +113,14 @@ class Module extends \Admin\Controllers\BaseController
             $data['success'] = '';
         }
 
-        $installedExtensions = $this->extensions->getInstalled('module');
+        $extensionModel = new ExtensionModel();
+        $moduleModel = new ModuleModel();
+
+        $installedExtensions = $extensionModel->getInstalled('module');
 
         foreach ($installedExtensions as $key => $value) {
             if (!is_file(APPPATH . 'Controllers/Module/' . $value . '.php')) {
-                $this->extensions->uninstall('module', $value);
+                $extensionModel->uninstall('module', $value);
                 unset($installedExtensions[$key]);
             }
         }
@@ -135,7 +137,7 @@ class Module extends \Admin\Controllers\BaseController
 
                 $module_data = [];
 
-                $modules = $this->modules->getModulesByCode($basename);
+                $modules = $moduleModel->getModulesByCode($basename);
 
                 foreach ($modules as $module) {
                     if ($module['setting']) {

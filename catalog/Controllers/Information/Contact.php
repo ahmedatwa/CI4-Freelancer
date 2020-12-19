@@ -1,6 +1,6 @@
 <?php namespace Catalog\Controllers\Information;
 
-use Catalog\Controllers\BaseController;
+use \Catalog\Controllers\BaseController;
 
 class Contact extends BaseController
 {

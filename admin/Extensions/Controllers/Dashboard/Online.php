@@ -1,15 +1,18 @@
 <?php namespace Extensions\Controllers\Dashboard;
 
+use Admin\Models\Setting\SettingModel;
+use Extensions\Models\Dashboard\OnlineModel;
+
 class Online extends \Admin\Controllers\BaseController
 {
     public function index()
     {
         $this->document->setTitle(lang('dashboard/online.list.heading_title'));
 
-        $settings = new \Admin\Models\Setting\Settings();
+        $settingModel = new SettingModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $settings->editSetting('dashboard_online', $this->request->getPost());
+            $settingModel->editSetting('dashboard_online', $this->request->getPost());
 
             return redirect()->to(base_url('index.php/setting/extension?user_token=' . $this->request->getVar('user_token') . '&type=dashboard'))
                              ->with('success', lang('dashboard/online.text_success'));
@@ -85,7 +88,7 @@ class Online extends \Admin\Controllers\BaseController
         $data['user_token'] = $this->request->getVar('user_token');
 
         // Total Orders
-        $onlineModel = new \Extensions\Models\Dashboard\Onlines();
+        $onlineModel = new OnlineModel();
 
         // Customers Online
         $online_total = $onlineModel->getTotalOnline();

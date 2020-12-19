@@ -1,6 +1,8 @@
 <?php namespace Admin\Controllers\Extension;
 
-use Admin\Models\Setting\Extensions;
+use \Admin\Models\Setting\ExtensionModel;
+use \Admin\Models\User\UserGroupModel;
+use \Extensions\Models\payment\PaymentModel;
 
 class Payment extends \Admin\Controllers\BaseController
 {
@@ -8,7 +10,7 @@ class Payment extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/payment.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         $this->getList();
     }
@@ -18,18 +20,18 @@ class Payment extends \Admin\Controllers\BaseController
         
         $this->document->setTitle(lang('extension/payment.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             $extensionsModel->install('payment', $this->request->getVar('extension'));
 
-            $userGroupModel = new \Admin\Models\User\Users_group();
+            $userGroupModel = new UserGroupModel();
 
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/payment/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/payment/' . $this->request->getVar('extension'));
 
             // Call install Method is exists
-            $paymentModel = new \Extensions\Models\payment\paymentModel();
+            $paymentModel = new PaymentModel();
             if (method_exists($paymentModel, 'install')) {
                 $paymentModel->install();
             }
@@ -44,12 +46,12 @@ class Payment extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/payment.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             $extensionsModel->uninstall('payment', $this->request->getVar('extension'));
             // Call uninstall Method is exists
-            $paymentModel = new \Extensions\Models\payment\paymentModel();
+            $paymentModel = new PaymentModel();
             if (method_exists($paymentModel, 'install')) {
                 $paymentModel->uninstall();
             }
@@ -62,7 +64,6 @@ class Payment extends \Admin\Controllers\BaseController
 
     protected function getList()
     {
-        $extensionsModel = new Extensions();
 
         if ($this->session->getFlashdata('warning')) {
             $data['error_warning'] = $this->session->getFlashdata('warning');
@@ -76,6 +77,8 @@ class Payment extends \Admin\Controllers\BaseController
             $data['success'] = '';
         }
 
+        $extensionsModel = new ExtensionModel();
+        
         $installedExtensions = $extensionsModel->getInstalled('payment');
 
         foreach ($installedExtensions as $key => $value) {

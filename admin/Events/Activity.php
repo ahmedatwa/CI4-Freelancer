@@ -1,28 +1,30 @@
 <?php namespace Admin\Events;
 
+use Admin\Models\Report\ActivityModel;
+use Admin\Libraries\User;
+use CodeIgniter\I18n\Time;
+
 class Activity
 {
-	// Admin\Controllers\user\user::index
+    // Admin\Controllers\user\user::index
     public static function login()
     {
-        $activity_model = new \Admin\Models\Report\Activity();
+        $activityModel = new ActivityModel();
+        $user = new User();
 
-        $user = new \Admin\Libraries\User();
+        $data = [
+            'user_id' => $user->getUserId(),
+            'name'    => $user->getUserName(),
+            ];
 
-        $data = array(
-            'user_id'     => $user->getUserId(),
-            'name'        => $user->getUserName(),
-            );
-
-        $activity_model->addActivity('activity_user_login', $data);
+        $activityModel->addActivity('activity_user_login', $data);
     }
 
-	// Admin\Controllers\user\user::Rules
+    // Admin\Controllers\user\user::Rules
     public static function loginAttempts(string $email)
     {
-        $User = new \Admin\Models\User\Users();
-
-        $User->addLoginAttempts($email);
+        $user = new User();
+        $user->addLoginAttempts($email);
     }
 
     // Admin\Controllers\Common\Forgotten::index
@@ -39,57 +41,69 @@ class Activity
         $email->send();
     }
 
-     // Admin\Models\*\::insert
+    // Admin\Models\*\::insert
     public static function afterInsert(int $id = 0, string $name = '')
     {
-        $activity_model = new \Admin\Models\Report\Activity();
+        $activityModel = new ActivityModel();
+        $user = new User();
 
-        $user = new \Admin\Libraries\User();
-
-        $data = array(
-            'user_id' => (int) $user->getUserId(),
-            'name'    => (string) $user->getUserName(),
+        $data = [
+            'user_id' => $user->getUserId(),
+            'name'    => $user->getUserName(),
             'id'      => $id,
             'name'    => $name
-            );
+            ];
 
-        $activity_model->addActivity('activity_user_add', $data);
+        $activityModel->addActivity('activity_user_add', $data);
     }
    
-     // Admin\Models\*\::Update
-     public static function afterUpdate(int $id = 0, string $name = '')
-     {
-         $activity_model = new \Admin\Models\Report\Activity();
+    // Admin\Models\*\::Update
+    public static function afterUpdate(int $id = 0, string $name = '')
+    {
+        $activityModel = new ActivityModel();
+        $user = new User();
  
-         $user = new \Admin\Libraries\User();
- 
-         $data = array(
-             'user_id' => (int) $user->getUserId(),
-             'name'    => (string) $user->getUserName(),
-             'id'      => $id,
-             'name'    => $name
-             );
- 
-         $activity_model->addActivity('activity_user_edit', $data);
-     }
-
-     // Admin\Models\*\::delete
-     public static function afterDelete($id, $name)
-     {
-         $activity_model = new \Admin\Models\Report\Activity();
- 
-         $user = new \Admin\Libraries\User();
- 
-         $data = array(
+        $data = [
              'user_id' => $user->getUserId(),
              'name'    => $user->getUserName(),
              'id'      => $id,
              'name'    => $name
-             );
+             ];
  
-         $activity_model->addActivity('activity_user_delete', $data);
-     }
+        $activityModel->addActivity('activity_user_edit', $data);
+    }
+
+    // Admin\Models\*\::delete
+    public static function afterDelete($id, $name)
+    {
+        $activityModel = new ActivityModel();
+        $user = new User();
  
+        $data = [
+             'user_id' => $user->getUserId(),
+             'name'    => $user->getUserName(),
+             'id'      => $id,
+             'name'    => $name
+             ];
+ 
+        $activityModel->addActivity('activity_user_delete', $data);
+    }
+    
+    public static function purgeLogFiles()
+    {
+        if (service('registry')->get('config_purge_logs')) {
+            $myTime = new Time('now');
+
+            $time = Time::parse('August 12, 2016 4:15:23pm');
+            $time = $time->addDays(30);
+
+
+
+
+            helper('filesystem');
+            delete_files('./path/to/directory/', true, false);
+        }
+    }
 
 
 
@@ -97,5 +111,5 @@ class Activity
 
 
 
-    // -----------------------------
+    // --------------------------------------------
 }

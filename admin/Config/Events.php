@@ -1,7 +1,7 @@
 <?php namespace Config;
 
 use CodeIgniter\Events\Events;
-
+use Admin\Models\Setting\EventModel;
 /*
  * --------------------------------------------------------------------
  * Application Events
@@ -31,8 +31,8 @@ Events::on('pre_system', function () {
     }
 
 // Fetch Events from DB
-$events_model = new \Admin\Models\Setting\Events();
-$results = $events_model->where(['status' => 1])->findAll();
+$eventModel = new EventModel();
+$results = $eventModel->where(['status' => 1])->findAll();
 foreach ($results as $result) {
     if ((substr($result['action'], 0, 6) == 'Admin\\')) {
         if ($result['priority'] != 0) {

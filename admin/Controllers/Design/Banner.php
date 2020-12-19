@@ -1,7 +1,7 @@
 <?php namespace Admin\Controllers\Design;
 
-use \Admin\Models\Design\Banners; 
-use \Admin\Models\Localisation\Languages;
+use \Admin\Models\Design\BannerModel;
+use \Admin\Models\Localisation\LanguageModel;
 
 class Banner extends \Admin\Controllers\BaseController
 {
@@ -9,7 +9,7 @@ class Banner extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('design/banner.list.heading_title'));
 
-        $bannerModel = new Banners();
+        $bannerModel = new BannerModel();
 
         $this->getList();
     }
@@ -18,7 +18,7 @@ class Banner extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('design/banner.list.heading_title'));
 
-        $bannerModel = new Banners();
+        $bannerModel = new BannerModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $bannerModel->addBanner($this->request->getPost());
@@ -33,7 +33,7 @@ class Banner extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('design/banner.list.heading_title'));
 
-        $bannerModel = new Banners();
+        $bannerModel = new BannerModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $bannerModel->editBanner($this->request->getVar('banner_id'), $this->request->getPost());
@@ -50,7 +50,7 @@ class Banner extends \Admin\Controllers\BaseController
 
         $this->document->setTitle(lang('design/banner.list.heading_title'));
    
-        $bannerModel = new Banners();
+        $bannerModel = new BannerModel();
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $banner_id) {
@@ -66,8 +66,6 @@ class Banner extends \Admin\Controllers\BaseController
 
     protected function getList()
     {
-        $bannerModel = new Banners();
-
         $data['breadcrumbs'] = [];
 
         $data['breadcrumbs'][] = [
@@ -89,6 +87,8 @@ class Banner extends \Admin\Controllers\BaseController
             'start' => 0,
             'limit' => $this->registry->get('config_admin_limit'),
         ];
+
+        $bannerModel = new BannerModel();
 
         $results = $bannerModel->getBanners($filter_data);
 
@@ -114,7 +114,7 @@ class Banner extends \Admin\Controllers\BaseController
         }
 
         if (isset($this->request->getPost()['selected'])) {
-            $data['selected'] = (array)$this->request->getPost()['selected'];
+            $data['selected'] = (array) $this->request->getPost()['selected'];
         } else {
             $data['selected'] = [];
         }
@@ -126,8 +126,6 @@ class Banner extends \Admin\Controllers\BaseController
 
     protected function getForm()
     {
-        $bannerModel = new Banners();
-
         $data['breadcrumbs'] = [];
 
         $data['breadcrumbs'][] = [
@@ -157,7 +155,8 @@ class Banner extends \Admin\Controllers\BaseController
         }
 
         if ($this->request->getVar('banner_id') && ($this->request->getMethod() != 'post')) {
-                $banner_info = $bannerModel->getBanner($this->request->getVar('banner_id'));
+            $bannerModel = new BannerModel();
+            $banner_info = $bannerModel->getBanner($this->request->getVar('banner_id'));
         }
 
         $data['user_token'] = $this->request->getVar('user_token');
@@ -178,9 +177,9 @@ class Banner extends \Admin\Controllers\BaseController
             $data['status'] = true;
         }
 
-        $languages = new Languages();
+        $languageModel = new LanguageModel();
 
-        $data['languages'] = $languages->findAll();
+        $data['languages'] = $languageModel->findAll();
 
         if ($this->request->getPost('banner_image')) {
             $banner_images = $this->request->getPost('banner_image');
@@ -193,9 +192,7 @@ class Banner extends \Admin\Controllers\BaseController
         $data['banner_images'] = [];
 
         foreach ($banner_images as $key => $value) {
-
             foreach ($value as $banner_image) {
-
                 if (is_file(DIR_IMAGE . $banner_image['image'])) {
                     $image = $banner_image['image'];
                     $thumb = $banner_image['image'];
@@ -221,28 +218,24 @@ class Banner extends \Admin\Controllers\BaseController
 
     protected function validateForm()
     {
-
         foreach ($this->request->getPost('banner_image') as $language_id => $value) {
             foreach ($value as $banner_image_id => $banner_image) {
-
                 if (! $this->validate([
                     "banner_image.{$language_id}.{$banner_image_id}.title" => [
-                     'label' => 'Title', 
+                     'label' => 'Title',
                      'rules' => 'required|min_length[2]|max_length[64]'
                  ]
-                ])) 
-                {
+                ])) {
                     $this->session->setFlashdata('error_warning', lang('en.error.error_form'));
                     return false;
                 }
             }
-
         }
 
         if (! $this->user->hasPermission('modify', 'design/banner')) {
-              $this->session->setFlashdata('error_warning', lang('design/banner.error_permission'));
+            $this->session->setFlashdata('error_warning', lang('design/banner.error_permission'));
             return false;
-        } 
+        }
 
         return true;
     }

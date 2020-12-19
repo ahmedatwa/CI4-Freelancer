@@ -1,7 +1,7 @@
 <?php namespace Catalog\Controllers\Account;
 
-use Catalog\Models\Account\CustomerModel;
-use Catalog\Models\Account\ActivityModel;
+use \Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Account\ActivityModel;
 use \Catalog\Models\Freelancer\BalanceModel;
 
 class Dashboard extends \Catalog\Controllers\BaseController
@@ -88,11 +88,11 @@ class Dashboard extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['total_views']    = $customerModel->getCustomerProfileView($this->customer->getCustomerId());
-        $data['total_projects'] = $customerModel->getTotalProjectsByCustomerId($this->customer->getCustomerId());
-        $data['total_balance']  = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId()));
-        $data['total_withdrawn']  = $this->currencyFormat($balanceModel->getWithdrawnByCustomerID($this->customer->getCustomerId()));
-        $data['total_used']  = $this->currencyFormat($balanceModel->getUsedByCustomerID($this->customer->getCustomerId()));
+        $data['total_views']     = $customerModel->getCustomerProfileView($this->customer->getCustomerId());
+        $data['total_projects']  = $customerModel->getTotalProjectsByCustomerId($this->customer->getCustomerId());
+        $data['total_balance']   = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId()));
+        $data['total_withdrawn'] = $this->currencyFormat($balanceModel->getWithdrawnByCustomerID($this->customer->getCustomerId()));
+        $data['total_used']      = $this->currencyFormat($balanceModel->getUsedByCustomerID($this->customer->getCustomerId()));
 
         $data['text_dashboard'] = lang('account/dashboard.text_dashboard');
         $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $this->session->get('username'));

@@ -1,12 +1,12 @@
 <?php namespace Admin\Controllers\Setting;
 
-use \Admin\Models\Setting\Events;
+use \Admin\Models\Setting\EventModel;
 
 class Event extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->events = new Events();
+        $eventModel = new EventModel();
 
         $this->document->setTitle(lang('setting/event.list.heading_title'));
 
@@ -17,15 +17,15 @@ class Event extends \Admin\Controllers\BaseController
     {
         $json = array();
 
-        $this->events = new Events();
+        $eventModel = new EventModel();
    
         $this->document->setTitle(lang('setting/event.list.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateForm()) {
             foreach ($this->request->getPost('selected') as $event_id) {
-                $this->events->delete($event_id);
+                $eventModel->delete($event_id);
                 $json['success'] = lang('setting/event.text_success');
-                $json['redirect'] = 'index.php/setting/event?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/setting/event?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('setting/event.error_permission');
@@ -37,11 +37,11 @@ class Event extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('setting/event.list.text_edit'));
 
-        $this->events = new Events();
+        $eventModel = new EventModel();
 
-        if ($this->request->getGet('event_id') && $this->validateForm()) {
-            $this->events->disableEvent($this->request->getGet('event_id'));
-            return redirect()->to(base_url('index.php/setting/event?user_token='. $this->session->get('user_token')))
+        if ($this->request->getVar('event_id') && $this->validateForm()) {
+            $eventModel->disableEvent($this->request->getVar('event_id'));
+            return redirect()->to(base_url('index.php/setting/event?user_token='. $this->request->getVar('user_token')))
                              ->with('success', lang('setting/event.text_success'));
         }
         $this->getList();
@@ -51,11 +51,11 @@ class Event extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('setting/event.list.text_edit'));
 
-        $this->events = new Events();
+        $eventModel = new EventModel();
 
-        if ($this->request->getGet('event_id') && $this->validateForm()) {
-            $this->events->enableEvent($this->request->getGet('event_id'));
-            return redirect()->to(base_url('index.php/setting/event?user_token='. $this->session->get('user_token')))
+        if ($this->request->getVar('event_id') && $this->validateForm()) {
+            $eventModel->enableEvent($this->request->getVar('event_id'));
+            return redirect()->to(base_url('index.php/setting/event?user_token='. $this->request->getVar('user_token')))
                              ->with('success', lang('setting/event.text_success'));
         }
         $this->getList();
@@ -64,28 +64,30 @@ class Event extends \Admin\Controllers\BaseController
     protected function getList()
     {
         // Breadcrumbs
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'] = [];
+        $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
+        ];
 
-        $data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = [
             'text' => lang('setting/event.list.heading_title'),
-            'href' => base_url('index.php/setting/event?user_token=' . $this->session->get('user_token')),
-        );
+            'href' => base_url('index.php/setting/event?user_token=' . $this->request->getVar('user_token')),
+        ];
 
-        if ($this->request->getGet('type')) {
-            $data['type'] = $this->request->getGet('type');
+        if ($this->request->getVar('type')) {
+            $data['type'] = $this->request->getVar('type');
         } else {
             $data['type'] = '';
         }
 
         // Data
-        $data['events'] = array();
-        $results = $this->events->findAll($this->registry->get('config_admin_limit'));
+        $data['events'] = [];
+        $eventModel = new EventModel();
+        
+        $results = $eventModel->findAll($this->registry->get('config_admin_limit'));
         foreach ($results as $result) {
-            $data['events'][] = array(
+            $data['events'][] = [
                 'event_id'   => $result['event_id'],
                 'code'       => $result['code'],
                 'action'     => $result['action'],
@@ -93,12 +95,12 @@ class Event extends \Admin\Controllers\BaseController
                 'description' => $result['description'],
                 'enabled'    => $result['status'],
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'disable'    => base_url('index.php/setting/event/disable?user_token=' . $this->session->get('user_token') . '&event_id=' . $result['event_id']),
-                'enable'     => base_url('index.php/setting/event/enable?user_token=' . $this->session->get('user_token') . '&event_id=' . $result['event_id']),
-              );
+                'disable'    => base_url('index.php/setting/event/disable?user_token=' . $this->request->getVar('user_token') . '&event_id=' . $result['event_id']),
+                'enable'     => base_url('index.php/setting/event/enable?user_token=' . $this->request->getVar('user_token') . '&event_id=' . $result['event_id']),
+              ];
         }
 
-        $data['delete'] = base_url('index.php/setting/event/delete?user_token=' . $this->session->get('user_token'));
+        $data['delete'] = base_url('index.php/setting/event/delete?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -115,10 +117,10 @@ class Event extends \Admin\Controllers\BaseController
         if ($this->request->getPost('selected')) {
             $data['selected'] = (array) $this->request->getPost('selected');
         } else {
-            $data['selected'] = array();
+            $data['selected'] = [];
         }
 
-        $data['user_token'] = $this->request->getGet('user_token');
+        $data['user_token'] = $this->request->getVar('user_token');
 
         $this->document->output('setting/event', $data);
     }
@@ -126,7 +128,7 @@ class Event extends \Admin\Controllers\BaseController
     
     protected function validateForm()
     {
-        if (!$this->user->hasPermission('modify', $this->getRoute())) {
+        if (!$this->user->hasPermission('modify', 'setting/event')) {
             $this->session->setFlashdata('error_warning', lang('setting/event.error_permission'));
             return false;
         }

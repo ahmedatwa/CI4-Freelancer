@@ -20,7 +20,7 @@
 <div id="container">
 <nav class="navbar navbar-expand-lg" id="header-nav">
 <div class="container-fluid">
-    <a id="header-logo" class="navbar-header" href="#">
+    <a id="header-logo" class="navbar-header" href="<?php echo $home; ?>">
     <img src="assets/images/logo.png" alt="<?php echo $admin_panel_title; ?>" title="<?php echo $admin_panel_title; ?>" width="180" height="35" class="my-auto">
     </a>
     <button type="button" id="button-menu" class="btn btn-white"><i class="fas fa-bars"></i><span>Toggle Sidebar</span></button>

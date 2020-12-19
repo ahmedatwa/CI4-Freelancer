@@ -1,6 +1,7 @@
 <?php namespace Catalog\Controllers\Account;
 
-use Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Localization\CountryModel;
 
 class Setting extends \Catalog\Controllers\BaseController
 {
@@ -20,8 +21,8 @@ class Setting extends \Catalog\Controllers\BaseController
 
     public function index()
     {
-        if (! $this->session->get('customer_id') && ! $this->customer->isLogged() ) {
-             return redirect('account_login');
+        if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
+            return redirect('account_login');
         }
 
         $this->template->setTitle(lang('account/setting.heading_title'));
@@ -273,11 +274,12 @@ class Setting extends \Catalog\Controllers\BaseController
             'text'  => lang('account/setting.text_llm'),
         ];
 
+        // Country
+        $countryModel = new CountryModel();
+        $data['countries'] = $countryModel->where('status', 1)->findAll();
 
         $data['customer_id'] = $this->customer->getCustomerID();
-
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
-
         $data['currency'] = $this->session->get('currency') ?? $this->registry->get('config_currency');
 
         $this->template->output('account/setting', $data);
@@ -297,17 +299,22 @@ class Setting extends \Catalog\Controllers\BaseController
         $customerModel = new CustomerModel();
 
         if (! $this->validate([
-            'name'             => "required",
-            'certificate_year' => 'required'
+            'certificate_name' => [
+                'label' => 'Certificate Name',
+                'rules' => 'required|alpha_numeric|is_unique[customer_to_certificate.name]'
+            ],
+            'certificate_year' => [
+                'label' => 'Certificate Year',
+                'rules' => 'required|numeric'
+            ]
         ])) {
-            $json['error']      = lang('account/setting.error_data');
-            $json['error_name'] = $this->validator->getError('certificate');
-            $json['error_year'] = $this->validator->getError('certificate_year');
-            return false;
+            $json['error'] = $this->validator->getErrors();
         }
 
-        $customerModel->addCertificate($this->request->getPost());
-        $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Certificates');
+        if (! $json) {
+            $customerModel->addCertificate($this->request->getPost());
+            $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Certificates');
+        }
 
         return $this->response->setJSON($json);
     }
@@ -354,10 +361,10 @@ class Setting extends \Catalog\Controllers\BaseController
     public function deleteCertificate()
     {
         $json = [];
-        if ($this->customer->getCustomerId()) {
+        if ($this->customer->getCustomerId() && $this->request->getMethod() == 'post') {
             $customerModel = new CustomerModel();
             if ($this->request->getVar('certificate_id')) {
-                $this->sellers->deleteSellerCertificate($this->request->getVar('certificate_id'));
+                $customerModel->deleteCustomerCertificate($this->request->getVar('certificate_id'));
                 $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Certificates');
             }
             return $this->response->setJSON($json);
@@ -432,19 +439,34 @@ class Setting extends \Catalog\Controllers\BaseController
         $customerModel = new CustomerModel();
 
         if (! $this->validate([
-            'university_id' => "required",
-            'major_title'   => "required",
-            'major_id'      => "required",
+            'university_id' => [
+                'label' => 'University',
+                'rules' => 'required|numeric|is_unique[customer_to_education.university_id]',
+                'errors' => [
+                   'is_unique' => 'University Name already exists'
+                ]
+            ],
+            'major_title'   => [
+                'label' => 'Major Title',
+                'rules' => 'required|alpha_numeric_space'
+            ],
+            'major_id'      => [
+                'label' => 'Major',
+                'rules' => 'required|numeric'
+            ],
+            'education_country' => [
+                'label' => 'Country',
+                'rules' => 'required|alpha_numeric_space'
+            ]
         ])) {
-            $json['error']                 = lang('account/setting.error_data');
-            $json['error_university_name'] = $this->validator->getError('university_id');
-            $json['error_major_title']     = $this->validator->getError('major_title');
-            $json['error_major_name']      = $this->validator->getError('major_id');
-            return false;
-        } else {
+            $json['error'] = $this->validator->getErrors();
+        }
+
+        if (! $json) {
             $customerModel->addEducation($this->request->getPost());
             $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Educations');
         }
+
         return $this->response->setJSON($json);
     }
 
@@ -458,18 +480,7 @@ class Setting extends \Catalog\Controllers\BaseController
             $page = 1;
         }
 
-        $data['educations'] = [];
-
-        $data['column_country']    = lang('account/setting.column_country');
-        $data['column_university'] = lang('account/setting.column_university');
-        $data['column_major']      = lang('account/setting.column_major');
-        $data['column_year']       = lang('account/setting.column_year');
-        $data['column_action']     = lang('account/setting.column_action');
-
-        $data['text_loading'] = lang('account/setting.text_loading');
-
-        $data['button_delete'] = lang('account/setting.button_delete');
-        
+        $data['educations'] = [];        
 
         $results = $customerModel->getEducations($this->customer->getCustomerID(), ($page - 1) * 5, 5);
         $total = $customerModel->getTotalEducationsByCustomerId($this->customer->getCustomerID());
@@ -485,7 +496,13 @@ class Setting extends \Catalog\Controllers\BaseController
             ];
         }
 
-
+        $data['column_country']    = lang('account/setting.column_country');
+        $data['column_university'] = lang('account/setting.column_university');
+        $data['column_major']      = lang('account/setting.column_major');
+        $data['column_year']       = lang('account/setting.column_year');
+        $data['column_action']     = lang('account/setting.column_action');
+        $data['button_delete']     = lang('account/setting.button_delete');
+        
         // Pagination
         $pager = \Config\Services::pager();
         $data['pagination'] = $pager->makeLinks($page, 5, $total);
@@ -542,18 +559,23 @@ class Setting extends \Catalog\Controllers\BaseController
             $customerModel = new CustomerModel();
 
             if (! $this->validate([
-            'language_id' => "required",
-            'language_level'   => "required",
-        ])) {
-                $json['error'] = lang('account/setting.error_data');
-                $json['error_language'] = $this->validator->getError('language_id');
-                $json['error_language_level'] = $this->validator->getError('language_level');
-                return false;
+                'language_name'  => [
+                    'label'  => 'Language Name',
+                    'rules' => 'required|alpha',
+                ],
+                'language_level' => [
+                    'label'  => 'Language Level',
+                    'rules' => 'required|numeric'
+                ],
+            ])) {
+                $json['error'] = $this->validator->getErrors();
             }
-            $customerModel->addCustomerLanguage($this->request->getPost());
-            $json['success'] = sprintf(lang('account/setting.text_success_edu'), lang('account/setting.text_languages'));
-        }
 
+            if (! $json) {
+                $customerModel->addCustomerLanguage($this->request->getPost());
+                $json['success'] = sprintf(lang('account/setting.text_success_edu'), lang('account/setting.text_languages'));
+            }
+        }
         return $this->response->setJSON($json);
     }
 
@@ -570,24 +592,37 @@ class Setting extends \Catalog\Controllers\BaseController
 
         $data['languages'] = [];
 
-        $data['column_name'] = lang('account/setting.column_name');
-        $data['column_level'] = lang('account/setting.column_level');
-        $data['column_action'] = lang('account/setting.column_action');
-
-        $data['text_loading'] = lang('account/setting.text_loading');
-
-        $data['button_delete'] = lang('account/setting.button_delete');
-
         $results = $customerModel->getCustomerLanguages($this->customer->getCustomerID(), ($page - 1) * 5, 5);
         $total = $customerModel->getTotalLanguagesByCustomerId($this->request->getVar('seller_id'));
 
         foreach ($results as $result) {
+            switch ($result['level']) {
+                case '1':
+                $level = lang('account/setting.text_basic');
+                  break;
+                case '2':
+                $level = lang('account/setting.text_conversational');
+                 break;
+                case '3':
+                $level = lang('account/setting.text_fluent');
+                 break;
+                case '4':
+                $level = lang('account/setting.text_native_or_bilingual');
+                 break;
+            }
+
             $data['languages'][] = [
                 'language_id' => $result['language_id'],
-                'name' => $result['name'],
-                'level' => $result['level'],
+                'name'        => $result['name'],
+                'level'       => $level,
            ];
         }
+
+        $data['column_name']   = lang('account/setting.column_name');
+        $data['column_level']  = lang('account/setting.column_level');
+        $data['column_action'] = lang('account/setting.column_action');
+        $data['button_delete'] = lang('account/setting.button_delete');
+
 
         // Pagination
         $pager = \Config\Services::pager();
@@ -619,8 +654,7 @@ class Setting extends \Catalog\Controllers\BaseController
             if (! $this->validate([
                     'category_id' => ['label' => 'Skill', 'rules' => 'required'],
              ])) {
-                $json['error'] = lang('account/setting.error_data');
-                $json['error_category'] = $this->validator->getError('category_id');
+                $json['error'] = $this->validator->getError('category_id');
             }
 
             if (!$json) {
@@ -707,34 +741,29 @@ class Setting extends \Catalog\Controllers\BaseController
         // Fields Validation Rules
         if (! $this->validate([
                 'current'  => 'required',
-                'password' => 'required|min_length[4]',
+                'password' => 'required|min_length[4]|alpha_numeric_punct',
                 'confirm'  => 'required_with[password]|matches[password]',
             ])) {
-
-            $json['error_required'] = $this->validator->getErrors();
-        } 
+            $json['error']['required'] = $this->validator->getErrors();
+        }
 
         if (!$json) {
-        if ($this->request->getMethod() == 'post' && !empty($this->request->getPost('current'))) {
+            if (($this->request->getMethod() == 'post') && ($this->request->getPost('current'))) {
+                $customerModel = new CustomerModel();
 
-            $customerModel = new CustomerModel();
-
-            $oldPassword = $customerModel->where('customer_id', $this->session->get('customer_id'))
-                                     ->findColumn('password');
-
-            if (password_verify($this->request->getPost('current'), $oldPassword[0])) {
-                // old password passed then update
-                $customerModel->where('customer_id', $this->session->get('customer_id'))
-                              ->set('password', password_hash($this->request->getPost('password'), PASSWORD_DEFAULT))
-                              ->update();
-
-                $json['success_password_form'] = lang('account/setting.text_password_success');              
-            } else {
-                $json['error_password_form'] = lang('account/setting.error_old_password');
+                $oldPassword = $customerModel->where('customer_id', $this->customer->getCustomerID())
+                                             ->findColumn('password');
+                if (password_verify($this->request->getPost('current'), $oldPassword[0])) {
+                    // old password passed then update
+                    $customerModel->where('customer_id', $this->customer->getCustomerID())
+                                  ->set('password', $this->request->getPost('password'))
+                                  ->update();
+                    $json['success'] = lang('account/setting.text_password_success');
+                } else {
+                    $json['error']['old_password'] = lang('account/setting.error_old_password');
+                }
             }
         }
-    }
-
         return $this->response->setJSON($json);
     }
 

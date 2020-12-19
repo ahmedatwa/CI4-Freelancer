@@ -231,7 +231,6 @@ class Column_left extends \Admin\Controllers\BaseController
             'href'     => '',
             'children' => $localisation,
         ];
-
         // Tools Level 1
         $tools = [];
         $tools[] = [

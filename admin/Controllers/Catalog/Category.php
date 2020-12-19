@@ -1,13 +1,13 @@
 <?php namespace Admin\Controllers\Catalog;
 
-use \Admin\Models\Catalog\Categories;
-use \Admin\Models\Localisation\Languages;
+use \Admin\Models\Catalog\CategoryModel;
+use \Admin\Models\Localisation\LanguageModel;
 
 class Category extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $categoryModel = new Categories;
+        $categoryModel = new CategoryModel;
 
         $this->document->setTitle(lang('catalog/category.list.heading_title'));
 
@@ -18,11 +18,11 @@ class Category extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/category.list.text_add'));
 
-        $categoryModel = new Categories;
+        $categoryModel = new CategoryModel;
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $categoryModel->addCategory($this->request->getPost());
-            return redirect()->to(base_url('index.php/catalog/category?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/catalog/category?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('catalog/category.text_success'));
         }
         $this->getForm();
@@ -32,11 +32,11 @@ class Category extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('catalog/category.list.text_edit'));
 
-        $categoryModel = new Categories;
+        $categoryModel = new CategoryModel;
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $categoryModel->editCategory($this->request->getVar('category_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/catalog/category?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/catalog/category?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('catalog/category.text_success'));
         }
         $this->getForm();
@@ -46,7 +46,7 @@ class Category extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $categoryModel = new Categories;
+        $categoryModel = new CategoryModel;
    
         $this->document->setTitle(lang('catalog/category.list.heading_title'));
 
@@ -54,7 +54,7 @@ class Category extends \Admin\Controllers\BaseController
             foreach ($this->request->getPost('selected') as $category_id) {
                 $categoryModel->deleteCategory($category_id);
                 $json['success'] = lang('catalog/category.text_success');
-                $json['redirect'] = 'index.php/catalog/category?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/catalog/category?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('catalog/category.error_permission');
@@ -68,15 +68,15 @@ class Category extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('catalog/category.list.heading_title'),
-            'href' => base_url('index.php/catalog/category?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/catalog/category?user_token=' . $this->request->getVar('user_token')),
         ];
 
-        $categoryModel = new Categories;
+        $categoryModel = new CategoryModel;
         // Data
         $data['categories'] = [];
 
@@ -88,13 +88,13 @@ class Category extends \Admin\Controllers\BaseController
                 'name'        => $categoryModel->getParentByCategoryId($result['category_id']) . $result['name'],
                 'sort_order'  => $result['sort_order'],
                 'status'      => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'edit'        => base_url('index.php/catalog/category/edit?user_token=' . $this->session->get('user_token') . '&category_id=' . $result['category_id']),
-                'delete'      => base_url('index.php/catalog/category/delete?user_token=' . $this->session->get('user_token') . '&category_id=' . $result['category_id']),
+                'edit'        => base_url('index.php/catalog/category/edit?user_token=' . $this->request->getVar('user_token') . '&category_id=' . $result['category_id']),
+                'delete'      => base_url('index.php/catalog/category/delete?user_token=' . $this->request->getVar('user_token') . '&category_id=' . $result['category_id']),
             ];
         }
 
-        $data['add'] = base_url('index.php/catalog/category/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/catalog/category/delete?user_token=' . $this->session->get('user_token'));
+        $data['add'] = base_url('index.php/catalog/category/add?user_token=' . $this->request->getVar('user_token'));
+        $data['delete'] = base_url('index.php/catalog/category/delete?user_token=' . $this->request->getVar('user_token'));
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -126,24 +126,24 @@ class Category extends \Admin\Controllers\BaseController
         
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('catalog/category.list.heading_title'),
-            'href' => base_url('index.php/catalog/category/edit?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/catalog/category/edit?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['text_form'] = !$this->request->getGet('category_id') ? lang('catalog/category.list.text_add') : lang('catalog/category.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/catalog/category?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/catalog/category?user_token=' . $this->request->getVar('user_token'));
 
-        $data['user_token'] = $this->session->get('user_token');
+        $data['user_token'] = $this->request->getVar('user_token');
 
         if (!$this->request->getGet('category_id')) {
-            $data['action'] = base_url('index.php/catalog/category/add?user_token=' . $this->session->get('user_token'));
+            $data['action'] = base_url('index.php/catalog/category/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/catalog/category/edit?user_token=' . $this->session->get('user_token') . '&category_id=' . $this->request->getVar('category_id'));
+            $data['action'] = base_url('index.php/catalog/category/edit?user_token=' . $this->request->getVar('user_token') . '&category_id=' . $this->request->getVar('category_id'));
         }
 
         if ($this->session->get('error_warning')) {
@@ -152,14 +152,14 @@ class Category extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        $categoryModel = new Categories;
+        $categoryModel = new CategoryModel;
 
         if ($this->request->getGet('category_id') && ($this->request->getMethod() != 'post')) {
             $category_info = $categoryModel->getCategory($this->request->getGet('category_id'));
         }
 
-        $languages = new Languages();
-        $data['languages'] = $languages->where('status', 1)->findAll();
+        $languageModel = new LanguageModel();
+        $data['languages'] = $languageModel->where('status', 1)->findAll();
 
         if ($this->request->getPost('category_description')) {
             $data['category_description'] = $this->request->getPost('category_description');
@@ -212,7 +212,7 @@ class Category extends \Admin\Controllers\BaseController
 
         if ($this->request->getVar('parent_id')) {
 
-            $categoryModel = new Categories();
+            $categoryModel = new CategoryModel();
 
             if ($this->request->getVar('parent_id')) {
                 $filter_name = $this->request->getVar('parent_id');

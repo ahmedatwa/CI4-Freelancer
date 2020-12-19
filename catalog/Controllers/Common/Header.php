@@ -17,7 +17,7 @@ class Header extends \Catalog\Controllers\BaseController
         $data['styles']      = $this->template->getStyles();
         $data['scripts']     = $this->template->getScripts();
         $data['lang']        = $this->locale;
-        $data['direction']   = lang($this->locale .'.direction');
+        $data['direction']   = lang($this->locale . '.direction');
         
         $data['base'] = slash_item('baseURL');
 

@@ -1,12 +1,13 @@
 <?php namespace Admin\Controllers\Customer;
 
-use \Admin\Models\Customer\Customers_group;
+use \Admin\Models\Customer\CustomerGroupModel;
+use \Admin\Models\Localisation\LanguageModel;
 
 class Customer_group extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $customersGroupModel = new Customers_group();
+        $customerGroupModel = new CustomerGroupModel();
 
         $this->document->setTitle(lang('customer/customer_group.list.heading_title'));
 
@@ -17,10 +18,10 @@ class Customer_group extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('customer/customer_group.list.text_add'));
 
-        $customersGroupModel = new Customers_group();
+        $customerGroupModel = new CustomerGroupModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $customersGroupModel->addCustomerGroup($this->request->getPost());
+            $customerGroupModel->addCustomerGroup($this->request->getPost());
             return redirect()->to(base_url('index.php/customer/customer_group?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('customer/customer_group.text_success'));
         }
@@ -31,10 +32,10 @@ class Customer_group extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('customer/customer_group.list.text_edit'));
 
-        $customersGroupModel = new Customers_group();
+        $customerGroupModel = new CustomerGroupModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $customersGroupModel->editCustomerGroup($this->request->getVar('customer_group_id'), $this->request->getPost());
+            $customerGroupModel->editCustomerGroup($this->request->getVar('customer_group_id'), $this->request->getPost());
             return redirect()->to(base_url('index.php/customer/customer_group?user_token=' . $this->request->getVar('user_token')))
                               ->with('success', lang('customer/customer_group.text_success'));
         }
@@ -45,13 +46,13 @@ class Customer_group extends \Admin\Controllers\BaseController
     {
         $json = [];
 
-        $customersGroupModel = new Customers_group();
+        $customersGroupModel = new CustomerGroupModel();
    
         $this->document->setTitle(lang('customer/customer_group.heading_title'));
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $customer_group_id) {
-                $customersGroupModel->deleteCustomerGroup($customer_group_id);
+                $customerGroupModel->deleteCustomerGroup($customer_group_id);
                 $json['success'] = lang('customer/customer_group.text_success');
                 $json['redirect'] = 'index.php/customer/customer_group?user_token=' . $this->request->getVar('user_token');
             }
@@ -83,9 +84,9 @@ class Customer_group extends \Admin\Controllers\BaseController
 
         $data['customer_groups'] = [];
 
-        $customersGroupModel = new Customers_group();
+        $customerGroupModel = new CustomerGroupModel();
 
-        $results = $customersGroupModel->getCustomerGroups($filter_data);
+        $results = $customerGroupModel->getCustomerGroups($filter_data);
 
         foreach ($results as $result) {
             $data['customer_groups'][] = [
@@ -150,7 +151,7 @@ class Customer_group extends \Admin\Controllers\BaseController
             $data['error_warning'] = '';
         }
 
-        $customersGroupModel = new Customers_group();
+        $customerGroupModel = new CustomerGroupModel();
 
         if ($this->request->getVar('customer_group_id') && ($this->request->getMethod() != 'post')) {
             $customer_group_info = $this->customers_group->getCustomerGroup($this->request->getVar('customer_group_id'));
@@ -159,7 +160,7 @@ class Customer_group extends \Admin\Controllers\BaseController
         if ($this->request->getPost('customer_group_description')) {
             $data['customer_group_description'] = $this->request->getPost('customer_group_description');
         } elseif ($this->request->getVar('customer_group_id')) {
-            $data['customer_group_description'] = $customersGroupModel->getCustomerGroupDescriptions($this->request->getVar('customer_group_id'));
+            $data['customer_group_description'] = $customerGroupModel->getCustomerGroupDescriptions($this->request->getVar('customer_group_id'));
         } else {
             $data['customer_group_description'] = [];
         }
@@ -172,8 +173,8 @@ class Customer_group extends \Admin\Controllers\BaseController
             $data['sort_order'] = 0;
         }
 
-        $languages = new \Admin\Models\Localisation\Languages();
-        $data['languages'] = $languages->where('status', 1)->findAll();
+        $languageModel = new LanguageModel();
+        $data['languages'] = $languageModel->where('status', 1)->findAll();
 
 
         $this->document->output('customer/customer_group_form', $data);

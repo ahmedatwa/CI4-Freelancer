@@ -12,7 +12,7 @@ class CustomerModel extends \CodeIgniter\Model
     protected $beforeInsert = ['hashPassword'];
     protected $beforeUpdate = ['hashPassword'];
     // User Activity Events
-    protected $afterInsert = ['afterInsertEvent'];
+   // protected $afterInsert = ['afterInsertEvent'];
     protected $afterUpdate = ['afterUpdateEvent'];
     // should use for keep data record create timestamp
     protected $createdField = 'date_added';
@@ -230,7 +230,7 @@ class CustomerModel extends \CodeIgniter\Model
         $builder = $this->db->table('customer_to_certificate');
         $data = [
           'freelancer_id' => $data['freelancer_id'],
-          'name'          => $data['name'],
+          'name'          => $data['certificate_name'],
           'year'          => $data['certificate_year'],
         ];
 

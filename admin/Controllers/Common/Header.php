@@ -1,7 +1,7 @@
 <?php namespace Admin\Controllers\Common;
 
-use \Admin\Models\User\Users;
-use \Admin\Models\Catalog\Projects;
+use \Admin\Models\User\UserModel;
+use \Admin\Models\Catalog\ProjectModel;
 
 class Header extends \Admin\Controllers\BaseController
 {
@@ -14,7 +14,6 @@ class Header extends \Admin\Controllers\BaseController
         $data['links']       = $this->document->getLinks();
         $data['styles']      = $this->document->getStyles();
 
-        
         $data['admin_panel_title'] = lang('common/header.admin_panel_title');
         $data['text_logout']       = lang('common/header.text_logout');
         $data['text_profile']      = lang('common/header.text_profile');
@@ -25,19 +24,19 @@ class Header extends \Admin\Controllers\BaseController
         $data['direction']         = lang('en.direction');
 
         $data['base']      = slash_item('baseURL');
-        $data['home']      = base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token'));
-        $data['profile']   = base_url('index.php/user/user/edit?user_token=' . $this->session->get('user_token') . '&user_id='. $this->user->getUserID());
+        $data['home']      = base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token'));
+        $data['profile']   = base_url('index.php/user/user/edit?user_token=' . $this->request->getVar('user_token') . '&user_id='. $this->user->getUserID());
         $data['logout']    = base_url('index.php/common/logout');
-        $data['activity']  = base_url('index.php/report/activity_log?user_token=' . $this->session->get('user_token'));
-        $data['setting']   = base_url('index.php/setting/setting?user_token=' . $this->session->get('user_token'));
+        $data['activity']  = base_url('index.php/report/activity_log?user_token=' . $this->request->getVar('user_token'));
+        $data['setting']   = base_url('index.php/setting/setting?user_token=' . $this->request->getVar('user_token'));
         $data['site']      = slash_item('httpCatalog');
 
         $data['logged'] = $this->user->isLogged();
         
-        $users_model = new Users();
+        $userModel = new UserModel();
 
-        if (! is_null($this->user->isLogged()) || $this->user->isLogged() != false) {
-            $user_info = $users_model->find($this->user->getUserId());
+        if ($this->user->isLogged() && $this->user->getUserId()) {
+            $user_info = $userModel->find($this->user->getUserId());
 
             if ($user_info) {
                 $data['firstname']     = $user_info['firstname'];
@@ -58,7 +57,7 @@ class Header extends \Admin\Controllers\BaseController
             }
         }
 
-        $projects_model = new Projects();
+        $projectModel = new ProjectModel();
 
         $data['notifications'] = [];
         
@@ -70,12 +69,12 @@ class Header extends \Admin\Controllers\BaseController
             'limit'             => 5,
         ];
 
-        $data['notifications_total'] = $projects_model->getTotalProjects($filter_data);
-        $results = $projects_model->getProjects($filter_data);
+        $data['notifications_total'] = $projectModel->getTotalProjects($filter_data);
+        $results = $projectModel->getProjects($filter_data);
         foreach ($results as $result) {
             $data['notifications'][] = [
                 'name' => substr($result['name'], 0, 30) . '...', 
-                'href' => base_url('index.php/catalog/project/edit?user_token=' . $this->session->get('user_token') . '&project_id=' . $result['project_id']),
+                'href' => base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id=' . $result['project_id']),
             ];
         }
 

@@ -1,7 +1,7 @@
 <?php namespace Catalog\Controllers\Account;
 
-use Catalog\Models\Account\ActivityModel;
-use Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Account\ActivityModel;
+use \Catalog\Models\Account\CustomerModel;
 
 class Notifications extends \Catalog\Controllers\BaseController
 {

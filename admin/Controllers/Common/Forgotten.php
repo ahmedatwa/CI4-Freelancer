@@ -1,6 +1,6 @@
 <?php namespace Admin\Controllers\Common;
 
-use \Admin\Models\User\Users;
+use \Admin\Models\User\UserModel;
 
 class Forgotten extends \Admin\Controllers\BaseController
 {
@@ -9,14 +9,14 @@ class Forgotten extends \Admin\Controllers\BaseController
     {
         $data['title'] = lang('common/forgotten.text_title');
 
-        $usersModel = new Users();
+        $userModel = new UserModel();
 
-        if ($this->user->isLogged() && $this->session->has('user_token') == !is_null($this->request->getGet('user_token'))) {
+        if ($this->user->isLogged() && $this->session->has('user_token') == !is_null($this->request->getVar('user_token'))) {
             return redirect()->to(base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')));
         }
 
         if (($this->request->getMethod(true) == 'POST') && $this->validateForm()) {
-            $usersModel->editCode($this->request->getPost('email'), token('alpha', 40));
+            $userModel->editCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), token('alpha', 40));
             
             $this->session->setFlashData('success', lang('common/forgotten.text_success'));
 
@@ -31,7 +31,7 @@ class Forgotten extends \Admin\Controllers\BaseController
 
 
         if ($this->request->getPost('email')) {
-            $data['email'] = $this->request->getPost('email');
+            $data['email'] = $this->request->getPost('email', FILTER_SANITIZE_EMAIL);
         } else {
             $data['email'] = '';
         }
@@ -44,11 +44,11 @@ class Forgotten extends \Admin\Controllers\BaseController
 
     protected function validateForm()
     {
-        $usersModel = new Users();
+        $userModel = new UserModel();
 
         if (! $this->validate([
             'email' => 'required|valid_email',
-        ]) || ! $usersModel->getTotalUsersByEmail($this->request->getPost('email'))) {
+        ]) || ! $userModel->getTotalUsersByEmail($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
             $this->session->setFlashData('error', lang('common/forgotten.error-email'));
         }
         return true;
