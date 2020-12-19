@@ -50,21 +50,20 @@
 		<div class="form-group row">
 			<label for="input-description" class="col-sm-2 col-form-label">Tags</label>
 			<div class="col-sm-10">
-			<input type="text" class="form-control" id="input-meta_keywords" name="job_description[meta_keywords]">
+			<input type="text" class="form-control" id="input-meta_keyword" name="job_description[meta_keyword]">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="input-description" class="col-sm-2 col-form-label">Salary</label>
 			<div class="col-sm-10">
-			<input type="number" class="form-control" id="input-salary" name="salary">
+			<input type="number" class="form-control" id="input-salary" min="1" name="salary">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="input-description" class="col-sm-2 col-form-label">Type</label>
 			<div class="col-sm-10">
 			<select class="custom-select my-1 mr-sm-2" id="input-type" name="type">
-				<option>--- Select ---</option>
-				<option value="1">Full Time</option>
+				<option value="1" selected>Full Time</option>
 				<option value="2">Part Time</option>
 				<option value="3">Intern</option>
 				<option value="4">Temporary</option>
@@ -75,7 +74,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="button-new-job">Save</button>
+        <button type="button" class="btn btn-primary" id="button-new-job">Add</button>
       </div>
     </div>
   </div>

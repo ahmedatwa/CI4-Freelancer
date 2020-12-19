@@ -3,7 +3,7 @@
 use \Catalog\Models\Extension\Job\JobModel;
 use \Catalog\Models\Tool\DownloadModel;
 
-class jobs extends \Catalog\Controllers\BaseController
+class Jobs extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
@@ -354,7 +354,7 @@ class jobs extends \Catalog\Controllers\BaseController
         $pager = \Config\Services::pager();
         $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
 
-        $this->template->output('extension/job/candidates-list', $data);
+        $this->template->output('extension/job/candidates_list', $data);
     }
 
     public function setJobApplicationStatus()
@@ -377,29 +377,20 @@ class jobs extends \Catalog\Controllers\BaseController
             $jobModel = new JobModel();
 
             if (! $this->validate([
-                'job_description[name]' =>
-                [
+                'job_description.name' => [
                     'label' => 'Job Name',
                     'rules' => 'required',
                 ],
-                'job_description[description]' =>
-                [
+                'job_description.description' => [
                     'label' => 'Job Description',
                     'rules' => 'required',
                 ],
-                'job_description[meta_keywords]' =>
-                [
+                'job_description.meta_keyword' => [
                     'label' => 'Job Tags',
                     'rules' => 'required',
                 ],
-                'job_description[salary]' => 'required|is_unique',
-                'job_description[type]' =>
-                [
-                    'label' => 'Job Type',
-                    'rules' => 'required',
-                ],
             ])) {
-                $json['error']['validation'] = $this->validator->getErrors();
+                $json['error'] = $this->validator->getErrors();
             }
 
             if (! $json) {

@@ -21,4 +21,5 @@ return [
 'text_ceased'        => 'Ceased',
 'text_login'         => 'Attention: You must <a href="%s">login</a> or <a href="%s">create an account</a> to apply!',
 'text_apply_success' => 'Success: Your Application has been submitted!',
+'text_success'       => 'Success: You have modified jobs!',
 ];

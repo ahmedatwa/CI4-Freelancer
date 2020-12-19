@@ -54,29 +54,30 @@ $('#button-new-job').on('click', function() {
         beforeSend: function() {
             $(this).html('<button class="btn btn-primary" type="button" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...</button>');
             $('.alert, .invalid-feedback, .text-danger').remove();
+            $('#form-add-job input, #form-add-job select').removeClass('is-invalid');
         },
         complete: function() {
-           $(this).html('Save');
+           $(this).html('Add');
         },
-        success: function(json) {                  
+        success: function(json) { 
+            
             if (json['error']) {
-              if (json['error']['validation']){
-                for (i in json['error']['validation']) {
-                  
-                  var element = $('#input-' + i.substring(i.lastIndexOf("[") + 1, i.lastIndexOf("]")));
-
-                  if (element.parent().hasClass('form-group')) {
-                      element.parent().after('<div class="invalid-feedback">' + json['error']['validation'][i] + '</div>');
-                    } else {
-                      element.after('<div class="text-danger">' + json['error']['validation'][i] + '</div>');
-                  }
+                for (i in json['error']) {
+                  var el = i.replace('.', '-');
+                  var input = $('#' + el.replace('job_description', 'input'));
+                    input.addClass('is-invalid');
+                    input.after('<div class="invalid-feedback">' + json['error'][i] + '</div>');
                 }
-              }
             }
+
             if (json['success']) {
+                $('#add-new-job').modal('hide');
                 $('#employer-job-list').load('account/jobs/getEmployerJobs');
 
                 $('#employer-job-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'); 
+                $('#form-add-job').trigger('reset');
+                // resetting summernote
+                $('#input-description').summernote('reset');
             } 
         },
         error: function(xhr, ajaxOptions, thrownError) {

@@ -71,14 +71,14 @@ class JobModel extends \CodeIgniter\Model
         return $query->getRowArray();
     }
 
-    public function addJob($data)
+    public function addJob(array $data)
     {
         $builder = $this->db->table($this->table);
         $job_data = [
             'sort_order' => $data['sort_order'] ?? 0,
             'status'     => $data['status'] ?? 1,
             'type'       => $data['type'],
-            'salary'     => $data['salary'],
+            'salary'     => $data['salary'] ?? 0,
             'employer_id'=> $data['customer_id'],
         ];
 
@@ -86,18 +86,18 @@ class JobModel extends \CodeIgniter\Model
         $builder->set('date_modified', 'NOW()', false);
         $builder->insert($job_data);
         // Get Last Inserted ID
-        $job_id = $this->db->insertID();
+        $jobID = $this->db->insertID();
 
         // job_description Query
         if (isset($data['job_description'])) {
             $job_description_table = $this->db->table('job_description');
             $job_description_data = [
-                    'job_id'           => $job_id,
+                    'job_id'           => $jobID,
                     'name'             => $data['job_description']['name'],
                     'description'      => $data['job_description']['description'],
-                    'meta_title'       => $data['job_description']['meta_title'],
-                    'meta_description' => $data['job_description']['meta_description'],
-                    'meta_keyword'     => $data['job_description']['meta_keyword'],
+                    'meta_title'       => $data['job_description']['meta_title'] ?? '',
+                    'meta_description' => $data['job_description']['meta_description'] ?? '',
+                    'meta_keyword'     => $data['job_description']['meta_keyword'] ?? '',
                 ];
             $job_description_table->insert($job_description_data);
         }
