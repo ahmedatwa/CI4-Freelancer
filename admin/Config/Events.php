@@ -1,7 +1,7 @@
 <?php namespace Config;
 
 use CodeIgniter\Events\Events;
-use Admin\Models\Setting\EventModel;
+use \Admin\Models\Setting\EventModel;
 /*
  * --------------------------------------------------------------------
  * Application Events
