@@ -1,5 +1,5 @@
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#add-new-job"><i class="fas fa-plus"></i> Add New Job</button>
-<div class="table-responsive mt-4" id="job_list">
+<div class="table-responsive mt-4">
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
@@ -39,6 +39,7 @@
     <?php } else { ?>
       <button type="button" class="btn btn-warning btn-sm" id="button-job-cease" data-toggle="tooltip" data-placement="top" onclick="ceaseJob(<?php echo $job['job_id']; ?>);" title="Cease Job"><i class="fas fa-hand-paper"></i></button>
      <?php } ?> 
+      <button type="button" class="btn btn-danger btn-sm" id="button-job-delete" data-toggle="tooltip" data-placement="top" onclick="deleteJob(<?php echo $job['job_id']; ?>);" title="Delete Job"><i class="far fa-trash-alt"></i></button>
       </td>
     </tr>
   <?php } ?>
@@ -56,7 +57,7 @@ $('#button-new-job').on('click', function() {
         method:'post',
         data: $('#form-add-job').serialize(),
         beforeSend: function() {
-            $(this).html('<button class="btn btn-primary" type="button" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...</button>');
+            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
             $('.alert, .invalid-feedback, .text-danger').remove();
             $('#form-add-job input, #form-add-job select').removeClass('is-invalid');
         },
@@ -64,7 +65,6 @@ $('#button-new-job').on('click', function() {
            $(this).html('Add');
         },
         success: function(json) { 
-            
             if (json['error']) {
                 for (i in json['error']) {
                   var el = i.replace('.', '-');
@@ -76,6 +76,7 @@ $('#button-new-job').on('click', function() {
 
             if (json['success']) {
                 $('#add-new-job').modal('hide');
+
                 $('#employer-job-list').load('account/jobs/getEmployerJobs');
 
                 $('#employer-job-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'); 
@@ -116,7 +117,7 @@ function ceaseJob(job_id) {
           method: 'post',
           dataType: 'json',
           beforeSend: function() {
-            $('#button-job-cease').html('<button class="btn btn-warning" type="button" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...</button>');
+            $('#button-job-cease').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
             $('.alert, .invalid-feedback, .text-danger').remove();
           },
           complete: function() {
@@ -125,8 +126,54 @@ function ceaseJob(job_id) {
           success: function(json) {                  
                   if (json['success']) {
                       $('#employer-job-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'); 
-                      location.reload();
-                    //$('#').load('account/jobs/getEmployerJobs');  
+                        $('#employer-job-list').load('account/jobs/getEmployerJobs');
+                  } 
+              },
+              error: function(xhr, ajaxOptions, thrownError) {
+                  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
+        });
+      }
+    }
+  });
+}
+
+// Delete Job
+function deleteJob(job_id) {
+  bootbox.confirm({
+    message: "Are You Sure",
+    size: 'small',
+    buttons: {
+        confirm: {
+            label: 'Yes',
+            className: 'btn-success'
+        },
+        cancel: {
+            label: 'No',
+            className: 'btn-danger'
+        }
+    },
+    callback: function (result) {
+      if (result) {
+        $.ajax({
+          url: 'account/jobs/deleteJob?job_id=' + job_id,
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          method: 'post',
+          dataType: 'json',
+          beforeSend: function() {
+            $('#button-job-delete').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+            $('.alert, .invalid-feedback, .text-danger').remove();
+          },
+          complete: function() {
+            $('#button-job-delete').html('<i class="far fa-trash-alt"></i>');
+          },
+          success: function(json) {                  
+                  if (json['success']) {
+                       $('#employer-job-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'); 
+                      $('#employer-job-list').load('account/jobs/getEmployerJobs');
                   } 
               },
               error: function(xhr, ajaxOptions, thrownError) {

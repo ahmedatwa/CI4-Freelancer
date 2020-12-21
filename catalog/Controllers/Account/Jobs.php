@@ -412,6 +412,17 @@ class Jobs extends \Catalog\Controllers\BaseController
         return $this->response->setJSON($json);
     }
 
+    public function deleteJob()
+    {
+        $json = [];
+        if ($this->request->getMethod() == 'post') {
+            $jobModel = new JobModel();
+            $jobModel->delete($this->request->getVar('job_id'));
+            $json['success'] = 'Success! Job has been deleted';
+        }
+        return $this->response->setJSON($json);
+    }
+
 
     //--------------------------------------------------------------------
 }
