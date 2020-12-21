@@ -6,10 +6,10 @@ class Register extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
-        if ($this->customer->isLogged() && $this->session->get('customer_id')) {
-            return redirect('account_dashboard');
-        }
-        
+        if ($this->customer->isLogged()) {
+            return redirect()->route('account_dashboard');
+        } 
+
         $this->template->setTitle(lang('account/register.heading_title'));
 
         $data['breadcrumbs'] = [];

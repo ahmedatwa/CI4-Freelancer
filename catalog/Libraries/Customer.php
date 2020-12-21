@@ -11,7 +11,6 @@ class Customer
     protected $permission = [];
     protected $session;
     protected $db;
-    
 
     public function __construct()
     {

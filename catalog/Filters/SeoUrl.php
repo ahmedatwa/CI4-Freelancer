@@ -4,7 +4,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 
-class Seo_url implements FilterInterface
+class SeoUrl implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {

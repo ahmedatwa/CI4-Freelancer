@@ -10,7 +10,7 @@ class Filters extends BaseConfig
 		'csrf'         => \CodeIgniter\Filters\CSRF::class,
 		'toolbar'      => \CodeIgniter\Filters\DebugToolbar::class,
 		'honeypot'     => \CodeIgniter\Filters\Honeypot::class,
-		'seo_url'      => \Catalog\Filters\Seo_url::class,
+		'seo_url'      => \Catalog\Filters\SeoUrl::class,
 		'localization' => \Catalog\Filters\Localization::class,
 		'maintenance'  => \Catalog\Filters\Maintenance::class,
 	];
@@ -25,7 +25,6 @@ class Filters extends BaseConfig
 		    'maintenance',
 		],
 		'after'  => [
-			'toolbar',
 			'honeypot',
 		],
 	];
@@ -33,17 +32,19 @@ class Filters extends BaseConfig
 	// Works on all of a particular HTTP method
 	// (GET, POST, etc) as BEFORE filters only
 	//     like: 'post' => ['CSRF', 'throttle'],
-	public $methods = [];
+	public $methods = [
+	   //'post' => ['CSRF'],
+    ];
 
 	// List filter aliases and any before/after uri patterns
 	// that they should run on, like:
-	//    'isLoggedIn' => ['before' => ['account/*', 'profiles/*']],
-	public $filters = [];/*[
-		'csrf' => [
-			'before' => [
-				'account/login', 
-				'account/register'
-			]
-	    ],
-	];*/
+	// 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']],
+	public $filters = [
+	    // 'isLoggedIn' => [
+	    // 	'before' => [
+	    // 		'account/*',
+	    // 		'project/*',
+	    // 	]
+	    // ],
+    ];
 }

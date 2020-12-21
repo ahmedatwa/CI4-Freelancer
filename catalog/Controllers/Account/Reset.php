@@ -7,8 +7,8 @@ class Reset extends \Catalog\Controllers\BaseController
     public function index()
     {
         if ($this->customer->isLogged()) {
-            return redirect()->to(route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
-        }
+            return redirect()->route('account_dashboard');
+        } 
 
         if ($this->request->getVar('code')) {
             $code = $this->request->getVar('code');

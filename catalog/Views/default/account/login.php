@@ -46,7 +46,7 @@ $('#button-form-login').on('click', function() {
 	$.ajax({
 		url: 'account/login/authLogin',
 		headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         },
 		type: 'post',
 		dataType: 'json',
@@ -57,7 +57,6 @@ $('#button-form-login').on('click', function() {
 		   $('.alert, .invalid-feedback').remove();
 		},
 		success: function(json) {
-
 			if (json['redirect']) {
 				$('#login-wrapper').html('<h2 class="text-center"><i class="fas fa-thumbs-up text-danger"></i> Login Success</h2><p class="text-center">Please wait we will redirect you.</p><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 				setTimeout(function() {
@@ -71,7 +70,7 @@ $('#button-form-login').on('click', function() {
 		    	}
 
 		    	$('.form-group input').addClass('is-invalid');
-		    	$('.welcome-text').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> '+json['error']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		    	$('.welcome-text').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> '+ json['error']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		    	$('#login-wrapper').addClass('animate__animated animate__shakeX');
 		    }
 		},
@@ -89,14 +88,18 @@ function onSuccess(googleUser) {
   var client_id = $('meta[name=\'google-signin-client_id\']').attr('content');
   $.ajax({
   	url: 'account/login/googleAuth?client_id=' + client_id + '&id_token=' + id_token,
-  	contentType: 'application/x-www-form-urlencoded',
+  	headers: {
+       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+       'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  	data: 'post',
+  	dataType: 'json',
   	beforeSend: function() {
   		$('#overlay').fadeIn().delay(2000);
   	},
   	complete: function() {
   		$('#overlay').fadeOut();
   	},
-  	dataType: 'json',
   	success: function(json) {
   		if (json['redirect']) {
   			location = json['redirect'];
@@ -119,6 +122,4 @@ function renderButton() {
   });
 }
 </script>
-
-
 <?php echo $footer; ?>

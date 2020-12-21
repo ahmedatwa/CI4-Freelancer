@@ -28,7 +28,6 @@
   <script src="catalog/default/javascript/moment.js"></script>
   <script src="catalog/default/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="catalog/default/vendor/bootstrap-slider/js/bootstrap-slider.js"></script> 
-
   <script src="catalog/default/vendor/slick/slick.min.js"></script>
   <script src="catalog/default/javascript/magnific-popup.min.js"></script>
   <!-- Notify JS -->
@@ -36,11 +35,9 @@
   <script src="catalog/default/javascript/jquery.counterup.min.js"></script>
   <script src="catalog/default/vendor/select2/js/select2.min.js"></script> 
   <script src="catalog/default/vendor/bootbox/bootbox.min.js"></script> 
-
   <!-- Pusher -->
   <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
   <script src="catalog/default/javascript/common.js"></script>
-
   <?php foreach ($scripts as $script) { ?>
     <script src="<?php echo $script; ?>" type="text/javascript"></script>
   <?php } ?>
@@ -114,7 +111,7 @@
                 <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_setting; ?></a>
                 <a class="dropdown-item" href="<?php echo $account_project; ?>"> <?php echo $text_my_projects; ?></a>
                 <a class="dropdown-item" href="<?php echo $profile; ?>"> <?php echo $text_profile; ?></a>
-                <a class="dropdown-item" href="#" id="button-logout"> <?php echo $text_logout; ?></a>
+                <a class="dropdown-item" href="javascript:void(0);" id="button-logout"> <?php echo $text_logout; ?></a>
           </div>
         </div>
       </div>
@@ -212,7 +209,7 @@
                 <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_setting; ?></a>
                 <a class="dropdown-item" href="<?php echo $account_project; ?>"> <?php echo $text_my_projects; ?></a>
                 <a class="dropdown-item" href="<?php echo $profile; ?>"> <?php echo $text_profile; ?></a>
-                <a class="dropdown-item" href="#" id="button-logout"> <?php echo $text_logout; ?></a>
+                <a class="dropdown-item" href="javascript:void(0);" id="button-logout"> <?php echo $text_logout; ?></a>
               </div>
             </div>
           </div>

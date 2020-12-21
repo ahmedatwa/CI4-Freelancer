@@ -8,9 +8,9 @@ class Login extends \Catalog\Controllers\BaseController
 
     public function index()
     {
-        if ($this->customer->isLogged() && $this->session->get('customer_id')) {
-            return redirect('account_dashboard');
-        }
+        if ($this->customer->isLogged()) {
+            return redirect()->route('account_dashboard');
+        } 
 
         $this->template->setTitle(lang('account/login.heading_title'));
 
@@ -33,38 +33,6 @@ class Login extends \Catalog\Controllers\BaseController
         $data['entry_password'] = lang('account/login.entry_password');
         $data['button_login']   = lang('account/login.button_login');
 
-
-        // if ($this->request->getPost('email')) {
-        //     $data['email'] = $this->request->getPost('email', FILTER_SANITIZE_EMAIL);
-        // } else {
-        //     $data['email'] = '';
-        // }
-
-        // if ($this->request->getPost('password')) {
-        //     $data['password'] = $this->request->getPost('password');
-        // } else {
-        //     $data['password'] = '';
-        // }
-
-        // if ($this->request->getVar('redirect')) {
-        //     $data['redirect'] = base_url($this->request->getVar('redirect'));
-        // } else {
-        //     $data['redirect'] = '';
-        // }
-
-        // if ($this->session->getFlashdata('error_warning')) {
-        //     $data['error_warning'] = $this->session->getFlashdata('error_warning');
-        // } else {
-        //     $data['error_warning'] = '';
-        // }
-
-        // if ($this->session->getFlashdata('success')) {
-        //     $data['success'] = $this->session->getFlashdata('success');
-        // } else {
-        //     $data['success'] = '';
-        // }
-
-        //$data['action'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
         $data['forgotton'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
 
         $this->template->output('account/login', $data);
@@ -93,7 +61,7 @@ class Login extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->request->getVar('id_token') && $this->request->getVar('client_id')) {
+        if ($this->request->getVar('id_token') && $this->request->getVar('client_id') && $this->request->getMothod() == 'post') {
             $customerModel = new CustomerModel();
 
             $client = new \Google_Client([
