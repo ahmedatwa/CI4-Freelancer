@@ -47,6 +47,7 @@ $('#button-form-login').on('click', function() {
 		url: 'account/login/authLogin',
 		headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-Requested-With': 'XMLHttpRequest'
         },
 		type: 'post',
 		dataType: 'json',
@@ -91,6 +92,7 @@ function onSuccess(googleUser) {
   	headers: {
        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
        'Content-Type': 'application/x-www-form-urlencoded',
+       'X-Requested-With': 'XMLHttpRequest'
     },
   	data: 'post',
   	dataType: 'json',

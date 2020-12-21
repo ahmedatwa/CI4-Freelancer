@@ -42,7 +42,7 @@ class Login extends \Catalog\Controllers\BaseController
     {
        $json = [];
 
-       if (($this->request->getMethod() == 'post') && $this->validateForm()) {
+       if (($this->request->getMethod() == 'post') && $this->validateForm() && $this->request->isAJAX()) {
 
             if ($this->session->get('redirect_url')) {
                 $json['redirect'] = (string) $this->session->get('redirect_url');
@@ -61,7 +61,7 @@ class Login extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->request->getVar('id_token') && $this->request->getVar('client_id') && $this->request->getMothod() == 'post') {
+        if ($this->request->getVar('id_token') && $this->request->getVar('client_id') && $this->request->getMothod() == 'post' && $this->request->isAJAX()) {
             $customerModel = new CustomerModel();
 
             $client = new \Google_Client([

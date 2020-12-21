@@ -51,7 +51,8 @@ $('#button-new-job').on('click', function() {
   $.ajax({
         url: 'account/jobs/add',
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-Requested-With': 'XMLHttpRequest'
         },
         dataType: 'json',
         method:'post',
@@ -112,7 +113,8 @@ function ceaseJob(job_id) {
         $.ajax({
           url: 'account/jobs/ceaseJob?job_id=' + job_id,
           headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-Requested-With': 'XMLHttpRequest'
           },
           method: 'post',
           dataType: 'json',

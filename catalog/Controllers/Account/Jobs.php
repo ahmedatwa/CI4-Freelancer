@@ -373,7 +373,7 @@ class Jobs extends \Catalog\Controllers\BaseController
     {
         $json = [];
         
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->getMethod() == 'post' && $this->request->isAJAX()) {
             $jobModel = new JobModel();
 
             if (! $this->validate([
@@ -404,7 +404,7 @@ class Jobs extends \Catalog\Controllers\BaseController
     public function ceaseJob()
     {
         $json = [];
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->getMethod() == 'post' && $this->request->isAJAX()) {
             $jobModel = new JobModel();
             $jobModel->update($this->request->getVar('job_id'), ['status' => 0]);
             $json['success'] = 'Success! Job has been ceased';
@@ -415,7 +415,7 @@ class Jobs extends \Catalog\Controllers\BaseController
     public function deleteJob()
     {
         $json = [];
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->getMethod() == 'post' && $this->request->isAJAX()) {
             $jobModel = new JobModel();
             $jobModel->delete($this->request->getVar('job_id'));
             $json['success'] = 'Success! Job has been deleted';
