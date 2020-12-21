@@ -1,16 +1,16 @@
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#add-new-job"><i class="fas fa-plus"></i> Add New Job</button>
-<div class="table-responsive mt-4">
+<div class="table-responsive mt-4" id="job_list">
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
       <th scope="col">Job ID</th>
-      <th scope="col">Job Name</th>
-      <th scope="col">Type</th>
-      <th scope="col">Salary</th>
-      <th scope="col">Status</th>
-      <th scope="col" class="text-center">Applicants</th>
-      <th scope="col">Date Added</th>
-      <th scope="col">Action</th>
+      <th>Job Name</th>
+      <th >Type</th>
+      <th >Salary</th>
+      <th >Status</th>
+      <th class="text-center">Applicants</th>
+      <th >Date Added</th>
+      <th >Action</th>
     </tr>
   </thead>
   <tbody>
@@ -32,9 +32,13 @@
       <?php if ($job['total'] > 0) { ?>
       <a role="button" href="<?php echo $job['view']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="View Applicants"><i class="fas fa-eye"></i></a>
       <?php } else { ?>
-        <a role="button" href="#" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="View Applicants" disabled><i class="fas fa-eye"></i></a>
+        <span data-toggle="tooltip" data-placement="top" title="View Applicants"><a role="button" href="#" class="btn btn-primary btn-sm disabled"><i class="fas fa-eye"></i></a></span>
       <?php } ?>
+      <?php if ($job['status'] == 0) { ?>
+      <span data-toggle="tooltip" data-placement="top" title="Cease Job"><a role="button" class="btn btn-warning btn-sm disabled" id="button-job-cease"><i class="fas fa-hand-paper"></i></a></span>
+    <?php } else { ?>
       <button type="button" class="btn btn-warning btn-sm" id="button-job-cease" data-toggle="tooltip" data-placement="top" onclick="ceaseJob(<?php echo $job['job_id']; ?>);" title="Cease Job"><i class="fas fa-hand-paper"></i></button>
+     <?php } ?> 
       </td>
     </tr>
   <?php } ?>
@@ -121,6 +125,8 @@ function ceaseJob(job_id) {
           success: function(json) {                  
                   if (json['success']) {
                       $('#employer-job-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'); 
+                      location.reload();
+                    //$('#').load('account/jobs/getEmployerJobs');  
                   } 
               },
               error: function(xhr, ajaxOptions, thrownError) {

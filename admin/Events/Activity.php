@@ -1,7 +1,8 @@
 <?php namespace Admin\Events;
 
-use Admin\Models\Report\ActivityModel;
-use Admin\Libraries\User;
+use \Admin\Models\Report\ActivityModel;
+use \Admin\Libraries\User;
+use \Admin\Models\User\UserModel;
 use CodeIgniter\I18n\Time;
 
 class Activity
@@ -23,8 +24,8 @@ class Activity
     // Admin\Controllers\user\user::Rules
     public static function loginAttempts(string $email)
     {
-        $user = new User();
-        $user->addLoginAttempts($email);
+        $userModel = new UserModel();
+        $userModel->addLoginAttempts($email);
     }
 
     // Admin\Controllers\Common\Forgotten::index
