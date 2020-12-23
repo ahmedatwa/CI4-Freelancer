@@ -50,9 +50,11 @@
         uploadUrl: "tool/upload?cid=<?php echo $customer_id; ?>&pid=<?php echo $project_id; ?>",
         enableResumableUpload: false,
         uploadExtraData: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), 
+            'csrf-token': $('meta[name="csrf-token"]').attr('content'), 
+            'X-Requested-With': 'XMLHttpRequest'
         },
         maxFileCount: 3,
+        uploadAsync: false,
         allowedFileExtensions: <?php echo json_encode($allowedFileExtensions); ?>, 
         showCancel: true,
         initialPreviewAsData: true,

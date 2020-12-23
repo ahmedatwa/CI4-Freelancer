@@ -480,7 +480,7 @@ class Setting extends \Catalog\Controllers\BaseController
             $page = 1;
         }
 
-        $data['educations'] = [];        
+        $data['educations'] = [];
 
         $results = $customerModel->getEducations($this->customer->getCustomerID(), ($page - 1) * 5, 5);
         $total = $customerModel->getTotalEducationsByCustomerId($this->customer->getCustomerID());
@@ -719,16 +719,17 @@ class Setting extends \Catalog\Controllers\BaseController
     public function avatarUpload()
     {
         $json = [];
+        if ($this->request->isAJAX()) {
+            if ($imagefile = $this->request->getFile('image')) {
+                $customerModel = new CustomerModel();
 
-        if ($imagefile = $this->request->getFile('image')) {
-            $customerModel = new CustomerModel();
-
-            if ($imagefile->isValid() && ! $imagefile->hasMoved()) {
-                $newName = $imagefile->getRandomName();
-                $imagefile->move('images/catalog', $newName);
-                $customerModel->where('customer_id', $this->session->get('customer_id'))
+                if ($imagefile->isValid() && ! $imagefile->hasMoved()) {
+                    $newName = $imagefile->getRandomName();
+                    $imagefile->move('images/catalog', $newName);
+                    $customerModel->where('customer_id', $this->session->get('customer_id'))
                               ->set('image', 'catalog/' . $newName)
                               ->update();
+                }
             }
         }
         return $this->response->setJSON($json);
@@ -744,11 +745,11 @@ class Setting extends \Catalog\Controllers\BaseController
                 'password' => 'required|min_length[4]|alpha_numeric_punct',
                 'confirm'  => 'required_with[password]|matches[password]',
             ])) {
-            $json['error']['required'] = $this->validator->getErrors();
+            $json['error'] = $this->validator->getErrors();
         }
 
         if (!$json) {
-            if (($this->request->getMethod() == 'post') && ($this->request->getPost('current'))) {
+            if (($this->request->getMethod() == 'post') && ($this->request->getPost('current')) && $this->request->isAJAX()) {
                 $customerModel = new CustomerModel();
 
                 $oldPassword = $customerModel->where('customer_id', $this->customer->getCustomerID())

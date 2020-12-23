@@ -846,6 +846,7 @@ $('#skills-list').on('click', 'button[id^=\'button-delete-skill\']', function() 
 <script type="text/javascript">
 $("#avatar-1").fileinput({
 	uploadUrl: 'account/setting/avatarUpload',
+	uploadAsync: false,
     maxFileSize: 1500,
     overwriteInitial: true,
     showClose: false,
@@ -864,7 +865,8 @@ $("#avatar-1").fileinput({
     removeClass: 'btn btn-danger',
     removeTitle: 'Cancel or reset changes',
     uploadExtraData: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        'csrf-token': $('meta[name="csrf-token"]').attr('content'),
+        'X-Requested-With': 'XMLHttpRequest'
     },
     showRemove: true,
     elErrorContainer: '#kv-avatar-errors',
@@ -880,7 +882,8 @@ $("#avatar-1").fileinput({
 		$.ajax({
 			url: 'account/setting/passwordUpdate',
 			headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'X-Requested-With': 'XMLHttpRequest'
             },
 			method: 'post',
 			dataType : 'json',
@@ -896,14 +899,12 @@ $("#avatar-1").fileinput({
 			success: function (json) {
 				// validation errors
 				if (json['error']) {
-					if (json['error']['required']) {
-						for(i in json['error']['required']) {
-							var el = $('#input-' + i.replace('_', '-'));
-				            if (el) {
-								el.after('<div class="invalid-feedback">' + json['error']['required'][i] + '</div>');
-								el.addClass('is-invalid');
-							} 
-						}
+				    for(i in json['error']) {
+						var el = $('#input-' + i.replace('_', '-'));
+			            if (el) {
+							el.after('<div class="invalid-feedback">' + json['error'][i] + '</div>');
+							el.addClass('is-invalid');
+						} 
 					}
 
 					if (json['error']['error_password']) {
