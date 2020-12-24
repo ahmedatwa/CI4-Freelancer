@@ -128,6 +128,8 @@ class Blog extends \Catalog\Controllers\BaseController
 
     public function getPost()
     {
+    	$this->template->setTitle($this->request->uri->getSegment(3));
+
         if ($this->request->getGet('post_id')) {
             $post_id = $this->request->getGet('post_id');
         } elseif ($this->request->uri->getSegment(2)) {
@@ -142,7 +144,7 @@ class Blog extends \Catalog\Controllers\BaseController
         if ($post_id) {
             $post_info = $blogModel->getPost($post_id);
         }
-        
+
         // Breadcrumbs
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -223,11 +225,22 @@ class Blog extends \Catalog\Controllers\BaseController
     public function addComment()
     {
         $json = [];
-        if (!$json) {
-            if ($this->request->getMethod() == 'post') {
-                $blogModel = new BlogModel();
-                $blogModel->insertComment($this->request->getPost());
-                $json['success'] = lang('extension/blog/blog.text_comment_success');
+
+        if ($this->request->isAJAX()) {
+            if (! $this->validate([
+            'email'   => "required|valid_email",
+            'name'    => 'required|alpha_numeric_spaces',
+            'comment' => 'required'
+        ])) {
+                $json['error'] = $this->validator->getErrors();
+            }
+
+            if (!$json) {
+                if ($this->request->getMethod() == 'post') {
+                    $blogModel = new BlogModel();
+                    $blogModel->insertComment($this->request->getPost());
+                    $json['success'] = lang('extension/blog/blog.text_comment_success');
+                }
             }
         }
 

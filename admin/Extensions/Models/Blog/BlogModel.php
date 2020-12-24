@@ -148,6 +148,31 @@ class BlogModel extends \CodeIgniter\Model
         $builder->delete(['category_id' => $category_id]);
     }
 
+    // Comments
+    public function getComments()
+    {
+        $builder = $this->db->Table('blog_post_to_comment');
+        $builder->select();
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
+    public function getComment($comment_id)
+    {
+        $builder = $this->db->table('blog_post_to_comment');
+        $builder->select();
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
+
+    public function editComment($comment_id, $data)
+    {
+        $builder = $this->db->Table('blog_post_to_comment');
+        $builder->set('status', 1);
+        $builder->where('comment_id', $comment_id);
+        $builder->update();
+    }
+
     public function install()
     {
         $forge = \Config\Database::forge();

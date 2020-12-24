@@ -140,7 +140,7 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text" id="basic-addon1"><i class="icon-material-outline-account-circle"></i></span>
 					</div>
-					<input type="text" class="form-control" name="name" id="name" placeholder="<?php echo $entry_name; ?>"/>
+					<input type="text" class="form-control" name="name" id="input-name" placeholder="<?php echo $entry_name; ?>"/>
 				</div>
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
@@ -148,33 +148,43 @@
 					</div>
 					<input type="text" class="form-control" name="email" id="input-email" placeholder="<?php echo $entry_email; ?>" required/>
 				</div>
-				<textarea  name="comment" cols="30" rows="5" class="form-control" placeholder="Comment"></textarea>
+				<textarea  name="comment" cols="30" rows="5" class="form-control" id="input-comment" placeholder="Comment"></textarea>
 			</div>
 			<button class="button button-sliding-icon ripple-effect margin-bottom-40 margin-top-20" type="button" id="add-comment"><?php echo $button_add; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
 		</form>
 	</div>
 </div>
-<!-- Leava a Comment / End -->
 </div>
-<!-- Spacer -->
 <div class="padding-top-40"></div>
 <script type="text/javascript">
 $("#add-comment").on('click', function () {
 	$.ajax({
 		url: 'extension/blog/blog/addComment',
 		headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest"
         },
 		method:'post',
 		data: $('#form-comment').serialize(),
 		dataType: 'json',
         beforeSend: function() {
+        	$('#form-comment').removeClass('is-invalid');
+        	$('.alert, .invalid-feedback').remove();
 			$(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
 		},
 		complete: function() {
 			$(this).html('<?php echo $button_add; ?> <i class="icon-material-outline-arrow-right-alt"></i>');
 		},
         success: function(json) {
+        	if (json['error']) {
+        		for (i in json['error']) {
+        			var el = $('#input-' + i);
+        			el.addClass('is-invalid');
+        			el.after('<div class="invalid-feedback d-block">' + json['error'][i] + '</div>');
+        		}
+        	}
+
 			if(json['success']) {
 				 $('#form-comment').before('<div class="notification success closeable"><p><i class="fas fa-check-circle"></i> ' + json['success'] + '</p><a class="close" href="#"></a></div>');
 			}

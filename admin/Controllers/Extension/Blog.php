@@ -31,7 +31,7 @@ class Blog extends \Admin\Controllers\BaseController
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/blog/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/blog/' . $this->request->getVar('extension'));
 
-            $settingModel = new Settings();
+            $settingModel = new SettingModel();
             $settingModel->editSetting('blog_extension', ['blog_extension_status' => 1]);
 
             // Call install Method is exists
@@ -60,7 +60,7 @@ class Blog extends \Admin\Controllers\BaseController
                 $blogModel->uninstall();
             }
 
-            $settingModel = new Settings();
+            $settingModel = new SettingModel();
             $settingModel->editSetting('blog_extension', ['blog_extension_status' => 0]);
 
             $this->session->setFlashdata('success', lang('extension/blog.text_success'));

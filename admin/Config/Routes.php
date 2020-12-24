@@ -51,15 +51,20 @@ $routes->group('extensions', ['namespace' => 'Extensions\Controllers'], function
     // Themes
     $routes->add('theme/basic', 'Theme\Basic::index');
     // Blog
+    // // Post
     $routes->add('blog/post', 'Blog\Post::index');
     $routes->add('blog/post/add', 'Blog\Post::add');
     $routes->add('blog/post/edit', 'Blog\Post::edit');
     $routes->add('blog/post/delete', 'Blog\Post::delete');
-    // Categiry
+    // // Categiry
     $routes->add('blog/category', 'Blog\Category::index');
     $routes->add('blog/category/add', 'Blog\Category::add');
     $routes->add('blog/category/edit', 'Blog\Category::edit');
     $routes->add('blog/category/delete', 'Blog\Category::delete');
+    // Comment
+    $routes->add('blog/comment', 'Blog\Comment::index');
+    $routes->add('blog/comment/edit', 'Blog\Comment::edit');
+    $routes->add('blog/comment/delete', 'Blog\Comment::delete');
 
 });
 
