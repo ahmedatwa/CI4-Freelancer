@@ -20,8 +20,8 @@ class Category extends \Admin\Controllers\BaseController
         $blogModel = new BlogModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $blogModel->addcategory($this->request->getPost());
-            return redirect()->to(base_url('index.php/extension/blog/category?user_token=' . $this->session->get('user_token')))
+            $blogModel->addCategory($this->request->getPost());
+            return redirect()->to(base_url('index.php/extensions/blog/category?user_token=' . $this->request->getVar('user_token')))
                              ->with('success', lang('blog/category.text_success'));
         }
         $this->getForm();
@@ -35,7 +35,7 @@ class Category extends \Admin\Controllers\BaseController
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
             $blogModel->editCategory($this->request->getVar('category_id'), $this->request->getPost());
-            return redirect()->to(base_url('index.php/extension/blog/category?user_token=' . $this->session->get('user_token')))
+            return redirect()->to(base_url('index.php/extensions/blog/category?user_token=' . $this->request->getVar('user_token')))
                              ->with('success', lang('blog/category.text_success'));
         }
         $this->getForm();
@@ -48,12 +48,12 @@ class Category extends \Admin\Controllers\BaseController
         $blogModel = new BlogModel();
    
         $this->document->setTitle(lang('blog/category.list.heading_title'));
-
-        if ($this->request->getcategory('selected') && $this->validateDelete()) {
+        
+        if (($this->request->getMethod() == 'post') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $category_id) {
                 $blogModel->deleteCategory($category_id);
                 $json['success'] = lang('blog/category.text_success');
-                $json['redirect'] = 'index.php/extension/blog/category?user_token=' . $this->session->get('user_token');
+                $json['redirect'] = 'index.php/extensions/blog/category?user_token=' . $this->request->getVar('user_token');
             }
         } else {
             $json['error_warning'] = lang('blog/category.error_permission');
@@ -67,7 +67,7 @@ class Category extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
@@ -77,11 +77,11 @@ class Category extends \Admin\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('extension/blog.list.heading_title'),
-            'href' => base_url('index.php/setting/extensions/?user_token=' . $this->session->get('user_token') . '&type=blog'),
+            'href' => base_url('index.php/setting/extensions/?user_token=' . $this->request->getVar('user_token') . '&type=blog'),
         ];
         $data['breadcrumbs'][] = [
             'text' => lang('blog/category.list.heading_title'),
-            'href' => base_url('index.php/extension/blog/category?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/extension/blog/category?user_token=' . $this->request->getVar('user_token')),
         ];
 
         // Data
@@ -95,14 +95,13 @@ class Category extends \Admin\Controllers\BaseController
                 'category_id'    => $result['category_id'],
                 'name'      => $result['name'],
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'edit'       => base_url('index.php/extension/blog/category/edit?user_token=' . $this->session->get('user_token') . '&category_id=' . $result['category_id']),
-                'delete'     => base_url('index.php/extension/blog/category/delete?user_token=' . $this->session->get('user_token') . '&category_id=' . $result['category_id']),
+                'edit'       => base_url('index.php/extensions/blog/category/edit?user_token=' . $this->request->getVar('user_token') . '&category_id=' . $result['category_id']),
+                'delete'     => base_url('index.php/extensions/blog/category/delete?user_token=' . $this->request->getVar('user_token') . '&category_id=' . $result['category_id']),
             ];
         }
 
-        $data['add'] = base_url('index.php/extension/blog/category/add?user_token=' . $this->session->get('user_token'));
-        $data['delete'] = base_url('index.php/extension/blog/category/delete?user_token=' . $this->session->get('user_token'));
-        $data['cancel'] = base_url('index.php/setting/extension?user_token=' . $this->session->get('user_token') . '&type=blog');
+        $data['add'] = base_url('index.php/extensions/blog/category/add?user_token=' . $this->request->getVar('user_token'));
+        $data['cancel'] = base_url('index.php/setting/extension?user_token=' . $this->request->getVar('user_token') . '&type=blog');
 
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
@@ -125,7 +124,6 @@ class Category extends \Admin\Controllers\BaseController
         $data['user_token'] = $this->request->getGet('user_token');
 
         $this->document->moduleOutput('Extensions', 'blog/category_list', $data);
-
     }
 
     protected function getForm()
@@ -135,30 +133,30 @@ class Category extends \Admin\Controllers\BaseController
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('en.text_home'),
-            'href' => base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('setting/extension.list.heading_title'),
-            'href' => base_url('index.php/setting/extensions?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/setting/extensions?user_token=' . $this->request->getVar('user_token')),
         ];
         $data['breadcrumbs'][] = [
-            'text' => lang('extension/extensions/blog.list.heading_title'),
-            'href' => base_url('index.php/setting/extensions/?user_token=' . $this->session->get('user_token') . '&type=blog'),
+            'text' => lang('extension/blog.list.heading_title'),
+            'href' => base_url('index.php/setting/extensions/?user_token=' . $this->request->getVar('user_token') . '&type=blog'),
         ];
         $data['breadcrumbs'][] = [
             'text' => lang('blog/category.list.heading_title'),
-            'href' => base_url('index.php/extension/blog/category/edit?user_token=' . $this->session->get('user_token')),
+            'href' => base_url('index.php/extensions/blog/category/edit?user_token=' . $this->request->getVar('user_token')),
         ];
 
         $data['text_form'] = !$this->request->getVar('category_id') ? lang('blog/category.list.text_add') : lang('blog/category.list.text_edit');
 
-        $data['cancel'] = base_url('index.php/extension/blog/category?user_token=' . $this->session->get('user_token'));
+        $data['cancel'] = base_url('index.php/extensions/blog/category?user_token=' . $this->request->getVar('user_token'));
 
         if (!$this->request->getVar('category_id')) {
-            $data['action'] = base_url('index.php/extension/blog/category/add?user_token=' . $this->session->get('user_token'));
+            $data['action'] = base_url('index.php/extensions/blog/category/add?user_token=' . $this->request->getVar('user_token'));
         } else {
-            $data['action'] = base_url('index.php/extension/blog/category/edit?user_token=' . $this->session->get('user_token') . '&category_id=' . $this->request->getVar('category_id'));
+            $data['action'] = base_url('index.php/extensions/blog/category/edit?user_token=' . $this->request->getVar('user_token') . '&category_id=' . $this->request->getVar('category_id'));
         }
 
         if ($this->session->getFlashdata('success')) {
@@ -176,7 +174,7 @@ class Category extends \Admin\Controllers\BaseController
         $blogModel = new BlogModel();
         
         if ($this->request->getVar('category_id') && ($this->request->getMethod() != 'category')) {
-             $category_info = $blogModel->getCategory($this->request->getVar('category_id'));
+            $category_info = $blogModel->getCategory($this->request->getVar('category_id'));
         }
 
         if ($this->request->getPost('name')) {
@@ -195,7 +193,7 @@ class Category extends \Admin\Controllers\BaseController
             $data['status'] = 0;
         }
 
-        $data['user_token'] = $this->session->get('user_token');
+        $data['user_token'] = $this->request->getVar('user_token');
 
         $this->document->moduleOutput('Extensions', 'blog/category_form', $data);
     }
@@ -219,7 +217,7 @@ class Category extends \Admin\Controllers\BaseController
 
     protected function validateDelete()
     {
-        if (!$this->user->hasPermission('modify', 'extensions/blog/category')) {
+        if (! $this->user->hasPermission('modify', 'extensions/blog/category')) {
             $this->session->setFlashdata('error_warning', lang('blog/category.error_permission'));
             return false;
         }

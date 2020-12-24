@@ -86,8 +86,8 @@
         function(isConfirm) {
             if (isConfirm) {
                 $.ajax({
-                    url: 'index.php/blog/category/delete?user_token=<?php echo $user_token; ?>',
-                    method:'category',
+                    url: 'index.php/extensions/blog/category/delete?user_token=<?php echo $user_token; ?>',
+                    method:'post',
                     dataType: 'json',
                     data: $("input[type=\'hidden\'], input[name^=\'selected\']:checked").serialize(),
                     success: function(json) {

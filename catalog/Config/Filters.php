@@ -13,6 +13,7 @@ class Filters extends BaseConfig
 		'seo_url'      => \Catalog\Filters\SeoUrl::class,
 		'localization' => \Catalog\Filters\Localization::class,
 		'maintenance'  => \Catalog\Filters\Maintenance::class,
+		'throttle'     => \Catalog\Filters\Throttle::class,
 	];
 
 	// Always applied before every request
@@ -20,7 +21,6 @@ class Filters extends BaseConfig
 		'before' => [
 			'localization',
 		    'seo_url',
-			'csrf',
 		    'honeypot',
 		    'maintenance',
 		],
@@ -33,7 +33,7 @@ class Filters extends BaseConfig
 	// (GET, POST, etc) as BEFORE filters only
 	//     like: 'post' => ['CSRF', 'throttle'],
 	public $methods = [
-	   //'post' => ['CSRF'],
+	   'post' => ['throttle', 'csrf']
     ];
 
 	// List filter aliases and any before/after uri patterns

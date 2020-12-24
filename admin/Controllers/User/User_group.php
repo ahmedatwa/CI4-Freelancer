@@ -148,6 +148,7 @@ class User_group extends \Admin\Controllers\BaseController
         }
 
         if ($this->request->getVar('user_group_id') && ($this->request->getMethod() != 'post')) {
+            $userGroupModel = new UserGroupModel();
             $user_group_info = $userGroupModel->getUserGroup($this->request->getVar('user_group_id'));
         }
 
