@@ -3,6 +3,7 @@
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
+use Config\Services;
 
 class Maintenance implements FilterInterface
 {
@@ -11,7 +12,7 @@ class Maintenance implements FilterInterface
         
         if (service('registry')->get('config_maintenance')) {
             echo view_cell('Catalog\Controllers\Common\Maintenance::index');
-            exit;
+            return Services::response()->setStatusCode(503);
         }
     }
 
