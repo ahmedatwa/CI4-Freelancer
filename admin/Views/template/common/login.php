@@ -53,6 +53,7 @@
                                 <input type="password" name="password" id="input-password" placeholder="<?php echo $entry_password; ?>" value="<?php echo $password; ?>">
                                 <?php echo form_error('password');?>
                             </div>
+                            <input type="hidden" name="redirect" value="<?php echo $redirect; ?>">
                             <div class="form-group form-button">
                                 <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
                             </div>
