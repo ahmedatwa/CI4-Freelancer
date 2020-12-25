@@ -104,7 +104,31 @@
 			</div>
 		</div>
 	</div>
-	<!-- Comments -->
+<!-- Leava a Comment -->
+<div class="row">
+	<div class="col-6">
+		<h3 class="margin-top-35 margin-bottom-30"><?php echo $text_add_comment; ?></h3>
+		<form action="" method="" id="form-comment" class="form-post-comment">
+			<div class="form-row">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1"><i class="icon-material-outline-account-circle"></i></span>
+					</div>
+					<input type="text" class="form-control" name="name" id="input-name" placeholder="<?php echo $entry_name; ?>"/>
+				</div>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1"><i class="icon-material-baseline-mail-outline"></i></span>
+					</div>
+					<input type="text" class="form-control" name="email" id="input-email" placeholder="<?php echo $entry_email; ?>" required/>
+				</div>
+				<textarea  name="comment" cols="30" rows="5" class="form-control" id="input-comment" placeholder="Comment"></textarea>
+			</div>
+			<button class="button button-sliding-icon ripple-effect margin-bottom-40 margin-top-20" type="button" id="add-comment"><?php echo $button_add; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
+		</form>
+	</div>
+</div>
+<!-- Comments -->
 	<?php if ($post_comments) { ?>
 		<div class="row">
 			<div class="col-12">
@@ -129,45 +153,19 @@
 	</div>
 <?php } ?>
 <!-- Comments / End -->
-<!-- Leava a Comment -->
-<div class="row">
-	<div class="col-6">
-		<h3 class="margin-top-35 margin-bottom-30"><?php echo $text_add_comment; ?></h3>
-		<form method="post" id="form-comment" class="form-post-comment">
-			<input type="hidden" name="post_id" value="<?= $post_id ?>" />
-			<div class="form-row">
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<span class="input-group-text" id="basic-addon1"><i class="icon-material-outline-account-circle"></i></span>
-					</div>
-					<input type="text" class="form-control" name="name" id="input-name" placeholder="<?php echo $entry_name; ?>"/>
-				</div>
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<span class="input-group-text" id="basic-addon1"><i class="icon-material-baseline-mail-outline"></i></span>
-					</div>
-					<input type="text" class="form-control" name="email" id="input-email" placeholder="<?php echo $entry_email; ?>" required/>
-				</div>
-				<textarea  name="comment" cols="30" rows="5" class="form-control" id="input-comment" placeholder="Comment"></textarea>
-			</div>
-			<button class="button button-sliding-icon ripple-effect margin-bottom-40 margin-top-20" type="button" id="add-comment"><?php echo $button_add; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
-		</form>
-	</div>
-</div>
 </div>
 <div class="padding-top-40"></div>
 <script type="text/javascript">
 $("#add-comment").on('click', function () {
 	$.ajax({
-		url: 'extension/blog/blog/addComment',
+		url: 'extension/blog/blog/addComment?post_id=<?php echo $post_id ?>',
 		headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
           "X-Requested-With": "XMLHttpRequest"
         },
 		method:'post',
-		data: $('#form-comment').serialize(),
 		dataType: 'json',
+		data: $('#form-comment').serialize(),
         beforeSend: function() {
         	$('#form-comment').removeClass('is-invalid');
         	$('.alert, .invalid-feedback').remove();
@@ -186,7 +184,9 @@ $("#add-comment").on('click', function () {
         	}
 
 			if(json['success']) {
+				 $('#form-comment').trigger('reset');
 				 $('#form-comment').before('<div class="notification success closeable"><p><i class="fas fa-check-circle"></i> ' + json['success'] + '</p><a class="close" href="#"></a></div>');
+
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

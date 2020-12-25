@@ -2526,7 +2526,7 @@ blockquote {
 
 .comment-content {
 	color: #666;
-	padding: 0 0 0 100px;
+	padding-right: 30%;
 }
 
 .comments ul li ul {

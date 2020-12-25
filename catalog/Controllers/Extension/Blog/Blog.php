@@ -226,21 +226,19 @@ class Blog extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->request->isAJAX()) {
+        if ($this->request->isAJAX() &&  ($this->request->getMethod() == 'post')) {
             if (! $this->validate([
-            'email'   => "required|valid_email",
-            'name'    => 'required|alpha_numeric_spaces',
-            'comment' => 'required'
+                'name'    => 'required|alpha_numeric_space',
+                'email'   => "required|valid_email",
+                'comment' => 'required|min_length[10]'
         ])) {
                 $json['error'] = $this->validator->getErrors();
             }
 
-            if (!$json) {
-                if ($this->request->getMethod() == 'post') {
-                    $blogModel = new BlogModel();
-                    $blogModel->insertComment($this->request->getPost());
-                    $json['success'] = lang('extension/blog/blog.text_comment_success');
-                }
+            if ((! $json) && $this->request->getVar('post_id')) {
+                $blogModel = new BlogModel();
+                $blogModel->insertComment($this->request->getVar('post_id'), $this->request->getPost());
+                $json['success'] = lang('extension/blog/blog.text_comment_success');
             }
         }
 

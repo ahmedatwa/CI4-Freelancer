@@ -98,11 +98,11 @@ class BlogModel extends \CodeIgniter\Model
         return $query['total'];
     }
 
-    public function insertComment($data)
+    public function insertComment($post_id, $data)
     {
-        $builder = $this->db->table('blog_post_to_commet');
+        $builder = $this->db->table('blog_post_to_comment');
         $data = [
-            'post_id' => $data['post_id'],
+            'post_id' => $post_id,
             'name'    => $data['name'],
             'email'   => $data['email'],
             'comment' => $data['comment'],

@@ -51,8 +51,8 @@ $('#button-new-job').on('click', function() {
   $.ajax({
         url: 'account/jobs/add',
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-          'X-Requested-With': 'XMLHttpRequest'
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
         },
         dataType: 'json',
         method:'post',

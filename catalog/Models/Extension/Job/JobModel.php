@@ -91,6 +91,7 @@ class JobModel extends \CodeIgniter\Model
         // job_description Query
         if (isset($data['job_description'])) {
             $job_description_table = $this->db->table('job_description');
+            $job_description_table->delete(['job_id' => $jobID]);
             $job_description_data = [
                     'job_id'           => $jobID,
                     'name'             => $data['job_description']['name'],

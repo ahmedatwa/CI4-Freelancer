@@ -116,7 +116,7 @@ class BlogModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table('blog_category');
         $builder->select();
-        $builder->where('status', 1);
+        $builder->where(['status' => 1, 'category_id' => $category_id]);
         $query = $builder->get();
         return $query->getRowArray();
     }
@@ -161,6 +161,7 @@ class BlogModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table('blog_post_to_comment');
         $builder->select();
+        $builder->where('comment_id', $comment_id);
         $query = $builder->get();
         return $query->getRowArray();
     }
