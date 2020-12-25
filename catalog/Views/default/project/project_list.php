@@ -222,7 +222,7 @@ selectionContainer: $('.keywords-list'),
 			location = json['uri'];
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError);
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
   
@@ -248,7 +248,7 @@ selectionContainer: $('.keywords-list'),
 			location = json['uri'];
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError);
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
@@ -281,7 +281,7 @@ $('input[name^=\'filter_state\']').on('click', function() {
 			location = json['uri'];
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError);
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
  });    
@@ -313,7 +313,7 @@ $('input[name^=\'filter_type\']').on('click', function() {
 			location = json['uri'];
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError);
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	})
 }); 
@@ -341,7 +341,7 @@ mySlider.on('slideStop', function(e){
 			location = json['uri'];
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError);
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });

@@ -20,13 +20,11 @@ class Filters extends BaseConfig
         'before' => [
              'permission',
              'language',
-            //'honeypot'
               'csrf' => ['except' => ['common/filemanager/[a-z]+']],
         ],
         'after'  => [
             'toolbar',
             'language',
-            //'honeypot'
         ],
     ];
 

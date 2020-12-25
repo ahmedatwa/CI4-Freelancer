@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <meta name="<?php echo csrf_token(); ?>" content="<?php echo csrf_hash(); ?>">
     <title><?php echo $title; ?></title>
     <base href="<?php echo $base; ?>">
     <!-- CSS -->
@@ -10,6 +11,9 @@
     <link rel="stylesheet" href="assets/stylesheet/stylesheet.css" type="text/css">
     <link rel="stylesheet" href="assets/vendor/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/vendor/bootstrap-sweetalert/sweetalert.css">
+    <?php foreach ($styles as $style) { ?>
+<link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
+   <?php } ?>
     <!-- JS -->
     <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>

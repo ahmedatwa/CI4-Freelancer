@@ -24,7 +24,7 @@ class Header extends \Admin\Controllers\BaseController
         $data['direction']         = lang('en.direction');
 
         $data['base']      = slash_item('baseURL');
-        $data['home']      = base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token'));
+        $data['home']      = ($this->request->getVar('user_token')) ? base_url('index.php/common/dashboard?user_token=' . $this->request->getVar('user_token')) : '#';
         $data['profile']   = base_url('index.php/user/user/edit?user_token=' . $this->request->getVar('user_token') . '&user_id='. $this->user->getUserID());
         $data['logout']    = base_url('index.php/common/logout');
         $data['activity']  = base_url('index.php/report/activity_log?user_token=' . $this->request->getVar('user_token'));

@@ -4,10 +4,9 @@ use \Admin\Models\User\UserModel;
 
 class Forgotten extends \Admin\Controllers\BaseController
 {
-
     public function index()
     {
-        $data['title'] = lang('common/forgotten.text_title');
+        $this->document->setTitle(lang('common/forgotten.list.heading_title'));
 
         $userModel = new UserModel();
 
@@ -15,42 +14,39 @@ class Forgotten extends \Admin\Controllers\BaseController
             return redirect()->to(base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')));
         }
 
-        if (($this->request->getMethod(true) == 'POST') && $this->validateForm()) {
-            $userModel->editCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), token('alpha', 40));
-            
-            $this->session->setFlashData('success', lang('common/forgotten.text_success'));
-
-            return redirect()->to(base_url('index.php/common/login'));
-        }
-
-        if ($this->session->get('error')) {
-            $data['error'] = $this->session->get('error');
-        } else {
-            $data['error'] = '';
-        }
-
-
-        if ($this->request->getPost('email')) {
-            $data['email'] = $this->request->getPost('email', FILTER_SANITIZE_EMAIL);
-        } else {
-            $data['email'] = '';
-        }
-
-        $data['action'] = base_url('index.php/common/forgotten');
         $data['cancel'] = base_url('index.php/common/login');
 
         $this->document->output('common/forgotten', $data);
     }
 
-    protected function validateForm()
+    public function resetPassword()
     {
-        $userModel = new UserModel();
+        $json = [];
 
-        if (! $this->validate([
-            'email' => 'required|valid_email',
-        ]) || ! $userModel->getTotalUsersByEmail($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
-            $this->session->setFlashData('error', lang('common/forgotten.error-email'));
+        if ($this->request->isAJAX()) {
+            $userModel = new UserModel();
+            if (! $this->validate([
+             'email' => 'required|valid_email',
+            ])) {
+                $json['error'] = $this->validator->getError('email');
+            }
+
+            if (! $userModel->getTotalUsersByEmail($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
+                $json['error_record'] = lang('common/forgotten.error_email');
+            }
+
+            $throttler = \Config\Services::throttler();
+            if ($throttler->check($this->request->getIPAddress(), 60, MINUTE) === false) {
+                $json['throttler'] = $this->response->setStatusCode(429);
+            }
+
+            if ((! $json) && ($this->request->getMethod() == 'post')) {
+                $userModel->editCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), token('alpha', 40));
+                $json['success'] = lang('common/forgotten.text_success');
+                $json['redirect'] = base_url('index.php/common/login');
+            }
         }
-        return true;
+        
+        return $this->response->setJSON($json);
     }
 } //------------------------------------------------
