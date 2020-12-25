@@ -205,9 +205,13 @@ selectionContainer: $('.keywords-list'),
 
 	$.ajax({
 		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
+        },
 		dataType: 'json',
 		method: 'post',
-		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), skills: select_val.join('_')},
+		data: {skills: select_val.join('_')},
 		beforeSend: function() {
 			$('#overlay').fadeIn().delay(2000);
 		},
@@ -227,9 +231,13 @@ selectionContainer: $('.keywords-list'),
 
 	  $.ajax({
 		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
+        },
 		dataType: 'json',
 		method: 'post',
-		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), clear: 'skills'},
+		data: {clear: 'skills'},
 		beforeSend: function() {
 			$('#overlay').fadeIn().delay(2000);
 		},
@@ -256,9 +264,13 @@ $('input[name^=\'filter_state\']').on('click', function() {
 
     $.ajax({
 		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
+        },
 		dataType: 'json',
 		method: 'post',
-		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), state: filter.join('_')},
+		data: {state: filter.join('_')},
 		beforeSend: function() {
 			$('#overlay').fadeIn().delay(2000);
 		},
@@ -284,9 +296,13 @@ $('input[name^=\'filter_type\']').on('click', function() {
 
 	$.ajax({
 		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
+        },
 		dataType: 'json',
 		method: 'post',
-		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), type: filter.join('_')},
+		data: {type: filter.join('_')},
 		beforeSend: function() {
 			$('#overlay').fadeIn().delay(2000);
 		},
@@ -308,9 +324,13 @@ mySlider.on('slideStop', function(e){
 	var filter = e.value;
 	$.ajax({
 		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
+        },
 		dataType: 'json',
 		method: 'post',
-		data: {'CSRFCAT': $('meta[name="CSRFCAT"]').attr('content'), budget: filter.join('_')},
+		data: {budget: filter.join('_')},
 		beforeSend: function() {
 			$('#overlay').fadeIn().delay(2000);
 		},

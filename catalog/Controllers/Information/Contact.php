@@ -9,7 +9,6 @@ class Contact extends BaseController
         $this->template->setTitle(lang('information/contact.heading_title'));
         
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            
             $email = \Config\Services::email();
 
             $email->setFrom($this->registry->get('config_email'), $this->registry->get('config_name'));
@@ -19,10 +18,10 @@ class Contact extends BaseController
             $email->setMessage($this->request->getPost('enquiry'));
             
             if ($email->send()) {
-				$this->session->setFlashdata('success', lang('information/contact.text_success'));
+                $this->session->setFlashdata('success', lang('information/contact.text_success'));
             } else {
-				$this->session->setFlashdata('error_warning', lang('en.error.error_form'));
-			}
+                $this->session->setFlashdata('error_warning', lang('en.error.error_form'));
+            }
         }
 
         $data['breadcrumbs'] = [];
@@ -59,8 +58,8 @@ class Contact extends BaseController
 
         $data['action'] = route_to('contact');
 
-		$data['site']       = $this->registry->get('config_name');
-		$data['address']    = nl2br($this->registry->get('config_address'));
+        $data['site']       = $this->registry->get('config_name');
+        $data['address']    = nl2br($this->registry->get('config_address'));
         $data['open']       = $this->registry->get('config_open');
         $data['telephone']  = $this->registry->get('config_telephone');
 
@@ -77,10 +76,11 @@ class Contact extends BaseController
     {
         if (! $this->validate([
                 'name'    => 'required|min_length[3]|max_length[32]',
-                'email'   => 'required|valid_email]',
-                'inquiry' => 'required||min_length[10]|max_length[300]',
+                'email'   => 'required|valid_email',
+                'inquiry' => 'required|min_length[10]|max_length[300]',
             ])) {
             $this->session->setFlashdata('error_warning', lang('en.error.error_form'));
+            return false;
         }
 
         return true;

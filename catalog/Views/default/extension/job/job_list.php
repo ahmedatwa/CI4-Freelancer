@@ -167,7 +167,8 @@ selectionContainer: $('.keywords-list'),
 	$.ajax({
 		url: 'project/project/filter?url=' + encodeURIComponent(uri),
 	    headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
         },
 		dataType: 'json',
 		method: 'post',
@@ -193,7 +194,8 @@ selectionContainer: $('.keywords-list'),
 	  $.ajax({
 		url: 'project/project/filter?url=' + encodeURIComponent(uri),
 	    headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
         },
 		dataType: 'json',
 		method: 'post',
@@ -226,7 +228,8 @@ $('input[name^=\'filter_type\']').on('click', function() {
 	$.ajax({
 		url: 'extension/job/job/filter?url=' + encodeURIComponent(uri),
 	    headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
         },
 		dataType: 'json',
 		method: 'post',
@@ -244,9 +247,6 @@ $('input[name^=\'filter_type\']').on('click', function() {
 			alert(thrownError);
 		}
 	});
-	
-	
-
 }); 
 </script>
 <?php echo $footer; ?>
