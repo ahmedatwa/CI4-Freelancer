@@ -7,7 +7,7 @@ class Login extends \Admin\Controllers\BaseController
     public function index()
     {
         $this->document->setTitle(lang('common/login.text_title'));
-
+        
         if ($this->user->isLogged() && $this->session->get('user_token')) {
             return redirect()->to(base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')));
         }
