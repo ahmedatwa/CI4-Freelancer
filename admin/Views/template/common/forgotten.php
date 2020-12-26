@@ -56,12 +56,11 @@ $('#button-forgot').on('click', function() {
                 $('#form-forgot').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['throttler'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>') 
             }
 
-
             if (json['success']) {
-                console.log(json['redirect'])
-                $('#form-forgot').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $('#form-forgot').html('<div class="d-flex justify-content-center"><div class="spinner-border text-success" role="status"><span class="sr-only">Loading...</span></div></div><span class="mt-3 d-flex justify-content-center">' + json['success'] + '</span>');
+
                 setTimeout(function() { 
-                    location.reload(json['redirect']);
+                    location = json['redirect'];
                 }, 2000);
             }
 

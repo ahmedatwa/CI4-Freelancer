@@ -92,11 +92,9 @@ class UserModel extends Model
     }
 
     // Forget Passowrd functions
-
     public function getTotalUsersByEmail($email)
     {
-        $builder = $this->db->Table($this->db->prefixTable('user'));
-
+        $builder = $this->db->table($this->table);
         $builder->select('user_id');
         $builder->where('email', $email);
         return $builder->countAllResults();
@@ -104,14 +102,11 @@ class UserModel extends Model
 
     public function editCode($email, $code)
     {
-        $builder = $this->db->Table($this->db->prefixTable('user'));
+        $builder = $this->db->table($this->table);
         $builder->set('code', $code);
         $builder->where('email', $email);
-        $builder->replace();
+        $builder->update();
     }
-
-
-
 
     // -----------------------------------------------------------------
 }

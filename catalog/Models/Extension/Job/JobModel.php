@@ -101,8 +101,16 @@ class JobModel extends \CodeIgniter\Model
                     'meta_keyword'     => $data['job_description']['meta_keyword'] ?? '',
                 ];
             $job_description_table->insert($job_description_data);
+            // Seo Url
+            $seo_url = $this->db->table('seo_url');
+            $seo_url_data = [
+            'site_id'     => 0,
+            'language_id' => 1,
+            'query'       => 'job_id=' . $jobID,
+            'keyword'     => generateSeoUrl($data['job_description']['name']),
+        ];
+            $seo_url->insert($seo_url_data);
         }
-        // Seo Url
     }
     
     public function editJob($job_id, $data)

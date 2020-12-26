@@ -43,7 +43,7 @@ class Forgotten extends \Admin\Controllers\BaseController
             if ((! $json) && ($this->request->getMethod() == 'post')) {
                 $userModel->editCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), token('alpha', 40));
                 $json['success'] = lang('common/forgotten.text_success');
-                $json['redirect'] = base_url('index.php/common/login');
+                $json['redirect'] = 'index.php/common/login';
             }
         }
         

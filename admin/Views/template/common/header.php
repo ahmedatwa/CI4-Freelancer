@@ -22,13 +22,13 @@
 </head>
 <body>
 <div id="container">
+<?php if ($logged) { ?>
 <nav class="navbar navbar-expand-lg" id="header-nav">
 <div class="container-fluid">
     <a id="header-logo" class="navbar-header" href="<?php echo $home; ?>">
     <img src="assets/images/logo.png" alt="<?php echo $admin_panel_title; ?>" title="<?php echo $admin_panel_title; ?>" width="180" height="35" class="my-auto">
     </a>
     <button type="button" id="button-menu" class="btn btn-white"><i class="fas fa-bars"></i><span>Toggle Sidebar</span></button>
-    <?php if ($logged) { ?>
     <ul class="nav ">
         <!-- Notifications DropDown-->
         <li class="nav-item d-none d-sm-block">
@@ -65,6 +65,7 @@
             <i class="fas fa-sign-out-alt"></i> <?php echo $text_logout; ?></a>
         </li>
          </ul>
-        <?php } ?>
+        
  </div>       
 </nav>
+<?php } ?>
