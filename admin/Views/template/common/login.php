@@ -69,10 +69,11 @@
 <script type="text/javascript">
 $('#button-login').on('click', function() {
     $.ajax({
-        url: 'index.php/common/login/authenticate',
+        url: 'index.php/common/login/authLogin',
         headers: {
            "X-CSRF-TOKEN": $('meta[name="csrf-token-admin"]').attr('content'),
-           "X-Requested-With": "XMLHttpRequest"
+           "X-Requested-With": "XMLHttpRequest",
+           'Content-Type': 'application/x-www-form-urlencoded',
         },
         method: 'post',
         dataType: 'json',
@@ -105,7 +106,7 @@ $('#button-login').on('click', function() {
                 $('#button-login').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> Loading...');
                 setTimeout(function() { 
                     location = json['redirect'];
-                }, 3000);
+                }, 2000);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

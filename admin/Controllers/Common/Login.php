@@ -58,7 +58,7 @@ class Login extends \Admin\Controllers\BaseController
         return $this->document->output('common/login', $data);
     }
 
-    public function authenticate()
+    public function authLogin()
     {
         $json = [];
 

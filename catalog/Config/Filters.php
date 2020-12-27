@@ -23,6 +23,8 @@ class Filters extends BaseConfig
 		    'seo_url',
 		    'honeypot',
 		    'maintenance',
+		    'csrf',
+		    'throttle'
 		],
 		'after'  => [
 			'honeypot',
@@ -32,9 +34,7 @@ class Filters extends BaseConfig
 	// Works on all of a particular HTTP method
 	// (GET, POST, etc) as BEFORE filters only
 	//     like: 'post' => ['CSRF', 'throttle'],
-	public $methods = [
-	   'post' => ['throttle', 'csrf']
-    ];
+	public $methods = [];
 
 	// List filter aliases and any before/after uri patterns
 	// that they should run on, like:

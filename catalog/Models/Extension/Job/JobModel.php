@@ -103,11 +103,12 @@ class JobModel extends \CodeIgniter\Model
             $job_description_table->insert($job_description_data);
             // Seo Url
             $seo_url = $this->db->table('seo_url');
+            helper('text');
             $seo_url_data = [
             'site_id'     => 0,
             'language_id' => 1,
             'query'       => 'job_id=' . $jobID,
-            'keyword'     => generateSeoUrl($data['job_description']['name']),
+            'keyword'     => url_title(convert_accented_characters($data['job_description']['name']), '-', true),
         ];
             $seo_url->insert($seo_url_data);
         }

@@ -4,13 +4,12 @@ use \Catalog\Models\Account\CustomerModel;
 
 class Login extends \Catalog\Controllers\BaseController
 {
-    private $error = [];
 
     public function index()
     {
         if ($this->customer->isLogged()) {
             return redirect()->route('account_dashboard');
-        } 
+        }
 
         $this->template->setTitle(lang('account/login.heading_title'));
 
@@ -40,21 +39,45 @@ class Login extends \Catalog\Controllers\BaseController
 
     public function authLogin()
     {
-       $json = [];
+        $json = [];
 
-       if (($this->request->getMethod() == 'post') && $this->validateForm() && $this->request->isAJAX()) {
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
 
-            if ($this->session->get('redirect_url')) {
-                $json['redirect'] = (string) $this->session->get('redirect_url');
-            } else {
-                $json['redirect'] = (route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
+            if (! $this->validate([
+                'email'    => 'required|valid_email',
+                'password' => 'required|min_length[4]',
+            ])) 
+            {
+                $json['error_warning'] = lang('account/login.text_warning');
+                $json['validator'] = $this->validator->getErrors();
+            }
+
+            $customerModel = new CustomerModel();
+
+            // Check how many login attempts have been made.
+            $login_info = $customerModel->getLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
+
+            if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+                $json['error_attempts'] = lang('account/login.error_attempts');
+            }
+        
+            if (! $this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'))) {
+                $json['error_warning'] = lang('account/login.text_warning');
+                $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
+            }
+
+            if (! $json) {
+                $customerModel->deleteLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
+
+                if ($this->session->get('redirect_url')) {
+                    $json['redirect'] = (string) $this->session->get('redirect_url');
+                } else {
+                    $json['redirect'] = (route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
+                }
             }
         }
-
-        $json['error'] = $this->session->getFlashdata('error_warning');
-        $json['validator'] = $this->error;
        
-       return $this->response->setJSON($json);  
+        return $this->response->setJSON($json);
     }
 
     public function googleAuth()
@@ -129,36 +152,36 @@ class Login extends \Catalog\Controllers\BaseController
         return $this->response->setJSON($json);
     }
 
-    protected function validateForm()
-    {
-        // Fields Validation Rules
-        if (! $this->validate([
-            'email'    => 'required|valid_email',
-            'password' => 'required|min_length[4]',
-        ])) {
-            $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
-            $this->error = $this->validator->getErrors();
-        }
+    // protected function validateForm()
+    // {
+    //     // Fields Validation Rules
+    //     // if (! $this->validate([
+    //     //     'email'    => 'required|valid_email',
+    //     //     'password' => 'required|min_length[4]',
+    //     // ])) {
+    //     //     $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
+    //     //     $this->error = $this->validator->getErrors();
+    //     // }
 
-        $customerModel = new CustomerModel();
-        // Check how many login attempts have been made.
-        $login_info = $customerModel->getLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
+    //     $customerModel = new CustomerModel();
+    //     // Check how many login attempts have been made.
+    //     $login_info = $customerModel->getLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
 
-        if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
-            $this->session->setFlashData('error_warning', lang('account/login.error_attempts'));
-            return false;
-        }
+    //     if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+    //         $this->session->setFlashData('error_warning', lang('account/login.error_attempts'));
+    //         return false;
+    //     }
         
-        if (!$this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'))) {
-            $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
-            $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
-            return false;
-        } else {
-            $customerModel->deleteLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
-        }
+    //     if (!$this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'))) {
+    //         $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
+    //         $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
+    //         return false;
+    //     } else {
+    //         $customerModel->deleteLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
     //--------------------------------------------------------------------
 }

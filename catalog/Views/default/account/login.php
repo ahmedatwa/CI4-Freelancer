@@ -47,7 +47,8 @@ $('#button-form-login').on('click', function() {
 		url: 'account/login/authLogin',
 		headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-          'X-Requested-With': 'XMLHttpRequest'
+          'X-Requested-With': 'XMLHttpRequest',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
 		type: 'post',
 		dataType: 'json',
@@ -58,25 +59,32 @@ $('#button-form-login').on('click', function() {
 		   $('.alert, .invalid-feedback').remove();
 		},
 		success: function(json) {
-			if (json['redirect']) {
+
+		    if (json['error_warning']) {
+		    	if (json['validator']) {
+			    	for ( i in json['validator']) {
+			    		$('#input-' + i).after('<div class="invalid-feedback">' + json['validator'][i] + '</div>');
+			    		$('#input-' + i).addClass('is-invalid');
+			    	}
+		        }
+
+		    	$('.welcome-text').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+ json['error_warning']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		    	$('#login-wrapper').addClass('animate__animated animate__shakeX');
+		    }
+
+		    if (json['error_attempts']) {
+                 $('.welcome-text').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+ json['error_attempts']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		    }
+
+		    if (json['redirect']) {
 				$('#login-wrapper').html('<h2 class="text-center"><i class="fas fa-thumbs-up text-danger"></i> Login Success</h2><p class="text-center">Please wait we will redirect you.</p><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 				setTimeout(function() {
 					location = json['redirect'];
 			    }, 2000); 
 			}
-
-		    if (json['error']) {
-		    	for ( i in json['validator']) {
-		    		$('#' + i).append('<div class="invalid-feedback">'+json['validator'][i]+'</div>')
-		    	}
-
-		    	$('.form-group input').addClass('is-invalid');
-		    	$('.welcome-text').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> '+ json['error']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-		    	$('#login-wrapper').addClass('animate__animated animate__shakeX');
-		    }
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			alert(xhr.responseJSON.message);
          }
 	});
 });
