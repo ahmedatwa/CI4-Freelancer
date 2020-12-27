@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2020 at 06:37 PM
+-- Generation Time: Dec 27, 2020 at 10:33 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.3.25
 
@@ -81,7 +81,7 @@ CREATE TABLE `ci_blog_category` (
 --
 
 INSERT INTO `ci_blog_category` (`category_id`, `name`, `status`) VALUES
-(1, 'uncategorized', 1);
+(1, 'General', 1);
 
 -- --------------------------------------------------------
 
@@ -109,13 +109,7 @@ CREATE TABLE `ci_blog_post` (
 --
 
 INSERT INTO `ci_blog_post` (`post_id`, `user_id`, `category_id`, `title`, `body`, `tags`, `image`, `featured`, `trending`, `status`, `date_added`, `date_modified`) VALUES
-(1, 0, 1, 'What is Lorem Ipsum?111', '\">\">', '', '', 1, 1, 1, '2020-09-23 21:17:17', '2020-11-19 18:17:54'),
-(2, 1, 1, 'What is Lorem Ipsum?', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>\">', '', '', 1, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17'),
-(4, 1, 1, 'What is Lorem Ipsum?', '<p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', '', '', 0, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17'),
-(5, 1, 1, 'What is Lorem Ipsum?', '<p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', '', '', 0, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17'),
-(6, 1, 1, 'What is Lorem Ipsum?', '<p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', '', '', 0, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17'),
-(7, 1, 1, 'What is Lorem Ipsum?', '<p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', '', '', 0, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17'),
-(8, 1, 1, 'What is Lorem Ipsum?', '<p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', '', '', 0, 0, 1, '2020-09-23 21:17:17', '2020-09-23 21:17:17');
+(1, 0, 1, 'Sample Blog Post', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-bottom: 15px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px;\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>\">', '', '', 0, 0, 1, '2020-12-24 20:44:19', '2020-12-24 21:26:17');
 
 -- --------------------------------------------------------
 
@@ -139,7 +133,10 @@ CREATE TABLE `ci_blog_post_to_comment` (
 --
 
 INSERT INTO `ci_blog_post_to_comment` (`comment_id`, `post_id`, `name`, `email`, `website`, `comment`, `status`, `date_added`) VALUES
-(1, 1, 'sssssss', 'ssss@fff.com', '', 'ssss', 0, '2020-09-24 18:49:27');
+(1, 1, 'sssssss', 'ssss@fff.com', '', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 1, '2020-09-24 18:49:27'),
+(2, 1, 'sssssss', 'ssss@fff.com', '', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 1, '2020-09-24 18:49:27'),
+(3, 1, 'test', 'customer_3@demo.com', '', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 1, '2020-12-25 12:33:47'),
+(4, 1, 'YallaHelp', 'customer_3@demo.com', '', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 0, '2020-12-25 12:34:27');
 
 -- --------------------------------------------------------
 
@@ -572,7 +569,7 @@ CREATE TABLE `ci_customer` (
 --
 
 INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
-(20, 1, 'employer', 'demo', 'customer', 'customer@customer.com', '', '$2y$10$Mj4hoXcroWKj84C0z725U.OZXkOU8qMEhDeHsRloIiaioiOm6YU7W', '', 22, 1, '', '', 0, NULL, 'NULL', 0, '', 1, '', '', '', '', '2020-11-15 12:00:19', '2020-12-18 18:09:37'),
+(20, 1, 'employer', 'demo', 'customer', 'customer@customer.com', '', '$2y$10$Mj4hoXcroWKj84C0z725U.OZXkOU8qMEhDeHsRloIiaioiOm6YU7W', '', 23, 1, '', 'catalog/1608582665_83479d8608f3933ad07b.png', 0, NULL, 'NULL', 0, '', 1, '', '', '', '', '2020-11-15 12:00:19', '2020-12-21 20:31:05'),
 (30, 1, 'freelancer', 'demo', 'customer_2', 'customer_2@demo.com', '', '$2y$10$1zyoqELnzmI4E0b56kc5iOkynJr3QrSEbwyXDJiauXY9beb6oaMyO', '', 1, 1, '', '', 0, NULL, 'NULL', 0, '', 0, '', '', '', '', '2020-11-15 12:03:14', '0000-00-00 00:00:00'),
 (31, 1, 'cust3', 'demo3', 'customer_3', 'customer_3@demo.com', '', '$2y$10$uMWVALi8btznHdC06HfVCe4qDKVBmxavbDs6rKzhWH6FVOF5JMyRy', '', 0, 1, '', '', 0, NULL, 'NULL', 0, '', 0, '', '', '', '', '2020-12-14 17:11:19', '2020-12-15 12:59:03');
 
@@ -687,6 +684,13 @@ CREATE TABLE `ci_customer_login` (
   `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `ci_customer_login`
+--
+
+INSERT INTO `ci_customer_login` (`customer_login_id`, `email`, `ip`, `total`, `date_added`, `date_modified`) VALUES
+(1, 'admin@admin.com', '::1', 27, '2020-12-27 21:42:00', '2020-12-27 22:30:35');
+
 -- --------------------------------------------------------
 
 --
@@ -706,7 +710,7 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 0, 'http://ci4.localhost/images/user-avatar-small-01.jpg', 'http://ci4.localhost/', '2020-12-19 18:33:35');
+('::1', 20, 'http://ci4.localhost/account/jobs', 'http://ci4.localhost/account/message', '2020-12-27 22:32:09');
 
 -- --------------------------------------------------------
 
@@ -1027,7 +1031,8 @@ INSERT INTO `ci_extension` (`extension_id`, `type`, `code`) VALUES
 (77, 'module', 'video'),
 (80, 'module', 'freelancer'),
 (83, 'wallet', 'wallet'),
-(92, 'job', 'job');
+(92, 'job', 'job'),
+(94, 'blogger', 'comment');
 
 -- --------------------------------------------------------
 
@@ -1099,6 +1104,14 @@ CREATE TABLE `ci_job` (
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `ci_job`
+--
+
+INSERT INTO `ci_job` (`job_id`, `employer_id`, `salary`, `type`, `viewed`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
+(15, 20, '0.0000', 1, 0, 0, 1, '2020-12-26 21:02:26', '2020-12-26 21:02:26'),
+(16, 20, '0.0000', 1, 0, 0, 1, '2020-12-26 21:02:26', '2020-12-26 21:02:26');
+
 -- --------------------------------------------------------
 
 --
@@ -1129,6 +1142,29 @@ CREATE TABLE `ci_job_description` (
   `meta_description` varchar(255) NOT NULL,
   `meta_keyword` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_job_description`
+--
+
+INSERT INTO `ci_job_description` (`job_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(1, 'test job', '<p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</span><br></p>', '', '', 'IT, Test'),
+(2, 'test job', '<p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</span><br></p>', '', '', 'IT, Test'),
+(3, 'test job', '<p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</span><br></p>', '', '', 'IT, Test'),
+(4, 'ssss', '<p>ssss</p>', '', '', 'ssss'),
+(5, 'sss', '<p>ssss</p>', '', '', 'ssss'),
+(6, 'ssss', '<p>ssss</p>', '', '', 'sssss'),
+(7, 'aaa', '<p>aaaa</p>', '', '', 'aaaa'),
+(8, 'aaa', '<p>aaa</p>', '', '', 'aaaa'),
+(9, 'ddd', '<p>ddd</p>', '', '', 'dddd'),
+(10, 'aaaa', '<p>aaaaaaaa</p>', '', '', 'www'),
+(11, 'eeeee', '<p>eeeeeeee</p>', '', '', 'rrrr'),
+(12, 'ssss', '<p><strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span><br></p>', '', '', 'ss'),
+(13, 'dddd', '<p>dddddddd</p>', '', '', 'dddd'),
+(14, 'dddd', '<p>dddddddd</p>', '', '', 'dddd'),
+(15, 'ssss', '<p>sssssss</p>', '', '', 'ssss'),
+(16, 'ssss', '<p>sssssss</p>', '', '', 'ssss'),
+(17, 'ddd', '<p>ddhhhh</p>', '', '', 'ssss');
 
 -- --------------------------------------------------------
 
@@ -1263,7 +1299,7 @@ CREATE TABLE `ci_layout` (
 
 INSERT INTO `ci_layout` (`layout_id`, `name`) VALUES
 (1, 'Home'),
-(3, 'category'),
+(3, 'Category'),
 (6, 'Account'),
 (8, 'Contact'),
 (11, 'Information');
@@ -1314,7 +1350,7 @@ CREATE TABLE `ci_layout_route` (
 INSERT INTO `ci_layout_route` (`layout_route_id`, `layout_id`, `site_id`, `route`) VALUES
 (39, 1, 0, 'common/home'),
 (7, 6, 0, 'account/(:any)'),
-(10, 3, 0, 'project/category');
+(40, 3, 0, 'project/category');
 
 -- --------------------------------------------------------
 
@@ -1340,14 +1376,14 @@ CREATE TABLE `ci_message` (
 
 INSERT INTO `ci_message` (`message_id`, `thread_id`, `project_id`, `sender_id`, `receiver_id`, `message`, `seen`, `date_added`, `date_modified`) VALUES
 (1, 'e72572021e', 1, 20, 30, '{\"sender_id\":\"20\",\"receiver_id\":\"30\",\"text\":\"ssss\"}', 0, '2020-12-14 18:28:41', '2020-12-14 18:46:30'),
-(2, 'a12d4fb70a', 1, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"rrrr\"}', 1, '2020-12-14 18:28:55', '2020-12-14 19:55:52'),
-(8, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"fffff\"}', 1, '2020-12-14 18:39:19', '2020-12-14 19:55:52'),
+(2, 'a12d4fb70a', 1, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"rrrr\"}', 1, '2020-12-14 18:28:55', '2020-12-27 22:32:05'),
+(8, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"fffff\"}', 1, '2020-12-14 18:39:19', '2020-12-27 22:32:05'),
 (9, 'e72572021e', 0, 20, 30, '{\"sender_id\":\"20\",\"receiver_id\":\"30\",\"text\":\"tttt\"}', 0, '2020-12-14 18:39:30', '2020-12-14 18:46:30'),
-(10, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"i have seen your profile and i\'m insterested to do business with you, reach out when you get my message \"}', 1, '2020-12-14 18:47:06', '2020-12-14 19:55:52'),
-(11, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"ffff\"}', 1, '2020-12-14 19:53:26', '2020-12-14 19:55:52'),
-(12, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"ssss\"}', 1, '2020-12-14 19:53:53', '2020-12-14 19:55:52'),
-(13, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"ssss\"}', 1, '2020-12-14 19:54:27', '2020-12-14 19:55:52'),
-(14, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"hhh\"}', 0, '2020-12-14 19:55:55', '2020-12-14 19:55:55');
+(10, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"i have seen your profile and i\'m insterested to do business with you, reach out when you get my message \"}', 1, '2020-12-14 18:47:06', '2020-12-27 22:32:05'),
+(11, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"ffff\"}', 1, '2020-12-14 19:53:26', '2020-12-27 22:32:05'),
+(12, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"ssss\"}', 1, '2020-12-14 19:53:53', '2020-12-27 22:32:05'),
+(13, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"ssss\"}', 1, '2020-12-14 19:54:27', '2020-12-27 22:32:05'),
+(14, 'a12d4fb70a', 0, 20, 31, '{\"sender_id\":\"20\",\"receiver_id\":\"31\",\"text\":\"hhh\"}', 1, '2020-12-14 19:55:55', '2020-12-27 22:32:05');
 
 -- --------------------------------------------------------
 
@@ -1404,7 +1440,7 @@ CREATE TABLE `ci_project` (
 --
 
 INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`, `date_delete`) VALUES
-(1, 20, 0, '20.0000', '50.0000', 1, 3, 7, 42, '', 0, 6, 0, 0, '2020-12-14 18:45:15', '2020-11-22 18:45:15', '0000-00-00 00:00:00');
+(1, 20, 0, '20.0000', '50.0000', 1, 3, 7, 44, '', 0, 5, 0, 0, '2020-12-14 18:45:15', '2020-11-22 18:45:15', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1692,25 +1728,9 @@ CREATE TABLE `ci_seo_url` (
 --
 
 INSERT INTO `ci_seo_url` (`seo_url_id`, `site_id`, `language_id`, `query`, `keyword`) VALUES
-(12, 0, 1, 'project_id=1', 'where-does-it-come-from'),
-(2, 0, 1, 'category_id=28', 'test'),
-(3, 0, 1, 'category_id=29', 'test'),
-(4, 0, 1, 'category_id=10', 'business-accounting-human-resources-legal'),
-(5, 0, 1, 'project_id=3', 'what-is-lorem-ipsum333www'),
-(6, 0, 1, 'category_id=1', 'websites-it-software'),
-(7, 0, 1, 'post_id=1', 'what-is-lorem-ipsum'),
-(8, 0, 1, 'post_id=1', 'what-is-lorem-ipsum111'),
-(9, 0, 1, 'project_id=4', 'let-me-see-new-code'),
-(11, 0, 1, 'project_id=2', '2nd-peoject-for-test'),
-(13, 0, 1, 'job_id=1', 'hr-specialist'),
-(14, 0, 1, 'information_id=2', 'about-us'),
-(15, 0, 1, 'information_id=4', 'how-it-works'),
-(16, 0, 1, 'information_id=3', 'privacy-policy'),
-(17, 0, 1, 'information_id=1', 'terms-conditions'),
-(18, 0, 1, 'job_id=1', 'hr-specialist'),
-(19, 0, 1, 'job_id=1', 'hr-specialist'),
-(20, 0, 1, 'job_id=2', 'recruiter'),
-(21, 0, 1, 'job_id=10', 'new-job');
+(27, 0, 1, 'job_id=17', 'ddd'),
+(26, 0, 1, 'job_id=16', 'ssss'),
+(25, 0, 1, 'job_id=15', 'ssss');
 
 -- --------------------------------------------------------
 
@@ -1730,39 +1750,27 @@ CREATE TABLE `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
-('n4bgkkh84m72e71av9h7aovemfgiummb', '::1', 1608141305, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383134313330353b5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2255324d70505271494c4e37435934727644575147536c58656475564146426f7a223b),
-('qgud7e6buov7t1672btqu8ibk2uh695s', '::1', 1608141658, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383134313635383b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d55324d70505271494c4e37435934727644575147536c58656475564146426f7a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2255324d70505271494c4e37435934727644575147536c58656475564146426f7a223b),
-('tobbsi244v8vc7pu0196sbppihr9spvv', '::1', 1608142128, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383134323132383b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d55324d70505271494c4e37435934727644575147536c58656475564146426f7a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2255324d70505271494c4e37435934727644575147536c58656475564146426f7a223b),
-('ueikugjkoelopn26a6ssid8pujk5bhe8', '::1', 1608142262, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383134323132383b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d55324d70505271494c4e37435934727644575147536c58656475564146426f7a223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2255324d70505271494c4e37435934727644575147536c58656475564146426f7a223b),
-('ovu3068cobvme5hncm8mekd1hpdquk8r', '::1', 1608196113, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383139363131333b5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b),
-('e7f5qtj7e8ao8lpahkr18q497u0ccu7n', '::1', 1608197084, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383139373038343b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72793f757365725f746f6b656e3d57435371634a557a38764d696e6768313575465a6d4552364f6a66544e393330223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2257435371634a557a38764d696e6768313575465a6d4552364f6a66544e393330223b),
-('a25dr59uc34e8g20sjc6m1p93i0eclmf', '::1', 1608197084, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383139373038343b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72793f757365725f746f6b656e3d57435371634a557a38764d696e6768313575465a6d4552364f6a66544e393330223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2257435371634a557a38764d696e6768313575465a6d4552364f6a66544e393330223b),
-('1gjosg34gtvng459jk7aescki92h3jc7', '::1', 1608205950, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383230353935303b5f63695f70726576696f75735f75726c7c733a39323a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f6c6f63616c69736174696f6e2f63757272656e63793f757365725f746f6b656e3d7241746b33556559346a6d504b7579394f586f43474c31675762704966567877223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227241746b33556559346a6d504b7579394f586f43474c31675762704966567877223b),
-('ksmb19i9ggcrb6u99snid2lq5u4bk9ba', '::1', 1608211815, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383231313831353b5f63695f70726576696f75735f75726c7c733a37393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f746f6f6c2f6c6f673f757365725f746f6b656e3d7241746b33556559346a6d504b7579394f586f43474c31675762704966567877223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227241746b33556559346a6d504b7579394f586f43474c31675762704966567877223b),
-('f1ld71037m7b8lr1qbdjvnequdrs5tkh', '::1', 1608212149, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383231323134393b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f70726f6a6563743f757365725f746f6b656e3d7241746b33556559346a6d504b7579394f586f43474c31675762704966567877223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227241746b33556559346a6d504b7579394f586f43474c31675762704966567877223b),
-('b5idsgfekbp6oq69qe4r5bkj7hq63n41', '::1', 1608212154, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383231323134393b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d7241746b33556559346a6d504b7579394f586f43474c31675762704966567877223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227241746b33556559346a6d504b7579394f586f43474c31675762704966567877223b737563636573737c733a32373a22596f752068617665206d6f6469666965642053657474696e677321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
-('tkruuocqnrl248psghakbk8dj9k8je3f', '::1', 1608222535, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383232323533353b5f63695f70726576696f75735f75726c7c733a3130343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f70726f6a6563742f656469743f757365725f746f6b656e3d30327667446235427a43316173644e71795a68563841344d6c597836467572552670726f6a6563745f69643d31223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2230327667446235427a43316173644e71795a68563841344d6c59783646757255223b),
-('0nckfmojm9qc0d3a3lfjp7u3b1hid607', '::1', 1608222535, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383232323533353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d30327667446235427a43316173644e71795a68563841344d6c59783646757255223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2230327667446235427a43316173644e71795a68563841344d6c59783646757255223b),
-('dutr3s9pia7fe5ccsnjopjt0o9ip5o9h', '::1', 1608232538, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233323533383b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d7632624e7479366473464f344c3731585063484b49776c617a3042336e516978223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227632624e7479366473464f344c3731585063484b49776c617a3042336e516978223b),
-('p9ksopqg23avj4019aa417sub664kbpk', '::1', 1608233405, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233333430353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d7632624e7479366473464f344c3731585063484b49776c617a3042336e516978223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227632624e7479366473464f344c3731585063484b49776c617a3042336e516978223b),
-('6bi766vojig5hlcojt1crval4ic3464i', '::1', 1608233729, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233333732393b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d7632624e7479366473464f344c3731585063484b49776c617a3042336e516978223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227632624e7479366473464f344c3731585063484b49776c617a3042336e516978223b),
-('iq82e2ui6emlvtdft4419uuslf9sei0s', '::1', 1608233975, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233333732393b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f657874656e73696f6e3f757365725f746f6b656e3d7632624e7479366473464f344c3731585063484b49776c617a3042336e516978223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227632624e7479366473464f344c3731585063484b49776c617a3042336e516978223b),
-('b7mckisdan23uvpvdqnc1udnrjqaqvdq', '::1', 1608234065, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233333939353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72793f757365725f746f6b656e3d6b44526d676954394a4151304238666249585a35734e4f64566e537972783136223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226b44526d676954394a4151304238666249585a35734e4f64566e537972783136223b),
-('c1gmcuistflfm9e77frq66unuths5f83', '::1', 1608234106, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233343130343b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d32456f394c7656496534775a4d7a46556a787141507972744e6c44476b686254223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2232456f394c7656496534775a4d7a46556a787141507972744e6c44476b686254223b),
-('iknkpml48i3hdh5a2fl049m73i11ehe3', '::1', 1608234555, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233343535353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d4e3651484f7862686a75793477335056443771736f4d4b46647466495a305955223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224e3651484f7862686a75793477335056443771736f4d4b46647466495a305955223b),
-('faojnms0dffg4gsd73q91ing5fhpdlao', '::1', 1608234555, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233343535353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d4e3651484f7862686a75793477335056443771736f4d4b46647466495a305955223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224e3651484f7862686a75793477335056443771736f4d4b46647466495a305955223b),
-('mm413d550hhodgevh0t91vqumjg3b8bd', '::1', 1608234677, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233343537373b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d70487559686c364e536a51506674394f6e7842646b65736f524c694641573161223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2270487559686c364e536a51506674394f6e7842646b65736f524c694641573161223b),
-('6spemtkdd5f488l51adqqqf55jstd4e4', '::1', 1608234961, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233343639353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d4e4c546233776d6e78705130394643526a6c384a767357445a7a47584f495664223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224e4c546233776d6e78705130394643526a6c384a767357445a7a47584f495664223b),
-('oac6ngql3ihc8bisdkp2cvm93emf7n2o', '::1', 1608235286, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233353238363b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f66696e616e63652f646973707574653f757365725f746f6b656e3d457050746d367638575473324741796a4f4b4c653448516f71723543396b664e223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22457050746d367638575473324741796a4f4b4c653448516f71723543396b664e223b),
-('2nih4vq94r4taf1ctd05li3vtuape660', '::1', 1608235589, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233353538393b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d457050746d367638575473324741796a4f4b4c653448516f71723543396b664e223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22457050746d367638575473324741796a4f4b4c653448516f71723543396b664e223b),
-('etp9t7n35fapc2tht3henesca784b9uq', '::1', 1608236903, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233363930333b5f63695f70726576696f75735f75726c7c733a38393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f66696e616e63652f7769746864726177616c3f757365725f746f6b656e3d457050746d367638575473324741796a4f4b4c653448516f71723543396b664e223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22457050746d367638575473324741796a4f4b4c653448516f71723543396b664e223b),
-('u8ub2vcaaqqvsoqeec4ct1hnu97mjlmc', '::1', 1608236972, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383233363930333b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f6c61796f75743f757365725f746f6b656e3d457050746d367638575473324741796a4f4b4c653448516f71723543396b664e223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22457050746d367638575473324741796a4f4b4c653448516f71723543396b664e223b737563636573737c733a33353a22537563636573733a20596f752068617665206d6f646966696564206c61796f75747321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
-('n6vu4itiei28s663rdd1dmbjh68h88c2', '127.0.0.1', 1608300193, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383330303131323b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d6a59327a446d765a6255516e75675474316534795270773058366c4357726149223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226a59327a446d765a6255516e75675474316534795270773058366c4357726149223b),
-('uvj027cjp8iledqot8jrl64hei0entmg', '127.0.0.1', 1608300195, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383330303139353b5f63695f70726576696f75735f75726c7c733a32373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f223b),
-('tufdue5b5dojeaahdio9u6jhcdmmbsc9', '127.0.0.1', 1608313063, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383331333036333b5f63695f70726576696f75735f75726c7c733a32373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f223b),
-('9d176v1pri6l7uucpvskcaifv95108hn', '127.0.0.1', 1608314600, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383331343539343b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d6173736574732532467374796c657368656574223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
-('3ufjtj91a0kecta8rie9utvcf47o2kv9', '::1', 1608316107, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383331363130373b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d5f63695f70726576696f75735f75726c7c733a36343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d64657369676e2532466c61796f7574223b),
-('hvtgjkpoca3j1j56b1rortj850l61cn8', '::1', 1608376515, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630383337363438343b5f63695f70726576696f75735f75726c7c733a36343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d64657369676e2532466c61796f7574223b);
+('kchtol0b6au1iv1innvt4ba3lon8qv9v', '::1', 1609004644, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030343634343b5f63695f70726576696f75735f75726c7c733a36373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d76656e646f72253246626f6f747374726170223b),
+('j9b2sdmi0ekn4o7n8epbrl8l1be8vipd', '::1', 1609005037, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030353033373b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d696d6167657325324669636f6e73223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('licdgo4fnurvaijjgdij3j0jecittpg8', '::1', 1609005370, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030353337303b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d696d6167657325324669636f6e73223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('o21bpm1boe08mqrpvo3i0lg6qbf31hhu', '::1', 1609005578, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030353337303b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d696d6167657325324669636f6e73223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('ror1alp92sl78gfmeddvt9uj7aot6mer', '::1', 1609005920, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030353932303b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d696d6167657325324669636f6e73223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('bi8m2cn8gfv4s3t9ce4ov730bic1sc78', '::1', 1609007008, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030373030383b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d696d6167657325324669636f6e73223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('36n3bdrohqbdh9ldbrn1tuul728u7n54', '::1', 1609007031, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030373030383b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d696d6167657325324669636f6e73223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('5dk0mcq5rvifs5imjdullsqpse70kklj', '::1', 1609007417, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030373431373b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226e6577223b7d),
+('e63p30v9rtvhjivivlc5k7aree0u46cn', '::1', 1609007853, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030373835333b5f63695f70726576696f75735f75726c7c733a38353a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f656d61696c3d637573746f6d65725f3325343064656d6f2e636f6d2670617373776f72643d637573746f6d6572223b),
+('h7q76mgps311kev4u3rte0ljffa6540n', '::1', 1609008154, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030383135343b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f656d61696c3d637573746f6d6572253430637573746f6d65722e636f6d2670617373776f72643d637573746f6d6572223b),
+('qvt5t7q9jj5c6p6pvf8qp4um8jvroa4q', '::1', 1609007863, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030373836333b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226e6577223b7d),
+('p7g3fklvai418d01ahleh56sqqkn71o9', '::1', 1609008320, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030383135343b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f656d61696c3d637573746f6d6572253430637573746f6d65722e636f6d2670617373776f72643d637573746f6d6572223b),
+('1976n79disiqtnb93lnu2ud8agvc4d4k', '::1', 1609008695, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030383639353b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('5kcbcn64qdh88sh3ijkhbss14brc7raq', '::1', 1609009411, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393030393431313b5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b),
+('jvp5rdho33ibcmb2tnneaikvuoqtgh92', '::1', 1609011342, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393031313334323b5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b),
+('j4783mvap38uolf1gfih9bkpma28adls', '::1', 1609011674, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393031313637343b5f63695f70726576696f75735f75726c7c733a33393a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e223b),
+('gjm5c92f28v192bvbg7djf58n7hjknb5', '::1', 1609011687, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393031313637343b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d6d534a746157357659454133674650774f624e5836684447634d49643831756f223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226d534a746157357659454133674650774f624e5836684447634d49643831756f223b),
+('3jinbr2r64vaanojq7l6v3ji0ffcqo24', '::1', 1609015862, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393031353836323b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d31446e37594f4b537948353662734c436a77385630666d347547507a7154634d223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2231446e37594f4b537948353662734c436a77385630666d347547507a7154634d223b),
+('ubfsdjdtcik23tnpdiqp7rv9ssgln0c0', '::1', 1609016089, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393031353938363b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d313732774134497a584651335344566739457361476e304252744c794e35756b223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a22313732774134497a584651335344566739457361476e304252744c794e35756b223b),
+('mpav9070kghjs03a16airtqn9d10gecd', '::1', 1609100474, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393130303436383b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d46516e6467433344346d654d6a416374567a313661546958574f455371625a30223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2246516e6467433344346d654d6a416374567a313661546958574f455371625a30223b),
+('kcqrjj42ppcfhgb4epfia1bt8btt6j37', '::1', 1609108391, 0x5f5f63695f6c6173745f726567656e65726174657c693a313630393130383335383b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f64657369676e2f6c61796f75743f757365725f746f6b656e3d3456693731614542684667786f3552397274644c3865624f4d6d305a6e775963223b757365725f69647c733a313a2231223b757365726e616d657c733a31303a2241686d65642041747761223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a223456693731614542684667786f3552397274644c3865624f4d6d305a6e775963223b737563636573737c733a33353a22537563636573733a20596f752068617665206d6f646966696564206c61796f75747321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d);
 
 -- --------------------------------------------------------
 
@@ -1786,56 +1794,56 @@ CREATE TABLE `ci_setting` (
 INSERT INTO `ci_setting` (`setting_id`, `site_id`, `code`, `name`, `setting`, `serialized`) VALUES
 (515, 0, 'dashboard_activity', 'dashboard_activity_sort_order', '2', 0),
 (514, 0, 'dashboard_activity', 'dashboard_activity_status', '1', 0),
-(562, 0, 'config', 'config_file_ext_allowed', 'zip\r\ntxt\r\npng\r\njpe\r\njpeg\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc', 0),
-(561, 0, 'config', 'config_maintenance', '0', 0),
-(560, 0, 'config', 'config_instagram', 'https://www.instagram.com/yallafreelancers/', 0),
-(559, 0, 'config', 'config_linkedin', 'https://www.linkedin.com/in/yallafreelancers/', 0),
-(558, 0, 'config', 'config_pintrest', 'https://www.pinterest.com/yallafreelancers/', 0),
-(557, 0, 'config', 'config_twitter', 'https://twitter.com/yallfreelancer', 0),
-(556, 0, 'config', 'config_facebook', 'https://www.facebook.com/Yallafreelancer/', 0),
+(628, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\n\"application/zip\"\r\napplication/x-zip\r\n\"application/x-zip\"\r\napplication/x-zip-compressed\r\n\"application/x-zip-compressed\"\r\napplication/rar\r\n\"application/rar\"\r\napplication/x-rar\r\n\"application/x-rar\"\r\napplication/x-rar-compressed\r\n\"application/x-rar-compressed\"\r\napplication/octet-stream\r\n\"application/octet-stream\"\r\naudio/mpeg\r\nvideo/quicktime\r\napplication/pdf', 0),
+(627, 0, 'config', 'config_file_ext_allowed', 'zip\r\ntxt\r\npng\r\njpe\r\njpeg\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc', 0),
 (518, 0, 'dashboard_online', 'dashboard_online_sort_order', '1', 0),
 (521, 0, 'wallet_extension', 'wallet_extension_status', '1', 0),
-(25, 0, 'blog_extension', 'blog_extension_status', '1', 0),
+(564, 0, 'blog_extension', 'blog_extension_status', '1', 0),
 (26, 0, 'customer_wallet', 'customer_wallet_status', '1', 0),
 (531, 0, 'job_extension', 'job_extension_status', '1', 0),
 (453, 0, 'module_category', 'module_category_status', '1', 0),
-(555, 0, 'config', 'config_upgrade_highlight', '2', 0),
 (99, 0, 'extension_wallet', 'extension_wallet_status', '1', 0),
 (344, 0, 'module_featured', 'module_featured_status', '1', 0),
 (343, 0, 'module_featured', 'module_featured_limit', '8', 0),
 (340, 0, 'theme_default', 'theme_default_status', '1', 0),
 (338, 0, 'theme_default', 'theme_default_directory', 'default', 0),
-(554, 0, 'config', 'config_upgrade_sponser', '5', 0),
-(553, 0, 'config', 'config_processing_fee', '2.3', 0),
-(552, 0, 'config', 'config_freelancer_fee', '', 0),
-(551, 0, 'config', 'config_customer_online', '1', 0),
-(550, 0, 'config', 'config_customer_activity', '1', 0),
-(549, 0, 'config', 'config_project_expired_status', '5', 0),
+(626, 0, 'config', 'config_maintenance', '0', 0),
+(625, 0, 'config', 'config_instagram', 'https://www.instagram.com/yallafreelancers/', 0),
+(624, 0, 'config', 'config_linkedin', 'https://www.linkedin.com/in/yallafreelancers/', 0),
 (339, 0, 'theme_default', 'theme_default_color', 'red.css', 0),
-(548, 0, 'config', 'config_project_completed_status', '2', 0),
-(547, 0, 'config', 'config_project_status_id', '8', 0),
-(546, 0, 'config', 'config_login_attempts', '5', 0),
-(545, 0, 'config', 'config_admin_limit', '20', 0),
-(541, 0, 'config', 'config_telephone', '+00 000-00-000', 0),
-(542, 0, 'config', 'config_language_id', '1', 0),
-(543, 0, 'config', 'config_admin_language_id', '1', 0),
-(544, 0, 'config', 'config_currency', 'EGP', 0),
-(538, 0, 'config', 'config_owner', 'Ahmed Atwa', 0),
-(539, 0, 'config', 'config_address', '6th Forrest Ray, London - 10001 UK', 0),
-(540, 0, 'config', 'config_email', 'admin@admin.com', 0),
+(623, 0, 'config', 'config_pintrest', 'https://www.pinterest.com/yallafreelancers/', 0),
+(622, 0, 'config', 'config_twitter', 'https://twitter.com/yallfreelancer', 0),
+(621, 0, 'config', 'config_facebook', 'https://www.facebook.com/Yallafreelancer/', 0),
+(620, 0, 'config', 'config_upgrade_highlight', '2', 0),
+(619, 0, 'config', 'config_upgrade_sponser', '5', 0),
+(617, 0, 'config', 'config_freelancer_fee', '', 0),
+(618, 0, 'config', 'config_processing_fee', '2.3', 0),
+(616, 0, 'config', 'config_customer_online', '1', 0),
+(615, 0, 'config', 'config_customer_activity', '1', 0),
+(614, 0, 'config', 'config_project_expired_status', '5', 0),
 (331, 0, 'extension_bid', 'extension_bid_status', '1', 0),
 (513, 0, 'dashboard_activity', 'dashboard_activity_width', '12', 0),
 (452, 0, 'module_freelancer', 'module_freelancer_status', '1', 0),
 (451, 0, 'module_freelancer', 'module_freelancer_limit', '8', 0),
 (517, 0, 'dashboard_online', 'dashboard_online_status', '1', 0),
 (516, 0, 'dashboard_online', 'dashboard_online_width', '3', 0),
-(532, 0, 'config', 'config_meta_title', 'Freelance Services Marketplace for Businesses in Egypt', 0),
-(533, 0, 'config', 'config_meta_description', 'Yallafreelancer mission is to change how the world works together. Yallafreelancer connects businesses with freelancers offering digital services in 300+ categories.', 0),
-(534, 0, 'config', 'config_meta_keyword', '', 0),
-(535, 0, 'config', 'config_theme', 'default', 0),
-(536, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
-(537, 0, 'config', 'config_name', 'YallaFreelancer', 0),
-(563, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\n\"application/zip\"\r\napplication/x-zip\r\n\"application/x-zip\"\r\napplication/x-zip-compressed\r\n\"application/x-zip-compressed\"\r\napplication/rar\r\n\"application/rar\"\r\napplication/x-rar\r\n\"application/x-rar\"\r\napplication/x-rar-compressed\r\n\"application/x-rar-compressed\"\r\napplication/octet-stream\r\n\"application/octet-stream\"\r\naudio/mpeg\r\nvideo/quicktime\r\napplication/pdf', 0);
+(613, 0, 'config', 'config_project_completed_status', '2', 0),
+(612, 0, 'config', 'config_project_status_id', '8', 0),
+(611, 0, 'config', 'config_login_attempts', '5', 0),
+(610, 0, 'config', 'config_admin_limit', '20', 0),
+(609, 0, 'config', 'config_currency', 'EGP', 0),
+(608, 0, 'config', 'config_admin_language_id', '1', 0),
+(606, 0, 'config', 'config_telephone', '+00 000-00-000', 0),
+(607, 0, 'config', 'config_language_id', '1', 0),
+(605, 0, 'config', 'config_email', 'admin@admin.com', 0),
+(604, 0, 'config', 'config_address', '6th Forrest Ray, London - 10001 UK', 0),
+(602, 0, 'config', 'config_name', 'YallaFreelancer', 0),
+(603, 0, 'config', 'config_owner', 'Ahmed Atwa', 0),
+(599, 0, 'config', 'config_meta_keyword', '', 0),
+(600, 0, 'config', 'config_theme', 'default', 0),
+(601, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
+(597, 0, 'config', 'config_meta_title', 'Freelance Services Marketplace for Businesses in Egypt', 0),
+(598, 0, 'config', 'config_meta_description', 'Yallafreelancer mission is to change how the world works together. Yallafreelancer connects businesses with freelancers offering digital services in 300+ categories.', 0);
 
 -- --------------------------------------------------------
 
@@ -2399,7 +2407,7 @@ CREATE TABLE `ci_user` (
 --
 
 INSERT INTO `ci_user` (`user_id`, `user_group_id`, `username`, `firstname`, `lastname`, `email`, `password`, `status`, `image`, `code`, `date_added`, `date_modified`, `date_deleted`) VALUES
-(1, 1, '', 'Ahmed', 'Atwa', 'admin@admin.com', '$2y$10$zZY54wKZBMY4N.CF7PDYouaRUS/fVC0jB/B1F5iA3L68wr530OQbO', 1, '', '', '2020-06-23 15:39:58', '2020-08-19 13:53:07', '0000-00-00 00:00:00'),
+(1, 1, '', 'Ahmed', 'Atwa', 'admin@admin.com', '$2y$10$zZY54wKZBMY4N.CF7PDYouaRUS/fVC0jB/B1F5iA3L68wr530OQbO', 1, '', 'AYWjstdzGrmBxJwUoVCbQKPMIaTqkXlDZiEupNgO', '2020-06-23 15:39:58', '2020-08-19 13:53:07', '0000-00-00 00:00:00'),
 (116, 2, '', 'test', 'test', 'test@test.com', '$2y$10$dz7FsKFNzwBltmknAU5L9ejxRGQA/q.q/Ih2WCWqImFeXQ34vL6Tq', 1, 'catalog/demo/ipod_touch_4.jpg', '', '2020-08-13 02:00:32', '2020-08-13 02:00:32', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
@@ -2436,7 +2444,72 @@ INSERT INTO `ci_user_activity` (`activity_id`, `user_id`, `key`, `data`, `ip`, `
 (11, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-17 19:49:39'),
 (12, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-17 19:51:37'),
 (13, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.400', '2020-12-17 19:56:20'),
-(14, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:84.0) Gecko/20100101 Firefox/84.0', '2020-12-18 14:02:02');
+(14, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:84.0) Gecko/20100101 Firefox/84.0', '2020-12-18 14:02:02'),
+(15, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-21 18:46:22'),
+(16, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-24 19:05:59'),
+(17, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 11:43:25'),
+(18, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 12:34:36'),
+(19, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 13:45:15'),
+(20, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 13:46:08'),
+(21, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 16:30:42'),
+(22, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 16:31:52'),
+(23, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:39:10'),
+(24, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:40:39'),
+(25, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:40:41'),
+(26, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:40:51'),
+(27, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:42:02'),
+(28, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:42:26'),
+(29, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:43:34'),
+(30, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:54:54'),
+(31, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:56:00'),
+(32, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:56:11'),
+(33, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:56:44'),
+(34, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:56:56'),
+(35, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:57:08'),
+(36, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:57:33'),
+(37, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:57:47'),
+(38, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:58:00'),
+(39, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:58:10'),
+(40, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 19:58:28'),
+(41, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 20:05:20'),
+(42, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 20:17:41'),
+(43, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-25 22:21:33'),
+(44, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 11:16:05'),
+(45, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 11:20:02'),
+(46, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 11:21:19'),
+(47, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:06:29'),
+(48, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:06:33'),
+(49, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:06:36'),
+(50, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:07:10'),
+(51, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:07:29'),
+(52, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:07:32'),
+(53, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:07:39'),
+(54, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:07:42'),
+(55, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:08:08'),
+(56, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:08:48'),
+(57, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:08:51'),
+(58, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:08:53'),
+(59, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:09:09'),
+(60, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:09:11'),
+(61, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:09:38'),
+(62, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:09:53'),
+(63, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:13:29'),
+(64, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:17:00'),
+(65, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:17:03'),
+(66, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:25:37'),
+(67, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:28:21'),
+(68, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:28:45'),
+(69, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:30:46'),
+(70, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:56:17'),
+(71, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:56:24'),
+(72, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 18:56:40'),
+(73, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 19:41:24'),
+(74, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 20:06:55'),
+(75, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 20:07:09'),
+(76, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-26 20:54:43'),
+(77, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-27 20:19:37'),
+(78, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-27 20:21:12'),
+(79, 1, 'activity_user_login', '{\"user_id\":\"1\",\"name\":\"Ahmed Atwa\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-27 22:32:43');
 
 -- --------------------------------------------------------
 
@@ -2458,7 +2531,7 @@ CREATE TABLE `ci_user_group` (
 
 INSERT INTO `ci_user_group` (`user_group_id`, `name`, `permission`, `date_added`, `date_modified`) VALUES
 (2, 'Demonstration', '{\"access\":[\"extension\\/dashboard\",\"extension\\/module\",\"localisation\\/language\",\"catalog\\/information\",\"user\\/user\",\"user\\/user_group\",\"common\\/filemanager\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/setting\",\"tool\\/log\",\"blog\\/post\",\"module\\/featured\",\"module\\/information\",\"module\\/special\",\"module\\/slideshow\",\"module\\/html\",\"module\\/carousel\",\"module\\/bestseller\",\"dashboard\\/sale\",\"dashboard\\/order\",\"dashboard\\/recent\",\"dashboard\\/map\",\"dashboard\\/chart\",\"dashboard\\/customer\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\"],\"modify\":[\"extension\\/dashboard\",\"extension\\/module\",\"localisation\\/language\",\"catalog\\/information\",\"user\\/user\",\"user\\/user_group\",\"common\\/filemanager\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/setting\",\"tool\\/log\",\"blog\\/post\",\"module\\/featured\",\"module\\/information\",\"module\\/special\",\"module\\/slideshow\",\"module\\/html\",\"module\\/carousel\",\"module\\/bestseller\",\"dashboard\\/sale\",\"dashboard\\/order\",\"dashboard\\/recent\",\"dashboard\\/map\",\"dashboard\\/chart\",\"dashboard\\/customer\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"dashboard\\/activity\",\"dashboard\\/online\",\"dashboard\\/activity\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\",\"module\\/carousel\"]}', '2020-07-21 21:45:31', '2020-07-21 21:45:31'),
-(1, 'Administrator', '{\"access\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job_\\/job.php_\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet_\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/wallet\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\"],\"modify\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job_\\/job.php_\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet_\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/wallet\\/wallet\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\",\"extensions\\/job\\/job\"]}', '2020-08-07 11:33:45', '2020-11-19 19:57:48');
+(1, 'Administrator', '{\"access\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet.php_\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/comment\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job\\/job\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet\\/wallet\"],\"modify\":[\"catalog\\/category\",\"catalog\\/information\",\"catalog\\/project\",\"catalog\\/review\",\"common\\/filemanager\",\"customer\\/customer\",\"customer\\/customer_group\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"extension\\/bid\",\"extension\\/blog\",\"extension\\/dashboard\",\"extension\\/job\",\"extension\\/payment\",\"extension\\/theme\",\"extension\\/wallet.php_\",\"finance\\/dispute\",\"finance\\/withdrawal\",\"localisation\\/currency\",\"localisation\\/dispute_action\",\"localisation\\/dispute_reason\",\"localisation\\/dispute_status\",\"localisation\\/language\",\"localisation\\/project_status\",\"localisation\\/withdraw_status\",\"module\\/account\",\"module\\/carousel\",\"module\\/category\",\"module\\/featured\",\"module\\/freelancer\",\"module\\/html\",\"module\\/video\",\"report\\/activity\",\"setting\\/event\",\"setting\\/extension\",\"setting\\/module\",\"setting\\/setting\",\"tool\\/log\",\"tool\\/mail\",\"user\\/user\",\"user\\/user_group\",\"extensions\\/bid\\/bid\",\"extensions\\/blog\\/category\",\"extensions\\/blog\\/comment\",\"extensions\\/blog\\/post\",\"extensions\\/dashboard\\/activity\",\"extensions\\/dashboard\\/online\",\"extensions\\/job\\/job\",\"extensions\\/theme\\/basic\",\"extensions\\/wallet\\/wallet\"]}', '2020-08-07 11:33:45', '2020-12-24 21:00:49');
 
 -- --------------------------------------------------------
 
@@ -2474,6 +2547,16 @@ CREATE TABLE `ci_user_login` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_user_login`
+--
+
+INSERT INTO `ci_user_login` (`user_login_id`, `email`, `ip`, `total`, `date_added`, `date_modified`) VALUES
+(0, 'customer@customer.com', '::1', 86, '2020-12-22 13:44:18', '2020-12-27 20:19:31'),
+(0, '', '::1', 86, '2020-12-25 19:48:15', '2020-12-27 20:19:31'),
+(0, 'admin@admin.com', '::1', 80, '2020-12-25 19:58:50', '2020-12-27 20:19:31'),
+(0, 'customer_3@demo.com', '::1', 66, '2020-12-26 18:28:52', '2020-12-27 20:19:31');
 
 -- --------------------------------------------------------
 
@@ -2985,13 +3068,13 @@ ALTER TABLE `ci_blog_category`
 -- AUTO_INCREMENT for table `ci_blog_post`
 --
 ALTER TABLE `ci_blog_post`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ci_blog_post_to_comment`
 --
 ALTER TABLE `ci_blog_post_to_comment`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ci_category`
@@ -3045,7 +3128,7 @@ ALTER TABLE `ci_customer_history`
 -- AUTO_INCREMENT for table `ci_customer_login`
 --
 ALTER TABLE `ci_customer_login`
-  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_balance`
@@ -3111,7 +3194,7 @@ ALTER TABLE `ci_event`
 -- AUTO_INCREMENT for table `ci_extension`
 --
 ALTER TABLE `ci_extension`
-  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `ci_information`
@@ -3123,7 +3206,7 @@ ALTER TABLE `ci_information`
 -- AUTO_INCREMENT for table `ci_job`
 --
 ALTER TABLE `ci_job`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `ci_language`
@@ -3153,7 +3236,7 @@ ALTER TABLE `ci_layout_module`
 -- AUTO_INCREMENT for table `ci_layout_route`
 --
 ALTER TABLE `ci_layout_route`
-  MODIFY `layout_route_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `layout_route_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `ci_message`
@@ -3243,13 +3326,13 @@ ALTER TABLE `ci_review`
 -- AUTO_INCREMENT for table `ci_seo_url`
 --
 ALTER TABLE `ci_seo_url`
-  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `ci_setting`
 --
 ALTER TABLE `ci_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=564;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=629;
 
 --
 -- AUTO_INCREMENT for table `ci_university`
@@ -3267,13 +3350,13 @@ ALTER TABLE `ci_university_majors`
 -- AUTO_INCREMENT for table `ci_user`
 --
 ALTER TABLE `ci_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT for table `ci_user_activity`
 --
 ALTER TABLE `ci_user_activity`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `ci_user_group`
