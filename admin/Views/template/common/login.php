@@ -80,9 +80,12 @@ $('#button-login').on('click', function() {
         data: $('#form-login').serialize(),
         beforeSend: function() {
             $('#form-login').removeClass('is-invalid');
-            $('.alert, .text-danger, .invalid-feedback').remove();            
+            $('.alert, .text-danger, .invalid-feedback').remove();
+            $(this).prop('disabled', true);       
         },
-        complete: function() {},
+        complete: function() {
+            $(this).prop('disabled', false);  
+        },
         success: function(json) {
             console.log(json)
             if (json['validator']) {
@@ -103,14 +106,17 @@ $('#button-login').on('click', function() {
             }
 
             if (json['redirect']) {
+                $('#form-login input').prop('disabled', true);
                 $('#button-login').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> Loading...');
                 setTimeout(function() { 
                     location = json['redirect'];
-                }, 2000);
+                }, 2500);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            alert(thrownError + ": " + xhr.responseJSON.message + "\r\nPage will be reloaded for new access token!");
+            // refresh the page for new access token
+            location.reload();
         }
     });
 });
