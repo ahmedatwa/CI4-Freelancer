@@ -14335,7 +14335,8 @@ body.offcanvas-active{
 
 
 #cats-navbar-dropdown {
-	top: 140px !important;
+	top: 155px;
+    /*top: calc(100% - 320px);*/
 	right: 0;
 	left: 0;
 }
@@ -14504,4 +14505,16 @@ body.offcanvas-active{
     100% {
         transform: rotate(360deg);
     }
+}
+
+
+.text-count-wrapper.error .text-count-message{
+    display: inline;
+    float: right;
+}
+
+.text-count-wrapper.error .error-text.error-text-min {
+    display: inline;
+    margin-right: 10px;
+    color: red;
 }

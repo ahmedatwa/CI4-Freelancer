@@ -5,10 +5,10 @@ use \Catalog\Models\Tool\DownloadModel;
 class Download extends \Catalog\Controllers\BaseController
 {
     public function index()
-    {  
+    {
         $downloadModel = new DownloadModel();
       
-        if (!$this->customer->isLogged()) {
+        if (! $this->customer->isLogged()) {
             return redirect('account_login');
         }
 
@@ -21,28 +21,13 @@ class Download extends \Catalog\Controllers\BaseController
         $download_info = $downloadModel->find($download_id);
 
         if ($download_info) {
-
             $file = WRITEPATH . 'uploads/' . $download_info['code'];
 
-            if (!headers_sent()) {
-
+            if (! headers_sent()) {
                 if (file_exists($file)) {
-                    header('Content-Type: application/octet-stream');
-                    header('Content-Disposition: attachment; filename="' . (basename($file)) . '"');
-                    header('Expires: 0');
-                    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-                    header('Pragma: public');
-                    header('Content-Length: ' . filesize($file));
-
-                    if (ob_get_level()) {
-                        ob_end_clean();
-                    }
-
-                    readfile($file, 'rb');
-
-                    exit();
+                    return $this->response->download($file, null);
                 } else {
-                    throw new \Exception('Error: Could not find file ' . $file . '!');
+                    throw new \Exception('Error: Could not find file ' . $download_info['filename'] . '!');
                 }
             } else {
                 throw new \Exception('Error: Headers already sent out!');

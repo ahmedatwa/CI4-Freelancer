@@ -19,7 +19,7 @@ class Filters extends BaseConfig
 	// Always applied before every request
 	public $globals = [
 		'before' => [
-			'localization',
+			//'localization',
 		    'seo_url',
 		    'honeypot',
 		    'maintenance',
@@ -28,6 +28,7 @@ class Filters extends BaseConfig
 		],
 		'after'  => [
 			'honeypot',
+			'toolbar',
 		],
 	];
 

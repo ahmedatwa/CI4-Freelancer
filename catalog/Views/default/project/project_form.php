@@ -15,23 +15,21 @@
 						<hr />
 					</div>
 					<div class="content with-padding padding-bottom-10">
-						<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" accept-charset="utf-8" id="form-project-add"> 
-							<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+						<form enctype="multipart/form-data" method="post" action="" accept-charset="utf-8" id="form-project-add"> 
 							<input type="hidden" name="employer_id" value="<?= $employer_id ?>" />
-							<div class="form-group row required">
+							<div class="form-group row">
 								<label for="input-name" class="col-sm-3 col-form-label"><?php echo $entry_name; ?></label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" placeholder="e.g. build me a website" name="project_description[<?php echo $language_id;?>][name]" value="<?php echo $project_description[$language_id]['name'] ?? ''; ?>" id="input-name">
-									<?php echo formError("project_description." . $language_id.".name"); ?>
+									<input type="text" class="form-control" placeholder="e.g. build me a website" name="project_description[<?php echo $language_id;?>][name]" value="<?php echo $project_description[$language_id]['name'] ?? ''; ?>" id="input-<?php echo $language_id;?>-name">
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="form-group row mb-4">
 								<label for="input-description" class="col-sm-3 col-form-label"><?php echo $entry_description; ?></label>
 								<div class="col-sm-9">
-									<textarea rows="10" style="height:100%;" id="input-description" class="form-control" name="project_description[<?php echo $language_id;?>][description]"><?php echo $project_description[$language_id]['description'] ?? ''; ?></textarea>
-									<?php echo formError("project_description." . $language_id.".description"); ?>
+									<textarea rows="10" class="form-control" name="project_description[<?php echo $language_id;?>][description]" id="input-<?php echo $language_id;?>-description"><?php echo $project_description[$language_id]['description'] ?? ''; ?></textarea>
 								</div>
 							</div>
+							<div class="clearfix"></div>
 							<div class="form-group row margin-top-30">
 							<label for="input-upload" class="col-sm-3 col-form-label"><?php echo $entry_upload; ?><span data-toggle="tooltip" title="<?php echo $help_upload; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col-sm-9">
@@ -40,12 +38,11 @@
 									<div id="kartik-file-errors"></div>
 								</div>
 							</div>
-						
 							<div class="clearfix"></div>
-							<div class="form-group row required">
+							<div class="form-group row">
 								<label for="input-category" class="col-sm-3 col-form-label"><?php echo $entry_skills; ?></label>
 								<div class="col-sm-9">
-									<select class="form-control" name="filter_category[]" data-width="100%" multiple="multiple">
+									<select class="form-control" name="category[]" data-width="100%" multiple="multiple" id="input-category">
 										<option></option>
 										<?php foreach($categories as $category) { ?>
 											<?php if ($category['category_id'] == $category_id) { ?> 
@@ -55,10 +52,9 @@
 											<?php } ?>
 										<?php } ?>
 									</select>
-									<?php echo formError("filter_category"); ?>
 								</div>
 							</div>
-							<div class="form-group row align-items-center mb-3 required">
+							<div class="form-group row align-items-center mb-3">
 								<label for="input-budget" class="col-sm-3 col-form-label"><?php echo $text_budget; ?><span data-toggle="tooltip" title="<?php echo $help_budget; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col">
 									<label class="sr-only" for="inlineFormInput"><?php echo $entry_min;?></label>
@@ -66,8 +62,7 @@
 										<div class="input-group-prepend">
 											<div class="input-group-text"><?php echo $config_currency;?></div>
 										</div>
-										<input type="text" class="form-control" placeholder="<?php echo $entry_min;?>" name="budget_min">
-										<?php echo formError("budget_min"); ?>
+										<input type="text" class="form-control" placeholder="<?php echo $entry_min;?>" name="budget_min" value=""id="input-budget_min">
 									</div>
 								</div>
 								<div class="col">
@@ -76,8 +71,7 @@
 										<div class="input-group-prepend">
 											<div class="input-group-text"><?php echo $config_currency;?></div>
 										</div>
-										<input type="text" class="form-control" placeholder="<?php echo $entry_max;?>" name="budget_max">
-										<?php echo formError("budget_max"); ?>
+										<input type="text" class="form-control" placeholder="<?php echo $entry_max;?>" name="budget_max" value=""id="input-budget_max">
 									</div>
 								</div>
 							</div>
@@ -105,21 +99,20 @@
 									<?php } ?>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="form-group row">
 								<label for="date-end" class="col-sm-3 col-form-label"><?php echo $entry_delivery_time; ?><span data-toggle="tooltip" title="<?php echo $help_delivery; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col-sm-9">
-									<input type="number" class="form-control" name="delivery_time" value="1" min="1" max="30">
-									<?php echo formError("delivery_time"); ?>
+									<input type="number" class="form-control" name="delivery_time" placeholder="<?php echo $entry_delivery_time; ?>" value="" min="1" max="30" id="input-delivery_time">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="date-end" class="col-sm-3 col-form-label"><?php echo $entry_run_time; ?><span data-toggle="tooltip" title="<?php echo $help_bidding_duration; ?>" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col-sm-9">
-									<input type="number" class="form-control" name="runtime" value="7" min="1" max="30">
+									<input type="number" class="form-control" name="runtime" placeholder="<?php echo $entry_run_time; ?>" id="input-runtime" min="1" max="30">
 								</div>
 							</div>
 							<div class="padding-top-20 text-right padding-bottom-30">
-								<button type="submit" class="button btn-sm ripple-effect"><i class="icon-material-outline-add"></i> <?php echo $button_save; ?></button>
+								<button type="button" class="button btn-sm ripple-effect" id="button-project-add"><i class="icon-material-outline-add"></i> <?php echo $button_save; ?></button>
 							</div>	
 						</div>
 						</div>
@@ -130,12 +123,12 @@
 		</div>
 	</div>
 </div>
-
 <script src="catalog/default/vendor/jQuery-Text-Counter/textcounter.min.js"></script> 
 <link href="catalog/default/vendor/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css">
 <script src="catalog/default/vendor/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="catalog/default/vendor/bootstrap-fileinput/themes/fas/theme.min.js"></script>
 <script type="text/javascript">
-$('select[name^=\'filter_category\']').select2({
+$('select[name^=\'category\']').select2({
 ajax: {
 	url: "project/category/autocomplete",
 	dataType: 'json',
@@ -162,63 +155,94 @@ placeholder: '<?php echo $text_select; ?>',
 allowClear: true,
 minimumResultsForSearch: 5
 });
-
 </script>
 <script type="text/javascript">
 $("#input-upload").fileinput({
 	uploadUrl: 'tool/upload?type=1',
 	enableResumableUpload: false,
     uploadExtraData: {
-      '<?= csrf_token() ?>': '<?= csrf_hash() ?>', 
+        'csrf-token': $('meta[name="csrf-token"]').attr('content'), 
+        'X-Requested-With': 'XMLHttpRequest'
     },
     maxFileCount: 1,
     showPreview: false,
     showUpload: true,
     showCancel: true,
     autoReplace: true,
+	theme: 'fas',
+    preferIconicPreview: true, 
     elErrorContainer: '#kartik-file-errors',
     allowedFileExtensions: <?php echo json_encode($allowedFileExtensions); ?>,
  }).on('fileuploaded', function(event, data, previewId, index) {
  	   var response = data.response, reader = data.reader;
        $('input[name=\'download_id\']').val(response.download_id);
-       $(this).fileinput("disable").fileinput("refresh", {showUpload: false});
+       $('#input-upload').fileinput('lock');
+	   //$('#input-upload').fileinput('refresh', {showUpload: false}).fileinput('disable');
  });
 
 </script>
 <!-- // tags input -->
 <script type="text/javascript">
-$('#input-description').textcounter({
+$('#input-<?php echo $language_id; ?>-description').textcounter({
 	min: 30,
-	max : 400,  
 	stopInputAtMaximum : false,  
 	minimumErrorText : "Please enter at least 30 characters", 
 });
-$('#input-name').textcounter({
+$('#input-<?php echo $language_id; ?>-name').textcounter({
 	min: 10,
 	minimumErrorText : "Please enter at least 10 characters", 
 });
 </script>
-<?php if ($error_warning) { ?>
+<!-- Add Project -->
 <script type="text/javascript">
-	$.notify({
-	// options
-	icon: 'fas fa-exclamation-circle',
-	title: 'Warning:',
-	message: "<?php echo $error_warning; ?>",
-},{
-	// settings
-	element: 'body',
-	type: "danger",
-	allow_dismiss: false,
-	placement: {
-		from: "top",
-		align: "center"
-	},
-	animate: {
-		enter: 'animate__animated animate__fadeInDown',
-		exit: 'animate__animated animate__fadeOutUp'
-	},
-});	
-</script>								
-<?php } ?>
+$('#button-project-add').on('click', function() {
+	const node = this;
+	$.ajax({
+	    url: 'project/project/add',
+	    headers: {
+	      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+	      'X-Requested-With': 'XMLHttpRequest',
+	      'Content-Type': 'application/x-www-form-urlencoded',
+	    },
+	    type: 'post',
+	    dataType: 'json',
+	    data: $('#form-project-add').serialize(),
+	    beforeSend: function() {
+	    	$('.invalid-feedback, .alert').remove();
+			$('input, textarea').removeClass('is-invalid');
+			$(node).prop('disabled', true);
+			$(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+	    },
+	    complete: function() {
+			$(node).prop('disabled', false);
+			$(node).html('<i class="icon-material-outline-add"></i> <?php echo $button_save; ?>');
+	    },
+	    success: function(json) {
+	    	if (json['error']) {
+	    		for (i in json['error']) { 
+				  var el = i.split('.').join('-');
+                  var input = $('#' + el.replace('project_description', 'input'));
+
+				  if (input) {
+					input.addClass('is-invalid');
+	    		    input.after('<div class="invalid-feedback">' + json['error'][i]+ '</div>'); 
+				  } 
+	    		    $('#input-' + i).addClass('is-invalid');
+	    		    $('#input-' + i).after('<div class="invalid-feedback">' + json['error'][i]+ '</div>');
+	    		
+				}
+	            $('#form-project-add').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error']['error_warning'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+	    	}
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+
+	    },
+	    error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }	
+    });
+});
+</script>
 <?php echo $footer; ?>

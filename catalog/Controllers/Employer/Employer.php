@@ -92,7 +92,7 @@ class Employer extends \Catalog\Controllers\BaseController
                 'comment'    => $result['comment'],
                 'status'     => $result['status'],
                 'action'     => $dispute_action ?? '-',
-                'date_added' => lang('en.longDate', [strtotime($result['date_added'])]),
+                'date_added' => lang($this->locale . '.longDate', [strtotime($result['date_added'])]),
 
             ];
         }

@@ -21,7 +21,7 @@
 </div>
 <!-- Page Heaedr End -->
 <div class="container-fluid">
-  <?php if ($error_warning){ ?>
+  <?php if ($error_warning) { ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <i class="fas fa-exclamation-circle"></i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -44,7 +44,7 @@
       <div class="form-group row required">
         <label for="input-body" class="col-md-2 col-form-label"><?php echo $entry_body; ?></label>
         <div class="col-md-10">
-          <textarea class="form-control" data-toggle="summernote" type="text" id="input-body" name="body" value="<?php echo $body; ?>"></textarea>
+          <textarea class="form-control" data-toggle="summernote" type="text" id="input-body" name="body"><?php echo $body; ?></textarea>
         </div>
       </div>
       <div class="form-group row required">

@@ -65,6 +65,8 @@ $routes->group('extensions', ['namespace' => 'Extensions\Controllers'], function
     $routes->add('blog/comment', 'Blog\Comment::index');
     $routes->add('blog/comment/edit', 'Blog\Comment::edit');
     $routes->add('blog/comment/delete', 'Blog\Comment::delete');
+    // Reports
+    $routes->add('report/user_activity', 'Report\User_activity::index');
 
 });
 

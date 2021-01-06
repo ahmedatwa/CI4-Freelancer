@@ -80,15 +80,14 @@
 							<a href="<?php echo $download; ?>" class="attachment-box ripple-effect"><span><?php echo $attachment; ?></span><i><?php echo $attachment_ext; ?></i></a>
 						</div>
 					</div>
-					<hr />
 				    <?php } ?>
 				<?php if ($freelancer_id != $employer_id) { ?>
 				<?php if ($days_left > 0) { ?>
+					<hr />
 				<div class="single-page-section">
 						<div class="bidding-headline"><h3><?php echo $text_bid; ?></h3>
 							<p class="mb-4"><?php echo $text_bid_detail; ?></p></div>
 						<form action="" enctype="multipart/form-data" id="bidding-form" accept-charset="UTF-8"> 
-							<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 							<input type="hidden" name="project_id" value="<?php echo $project_id; ?>" />
 							<input type="hidden" name="freelancer_id" value="<?php echo $freelancer_id; ?>" />
 							<input type="hidden" name="employer_id" value="<?php echo $employer_id; ?>" />
@@ -169,12 +168,8 @@
 				<!-- Sidebar -->
 				<div class="col-sm-12 col-md-3">
 					<div class="sidebar-container p-3 mb-5 bg-white">
-						<?php if ($days_left <= 0) { ?>
-							<div class="alert alert-danger text-center" role="alert">
-							  <?php echo $text_expired; ?>
-							</div>
-					    <?php } else { ?>
-					    	<div class="alert alert-info text-center" role="alert">
+						<?php if ($days_left) { ?>
+							<div class="alert alert-info text-center" role="alert">
 							  <?php echo $days_left; ?>
 							</div>
 						<?php } ?>
@@ -240,6 +235,11 @@ bootbox.confirm({
     if (result) {
 		$.ajax({
 			url: 'extension/bid/bid/placeBid',
+			headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+	            'X-Requested-With': 'XMLHttpRequest',
+	            'Content-Type': 'application/x-www-form-urlencoded',
+	        },
 			method:'post',
 			data: $('#bidding-form').serialize(),
 			dataType: 'json',
@@ -251,7 +251,6 @@ bootbox.confirm({
 	  		    $('.bootbox-accept').html('<?php echo $button_bid; ?>');
 			},
 			success: function(json) {
-				
 				if (json['error']) {
 	                for (i in json['error']) {
 	                 var element = $('#input-' + i.replace('_', '-'));
@@ -292,7 +291,7 @@ bootbox.confirm({
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError);
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	   } // if end
@@ -319,12 +318,19 @@ $('#bid-container').load("extension/bid/bid?pid=<?php echo $project_id; ?>");
 <script type="text/javascript">
 $("#upgrade-options-table input[type='checkbox']").on('change', function() {
 	var total = 0;
-	$('#upgrade-options-table input:checkbox:checked').each(function() { 
+	var inputChecked = $('#upgrade-options-table input[type=checkbox]:checked');
+
+	if($(this).is(":checked")){
+		inputChecked.each(function() { 
         total += isNaN(parseInt($(this).val())) ? 0 : parseInt($(this).val());
     });   
-
 	$('#button-place-bid').html('Place bid and Pay ' + total + '.00 EGP');
 	$('input[name=\'fee\']').val(total);
+	} else if($(this).is(":not(:checked)")) {
+		$('#button-place-bid').html('Place bid');
+		$('input[name=\'fee\']').val('');
+	}
+	
 });
 </script>
 <?php if ($success) { ?>

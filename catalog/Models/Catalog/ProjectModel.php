@@ -9,11 +9,10 @@ class ProjectModel extends \CodeIgniter\Model
     protected $createdField  = 'date_added';
     protected $updatedField  = 'date_modified';
 
-    public function addProject($data)
+    public function addProject(array $data)
     {
         $builder = $this->db->table($this->table);
         $project_data = [
-            'status_id'     => service('registry')->get('config_project_status_id'),
             'type'          => $data['type'],
             'runtime'       => $data['runtime'],
             'employer_id'   => $data['employer_id'],
@@ -21,6 +20,7 @@ class ProjectModel extends \CodeIgniter\Model
             'budget_min'    => $data['budget_min'],
             'budget_max'    => $data['budget_max'],
             'delivery_time' => $data['delivery_time'],
+            'status_id'     => service('registry')->get('config_project_status_id') ?? 8,
         ];
 
         $builder->set('date_added', 'NOW()', false);
@@ -48,7 +48,7 @@ class ProjectModel extends \CodeIgniter\Model
 
                 // Mail Alert
                 \CodeIgniter\Events\Events::trigger('mail_project_add', $data['employer_id'], $value['name']);
-                // Trigger Pusher Notification event 
+                // Trigger Pusher Notification event
                 $options = ['cluster' => 'eu', 'useTLS' => true];
 
                 $pusher = new \Pusher\Pusher(
@@ -68,9 +68,7 @@ class ProjectModel extends \CodeIgniter\Model
                     'href'        => route_to('single_project', $keyword)
                 ];
 
-             $event = $pusher->trigger('global-channel', 'new-project-event', $pusher_data);
-
-
+                $event = $pusher->trigger('global-channel', 'new-project-event', $pusher_data);
                 //  Seo Urls
                 helper('text');
                 $seo_url->delete(['query' => 'project_id=' . $project_id]);
@@ -84,10 +82,10 @@ class ProjectModel extends \CodeIgniter\Model
             }
         }
         // project_categories
-        if (isset($data['filter_category'])) {
+        if (isset($data['category'])) {
             $project_category_table = $this->db->table('project_to_category');
             $project_category_table->delete(['project_id' => $project_id]);
-            foreach ($data['filter_category'] as $category_id) {
+            foreach ($data['category'] as $category_id) {
                 $project_category_data = [
                     'project_id'       => $project_id,
                     'category_id'      => $category_id,
@@ -95,7 +93,6 @@ class ProjectModel extends \CodeIgniter\Model
                 $project_category_table->insert($project_category_data);
             }
         }
-        
         return $project_id;
     }
     
@@ -165,8 +162,9 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
 
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
-       
-        if ((isset($data['filter_category_id']) && !empty($data['filter_category_id']))|| (isset($data['filter_skills']) && !empty($data['filter_skills']))) {
+        $builder->where('p.draft', 0);
+
+        if ((isset($data['filter_category_id']) && ! is_null($data['filter_category_id'])) || (isset($data['filter_skills']) && !empty($data['filter_skills']))) {
             $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
             $builder->where('p2c.category_id', $data['filter_category_id']);
         }
@@ -182,12 +180,11 @@ class ProjectModel extends \CodeIgniter\Model
         if (isset($data['filter_state'])) {
             $filter_state = explode(',', $data['filter_state']);
            
-            if(in_array('all', $filter_state))
-            {
-              $builder->where('p.status_id > ', 0);
+            if (in_array('all', $filter_state)) {
+                $builder->where('p.status_id > ', 0);
             } else {
-               $builder->whereIn('p.status_id', $filter_state);
-            }  
+                $builder->whereIn('p.status_id', $filter_state);
+            }
         }
 
         if (isset($data['current_project'])) {
@@ -208,7 +205,7 @@ class ProjectModel extends \CodeIgniter\Model
             $builder->whereIn('p.status_id', $status_id);
         }
 
-        // Budget Filter 
+        // Budget Filter
         if (isset($data['filter_budget']) && !empty($data['filter_budget'])) {
             $parts  = explode('_', $data['filter_budget']);
 
@@ -256,7 +253,7 @@ class ProjectModel extends \CodeIgniter\Model
         return $query->getResultArray();
     }
 
-    public function getTotalProjects($data = [])
+    public function getTotalProjects(array $data = [])
     {
         $builder = $this->db->table('project p');
         $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status, p.employer_id, p.freelancer_id');
@@ -280,12 +277,11 @@ class ProjectModel extends \CodeIgniter\Model
         if (isset($data['filter_state'])) {
             $filter_state = explode(',', $data['filter_state']);
            
-            if(in_array('all', $filter_state))
-            {
-              $builder->where('p.status_id > ', 0);
+            if (in_array('all', $filter_state)) {
+                $builder->where('p.status_id > ', 0);
             } else {
-               $builder->whereIn('p.status_id', $filter_state);
-            }  
+                $builder->whereIn('p.status_id', $filter_state);
+            }
         }
 
         if (isset($data['current_project'])) {
@@ -300,9 +296,8 @@ class ProjectModel extends \CodeIgniter\Model
             $builder->where('DATE("p.date_added")', 'DATE("' . $data['filter_date_added'] .'")');
         }
 
-        // Budget Filter 
+        // Budget Filter
         if (isset($data['filter_budget']) && !empty($data['filter_budget'])) {
-            
             $parts  = explode('_', $data['filter_budget']);
 
             $builder->where('p.budget_min >= ', $parts[0])
@@ -346,7 +341,7 @@ class ProjectModel extends \CodeIgniter\Model
         return $builder->countAllResults();
     }
 
-    public function getProjectDescription($project_id)
+    public function getProjectDescription(int $project_id)
     {
         $builder = $this->db->table('project_description');
 
@@ -367,11 +362,12 @@ class ProjectModel extends \CodeIgniter\Model
         return $project_description_data;
     }
 
-    public function getProject($project_id)
+    public function getProject(int $project_id)
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, p.status_id, p.viewed, p.download_id, c.username');
+        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, ps.name AS status, p.viewed, p.download_id, c.username');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
+        $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
         $builder->join('customer c', 'p.employer_id = c.customer_id', 'left');
         $builder->where([
             'p.project_id'   => $project_id,
@@ -382,7 +378,7 @@ class ProjectModel extends \CodeIgniter\Model
         return $query->getRowArray();
     }
 
-    public function getEmployerProjects($data = [])
+    public function getEmployerProjects(array $data = [])
     {
         $builder = $this->db->table('project p');
         $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.type, p.status, p.runtime');
@@ -508,7 +504,7 @@ class ProjectModel extends \CodeIgniter\Model
         return $builder->countAllResults();
     }
 
-    // Bootstrap File Input
+    // Bootstrap FileInput
     public function getFilesByProjectId($project_id)
     {
         $image = [];
@@ -525,8 +521,6 @@ class ProjectModel extends \CodeIgniter\Model
 
     public function getFilesPreviewConfig($project_id)
     {
-        helper('filesystem');
-
         $config_data = [];
         $builder = $this->db->table('project_to_upload');
         $builder->select();
@@ -537,17 +531,53 @@ class ProjectModel extends \CodeIgniter\Model
                 'key'         => $value['code'],
                 'type'        => $value['type'],
                 'caption'     => $value['filename'],
-                'downloadUrl' => base_url('uploads/' . $value['code']),
+                'downloadUrl' => $this->downloadProjectFiles($project_id),
                 'size'        => $value['size'],
            ];
         }
-
         return json_encode($config_data);
     }
-    
-    
+
+    public function downloadProjectFiles($project_id)
+    {
+        $builder = $this->db->table('project_to_upload');
+        $builder->select();
+        $builder->where('project_id', $project_id);
+        $query = $builder->get();
+        $row = $query->getRowArray();
+        if ($row) {
+            $response = \Config\Services::response();
+            $file = WRITEPATH . 'uploads/' . $row['code'];
+            if (file_exists($file)) {
+                return $response->download($file, null);
+            } else {
+                return;
+            }
+        } 
+    }
+
+    public function deleteProjectFiles(int $project_id, int $freelancer_id)
+    {
+        $builder = $this->db->table('project_to_upload');
+        $builder->delete([
+            'project_id' => $project_id,
+            'freelancer_id' => $freelancer_id
+        ]);
+    }
+
+    public function getProjectUploadedFile(int $project_id, int $freelancer_id)
+    {
+        $builder = $this->db->table('project_to_upload');
+        $builder->select();
+        $builder->where([
+            'project_id' => $project_id,
+            'freelancer_id' => $freelancer_id,
+            ]);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
     // Freelancer In-progress Projects
-    public function getfreelancerProjects($freelancer_id)
+    public function getfreelancerProjects(int $freelancer_id)
     {
         $builder = $this->db->table('project p');
         $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status');

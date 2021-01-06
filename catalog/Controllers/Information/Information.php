@@ -19,13 +19,13 @@ class Information extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('fid')) {
             $information_id = $this->request->getVar('fid');
-        } elseif($this->request->uri->getSegment(2)) {
-            $information_id = substr($this->request->uri->getSegment(2), 1);
-        } elseif($this->request->getGet('information_id')) {
+        } elseif ($this->request->getGet('information_id')) {
             $information_id = $this->request->getGet('information_id');
+        } elseif ($this->request->uri->getSegment(2)) {
+            $information_id = substr($this->request->uri->getSegment(2), 1);
         } else {
             $information_id = 0;
-        }  
+        }
 
         $information_info = $informations->getInformation($information_id);
 

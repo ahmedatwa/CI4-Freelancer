@@ -39,7 +39,8 @@ class BaseController extends \CodeIgniter\Controller
         //--------------------------------------------------------------------
         // E.g.:
         $this->session  = \Config\Services::session();
-        $this->locale   = $this->request->getLocale();
+        $language = \Config\Services::language();
+        $this->locale   = $language->getLocale();
         $this->registry = service('registry');
         $this->template = service('template');
         $this->customer = service('customer');
@@ -112,26 +113,25 @@ class BaseController extends \CodeIgniter\Controller
         return $time->toDateTimeString();
     }
 
-    public function dateDifference(string $date_added, int $runtime = null)
+    public function dateDifference(string $date_added, int $runtime = 0)
     {
         $time  = new \CodeIgniter\I18n\Time;
 
-        if (!$runtime) {
-           $date = $time::parse($date_added);
-           return $date->humanize();
+        if ($runtime == 0) {
+            $date = $time::parse($date_added);
+            return $date->humanize();
         }
 
         $time = $time::parse($date_added);
-        // thw bidding endDate
+
+        // the bidding endDate
         $endDate = $time->addDays($runtime)->toDateTimeString();
 
-        $today = $time::today();
-
-        //$oldDate = $time::parse($date_added);
+        $today = $time::today(null, $this->locale);
         
         $diff = $today->difference($endDate);
 
-        return $diff->getDays(); 
+        return $diff->getDays();
     }
 
     public function addDays(string $date_added, string $runtime)
@@ -141,8 +141,7 @@ class BaseController extends \CodeIgniter\Controller
 
         $sub = $time->addDays($runtime);
 
-        return $sub->toDateString();   
-
+        return $sub->toDateString();
     }
 
     public function currencyFormat(float $number)
@@ -156,10 +155,9 @@ class BaseController extends \CodeIgniter\Controller
         $value = $currency_info['value'] ? (float)$number * $currency_info['value'] : (float)$number;
 
         if ($this->session->get('currency')) {
-         return number_to_currency($value, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
+            return number_to_currency($value, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
         } else {
-         return number_to_currency($number, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
-
+            return number_to_currency($number, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
         }
     }
 

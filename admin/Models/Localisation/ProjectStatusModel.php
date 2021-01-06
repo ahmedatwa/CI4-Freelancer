@@ -36,42 +36,42 @@ class ProjectStatusModel extends Model
         }
     }
 
-    public function addProjectStatus($data)
+    public function addProjectStatus(array $data)
     {
         $builder = $this->db->table($this->table);
         foreach ($data['project_status'] as $language_id => $value) {
-            $project_status_data = array(
+            $project_status_data = [
                 'language_id' => $language_id,
                 'name' => $value
-            );
+            ];
         $builder->insert($project_status_data);
         }
     }
 
 
-    public function editprojectStatus($project_status_id, $data)
+    public function editprojectStatus(int $status_id, array $data)
     {
         $builder = $this->db->table($this->table);
-        $builder->delete(['project_status_id' => $project_status_id]);
+        $builder->delete(['status_id' => $status_id]);
         foreach ($data['project_status'] as $language_id => $value) {
-            $project_status_data = array(
+            $project_status_data = [
                 'language_id' => $language_id,
                 'name' => $value
-            );
+            ];
         $builder->insert($project_status_data);
         }
     }
 
-     public function getProjectStatusDescriptions($project_status_id)
+     public function getProjectStatusDescriptions(int $status_id)
      {
-        $project_status_data = array();
+        $project_status_data = [];
 
         $builder = $this->db->table($this->table);
         $builder->select();
-        $builder->where('project_status_id', $project_status_id);
+        $builder->where('status_id', $status_id);
         $query = $builder->get();
         foreach ($query->getResultArray() as $result) {
-            $project_status_data[$result['language_id']] = array( 'name' => $result['name']);
+            $project_status_data[$result['language_id']] = ['name' => $result['name']];
         }
         return $project_status_data;
      } 

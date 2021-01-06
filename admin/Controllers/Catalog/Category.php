@@ -164,7 +164,7 @@ class Category extends \Admin\Controllers\BaseController
         if ($this->request->getPost('category_description')) {
             $data['category_description'] = $this->request->getPost('category_description');
         } elseif ($this->request->getVar('category_id')) {
-            $data['category_description'] = $this->categories->getCategoryDescriptions($this->request->getVar('category_id'));
+            $data['category_description'] = $categoryModel->getCategoryDescriptions($this->request->getVar('category_id'));
         } else {
             $data['category_description'] = [];
         }

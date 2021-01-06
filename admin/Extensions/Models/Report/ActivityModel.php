@@ -1,25 +1,12 @@
-<?php namespace Admin\Models\Report;
+<?php namespace Extensions\Models\Report;
 
-use CodeIgniter\Model;
-
-class ActivityModel extends Model
+class ActivityModel extends \CodeIgniter\Model
 {
-
-
     public function getActivities($data = array())
     {
-        $builder = $this->db->table($this->db->prefixTable('user_activity'));
+        $builder = $this->db->table('user_activity');
 
         $builder->select();
-        //$builder->join($this->db->dbprefix . 'vendors v', 'va.user_id = v.user_id', 'LEFT');
-
-        // if (!empty($this->input->get("filter_name"))) {
-        //     $this->db->like('CONCAT(v.firstname," ",v.lastname)', $this->input->get("filter_name"), 'adter');
-        // }
-
-        // if (!empty($this->input->get("filter_date_added"))) {
-        //     $this->db->like('va.date_added', $this->input->get("filter_date_added"), 'after');
-        // }
 
         if (isset($data['start']) || isset($data['limit'])) {
             if ($data['start'] < 0) {
@@ -65,5 +52,4 @@ class ActivityModel extends Model
 
         return $builder->countAllResults();
     }
-
 } // END OF Activities Model FILE

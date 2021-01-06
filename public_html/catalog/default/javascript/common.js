@@ -23,12 +23,23 @@ $('.intro-search-field input').on('keydown', function(e) {
 });
 
 // Currency
-	$('#form-currency #currency-list').on('change', function(e) {
-		e.preventDefault();
-		$('#form-currency input[name=\'code\']').val($(this).val());
+$('#form-currency #currency-list').on('change', function(e) {
+	e.preventDefault();
+	$('#form-currency input[name=\'code\']').val($(this).val());
 
-		$('#form-currency').submit();
-	});
+	$('#form-currency').submit();
+});
+
+// Language 
+$('#form-language #language-list').on('change', function(e) {
+	e.preventDefault();
+	$('#form-language input[name=\'code\']').val($(this).val());
+	
+	var redirect = $(this).children('option:selected').data('redirect');
+	$('#form-language input[name=\'redirect\']').val(redirect);
+
+	$('#form-language').submit();
+});
 
 $("[data-trigger]").on("click", function(e){
     e.preventDefault();
@@ -109,7 +120,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 
     // Dismiss Alerts
     setTimeout(function() { 
-    	$('.alert-dismissible').alert('close');
+    	$('.alert-dismissible').alert('dispose');
     }, 7000);
 	/*--------------------------------------------------*/
 	/*  Ripple Effect
@@ -585,7 +596,6 @@ $(document).on('click', '.dropdown-menu', function (e) {
     /*----------------------------------------------------*/
 	$(document).on('show.bs.dropdown', '#cats-navbar-dropdown', function(e) {
 		window.target = e.target;
-		console.log(e.target )
         var dropdown = $(e.target).find('.dropdown-menu');
          dropdown.appendTo('body');
         $(this).on('hidden.bs.dropdown', function () {
@@ -625,6 +635,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	  }
 	});
 
+	// append fragment to url
 	var url = document.URL;
 	var hash = url.substring(url.indexOf('#'));
 

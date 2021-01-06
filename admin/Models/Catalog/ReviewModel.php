@@ -16,7 +16,6 @@ class ReviewModel extends Model
     // should use for keep data record create timestamp
     protected $createdField = 'date_added';
     protected $updatedField = 'date_modified';
-
     // Registry
     protected $registry;
 
@@ -42,7 +41,7 @@ class ReviewModel extends Model
 
 
     public function getReviews(array $data = [])
-    {        
+    {
         $builder = $this->db->table('review r');
         $builder->select('r.review_id as review_id, r.rating, r.status, r.date_added, pd.name, r.project_id, CONCAT(c.firstname, " ", c.lastname) As author');
         $builder->join('project_description pd', 'r.project_id = pd.project_id', 'left');
@@ -57,9 +56,9 @@ class ReviewModel extends Model
             $builder->where('pd.name', $data['filter_name']);
         }
 
-        $sorting_data = array(
+        $sorting_data = [
             'jd.name',
-        );
+        ];
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
             $data['order_by'] = 'DESC';
@@ -94,13 +93,13 @@ class ReviewModel extends Model
     public function addReview($data)
     {
         $builder = $this->db->table($this->table);
-        $review_data = array(
+        $review_data = [
             'author'     => $data['author'],
             'service_id' => $data['service_id'],
             'text'       => $data['text'],
             'rating'     => $data['rating'],
             'status'     => $data['status']
-        );
+        ];
 
         $builder->set('date_added', 'NOW()', false);
         $builder->insert($review_data);
@@ -109,13 +108,13 @@ class ReviewModel extends Model
     public function editReview($review_id, $data)
     {
         $builder = $this->db->table($this->table);
-        $review_data = array(
+        $review_data = [
             'author'     => $data['author'],
             'service_id' => $data['service_id'],
             'text'       => $data['text'],
             'rating'     => $data['rating'],
             'status'     => $data['status']
-        );
+        ];
         
         $builder->set('date_modified', 'NOW()', false);
         $builder->where('review_id', $review_id);

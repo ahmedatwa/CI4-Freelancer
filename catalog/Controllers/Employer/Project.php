@@ -7,6 +7,7 @@ use \Catalog\Models\Extension\Bid\BidModel;
 use \Catalog\Models\Freelancer\BalanceModel;
 use \Catalog\Models\Employer\EmployerModel;
 use \Catalog\Models\Freelancer\DisputeModel;
+use \Catalog\Models\Account\ReviewModel;
 
 class Project extends \Catalog\Controllers\BaseController
 {
@@ -96,7 +97,6 @@ class Project extends \Catalog\Controllers\BaseController
         $data['customer_id'] = $customer_id;
 
         $data['initial_preview_data'] = $projectModel->getFilesByProjectId($project_id);
-
         $data['initial_preview_config_data'] = $projectModel->getFilesPreviewConfig($project_id);
 
         // upload extensions allowed
@@ -109,7 +109,6 @@ class Project extends \Catalog\Controllers\BaseController
         }
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
-
 
         $this->template->output('employer/project_info', $data);
     }
@@ -176,7 +175,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $results = $bidModel->getBids($filter_data);
         $total = $bidModel->getTotalBidsByProjectId($project_id);
-        $reviewModel = new \Catalog\Models\Account\ReviewModel();
+        $reviewModel = new ReviewModel();
 
 
         foreach ($results as $result) {
@@ -185,14 +184,15 @@ class Project extends \Catalog\Controllers\BaseController
                 'freelancer_id' => $result['freelancer_id'],
                 'freelancer'    => $result['username'],
                 'email'         => $result['email'],
+                'description'   => nl2br($result['description']),
                 'price'         => $this->currencyFormat($result['quote']),
                 'delivery'      => $result['delivery'] . ' ' . lang($this->locale . '.text_days'),
                 'status'        => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'profile'       => route_to('freelancers/profile', $result['customer_id']),
                 'type'          => ($result['status'] == 1) ? lang('project/project.list.text_fixed_price') : lang('project/project.list.text_per_hour'),
                 'image'         => ($result['image']) ? $this->resize($result['image'], 80, 80) : $this->resize('catalog/avatar.jpg', 80, 80),
                 'rating'        => $reviewModel->getAvgReviewByFreelancerId($result['freelancer_id']),
                 'isSelected'    => $bidModel->isAwarded($result['freelancer_id'], $result['project_id']),
+                'profile'       => route_to('freelancer_profile', $result['freelancer_id'], $result['username'])
             ];
         }
 
@@ -246,10 +246,10 @@ class Project extends \Catalog\Controllers\BaseController
         $filter_data = [
             'employer_id' => $customer_id,
             'status_id'   => '8,6',
-             'sort_by'    => $sort_by,
-             'order_by'   => $order_by,
-             'limit'      => $limit,
-             'start'      => ($page - 1) * $limit,
+            'sort_by'     => $sort_by,
+            'order_by'    => $order_by,
+            'limit'       => $limit,
+            'start'       => ($page - 1) * $limit,
         ];
 
         $data['open_projects'] = [];

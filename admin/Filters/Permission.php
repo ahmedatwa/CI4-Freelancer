@@ -40,7 +40,6 @@ class Permission implements FilterInterface
 
         // Ignore Some Pages for Token Check
         if ($route) {
-
             $ignore = [
             'common/dashboard',
             'common/login',
@@ -50,11 +49,11 @@ class Permission implements FilterInterface
             'error/permission'
            ];
 
-        // redirect if not logged in or token expired
-        if (!in_array($route, $ignore) && (! $user->isLogged() || ! $session->get('user_token') || ! $request->getVar('user_token') || ($session->get('user_token') != $request->getVar('user_token')))) {
-            return redirect()->to(base_url('index.php/common/login?redirect=' . $route))
-                             ->with('error', lang('en.error.error_token'));
-         }
+            // redirect if not logged in or token expired
+            if (!in_array($route, $ignore) && (! $user->isLogged() || ! $session->get('user_token') || ! $request->getVar('user_token') || ($session->get('user_token') != $request->getVar('user_token')))) {
+                return redirect()->to(base_url('index.php/common/login?redirect=' . $route))
+                                 ->with('error', lang('en.error.error_token'));
+            }
         } else {
             if (! $request->getVar('user_token') || ! $session->get('user_token') || ($request->getVar('user_token') != $session->get('user_token'))) {
                 return redirect()->to(base_url('index.php/common/login?redirect=' . $route))

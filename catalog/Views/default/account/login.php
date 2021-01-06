@@ -84,7 +84,7 @@ $('#button-form-login').on('click', function() {
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(xhr.responseJSON.message);
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
          }
 	});
 });

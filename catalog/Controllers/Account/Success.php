@@ -2,7 +2,11 @@
 
 class Success extends \Catalog\Controllers\BaseController
 {
-    public function index() {
+    public function index()
+    {
+        if (! $this->customer->isLogged()) {
+            return redirect()->route('account_login');
+        }
 
         $this->template->setTitle(lang('account/success.heading_title'));
 
@@ -26,7 +30,7 @@ class Success extends \Catalog\Controllers\BaseController
 
         if ($this->customer->isLogged()) {
             $data['text_message'] = sprintf(lang('account/success.text_message'), route_to('contact'));
-        } 
+        }
 
         $data['heading_title'] = lang('account/success.heading_title');
 

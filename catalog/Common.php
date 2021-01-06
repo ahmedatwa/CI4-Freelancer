@@ -55,10 +55,10 @@ if (! function_exists('view')) {
             if (array_key_exists('saveData', $options)) {
                 $saveData = (bool) $options['saveData'];
                 unset($options['saveData']);
-            }   
+            }
 
             return $renderer->setData($data, 'raw')
-                    ->render(service('registry')->get('config_theme') . '/' . $name, $options, $saveData);
+                            ->render(service('registry')->get('config_theme') . '/' . $name, $options, $saveData);
         }
     }
 }
@@ -71,8 +71,7 @@ if (! function_exists('getDaysLeft')) {
     function getDaysLeft(string $date)
     {
         $time = new CodeIgniter\I18n\Time();
-
-        $now = $time::now();
+        $now  = $time::now();
         $diff = $now->difference($time::parse($date));
         return $diff->humanize();
     }
@@ -83,12 +82,13 @@ if (!function_exists('seller_graduation_year')) {
     function seller_graduation_year()
     {
         $json = [];
+        
         $cur_year = date('Y');
-        $years = range($cur_year, $cur_year - 50);
+        $years    = range($cur_year, $cur_year - 50);
 
         foreach ($years as $year) {
             $json[] = [
-               'id' => $year,
+               'id'   => $year,
                'text' => $year
            ];
         }
@@ -106,5 +106,3 @@ if (!function_exists('seller_countries_list')) {
         return $countries;
     }
 }
-
-

@@ -230,8 +230,8 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('cid')) {
             $customer_id = $this->request->getVar('cid');
-        } elseif ($this->request->uri->getSegment(2)) {
-            $customer_id = substr($this->request->uri->getSegment(2), 1);
+        } elseif ((int) $this->request->uri->getSegment(3)) {
+            $customer_id = (int) substr($this->request->uri->getSegment(3), 1);
         } else {
             $customer_id = 0;
         }

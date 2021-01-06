@@ -38,7 +38,7 @@ class Menu extends \Catalog\Controllers\BaseController
             'icon'     => 'fas fa-building',
             'class'    => '',
             'name'     => lang('account/menu.text_my_projects'),
-            'href'     => route_to('account_project') ? route_to('account_project') : base_url('account/projects'),
+            'href'     => '',
             'children' => $projects,
         ];
 

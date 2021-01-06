@@ -102,7 +102,7 @@ class Job extends \Catalog\Controllers\BaseController
                 'description' => ($result['description']) ? word_limiter($result['description'], 100) : '',
                 'meta_keyword'=> ($result['meta_keyword']) ? explode(',', $result['meta_keyword']) : '',
                 'type'        => $type,
-                'date_added'  => lang('en.mediumDate', [strtotime($result['date_added'])]),
+                'date_added'  => lang($this->locale . '.mediumDate', [strtotime($result['date_added'])]),
                 'href'        => ($keyword) ? route_to('local_job', $result['job_id'], $keyword) : base_url('extension/job/job?job_id=' . $result['job_id']),
             ];
         }
@@ -159,7 +159,7 @@ class Job extends \Catalog\Controllers\BaseController
         $data['text_sidebar']        = lang('extension/job/job.text_sidebar');
         $data['text_type']           = lang('extension/job/job.text_type');
         $data['text_tags']           = lang('extension/job/job.text_tags');
-        $data['text_select']         = lang('en.text_select');
+        $data['text_select']         = lang($this->locale . '.text_select');
 
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
 

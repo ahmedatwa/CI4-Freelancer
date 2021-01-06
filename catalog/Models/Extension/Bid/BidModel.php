@@ -25,7 +25,7 @@ class BidModel extends \CodeIgniter\Model
     public function getBids(array $data =[])
     {
         $builder = $this->db->table('project_bids pb');
-        $builder->select('c.username, c.email, pb.quote, pb.bid_id, pb.status, pb.delivery, c.image, c.customer_id, pb.freelancer_id, pb.project_id');
+        $builder->select('c.username, c.email, pb.quote, pb.bid_id, pb.status, pb.delivery, c.image, c.customer_id, pb.freelancer_id, pb.project_id, pb.description');
         $builder->join('customer c', 'pb.freelancer_id = c.customer_id', 'left');
         $builder->join('project_description pd', 'pb.project_id = pd.project_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));

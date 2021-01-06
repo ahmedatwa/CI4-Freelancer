@@ -2,6 +2,10 @@
 
 class LanguageModel extends \CodeIgniter\Model
 {
+	protected $table      = 'language';
+	protected $primaryKey = 'language_id';
+	protected $returnType = 'array';
+
     public function getLanguageByCode($code)
     {
         $builder = $this->db->table('language');

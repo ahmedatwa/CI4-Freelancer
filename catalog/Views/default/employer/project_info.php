@@ -38,12 +38,12 @@
 			<div class="tab-content mt-4" id="myTabContent">
                 <div class="tab-pane fade" id="bids" role="tabpanel" aria-labelledby="bids-tab">
                     <div id="bids-list"></div></div> 
-				<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-                    <div id="messages-list"></div></div> 
+<!-- 				<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                    <div id="messages-list"></div></div>  -->
 				<div class="tab-pane fade" id="milestones" role="tabpanel" aria-labelledby="milestones-tab">
                     <div id="milestones-list"></div></div> 
 				<div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
-					<input type="file" id="input-upload" name="file"></div> 
+					<input type="file" id="input-upload" name="file" disabled="true"></div> 
 			</div>
           </div>
 		</div>
@@ -55,10 +55,11 @@
 <script src="catalog/default/vendor/bootstrap-fileinput/themes/fas/theme.min.js"></script>
 <script type="text/javascript">	
     $("#input-upload").fileinput({
-        uploadUrl: "tool/upload?cid=<?php echo $customer_id; ?>&pid=<?php echo $project_id; ?>",
+        //uploadUrl: "tool/upload?cid=<?php //echo $customer_id; ?>&pid=<?php //echo $project_id; ?>",
         enableResumableUpload: false,
         uploadExtraData: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-Requested-With': 'XMLHttpRequest'
         },
         maxFileCount: 3,
         allowedFileExtensions: <?php echo json_encode($allowedFileExtensions); ?>, 
@@ -67,12 +68,18 @@
         overwriteInitial: false,
         showUpload: false,
         showRemove: false,
+        //showBrowse: false,
         initialPreview: <?php echo $initial_preview_data; ?>,          // if you have previously uploaded preview files
         initialPreviewConfig: <?php echo $initial_preview_config_data; ?>,    // if you have previously uploaded preview files
         theme: 'fas',
-        deleteUrl: "tool/upload/delete?cid=<?php echo $customer_id; ?>&pid=<?php echo $project_id; ?>",
+        deleteUrl: "",
         fileActionSettings: {
             showZoom: false,
+            showDownload: true,
+            showDrag: false,
+            showRemove: false,
+            showUpload: false,
+            removeClass: 'd-none',
         },
         preferIconicPreview: true, // this will force thumbnails to display icons for following file extensions
         previewFileIconSettings: { 
@@ -123,12 +130,9 @@
     }).on('filebatchuploadcomplete', function(event, preview, config, tags, extraData) {
         console.log('File Batch Uploaded', preview, config, tags, extraData);
     });
-
 </script>
-
 <!-- // load the bidders List Table-->
 <script type="text/javascript">
-
 $('#project-info #bids-tab').on('click', function (e) {
  $.ajax({
     url: 'employer/project/bids?pid=<?php echo $project_id; ?>',

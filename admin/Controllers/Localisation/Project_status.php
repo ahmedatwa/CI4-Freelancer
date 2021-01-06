@@ -150,6 +150,8 @@ class Project_status extends \Admin\Controllers\BaseController
         }
 
         $languageModel = new LanguageModel();
+        $projectStatusModel = new ProjectStatusModel();
+        
         $data['languages'] = $languageModel->findAll($this->registry->get('config_admin_limit'));
         
         if ($this->request->getPost('project_status')) {

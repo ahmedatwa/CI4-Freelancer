@@ -27,8 +27,8 @@ class Project extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('gid')) {
             $filter_category_id = $this->request->getVar('gid');
-        } elseif ($this->request->uri->getSegment(2)) {
-            $filter_category_id = substr($this->request->uri->getSegment(2), 1);
+        } elseif ((int) $this->request->uri->getSegment(2)) {
+            $filter_category_id = (int) substr($this->request->uri->getSegment(2), 1);
         } else {
             $filter_category_id = null;
         }
@@ -111,13 +111,12 @@ class Project extends \Catalog\Controllers\BaseController
         foreach ($results as $result) {
             // SEO Query
             $keyword = $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']);
-
             $days_left = $this->dateDifference($result['date_added'], $result['runtime']);
 
-            if ($days_left <= 0) {
+            if (! is_int($days_left)) {
                 $status = $result['status'];
             } else {
-                $status = lang('project/project.text_expire', [$days_left]);;
+                $status = lang('project/project.text_expire', [$days_left]);
             }
 
             $data['projects'][] = [
@@ -126,12 +125,11 @@ class Project extends \Catalog\Controllers\BaseController
                 'description' => word_limiter($result['description'], 50),
                 'meta_keyword'=> ($result['meta_keyword']) ? explode(',', $result['meta_keyword']) : '',
                 'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                'type'        => ($result['type'] == 1) ? lang('en.text_fixed_price') : lang('en.text_per_hour'),
+                'type'        => ($result['type'] == 1) ? lang($this->locale . '.text_fixed_price') : lang($this->locale . '.text_per_hour'),
                 'date_added'  => $status,
-                'href'        => ($keyword) ? route_to('single_project', $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
+                'href'        => ($keyword) ? route_to('single_project', $result['project_id'], $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
             ];
         }
-
         
         $uri = $this->request->uri;
  
@@ -173,12 +171,12 @@ class Project extends \Catalog\Controllers\BaseController
         $data['types'][] = [
             'id'    => 'fixed_price',
             'value' => '1',
-            'text'  => lang('en.text_fixed_price'),
+            'text'  => lang($this->locale . '.text_fixed_price'),
         ];
         $data['types'][] = [
             'id'    => 'per_hour',
             'value' => '2',
-            'text'  => lang('en.text_per_hour'),
+            'text'  => lang($this->locale . '.text_per_hour'),
         ];
 
         $categoryModel = new CategoryModel();
@@ -204,13 +202,15 @@ class Project extends \Catalog\Controllers\BaseController
         $data['heading_title']       = lang('project/project.text_projects');
         
         $data['text_projects']       = lang('project/project.text_projects');
-        $data['button_hire']         = lang('en.button_hire');
-        $data['button_work']         = lang('en.button_work');
+        $data['button_hire']         = lang($this->locale . '.button_hire');
+        $data['button_work']         = lang($this->locale . '.button_work');
         $data['button_bid_now']      = lang('project/project.button_bid_now');
-        $data['text_select']         = lang('en.text_select');
+        $data['text_select']         = lang($this->locale . '.text_select');
 
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
         $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
+
+
         $this->session->set('redirect_url', current_url());
 
 
@@ -233,16 +233,21 @@ class Project extends \Catalog\Controllers\BaseController
     // Single Project View
     public function info()
     {
-        $projectModel = new ProjectModel();
-        $seoUrl = service('seo_url');
-        $categoryModel = new CategoryModel();
-
-
-        if ($this->request->uri->getSegment(2)) {
-            $keyword = $this->request->uri->getSegment(2);
+        if ($this->request->getVar('pid')) {
+            $keyword = $this->request->getVar('pid');
+        } elseif ((int) substr($this->request->uri->getSegment(3), 1)) {
+            $keyword = (int) substr($this->request->uri->getSegment(3), 1);
         } else {
             $keyword = '';
         }
+        
+        $this->template->setTitle($keyword);
+
+        $projectModel = new ProjectModel();
+
+        $seoUrl = service('seo_url');
+
+        $categoryModel = new CategoryModel();
 
         if ($this->request->getVar('pid')) {
             $project_id = $this->request->getVar('pid');
@@ -253,12 +258,10 @@ class Project extends \Catalog\Controllers\BaseController
         }
 
         if ($this->session->getFlashdata('success')) {
-        	$data['success'] = $this->session->getFlashdata('success');
+            $data['success'] = $this->session->getFlashdata('success');
         } else {
-        	$data['success'] = '';
+            $data['success'] = '';
         }
-
-        $this->template->setTitle($keyword .' | '. $this->registry->get('config_name'));
 
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -294,16 +297,13 @@ class Project extends \Catalog\Controllers\BaseController
         
         if ($project_id) {
             $project_info = $projectModel->getProject($project_id);
-        } else {
-            $project_info = [];
         }
-
 
         if ($project_info) {
             $reviewModel = new ReviewModel();
 
             $data['project_id']  = $project_info['project_id'];
-            $data['name']        = $project_info['name'];
+            $data['name']        = $project_info['name'] ?? '';
             $data['budget']      = $this->currencyFormat($project_info['budget_min']) . ' - ' . $this->currencyFormat($project_info['budget_max']);
             $data['description'] = $project_info['description'];
             $data['categories']  = $categoryModel->getCategoriesByProjectId($project_id);
@@ -313,26 +313,28 @@ class Project extends \Catalog\Controllers\BaseController
             $downloadModel = new DownloadModel();
             $data['download']        = base_url('tool/download?download_id=' . $project_info['download_id']);
             $data['attachment']      = $downloadModel->where('download_id', $project_info['download_id'])->findColumn('filename')[0];
-            $data['attachment_ext'] =  strtoupper($downloadModel->where('download_id', $project_info['download_id'])->findColumn('ext')[0]);
+            $data['attachment_ext']  =  strtoupper($downloadModel->where('download_id', $project_info['download_id'])->findColumn('ext')[0]);
 
             // Calculate the Bidding Time
             $days_left = $this->dateDifference($project_info['date_added'], $project_info['runtime']);
 
-            if ($days_left <= 0) {
-                $project_status = [
-                    'status_id' => $this->registry->get('config_project_expired_status')
-                ];
+            if ($project_info['runtime'] != 0) {
+                $project_status = ['status_id' => $this->registry->get('config_project_expired_status')];
                 $projectModel->update($project_info['project_id'], $project_status);
             }
 
-            $data['days_left'] = lang('project/project.text_expire', [$days_left]);
+            if (! is_int($days_left)) {
+                $data['days_left'] = $project_info['status'];
+            } else {
+                $data['days_left'] = lang('project/project.text_expire', [$days_left]);
+            }
+            
 
             $data['runtime'] = $project_info['runtime'];
-            
             $data['rating']      = round($reviewModel->getAvgReviewByEmployerId($project_info['employer_id']));
             $data['employer']    = ($project_info['employer'] == '') ? $project_info['employer'] : '@' . $project_info['username'];
             $data['employer_id'] = $project_info['employer_id'];
-            $data['status'] = $projectModel->getStatusByProjectId($project_info['project_id']);
+            $data['status']      = $projectModel->getStatusByProjectId($project_info['project_id']);
 
             // more Employer projects
             $data['other_projects'] = [];
@@ -354,6 +356,8 @@ class Project extends \Catalog\Controllers\BaseController
                 'href'        => ($keyword) ? route_to('single_project', $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
             ];
             }
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
         $data['text_about']          = lang('project/project.text_about');
@@ -367,9 +371,9 @@ class Project extends \Catalog\Controllers\BaseController
         $data['text_describe']       = lang('project/project.text_describe');
         $data['text_delivery']       = lang('project/project.text_delivery');
         $data['text_register']       = lang('common/header.text_register');
-        $data['text_facebook']       = lang('en.text_facebook');
-        $data['text_twitter']        = lang('en.text_twitter');
-        $data['text_gplus']          = lang('en.text_gplus');
+        $data['text_facebook']       = lang($this->locale . '.text_facebook');
+        $data['text_twitter']        = lang($this->locale . '.text_twitter');
+        $data['text_gplus']          = lang($this->locale . '.text_gplus');
         $data['button_bid']          = lang('project/project.button_bid');
         $data['text_expired']        = lang('project/project.text_expired');
         $data['text_similar']        = lang('project/project.text_similar');
@@ -390,32 +394,70 @@ class Project extends \Catalog\Controllers\BaseController
     
     public function add()
     {
-        if (! $this->customer->isLogged()) {
-            // Set the previous url in session
-            $this->session->set('redirect_url', current_url());
-            return redirect()->to(route_to('account_login') ? route_to('account_login') : base_url('account/login')); 
+        $json = [];
+
+        if ($this->request->isAJAX() && $this->request->getMethod() == 'post') {
+            foreach ($this->request->getPost('project_description') as $language_id => $value) {
+                if (! $this->validate([
+                    "project_description.{$language_id}.name" => [
+                        'label' => 'Project Name',
+                        'rules' => 'required|min_length[10]|max_length[64]'
+                    ],
+                    "project_description.{$language_id}.description" => [
+                        'label' => 'Project Description',
+                        'rules' => 'required|min_length[30]'
+                    ],
+                    "delivery_time" => [
+                        'label' => 'Delivery Time',
+                        'rules' => 'required|numeric'
+                    ],
+                    "category" => [
+                        'label' => 'Skills',
+                        'rules' => 'required'
+                    ],
+                    "budget_min" => [
+                        'label' => 'Minimum Budget',
+                        'rules' => 'required|numeric'
+                    ],
+                    "budget_max" => [
+                        'label' => 'Maximum Budget',
+                        'rules' => 'required|numeric'
+                    ],
+                    "runtime" => [
+                        'label' => 'Bidding Duration',
+                        'rules' => 'required|numeric'
+                    ],
+                    ])) 
+                {
+                    $error_warning = ['error_warning' => lang('project/project.text_warning')];
+                    $json['error'] = array_merge($this->validator->getErrors(), $error_warning);
+                }
+            }
+            
+            if (! $json) {
+                $projectModel = new ProjectModel();
+
+                $seoUrl = service('seo_url');
+
+                $project_id = $projectModel->addProject($this->request->getPost());
+
+                $keyword = $seoUrl->getKeywordByQuery('project_id=' . $project_id);
+                $this->session->setFlashdata('success', lang('project/project.success_new_project'));
+                $json['redirect'] = route_to('single_project', $keyword);
+            }
         }
 
-        $this->template->setTitle(lang('account/dashboard.heading_title'));
-
-        $projectModel = new ProjectModel();
-
-        $seoUrl = service('seo_url');
-
-        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-            $project_id = $projectModel->addProject($this->request->getPost());
-
-            $keyword = $seoUrl->getKeywordByQuery('project_id=' . $project_id);
-
-            return redirect()->to(route_to('single_project', $keyword))
-                             ->with('success', lang('project/project.success_new_project'));
-        }
-
-        $this->getForm();
+        return $this->response->setJSON($json);
     }
 
     public function getForm()
     {
+        if (! $this->customer->isLogged()) {
+            // Set the previous url in session
+            $this->session->set('redirect_url', current_url());
+            return redirect()->to(route_to('account_login') ? route_to('account_login') : base_url('account/login'));
+        }
+
         $projectModel = new ProjectModel();
 
         $this->template->setTitle($this->registry->get('config_name'));
@@ -458,9 +500,9 @@ class Project extends \Catalog\Controllers\BaseController
         $data['entry_description']     = lang('project/project.entry_description');
         $data['text_type']             = lang('project/project.text_type');
         $data['text_budget']           = lang('project/project.text_budget');
-        $data['text_select']           = lang('en.text_select');
-        $data['text_enabled']          = lang('en.text_enabled');
-        $data['text_disabled']         = lang('en.text_disabled');
+        $data['text_select']           = lang($this->locale . '.text_select');
+        $data['text_enabled']          = lang($this->locale . '.text_enabled');
+        $data['text_disabled']         = lang($this->locale . '.text_disabled');
         
         $data['entry_meta_keywords']   = lang('project/project.entry_meta_keywords');
         $data['entry_days_open']       = lang('project/project.entry_days_open');
@@ -468,7 +510,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['entry_skills']          = lang('project/project.entry_skills');
         $data['entry_min']             = lang('project/project.entry_min');
         $data['entry_max']             = lang('project/project.entry_max');
-        $data['entry_status']          = lang('en.entry_status');
+        $data['entry_status']          = lang($this->locale . '.entry_status');
         $data['entry_delivery_time']   = lang('project/project.entry_delivery_time');
         $data['entry_run_time']        = lang('project/project.entry_run_time');
         $data['entry_upload']          = lang('project/project.entry_upload');
@@ -476,7 +518,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['help_delivery']         = lang('project/project.help_delivery');
         $data['help_bidding_duration'] = lang('project/project.help_bidding_duration');
         $data['help_upload']           = lang('project/project.help_upload');
-        $data['button_add']            = lang('en.button_add');
+        $data['button_add']            = lang($this->locale . '.button_add');
         
         $data['button_save'] = !$this->request->getVar('project_id') ? lang('project/project.button_add') : lang('project/project.button_edit');
         
@@ -509,7 +551,7 @@ class Project extends \Catalog\Controllers\BaseController
         } elseif ($this->request->getVar('pid')) {
             $data['budget_min'] = round($project_info['budget_min']);
         } else {
-            $data['budget_min'] = 0;
+            $data['budget_min'] = '';
         }
 
         if ($this->request->getPost('budget_max')) {
@@ -517,7 +559,7 @@ class Project extends \Catalog\Controllers\BaseController
         } elseif ($this->request->getVar('pid')) {
             $data['budget_max'] = round($project_info['budget_max']);
         } else {
-            $data['budget_max'] = 0;
+            $data['budget_max'] = '';
         }
 
         if ($this->request->getPost('type')) {
@@ -541,16 +583,16 @@ class Project extends \Catalog\Controllers\BaseController
         } elseif ($this->request->getVar('pid')) {
             $data['delivery_time'] = $project_info['delivery_time'];
         } else {
-            $data['delivery_time'] = 0;
+            $data['delivery_time'] = '';
         }
 
         if ($this->request->getPost('runtime')) {
             $data['runtime'] = $this->request->getPost('runtime');
         } elseif ($this->request->getVar('pid')) {
-            $data['delivery_time'] = $project_info['runtime'];
+            $data['runtime'] = $project_info['runtime'];
         } else {
-            $data['runtime'] = 3;
-        }        
+            $data['runtime'] = 8;
+        }
 
         if ($this->request->getPost('download_id')) {
             $data['download_id'] = $this->request->getPost('download_id');
@@ -578,7 +620,6 @@ class Project extends \Catalog\Controllers\BaseController
         $json = [];
 
         if ($this->request->getVar('url')) {
-            
             $uri = new \CodeIgniter\HTTP\URI($this->request->getVar('url'));
 
             if ($this->request->getPost('skills')) {
@@ -598,11 +639,10 @@ class Project extends \Catalog\Controllers\BaseController
             }
 
             if ($this->request->getPost('state')) {
-               $uri->addQuery('state', $this->request->getPost('state'));
+                $uri->addQuery('state', $this->request->getPost('state'));
             }
 
             $json['uri'] = (string) $uri;
-
         }
         
         return $this->response->setJSON($json);

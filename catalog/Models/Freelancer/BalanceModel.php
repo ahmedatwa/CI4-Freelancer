@@ -27,11 +27,12 @@ class BalanceModel extends \CodeIgniter\Model
         $builder->set('date_added', 'NOW()', false);
         $builder->set('date_modified', 'NOW()', false);
         $builder->insert($freelancer_data);
+        $balance_id = $this->db->insertID();
       }  
       // Employer Balance
       if (isset($data['employer_id'])) {
             $employer_data = [
-                'customer_id' => $data['freelancer_id'],
+                'customer_id' => $data['employer_id'],
                 'project_id'  => $project_id,
                 'used'        => $data['amount'],
             ];
@@ -39,7 +40,7 @@ class BalanceModel extends \CodeIgniter\Model
         $builder->set('date_added', 'NOW()', false);
         $builder->set('date_modified', 'NOW()', false);
         $builder->insert($employer_data);
-        $balance_id = $this->db->insertID();
+        
         \CodeIgniter\Events\Events::trigger('customer_milestone_payment', $data['freelancer_id'], $project_id, $balance_id);
       }  
     }

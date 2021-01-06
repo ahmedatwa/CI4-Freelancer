@@ -259,6 +259,28 @@ class Column_left extends \Admin\Controllers\BaseController
             'name'         => lang('common/column_left.text_system'),
             'children'     => $system,
         ];
+
+        // report Level 1
+        $report = [];
+        $report[] = [
+            'id'       => 'menu-report',
+            'name'     => lang('common/column_left.text_report'),
+            'href'     => base_url('index.php/report/report?user_token=' . $this->request->getVar('user_token')),
+            'children' => [],
+        ];
+        $report[] = [
+            'id'       => 'menu-report',
+            'name'     => lang('common/column_left.text_online'),
+            'href'     => base_url('index.php/report/online?user_token=' . $this->request->getVar('user_token')),
+            'children' => [],
+        ];
+        $data['menus'][] = [
+            'id'           => 'menu-report',
+            'icon'         => 'fas fa-chart-pie',
+            'name'         => lang('common/column_left.text_report'),
+            'children'     => $report,
+        ];
+
         
 
         return view('common/column_left', $data);

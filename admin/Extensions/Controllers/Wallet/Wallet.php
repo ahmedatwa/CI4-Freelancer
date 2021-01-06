@@ -1,12 +1,14 @@
 <?php namespace Extensions\Controllers\Wallet;
 
+use \Admin\Models\Setting\SettingModel;
+
 class Wallet extends \Admin\Controllers\BaseController
 {
     public function index()
     {
         $this->document->setTitle(lang('wallet/wallet.list.heading_title'));
 
-        $setting_model = new \Admin\Models\Setting\Settings();
+        $setting_model = new SettingModel();
 
         if (($this->request->getMethod() == 'post') ) {
                 $setting_model->editSetting('wallet_extension', $this->request->getPost());

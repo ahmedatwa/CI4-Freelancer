@@ -125,6 +125,7 @@ class Footer extends \Catalog\Controllers\BaseController
         $data['scripts'] = $this->template->getScripts();
 
         $data['currency'] = view_cell('\Catalog\Controllers\Common\Currency::index');
+        $data['language'] = view_cell('\Catalog\Controllers\Common\Language::index');
 
         return view('common/footer', $data);
     }

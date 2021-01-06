@@ -338,7 +338,7 @@ class Project extends \Catalog\Controllers\BaseController
                 'accepted'      => $result['accepted'],
                 'status'        => ($result['accepted']) ? 'Accepted' : 'Awarded',
                 'date_added'    => $this->dateDifference($result['date_added']),
-                'href'          => route_to('single_project', $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']))
+                'href'          => route_to('single_project', $result['project_id'], $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']))
             ];
         }
 

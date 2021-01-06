@@ -20,7 +20,7 @@ class Blog extends \Catalog\Controllers\BaseController
         // Breadcrumbs
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
-            'text' => lang('en.text_home'),
+            'text' => lang($this->locale . '.text_home'),
             'href' => base_url(),
         ];
 
@@ -94,7 +94,7 @@ class Blog extends \Catalog\Controllers\BaseController
                 'title' => $result['title'],
                 'image' => $this->resize($result['image'], 374, 460),
                 'body'  => word_limiter($result['body'], 20),
-                'href'  => ($keyword) ? route_to('blog/post', $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
+                'href'  => ($keyword) ? route_to('blog_post', $result['post_id'], $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
                 'date_added' => $this->dateDifference($result['date_added']),
             ];
         }
@@ -107,7 +107,7 @@ class Blog extends \Catalog\Controllers\BaseController
                 'title' => $result['title'],
                 'image' => $this->resize($result['image'], 358, 142),
                 'body'  => word_limiter($result['body'], 10),
-                'href'  => ($keyword) ? route_to('blog/post', $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
+                'href'  => ($keyword) ? route_to('blog_post', $result['post_id'], $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
                 'date_added' => $this->dateDifference($result['date_added']),
             ];
         }
@@ -148,7 +148,7 @@ class Blog extends \Catalog\Controllers\BaseController
         // Breadcrumbs
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
-            'text' => lang('en.text_home'),
+            'text' => lang($this->locale . '.text_home'),
             'href' => base_url(),
         ];
 
@@ -166,9 +166,13 @@ class Blog extends \Catalog\Controllers\BaseController
             $data['title']      = $post_info['title'];
             $data['category']   = $post_info['category'];
             $data['body']       = $post_info['body'];
-            $data['date_added'] = lang('en.longDate', [strtotime($post_info['date_added'])]);
+            $data['date_added'] = lang($this->locale . '.longDate', [strtotime($post_info['date_added'])]);
             $data['image']      = ($post_info['image']) ? $this->resize($post_info['image'], 777, 380) : $this->resize('no_image.jpg', 777, 380);
             $data['post_id']    = $post_info['post_id'];
+
+            $keyword = $seo_url->getKeywordByQuery('post_id=' . $post_info['post_id']);
+            $data['href'] = ($keyword) ? route_to('blog/post', $keyword) : base_url('extension/blog/blog/view?post_id=' . $post_info['post_id']);
+
         } else {
             $data['title']      = '';
             $data['category']   = '';
@@ -203,13 +207,12 @@ class Blog extends \Catalog\Controllers\BaseController
         foreach ($trending as $result) {
             $keyword = $seo_url->getKeywordByQuery('post_id=' . $result['post_id']);
             $data['trending'][] = [
-                'title'      => $result['title'],
+                'title' => $result['title'],
                 'image' => $this->resize($result['image'], 358, 142) ?? $this->resize('no_image.jpg', 358, 142),
-                'href'  => ($keyword) ? route_to('blog/post', $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
+                'href'  => ($keyword) ? route_to('blog_post', $result['post_id'], $keyword) : base_url('extension/blog/blog/view?post_id=' . $result['post_id']),
                 'date_added' => $this->dateDifference($result['date_added']),
             ];
         }
-
 
         // Social
         $data['facebook']      = $this->registry->get('config_facebook');

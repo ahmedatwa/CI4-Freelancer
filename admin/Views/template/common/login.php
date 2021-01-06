@@ -53,6 +53,7 @@
                         </a>
                     </div>
                     <div class="text-center p-t-136">
+                        <input type="hidden" name="redirect" value="<?php echo $redirect; ?>">
                     </div>
                 </form>
             </div>
@@ -87,7 +88,6 @@ $('#button-login').on('click', function() {
             $(this).prop('disabled', false);  
         },
         success: function(json) {
-            console.log(json)
             if (json['validator']) {
                 for (i in json['validator']) {
                     var element = $('#input-' + i);

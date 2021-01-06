@@ -21,7 +21,7 @@ $routes->setTranslateURIDashes(false);
 $routes->setAutoRoute(true);
 // Will display a custom view
 $routes->set404Override(function () {
-    echo view_cell('\Catalog\Controllers\Error\Not_found::index');
+    echo view_cell('\Catalog\Controllers\Error\NotFound::index');
 });
 
 
@@ -36,13 +36,13 @@ $routes->set404Override(function () {
 
 $routes->add('/', 'Common/Home::index');
 // Information
-$routes->group('information', function ($routes) {
+$routes->group('{locale}/information', function ($routes) {
   $routes->add('i(:num)/(:any)', 'Information\Information::index/$1/$2', ['as' => 'information']);
 });
 $routes->add('contact', 'Information\Contact::index');
 
 // Blog
-$routes->group('blog', function ($routes) {
+$routes->group('{locale}/blog', function ($routes) {
     $routes->add('/', 'Extension\Blog\Blog::index', ['as' => 'blog']);
     $routes->add('p(:num)/(:any)', 'Extension\Blog\Blog::getPost/$1/$2', ['as' => 'blog_post']);
 });
@@ -72,16 +72,15 @@ $routes->group('account', function ($routes) {
 	$routes->add('logout', 'Account\Logout::index', ['as' => 'account_logout']);
 	$routes->add('projects', 'Account\Projects::index', ['as' => 'account_project']);
 	$routes->add('dispute', 'Account\Dispute::index', ['as' => 'account_dispute']);
-	$routes->add('jobs', 'Account\Jobs::index', ['as' => 'account_job']);
-
+	$routes->add('jobs', 'Account\Jobs::index', ['as' => 'account_jobs']);
 });
 
 // projects
-$routes->add('add-project', 'Project\Project::add');
+$routes->add('add-project', 'Project\Project::getForm', ['as' => 'add-project']);
 // single category for projects
 $routes->add('category/c(:num)/(:any)', 'Project\Project::index', ['as' => 'category']);
 $routes->add('projects', 'Project\Project::index', ['as' => 'projects']);
-$routes->add('service/(:any)', 'Project\Project::info/$1', ['as' => 'single_project']);
+$routes->add('service/s(:num)/(:any)', 'Project\Project::info/$1/$2', ['as' => 'single_project']);
 // Category
 $routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
 /**

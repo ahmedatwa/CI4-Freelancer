@@ -56,6 +56,8 @@ class BlogModel extends \CodeIgniter\Model
             'tags'        => $data['tags'],
             'image'       => $data['image'],
             'status'      => $data['status'],
+            'featured'    => $data['featured'],
+            'trending'    => $data['trending'],
         ];
 
         $builder->set('date_added', 'NOW()', false);
@@ -86,6 +88,8 @@ class BlogModel extends \CodeIgniter\Model
             'tags'        => $data['tags'],
             'image'       => $data['image'],
             'status'      => $data['status'],
+            'featured'    => $data['featured'],
+            'trending'    => $data['trending'],
         ];
         // SEO URLS
         $seo_url = $this->db->table('seo_url');

@@ -29,6 +29,7 @@ return [
     'text_jobs'            => 'Jobs',
     'text_reviews'         => 'Reviews',
     'text_project_status'  => 'Project Status',
+    'text_online'          => 'Who\'s Online',
     // Blog
     'text_blog'            => 'Blog',
     'text_blog_posts'      => 'Posts',
@@ -44,6 +45,6 @@ return [
     'text_finance'         => 'Finance',
     'text_withdrawal'      => 'Withdrawal',
     'text_wallet'          => 'Wallet',
-    'text_withdraw_status'  => 'Withdrawal Statuses',
+    'text_withdraw_status' => 'Withdrawal Statuses',
 
 ];

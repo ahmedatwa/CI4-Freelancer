@@ -37,6 +37,7 @@ class SettingModel extends \CodeIgniter\Model
         $builder->delete(['site_id' => $site_id, 'code' => $code]);
 
         foreach ($data as $key => $value) {
+
             if (substr($key, 0, strlen($code)) == $code) {
                 if (!is_array($value)) {
                     $setting  = $value;

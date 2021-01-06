@@ -1,6 +1,6 @@
 <?php namespace Admin\Events;
 
-use \Admin\Models\Report\ActivityModel;
+use \Extensions\Models\Report\ActivityModel;
 use \Admin\Libraries\User;
 use \Admin\Models\User\UserModel;
 use CodeIgniter\I18n\Time;
@@ -18,7 +18,7 @@ class Activity
             'name'    => $user->getUserName(),
             ];
 
-        $activityModel->addActivity('activity_user_login', $data);
+        $activityModel->addActivity('activity_login', $data);
     }
 
     // Admin\Controllers\user\user::Rules
@@ -55,7 +55,7 @@ class Activity
             'name'    => $name
             ];
 
-        $activityModel->addActivity('activity_user_add', $data);
+        $activityModel->addActivity('activity_add', $data);
     }
    
     // Admin\Models\*\::Update
@@ -71,7 +71,7 @@ class Activity
              'name'    => $name
              ];
  
-        $activityModel->addActivity('activity_user_edit', $data);
+        $activityModel->addActivity('activity_edit', $data);
     }
 
     // Admin\Models\*\::delete

@@ -1,6 +1,6 @@
 <?php namespace Catalog\Controllers\Error;
 
-class Not_found extends \Catalog\Controllers\BaseController
+class NotFound extends \Catalog\Controllers\BaseController
 {
 	public function index() 
 	{

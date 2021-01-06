@@ -13,7 +13,7 @@
     'text_budget'           => 'Estimated Budget',
     'text_projects'         => 'Projects',
     // Add From
-    'text_warning'          => 'Please check the form for errors.',
+    'text_warning'          => 'Please check the errors below.',
     'success_new_project'          => 'Your Project is live now.',
     'text_projects'         => 'My Projects',
     'text_manage_bidders'   => 'Manage Bidders',

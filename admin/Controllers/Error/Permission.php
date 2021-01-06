@@ -10,7 +10,7 @@ class Permission extends \Admin\Controllers\BaseController
 
         $data['text_permission'] = lang('error/permission.list.text_permission');
         
-        return $this->document->output('error/permission', $data);
+        $this->document->output('error/permission', $data);
     }
 
 

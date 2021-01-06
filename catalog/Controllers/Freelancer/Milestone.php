@@ -81,13 +81,22 @@ class Milestone extends \Catalog\Controllers\BaseController
     public function addMilestone()
     {
         $json = [];
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
+            if (! $this->validate([
+                'amount'      => "required|numeric",
+                'description' => "required|alpha_numeric_space",
+                'deadline'    => "required|numeric",
+            ])) {
+                $json['error'] = $this->validator->getErrors();
+            }
 
-        if ($this->request->getMethod() == 'post' && $this->request->getVar('pid')) {
-            $milestoneModel = new MilestoneModel();
+            if ((! $json) && $this->request->getVar('project_id')) {
+                $milestoneModel = new MilestoneModel();
 
-            $milestoneModel->insert($this->request->getPost());
+                $milestoneModel->insert($this->request->getPost());
 
-            $json['success'] = lang('freelancer/project.text_success_milestone');
+                $json['success'] = lang('freelancer/project.text_success_milestone');
+            }
         }
 
         return $this->response->setJSON($json);
@@ -119,9 +128,7 @@ class Milestone extends \Catalog\Controllers\BaseController
         if ($this->request->getMethod() == 'post') {
             $milestoneModel = new MilestoneModel();
             
-            $data = [
-             'status' => 3
-            ];
+            $data = ['status' => 3];
 
             $milestoneModel->update($this->request->getVar('milestone_id'), $data);
 
@@ -134,31 +141,37 @@ class Milestone extends \Catalog\Controllers\BaseController
     public function payMilestone()
     {
         $json = [];
-
-        if ($this->request->getMethod() == 'post') {
-            if ($this->request->getPost('milestone_id')) {
-                $milestone_id = $this->request->getPost('milestone_id');
-            } else {
-                $milestone_id = 0;
-            }
-
-            $milestoneModel = new MilestoneModel();
-
-            $milestone_info = $milestoneModel->find($milestone_id);
-
-            $data = [
-             'status' => 2
-            ];
-
-            $milestoneModel->update($milestone_id, $data);
-            // update customer balance
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
             $balanceModel = new BalanceModel();
 
-            if ($this->request->getPost('freelancer_id') && $this->request->getPost('employer_id')) {
-                $balanceModel->payMilestone($this->request->getPost(), $milestone_info['project_id']);
+            $balance = $balanceModel->getBalanceByCustomerID($this->customer->getCustomerID());
+
+            // Emploer Balance Validation
+            if (($balance == 0) || $this->request->getPost('amount') > $balance) {
+                $json['error'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
             }
+
+            if (! $json) {
+                if ($this->request->getPost('milestone_id')) {
+                    $milestone_id = $this->request->getPost('milestone_id');
+                } else {
+                    $milestone_id = 0;
+                }
+
+                $milestoneModel = new MilestoneModel();
+
+                $milestone_info = $milestoneModel->find($milestone_id);
+
+                $data = ['status' => 2];
+
+                $milestoneModel->update($milestone_id, $data);
+                // update customer balance
+                if ($this->request->getPost('freelancer_id') && $this->request->getPost('employer_id')) {
+                    $balanceModel->payMilestone($this->request->getPost(), $milestone_info['project_id']);
+                }
             
-            $json['success'] = 'Milestone has been been paid!';
+                $json['success'] = 'Milestone has been been paid!';
+            }
         }
 
         return $this->response->setJSON($json);

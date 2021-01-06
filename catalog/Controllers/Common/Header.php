@@ -51,7 +51,6 @@ class Header extends \Catalog\Controllers\BaseController
         $data['text_withdraw_funds']       = lang('common/header.text_withdraw_funds');
         $data['text_transactions_history'] = lang('common/header.text_transactions_history');
 
-
         $data['config_name'] = $this->registry->get('config_name');
 
         if (is_file(DIR_IMAGE . $this->registry->get('config_logo'))) {
@@ -66,6 +65,7 @@ class Header extends \Catalog\Controllers\BaseController
         $data['forgotton']   = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
         $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/project');
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
+        $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
 
         if ($this->session->get('customer_id')) {
             $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');

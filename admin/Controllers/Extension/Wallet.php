@@ -1,6 +1,8 @@
 <?php namespace Admin\Controllers\Extension;
 
-use \Admin\Models\Setting\Extensions;
+use \Admin\Models\Setting\ExtensionModel;
+use \Extensions\Models\wallet\WalletModel;
+use \Admin\Models\Setting\SettingModel;
 
 class Wallet extends \Admin\Controllers\BaseController
 {
@@ -8,7 +10,7 @@ class Wallet extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/wallet.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         $this->getList();
     }
@@ -18,7 +20,7 @@ class Wallet extends \Admin\Controllers\BaseController
         
         $this->document->setTitle(lang('extension/wallet.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             $extensionsModel->install('wallet', $this->request->getVar('extension'));
@@ -28,11 +30,11 @@ class Wallet extends \Admin\Controllers\BaseController
             $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/wallet/' . $this->request->getVar('extension'));
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/wallet/' . $this->request->getVar('extension'));
 
-            $settingModel = new \Admin\Models\Setting\Settings();
+            $settingModel = new SettingModel;
             $settingModel->editSetting('wallet_extension', ['wallet_extension_status' => 1]);
 
             // Call install Method is exists
-            $walletModel = new \Extensions\Models\wallet\walletModel();
+            $walletModel = new WalletModel();
             if (method_exists($walletModel, 'install')) {
                 $walletModel->install();
             }
@@ -47,12 +49,12 @@ class Wallet extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('extension/wallet.list.heading_title'));
 
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
             $extensionsModel->uninstall('wallet', $this->request->getVar('extension'));
             // Call uninstall Method is exists
-            $walletModel = new \Extensions\Models\wallet\walletModel();
+            $walletModel = new WalletModel();
             if (method_exists($walletModel, 'install')) {
                 $walletModel->uninstall();
             }
@@ -65,7 +67,7 @@ class Wallet extends \Admin\Controllers\BaseController
 
     protected function getList()
     {
-        $extensionsModel = new Extensions();
+        $extensionsModel = new ExtensionModel();
 
         if ($this->session->getFlashdata('warning')) {
             $data['error_warning'] = $this->session->getFlashdata('warning');

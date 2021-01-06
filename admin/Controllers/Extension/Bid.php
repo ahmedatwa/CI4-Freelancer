@@ -27,8 +27,8 @@ class Bid extends \Admin\Controllers\BaseController
 
             $userGroupModel = new UserGroupModel();
 
-            $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'ExtensionModel()/bid/' . $this->request->getVar('extension'));
-            $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'ExtensionModel()/bid/' . $this->request->getVar('extension'));
+            $userGroupModel->addPermission($this->user->getGroupId(), 'access', 'extensions/bid/' . $this->request->getVar('extension'));
+            $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/bid/' . $this->request->getVar('extension'));
             // Add Setting Key Since extension has no config Values
             $settingModel = new SettingModel();
             $settingModel->editSetting('extension_bid', ['extension_bid_status' => 1]);
@@ -90,23 +90,23 @@ class Bid extends \Admin\Controllers\BaseController
             }
         }
 
-        $data['ExtensionModel()'] = [];
+        $data['extensions'] = [];
         
         helper('filesystem');
 
-        $files = directory_map(APPPATH . 'ExtensionModel()/Controllers/Bid', 1);
+        $files = directory_map(APPPATH . 'Extensions/Controllers/Bid', 1);
 
         if ($files) {
             foreach ($files as $file) {
                 $basename = basename($file, '.php');
                 
-                $data['ExtensionModel()'][] = [
+                $data['extensions'][] = [
                     'name'       => lang('bid/' . strtolower($basename) . '.list.heading_title'),
                     'status'     => ($this->registry->get('extension_bid_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'install'    => base_url('index.php//bid/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/bid/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
-                    'installed'  => in_array(strtolower($basename), $installedExtensions,
-                    'edit'       => base_url('index.php/ExtensionModel()/bid/' . strtolower($basename) .'?user_token=' . $this->request->getVar('user_token')),
+                    'installed'  => in_array(strtolower($basename), $installedExtensions),
+                    'edit'       => base_url('index.php/extensions/bid/' . strtolower($basename) .'?user_token=' . $this->request->getVar('user_token')),
                 ];
             }
         }

@@ -111,7 +111,7 @@
                 <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_setting; ?></a>
                 <a class="dropdown-item" href="<?php echo $account_project; ?>"> <?php echo $text_my_projects; ?></a>
                 <a class="dropdown-item" href="<?php echo $profile; ?>"> <?php echo $text_profile; ?></a>
-                <a class="dropdown-item" href="javascript:void(0);" id="button-logout"> <?php echo $text_logout; ?></a>
+                <a class="dropdown-item" href="<?php echo $logout; ?>" id="button-logout"> <?php echo $text_logout; ?></a>
           </div>
         </div>
       </div>
@@ -209,7 +209,7 @@
                 <a class="dropdown-item" href="<?php echo $setting; ?>"> <?php echo $text_setting; ?></a>
                 <a class="dropdown-item" href="<?php echo $account_project; ?>"> <?php echo $text_my_projects; ?></a>
                 <a class="dropdown-item" href="<?php echo $profile; ?>"> <?php echo $text_profile; ?></a>
-                <a class="dropdown-item" href="javascript:void(0);" id="button-logout"> <?php echo $text_logout; ?></a>
+                <a class="dropdown-item" href="<?php echo $logout; ?>" id="button-logout"> <?php echo $text_logout; ?></a>
               </div>
             </div>
           </div>

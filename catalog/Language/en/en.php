@@ -30,9 +30,6 @@ return [
     'text_per_hour'       => 'Hourly Rate',
     'text_no_results'   => 'No Results !',
     'text_confirm'  => 'Are you sure?',
-
-
-
     // Button
     // Entry
     'entry_date_added' => 'Date Added',

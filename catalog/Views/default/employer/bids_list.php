@@ -9,11 +9,12 @@
 							<div class="freelancer-overview-inner">
 								<div class="freelancer-avatar">
 									<div class="verified-badge"></div>
-									<a href="#"><img src="<?php echo $bidder['image']; ?>" alt=""></a>
+									<a href="<?php echo $bidder['profile']; ?>"><img src="<?php echo $bidder['image']; ?>" alt="<?php echo $bidder['freelancer']; ?>"></a>
 								</div>
 								<div class="freelancer-name">
 									<h4><a href="<?php echo $bidder['profile']; ?>"><?php echo $bidder['freelancer']; ?> <img class="flag" src="images/flags/de.svg" alt="" title="Germany" data-placement="top" data-toggle="tooltip"></a></h4>
-									<span class="freelancer-detail-item"><a href="#"><i class="icon-feather-mail"></i> <?php echo $bidder['email']; ?></a></span>
+									<span class="freelancer-detail-item"><i class="icon-feather-mail"></i> <?php echo $bidder['email']; ?></span>
+                  <div class="">Description: <?php echo $bidder['description']; ?></div>
 									<div class="freelancer-rating">
 										<div class="rating">
 											<ul>

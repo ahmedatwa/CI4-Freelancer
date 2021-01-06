@@ -228,7 +228,7 @@ class Post extends \Admin\Controllers\BaseController
         } else {
             $data['featured'] = 0;
         }
-
+        
         if ($this->request->getPost('trending')) {
             $data['trending'] = $this->request->getPost('trending');
         } elseif (!empty($post_info)) {

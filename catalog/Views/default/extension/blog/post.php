@@ -31,9 +31,8 @@
 				<!-- Blog Post Content -->
 				<div class="blog-post-content">
 					<h3 class="margin-bottom-10"><?php echo $title; ?></h3>
-
 					<div class="blog-post-info-list margin-bottom-20">
-						<a href="#" class="blog-post-info"><?php echo $date_added; ?></a>
+						<span class="blog-post-info"><?php echo $date_added; ?></span>
 						<!-- <a href="#"  class="blog-post-info">5 Comments</a> -->
 					</div>
 					<p><?php echo $body; ?></p>
@@ -59,13 +58,13 @@
 				<div class="sidebar-widget">
 					<h3><?php echo $text_trending; ?></h3>
 					<ul class="widget-tabs">
-						<?php foreach ($trending as $value) { ?>
+						<?php foreach ($trending as $trend) { ?>
 							<li>
-								<a href="#" class="widget-content active">
-									<img src="<?php echo $value['image']; ?>" alt="">
+								<a href="<?php echo $trend['href']; ?>" class="widget-content active">
+									<img src="<?php echo $trend['image']; ?>" alt="">
 									<div class="widget-text">
-										<h5><?php echo $value['title']; ?></h5>
-										<span><?php echo $value['date_added']; ?></span>
+										<h5><?php echo $trend['title']; ?></h5>
+										<span><?php echo $trend['date_added']; ?></span>
 									</div>
 								</a>
 							</li>

@@ -56,9 +56,9 @@
 
 <script type="text/javascript">
 function addMilestone() {
-   bootbox.confirm({
+   var dialog = bootbox.confirm({
     title: 'Create Milestone',
-    message: '<form id="milestone-modal-form"><input type="hidden" name="project_id" value="<?php echo $project_id; ?>" /><input type="hidden" name="created_by" value="<?php echo $customer_id; ?>" /><input type="hidden" name="created_for" value="<?php echo $created_for; ?>" /><div class="form-group"><label for="input-message">Amount</label><input type="number" min="1" class="form-control" name="amount"></div><div class="form-group"><label for="input-message">Description</label><textarea type="text" cols="3" row="4" class="form-control" name="description"></textarea></div><div class="form-group"><label for="input-message">Completed in</label><input type="number" min="1" max="30" class="form-control" name="deadline"></div></form>',
+    message: '<form id="milestone-modal-form"><input type="hidden" name="project_id" value="<?php echo $project_id; ?>" /><input type="hidden" name="created_by" value="<?php echo $customer_id; ?>" /><input type="hidden" name="created_for" value="<?php echo $created_for; ?>" /><div class="form-group"><label for="input-amount">Amount</label><input type="number" min="1" class="form-control" name="amount" id="input-amount"></div><div class="form-group"><label for="input-description">Description</label><textarea type="text" cols="3" row="4" class="form-control" name="description" id="input-description"></textarea></div><div class="form-group"><label for="input-deadline">Completed in</label><input type="number" min="1" max="30" class="form-control" name="deadline" id="input-deadline"></div></form>',
     className: 'animate__animated animate__fadeInDown',
     buttons: {
         cancel: {
@@ -71,25 +71,35 @@ function addMilestone() {
         }
     },
     callback: function (result) {
-    if (result) {
+    if (result === false) {
+        dialog.modal('hide');
+      } else { 
              $.ajax({
-                url: 'freelancer/milestone/addMilestone?pid=<?php echo $project_id; ?>',
+                url: 'freelancer/milestone/addMilestone?project_id=<?php echo $project_id; ?>',
                 headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                  'X-Requested-With': 'XMLHttpRequest',
                 },
                 dataType: 'json',
                 method: 'post',
                 data: $('#milestone-modal-form').serialize(),
                 beforeSend: function() {
-                    $('.text-danger, .alert').remove();
+                  $('.text-danger, .alert, .invalid-feedback').remove();
+                  $('#comment').removeClass('is-invalid');
                 },
                 success: function(json) {
                     if (json['error']) {
-                        $('textarea[name=\'message\']').after('<p class="text-danger">' + json['error'] + '</p>')
+                            for (i in json['error']) {
+                            var el = $('#input-' + i);
+                            el.addClass('is-invalid');
+                            el.after('<div class="invalid-feedback"><i class="fas fa-exclamation-triangle"></i>' + json['error'][i] + '</div>'); 
+                        }
                     }
 
                     if (json['success']) {
-                        $('#milestones-list').load('freelancer/Project/getInProgressProjects');   
+                        dialog.modal('hide');
+                        
+                        $('#project-info #milestones-tab').trigger('click');   
 
                         $('#milestones-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                     }                        
@@ -98,7 +108,8 @@ function addMilestone() {
                     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
           });
-      } 
+      }
+      return false; 
     } 
    });  
 }	
@@ -123,7 +134,8 @@ function cancelMilestone(milestone_id) {
     $.ajax({
         url: 'freelancer/milestone/cancelMilestone?milestone_id=' + milestone_id,
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-Requested-With': 'XMLHttpRequest',
         },
         dataType: 'json',
         method: 'post',
@@ -168,7 +180,8 @@ function approveMilestone(milestone_id) {
     $.ajax({
         url: 'freelancer/milestone/approveMilestone?milestone_id=' + milestone_id,
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-Requested-With': 'XMLHttpRequest',
         },
         dataType: 'json',
         method: 'post',
@@ -216,7 +229,8 @@ function payMilestone(milestone_id, amount, employer_id, freelancer_id) {
     $.ajax({
         url: 'freelancer/milestone/payMilestone',
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-Requested-With': 'XMLHttpRequest',
         },
         dataType: 'json',
         method: 'post',
@@ -225,8 +239,11 @@ function payMilestone(milestone_id, amount, employer_id, freelancer_id) {
             $('.text-danger, .alert').remove();
         },
         success: function(json) {
+            if (json['error']) {
+                $('#milestones-list').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['error']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            }
+
             if (json['success']) {
-            
              $('#milestones-list').load('freelancer/milestone?project_id=<?php echo $project_id; ?>');   
 
              $('#milestones-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');

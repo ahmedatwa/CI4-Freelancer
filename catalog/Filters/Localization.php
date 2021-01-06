@@ -10,24 +10,25 @@ class Localization implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-
         $languageModel = new LanguageModel();
         
         $registry = service('registry');
+        $session = service('session');
+
+        $language = \Config\Services::language();
 
         $supportedLocales = $request->config->supportedLocales;
 
-        if (sizeof($supportedLocales) > 1) {
-            $language = $languageModel->getLanguageByCode($request->getLocale());
+        $defaultLocale = $request->config->defaultLocale;
 
-            if ($language['language_id'] && $request->getLocale()) {
-                $registry->set('config_language_id', $language['language_id']);
-            } else {
-                $registry->set('config_language_id', $languageModel->getLanguages($request->config->defaultLocale));
-            }
-            if ($request->uri->getTotalSegments() > 0 && !in_array($request->uri->getSegment(1), $supportedLocales)) {
-                //var_dump(uri_string());
-                //return redirect('/');
+        if ($session->get('language')) {
+            $language_info = $languageModel->getLanguageByCode($session->get('language'));
+
+            $locale  = $language_info['code'];
+
+            if (in_array($locale, $supportedLocales)) {
+                $language->setLocale($session->get('language'));
+                $registry->set('config_language_id', $language_info['language_id']);
             }
         }
     }

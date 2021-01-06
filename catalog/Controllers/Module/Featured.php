@@ -27,7 +27,7 @@ class Featured extends \Catalog\Controllers\BaseController
             $data['featured'][] = [
 				'project_id'  => $result['project_id'],
 				'name'        => $result['name'],
-				'type'        => ($result['type'] == 1) ? lang('en.text_fixed_price') : lang('en.text_per_hour'),
+				'type'        => ($result['type'] == 1) ? lang($this->locale . '.text_fixed_price') : lang($this->locale . '.text_per_hour'),
 				'date_added'  => $this->dateDifference($result['date_added']),
 				'href'        => (route_to('single_project', $keyword)) ? route_to('single_project', $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
 			];

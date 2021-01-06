@@ -48,9 +48,7 @@
 							
 							<div class="footer-row">
 								<div class="footer-row-inner language-switcher">
-									<select class="custom-select">
-										<option selected>English</option>
-									</select>
+									<?php echo $language; ?>
 								</div>
 							</div>
 							<div class="footer-row">
@@ -143,7 +141,7 @@ function gSignOut() {
 <script type="text/javascript">
 	$(document).on('click', '#button-logout', function(){
 		$.ajax({
-			url: 'account/logout',
+			url: $(this).attr('href'),
 			dataType: 'json',
 			success: function(json) {
 				if (json['redirect']) {
