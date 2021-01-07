@@ -34,7 +34,7 @@ return [
     'text_phd'                  => 'PH.D',
     'text_llb'                  => 'LLB',
     'text_llm'                  => 'LLM',
-    'text_professional_heading' => 'Professional Information',
+    'text_professional_heading' => 'Freelancer Professional Information',
     'text_professional_sub'     => 'This is your time to shine. Let potential buyers know what you do best <br />and how you gained your skills, certifications and experience.',
     'text_add_language'         => 'Add Language',
     'text_basic'                => 'Basic',

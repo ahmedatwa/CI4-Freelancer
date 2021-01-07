@@ -62,6 +62,7 @@ class Header extends \Catalog\Controllers\BaseController
         $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/project');
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
         $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
+        $data['markread']    = base_url('account/notifications/markRead');
 
         if ($this->session->get('customer_id')) {
             $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
@@ -182,14 +183,16 @@ class Header extends \Catalog\Controllers\BaseController
                 $customer_id = 0;
             }
 
+            helper('number');
+
             if ($customer_id) {
                 $balanceModel = new BalanceModel();
 
-                $customer_balance = $balanceModel->getBalanceByCustomerID($customer_id);
+                $balance = $balanceModel->getBalanceByCustomerID($customer_id);
 
-                $json['total'] = round($customer_balance) . '.00 ' . $this->registry->get('config_currency');
+                $json['total'] = number_to_currency($balance['total'], $balance['currency'], $this->locale, 2);
             } else {
-                $json['total'] = '0.00';
+                $json['total'] = '0.00 ' . $this->registry->get('config_currency');
             }
         }
 

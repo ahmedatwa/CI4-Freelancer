@@ -137,20 +137,20 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['sorts'][] = [
             'text'  => lang('common/search.text_newest'),
-            'value' => 'p.date_added-ASC',
-            'href'  => $uri->addQuery('sort_by', 'budget_min')->addQuery('order_by', 'ASC')
+            'value' => 'date_added',
+            'href'  => $uri->addQuery('sort_by', 'date_added')->addQuery('order_by', 'ASC')
         ];
 
         $data['sorts'][] = [
             'text'  => lang('common/search.text_lowest'),
-            'value' => 'p.budget_min-ASC',
+            'value' => 'budget_min',
             'href'  => $uri->addQuery('sort_by', 'budget_min')->addQuery('order_by', 'ASC')
         ];
 
         $data['sorts'][] = [
             'text'  => lang('common/search.text_highest'),
-            'value' => 'p.budget_min-DESC',
-            'href'  => $uri->addQuery('sort_b', 'budget_min')->addQuery('order_by', 'DESC')
+            'value' => 'budget_max',
+            'href'  => $uri->addQuery('sort_by', 'budget_max')->addQuery('order_by', 'DESC')
         ];
 
         $data['states'] = [];
@@ -210,9 +210,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
         $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
 
-
         $this->session->set('redirect_url', current_url());
-
 
         $data['filter_type']   = $filter_type;
         $data['filter_state']  = $filter_state;
@@ -237,7 +235,7 @@ class Project extends \Catalog\Controllers\BaseController
             $keyword = $this->request->uri->getSegment(3);
         } else {
             $keyword = '';
-        }   
+        }
 
         $this->template->setTitle($keyword);
 
@@ -353,7 +351,7 @@ class Project extends \Catalog\Controllers\BaseController
                 'project_id'  => $result['project_id'],
                 'name'        => $result['name'],
                 'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                'href'        => ($keyword) ? route_to('single_project', $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
+                'href'        => ($keyword) ? route_to('single_project', $result['project_id'], $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
             ];
             }
         } else {
@@ -427,8 +425,7 @@ class Project extends \Catalog\Controllers\BaseController
                         'label' => 'Bidding Duration',
                         'rules' => 'required|numeric'
                     ],
-                    ])) 
-                {
+                    ])) {
                     $error_warning = ['error_warning' => lang('project/project.text_warning')];
                     $json['error'] = array_merge($this->validator->getErrors(), $error_warning);
                 }
@@ -442,8 +439,9 @@ class Project extends \Catalog\Controllers\BaseController
                 $project_id = $projectModel->addProject($this->request->getPost());
 
                 $keyword = $seoUrl->getKeywordByQuery('project_id=' . $project_id);
+
                 $this->session->setFlashdata('success', lang('project/project.success_new_project'));
-                $json['redirect'] = route_to('single_project', $keyword);
+                $json['redirect'] = route_to('single_project', $project_id, $keyword);
             }
         }
 

@@ -14,6 +14,8 @@ namespace Catalog\Controllers;
  * @package CodeIgniter
  */
 
+use \Catalog\Models\Localization\CurrencyModel;
+
 class BaseController extends \CodeIgniter\Controller
 {
 
@@ -146,13 +148,13 @@ class BaseController extends \CodeIgniter\Controller
 
     public function currencyFormat(float $number)
     {
-        $currencyModel = new \Catalog\Models\Localization\CurrencyModel();
+        $currencyModel = new CurrencyModel();
 
         $currency_info = $currencyModel->getCurrencyByCode($this->session->get('currency'));
 
         helper('number');
 
-        $value = $currency_info['value'] ? (float)$number * $currency_info['value'] : (float)$number;
+        $value = $currency_info['value'] ? (float) $number * $currency_info['value'] : (float) $number;
 
         if ($this->session->get('currency')) {
             return number_to_currency($value, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);

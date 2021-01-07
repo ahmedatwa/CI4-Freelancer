@@ -100,8 +100,9 @@ class BalanceModel extends \CodeIgniter\Model
     public function getBalanceByCustomerID(int $customer_id)
     {
         $builder = $this->db->table('customer_to_balance');
-        $builder->select('SUM(used) AS used, SUM(withdrawn) As withdrawn, SUM(income) AS income, available');
+        $builder->select('SUM(used) AS used, SUM(withdrawn) As withdrawn, SUM(income) AS income, available, currency');
         $builder->where('customer_id', $customer_id);
+        $builder->groupBy('currency');
 
         $query = $builder->get();
 
@@ -110,7 +111,10 @@ class BalanceModel extends \CodeIgniter\Model
         }
         
         if ($total) {
-            return $total;
+            return $balance = [
+                'total' => $total,
+                'currency' => $result['currency'],
+            ];
         } else {
             return '0.00';
         }

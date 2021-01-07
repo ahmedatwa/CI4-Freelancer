@@ -71,6 +71,7 @@
         },
         fileActionSettings: {
             showZoom: false,
+            showDrag: false,
         },
         preferIconicPreview: true, // this will force thumbnails to display icons for following file extensions
         previewFileIconSettings: { 
@@ -113,15 +114,7 @@
                     return ext.match(/(mp3|wav)$/i);
                 }
             }
-    }).on('fileuploaded', function(event, previewId, index, fileId) {
-        console.log('File Uploaded', 'ID: ' + fileId + ', Thumb ID: ' + previewId);
-        console.log('Modified initial preview is ', $("#input-upload").data('fileinput').initialPreview);
-    }).on('fileuploaderror', function(event, data, msg) {
-        console.log('File Upload Error', 'ID: ' + data.fileId + ', Thumb ID: ' + data.previewId);
-    }).on('filebatchuploadcomplete', function(event, preview, config, tags, extraData) {
-        console.log('File Batch Uploaded', preview, config, tags, extraData);
     });
-
 </script>
 
 <!-- // load the bidders List Table-->

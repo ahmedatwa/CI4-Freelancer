@@ -199,10 +199,12 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	    });
 	});
 
-	$('#nav-user-main #header-messages').on('click', function() {
+	$('#nav-user-main #header-messages').on('click', function(e) {
+	  e.preventDefault();
 	  loadMessages();
 	});
-	$('#nav-user-main #header-notifications').on('click', function() {
+	$('#nav-user-main #header-notifications').on('click', function(e) {
+	  e.preventDefault();
 	  loadNotifications();
 	});
 	
@@ -237,9 +239,14 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	    });
 	  }
 	  // Mark Read Notification button
-	$('#button-mark-read').on('click', function() {
+	$(document).on('click', '#button-mark-read', function() {
 	  $.ajax({
 		url: 'account/notifications/markRead',
+	    headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'post',
 		dataType: 'json',
 		beforeSend: function() {
 	        $('#nav-user-main #notifications-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');

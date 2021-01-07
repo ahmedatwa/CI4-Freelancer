@@ -5,7 +5,6 @@ use \Catalog\Models\Account\CustomerModel;
 
 class Notifications extends \Catalog\Controllers\BaseController
 {
-    
     public function getNotifications()
     {
         $json = [];
@@ -23,7 +22,6 @@ class Notifications extends \Catalog\Controllers\BaseController
         $customerModel = new CustomerModel();
 
         foreach ($results as $result) {
-
             $info = json_decode($result['data'], true);
 
             $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
@@ -63,7 +61,6 @@ class Notifications extends \Catalog\Controllers\BaseController
             $json[] = [
                 'comment' => str_replace($find, $replace, $comment),
             ];
-
         }
 
         return $this->response->setJSON($json);
@@ -92,21 +89,23 @@ class Notifications extends \Catalog\Controllers\BaseController
 
     public function markRead()
     {
-       $json = [];
+        $json = [];
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
+            $activityModel = new ActivityModel();
 
-        $activityModel = new ActivityModel();
+            if ($this->customer->getCustomerId()) {
+                $customer_id = $this->customer->getCustomerId();
+            } else {
+                $customer_id = 0;
+            }
 
-        if ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
-        } else {
-            $customer_id = 0;
-        }
-
-        $activityModel->where('customer_id', $customer_id)
+            $activityModel->where('customer_id', $customer_id)
                                ->set('seen', 1)
                                ->update();
+            $json['success'] = 'Cleared';                   
+        }
        
-        return $this->response->setJSON($json);  
+        return $this->response->setJSON($json);
     }
 
     

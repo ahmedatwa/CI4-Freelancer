@@ -90,7 +90,7 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         $data['total_views']     = $customerModel->getCustomerProfileView($this->customer->getCustomerId());
         $data['total_projects']  = $customerModel->getTotalProjectsByCustomerId($this->customer->getCustomerId());
-        $data['total_balance']   = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId()));
+        $data['total_balance']   = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId())['total']);
         $data['total_withdrawn'] = $this->currencyFormat($balanceModel->getWithdrawnByCustomerID($this->customer->getCustomerId()));
         $data['total_used']      = $this->currencyFormat($balanceModel->getUsedByCustomerID($this->customer->getCustomerId()));
 

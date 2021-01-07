@@ -70,17 +70,24 @@ class Upload extends \Catalog\Controllers\BaseController
 
                     $newName = $file->getRandomName();
 
-                    $file->move(WRITEPATH . 'uploads', $newName);
+                    $folder = WRITEPATH . 'uploads/project-' . $project_id;
+
+                    if (is_dir($folder)) {
+                        $file->move($folder, $newName);
+                    } else {
+                        mkdir(WRITEPATH . 'uploads/project-' . $project_id, 0777);
+                        $file->move($folder, $newName);
+                    }
 
                     $json['initialPreview'] = '';
 
                     $json['initialPreviewConfig'][] = [
-                            'type'     => 'image',      // check previewTypes (set it to 'other' if you want no content preview)
-                            'caption'  => $file->getClientName(), // caption
-                            'key'      => $newName,       // keys for deleting/reorganizing preview
-                            'fileId'   => $newName,    // file identifier
+                            'type'     => 'image',      
+                            'caption'  => $file->getClientName(),
+                            'key'      => $newName,
+                            'fileId'   => $newName, 
                             'size'     => $file->getSize(),
-                            'downloadUrl' => '',
+                            'url'      => base_url('tool/upload/remove?freelancer_id=' . $customer_id . '&project_id=' . $project_id),
                     ];
 
                     $json['append'] = true;
@@ -89,7 +96,7 @@ class Upload extends \Catalog\Controllers\BaseController
                         'project_id'    => $project_id,
                         'freelancer_id' => $customer_id,
                         'filename'      => $file->getClientName(),
-                        'code'          => $newName,
+                        'code'          => 'project-' . $project_id . '/' . $newName,
                         'type'          => $file->getClientMimeType(),
                         'ext'           => $file->getClientExtension(),
                         'size'          => $file->getSize()
@@ -105,8 +112,6 @@ class Upload extends \Catalog\Controllers\BaseController
                 }
             }
         }
-        
-        
         return $this->response->setJSON($json);
     }
 
@@ -119,14 +124,14 @@ class Upload extends \Catalog\Controllers\BaseController
                 $projectModel = new ProjectModel();
 
                 $upload_info = $projectModel->getProjectUploadedFile($this->request->getVar('project_id'), $this->request->getVar('freelancer_id'));
-                var_dump($this->request->getVar('freelancer_id'));
+
                 if ($upload_info) {
                     $file = WRITEPATH . 'uploads/' . $upload_info['code'];
                     if (file_exists($file)) {
                         unlink($file);
-                        $projectModel->deleteProjectFiles($this->request->getPost('project_id'), $this->request->getPost('freelancer_id'));
+                        $projectModel->deleteProjectFiles($this->request->getVar('project_id'), $this->request->getVar('freelancer_id'));
                     } else {
-                        $json['error'] = 'Error: Could not find file !';
+                        $projectModel->deleteProjectFiles($this->request->getVar('project_id'), $this->request->getVar('freelancer_id'));
                     }
                 } else {
                         $json['error'] = 'Error: Please contact system administrator';

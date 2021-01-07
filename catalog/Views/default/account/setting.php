@@ -150,10 +150,7 @@
 						</ul>
 					</div>
 				</form>
-				</div>
-				</div>
-				<div class="col-12">
-				<div class="shadow-sm p-3 mb-5 bg-white rounded">
+				<hr />
 					<div class="headline">
 						<h3><i class="fab fa-leanpub"></i> <?php echo $text_professional_heading; ?></h3>
 						<small><?php echo $text_professional_sub; ?></small>

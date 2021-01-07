@@ -105,7 +105,7 @@
 							<div class="form-group">
 								<select class="custom-select" onchange="location = this.value;">
 									<?php foreach ($sorts as $sort) { ?> 
-										<?php if ($sort['value'] == $sort_by  . '-' . $order_by) { ?>
+										<?php if ($sort['value'] == $sort_by) { ?>
 											<option value="<?php echo $sort['href']; ?>" selected><?php echo $sort['text']; ?></option>
 										<?php } else { ?>
 											<option value="<?php echo $sort['href']; ?>"><?php echo $sort['text']; ?></option>  
@@ -113,7 +113,7 @@
 									<?php } ?>      
 								</select>
 							</div>
-						</div>
+						</div>																	
 					</div>
 					<div class="clearfix"></div>
 					<!-- Task -->

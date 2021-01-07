@@ -65,7 +65,7 @@ class ProjectModel extends \CodeIgniter\Model
                     'name'        => $value['name'],
                     'employer_id' => $data['employer_id'],
                     'budget'      => $data['budget_min'] . ' - ' . $data['budget_max'],
-                    'href'        => route_to('single_project', $keyword)
+                    'href'        => route_to('single_project', $project_id, $keyword)
                 ];
 
                 $event = $pusher->trigger('global-channel', 'new-project-event', $pusher_data);

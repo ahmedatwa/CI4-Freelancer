@@ -55,14 +55,6 @@
 <script src="catalog/default/vendor/bootstrap-fileinput/themes/fas/theme.min.js"></script>
 <script type="text/javascript">	
     $("#input-upload").fileinput({
-        //uploadUrl: "tool/upload?cid=<?php //echo $customer_id; ?>&pid=<?php //echo $project_id; ?>",
-        enableResumableUpload: false,
-        uploadExtraData: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        maxFileCount: 3,
-        allowedFileExtensions: <?php echo json_encode($allowedFileExtensions); ?>, 
         showCancel: true,
         initialPreviewAsData: true,
         overwriteInitial: false,
