@@ -233,14 +233,12 @@ class Project extends \Catalog\Controllers\BaseController
     // Single Project View
     public function info()
     {
-        if ($this->request->getVar('pid')) {
-            $keyword = $this->request->getVar('pid');
-        } elseif ((int) substr($this->request->uri->getSegment(3), 1)) {
-            $keyword = (int) substr($this->request->uri->getSegment(3), 1);
+        if ($this->request->uri->getSegment(3)) {
+            $keyword = $this->request->uri->getSegment(3);
         } else {
             $keyword = '';
-        }
-        
+        }   
+
         $this->template->setTitle($keyword);
 
         $projectModel = new ProjectModel();
@@ -253,6 +251,8 @@ class Project extends \Catalog\Controllers\BaseController
             $project_id = $this->request->getVar('pid');
         } elseif ($this->request->getGet('project_id')) {
             $project_id = $this->request->getGet('project_id');
+        } elseif ($this->request->uri->getSegment(3)) {
+            $project_id = (int) substr($this->request->uri->getSegment(3), 1);
         } else {
             $project_id = 0;
         }

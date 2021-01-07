@@ -33,20 +33,16 @@ class Header extends \Catalog\Controllers\BaseController
 
         $balanceModel = new BalanceModel();
 
-        helper('number');
-
         if ($this->customer->getCustomerID()) {
-           $customer_id = $this->customer->getCustomerID();
+            $customer_id = $this->customer->getCustomerID();
         } else {
             $customer_id = 0;
         }
 
-        $customer_balance = $balanceModel->getBalanceByCustomerID($customer_id);
-
         $data['text_finance']              = lang('common/header.text_finance');
         $data['text_account']              = lang('common/header.text_account');
         $data['text_balances']             = lang('common/header.text_balances');
-        $data['customer_balance']          = number_to_currency($customer_balance, $this->session->get('customer_currency') ?? $this->registry->get('config_currency'));
+        $data['customer_balance']          = base_url('common/header/getCustomerBalace');
         $data['text_deposite_funds']       = lang('common/header.text_deposite_funds');
         $data['text_withdraw_funds']       = lang('common/header.text_withdraw_funds');
         $data['text_transactions_history'] = lang('common/header.text_transactions_history');
@@ -174,6 +170,30 @@ class Header extends \Catalog\Controllers\BaseController
         $data['reviews']          = route_to('account_review') ? route_to('account_review') : base_url('account/review');
 
         return view('common/header', $data);
+    }
+
+    public function getCustomerBalace()
+    {
+        $json = [];
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
+            if ($this->customer->getCustomerID()) {
+                $customer_id = $this->customer->getCustomerID();
+            } else {
+                $customer_id = 0;
+            }
+
+            if ($customer_id) {
+                $balanceModel = new BalanceModel();
+
+                $customer_balance = $balanceModel->getBalanceByCustomerID($customer_id);
+
+                $json['total'] = round($customer_balance) . '.00 ' . $this->registry->get('config_currency');
+            } else {
+                $json['total'] = '0.00';
+            }
+        }
+
+        return $this->response->setJSON($json);
     }
 
     public function getMessages()

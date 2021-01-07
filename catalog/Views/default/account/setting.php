@@ -7,13 +7,11 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
-				<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" id="form-location" accept-charset="utf-8"> 
-					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 					<div class="shadow-sm p-3 mb-5 bg-white rounded">
 						<div class="mb-4">
 							<h3><i class="icon-material-outline-account-circle"></i> <?php echo $text_account; ?></h3>
 						</div>
-						<div class="content with-padding padding-bottom-0">
+						<div class="content with-padding padding-bottom-0" id="profile-form">
 							<div class="row">
 								<div class="col-sm-4 text-center">
 									<div class="kv-avatar">
@@ -28,78 +26,66 @@
 								</div>
 								<div class="col">
 									<div class="row">
-										<div class="col-xl-6">
+										<div class="col-12">
 											<div class="submit-field required">
 												<h5><?php echo $entry_firstname; ?></h5>
-												<input type="text" class="form-control" name="firstname" value="<?php echo $firstname; ?>">
-												<?php echo formError('firstname'); ?>
+												<input type="text" class="form-control" id="input-firstname" name="firstname" value="<?php echo $firstname; ?>">
 											</div>
 										</div>
-
-										<div class="col-xl-6">
+										<div class="col-12">
 											<div class="submit-field required">
 												<h5><?php echo $entry_lastname; ?></h5>
-												<input type="text" class="form-control" name="lastname" value="<?php echo $lastname; ?>">
-												<?php echo formError('lastname'); ?>
+												<input type="text" class="form-control" id="input-lastname" name="lastname" value="<?php echo $lastname; ?>">
 											</div>
 										</div>
-										<div class="col-xl-6">
+										<div class="col-12">
 											<div class="submit-field">
 												<h5><?php echo $entry_email; ?></h5>
 												<input type="text" class="form-control" value="<?php echo $email; ?>" disabled>
 											</div>
 										</div>
-                                        
+									</div>
+								</div>
+								<div class="col-12 mt-4">
+									<hr/>
+									<div class="headline mb-4">
+										<h3><i class="icon-material-outline-lock"></i> <?php echo $text_password_security; ?></h3>
+									</div>
+									<div class="row">	
+										<div class="col">
+											<div class="submit-field required">
+												<h5><?php echo $entry_current_password; ?></h5>
+												<input type="password" class="form-control" id="input-current" name="current">
+											</div>
+										</div>
+										<div class="col">
+											<div class="submit-field required">
+												<h5><?php echo $entry_password; ?></h5>
+												<input type="password" class="form-control" id="input-password" name="password">
+											</div>
+										</div>
+										<div class="col">
+											<div class="submit-field required">
+												<h5><?php echo $entry_confirm; ?></h5>
+												<input type="password" class="form-control" id="input-confirm" name="confirm">
+											</div>										
+										</div>
 									</div>
 								</div>
 								<div class="col-12">
-										<button type="submit" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
-									</div>
+									<button type="button" id="profile-form-button" class="button ripple-effect big margin-top-30 float-right">Update</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>	
-			</form>
-			<!-- Dashboard Box -->
-			<div class="col-12">
-				<div class="shadow-sm p-3 mb-5 bg-white rounded" id="password-form">
-					<div class="headline mb-4">
-						<h3><i class="icon-material-outline-lock"></i> <?php echo $text_password_security; ?></h3>
-					</div>
-					<div class="content with-padding">
-						<div class="row">
-							<div class="col-xl-4">
-								<div class="submit-field required">
-									<h5><?php echo $entry_current_password; ?></h5>
-									<input type="password" class="form-control" id="input-current" name="current">
-								</div>
-							</div>
-							<div class="col-xl-4">
-								<div class="submit-field required">
-									<h5><?php echo $entry_password; ?></h5>
-									<input type="password" class="form-control" id="input-password" name="password">
-								</div>
-							</div>
-							<div class="col-xl-4">
-								<div class="submit-field required">
-									<h5><?php echo $entry_confirm; ?></h5>
-									<input type="password" class="form-control" id="input-confirm" name="confirm">
-								</div>										
-							</div>
-							<div class="col-12">
-								<button type="button" id="password-form-button" class="button ripple-effect big margin-top-30 float-right">Update Password</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			</div>	
 			<div class="col-12">
 				<div class="shadow-sm p-3 mb-5 bg-white rounded">
 					<div class="headline mb-4">
 						<h3><i class="icon-material-outline-face"></i> <?php echo $text_profile; ?></h3>
 						<small>Complete the information below to be considered as a Freelancer!</small>
 					</div>
-					<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" id="form-location-profile" accept-charset="utf-8"> 
+					<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" accept-charset="utf-8"> 
 					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 					<div class="content">
 						<ul class="fields-ul">
@@ -164,6 +150,10 @@
 						</ul>
 					</div>
 				</form>
+				</div>
+				</div>
+				<div class="col-12">
+				<div class="shadow-sm p-3 mb-5 bg-white rounded">
 					<div class="headline">
 						<h3><i class="fab fa-leanpub"></i> <?php echo $text_professional_heading; ?></h3>
 						<small><?php echo $text_professional_sub; ?></small>
@@ -347,7 +337,8 @@ $('#add-certificate').on('click', function(){
     $.ajax({
         url: 'account/setting/addCertificate',
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+			'X-Requested-With': 'XMLHttpRequest'
         },
         type: 'post',
         dataType: 'json',
@@ -413,7 +404,8 @@ $('#certificates-list').on('click', 'button[id^=\'button-delete-certificate\']',
     	 $.ajax({
             url: 'account/setting/deleteCertificate?certificate_id=' + $(node).val(),
             headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+			   'X-Requested-With': 'XMLHttpRequest'
             },
             method : 'post',
             dataType: 'json',
@@ -499,7 +491,8 @@ $('#add-education').on('click', function() {
     $.ajax({
         url: 'account/setting/addEducation',
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+		  'X-Requested-With': 'XMLHttpRequest'
         },
         type: 'post',
         dataType: 'json',
@@ -564,7 +557,8 @@ $('#educations-list').on('click', 'button[id^=\'button-delete-education\']', fun
     	 $.ajax({
             url: 'account/setting/deleteEducation?education_id=' + $(node).val(),
             headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+			   'X-Requested-With': 'XMLHttpRequest'
             },
             method: 'post',
             dataType: 'json',
@@ -626,7 +620,8 @@ $('#add-language').on('click', function() {
     $.ajax({
         url: 'account/setting/addLanguage',
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+		  'X-Requested-With': 'XMLHttpRequest'
         },
         type: 'post',
         dataType: 'json',
@@ -690,7 +685,8 @@ $('#languages-list').on('click', 'button[id^=\'button-delete-language\']', funct
         $.ajax({
             url: 'account/setting/deleteLanguage?language_id=' + $(node).val(),
             headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+			  'X-Requested-With': 'XMLHttpRequest'
             },
             method: 'post',
             dataType: 'json',
@@ -750,7 +746,8 @@ $('#button-add-skill').on('click', function() {
     $.ajax({
         url: 'account/setting/addSkill',
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+		  'X-Requested-With': 'XMLHttpRequest'
         },
         type: 'post',
         dataType: 'json',
@@ -810,7 +807,8 @@ $('#skills-list').on('click', 'button[id^=\'button-delete-skill\']', function() 
         $.ajax({
             url: 'account/setting/deleteSkill?category_id=' + $(node).val(),
             headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+			  'X-Requested-With': 'XMLHttpRequest'
             },
             method: 'post',
             dataType: 'json',
@@ -846,29 +844,30 @@ $('#skills-list').on('click', 'button[id^=\'button-delete-skill\']', function() 
 <script type="text/javascript">
 $("#avatar-1").fileinput({
 	uploadUrl: 'account/setting/avatarUpload',
-	uploadAsync: false,
     maxFileSize: 1500,
     overwriteInitial: true,
+	initialPreviewAsData: true,
     showClose: false,
     showCaption: false,
     showUpload: true,
     showBrowse: false,
+	showRemove: true,
     theme: 'fas',
     browseOnZoneClick: true,
     fileActionSettings: {
        showZoom: false,
        showDrag: false,
-       removeClass: 'd-none',
+	   removeClass: 'd-none',
+	   showUpload: false,
     },
-    removeLabel: 'Remove',
     removeIcon: '<i class="far fa-window-close"></i>',
+	removeLabel: '',
+	removeTitle: 'Cancel or reset changes',
     removeClass: 'btn btn-danger',
-    removeTitle: 'Cancel or reset changes',
     uploadExtraData: {
         'csrf-token': $('meta[name="csrf-token"]').attr('content'),
         'X-Requested-With': 'XMLHttpRequest'
     },
-    showRemove: true,
     elErrorContainer: '#kv-avatar-errors',
     msgErrorClass: 'alert alert-block alert-danger',
     defaultPreviewContent: '<?php echo $thumb; ?>',
@@ -877,24 +876,25 @@ $("#avatar-1").fileinput({
 </script>
 <!-- password change -->
 <script type="text/javascript">
-	$('#password-form-button').on('click', function() {
+	$('#profile-form-button').on('click', function() {
 		var node = this;
 		$.ajax({
-			url: 'account/setting/passwordUpdate',
+			url: 'account/setting/profileUpdate',
 			headers: {
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 'X-Requested-With': 'XMLHttpRequest'
             },
 			method: 'post',
 			dataType : 'json',
-			data: $('#password-form input'), 
+			data: $('#profile-form input'), 
 			beforeSend: function() {
 				$('.alert, .text-danger, .invalid-feedback').remove();
-				$('#password-form input').removeClass('is-invalid');
-				$(node).html('<p id="loading-state"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...</p>');
+				$('#profile-form input').removeClass('is-invalid');
+				$(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
 			},
 			complete: function () {
-				$(node).html('Update Password');
+				$('.spinner-border').remove();
+				$(node).html('Update');
 			},
 			success: function (json) {
 				// validation errors
@@ -912,13 +912,13 @@ $("#avatar-1").fileinput({
 					}
 
 					if (json['error']['old_password']) {
-						$('#password-form .content').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+ json['error']['old_password'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+						$('#profile-form-form .content').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+ json['error']['old_password'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 					}
 				}
 
 				if (json['success']) {
-					$('#password-form .content').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+ json['success'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-					$('#password-form input').val('');
+					$('#profile-form .content').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+ json['success'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('#profile-form-form input').val('');
 				}
 			},
             error: function(xhr, ajaxOptions, thrownError) {

@@ -11,7 +11,7 @@ class Setting extends \Catalog\Controllers\BaseController
 
         $customerModel = new CustomerModel();
 
-        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
+        if (($this->request->getMethod() == 'post')) {
             $customerModel->update($this->session->get('customer_id'), $this->request->getPost());
             return redirect()->route('account_setting')->with('success', lang('account/setting.text_success'));
         }
@@ -70,17 +70,13 @@ class Setting extends \Catalog\Controllers\BaseController
             $customer_info = $customerModel->getCustomer($customer_id);
         }
 
-        if ($this->request->getPost('firstname')) {
-            $data['firstname'] = $this->request->getPost('firstname');
-        } elseif ($customer_info['firstname']) {
+        if (isset($customer_info['firstname'])) {
             $data['firstname'] = $customer_info['firstname'];
         } else {
             $data['firstname'] = '';
         }
 
-        if ($this->request->getPost('lastname')) {
-            $data['lastname'] = $this->request->getPost('lastname');
-        } elseif ($customer_info['lastname']) {
+        if (isset($customer_info['lastname'])) {
             $data['lastname'] = $customer_info['lastname'];
         } else {
             $data['lastname'] = '';
@@ -91,7 +87,7 @@ class Setting extends \Catalog\Controllers\BaseController
         } else {
             $data['email'] = '';
         }
-
+        // Freelancer Profile
         if ($this->request->getPost('about')) {
             $data['about'] = $this->request->getPost('about');
         } elseif ($customer_info['about']) {
@@ -729,57 +725,74 @@ class Setting extends \Catalog\Controllers\BaseController
                     $customerModel->where('customer_id', $this->session->get('customer_id'))
                               ->set('image', 'catalog/' . $newName)
                               ->update();
+                    // return fileInput Config
+                    $json = [
+                        'initialPreview' => base_url('images/catalog/' . $newName),
+                        'initialPreviewConfig' => [
+                            'caption' => $imagefile->getClientName(),
+                            'url'     => '',
+                            'key'     => $this->session->get('customer_id'),
+                        ],
+                        'append' => true,
+                   ];
                 }
             }
         }
         return $this->response->setJSON($json);
     }
 
-    public function passwordUpdate()
+    public function profileUpdate()
     {
         $json = [];
+        if ($this->request->isAJAX()) {
+            // Fields Validation Rules
+            if ($this->request->getMethod() == 'post') {
+                // Passowrd Update
+                if ($this->request->getPost('current') && $this->request->getPost('password')) {
+                    if (! $this->validate([
+                        'current'  => 'required',
+                        'password' => 'required|min_length[4]|alpha_numeric_punct',
+                        'confirm'  => 'required_with[password]|matches[password]',
+                    ])) {
+                        $json['error'] = $this->validator->getErrors();
+                    }
 
-        // Fields Validation Rules
-        if (! $this->validate([
-                'current'  => 'required',
-                'password' => 'required|min_length[4]|alpha_numeric_punct',
-                'confirm'  => 'required_with[password]|matches[password]',
-            ])) {
-            $json['error'] = $this->validator->getErrors();
-        }
+                    if (! $json) {
+                        $customerModel = new CustomerModel();
 
-        if (!$json) {
-            if (($this->request->getMethod() == 'post') && ($this->request->getPost('current')) && $this->request->isAJAX()) {
-                $customerModel = new CustomerModel();
-
-                $oldPassword = $customerModel->where('customer_id', $this->customer->getCustomerID())
+                        $oldPassword = $customerModel->where('customer_id', $this->customer->getCustomerID())
                                              ->findColumn('password');
-                if (password_verify($this->request->getPost('current'), $oldPassword[0])) {
-                    // old password passed then update
-                    $customerModel->where('customer_id', $this->customer->getCustomerID())
+                        if (password_verify($this->request->getPost('current'), $oldPassword[0])) {
+                            // old password passed then update
+                            $customerModel->where('customer_id', $this->customer->getCustomerID())
                                   ->set('password', $this->request->getPost('password'))
                                   ->update();
-                    $json['success'] = lang('account/setting.text_password_success');
+                            $json['success'] = lang('account/setting.text_password_success');
+                        } else {
+                            $json['error']['old_password'] = lang('account/setting.error_old_password');
+                        }
+                    }
+                    // Name  
                 } else {
-                    $json['error']['old_password'] = lang('account/setting.error_old_password');
+                    if (! $this->validate([
+                        'firstname' => 'required|alpha_numeric',
+                        'lastname'  => 'required|alpha_numeric',
+                    ])) {
+                        $json['error'] = $this->validator->getErrors();
+                    }
+
+                    if (! $json) {
+                        $customerModel = new CustomerModel();
+
+                        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
+                            $customerModel->update($this->session->get('customer_id'), $this->request->getPost());
+                            $json['success'] = lang('account/setting.text_success');
+                        }                
+                    }
                 }
             }
         }
         return $this->response->setJSON($json);
     }
-
-    protected function validateForm()
-    {
-        // Fields Validation Rules
-        if (! $this->validate([
-                'firstname' => 'required|alpha_numeric',
-                'lastname'  => 'required|alpha_numeric',
-            ])) {
-            $this->session->setFlashData('error_warning', lang('account/register.text_warning'));
-            return false;
-        }
-        return true;
-    }
-
     //--------------------------------------------------------------------
 }

@@ -147,7 +147,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	/*  Notification Messages
 /*--------------------------------------------------*/
 	// refresh notification count
-	  function totalUnseen(data) {
+	  function totalUnseen() {
 	   $.ajax({
 	      url: 'account/message/getTotalUnseenMessages',
 	      dataType: 'json',
@@ -159,7 +159,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	    });
 	 }totalUnseen();
 	// get Live Notification Alerts
-	function totalNotifications(data) {
+	function totalNotifications() {
 	   $.ajax({
 	      url: 'account/notifications/getTotalNotifications',
 	      dataType: 'json',
@@ -171,10 +171,33 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	    });
 	 }totalNotifications();
 
-	setInterval(function(){
+	setInterval(function() {
 	   totalUnseen();
 	   totalNotifications();
 	}, 7000);
+
+	$('#nav-user-main #headerLoginDropdown').on('click', function() {
+		$.ajax({
+	      url: 'common/header/getCustomerBalace',
+	      headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-Requested-With': 'XMLHttpRequest'
+          },
+	      dataType: 'json',
+	      method: 'post',
+	      beforeSend: function() {
+	      	$('#nav-user-main #customer-balance').html('<i class="fas fa-spinner fa-spin"></i>'); 
+	      },
+	      complete: function() {
+	      	$('.fa-spinner').remove();
+	      },
+	      success: function(json) {
+	          if (json['total']) {
+	               $('#nav-user-main #customer-balance').html(json['total']);
+	           } 
+	        }
+	    });
+	});
 
 	$('#nav-user-main #header-messages').on('click', function() {
 	  loadMessages();

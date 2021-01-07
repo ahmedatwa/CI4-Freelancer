@@ -16,6 +16,16 @@ class Menu extends \Catalog\Controllers\BaseController
             'href'  => route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'),
             'children' => [],
         ];
+
+        $data['menus'][] = [
+            'id'    => 'menu-start',
+            'icon'  => 'fas fa-user-cog',
+            'class' => '',
+            'name'  => lang('account/menu.text_settings'),
+            'href'  => route_to('account_setting'),
+            'children' => [],
+        ];
+
         // Projects
         $projects[] = [
             'id'       => 'menu-manage',

@@ -141,11 +141,12 @@ $('#input-amount').on('input', function(){
         $.ajax({
         	url: 'freelancer/deposit/addFunds?customer_id=<?php echo $customer_id; ?>',
         	headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-Requested-With': 'XMLHttpRequest'
             },
         	method: 'post',
         	dataType: 'json',
-        	data: {amount: details.purchase_units[0].amount.value, currency: details.purchase_units[0].amount.currency_code, status:details.status, 'CSRFCAT': csrf_token},
+        	data: {amount: details.purchase_units[0].amount.value, currency: details.purchase_units[0].amount.currency_code, status:details.status},
         	success: function(json) {
         		if (json['success']) {
         			$.notify({

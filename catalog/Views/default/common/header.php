@@ -100,7 +100,7 @@
           <div class="multi-column-dropdown col-6 border-right">
             <h4><?php echo $text_finance; ?></h4>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="javascript:void(0);"> <?php echo $text_balances; ?> <span class="badge badge-secondary"><?php echo $customer_balance; ?></span></a>
+            <a class="dropdown-item" href="javascript:void(0)"><?php echo $text_balances; ?> <span id="customer-balance" class="badge badge-info"></span></a>
             <a class="dropdown-item" href="<?php echo $deposit; ?>"> <?php echo $text_deposite_funds; ?></a>
             <a class="dropdown-item" href="<?php echo $withdraw; ?>"> <?php echo $text_withdraw_funds; ?></a>
           </div>
@@ -198,7 +198,7 @@
               <div class="multi-column-dropdown col-6">
                 <h4><?php echo $text_finance; ?></h4>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0);"> <?php echo $text_balances; ?> <span class="badge badge-secondary"><?php echo $customer_balance; ?></span></a>
+                <a class="dropdown-item" href="javascript:void(0)"><?php echo $text_balances;?> <span id="customer-balance" class="badge badge-info"></span></a>
                 <a class="dropdown-item" href="<?php echo $deposit; ?>"> <?php echo $text_deposite_funds; ?></a>
                 <a class="dropdown-item" href="<?php echo $withdraw; ?>"> <?php echo $text_withdraw_funds; ?></a>
               </div>

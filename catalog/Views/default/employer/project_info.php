@@ -68,7 +68,6 @@
         overwriteInitial: false,
         showUpload: false,
         showRemove: false,
-        //showBrowse: false,
         initialPreview: <?php echo $initial_preview_data; ?>,          // if you have previously uploaded preview files
         initialPreviewConfig: <?php echo $initial_preview_config_data; ?>,    // if you have previously uploaded preview files
         theme: 'fas',
@@ -122,13 +121,6 @@
                     return ext.match(/(mp3|wav)$/i);
                 }
             }
-    }).on('fileuploaded', function(event, previewId, index, fileId) {
-        console.log('File Uploaded', 'ID: ' + fileId + ', Thumb ID: ' + previewId);
-        console.log('Modified initial preview is ', $("#input-upload").data('fileinput').initialPreview);
-    }).on('fileuploaderror', function(event, data, msg) {
-        console.log('File Upload Error', 'ID: ' + data.fileId + ', Thumb ID: ' + data.previewId);
-    }).on('filebatchuploadcomplete', function(event, preview, config, tags, extraData) {
-        console.log('File Batch Uploaded', preview, config, tags, extraData);
     });
 </script>
 <!-- // load the bidders List Table-->

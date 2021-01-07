@@ -27,7 +27,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="add-new-job">Add New Job</h5>
+        <h5 class="modal-title" id="add-new-job">Add New Local Job</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -85,7 +85,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
   $('.summernote').summernote({
-	height: 250,
+	height: 200,
 	toolbar: [
           ['style', ['style']],
           ['font', ['bold', 'underline', 'clear']],
