@@ -62,8 +62,9 @@
 						<p><?php echo $description; ?></p>
 					</div>
 					<h4 class="mb-4">Viewed: <span class="badge badge-success"><?php echo $viewed; ?></span></h4>
+					<h4 class="mb-4">Project ID: <?php echo $project_id; ?></h4>
 					<div class="single-page-section">
-						<h3><?php echo $text_skills; ?></h3>
+						<h3><?php echo $text_skills; ?>:</h3>
 						<?php if ($categories) { ?>
 							<div class="task-tags">
 								<?php foreach ($categories as $category) { ?>

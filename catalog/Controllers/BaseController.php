@@ -146,7 +146,7 @@ class BaseController extends \CodeIgniter\Controller
         return $sub->toDateString();
     }
 
-    public function currencyFormat(float $number)
+    public function currencyFormat(float $number, int $fraction = 2)
     {
         $currencyModel = new CurrencyModel();
 
@@ -157,9 +157,9 @@ class BaseController extends \CodeIgniter\Controller
         $value = $currency_info['value'] ? (float) $number * $currency_info['value'] : (float) $number;
 
         if ($this->session->get('currency')) {
-            return number_to_currency($value, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
+            return number_to_currency($value, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, $fraction);
         } else {
-            return number_to_currency($number, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, 2);
+            return number_to_currency($number, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, $fraction);
         }
     }
 

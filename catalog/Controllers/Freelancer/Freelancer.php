@@ -7,6 +7,7 @@ use \Catalog\Models\Account\ReviewModel;
 use \Catalog\Models\Freelancer\BalanceModel;
 use \Catalog\Models\Freelancer\DisputeModel;
 use \Catalog\Models\Account\MessageModel;
+use \Catalog\Models\Catalog\ProjectModel;
 
 class Freelancer extends \Catalog\Controllers\BaseController
 {
@@ -260,7 +261,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
         ];
 
         $reviewModel = new ReviewModel();
-        $projectModel = new \Catalog\Models\Catalog\ProjectModel();
+        $projectModel = new ProjectModel();
 
         if ($customer_info) {
             $data['text_hire_me']     = sprintf(lang('freelancer/freelancer.text_hire_me'), $customer_info['username']);
