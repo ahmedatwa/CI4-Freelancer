@@ -146,8 +146,9 @@ class CategoryModel extends Model
     public function getCategory($category_id)
     {
         $builder = $this->db->table('category c');
-        $builder->distinct('cd.category_id, cd.name, c.sort_order, c.status');
+        $builder->select();
         $builder->join('category_description cd', 'c.category_id = cd.category_id', 'left');
+        $builder->where('c.category_id', $category_id);
         $query = $builder->get();
         return $query->getRowArray();
     }

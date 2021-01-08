@@ -185,11 +185,16 @@ $("#input-upload").fileinput({
 <script type="text/javascript">
 $('#input-<?php echo $language_id; ?>-description').textcounter({
 	min: 30,
-	stopInputAtMaximum : false,  
+	max: 1000,
+	countDown: true,
+	stopInputAtMaximum : true,  
 	minimumErrorText : "Please enter at least 30 characters", 
 });
 $('#input-<?php echo $language_id; ?>-name').textcounter({
 	min: 10,
+	max: 64,
+	countDown: true,
+	stopInputAtMaximum : true,  
 	minimumErrorText : "Please enter at least 10 characters", 
 });
 </script>

@@ -70,14 +70,17 @@ class Upload extends \Catalog\Controllers\BaseController
 
                     $newName = $file->getRandomName();
 
-                    $folder = WRITEPATH . 'uploads/project-' . $project_id;
-
-                    if (is_dir($folder)) {
-                        $file->move($folder, $newName);
-                    } else {
+                    if ($project_id != 0) {
+                        $folder = WRITEPATH . 'uploads/project-' . $project_id;
+                        if (is_dir($folder)) {
+                            $file->move($folder, $newName);
+                        } else {
                         mkdir(WRITEPATH . 'uploads/project-' . $project_id, 0777);
                         $file->move($folder, $newName);
-                    }
+                       }
+                    } else {
+                        $file->move(WRITEPATH . 'uploads/', $newName);
+                    } 
 
                     $json['initialPreview'] = '';
 

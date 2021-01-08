@@ -99,6 +99,8 @@ class BalanceModel extends \CodeIgniter\Model
 
     public function getBalanceByCustomerID(int $customer_id)
     {
+        $total = 0;
+        
         $builder = $this->db->table('customer_to_balance');
         $builder->select('SUM(used) AS used, SUM(withdrawn) As withdrawn, SUM(income) AS income, available, currency');
         $builder->where('customer_id', $customer_id);

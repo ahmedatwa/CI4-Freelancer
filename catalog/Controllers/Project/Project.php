@@ -27,8 +27,8 @@ class Project extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('gid')) {
             $filter_category_id = $this->request->getVar('gid');
-        } elseif ((int) $this->request->uri->getSegment(2)) {
-            $filter_category_id = (int) substr($this->request->uri->getSegment(2), 1);
+        } elseif ($this->request->uri->getSegment(2)) {
+            $filter_category_id = substr($this->request->uri->getSegment(2), 1);
         } else {
             $filter_category_id = null;
         }

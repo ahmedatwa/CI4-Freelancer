@@ -81,7 +81,7 @@
 						</div>
 					</div>
 				    <?php } ?>
-				<?php if ($freelancer_id != $employer_id) { ?>
+				<?php if ($logged && ($freelancer_id != $employer_id)) { ?>
 				<?php if ($days_left > 0) { ?>
 					<hr />
 				<div class="single-page-section">
@@ -153,7 +153,7 @@
 					<button id="button-place-bid" onclick="" class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right"><?php echo $button_bid; ?></button>
 					</div>
 				</div>
-				<?php } if(!$logged) { ?>
+				<?php } if(! $logged) { ?>
 					<div class="text-center">
 						<div class="single-page-section">
 							<p class="lead mb-3">Not logged yet, please login to place bids</p>
