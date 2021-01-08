@@ -1,9 +1,9 @@
-  <nav class="navbar navbar-expand navbar-dark bg-dark shadow-sm p-1 mb-5">
+  <nav class="navbar navbar-expand navbar-dark bg-dark shadow-sm p-1 mb-5" style="overflow-y: auto;width: 100%">
     <div class="collapse navbar-collapse" id="navbarDashboard">
       <ul class="navbar-nav mx-auto">
        <?php foreach ($menus as $menu) { ?>
          <?php if ($menu['children']) { ?>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown my-auto" style="width: 90px">
             <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="<?php echo $menu['icon']; ?>"></i> <?php echo $menu['name']; ?>
             </a>

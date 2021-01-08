@@ -68,7 +68,7 @@ class Withdraw extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $customer_balance = $balanceModel->getBalanceByCustomerID($this->session->get('customer_id'));
+        $customer_balance = $balanceModel->getBalanceByCustomerID($this->session->get('customer_id'))['total'];
 
         $data['currency'] = $this->session->get('currency') ?? $this->registry->get('config_currency');
 

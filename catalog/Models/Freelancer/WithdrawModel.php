@@ -29,7 +29,7 @@ class WithdrawModel extends \CodeIgniter\Model
             'customer_id'        => $data['customer_id'],
             'amount'             => $data['amount'],
             'currency'           => $data['currency'] ?? service('registry')->get('config_currency'),
-            'withdraw_status_id' => $data['withdraw_status_id']
+            'withdraw_status_id' => $data['status_id']
         ];
         $builder->set('date_added', 'NOW()', false);
         $builder->set('date_modified', 'NOW()', false);

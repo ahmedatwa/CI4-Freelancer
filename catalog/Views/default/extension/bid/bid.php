@@ -20,7 +20,8 @@
 				</div>
 				<div class="bids-bid">
 					<div class="bid-rate">
-						<div class="rate"><?php echo $bid['quote']; ?> in <?php echo $bid['delivery']; ?></div>
+					<div class="rate"><small>Quote:</small> <?php echo $bid['quote']; ?></div>
+					<div class="rate"><small>Delivery:</small> <?php echo $bid['delivery']; ?></div>
 					   <div class="rating">
 						<ul class="pl-0">
 							<?php for ($i=1; $i <= 5; $i++) { ?>

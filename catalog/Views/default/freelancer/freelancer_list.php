@@ -82,7 +82,7 @@
 
 							<!-- Name -->
 							<div class="freelancer-name">
-								<h4><a href="<?php echo $freelancer['href']; ?>"><?php echo $freelancer['name']; ?> <img class="flag" src="images/flags/gb.svg" alt="" title="United Kingdom" data-tippy-placement="top"></a></h4>
+								<h4><a href="<?php echo $freelancer['href']; ?>"><?php echo $freelancer['name']; ?></a></h4>
 								<span><?php echo $freelancer['tag_line']; ?></span>
 								<!-- Rating -->
 								<div class="freelancer-rating">

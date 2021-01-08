@@ -114,7 +114,7 @@ $('#button-login').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + ": " + xhr.responseJSON.message + "\r\nPage will be reloaded for new access token!");
+            alert(thrownError + "Page will be reloaded for new access token!");
             // refresh the page for new access token
             location.reload();
         }

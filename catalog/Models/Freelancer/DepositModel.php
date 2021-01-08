@@ -36,14 +36,15 @@ class DepositModel extends \CodeIgniter\Model
     public function insertFunds($data)
     {
         $builder = $this->db->table($this->table);
-        $data = [
+        $fund_data = [
             'customer_id' => $data['customer_id'],
             'amount'      => $data['amount'],
             'currency'    => $data['currency'],
             'status'      => $data['status']
         ];
         $builder->set('date_added', 'NOW()', false);
-        $builder->set($data);
+        $builder->set('date_modified', 'NOW()', false);
+        $builder->set($fund_data);
         $builder->insert();
         // update balance
         $balance_table = $this->db->table('customer_to_balance');
@@ -54,16 +55,18 @@ class DepositModel extends \CodeIgniter\Model
 
         if ($row) {
             $balance_data = [
-            'available'   => $row->available + $data['amount']
-        ];
+               'available'   => $row->available + $data['amount']
+            ];
+            $balance_table->where('customer_id', $data['customer_id']);
             $balance_table->set('date_modified', 'NOW()', false);
             $balance_table->update($balance_data);
         } else {
             $balance_data = [
-            'available' => $data['amount'],
-            'customer_id' => $data['customer_id']
-        ];
+                'available'   => $data['amount'],
+                'customer_id' => $data['customer_id']
+            ];
             $balance_table->set('date_added', 'NOW()', false);
+            $balance_table->set('date_modified', 'NOW()', false);
             $balance_table->insert($balance_data);
         }
     }

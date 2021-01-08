@@ -52,19 +52,19 @@
 										<h3><i class="icon-material-outline-lock"></i> <?php echo $text_password_security; ?></h3>
 									</div>
 									<div class="row">	
-										<div class="col">
+										<div class="col-xs-12 col-md-4">
 											<div class="submit-field required">
 												<h5><?php echo $entry_current_password; ?></h5>
 												<input type="password" class="form-control" id="input-current" name="current">
 											</div>
 										</div>
-										<div class="col">
+										<div class="col-xs-12 col-md-4">
 											<div class="submit-field required">
 												<h5><?php echo $entry_password; ?></h5>
 												<input type="password" class="form-control" id="input-password" name="password">
 											</div>
 										</div>
-										<div class="col">
+										<div class="col-xs-12 col-md-4">
 											<div class="submit-field required">
 												<h5><?php echo $entry_confirm; ?></h5>
 												<input type="password" class="form-control" id="input-confirm" name="confirm">

@@ -27,7 +27,11 @@
 			    </div>
 			  </div>
 			  <div class="text-right">
-			    <button type="button" id="button-submit" class="button ripple-effect"><?php echo $button_submit; ?></button>
+			  	<?php if ($amount > 0) { ?>
+			    <button type="button" id="button-submit" class="btn btn-danger"><?php echo $button_submit; ?></button>
+			   <?php } else { ?>
+			   	<button type="button" class="btn btn-danger" disabled><?php echo $button_submit; ?></button>
+			   <?php } ?>
 			</div>
 			</form>
 			</div>
@@ -70,9 +74,7 @@
 				</div>
 			</div>
 			<!-- Summary / End -->
-
 		</div>
-
 	</div>
 </div>
 <!-- Container / End -->
@@ -86,12 +88,29 @@ var table = $('#table-withdraw').DataTable({
     "lengthMenu": [10, 20, 30]
 });
 // submit the form
-$('#button-submit').on('click', function(){
+$('#button-submit').on('click', function() {
 	var $node = $(this);
+	bootbox.confirm({
+    message: "Are you sure?",
+    size: 'small',
+    className: 'animate__animated animate__fadeInDown',
+    buttons: {
+        cancel: {
+            label: '<i class="fa fa-times"></i> Cancel',
+            className: 'btn-dark'
+        },
+        confirm: {
+            label: '<i class="fa fa-check"></i> Confirm',
+            className: 'btn-success'
+        }
+    },
+    callback: function (result) {
+   if (result) {
 	$.ajax({
 		url: 'freelancer/withdraw/add',
 		headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-Requested-With': 'XMLHttpRequest'
         },
 		method: 'post',
 		dataType: 'json',
@@ -114,6 +133,9 @@ $('#button-submit').on('click', function(){
 		 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 	    }
 	});
+	}
+    } 
+   });  
 });
 </script>
 <?php echo $footer; ?>

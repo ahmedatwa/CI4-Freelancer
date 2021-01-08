@@ -41,7 +41,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
                 'tag_line' => $result['tag_line'],
                 'rate'     => $this->currencyFormat($result['rate']),
                 'rating'   => $reviewModel->getAvgReviewByFreelancerId($result['customer_id']),
-                'success'  => @($total_services / $ontime),
+                'success'  => ($ontime) ? ($total_services / $ontime) : '0',
                 'href'     => (route_to('freelancer_profile', $result['customer_id'], $result['username'])) ? route_to('freelancer_profile', $result['customer_id'], $result['username']) : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
             ];
         }

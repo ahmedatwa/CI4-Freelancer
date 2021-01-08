@@ -17,15 +17,6 @@ class Menu extends \Catalog\Controllers\BaseController
             'children' => [],
         ];
 
-        $data['menus'][] = [
-            'id'    => 'menu-start',
-            'icon'  => 'fas fa-user-cog',
-            'class' => '',
-            'name'  => lang('account/menu.text_settings'),
-            'href'  => route_to('account_setting'),
-            'children' => [],
-        ];
-
         // Projects
         $projects[] = [
             'id'       => 'menu-manage',
@@ -50,6 +41,15 @@ class Menu extends \Catalog\Controllers\BaseController
             'name'     => lang('account/menu.text_my_projects'),
             'href'     => '',
             'children' => $projects,
+        ];
+
+        $data['menus'][] = [
+            'id'    => 'menu-start',
+            'icon'  => 'fas fa-user-cog',
+            'class' => '',
+            'name'  => lang('account/menu.text_settings'),
+            'href'  => route_to('account_setting'),
+            'children' => [],
         ];
 
         $data['menus'][] = [
@@ -80,7 +80,7 @@ class Menu extends \Catalog\Controllers\BaseController
         ];
 
 
-        return view ('account/menu', $data);
+        return view('account/menu', $data);
     }
     //--------------------------------------------------------------------
 }
