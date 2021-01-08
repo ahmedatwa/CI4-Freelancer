@@ -47,11 +47,13 @@
 		</div>
 		<div class="col-3">
 			<p class="text-center mb-4">
-				<?php if (! $alreadyApplied) { ?>
+				
+				<?php if (! $alreadyApplied && ($customer_id != $employer_id)) { ?>
 					<button type="button" data-toggle="modal" data-target="#applyform" class="btn btn-danger btn-block">Apply Now <i class="icon-material-outline-arrow-right-alt"></i></button>
 				<?php } else { ?>
-					<button type="button" class="btn btn-danger btn-block" disabled>Already Applied <i class="icon-material-outline-arrow-right-alt"></i></button>
-					<?php } ?></p>
+					<button type="btn btn-danger btn-block" class="btn btn-danger btn-block" disabled>Already Applied <i class="icon-material-outline-arrow-right-alt"></i></button>
+					<?php } ?>
+					</p>
 					<!-- Sidebar Widget -->
 					<div class="sidebar-widget">
 						<div class="job-overview">

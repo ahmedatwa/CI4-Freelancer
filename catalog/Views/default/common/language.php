@@ -1,4 +1,6 @@
-<?php if ($languages) { ?>
+<?php if (count($languages) > 0) { ?>
+  <div class="footer-row">
+  <div class="footer-row-inner language-switcher">
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-language">
     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
     <div class="form-group">
@@ -15,4 +17,6 @@
     <input type="hidden" name="code" value=""/> 
     <input type="hidden" name="redirect" value=""/>
   </form>
+</div>
+</div>
 <?php } ?>

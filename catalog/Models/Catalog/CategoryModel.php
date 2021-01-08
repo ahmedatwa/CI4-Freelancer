@@ -19,7 +19,7 @@ class CategoryModel extends \CodeIgniter\Model
     public function getCategories(array $data = [])
     {
         $builder = $this->db->table('category c');
-        $builder->select('cd.category_id, cd.name, c.sort_order, c.status, cd.description, c.icon');
+        $builder->select('cd.category_id, cd.name, c.sort_order, c.status, cd.description, c.icon, c.parent_id');
         $builder->join('category_description cd', 'c.category_id = cd.category_id', 'left');
         $builder->where('cd.language_id', service('registry')->get('config_language_id'));
         $builder->where('c.status !=', '0');
@@ -50,28 +50,6 @@ class CategoryModel extends \CodeIgniter\Model
 
         $query = $builder->get();
         return $query->getResultArray();
-    }
-
-    public function getChildrenByCategoryId($category_id)
-    {
-        $children_data = [];
-        $builder = $this->db->table('category c');
-        $builder->select('cd.category_id, cd.name');
-        $builder->join('category_description cd', 'c.category_id = cd.category_id', 'left');
-        $builder->where('cd.language_id', service('registry')->get('config_language_id'));
-        $builder->where('c.status !=', 0);
-        $builder->where('c.parent_id', $category_id);
-        $query = $builder->get();
-        foreach ($query->getResultArray() as $result) {
-            $children_data[] = [
-                'category_id' => $result['category_id'],
-                'name'        => $result['name'],
-                'href'        => route_to('projects') . '?gid=' . $result['category_id'],
-            ];
-        }
-
-        return $children_data;
- 
     }
 
     public function getCategoriesByProjectId($project_id)

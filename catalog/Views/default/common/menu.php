@@ -8,14 +8,14 @@
 						<a class="nav-link dropdown-toggle" href="<?php echo $category['href']; ?>" id="dropdown<?php echo $category['category_id']; ?>" aria-haspopup="true" aria-expanded="false"><?php echo $category['name']; ?></a>
 						<div class="dropdown-menu megamenu rounded-0" aria-labelledby="dropdown<?php echo $category['category_id']; ?>" id="cats-navbar-dropdown">
 							<div class="row">
-								<?php foreach (array_chunk($category['children'], ceil(count($category['children']) / 2)) as $children) { ?>
+								<?php foreach (array_chunk($category['children'], ceil(count($category['children']) / 4)) as $children) { ?>
 									<ul class="col list-unstyled">
 										<?php foreach ($children as $child) { ?>
 											<li class="ml-4"><a class="dropdown-item" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a></li>
 										<?php } ?> 
 									</ul>
 								<?php } ?>
-								<div class="col m-auto"><i class="<?php echo $category['ico']; ?> fa-10x"></i></div>
+								<!-- <div class="col m-auto"><i class="<?php //echo $category['ico']; ?> fa-10x"></i></div> -->
 							</div>
 						</div>
 					</li>

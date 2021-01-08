@@ -65,13 +65,32 @@ class Category extends \Catalog\Controllers\BaseController
             
             $keyword = $seoUrl->getKeywordByQuery('category_id=' . $result['category_id']);
 
+            $children = $categoryModel->getCategories([
+                'category_id' => $result['category_id'],
+            ]);
+
+            $children_data = [];
+            
+            foreach ($children as $child) {
+                $keyword_2 = $seoUrl->getKeywordByQuery('category_id=' . $child['category_id']);
+
+                $children_data[] = [
+                    'category_id' => $child['category_id'],
+                    'parent_id'   => $child['parent_id'],
+                    'name'        => $child['name'],
+                    'icon'        => $child['icon'],
+                    'description' => $child['description'],
+                    'href'        => ($keyword_2) ? route_to('category', $child['category_id'], $keyword_2) : base_url('project/project?gid=' . $child['category_id']),
+                ];
+            }
+
             $data['categories'][] = [
                 'category_id' => $result['category_id'],
                 'name'        => $result['name'],
                 'icon'        => $result['icon'],
                 'description' => $result['description'],
                 'href'        => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project?gid=' . $result['category_id']),
-                'children'    => $categoryModel->getChildrenByCategoryId($result['category_id']),
+                'children'    => $children_data,
             ];
         }
 
@@ -88,7 +107,6 @@ class Category extends \Catalog\Controllers\BaseController
 
         // Pagination
         $pager = \Config\Services::pager();
-
         $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
 
         $this->template->output('project/category', $data);

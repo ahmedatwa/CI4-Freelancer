@@ -44,18 +44,9 @@
 									</ul>
 									<div class="clearfix"></div>
 								</div>
-							</div>
-							
-							<div class="footer-row">
-								<div class="footer-row-inner language-switcher">
-									<?php echo $language; ?>
-								</div>
-							</div>
-							<div class="footer-row">
-							<div class="footer-row-inner language-switcher">
+							</div>							
+							<?php echo $language; ?>
 							<?php echo $currency; ?>
-						</div>
-					   </div>
 						</div>
 					</div>
 					<!-- Footer Rows Container / End -->

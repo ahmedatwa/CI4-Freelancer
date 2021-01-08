@@ -150,8 +150,7 @@ class Job extends \Catalog\Controllers\BaseController
 
 
         $data['tags'] = [];
-        
-
+    
         $data['heading_title']       = lang('extension/job/job.heading_title');
         $data['text_search_keyword'] = lang('extension/job/job.text_search_keyword');
         $data['button_search']       = lang('extension/job/job.button_search');
@@ -242,6 +241,7 @@ class Job extends \Catalog\Controllers\BaseController
         if ($job_info) {
 
             $data['job_id']        = $job_info['job_id'];
+            $data['employer_id']        = $job_info['employer_id'];
             $data['name']          = $job_info['name'];
             $data['tags']          = explode(',', $job_info['meta_keyword']);
             $data['description']   = $job_info['description'];
