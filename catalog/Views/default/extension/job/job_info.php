@@ -48,11 +48,15 @@
 		<div class="col-3">
 			<p class="text-center mb-4">
 				
-				<?php if (! $alreadyApplied && ($customer_id != $employer_id)) { ?>
+				<?php if (($customer_id != $employer_id) && $isLogged) { ?>
 					<button type="button" data-toggle="modal" data-target="#applyform" class="btn btn-danger btn-block">Apply Now <i class="icon-material-outline-arrow-right-alt"></i></button>
+				<?php } elseif ($alreadyApplied) { ?>
+					<button type="button" class="btn btn-danger btn-block" disabled>Aleady Applied <i class="icon-material-outline-arrow-right-alt"></i></button>
+				<?php } elseif (! $isLogged) { ?>
+					<a class="btn btn-danger btn-block" role="button" href="<?php echo $login;?>">Login to apply <i class="icon-material-outline-arrow-right-alt"></i></a>
 				<?php } else { ?>
-					<button type="btn btn-danger btn-block" class="btn btn-danger btn-block" disabled>Already Applied <i class="icon-material-outline-arrow-right-alt"></i></button>
-					<?php } ?>
+				<button type="button" class="btn btn-danger btn-block" disabled>Apply Now <i class="icon-material-outline-arrow-right-alt"></i></button>
+				<?php } ?>	
 					</p>
 					<!-- Sidebar Widget -->
 					<div class="sidebar-widget">
