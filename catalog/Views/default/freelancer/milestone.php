@@ -145,7 +145,7 @@ function cancelMilestone(milestone_id) {
         success: function(json) {
             if (json['success']) {
             
-             $('#milestones-list').load('freelancer/milestone?project_id=<?php echo $project_id; ?>');   
+             $('#project-info #milestones-tab').trigger('click');   
 
              $('#milestones-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             }                        
@@ -191,7 +191,7 @@ function approveMilestone(milestone_id) {
         success: function(json) {
             if (json['success']) {
             
-             $('#milestones-list').load('freelancer/milestone?project_id=<?php echo $project_id; ?>');   
+             $('#project-info #milestones-tab').trigger('click');   
 
              $('#milestones-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             }                        
@@ -225,7 +225,9 @@ function payMilestone(milestone_id, amount, employer_id, freelancer_id) {
         $(this).find('.modal-body').text(amount + '.00 EGP will be deducted from your Balance');
     },
     callback: function (result) {
-    if (result) {
+    if (result === false) {
+        dialog.modal('hide');
+    } else { 
     $.ajax({
         url: 'freelancer/milestone/payMilestone',
         headers: {
@@ -244,7 +246,8 @@ function payMilestone(milestone_id, amount, employer_id, freelancer_id) {
             }
 
             if (json['success']) {
-             $('#milestones-list').load('freelancer/milestone?project_id=<?php echo $project_id; ?>');   
+             dialog.modal('hide');
+             $('#project-info #milestones-tab').trigger('click');   
 
              $('#milestones-list').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             }                        
@@ -254,6 +257,7 @@ function payMilestone(milestone_id, amount, employer_id, freelancer_id) {
         }
   });
   } 
+  return false; 
  } 
 }); 
 }	

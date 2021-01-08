@@ -115,10 +115,13 @@ class BalanceModel extends \CodeIgniter\Model
         if ($total) {
             return $balance = [
                 'total' => $total,
-                'currency' => $result['currency'],
+                'currency' => $result['currency'] ?? 'EGP',
             ];
         } else {
-            return '0.00';
+            return $balance = [  
+                'total' => '0.00',
+                'currency' => $result['currency'] ?? 'EGP',
+            ];
         }
     }
 

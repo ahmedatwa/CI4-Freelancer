@@ -144,7 +144,7 @@ class Milestone extends \Catalog\Controllers\BaseController
         if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
             $balanceModel = new BalanceModel();
 
-            $balance = $balanceModel->getBalanceByCustomerID($this->customer->getCustomerID());
+            $balance = $balanceModel->getBalanceByCustomerID($this->customer->getCustomerID())['total'];
 
             // Emploer Balance Validation
             if (($balance == 0) || $this->request->getPost('amount') > $balance) {

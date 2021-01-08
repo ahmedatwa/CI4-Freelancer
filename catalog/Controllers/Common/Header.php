@@ -170,9 +170,11 @@ class Header extends \Catalog\Controllers\BaseController
 
                 $balance = $balanceModel->getBalanceByCustomerID($customer_id);
 
-                $json['total'] = number_to_currency($balance['total'], $balance['currency'], $this->locale, 2);
+                $currency = empty($balance['currency']) ? $this->registry->get('config_currency') : $balance['currency'];
+
+                $json['total'] = number_to_currency($balance['total'], $currency , $this->locale, 2);
             } else {
-                $json['total'] = '0.00 ' . $this->registry->get('config_currency');
+                $json['total'] = '0.00 ' . $currency;
             }
         }
 
