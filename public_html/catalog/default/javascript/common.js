@@ -214,7 +214,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	      url: 'account/notifications/getNotifications',
 	      dataType: 'json',
 	      beforeSend: function() {
-	          $('#notifications-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+	          $('#nav-user-main #notifications-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 	          $('#nav-user-main #notifications-list').html('');
 	      },
 	      complete: function () {
@@ -267,7 +267,6 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	      dataType: 'json',
 	      beforeSend: function() {
 	          $('#nav-user-main #message-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
-	          $('#nav-user-main #message-list').html('');
 	          $('#nav-user-main #message-count').html('');
 	      },
 	      complete: function () {

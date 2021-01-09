@@ -70,7 +70,6 @@ class CustomerModel extends \CodeIgniter\Model
         $builder->join('customer_to_category c2c', 'c.customer_id = c2c.freelancer_id', 'left');
 
         if (isset($data['filter_freelancer'])) {
-            //$builder->where('about IS NOT', $data['filter_freelancer']);
             $builder->where('c.rate >', $data['filter_freelancer']);
         }
 
@@ -115,7 +114,6 @@ class CustomerModel extends \CodeIgniter\Model
             $builder->limit($data['limit'], $data['start']);
         }
 
-        //echo $builder->getCompiledSelect();
         $builder->groupBy('c.customer_id');
 
         $query = $builder->get();
@@ -136,8 +134,7 @@ class CustomerModel extends \CodeIgniter\Model
         $builder->select('CONCAT(c.firstname, " ", c.lastname) AS name, c.about, c.tag_line, c.image, c.customer_id, c.rate, c.online, c.username');
         $builder->join('customer_to_category c2c', 'c.customer_id = c2c.freelancer_id', 'left');
 
-        if (isset($data['filter_freelancer'])) {
-            //$builder->where('about IS NOT', $data['filter_freelancer']);
+                if (isset($data['filter_freelancer'])) {
             $builder->where('c.rate >', $data['filter_freelancer']);
         }
 
@@ -181,6 +178,8 @@ class CustomerModel extends \CodeIgniter\Model
             }
             $builder->limit($data['limit'], $data['start']);
         }
+
+        $builder->groupBy('c.customer_id');
 
         return $builder->countAllResults();
     }
