@@ -1,4 +1,4 @@
-  <nav class="navbar navbar-expand navbar-dark bg-dark shadow-sm p-1 mb-5" style="overflow-y: auto;width: 100%">
+  <nav class="navbar navbar-expand navbar-dark bg-dark shadow-sm p-1 mb-5" style="overflow-y: auto;">
     <div class="collapse navbar-collapse" id="navbarDashboard">
       <ul class="navbar-nav mx-auto">
        <?php foreach ($menus as $menu) { ?>

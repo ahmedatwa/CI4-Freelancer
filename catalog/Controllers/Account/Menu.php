@@ -18,30 +18,32 @@ class Menu extends \Catalog\Controllers\BaseController
         ];
 
         // Projects
-        $projects[] = [
-            'id'       => 'menu-manage',
-            'icon'     => 'fas fa-angle-double-right',
-            'class'    => '',
-            'name'     => lang('account/menu.text_my_projects'),
-            'href'     => route_to('account_project') ? route_to('account_project') : base_url('account/projects'),
-        ];
-
-        $projects[] = [
-            'id'       => 'menu-dispute',
-            'icon'     => 'fas fa-angle-double-right',
-            'class'    => '',
-            'name'     => lang('account/menu.text_dispute'),
-            'href'     => route_to('account_dispute') ? route_to('account_dispute') : base_url('account/dispute'),
-        ];
-
         $data['menus'][] = [
             'id'       => 'menu-manage',
             'icon'     => 'fas fa-building',
             'class'    => '',
             'name'     => lang('account/menu.text_my_projects'),
-            'href'     => '',
-            'children' => $projects,
+            'href'     => route_to('account_project') ? route_to('account_project') : base_url('account/projects'),
+            'children' => [],
         ];
+
+        $data['menus'][] = [
+            'id'       => 'menu-dispute',
+            'icon'     => 'fas fa-bomb',
+            'class'    => '',
+            'name'     => lang('account/menu.text_dispute'),
+            'href'     => route_to('account_dispute') ? route_to('account_dispute') : base_url('account/dispute'),
+            'children' => [],
+        ];
+
+        // $data['menus'][] = [
+        //     'id'       => 'menu-manage',
+        //     'icon'     => 'fas fa-building',
+        //     'class'    => '',
+        //     'name'     => lang('account/menu.text_my_projects'),
+        //     'href'     => '',
+        //     'children' => [],
+        // ];
 
         $data['menus'][] = [
             'id'    => 'menu-start',
