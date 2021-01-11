@@ -17,6 +17,15 @@ class Menu extends \Catalog\Controllers\BaseController
             'children' => [],
         ];
 
+        $data['menus'][] = [
+            'id'    => 'menu-start',
+            'icon'  => 'fas fa-user-cog',
+            'class' => '',
+            'name'  => lang('account/menu.text_settings'),
+            'href'  => route_to('account_setting'),
+            'children' => [],
+        ];
+
         // Projects
         $data['menus'][] = [
             'id'       => 'menu-manage',
@@ -28,38 +37,20 @@ class Menu extends \Catalog\Controllers\BaseController
         ];
 
         $data['menus'][] = [
-            'id'       => 'menu-dispute',
-            'icon'     => 'fas fa-bomb',
-            'class'    => '',
-            'name'     => lang('account/menu.text_dispute'),
-            'href'     => route_to('account_dispute') ? route_to('account_dispute') : base_url('account/dispute'),
-            'children' => [],
-        ];
-
-        // $data['menus'][] = [
-        //     'id'       => 'menu-manage',
-        //     'icon'     => 'fas fa-building',
-        //     'class'    => '',
-        //     'name'     => lang('account/menu.text_my_projects'),
-        //     'href'     => '',
-        //     'children' => [],
-        // ];
-
-        $data['menus'][] = [
-            'id'    => 'menu-start',
-            'icon'  => 'fas fa-user-cog',
-            'class' => '',
-            'name'  => lang('account/menu.text_settings'),
-            'href'  => route_to('account_setting'),
-            'children' => [],
-        ];
-
-        $data['menus'][] = [
             'id'       => 'menu-manage',
             'icon'     => 'fas fa-briefcase',
             'class'    => '',
             'name'     => lang('account/menu.text_my_local_jobs'),
             'href'     => route_to('account_jobs') ? route_to('account_jobs') : base_url('account/jobs'),
+            'children' => [],
+        ];
+
+        $data['menus'][] = [
+            'id'       => 'menu-dispute',
+            'icon'     => 'fas fa-bomb',
+            'class'    => '',
+            'name'     => lang('account/menu.text_dispute'),
+            'href'     => route_to('account_dispute') ? route_to('account_dispute') : base_url('account/dispute'),
             'children' => [],
         ];
 
