@@ -96,6 +96,7 @@ function payFreelancer(employer_id, freelancer_id, project_id, amount) {
             method:'post',
             data: {'employer_id': employer_id, 'freelancer_id': freelancer_id, 'project_id': project_id, 'amount': amount, '<?= csrf_token() ?>': '<?= csrf_hash() ?>'},
             beforeSend: function() {
+                $('.alert').remove();
                 $('#freelancer-past-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
             },
             complete: function() {
