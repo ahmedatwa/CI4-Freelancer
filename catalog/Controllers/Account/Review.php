@@ -2,6 +2,7 @@
 
 use \Catalog\Models\Catalog\ProjectModel;
 use \Catalog\Models\Account\ReviewModel;
+use \Catalog\Models\Account\CustomerModel;
 
 class Review extends \Catalog\Controllers\BaseController
 {
@@ -115,7 +116,7 @@ class Review extends \Catalog\Controllers\BaseController
         
         $results = $projectModel->getProjectAward($filter_data);
 
-        $customerModel = new \Catalog\Models\Account\CustomerModel();
+        $customerModel = new CustomerModel();
         //$total = $reviewModel->getTotalReviews();
 
         foreach ($results as $result) {

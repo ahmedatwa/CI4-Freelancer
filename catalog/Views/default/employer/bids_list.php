@@ -77,7 +77,8 @@ function awardFreelancer(freelancer_id, bid_id) {
          $.ajax({
             url: 'employer/project/awardWinner?pid=<?php echo $project_id; ?>',
             headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-Requested-With': 'XMLHttpRequest'
             },
             dataType: 'json',
             method: 'post',
@@ -126,7 +127,8 @@ function sendMessage(sender_id, receiver_id) {
          $.ajax({
             url: 'account/message/sendMessage',
             headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-Requested-With': 'XMLHttpRequest'
             },
             dataType: 'json',
             method: 'post',

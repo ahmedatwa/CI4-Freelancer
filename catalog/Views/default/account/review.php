@@ -1,8 +1,6 @@
 <?php echo $header; ?><?php echo $dashboard_menu ;?>
-<!-- Dashboard Content -->
 <div class="dashboard-content-container container margin-top-40 shadow-sm p-3 mb-5 bg-white rounded border">
 	<div class="dashboard-content-inner" >
-		<!-- Dashboard Headline -->
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>
 		</div>
