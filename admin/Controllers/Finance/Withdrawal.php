@@ -37,7 +37,7 @@ class Withdrawal extends \Admin\Controllers\BaseController
 
         if ($this->request->getPost('selected') && $this->validateDelete()) {
             foreach ($this->request->getPost('selected') as $withdraw_id) {
-                $disputeModel->delete($withdraw_id);
+                $withdrawalModel->delete($withdraw_id);
                 $json['success'] = lang('finance/withdrawal.text_success');
                 $json['redirect'] = 'index.php/finance/withdrawal?user_token=' . $this->request->getVar('user_token');
             }
@@ -80,8 +80,8 @@ class Withdrawal extends \Admin\Controllers\BaseController
                 'customer'       => $result['username'],
                 'status'         => $result['status'],
                 'amount'         => currency_format($result['amount']),
-                'date_added'     => DateShortFormat($result['date_added']),
-                'date_processed' => DateShortFormat($result['date_processed']),
+                'date_added'     => lang('en.medium_time', [$result['date_added']]),
+                'date_processed' => lang('en.medium_time', [$result['date_processed']]),
                 'edit'           => base_url('index.php/finance/withdrawal/edit?user_token=' . $this->request->getVar('user_token') . '&withdraw_id=' . $result['withdraw_id']),
                 'delete'         => base_url('index.php/finance/withdrawal/delete?user_token=' . $this->request->getVar('user_token') . '&withdraw_id=' . $result['withdraw_id']),
             ];
@@ -233,7 +233,15 @@ class Withdrawal extends \Admin\Controllers\BaseController
             $this->session->setFlashdata('error_warning', lang('finance/withdrawal.error_permission'));
             return false;
         }
+        return true;
+    }
 
+    protected function validateDelete()
+    {
+        if (! $this->user->hasPermission('modify', 'finance/withdrawal')) {
+            $this->session->setFlashdata('error_warning', lang('finance/withdrawal.error_permission'));
+            return false;
+        }
         return true;
     }
         

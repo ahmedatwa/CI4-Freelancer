@@ -69,11 +69,13 @@
 	</div>
 <!-- Scripts -->
 <script type="text/javascript">
-// Enable pusher logging - don't include this in production
+var PUSHER_KEY = <?php echo PUSHER_KEY; ?>;
+var PUSHER_CLUSTER = <?php echo PUSHER_CLUSTER; ?>;
+
 $(document).ready(function(){
 
-	var pusher = new Pusher('b4093000fa8e8cab989a', {
-      cluster: 'eu'
+	var pusher = new Pusher(PUSHER_KEY, {
+      cluster: PUSHER_CLUSTER
     });
 
 	var channel = pusher.subscribe('chat-channel');

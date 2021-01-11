@@ -1,12 +1,14 @@
 <?php namespace Extensions\Controllers\Theme;
 
+use \Admin\Models\Setting\SettingModel;
+
 class Basic extends \Admin\Controllers\BaseController
 {
     public function index()
     {
         $this->document->setTitle(lang('theme/basic.list.heading_title'));
 
-        $setting_model = new \Admin\Models\Setting\Settings();
+        $setting_model = new SettingModel();
 
         if (($this->request->getMethod() == 'post') && $this->validateForm()) {
                 $setting_model->editSetting('theme_default', $this->request->getPost());
@@ -58,7 +60,7 @@ class Basic extends \Admin\Controllers\BaseController
 
         helper('filesystem');
 
-        $directories = directory_map(ROOTPATH . 'catalog/Views/template/', 1);
+        $directories = directory_map(ROOTPATH . 'catalog/Views/', 1);
 
         foreach ($directories as $directory) {
             $data['directories'][] = basename($directory);

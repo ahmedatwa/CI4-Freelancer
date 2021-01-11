@@ -148,8 +148,11 @@ function gSignOut() {
 <!-- New Project Global Alert -->
 
 <script type="text/javascript">
-var pusher = new Pusher('b4093000fa8e8cab989a', {
-  cluster: 'eu'
+var PUSHER_KEY = <?php echo PUSHER_KEY; ?>;
+var PUSHER_CLUSTER = <?php echo PUSHER_CLUSTER; ?>;
+
+var pusher = new Pusher(PUSHER_KEY, {
+  cluster: PUSHER_CLUSTER
 });
 
 var channel = pusher.subscribe('global-channel');

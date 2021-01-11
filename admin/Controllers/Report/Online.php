@@ -22,8 +22,14 @@ class Online extends \Admin\Controllers\BaseController
             'href' => base_url('report/online?user_token=' . $this->session->get('user_token'))
         ];
 
-        $data['user_token'] = $this->session->get('user_token');
+        if ($this->session->getFlashdata('success')) {
+            $data['success'] = $this->session->getFlashdata('success');
+        } else {
+            $data['success'] = '';
+        }
 
+        $data['user_token'] = $this->session->get('user_token');
+        $data['delete'] = '';
         // Reports
         $data['reports'] = [];
         
@@ -38,7 +44,7 @@ class Online extends \Admin\Controllers\BaseController
                     'text'       => lang('report/'. $code .'.list.heading_title'),
                     'code'       => $code,
                     'sort_order' => $this->registry->get('report_' . $code . '_sort_order'),
-                    'href'       => base_url('report/report?user_token=' . $this->session->get('user_token') . '&code=' . $code)
+                    'href'       => base_url('report/report?user_token=' . $this->session->get('user_token') . '&code=' . $code),
                 ];
             }
         }

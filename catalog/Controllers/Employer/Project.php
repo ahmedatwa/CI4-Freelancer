@@ -495,7 +495,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['column_action']     = lang('employer/project.column_action');
 
         $balanceModel = new BalanceModel();
-        $data['balance'] = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId()));
+        $data['balance'] = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId())['total']);
 
         // Pagination
         $pager = \Config\Services::pager();

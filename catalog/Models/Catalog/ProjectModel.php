@@ -49,14 +49,9 @@ class ProjectModel extends \CodeIgniter\Model
                 // Mail Alert
                 \CodeIgniter\Events\Events::trigger('mail_project_add', $data['employer_id'], $value['name']);
                 // Trigger Pusher Notification event
-                $options = ['cluster' => 'eu', 'useTLS' => true];
+                $options = ['cluster' => PUSHER_CLUSTER, 'useTLS' => PUSHER_USETLS];
 
-                $pusher = new \Pusher\Pusher(
-                    'b4093000fa8e8cab989a',
-                    'fb4bfd2d78aac168d918',
-                    '1047280',
-                    $options
-                );
+                $pusher = new \Pusher\Pusher(PUSHER_KEY, PUSHER_SECRET, PUSHER_APP_ID, $options);
                 // SEO URL
                 $seoUrl = service('seo_url');
                 $keyword = $seoUrl->getKeywordByQuery('project_id=' . $project_id);

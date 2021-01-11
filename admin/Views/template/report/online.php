@@ -38,19 +38,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($users) { ?>
-                        <?php foreach ($users as $user) { ?>
+                    <?php if ($reports) { ?>
+                        <?php foreach ($reports as $report) { ?>
                             <tr>
-                                <th scope="row"> <?php if (in_array($user['user_id'], $selected)) { ?>
-                                    <input type="checkbox" name="selected[]" value="<?php echo $user['user_id']; ?>" checked="checked"/>
-                                <?php } else { ?>
-                                    <input type="checkbox" name="selected[]" value="<?php echo $user['user_id']; ?>"/>
-                                    <?php } ?> </div></th>
-                                    <td><?php echo $user['email']; ?></td>
-                                    <td><?php echo $user['status']; ?></td>
-                                    <td><?php echo $user['date_added']; ?></td>
-                                    <td class="text-center">  
-                                        <a href="<?php echo $user['edit']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>" ><i class="far fa-edit"></i></a></td>
+                            <td><?php echo $report['text']; ?></td>
+                            <td><?php echo $report['code']; ?></td>
+                            <td><?php echo $report['sort_order']; ?></td>
+                            <td class="text-center">  
+                                <a href="<?php echo $report['href']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>" ><i class="far fa-edit"></i></a></td>
                                     </tr>
                                 <?php } ?>
                             <?php } ?>
