@@ -110,11 +110,12 @@ class Message extends \Catalog\Controllers\BaseController
     public function markRead()
     {
         $json = [];
-        
-        if ($this->request->getVar('message_id')) {
-            $messageModel = new MessageModel();
+        if (($this->request->getMethod() == 'post') && $this->request->isAJAX()) {
+            if ($this->request->getVar('message_id')) {
+                $messageModel = new MessageModel();
 
-            $messageModel->markSeen($this->request->getVar('message_id'));
+                $messageModel->markSeen($this->request->getVar('message_id'));
+            }
         }
         
         return $this->response->setJSON($json);
@@ -138,18 +139,17 @@ class Message extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->request->getMethod() == 'post') {
+        if (($this->request->getMethod() == 'post') && $this->request->isAJAX()) {
             $messageModel = new MessageModel();
 
             if (! $this->validate([
                 'message'  => 'required'
             ])) {
-                $json['error'] = $this->validator->getErrors();
+                $json['error'] = $this->validator->getError('message');
             }
 
             if (! $json) {
                 $messageModel->addProjectMessage($this->request->getPost());
-
                 $json['success'] = lang('freelancer/project.text_success_pm');
             }
         }
@@ -205,7 +205,6 @@ class Message extends \Catalog\Controllers\BaseController
         $members = $messageModel->getMembers($customer_id);
 
         foreach ($members as $member) {
-
             if ($this->session->get('customer_id') == $member['sender_id']) {
                 $receiver_id = $member['receiver_id'];
             } else {

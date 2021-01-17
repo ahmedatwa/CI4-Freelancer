@@ -43,8 +43,12 @@
               $(node).html('Send');
           },
           success: function(json) {
+              if (json['error']) {
+                 $.notify({icon: 'fas fa-exclamation-circle', message: json['error']},{type: 'danger'});
+              }
+
               if (json['success']) {
-                $('.header-notifications-content').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $('#project-info').after('<div class="alert alert-success alert-dismissible fade show mt-2" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 
                 $('#v-pills-tabContent-projectMessages').load('account/message/getThreadMessages?thread_id=<?php echo $thread_id; ?>');
               }                        
