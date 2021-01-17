@@ -7,6 +7,7 @@ use \Catalog\Models\Extension\Bid\BidModel;
 use \Catalog\Models\Freelancer\BalanceModel;
 use \Catalog\Models\Freelancer\FreelancerModel;
 use \Catalog\Models\Freelancer\DisputeModel;
+use \Catalog\Models\Account\MessageModel;
 
 class Project extends \Catalog\Controllers\BaseController
 {
@@ -83,6 +84,15 @@ class Project extends \Catalog\Controllers\BaseController
             $data['freelancer_profile'] = ($bid_info['freelancer_id']) ? route_to('freelancer_profile', $bid_info['freelancer_id'], $freelancer_info['username']) : '';
 
             $data['status'] = $projectModel->getStatusByProjectId($project_info['project_id']);
+
+            // Project PMs Data
+            $messageModel = new MessageModel();
+            $message_info = $messageModel->getMessageThread($this->customer->getCustomerID());
+            
+            $data['thread_id'] = $message_info['thread_id'] ?? '';
+            $data['receiver_id'] = $message_info['receiver_id'] ?? '';
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
         $data['heading_title'] = lang('project/project.text_my_projects');
@@ -191,7 +201,7 @@ class Project extends \Catalog\Controllers\BaseController
         return view('freelancer/progress_project_list', $data);
     }
 
-        public function getPastProjects()
+    public function getPastProjects()
     {
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
@@ -298,7 +308,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['column_action']     = lang('freelancer/project.column_action');
 
         $balanceModel = new BalanceModel();
-        $data['balance'] = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId()));
+        $data['balance'] = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId())['total']);
 
         // Pagination
         $pager = \Config\Services::pager();
@@ -353,7 +363,6 @@ class Project extends \Catalog\Controllers\BaseController
         $json = [];
 
         if ($this->request->getMethod() == 'post') {
-
             $freelancerModel = new FreelancerModel();
 
             $freelancerModel->updateProjectStatus($this->request->getVar('project_id'), $this->request->getPost());

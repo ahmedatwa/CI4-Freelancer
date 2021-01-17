@@ -151,7 +151,7 @@ function sendMessage(sender_id, receiver_id) {
                 if (json['success']) {
                     dialog.modal('hide');
                   $('#bids').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                  $('#messages').load('account/message/getProjectMessages?project_id=' +project_id+ '&customer_id=<?php echo $customer_id; ?>');
+                  $('#project-info #messages-tab').trigger('click');
                   $('#send-message-modal-form').trigger('reset');
                 }                        
             },

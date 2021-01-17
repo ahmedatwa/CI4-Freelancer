@@ -17,9 +17,9 @@
 		<div class="row">
 			<div class="col-12">
 			<ul class="nav nav-tabs" id="project-info" role="tablist">
-				<!-- <li class="nav-item" role="presentation">
+				<li class="nav-item" role="presentation">
 					<a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
-				</li> -->
+				</li>
 				<li class="nav-item" role="presentation">
 					<a class="nav-link" id="milestones-tab" data-toggle="tab" href="#milestones" role="tab" aria-controls="milestones" aria-selected="false">Milestone</a>
 				</li>
@@ -29,7 +29,7 @@
 			</ul>
 
 			<div class="tab-content mt-4" id="myTabContent">
-				<!-- <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab"></div> --> <!-- </div> messages-tab  -->
+				<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab"></div> <!-- </div> messages-tab  -->
 				<div class="tab-pane fade" id="milestones" role="tabpanel" aria-labelledby="milestones-tab">
                 <div id="milestones-list"></div>
                 </div> <!-- </div> milestones-tab  -->
@@ -141,24 +141,24 @@ $('#project-info #bids-tab').on('click', function (e) {
 
 
 // Messages
-// $('#project-info #messages-tab').on('click', function (e) {
-//  $.ajax({
-//     url: 'account/message/getProjectMessages?pid=<?php //echo $project_id; ?>&customer_id=<?php //echo $employer_id; ?>',
-//     dataType: 'html',
-//     beforeSend: function() {
-//         $('#messages').html('<p id="loader-div" class="text-center"><i class="fas fa-spinner fa-spin fa-lg"></i> Retrieving Data...</p>');
-//     },
-//     complete: function() {
-//         $('#loader-div').remove();
-//     },
-//     success: function(html) {
-//         $('#messages').html(html);
-//     },
-//     error: function(xhr, ajaxOptions, thrownError) {
-//         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-//     }
-//  });
-// }); 
+$('#project-info #messages-tab').on('click', function (e) {
+ $.ajax({
+    url: 'account/message/getProjectMessages?project_id=<?php echo $project_id; ?>&receiver_id=<?php echo $receiver_id; ?>',
+    dataType: 'html',
+    beforeSend: function() {
+        $('#messages').html('<p id="loader-div" class="text-center"><i class="fas fa-spinner fa-spin fa-lg"></i> Retrieving Data...</p>');
+    },
+    complete: function() {
+        $('#loader-div').remove();
+    },
+    success: function(html) {
+        $('#messages').html(html);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
+ });
+}); 
 
 $('#project-info #milestones-tab').on('click', function (e) {
  $.ajax({
@@ -181,7 +181,6 @@ $('#project-info #milestones-tab').on('click', function (e) {
 }); 
 
 $('#project-info li:first-child a').tab('show') // Select first tab
-
 $('#project-info li:first-child a').trigger('click') // Select first tab
 </script>
 <?php echo $footer; ?>

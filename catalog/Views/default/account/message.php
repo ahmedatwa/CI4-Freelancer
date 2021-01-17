@@ -69,8 +69,8 @@
 	</div>
 <!-- Scripts -->
 <script type="text/javascript">
-var PUSHER_KEY = <?php echo PUSHER_KEY; ?>;
-var PUSHER_CLUSTER = <?php echo PUSHER_CLUSTER; ?>;
+var PUSHER_KEY = "<?php echo PUSHER_KEY; ?>";
+var PUSHER_CLUSTER = '<?php echo PUSHER_CLUSTER; ?>';
 
 $(document).ready(function(){
 
@@ -86,7 +86,10 @@ $(document).ready(function(){
 
 	function sendMessage(data) {
 		console.log(data)
-		if(data.sender_id == <?php echo $customer_id; ?>) {
+		var customer_id = <?php echo $customer_id; ?>;
+		console.log(customer_id != data.receiver_id)
+
+		if(data.sender_id = customer_id) {
 			html = '<div class="message-time-sign">';
 			html += '<span> ' + new Date().toLocaleString(); + ' </span>'; 
 			html += '</div>';
@@ -101,7 +104,7 @@ $(document).ready(function(){
 			$('#input-message').val("");
 			$(".tab-content").animate({ scrollTop: $(document).height() }, 1000);
 		} 
-		 if(data.sender_id != <?php echo $customer_id; ?>) {
+		 if(data.receiver_id != customer_id) {
 			html = '<div class="message-bubble">';
 			html += '<div class="message-bubble-inner">';
 			html += '<div class="message-avatar"><img src="images/catalog/avatar.jpg" alt="" /></div>';
@@ -136,6 +139,7 @@ $(document).ready(function(){
 		      data:$("#form-message").serialize(),
 		      success:function() {
 		      	$('#input-message').val('');
+		      	//fetchChatHistory();
 		      }    
 		  	});
 		}
@@ -188,7 +192,7 @@ function fetchChatHistory (thread_id) {
 			html += '</div>';
           	html += '<div class="message-bubble me">';							
 			html += '<div class="message-bubble-inner">';							
-			html += '<div class="message-avatar"><img src="images/catalog/avatar.jpg" alt="" /></div>';	
+			html += '<div class="message-avatar"><img src="images/catalog/avatar.jpg" alt="" />' + json[i].sender + '</div>';	
 			html += '<div class="message-text"><p>'+json[i].message.text+'</p></div>';	
 			html += '</div>'
 			html += '<div class="clearfix"></div>';
@@ -197,7 +201,7 @@ function fetchChatHistory (thread_id) {
 	    if (json[i].sender_id != <?php echo $customer_id; ?>) {
 			html += '<div class="message-bubble">';
 			html += '<div class="message-bubble-inner">';
-			html += '<div class="message-avatar"><img src="images/catalog/avatar.jpg" alt="" /></div>';
+			html += '<div class="message-avatar"><img src="images/catalog/avatar.jpg" alt="" />' + json[i].receiver + '</div>';
 			html += '<div class="message-text"><p>'+ json[i].message.text +'</p></div>';
 			html += '</div>';
 			html += '<div class="clearfix"></div>';

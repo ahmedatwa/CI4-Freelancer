@@ -137,7 +137,7 @@ class Header extends \Catalog\Controllers\BaseController
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
         $data['defaut_color_scheme'] = $this->registry->get('theme_default_color') ?? 'red.css';
-        $data['all_messages']        = route_to('account_messages') ? route_to('account_messages') : base_url('account/message');
+        $data['all_messages']        = route_to('account_project');
 
         // Logged Menu
         $data['text_dashboard']   = lang('account/menu.text_dashboard');
@@ -153,7 +153,7 @@ class Header extends \Catalog\Controllers\BaseController
         return view('common/header', $data);
     }
 
-    public function getCustomerBalace()
+    public function getCustomerBalance()
     {
         $json = [];
         if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
@@ -186,15 +186,9 @@ class Header extends \Catalog\Controllers\BaseController
         $json = [];
 
         if ($this->session->get('customer_id')) {
-            if ($this->request->getVar('view')) {
-                $viewed = $this->request->getVar('view');
-            } else {
-                $viewed = '';
-            }
-
             $messageModel = new MessageModel();
 
-            $results = $messageModel->getMessageByCustomerId($viewed, $this->session->get('customer_id'));
+            $results = $messageModel->getMessageByCustomerId(0, $this->session->get('customer_id'));
 
             helper('text');
 
@@ -203,13 +197,13 @@ class Header extends \Catalog\Controllers\BaseController
                 'thread_id'   => $result['thread_id'],
                 'message_id'  => $result['message_id'],
                 'receiver_id' => $result['receiver_id'],
+                'project_id'  => $result['project_id'],
                 'sender_id'   => $result['sender_id'],
                 'name'        => $result['name'],
                 'image'       => ($result['image']) ? $this->resize($result['image'], 42, 42) : $this->resize('catalog/avatar.jpg', 42, 42),
-                'message'     => word_limiter(json_decode($result['message'], true)['text'], 10),
+                'message'     => word_limiter($result['message']),
                 'date_added'  => $this->dateDifference($result['date_added']),
                 'count'       => $result['total'],
-                'href'        => base_url('account/inbox?message_id=' . $result['message_id']),
 
             ];
             }

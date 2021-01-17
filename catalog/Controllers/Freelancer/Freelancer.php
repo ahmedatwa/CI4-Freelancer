@@ -267,40 +267,30 @@ class Freelancer extends \Catalog\Controllers\BaseController
             $data['text_hire_me']     = sprintf(lang('freelancer/freelancer.text_hire_me'), $customer_info['username']);
             $data['text_canned']      = sprintf(lang('freelancer/freelancer.text_canned'), $customer_info['username']);
 
-            $name = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
-
+            $name                  = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
             $data['name']          = (strlen($name) > 1) ? $name : '@'.$customer_info['username'];
             $data['freelancer_id'] = $customer_info['customer_id'];
+            $data['employer_id']   = $this->session->get('customer_id');
             $data['about']         = $customer_info['about'];
             $data['rate']          = $customer_info['rate'];
             $data['tag_line']      = ($customer_info['tag_line'] == 'NULL') ? '' : $customer_info['tag_line'];
-
-            $data['image'] = $customer_info['image'] ? $this->resize($customer_info['image'], 130, 130) : $this->resize('catalog/avatar.jpg', 130, 130);
+            
+            $data['image']         = $customer_info['image'] ? $this->resize($customer_info['image'], 130, 130) : $this->resize('catalog/avatar.jpg', 130, 130);
             // Widgets
             $data['rating']        = $reviewModel->getAvgReviewByFreelancerId($customer_id);
             $data['recommended']   = $reviewModel->getRecommendedByFreelancerId($customer_id);
             $data['ontime']        = $reviewModel->getOntimeByFreelancerId($customer_id);
             // Social
-            $data['facebook'] = $customer_info['facebook'];
-            $data['twitter']  = $customer_info['twitter'];
-            $data['linkedin'] = $customer_info['linkedin'];
-            $data['github']   = $customer_info['github'];
-
+            $data['facebook']      = $customer_info['facebook'];
+            $data['twitter']       = $customer_info['twitter'];
+            $data['linkedin']      = $customer_info['linkedin'];
+            $data['github']        = $customer_info['github'];
+            
             $data['skills']        = $customerModel->getCustomerSkills($customer_id);
             $data['languages']     = $customerModel->getCustomerLanguages($customer_id);
+            $data['educations']    = $customerModel->getEducations($customer_id);
+            $data['certificates']  = $customerModel->getCustomerCertificates($customer_id);
 
-            $data['educations'] = $customerModel->getEducations($customer_id);
-
-            
-            $data['certificates'] = $customerModel->getCustomerCertificates($customer_id);
-
-            // $filter_data = [
-            //  'freelancer_id' => $customer_id,
-            //  'status'        => $this->registry->get('config_project_completed_status')
-            // ];
-
-            // $projects = $projectModel->getProjectAward($filter_data);
-            
             // reviews
             $data['reviews'] = [];
             $freelancer_reviews = $reviewModel->getFreelancerReviews($customer_id);
@@ -312,6 +302,10 @@ class Freelancer extends \Catalog\Controllers\BaseController
                     'date_added'    => lang('en.mediumDate', [strtotime($result['date_added'])]),
                 ];
             }
+            // Project PMs Data
+            $messageModel = new MessageModel();
+            $message_info = $messageModel->getMessageThread($this->customer->getCustomerID());
+            $data['thread_id'] = $message_info['thread_id'] ?? '';
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
@@ -338,9 +332,6 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         $pager = \Config\Services::pager();
         $data['pagination'] = ($projects_total <= $limit) ? '' : $pager->makeLinks($page, $limit, $projects_total);
-
-        $data['employer_id'] = $this->session->get('customer_id');
-
 
         $customerModel->updateViewed($customer_id);
 

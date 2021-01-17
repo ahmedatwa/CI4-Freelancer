@@ -178,7 +178,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 
 	$('#nav-user-main #headerLoginDropdown').on('click', function() {
 		$.ajax({
-	      url: 'common/header/getCustomerBalace',
+	      url: 'common/header/getCustomerBalance',
 	      headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
               'X-Requested-With': 'XMLHttpRequest'
@@ -266,28 +266,25 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	      url: 'common/header/getMessages',
 	      dataType: 'json',
 	      beforeSend: function() {
-	          $('#nav-user-main #message-list').html('<div class="d-flex justify-content-center" id="preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+	          $('#nav-user-main #message-list').html('<div class="d-flex justify-content-center preloading"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 	          $('#nav-user-main #message-count').html('');
 	      },
 	      complete: function () {
-	          $('#preloading').remove();
+	          $('.preloading').remove();
 	      },
 	      success: function(json) {
 	      	var html = '';
-
 	      	if (json.length > 0) {
 	          for (var i = 0; json.length > i; i++) {
-
 	           html = '<li class="list-group-item" id="'+json[i].message_id+'">';
-	           html += '<a href="account/message#v-pills-'+json[i].thread_id+'">';
+	           html += '<a role="button" href="javascript:void(0)">';
 	           html += '<span class="notification-avatar status-online float-left"><img src="'+json[i].image+'" alt=""></span>';
 	           html += '<div class="notification-text">';
-	           html += '<strong>' + json[i].name + '</strong>';
+	           html += '<strong>' + json[i].name + '</strong><small><a role="button" href="javascript:void(0)" id="markRead" data-messageId="'+json[i].message_id+'" class="btn btn-sm float-right rounded-pill mark-as-read" title="Mark Read" data-placement="left" data-toggle="tooltip"><i class="fas fa-check"></i></a></small>';
 	           html += '<p class="notification-msg-text">' + json[i].message + '<span class="color">' + json[i].date_added + '</span></p>';
 	           html += '</div>';
 	           html += '</a>';
 	           html += '</li>';
-
 	          $('#nav-user-main #message-list').append(html);
 	        }
 	    } else {
@@ -297,6 +294,20 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	    });
 	  }
 
+	$(document).on('click', '#markRead', function () {
+	  $.ajax({
+	      url: 'account/message/markRead?message_id='+ $(this).attr('data-messageId'),
+	      headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          method: 'post',
+          dataType: 'json',
+	      success: function(json) {
+	      	loadMessages()
+	      }
+	  });
+	});
 	/*--------------------------------------------------*/
 	/*  Interactive Effects
 	/*--------------------------------------------------*/

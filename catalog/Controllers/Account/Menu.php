@@ -54,14 +54,14 @@ class Menu extends \Catalog\Controllers\BaseController
             'children' => [],
         ];
 
-        $data['menus'][] = [
-            'id'       => 'menu-start',
-            'icon'     => 'icon-material-outline-question-answer',
-            'class'    => '',
-            'name'     => lang('account/menu.text_messages'),
-            'href'     => route_to('account_message') ? route_to('account_message') : base_url('account/message'),
-            'children' => [],
-        ];
+        // $data['menus'][] = [
+        //     'id'       => 'menu-start',
+        //     'icon'     => 'icon-material-outline-question-answer',
+        //     'class'    => '',
+        //     'name'     => lang('account/menu.text_messages'),
+        //     'href'     => route_to('account_message') ? route_to('account_message') : base_url('account/message'),
+        //     'children' => [],
+        // ];
 
         $data['menus'][] = [
             'id'       => 'menu-start',

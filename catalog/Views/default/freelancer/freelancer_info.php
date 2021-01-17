@@ -205,6 +205,7 @@
 				<form enctype="multipart/form-data" method="post" action="" id="form-hire" accept-charset="utf-8"> 
 					<input type="hidden" name="sender_id" value="<?php echo $employer_id; ?>" />
 					<input type="hidden" name="receiver_id" value="<?php echo $freelancer_id; ?>" />
+					<input type="hidden" name="thread_id" value="<?php echo $thread_id; ?>" />
 					<div class="form-group">
 						<label for="exampleInputEmail1"><i class="fas fa-comment"></i> <?php echo $text_message; ?></label>
 						<textarea rows="3" class="form-control" name="message"><?php echo $text_canned; ?></textarea>
@@ -234,11 +235,14 @@
 </div>
 
 <script type="text/javascript">
-$("#button-hire-me").on('click', function () {
+$('#hireme').on('shown.bs.modal', function (e) {
+  $('.fas, .alert').remove();
+ $('#button-hire-me').on('click', function () {
 	$.ajax({
 		url: 'account/message/hireMe?cid=<?php echo $employer_id; ?>',
 		headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
         },
 		dataType: 'json',
 		method: 'post',
@@ -252,13 +256,15 @@ $("#button-hire-me").on('click', function () {
 		},
 		success : function (json){
 			if (json['success']) {
-				$('.modal-header').after('<div class="alert alert-success alert-dismissible fade show" role="alert">'+ json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				$.notify({icon: 'fas fa-check-circle', message: json['success']},{type: 'success'});
+				$('#hireme').modal('hide')
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 		 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
+});
 });
 </script>
 <?php echo $footer; ?>

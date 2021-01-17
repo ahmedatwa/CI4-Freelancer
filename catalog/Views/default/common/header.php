@@ -83,9 +83,9 @@
           <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-messages">
             <div class="d-flex w-100 justify-content-between">
               <h4 class="mb-1">Messages</h4>
-              <small><a role="button" href="<?php echo $all_messages; ?>" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
+              <!-- <small><a role="button" href="<?php //echo $all_messages; ?>" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
               <i class="far fa-eye"></i>
-              </a></small>
+              </a></small> -->
             </div>
             <ul id="message-list" class="text-left list-group list-group-flush"></ul>
           </div>
@@ -180,9 +180,9 @@
           <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-messages">
             <div class="d-flex w-100 justify-content-between">
               <h4 class="mb-1">Messages</h4>
-              <small><a role="button" href="<?php echo $all_messages; ?>" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
+              <!-- <small><a role="button" href="<?php //echo $all_messages; ?>" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
               <i class="far fa-eye"></i>
-              </a></small>
+              </a></small> -->
             </div>
             <ul id="message-list" class="text-left list-group list-group-flush"></ul>
           </div>

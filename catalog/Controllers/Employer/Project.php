@@ -8,10 +8,10 @@ use \Catalog\Models\Freelancer\BalanceModel;
 use \Catalog\Models\Employer\EmployerModel;
 use \Catalog\Models\Freelancer\DisputeModel;
 use \Catalog\Models\Account\ReviewModel;
+use \Catalog\Models\Account\MessageModel;
 
 class Project extends \Catalog\Controllers\BaseController
 {
-
     public function view()
     {
         if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
@@ -54,7 +54,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         if ($project_id) {
             $project_info = $projectModel->getProject($project_id);
-        } 
+        }
 
         $bidModel = new BidModel();
 
@@ -89,6 +89,14 @@ class Project extends \Catalog\Controllers\BaseController
             $data['freelancer_profile'] = ($bid_info['freelancer_id']) ? route_to('freelancer_profile', $bid_info['freelancer_id'], $freelancer_info['username']) : '';
 
             $data['status'] = $projectModel->getStatusByProjectId($project_info['project_id']);
+            // Project PMs Data
+            $messageModel = new MessageModel();
+            $message_info = $messageModel->getMessageThread($this->customer->getCustomerID());
+        
+            $data['thread_id'] = $message_info['thread_id'] ?? '';
+            $data['receiver_id'] = $message_info['receiver_id'] ?? '';
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
         $data['heading_title'] = lang('project/project.text_my_projects');

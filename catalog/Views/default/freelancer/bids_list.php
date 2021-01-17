@@ -103,9 +103,13 @@ function sendMessage(sender_id, receiver_id, project_id) {
 	} else { 
          $.ajax({
             url: 'account/message/sendMessage',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "X-Requested-With": "XMLHttpRequest"
+            },
             dataType: 'json',
             method: 'post',
-            data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'sender_id': sender_id, 'receiver_id': receiver_id, 'message': $('.bootbox-input-textarea').val(), 'project_id': project_id},
+            data: {'sender_id': sender_id, 'receiver_id': receiver_id, 'message': $('.bootbox-input-textarea').val(), 'project_id': project_id},
             beforeSend: function() {
                 $('.text-danger, .alert, .is-invalid, .invalid-feedback').remove();
             },
