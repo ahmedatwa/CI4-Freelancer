@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2021 at 10:48 AM
+-- Generation Time: Jan 17, 2021 at 09:38 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.3.25
 
@@ -547,7 +547,8 @@ CREATE TABLE `ci_customer` (
 
 INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
 (1, 1, 'Anna', 'Loue', 'employer', 'employer@employer.com', '', '$2y$10$1ixd5RAOq586ee7GY1Bw3uc5kdYYd1iERcRCihM65cp.eh/13lvXO', '', 12, 1, '', '', 0, '', '', 0, '', 0, '#', '#', '#', '#', '2021-01-06 07:53:28', '2021-01-07 08:05:52'),
-(2, 1, 'Mike', 'Myers', 'freelancer', 'freelancer@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 4, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 0, '', '', '', '', '2021-01-06 08:00:23', '2021-01-08 09:04:28');
+(2, 1, 'Mike', 'Myers', 'freelancer', 'freelancer@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 38, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 1, '', '', '', '', '2021-01-06 08:00:23', '2021-01-08 09:04:28'),
+(3, 1, 'Smith', 'Conner', 'freelancer2', 'freelancer2@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 27, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 0, '', '', '', '', '2021-01-06 08:00:23', '2021-01-08 09:04:28');
 
 -- --------------------------------------------------------
 
@@ -571,9 +572,10 @@ CREATE TABLE `ci_customer_activity` (
 --
 
 INSERT INTO `ci_customer_activity` (`customer_activity_id`, `customer_id`, `key`, `data`, `ip`, `user_agent`, `seen`, `date_added`) VALUES
-(1, 1, 'project_bid_add', '{\"customer_id\":1,\"project_id\":1,\"freelancer_id\":2,\"url\":\"http:\\/\\/ci4.localhost\\/employer\\/project\\/view?pid=1&cid=1\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 1, '2021-01-08 08:38:28'),
-(2, 2, 'project_offer_selected', '{\"customer_id\":\"2\",\"project_id\":\"1\",\"url\":\"\\/account\\/projects#freelancer\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329', 0, '2021-01-08 08:38:58'),
-(3, 1, 'project_offer_accepted', '{\"freelancer_id\":2,\"customer_id\":1,\"project_id\":1,\"bid_id\":1,\"url\":\"\\/account\\/projects#in-progress\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 1, '2021-01-08 08:39:10');
+(1, 1, 'project_bid_add', '{\"customer_id\":1,\"project_id\":1,\"freelancer_id\":2,\"url\":\"http:\\/\\/ci4.localhost\\/employer\\/project\\/view?pid=1&cid=1\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 0, '2021-01-16 18:43:25'),
+(2, 2, 'project_offer_selected', '{\"customer_id\":\"2\",\"project_id\":\"1\",\"url\":\"\\/account\\/projects#freelancer\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329', 0, '2021-01-16 18:43:35'),
+(3, 1, 'project_offer_accepted', '{\"freelancer_id\":2,\"customer_id\":1,\"project_id\":1,\"bid_id\":1,\"url\":\"\\/account\\/projects#in-progress\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 0, '2021-01-16 18:43:43'),
+(4, 1, 'project_bid_add', '{\"customer_id\":1,\"project_id\":1,\"freelancer_id\":3,\"url\":\"http:\\/\\/ci4.localhost\\/employer\\/project\\/view?pid=1&cid=1\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 0, '2021-01-17 15:32:12');
 
 -- --------------------------------------------------------
 
@@ -591,6 +593,14 @@ CREATE TABLE `ci_customer_deposit` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_customer_deposit`
+--
+
+INSERT INTO `ci_customer_deposit` (`balance_id`, `customer_id`, `amount`, `currency`, `gateway`, `status`, `date_added`, `date_modified`) VALUES
+(1, 1, '22.3000', 'EUR', '', 'completed', '2021-01-08 12:16:45', '0000-00-00 00:00:00'),
+(2, 1, '22.3000', 'EUR', '', 'completed', '2021-01-08 12:19:15', '2021-01-08 12:19:15');
 
 -- --------------------------------------------------------
 
@@ -664,7 +674,7 @@ CREATE TABLE `ci_customer_login` (
 --
 
 INSERT INTO `ci_customer_login` (`customer_login_id`, `email`, `ip`, `total`, `date_added`, `date_modified`) VALUES
-(1, 'customer_2@demo.com', '::1', 1, '2021-01-06 19:14:30', '0000-00-00 00:00:00');
+(1, 'customer_2@demo.com', '::1', 2, '2021-01-06 19:14:30', '2021-01-15 23:47:00');
 
 -- --------------------------------------------------------
 
@@ -685,7 +695,7 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 0, 'http://ci4.localhost/account/login', 'http://ci4.localhost/add-project', '2021-01-08 10:38:00');
+('::1', 2, 'http://ci4.localhost/images/user-avatar-small-01.jpg', 'http://ci4.localhost/', '2021-01-17 21:37:25');
 
 -- --------------------------------------------------------
 
@@ -706,6 +716,14 @@ CREATE TABLE `ci_customer_to_balance` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_customer_to_balance`
+--
+
+INSERT INTO `ci_customer_to_balance` (`balance_id`, `customer_id`, `project_id`, `income`, `withdrawn`, `used`, `available`, `pending`, `currency`, `date_added`, `date_modified`) VALUES
+(1, 1, 0, '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '', '2021-01-08 12:16:45', '2021-01-08 12:24:24'),
+(2, 2, 0, '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '', '2021-01-08 12:16:45', '2021-01-08 12:24:24');
 
 -- --------------------------------------------------------
 
@@ -1051,7 +1069,7 @@ INSERT INTO `ci_information` (`information_id`, `bottom`, `sort_order`, `status`
 (1, 1, 0, 1, '2020-09-01 11:31:34', '2021-01-06 13:54:45'),
 (2, 1, 3, 1, '2020-09-01 11:31:34', '2021-01-06 13:54:35'),
 (3, 1, 1, 1, '2020-09-01 11:31:34', '2021-01-06 13:54:42'),
-(4, 0, 0, 1, '2020-09-01 11:31:34', '2021-01-06 13:54:39');
+(4, 0, 0, 1, '2020-09-01 11:31:34', '2021-01-08 11:17:39');
 
 -- --------------------------------------------------------
 
@@ -1077,7 +1095,7 @@ INSERT INTO `ci_information_description` (`information_id`, `language_id`, `titl
 (5, 1, 'new info page', '<p>new info page<br></p>', 'new info page', '', ''),
 (3, 1, 'Privacy Policy', '<p><span style=\"color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px; text-align: justify;\">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</span><br></p>\r\n', 'Privacy Policy', '', ''),
 (2, 1, 'About Us', '<p><span style=\"color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; font-size: 14px; text-align: justify;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</span><br></p>', 'About Us', '', ''),
-(4, 1, 'How It Works', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'How It Works', '', ''),
+(4, 1, 'How It Works', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p><br></p><p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</span></p><p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\"><br></span></p><p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</span><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\"><br></span><br></p>', 'How It Works', '', ''),
 (1, 1, 'Terms & Conditions', '<p><strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\"> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p><p><strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\"> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p><p><strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\"> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p><p><strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\"> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span><span style=\"color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\"><br></span><span style=\"color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\"><br></span><span style=\"color: rgb(0, 0, 0); font-family: \"Open Sans\", Arial, sans-serif; text-align: justify;\"><br></span></p>', 'Terms & Conditions', '', '');
 
 -- --------------------------------------------------------
@@ -1163,8 +1181,7 @@ CREATE TABLE `ci_language` (
 --
 
 INSERT INTO `ci_language` (`language_id`, `name`, `code`, `locale`, `sort_order`, `status`) VALUES
-(1, 'English', 'en', 'en-gb,en', 1, 1),
-(2, 'Arabic', 'en', 'ar-eg,ar', 1, 0);
+(1, 'English', 'en', 'en-gb,en', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1347,14 +1364,6 @@ CREATE TABLE `ci_message` (
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `ci_message`
---
-
-INSERT INTO `ci_message` (`message_id`, `thread_id`, `project_id`, `sender_id`, `receiver_id`, `message`, `seen`, `date_added`, `date_modified`) VALUES
-(1, 'bda5fabfb0', 0, 2, 1, '{\"sender_id\":\"2\",\"receiver_id\":\"1\",\"text\":\"Hi employer, I noticed your profile and would like to offer you my project. We can discuss any details over chat.\"}', 1, '2021-01-07 15:09:16', '2021-01-07 17:46:43'),
-(2, 'bda5fabfb0', 0, 2, 1, '{\"sender_id\":\"2\",\"receiver_id\":\"1\",\"text\":\"hi\"}', 1, '2021-01-07 15:10:52', '2021-01-07 17:46:43');
-
 -- --------------------------------------------------------
 
 --
@@ -1409,8 +1418,7 @@ CREATE TABLE `ci_project` (
 --
 
 INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`) VALUES
-(1, 1, 2, '30.0000', '40.0000', 1, 5, 9, 18, '', 0, 5, 0, 0, '2021-01-08 08:31:36', '2021-01-08 08:31:36'),
-(2, 1, 0, '30.0000', '70.0000', 1, 4, 8, 3, '', 0, 5, 0, 0, '2021-01-08 08:32:53', '2021-01-08 08:32:53');
+(1, 1, 2, '50.0000', '80.0000', 1, 7, 5, 4, '', 0, 4, 0, 0, '2021-01-16 18:43:00', '2021-01-16 18:43:00');
 
 -- --------------------------------------------------------
 
@@ -1459,7 +1467,8 @@ CREATE TABLE `ci_project_bids` (
 --
 
 INSERT INTO `ci_project_bids` (`bid_id`, `project_id`, `freelancer_id`, `employer_id`, `quote`, `delivery`, `selected`, `accepted`, `description`, `status`, `paid`, `date_added`, `date_modified`) VALUES
-(1, 1, 2, 1, '30', 4, 1, 1, 'test', 1, 0, '2021-01-08 08:38:28', '2021-01-08 08:38:58');
+(1, 1, 2, 1, '30', 4, 1, 1, 'test proposal', 1, 0, '2021-01-16 18:43:25', '2021-01-16 18:43:35'),
+(2, 1, 3, 1, '30', 6, 0, 0, 'ffff', 1, 0, '2021-01-17 15:32:12', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1498,8 +1507,7 @@ CREATE TABLE `ci_project_description` (
 --
 
 INSERT INTO `ci_project_description` (`project_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
-(1, 1, 'Simple Project Post', 'vContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\r\n\r\nThe standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.', '', '', ''),
-(2, 1, 'Simple Project Post-2', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '', '', '');
+(1, 1, 'Simple Project Post !', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1562,12 +1570,7 @@ CREATE TABLE `ci_project_to_category` (
 --
 
 INSERT INTO `ci_project_to_category` (`project_id`, `category_id`) VALUES
-(1, 1),
-(1, 21),
-(1, 22),
-(1, 26),
-(2, 1),
-(2, 21);
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -1595,13 +1598,23 @@ CREATE TABLE `ci_project_to_download` (
 
 CREATE TABLE `ci_project_to_message` (
   `message_id` int(11) NOT NULL,
+  `thread_id` varchar(32) NOT NULL,
   `sender_id` int(11) NOT NULL,
   `receiver_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `message` text NOT NULL,
+  `seen` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_project_to_message`
+--
+
+INSERT INTO `ci_project_to_message` (`message_id`, `thread_id`, `sender_id`, `receiver_id`, `project_id`, `message`, `seen`, `date_added`, `date_modified`) VALUES
+(1, 'a6a7fff50a', 1, 2, 0, 'Hi freelancer, I noticed your profile and would like to offer you my project. We can discuss any details over chat.', 1, '2021-01-17 19:23:47', '2021-01-17 21:03:26'),
+(8, 'a6a7fff50a', 1, 2, 0, 'Hi freelancer, I noticed your profile and would like to offer you my project. We can discuss any details over chat.', 1, '2021-01-17 19:39:08', '2021-01-17 20:52:33');
 
 -- --------------------------------------------------------
 
@@ -1696,9 +1709,9 @@ CREATE TABLE `ci_seo_url` (
 --
 
 INSERT INTO `ci_seo_url` (`seo_url_id`, `site_id`, `language_id`, `query`, `keyword`) VALUES
-(31, 0, 1, 'project_id=1', 'simple-project-post'),
+(36, 0, 1, 'project_id=1', 'simple-project-post'),
 (2, 0, 1, 'information_id=2', 'about-us'),
-(3, 0, 1, 'information_id=4', 'how-it-works'),
+(34, 0, 1, 'information_id=4', 'how-it-works'),
 (4, 0, 1, 'information_id=3', 'privacy-policy'),
 (5, 0, 1, 'information_id=1', 'terms-conditions'),
 (21, 0, 1, 'category_id=1', 'websites-it-software'),
@@ -1715,7 +1728,8 @@ INSERT INTO `ci_seo_url` (`seo_url_id`, `site_id`, `language_id`, `query`, `keyw
 (27, 0, 1, 'category_id=8', 'sales-marketing'),
 (28, 0, 1, 'category_id=11', 'translation-languages'),
 (32, 0, 1, 'project_id=2', 'simple-project-post-2'),
-(33, 0, 1, 'job_id=1', 'simple-local-job');
+(33, 0, 1, 'job_id=1', 'simple-local-job'),
+(35, 0, 1, 'project_id=3', 'what-is-lorem-ipsum');
 
 -- --------------------------------------------------------
 
@@ -1769,7 +1783,18 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('n6r5g31as8538q2g15kdg2lc1hfn1aoj', '::1', 1610091764, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303039313736343b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226a723353764348657946684b386f6359664544504278644777734d49347a364e223b),
 ('ijacpgls3vaomc2apr2mm7i91bl8hps8', '::1', 1610092070, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303039323037303b5f63695f70726576696f75735f75726c7c733a3130373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72792f656469743f757365725f746f6b656e3d6a723353764348657946684b386f6359664544504278644777734d49347a364e2663617465676f72795f69643d3136223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226a723353764348657946684b386f6359664544504278644777734d49347a364e223b),
 ('66o84ldacpmocg60r6vnkmbn8h5nflt5', '::1', 1610092385, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303039323338353b5f63695f70726576696f75735f75726c7c733a3130373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72792f656469743f757365725f746f6b656e3d6a723353764348657946684b386f6359664544504278644777734d49347a364e2663617465676f72795f69643d3236223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226a723353764348657946684b386f6359664544504278644777734d49347a364e223b),
-('q5q4t40fqgd5mp7t95vdiaoaddrvr9th', '::1', 1610092682, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303039323338353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72793f757365725f746f6b656e3d6a723353764348657946684b386f6359664544504278644777734d49347a364e223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226a723353764348657946684b386f6359664544504278644777734d49347a364e223b737563636573737c733a33383a22537563636573733a20596f752068617665206d6f6469666965642063617465676f7269657321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d);
+('q5q4t40fqgd5mp7t95vdiaoaddrvr9th', '::1', 1610092682, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303039323338353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f63617465676f72793f757365725f746f6b656e3d6a723353764348657946684b386f6359664544504278644777734d49347a364e223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226a723353764348657946684b386f6359664544504278644777734d49347a364e223b737563636573737c733a33383a22537563636573733a20596f752068617665206d6f6469666965642063617465676f7269657321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
+('nu7651nfkhq89iicp8c0qka11c3hf7ng', '::1', 1610104980, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303130343938303b5f63695f70726576696f75735f75726c7c733a39303a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f696e666f726d6174696f6e3f757365725f746f6b656e3d4e4c5970314a5762463741346b676a683950747a4f776d564d51635843726132223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224e4c5970314a5762463741346b676a683950747a4f776d564d51635843726132223b737563636573737c733a33303a22596f752068617665206d6f64696669656420696e666f726d6174696f6e21223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
+('pboib7kkhsshtbgmn37lil8is0u9ilt8', '::1', 1610111436, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303131313433363b5f63695f70726576696f75735f75726c7c733a39303a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f696e666f726d6174696f6e3f757365725f746f6b656e3d4e4c5970314a5762463741346b676a683950747a4f776d564d51635843726132223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224e4c5970314a5762463741346b676a683950747a4f776d564d51635843726132223b),
+('folqn1dqf0jlliq0q23vephjaoijv4dn', '::1', 1610111436, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303131313433363b5f63695f70726576696f75735f75726c7c733a39303a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636174616c6f672f696e666f726d6174696f6e3f757365725f746f6b656e3d4e4c5970314a5762463741346b676a683950747a4f776d564d51635843726132223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a224e4c5970314a5762463741346b676a683950747a4f776d564d51635843726132223b),
+('t2u7mllu0ghc94ik03lcd90f2lagfi46', '::1', 1610182543, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303138323534333b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('uv3ql26oh2i7l9lb2pnu4pl78uabc80f', '::1', 1610182543, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303138323534333b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('a6ikvmtlchtufe4c1if2vk83hn61n98f', '::1', 1610203935, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303230333933353b5f63695f70726576696f75735f75726c7c733a39333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f657874656e73696f6e732f7468656d652f62617369633f757365725f746f6b656e3d62733159307a63436733576e42443779543555776658564c4732684148367675223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2262733159307a63436733576e42443779543555776658564c4732684148367675223b),
+('imh14ud88t09gfrfrfgrrji0r216fa3b', '::1', 1610204251, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303230343235313b5f63695f70726576696f75735f75726c7c733a39323a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f6c6f63616c69736174696f6e2f63757272656e63793f757365725f746f6b656e3d62733159307a63436733576e42443779543555776658564c4732684148367675223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2262733159307a63436733576e42443779543555776658564c4732684148367675223b),
+('29pnssqcl4ptie76uuo36c54ra5v7lju', '::1', 1610204555, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303230343535353b5f63695f70726576696f75735f75726c7c733a38373a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f64617368626f6172643f757365725f746f6b656e3d62733159307a63436733576e42443779543555776658564c4732684148367675223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2262733159307a63436733576e42443779543555776658564c4732684148367675223b),
+('9c5hnk2if2k2b0q32bbe00ejfupl49oo', '::1', 1610204656, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303230343535353b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f7265706f72742f6f6e6c696e653f757365725f746f6b656e3d62733159307a63436733576e42443779543555776658564c4732684148367675223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2262733159307a63436733576e42443779543555776658564c4732684148367675223b),
+('h180q5algfqhg1cfv49uq17ve9qkjor6', '::1', 1610371521, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303337313532313b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('2nbc6ipej50s72hi7tu295e7e075lg5d', '::1', 1610383653, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631303338333635333b5f63695f70726576696f75735f75726c7c733a36343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d7265706f72742532466f6e6c696e65223b);
 
 -- --------------------------------------------------------
 
@@ -2422,25 +2447,6 @@ CREATE TABLE `ci_user_activity` (
   `date_added` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `ci_user_activity`
---
-
-INSERT INTO `ci_user_activity` (`activity_id`, `user_id`, `key`, `data`, `ip`, `user_agent`, `date_added`) VALUES
-(1, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-30 08:33:28'),
-(2, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-30 18:46:55'),
-(3, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-30 20:40:50'),
-(4, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-31 08:18:19'),
-(5, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2020-12-31 12:46:25'),
-(6, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2021-01-01 17:16:11'),
-(7, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2021-01-01 17:35:08'),
-(8, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2021-01-01 17:40:16'),
-(9, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2021-01-01 17:42:33'),
-(10, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2021-01-01 17:43:21'),
-(11, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2021-01-01 17:47:02'),
-(12, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2021-01-05 10:16:25'),
-(13, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.284', '2021-01-07 18:56:23');
-
 -- --------------------------------------------------------
 
 --
@@ -2505,14 +2511,6 @@ CREATE TABLE `ci_withdraw` (
   `date_modified` datetime NOT NULL,
   `date_processed` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `ci_withdraw`
---
-
-INSERT INTO `ci_withdraw` (`withdraw_id`, `customer_id`, `amount`, `currency`, `withdraw_status_id`, `date_added`, `date_modified`, `date_processed`) VALUES
-(1, 1, '400.0000', 'EGP', 1, '2020-11-16 10:53:49', '2020-11-16 12:43:37', '2020-11-16 12:43:37'),
-(2, 2, '400.0000', 'EGP', 1, '2020-11-16 10:53:49', '2020-11-16 12:43:37', '2020-11-16 12:43:37');
 
 -- --------------------------------------------------------
 
@@ -3029,19 +3027,19 @@ ALTER TABLE `ci_currency`
 -- AUTO_INCREMENT for table `ci_customer`
 --
 ALTER TABLE `ci_customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_activity`
 --
 ALTER TABLE `ci_customer_activity`
-  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_deposit`
 --
 ALTER TABLE `ci_customer_deposit`
-  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_group`
@@ -3059,13 +3057,13 @@ ALTER TABLE `ci_customer_history`
 -- AUTO_INCREMENT for table `ci_customer_login`
 --
 ALTER TABLE `ci_customer_login`
-  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_balance`
 --
 ALTER TABLE `ci_customer_to_balance`
-  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_certificate`
@@ -3173,7 +3171,7 @@ ALTER TABLE `ci_layout_route`
 -- AUTO_INCREMENT for table `ci_message`
 --
 ALTER TABLE `ci_message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_module`
@@ -3185,7 +3183,7 @@ ALTER TABLE `ci_module`
 -- AUTO_INCREMENT for table `ci_project`
 --
 ALTER TABLE `ci_project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ci_project_award`
@@ -3197,7 +3195,7 @@ ALTER TABLE `ci_project_award`
 -- AUTO_INCREMENT for table `ci_project_bids`
 --
 ALTER TABLE `ci_project_bids`
-  MODIFY `bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `bid_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ci_project_bids_upgrade`
@@ -3227,7 +3225,7 @@ ALTER TABLE `ci_project_to_download`
 -- AUTO_INCREMENT for table `ci_project_to_message`
 --
 ALTER TABLE `ci_project_to_message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `ci_project_to_milestone`
@@ -3257,7 +3255,7 @@ ALTER TABLE `ci_review`
 -- AUTO_INCREMENT for table `ci_seo_url`
 --
 ALTER TABLE `ci_seo_url`
-  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `ci_setting`
@@ -3287,7 +3285,7 @@ ALTER TABLE `ci_user`
 -- AUTO_INCREMENT for table `ci_user_activity`
 --
 ALTER TABLE `ci_user_activity`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_user_group`
@@ -3299,7 +3297,7 @@ ALTER TABLE `ci_user_group`
 -- AUTO_INCREMENT for table `ci_withdraw`
 --
 ALTER TABLE `ci_withdraw`
-  MODIFY `withdraw_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `withdraw_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_withdraw_history`
