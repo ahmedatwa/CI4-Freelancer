@@ -138,9 +138,8 @@ function gSignOut() {
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
-				var auth2 = gapi.auth2.getAuthInstance();
-				console.log(auth2)
-    			
+				var auth2 = gapi.auth2.getAuthInstance();   
+				auth2.signOut(); 			
 			}
 		});
 	});

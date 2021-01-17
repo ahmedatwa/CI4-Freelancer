@@ -114,12 +114,12 @@ class Login extends \Catalog\Controllers\BaseController
 
                     if ($customer_info) {
                         $session_data = [
-                                'customer_id'    => $insertID ?? $customer_info['customer_id'],
-                                'customer_image' => $payload['picture'],
-                                'customer_name'  => $payload['given_name'] . ' ' . $payload['family_name'],
-                                'username'       => substr($payload['email'], 0, strpos($payload['email'], '@')),
-                                'gtoken'         => $this->request->getVar('id_token'),
-                                'isLogged'       => true,
+                            'customer_id'    => $insertID ?? $customer_info['customer_id'],
+                            'customer_image' => $payload['picture'],
+                            'customer_name'  => $payload['given_name'] . ' ' . $payload['family_name'],
+                            'username'       => substr($payload['email'], 0, strpos($payload['email'], '@')),
+                            'gtoken'         => $this->request->getVar('id_token'),
+                            'isLogged'       => true,
                             ];
 
                         $this->session->set($session_data);
@@ -135,8 +135,8 @@ class Login extends \Catalog\Controllers\BaseController
                         );
 
                         $data['message'] = [
-                                'customer_id' => $insertID,
-                                'username'    => $payload['given_name'] . ' ' . $payload['family_name']
+                            'customer_id' => $insertID,
+                            'username'    => $payload['given_name'] . ' ' . $payload['family_name']
                             ];
 
                         $pusher->trigger('chat-channel', 'online-event', $data);
