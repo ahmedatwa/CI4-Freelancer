@@ -195,28 +195,9 @@ class Message extends \Catalog\Controllers\BaseController
 
         $messageModel = new MessageModel();
          
-        //$data['project_messages'] = [];
-
-        //$results = $messageModel->getMessages($customer_id);
-
         $customerModel = new CustomerModel();
 
-        // foreach ($results as $result) {
-        //     $data['project_messages'][] = [
-        //         'message'     => $result['message'],
-        //         'receiver_id' => $result['receiver_id'],
-        //         'sender_id'   => $result['sender_id'],
-        //         'project_id'  => $result['project_id'],
-        //         'thread_id'   => $result['thread_id'],
-        //         'receiver'    => $customerModel->where('customer_id', $result['receiver_id'])->findColumn('username')[0],
-        //         'date_added'  => $this->dateDifference($result['date_added']),
-        //     ];
-        // }
-
         $data['customer_id'] = $customer_id;
-        // $data['thread_id']   = $thread_id;
-        // $data['project_id']  = $project_id;
-        // $data['receiver_id'] = $receiver_id;
 
         $data['help_messages'] = lang('account/message.help_message');
         $data['heading_title'] = lang('project/project.text_manage_bidders');
@@ -224,11 +205,18 @@ class Message extends \Catalog\Controllers\BaseController
         $members = $messageModel->getMembers($customer_id);
 
         foreach ($members as $member) {
+
+            if ($this->session->get('customer_id') == $member['sender_id']) {
+                $receiver_id = $member['receiver_id'];
+            } else {
+                $receiver_id = $member['sender_id'];
+            }
+
             $data['members'][] = [
                 'receiver_id' => $member['receiver_id'],
                 'sender_id'   => $member['sender_id'],
-                'thread_id'  => $member['thread_id'],
-                'receiver'   => $customerModel->where('customer_id', $member['receiver_id'])->findColumn('username')[0],
+                'thread_id'   => $member['thread_id'],
+                'receiver'    => $customerModel->where('customer_id', $receiver_id)->findColumn('username')[0],
             ];
         }
 
@@ -272,7 +260,7 @@ class Message extends \Catalog\Controllers\BaseController
         if ($this->session->get('customer_id') == $message_info['sender_id']) {
             $data['receiver_id'] = $message_info['receiver_id'];
         } else {
-           $data['receiver_id'] = $message_info['sender_id']; 
+            $data['receiver_id'] = $message_info['sender_id'];
         }
 
         return view('freelancer/messages_list', $data);
