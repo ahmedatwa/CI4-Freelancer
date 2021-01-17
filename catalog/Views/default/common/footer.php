@@ -148,8 +148,8 @@ function gSignOut() {
 <!-- New Project Global Alert -->
 
 <script type="text/javascript">
-var PUSHER_KEY = <?php echo PUSHER_KEY; ?>;
-var PUSHER_CLUSTER = <?php echo PUSHER_CLUSTER; ?>;
+var PUSHER_KEY = "<?php echo PUSHER_KEY; ?>";
+var PUSHER_CLUSTER = "<?php echo PUSHER_CLUSTER; ?>";
 
 var pusher = new Pusher(PUSHER_KEY, {
   cluster: PUSHER_CLUSTER
