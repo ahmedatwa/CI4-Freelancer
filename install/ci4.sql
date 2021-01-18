@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2021 at 09:38 PM
+-- Generation Time: Jan 18, 2021 at 04:01 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.3.25
 
@@ -546,7 +546,7 @@ CREATE TABLE `ci_customer` (
 --
 
 INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
-(1, 1, 'Anna', 'Loue', 'employer', 'employer@employer.com', '', '$2y$10$1ixd5RAOq586ee7GY1Bw3uc5kdYYd1iERcRCihM65cp.eh/13lvXO', '', 12, 1, '', '', 0, '', '', 0, '', 0, '#', '#', '#', '#', '2021-01-06 07:53:28', '2021-01-07 08:05:52'),
+(1, 1, 'Anna', 'Loue', 'employer', 'employer@employer.com', '', '$2y$10$1ixd5RAOq586ee7GY1Bw3uc5kdYYd1iERcRCihM65cp.eh/13lvXO', '', 12, 1, '', '', 0, '', '', 0, '', 1, '#', '#', '#', '#', '2021-01-06 07:53:28', '2021-01-07 08:05:52'),
 (2, 1, 'Mike', 'Myers', 'freelancer', 'freelancer@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 38, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 1, '', '', '', '', '2021-01-06 08:00:23', '2021-01-08 09:04:28'),
 (3, 1, 'Smith', 'Conner', 'freelancer2', 'freelancer2@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 27, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 0, '', '', '', '', '2021-01-06 08:00:23', '2021-01-08 09:04:28');
 
@@ -572,10 +572,7 @@ CREATE TABLE `ci_customer_activity` (
 --
 
 INSERT INTO `ci_customer_activity` (`customer_activity_id`, `customer_id`, `key`, `data`, `ip`, `user_agent`, `seen`, `date_added`) VALUES
-(1, 1, 'project_bid_add', '{\"customer_id\":1,\"project_id\":1,\"freelancer_id\":2,\"url\":\"http:\\/\\/ci4.localhost\\/employer\\/project\\/view?pid=1&cid=1\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 0, '2021-01-16 18:43:25'),
-(2, 2, 'project_offer_selected', '{\"customer_id\":\"2\",\"project_id\":\"1\",\"url\":\"\\/account\\/projects#freelancer\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329', 0, '2021-01-16 18:43:35'),
-(3, 1, 'project_offer_accepted', '{\"freelancer_id\":2,\"customer_id\":1,\"project_id\":1,\"bid_id\":1,\"url\":\"\\/account\\/projects#in-progress\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 0, '2021-01-16 18:43:43'),
-(4, 1, 'project_bid_add', '{\"customer_id\":1,\"project_id\":1,\"freelancer_id\":3,\"url\":\"http:\\/\\/ci4.localhost\\/employer\\/project\\/view?pid=1&cid=1\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 0, '2021-01-17 15:32:12');
+(1, 2, 'customer_review', '{\"customer_id\":\"2\",\"submitted_by\":\"1\",\"freelancer_id\":\"2\",\"project_id\":\"1\",\"url\":\"\\/account\\/review\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', 0, '2021-01-18 13:47:36');
 
 -- --------------------------------------------------------
 
@@ -695,7 +692,7 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 2, 'http://ci4.localhost/images/user-avatar-small-01.jpg', 'http://ci4.localhost/', '2021-01-17 21:37:25');
+('::1', 1, 'http://ci4.localhost/account/review', 'http://ci4.localhost/account/projects', '2021-01-18 15:59:50');
 
 -- --------------------------------------------------------
 
@@ -1408,6 +1405,8 @@ CREATE TABLE `ci_project` (
   `sort_order` int(11) NOT NULL,
   `status_id` tinyint(1) NOT NULL DEFAULT '0',
   `download_id` tinyint(1) NOT NULL,
+  `freelancer_review_id` int(11) NOT NULL,
+  `employer_review_id` int(11) NOT NULL,
   `draft` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
@@ -1417,8 +1416,8 @@ CREATE TABLE `ci_project` (
 -- Dumping data for table `ci_project`
 --
 
-INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `draft`, `date_added`, `date_modified`) VALUES
-(1, 1, 2, '50.0000', '80.0000', 1, 7, 5, 4, '', 0, 4, 0, 0, '2021-01-16 18:43:00', '2021-01-16 18:43:00');
+INSERT INTO `ci_project` (`project_id`, `employer_id`, `freelancer_id`, `budget_min`, `budget_max`, `type`, `delivery_time`, `runtime`, `viewed`, `image`, `sort_order`, `status_id`, `download_id`, `freelancer_review_id`, `employer_review_id`, `draft`, `date_added`, `date_modified`) VALUES
+(1, 1, 2, '50.0000', '80.0000', 1, 7, 5, 4, '', 0, 2, 0, 0, 0, 0, '2021-01-16 18:43:00', '2021-01-16 18:43:00');
 
 -- --------------------------------------------------------
 
@@ -3033,7 +3032,7 @@ ALTER TABLE `ci_customer`
 -- AUTO_INCREMENT for table `ci_customer_activity`
 --
 ALTER TABLE `ci_customer_activity`
-  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_deposit`
