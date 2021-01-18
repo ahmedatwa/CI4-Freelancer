@@ -699,6 +699,17 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	        location.hash = $(this).attr('href');
 	    });
 	});
+
+	// Login
+	$('#button-glogin').on('click', function(){
+	var dialog = bootbox.prompt({
+	    title: "What is your name?",
+	    callback: function(result){ 
+	        /* result = String containing user input if OK clicked or null if Cancel clicked */ 
+	    }
+ }); 
+});
+	/*----------------------------------------------------*/
 });
 })(this.jQuery);
 
