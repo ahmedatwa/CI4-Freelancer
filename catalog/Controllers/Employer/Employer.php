@@ -20,7 +20,7 @@ class Employer extends \Catalog\Controllers\BaseController
                 $json['error'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
             }
 
-            if (!$json) {
+            if (! $json) {
                 $balanceModel->transferProjectFunds($this->request->getPost());
 
                 $json['success'] = lang('freelancer/freelancer.text_transaction');

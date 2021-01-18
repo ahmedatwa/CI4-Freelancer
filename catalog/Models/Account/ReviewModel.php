@@ -7,7 +7,7 @@ class ReviewModel extends \CodeIgniter\Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['project_id', 'freelancer_id', 'employer_id', 'comment', 'rating', 'recommended', 'ontime', 'submitted_by'];
+    protected $allowedFields = ['project_id', 'freelancer_id', 'employer_id', 'comment', 'rating', 'recommended', 'ontime', 'submitted_by', 'status'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'date_added';
@@ -17,7 +17,8 @@ class ReviewModel extends \CodeIgniter\Model
 
     protected function afterInsert(array $data)
     {
-        \CodeIgniter\Events\Events::trigger('customer_review_add', $data['data']['customer_id'], $data['data']['project_id'], $data['id']);
+        \CodeIgniter\Events\Events::trigger('customer_review_add', $data['data']);
+        return $data['id'];
     }
 
     public function getAvgReviewByFreelancerId($freelancer_id)

@@ -96,14 +96,15 @@ function onSuccess(googleUser) {
   var id_token = googleUser.getAuthResponse().id_token;
   var client_id = $('meta[name=\'google-signin-client_id\']').attr('content');
   $.ajax({
-  	url: 'account/login/googleAuth?client_id=' + client_id + '&id_token=' + id_token,
+  	url: 'account/login/googleAuth',
   	headers: {
        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
        'Content-Type': 'application/x-www-form-urlencoded',
        'X-Requested-With': 'XMLHttpRequest'
     },
-  	data: 'post',
+  	method: 'post',
   	dataType: 'json',
+  	data: {'client_id': client_id, 'id_token': id_token},
   	beforeSend: function() {
   		$('#overlay').fadeIn().delay(2000);
   	},
@@ -114,12 +115,17 @@ function onSuccess(googleUser) {
   		if (json['redirect']) {
   			location = json['redirect'];
   		}
+  		if (json['error']) {
+  			console.log(json['error']);
+  		}
   	}
 
   });
 }
 
-function onFailure(error) {}
+function onFailure(error) {
+	console.log(error)
+}
 function renderButton() {
   gapi.signin2.render('my-signin2', {
     'scope': 'profile email',
@@ -128,7 +134,7 @@ function renderButton() {
     'longtitle': true,
     'theme': 'dark',
     'onsuccess': onSuccess,
-    //'onfailure': onFailure
+    'onfailure': onFailure
   });
 }
 </script>

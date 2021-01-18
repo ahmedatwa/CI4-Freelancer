@@ -156,6 +156,7 @@ class Header extends \Catalog\Controllers\BaseController
     public function getCustomerBalance()
     {
         $json = [];
+        
         if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
             if ($this->customer->getCustomerID()) {
                 $customer_id = $this->customer->getCustomerID();
@@ -172,9 +173,9 @@ class Header extends \Catalog\Controllers\BaseController
 
                 $currency = empty($balance['currency']) ? $this->registry->get('config_currency') : $balance['currency'];
 
-                $json['total'] = number_to_currency($balance['total'], $currency , $this->locale, 2);
+                $json['total'] = number_to_currency($balance['total'], $currency, $this->locale, 2);
             } else {
-                $json['total'] = '0.00 ' . $currency;
+                $json['total'] = number_to_currency('0.00', $currency, $this->locale, 2);
             }
         }
 

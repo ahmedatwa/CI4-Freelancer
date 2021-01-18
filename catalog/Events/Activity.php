@@ -195,6 +195,27 @@ class Activity
 
         $activityModel->addActivity('project_status_update', $activity_data);
     }
+
+    // Catalog\Model\Account\ReviewModel::insert
+    public static function addReview(array $data = [])
+    {
+        $activityModel = new ActivityModel();
+        if ($data['freelancer_id'] == $data['submitted_by']) {
+            $customer_id = $data['employer_id'];
+        } else {
+            $customer_id = $data['freelancer_id'];
+        }
+
+        $activity_data = [
+            'customer_id'   => $customer_id,
+            'submitted_by'  => $data['submitted_by'],
+            'freelancer_id' => $data['freelancer_id'],
+            'project_id'    => $data['project_id'],
+            'url'           => route_to('account_review')
+        ];
+
+        $activityModel->addActivity('customer_review', $activity_data);
+    }
     
 
     // --------------------------------------------------

@@ -5,7 +5,7 @@ class ProjectModel extends \CodeIgniter\Model
     protected $table          = 'project';
     protected $primaryKey     = 'project_id';
     protected $returnType     = 'array';
-    protected $allowedFields = ['status_id'];
+    protected $allowedFields = ['status_id', 'employer_review_id', 'freelancer_review_id'];
     protected $createdField  = 'date_added';
     protected $updatedField  = 'date_modified';
 
@@ -422,20 +422,29 @@ class ProjectModel extends \CodeIgniter\Model
         return round($query['total']);
     }
 
-    public function getProjectAward($data = [])
+    public function getFeedbackProjects($data = [])
     {
-        $builder = $this->db->table('project_award pa');
-        $builder->select('pa.project_id, pd.name, pa.delivery_time, pa.employer_id, pa.freelancer_id, ps.name as status_name, pa.status_id, pa.employer_id');
-        $builder->join('project_description pd', 'pa.project_id = pd.project_id', 'left');
-        $builder->join('project_status ps', 'pa.status_id = ps.status_id', 'left');
+        $builder = $this->db->table('project p');
+        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.type, p.status_id, p.runtime, p.employer_id, p.freelancer_id, ps.name as status, p.freelancer_review_id, p.employer_review_id');
+        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
+        $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
+        $builder->where([
+            'pd.language_id' => service('registry')->get('config_language_id'),
+            'p.status_id'    => service('registry')->get('config_project_completed_status'),
+            'p.freelancer_review_id'    => 0,
+        ]);
+
+        $builder->orWhere([
+            'p.employer_review_id'    => 0,
+        ]);
 
         if (isset($data['status'])) {
-            $builder->where('pa.status_id', $data['status']);
+            $builder->where('p.status_id', $data['status']);
         }
 
         if (isset($data['customer_id'])) {
-            $builder->where('pa.freelancer_id', $data['customer_id']);
-            $builder->orWhere('pa.employer_id', $data['customer_id']);
+            $builder->where('p.freelancer_id', $data['customer_id']);
+            $builder->orWhere('p.employer_id', $data['customer_id']);
         }
 
         if (isset($data['orderBy']) && $data['orderBy'] == 'DESC') {
@@ -449,7 +458,7 @@ class ProjectModel extends \CodeIgniter\Model
         if (isset($data['sortBy']) && in_array($data['sortBy'], $sortData)) {
             $builder->orderBy($data['sortBy'], 'DESC');
         } else {
-            $builder->orderBy('pa.date_added', 'ASC');
+            $builder->orderBy('p.date_added', 'ASC');
         }
 
         if (isset($data['start']) || isset($data['limit'])) {

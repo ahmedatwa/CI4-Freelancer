@@ -10,22 +10,51 @@ class Review extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        if ($this->request->getMethod() == 'post' && $this->request->getVar('project_id')) {
-            $reviewModel = new ReviewModel();
-            $data = [
-                'project_id'    => $this->request->getVar('project_id'),
-                'freelancer_id' => $this->request->getVar('freelancer_id'),
-                'employer_id'   => $this->request->getVar('employer_id'),
-                'ontime'        => $this->request->getPost('ontime'),
-                'recommended'   => $this->request->getPost('recommended'),
-                'rating'        => $this->request->getPost('rating'),
-                'comment'       => $this->request->getPost('comment'),
-                'submitted_by'  => $this->session->get('customer_id'),
-                'status'        => 1,
-            ];
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
+            if (! $this->validate([
+                'ontime'      => "required",
+                'recommended' => 'required',
+                'rating'      => 'required',
+                'comment'     => 'required'
+            ])) {
+                $json['errors'] = $this->validator->getErrors();
+            }
+        
+            if (! $json) {
+                if ($this->request->getVar('project_id')) {
+                    $reviewModel = new ReviewModel();
+                    $data = [
+                        'project_id'    => $this->request->getVar('project_id'),
+                        'freelancer_id' => $this->request->getVar('freelancer_id'),
+                        'employer_id'   => $this->request->getVar('employer_id'),
+                        'ontime'        => $this->request->getPost('ontime'),
+                        'recommended'   => $this->request->getPost('recommended'),
+                        'rating'        => $this->request->getPost('rating'),
+                        'comment'       => $this->request->getPost('comment'),
+                        'submitted_by'  => $this->session->get('customer_id'),
+                        'status'        => 1,
+                    ];
 
-            $reviewModel->insert($data);
-            $json['success'] = lang('account/review.text_success');
+                    $review_id = $reviewModel->insert($data);
+
+                    if ($review_id) {
+                        $projectModel = new ProjectModel();
+                        $extraData = [];
+
+                        if ($this->session->get('customer_id') == $this->request->getVar('freelancer_id')) {
+                            $extraData = ['freelancer_review_id' => $review_id];
+                        } else {
+                            $extraData = ['employer_review_id' => $review_id];
+                        }
+
+                        $projectModel->where('project_id', $this->request->getVar('project_id'))
+                                     ->set($extraData)
+                                     ->update();
+                    }
+
+                    $json['success'] = lang('account/review.text_success');
+                }
+            }
         }
 
         return $this->response->setJSON($json);
@@ -33,8 +62,8 @@ class Review extends \Catalog\Controllers\BaseController
 
     public function index()
     {
-        if (! $this->session->get('customer_id') && ! $this->customer->isLogged() ) {
-             return redirect('account_login');
+        if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
+            return redirect('account_login');
         }
 
         $this->template->setTitle(lang('account/review.heading_title'));
@@ -59,7 +88,7 @@ class Review extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('cid')) {
             $customer_id = $this->request->getVar('cid');
-        } elseif($this->session->get('customer_id')) {
+        } elseif ($this->session->get('customer_id')) {
             $customer_id = $this->session->get('customer_id');
         } else {
             $customer_id = 0;
@@ -114,7 +143,7 @@ class Review extends \Catalog\Controllers\BaseController
     
         $data['projects'] = [];
         
-        $results = $projectModel->getProjectAward($filter_data);
+        $results = $projectModel->getFeedbackProjects($filter_data);
 
         $customerModel = new CustomerModel();
         //$total = $reviewModel->getTotalReviews();
@@ -127,12 +156,14 @@ class Review extends \Catalog\Controllers\BaseController
                 'freelancer_id' => $result['freelancer_id'],
                 'employer_id'   => $result['employer_id'],
                 'name'          => $result['name'],
-                'status'        => $result['status_name'],
+                'status'        => $result['status'],
                 'employer'      => $employer['firstname'] . ' ' . $employer['lastname'],
                 'freelancer'    => $freelancer['firstname'] . ' ' . $freelancer['lastname'],
-                'edit' => ''
+                'freelancer_review_id'    => $projectModel->where('project_id', $result['project_id'])->findColumn('freelancer_review_id') ,
+                'employer_review_id'    => $projectModel->where('project_id', $result['project_id'])->findColumn('employer_review_id') ,
             ];
         }
+
 
         $data['heading_title']     = lang('account/review.heading_title');
         $data['column_name']       = lang('account/review.column_name');
@@ -142,6 +173,7 @@ class Review extends \Catalog\Controllers\BaseController
         $data['column_freelancer'] = lang('account/review.column_freelancer');
         $data['button_edit']       = lang($this->locale . '.button_edit');
         $data['text_no_results']   = lang($this->locale . '.text_no_results');
+        $data['column_feedback']   = lang('account/review.column_feedback');
 
         $data['customer_id'] = $customer_id;
 

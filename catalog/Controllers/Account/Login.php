@@ -4,7 +4,6 @@ use \Catalog\Models\Account\CustomerModel;
 
 class Login extends \Catalog\Controllers\BaseController
 {
-
     public function index()
     {
         if ($this->customer->isLogged()) {
@@ -42,12 +41,10 @@ class Login extends \Catalog\Controllers\BaseController
         $json = [];
 
         if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
-
             if (! $this->validate([
                 'email'    => 'required|valid_email',
                 'password' => 'required|min_length[4]',
-            ])) 
-            {
+            ])) {
                 $json['error_warning'] = lang('account/login.text_warning');
                 $json['validator'] = $this->validator->getErrors();
             }
@@ -83,22 +80,22 @@ class Login extends \Catalog\Controllers\BaseController
     public function googleAuth()
     {
         $json = [];
+        if (($this->request->getMethod() == 'post') && $this->request->isAJAX()) {
+            if ($this->request->getPost('id_token') && $this->request->getPost('client_id')) {
+                $customerModel = new CustomerModel();
 
-        if ($this->request->getVar('id_token') && $this->request->getVar('client_id') && $this->request->getMothod() == 'post' && $this->request->isAJAX()) {
-            $customerModel = new CustomerModel();
-
-            $client = new \Google_Client([
-                'client_id' => $this->request->getVar('client_id'),
+                $client = new \Google_Client([
+                'client_id' => $this->request->getPost('client_id'),
             ]);
 
-            $payload = $client->verifyIdToken($this->request->getVar('id_token'));
+                $payload = $client->verifyIdToken($this->request->getPost('id_token'));
 
-            if ($payload) {
-                if (($payload['aud'] == $this->request->getVar('client_id')) && (in_array($payload['iss'], ['https://accounts.google.com', 'accounts.google.com']))) {
-                    $customer_info = $customerModel->where('email', $payload['email'])->first();
-                    // user doesn't exist create new one from Client Response
-                    if (! $customer_info) {
-                        $customer_data = [
+                if ($payload) {
+                    if (($payload['aud'] == $this->request->getPost('client_id')) && (in_array($payload['iss'], ['https://accounts.google.com', 'accounts.google.com']))) {
+                        $customer_info = $customerModel->where('email', $payload['email'])->first();
+                        // user doesn't exist create new one from Client Response
+                        if (! $customer_info) {
+                            $customer_data = [
                             'customer_group_id' => 1,
                             'online'            => 1,
                             'status'            => 1,
@@ -109,11 +106,11 @@ class Login extends \Catalog\Controllers\BaseController
                             'origin'            => 'google',
                         ];
 
-                        $insertID = $customerModel->insert($customer_data);
-                    }
+                            $insertID = $customerModel->insert($customer_data);
+                        }
 
-                    if ($customer_info) {
-                        $session_data = [
+                        if ($customer_info) {
+                            $session_data = [
                             'customer_id'    => $insertID ?? $customer_info['customer_id'],
                             'customer_image' => $payload['picture'],
                             'customer_name'  => $payload['given_name'] . ' ' . $payload['family_name'],
@@ -122,29 +119,30 @@ class Login extends \Catalog\Controllers\BaseController
                             'isLogged'       => true,
                             ];
 
-                        $this->session->set($session_data);
+                            $this->session->set($session_data);
 
-                        // Trigger Pusher Online Event
-                        $options = ['cluster' => 'eu', 'useTLS' => true];
+                            // Trigger Pusher Online Event
+                            $options = ['cluster' => 'eu', 'useTLS' => true];
 
-                        $pusher = new \Pusher\Pusher(
-                            'b4093000fa8e8cab989a',
-                            'fb4bfd2d78aac168d918',
-                            '1047280',
-                            $options
-                        );
+                            $pusher = new \Pusher\Pusher(
+                                'b4093000fa8e8cab989a',
+                                'fb4bfd2d78aac168d918',
+                                '1047280',
+                                $options
+                            );
 
-                        $data['message'] = [
+                            $data['message'] = [
                             'customer_id' => $insertID,
                             'username'    => $payload['given_name'] . ' ' . $payload['family_name']
                             ];
 
-                        $pusher->trigger('chat-channel', 'online-event', $data);
+                            $pusher->trigger('chat-channel', 'online-event', $data);
 
-                        $json['redirect'] = base_url('account/dashboard');
+                            $json['redirect'] = base_url('account/dashboard');
+                        }
+                    } else {
+                        $json['error'] = 'Invalid ID token';
                     }
-                } else {
-                    $json['invalid'] = 'Invalid ID token';
                 }
             }
         }

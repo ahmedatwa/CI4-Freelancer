@@ -8,6 +8,7 @@ return [
     'column_name'       => 'Project Name',
     'column_employer'   => 'Employer',
     'column_status'     => 'Project Status',
+    'column_feedback'   => 'Overall Feedback',
     'column_action'     => 'Action',
     'column_freelancer' => 'Freelancer'
 

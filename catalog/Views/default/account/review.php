@@ -36,9 +36,13 @@
 											<td><?php echo $project['employer']; ?></td>
 											<td><?php echo $project['status']; ?></td>
 											<td class="text-center">
+												<?php if ($project['freelancer_review_id']) { ?>
+													<span class="badge badge-primary">Submitted</span>
+												<?php } else { ?>
 													<span data-toggle="tooltip" data-placement="top" title="Leave Feedback">
 													<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#rateModal" data-freelancer="<?php echo $project['freelancer']; ?>" data-projectid="<?php echo $project['project_id']; ?>" data-freelancerid="<?php echo $project['freelancer_id']; ?>" data-employerid="<?php echo $project['employer_id']; ?>"><i class="far fa-thumbs-up"></i></button>
 													</span>
+												<?php } ?>
 												</td>
 											</tr>
 										<?php } else { ?>
@@ -56,7 +60,6 @@
 							</table>
 						</div>
 						</div> <!--pills-freelancer-tab-->
-						<!-- Rate Freelancers -->
 						<div class="tab-pane fade" id="employer-review" role="tabpanel" aria-labelledby="employer-review-tab">
 							<div class="table-responsive">
 							<table id="table-location" class="table table-striped table-bordered">
@@ -77,9 +80,13 @@
 												<td><?php echo $project['freelancer']; ?></td>
 												<td><?php echo $project['status']; ?></td>
 												<td class="text-center">
+													<?php if ($project['freelancer_review_id']) { ?>
+													<span class="badge badge-primary">Submitted</span>
+												<?php } else { ?>
 													<span data-toggle="tooltip" data-placement="top" title="Leave Feedback">
 													<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#rateModal" data-freelancer="<?php echo $project['freelancer']; ?>" data-projectid="<?php echo $project['project_id']; ?>" data-freelancerid="<?php echo $project['freelancer_id']; ?>" data-employerid="<?php echo $project['employer_id']; ?>"><i class="far fa-thumbs-up"></i></button>
 													</span>
+												<?php } ?>	
 												</td>
 												</tr>
 											<?php } else { ?>
@@ -116,23 +123,22 @@
 			</div>
 			<div class="modal-body">
 				<form id="form-for-freelancer">
-					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 					<div class="form-group">
 						<label for="staticEmail" class="col-form-label">Project Delivered on-time</label>
-						<div class="col-sm-12">
+						<div class="col-sm-12" id="input-ontime">
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="ontime" value="1">
 								<label class="form-check-label" for="inlineCheckbox1">Yes</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="ontime" value="0">
+								<input class="form-check-input" type="radio" name="ontime" value="0" >
 								<label class="form-check-label" for="inlineCheckbox1">No</label>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="staticEmail" class="col-form-label">Recommended</label>
-						<div class="col-sm-12">
+						<div class="col-sm-12" id="input-recommended">
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="recommended" value="1">
 								<label class="form-check-label" for="inlineCheckbox1">Yes</label>
@@ -145,7 +151,7 @@
 					</div>
 					<div class="form-group">
 						<label for="staticEmail" class="col-form-label">Overall Rating</label>
-						<div class="col-sm-12">
+						<div class="col-sm-12" id="input-rating">
 							<input type="text" id="rating" class="rating-loading">
 							<input type="hidden" name="rating" id="rating-value" value="">
 						</div>
@@ -153,7 +159,7 @@
 					<div class="form-group">
 						<label for="staticEmail" class="col-form-label">Comment</label>
 						<div class="col-sm-12">
-							<textarea name="comment" cols="5" rows="5" class="form-control"></textarea>	
+							<textarea name="comment" cols="3" rows="2" class="form-control" id="input-comment"></textarea>	
 						</div>
 					</div>			
 				</form>
@@ -193,44 +199,46 @@ $(document).ready(function(){
 
 <!-- scri -->
 <script type="text/javascript">
-$('#rateModal').on('show.bs.modal', function (event) {
+$('#rateModal').on('shown.bs.modal', function (event) {
   var button = $(event.relatedTarget); 
   var freelancer = button.data('freelancer'); 
   var project_id = button.data('projectid'); 
   var freelancer_id = button.data('freelancerid'); 
   var employer_id = button.data('employerid'); 
-  var modal = $(this)
-  modal.find('.modal-title').text('Leave a Feedback for ' + freelancer);
+  $(this).find('.modal-title').text('Leave a Feedback for ' + freelancer);
 
-  $('#button-submit-feedback').on('click', function(){
+  $('#button-submit-feedback').on('click', function() {
   	var $node = $(this);
   	$.ajax({
   		url: 'account/review/add?project_id=' + project_id + '&freelancer_id=' + freelancer_id + '&employer_id=' + employer_id,
+  		headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-Requested-With': 'XMLHttpRequest'
+        },
   		method: 'post',
   		dataType: 'json',
   		data: $('#form-for-freelancer').serialize(),
   		beforeSend: function() {
+  			$('.alert, .invalid-feedback').remove();
+  			$('#input-comment').removeClass('is-invalid');
   			$($node).html(' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
   		},
   		complete: function() {
 		    $($node).html('Submit');
   		},
   		success: function(json) {
-		   	
+  			if (json['errors']) {
+  				for (i in json['errors']) {
+  					var el = $('#input-' + i);
+  					el.addClass('is-invalid');
+                    el.after('<div class="invalid-feedback"><i class="fas fa-exclamation-triangle"></i>' + json['errors'][i] + '</div>'); 
+  				}
+  			}
 		   	if (json['success']) {
+		   		$('#form-for-freelancer').trigger('reset');
 		   		$('#rateModal').modal('hide');
-
-	        	$.notify({
-                icon: 'fas fa-check-circle',
-                title: 'Success',
-                message: json['success']
-	            },{
-	             animate: {
-	                enter: 'animate__animated animate__lightSpeedInRight',
-	                exit: 'animate__animated animate__lightSpeedOutRight'
-	            },
-               type: 'success'
-             });
+		   		$('.alert').remove();
+		   		$('#pills-tab').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 	        }
   		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -239,21 +247,6 @@ $('#rateModal').on('show.bs.modal', function (event) {
 
   	});
   });
-
-});
-</script>
-<script type="text/javascript">
-var url = document.URL;
-var hash = url.substring(url.indexOf('#'));
-
-$(".nav-pills").find("li a").each(function(key, val) {
-    if (hash == $(val).attr('href')) {
-        $(val).click();
-    }
-    
-    $(val).click(function(ky, vl) {
-        location.hash = $(this).attr('href');
-    });
 });
 </script>
 <?php echo $footer; ?>

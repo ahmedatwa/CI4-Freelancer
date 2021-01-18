@@ -71,7 +71,7 @@
 <!-- Tranfer amount -->
 <script type="text/javascript">
 function payFreelancer(employer_id, freelancer_id, project_id, amount) {
-  bootbox.confirm({
+  var dialog = bootbox.confirm({
     title: '<i class="fas fa-exclamation"></i> Your Currenct Balance is: <?php echo $balance; ?>',
     message: '<form id="payFreelancer-form"><input type="hidden" name="freelancer_id" value="'+freelancer_id+'" /><input type="hidden" name="project_id" value="'+project_id+'" /><div class="form-group"><label for="input-amount">Amount</label><input type="number" class="form-control" name="amount" value="' + amount + '"></div></form>',
     className: 'animate__animated animate__fadeInDown',
@@ -86,7 +86,9 @@ function payFreelancer(employer_id, freelancer_id, project_id, amount) {
         }
     },
     callback: function (result) {
-    if (result) {
+    if (result === false) {
+        dialog.modal('hide');
+    } else {
       $.ajax({
             url: 'employer/employer/transferFunds',
             headers: {
@@ -106,10 +108,11 @@ function payFreelancer(employer_id, freelancer_id, project_id, amount) {
             success: function(json) {
 
                 if (json['error']) {
-                      modal.find('.modal-body').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['error']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+                      dialog.find('.modal-body').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+json['error']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
                 }
                 
                 if (json['success']) {
+                    dialog.modal('hide');
                     $('#employer-past-list').load('employer/Project/getPastProjects');
 
                     $('#past-projects').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'); 
@@ -119,9 +122,10 @@ function payFreelancer(employer_id, freelancer_id, project_id, amount) {
                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-      } // if end
-    } // callback end
-   });  // bootbox end
+      } 
+      return false;
+    } 
+   });
 }
 
 // open Dispute

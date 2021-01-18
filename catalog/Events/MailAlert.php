@@ -104,7 +104,7 @@ class MailAlert
         $keyword = $seo_url->getKeywordByQuery('project_id=' . $project_id);
 
         $data['text_subject']    = sprintf(lang('mail/project_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
-        $data['text_received']   = sprintf(lang('mail/project_alert.text_received'), route_to('single_project', $keyword));
+        $data['text_received']   = sprintf(lang('mail/project_alert.text_received'), route_to('single_project', $project_id, $keyword));
         $data['text_pay']        = lang('mail/project_alert.text_pay');
         $data['text_thank']      = lang('mail/project_alert.text_thank');
         $data['text_signature']  = sprintf(lang('mail/project_alert.text_signature'), service('registry')->get('config_name'));
