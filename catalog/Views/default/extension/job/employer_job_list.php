@@ -34,11 +34,7 @@
       <?php } else { ?>
         <span data-toggle="tooltip" data-placement="top" title="View Applicants"><a role="button" href="#" class="btn btn-primary btn-sm disabled"><i class="fas fa-eye"></i></a></span>
       <?php } ?>
-      <?php if ($job['status'] == 0) { ?>
-      <span data-toggle="tooltip" data-placement="top" title="Cease Job"><a role="button" class="btn btn-warning btn-sm disabled" id="button-job-cease"><i class="fas fa-hand-paper"></i></a></span>
-    <?php } else { ?>
       <button type="button" class="btn btn-warning btn-sm" id="button-job-cease" data-toggle="tooltip" data-placement="top" onclick="ceaseJob(<?php echo $job['job_id']; ?>);" title="Cease Job"><i class="fas fa-hand-paper"></i></button>
-     <?php } ?> 
       <button type="button" class="btn btn-danger btn-sm" id="button-job-delete" data-toggle="tooltip" data-placement="top" onclick="deleteJob(<?php echo $job['job_id']; ?>);" title="Delete Job"><i class="far fa-trash-alt"></i></button>
       </td>
     </tr>
