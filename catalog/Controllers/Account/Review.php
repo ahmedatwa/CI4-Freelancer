@@ -32,7 +32,7 @@ class Review extends \Catalog\Controllers\BaseController
                         'rating'        => $this->request->getPost('rating'),
                         'comment'       => $this->request->getPost('comment'),
                         'submitted_by'  => $this->session->get('customer_id'),
-                        'status'        => 1,
+                        'status'        => 0,
                     ];
 
                     $review_id = $reviewModel->insert($data);
@@ -152,15 +152,15 @@ class Review extends \Catalog\Controllers\BaseController
             $employer = $customerModel->getCustomer($result['employer_id']);
             $freelancer = $customerModel->getCustomer($result['freelancer_id']);
             $data['projects'][] = [
-                'project_id'    => $result['project_id'],
-                'freelancer_id' => $result['freelancer_id'],
-                'employer_id'   => $result['employer_id'],
-                'name'          => $result['name'],
-                'status'        => $result['status'],
-                'employer'      => $employer['firstname'] . ' ' . $employer['lastname'],
-                'freelancer'    => $freelancer['firstname'] . ' ' . $freelancer['lastname'],
-                'freelancer_review_id'    => $projectModel->where('project_id', $result['project_id'])->findColumn('freelancer_review_id') ,
-                'employer_review_id'    => $projectModel->where('project_id', $result['project_id'])->findColumn('employer_review_id') ,
+                'project_id'           => $result['project_id'],
+                'freelancer_id'        => $result['freelancer_id'],
+                'employer_id'          => $result['employer_id'],
+                'name'                 => $result['name'],
+                'status'               => $result['status'],
+                'employer'             => $employer['firstname'] . ' ' . $employer['lastname'],
+                'freelancer'           => $freelancer['firstname'] . ' ' . $freelancer['lastname'],
+                'freelancer_review_id' => $projectModel->where('project_id', $result['project_id'])->findColumn('freelancer_review_id')[0] ,
+                'employer_review_id'   => $projectModel->where('project_id', $result['project_id'])->findColumn('employer_review_id')[0] ,
             ];
         }
 

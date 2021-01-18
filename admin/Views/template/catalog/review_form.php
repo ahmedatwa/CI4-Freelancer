@@ -59,13 +59,13 @@
 					<div class="form-group row">
 						<label for="input-text" class="col-md-2 col-form-label"><?php echo $entry_text; ?></label>
 						<div class="col-md-10">
-							<textarea class="form-control" type="text" id="input-text" cols="60" rows="8" disabled><?php echo $comment; ?></textarea>
+							<textarea class="form-control" type="text" id="input-text" cols="60" rows="8"><?php echo $comment; ?></textarea>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="input-rating" class="col-md-2 col-form-label"><?php echo $entry_rating; ?></label>
 						<div class="col-md-10">
-							<input class="form-control" type="text" id="input-meta-description" value="<?php echo $rating; ?>" disabled>
+							<input class="form-control" type="text" id="input-meta-description" value="<?php echo $rating; ?>">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -92,36 +92,36 @@
 			</div><!-- Card -->
 		</div><!-- container-fluid -->
 	</div>
-	<link href="assets/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css">
-	<script src="assets/vendor/select2/js/select2.min.js"></script> 
-	<script type="text/javascript">
-		$('select[name=\'project_id\']').select2({
-			ajax: {
-				url: "index.php/catalog/review/autocomplete?user_token=<?php echo $user_token; ?>",
-				dataType: 'json',
-				delay: 250,
-				theme: 'bootstrap4',
-				data: function (params) {
-					return {
-						parent_id: params.term,
-					};
-				},
-				processResults: function (data, params) {
-					var results = $.map(data, function (item) {
-						item.id = item.parent_id;
-						item.text = item.name;
-						return item;
-					});
-					return {
-						results: results,
-					};
-				},
-				cache: true
+<link href="assets/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+<script src="assets/vendor/select2/js/select2.min.js"></script> 
+<script type="text/javascript">
+	$('select[name=\'project_id\']').select2({
+		ajax: {
+			url: "index.php/catalog/review/autocomplete?user_token=<?php echo $user_token; ?>",
+			dataType: 'json',
+			delay: 250,
+			theme: 'bootstrap4',
+			data: function (params) {
+				return {
+					parent_id: params.term,
+				};
 			},
-			minimumInputLength: 3,
-			placeholder: '<?php echo $text_select; ?>',
-			allowClear: true,
-			minimumResultsForSearch: 5
-		});
-	</script> 
-	<?php echo $footer; ?>
+			processResults: function (data, params) {
+				var results = $.map(data, function (item) {
+					item.id = item.parent_id;
+					item.text = item.name;
+					return item;
+				});
+				return {
+					results: results,
+				};
+			},
+			cache: true
+		},
+		minimumInputLength: 3,
+		placeholder: '<?php echo $text_select; ?>',
+		allowClear: true,
+		minimumResultsForSearch: 5
+	});
+</script> 
+<?php echo $footer; ?>

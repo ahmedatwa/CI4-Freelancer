@@ -181,13 +181,17 @@ class Review extends \Admin\Controllers\BaseController
             $data['author'] = '';
         }
 
-        if (!empty($review_info)) {
+        if ($this->request->getPost('comment')) {
+            $data['comment'] = $this->request->getPost('comment');
+        } elseif (!empty($review_info)) {
             $data['comment'] = $review_info['comment'];
         } else {
             $data['comment'] = '';
         }
 
-        if (!empty($review_info)) {
+        if ($this->request->getPost('rating')) {
+            $data['rating'] = $this->request->getPost('rating');
+        } elseif (!empty($review_info)) {
             $data['rating'] = $review_info['rating'];
         } else {
             $data['rating'] = '';

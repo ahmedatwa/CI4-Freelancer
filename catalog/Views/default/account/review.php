@@ -4,7 +4,6 @@
 		<div class="dashboard-headline">
 			<h3><?php echo $heading_title; ?></h3>
 		</div>
-		<!-- Row -->
 		<div class="row">
 			<div class="col-12 mb-4">
 				<ul class="nav nav-pills float-right mb-4" id="pills-tab" role="tablist">
@@ -18,7 +17,7 @@
 				<div class="tab-content" id="pills-tabContent">
 					<div class="tab-pane fade show active" id="freelancer-review" role="tabpanel" aria-labelledby="freelancer-review-tab">
 						<div class="table-responsive">
-						<table id="table-location" class="table table-striped table-bordered">
+						<table id="freelancer-table-location" class="table table-striped table-bordered">
 							<thead>
 								<tr>
 									<th><?php echo $column_name; ?></th>
@@ -28,15 +27,14 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php if ($projects) { ?>
 									<?php foreach ($projects as $project) { ?>
-										<?php if ($project['freelancer_id'] == $customer_id) { ?>
+									<?php if ($project['freelancer_id'] == $customer_id) { ?>
 										<tr>
 											<td><?php echo $project['name']; ?></td>
 											<td><?php echo $project['employer']; ?></td>
 											<td><?php echo $project['status']; ?></td>
 											<td class="text-center">
-												<?php if ($project['freelancer_review_id']) { ?>
+												<?php if ($project['freelancer_review_id'] > 0) { ?>
 													<span class="badge badge-primary">Submitted</span>
 												<?php } else { ?>
 													<span data-toggle="tooltip" data-placement="top" title="Leave Feedback">
@@ -45,24 +43,19 @@
 												<?php } ?>
 												</td>
 											</tr>
-										<?php } else { ?>
+											<?php } else { ?>
 											<tr>
-												<td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+												<td colspan="4" class="text-center">No Results Found!</td>
 											</tr>
-											<?php } ?>	
+										<?php } ?>		
 										<?php } ?>
-									<?php } else { ?>
-										<tr>
-											<td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
-										</tr>
-									<?php } ?>	
 								</tbody>
 							</table>
 						</div>
 						</div> <!--pills-freelancer-tab-->
 						<div class="tab-pane fade" id="employer-review" role="tabpanel" aria-labelledby="employer-review-tab">
 							<div class="table-responsive">
-							<table id="table-location" class="table table-striped table-bordered">
+							<table id="employer-table-location" class="table table-striped table-bordered">
 								<thead>
 									<tr>
 										<th><?php echo $column_name; ?></th>
@@ -72,35 +65,29 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php if ($projects) { ?>
-										<?php foreach ($projects as $project) { ?>
-										 <?php if ($project['employer_id'] == $customer_id) { ?>
+									<?php foreach ($projects as $project) { ?>
+										<?php if ($project['employer_id'] == $customer_id) { ?>
 											<tr>
 												<td><?php echo $project['name']; ?></td>
 												<td><?php echo $project['freelancer']; ?></td>
 												<td><?php echo $project['status']; ?></td>
 												<td class="text-center">
-													<?php if ($project['freelancer_review_id']) { ?>
-													<span class="badge badge-primary">Submitted</span>
-												<?php } else { ?>
-													<span data-toggle="tooltip" data-placement="top" title="Leave Feedback">
-													<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#rateModal" data-freelancer="<?php echo $project['freelancer']; ?>" data-projectid="<?php echo $project['project_id']; ?>" data-freelancerid="<?php echo $project['freelancer_id']; ?>" data-employerid="<?php echo $project['employer_id']; ?>"><i class="far fa-thumbs-up"></i></button>
-													</span>
-												<?php } ?>	
+													<?php if ($project['employer_review_id'] > 0) { ?>
+														<span class="badge badge-primary">Submitted</span>
+													<?php } else { ?>
+														<span data-toggle="tooltip" data-placement="top" title="Leave Feedback">
+															<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#rateModal" data-freelancer="<?php echo $project['freelancer']; ?>" data-projectid="<?php echo $project['project_id']; ?>" data-freelancerid="<?php echo $project['freelancer_id']; ?>" data-employerid="<?php echo $project['employer_id']; ?>"><i class="far fa-thumbs-up"></i></button>
+														</span>
+													<?php } ?>	
 												</td>
-												</tr>
-											<?php } else { ?>
-											<tr>
-												<td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
 											</tr>
-											<?php } ?>	
-											<?php } ?>
 										<?php } else { ?>
 											<tr>
-												<td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+												<td colspan="4" class="text-center">No Results Found!</td>
 											</tr>
 										<?php } ?>	
-									</tbody>
+									<?php } ?>
+								</tbody>
 								</table>
 							</div>
 							</div> <!--pills-employer-tab-->
@@ -110,7 +97,6 @@
 				<!-- Row / End -->
 			</div>
 		</div>
-
 <!-- Modal -->
 <div class="modal fade" id="rateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -176,9 +162,20 @@
 <link rel="stylesheet" href="catalog/default/vendor/kartik-v-bootstrap-star/themes/krajee-fa/theme.min.css" media="all" type="text/css"/>
 <script src="catalog/default/vendor/kartik-v-bootstrap-star/js/star-rating.js" type="text/javascript"></script>
 <script src="catalog/default/vendor/kartik-v-bootstrap-star/themes/krajee-fa/theme.js" type="text/javascript"></script>
+<link rel="stylesheet" href="catalog/default/vendor/DataTables/datatables.css" media="all" type="text/css"/>
+<script src="catalog/default/vendor/DataTables/datatables.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-$(document).ready(function(){
+	 $('#freelancer-table-location').DataTable({
+         "lengthMenu": [ 10, 25],
+	});
+	$('#employer-table-location').DataTable({
+       "lengthMenu": [ 10, 25],
+	});
+
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
     $('#rating').rating({
     	hoverEnabled: true,
     	hoverOnClear: false,
@@ -196,7 +193,6 @@ $(document).ready(function(){
 });  
 });
 </script>
-
 <!-- scri -->
 <script type="text/javascript">
 $('#rateModal').on('shown.bs.modal', function (event) {

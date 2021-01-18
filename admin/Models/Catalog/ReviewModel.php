@@ -9,7 +9,7 @@ class ReviewModel extends Model
     protected $returnType     = 'array';
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
-    protected $allowedFields = ['status'];
+    protected $allowedFields = ['status', 'comment', 'rating'];
     // User Activity Events
     //protected $afterInsert = ['afterInsertEvent'];
     //protected $afterUpdate = ['afterUpdateEvent'];

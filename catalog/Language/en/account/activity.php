@@ -18,5 +18,5 @@ return [
 'text_activity_project_milestone_create' => 'Milestone has been created for <a href="url="><strong class="text-danger">project</strong></a>.',
 'text_activity_project_milestone_update' => 'Milestone status has been milestone_status= for <a href="url="><strong class="text-danger">project</strong></a>.',
 'text_activity_project_status_update'    => '<a href="url="><strong class="text-danger">project</strong></a> status has been updated.',
-'text_activity_customer_review'          => 'You have received new <a href="url="><strong class="text-danger">review</strong></a>.',
+'text_activity_customer_review'          => 'You have received new <a href="url="><strong class="text-danger">project feedback</strong></a>.',
 ];

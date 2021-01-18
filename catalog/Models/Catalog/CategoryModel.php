@@ -9,9 +9,12 @@ class CategoryModel extends \CodeIgniter\Model
     public function getCategory($category_id)
     {
         $builder = $this->db->table('category');
-        $builder->select('category.category_id, category_description.name, category.status');
+        $builder->select('category.category_id, category_description.name, category_description.description, category.status, category.icon');
         $builder->join('category_description', 'category.category_id = category_description.category_id', 'left');
-        $builder->where('category.category_id', $category_id);
+        $builder->where([
+            'category.category_id' => $category_id,
+            'language_id' => service('registry')->get('config_language_id'),
+        ]);
         $query = $builder->get();
         return $query->getRowArray();
     }

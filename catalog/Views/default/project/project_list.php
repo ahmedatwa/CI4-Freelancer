@@ -2,9 +2,12 @@
 <div class="jumbotron">
 	<div class="container-fluid">
 		<h2 class="display-5"><?php echo $heading_title; ?></h2>
+		<p class="lead"><?php echo $lead; ?></p>
 		<div class="text-right mt-4 w-100">
-			<a href="<?php echo $add_project; ?>" class="button rounded"><?php echo $button_hire; ?></a>
-			<a href="<?php echo $login; ?>" class="button dark text-white"><?php echo $button_work; ?></a>
+			<a href="<?php echo $add_project; ?>" class="button dark button-sliding-icon ripple-effect rounded"><?php echo $button_hire; ?></a>
+			<?php if (! $logged) { ?>
+			<a href="<?php echo $login; ?>" class="button button-sliding-icon ripple-effect rounded"><?php echo $button_work; ?></a>
+		   <?php } ?>
 		</div>
 	</div>
 </div>

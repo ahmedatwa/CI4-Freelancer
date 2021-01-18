@@ -10,6 +10,7 @@ class Project extends \Catalog\Controllers\BaseController
     public function index()
     {
         $projectModel = new ProjectModel();
+        $categoryModel = new CategoryModel();
         $seoUrl = service('seo_url');
 
         $this->template->setTitle(lang('project/project.heading_title'));
@@ -22,7 +23,7 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('project/project.text_projects'),
-            'href' => '',
+            'href' => route_to('projects'),
         ];
 
         if ($this->request->getVar('gid')) {
@@ -31,6 +32,25 @@ class Project extends \Catalog\Controllers\BaseController
             $filter_category_id = substr($this->request->uri->getSegment(2), 1);
         } else {
             $filter_category_id = null;
+        }
+
+        // for child Category lead info
+        if ($filter_category_id) {
+            $category_info = $categoryModel->getCategory($filter_category_id);
+            $data['breadcrumbs'][] = [
+                'text' => $category_info['name'],
+                'href' => route_to('category', $filter_category_id, $seoUrl->getKeywordByQuery('category_id=' . $filter_category_id)),
+            ];
+
+            $data['lead']          = $category_info['description'];
+            $data['heading_title'] = $category_info['name'];
+            $data['icon']          = $category_info['icon'];
+            $data['button_hire']   = lang('Hire For ' . $category_info['name']);
+        } else {
+            $data['heading_title'] = lang('project/project.text_projects');
+            $data['lead']          = '';
+            $data['button_hire']   = lang($this->locale . '.button_hire');
+            $data['icon']          = '';
         }
 
         if ($this->request->getVar('type')) {
@@ -179,8 +199,6 @@ class Project extends \Catalog\Controllers\BaseController
             'text'  => lang($this->locale . '.text_per_hour'),
         ];
 
-        $categoryModel = new CategoryModel();
-
         $data['categories'] = [];
         $categories = $categoryModel->getCategories();
         foreach ($categories as $category) {
@@ -199,16 +217,15 @@ class Project extends \Catalog\Controllers\BaseController
         $data['text_languages']      = lang('project/project.text_languages');
         $data['text_state']          = lang('project/project.text_state');
         $data['text_budget']         = lang('project/project.text_budget');
-        $data['heading_title']       = lang('project/project.text_projects');
         
         $data['text_projects']       = lang('project/project.text_projects');
-        $data['button_hire']         = lang($this->locale . '.button_hire');
         $data['button_work']         = lang($this->locale . '.button_work');
         $data['button_bid_now']      = lang('project/project.button_bid_now');
         $data['text_select']         = lang($this->locale . '.text_select');
 
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
         $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
+        $data['logged'] = $this->customer->isLogged();
 
         $this->session->set('redirect_url', current_url());
 
