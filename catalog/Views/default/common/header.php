@@ -1,4 +1,8 @@
 <!doctype html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
 <html lang="<?php echo $lang; ?>" direction="<?php echo $direction; ?>">
 <head>
   <title><?php echo $title; ?></title>
@@ -22,6 +26,8 @@
   <?php foreach ($styles as $style) { ?>
     <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
   <?php } ?>
+  <!--[if IE]><link rel="shortcut icon" href="favicon.ico"><![endif]-->
+  <link rel="icon" href="favicon.ico">
   <!-- Scripts -->
   <script src="catalog/default/javascript/jquery-3.5.1.min.js"></script>
   <script src="catalog/default/javascript/jquery-ui/jquery-ui.js"></script>
