@@ -151,7 +151,7 @@
 </ul>
 <ul class="navbar-nav ml-auto mr-3" id="nav-user-main">
     <?php if (! $logged) { ?>
-      <li class="nav-item d-none d-lg-block"><a id="button-glogin" class="nav-link" href="javascript:void(0)"><?php echo $text_login; ?> </a></li>
+      <li class="nav-item d-none d-lg-block"><a id="button-glogin" class="nav-link" href="<?php echo $login; ?>"><?php echo $text_login; ?> </a></li>
       <li class="nav-item d-none d-lg-block"><a id="" class="nav-link" href="<?php echo $register; ?>"> <?php echo $text_register; ?> </a></li>
     <?php } else { ?>
       <!-- Messages -->

@@ -701,14 +701,22 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	});
 
 	// Login
-	$('#button-glogin').on('click', function(){
-	var dialog = bootbox.prompt({
-	    title: "What is your name?",
-	    callback: function(result){ 
-	        /* result = String containing user input if OK clicked or null if Cancel clicked */ 
-	    }
- }); 
-});
+// 	$('#button-glogin').on('click', function() {
+//      var dialog = bootbox.dialog({
+//       title: "We're glad to see you again!",
+//       message: '<form method="post" action="" enctype="multipart/form-data" accept-charset="utf-8" id="form-login"><div class="form-group"><div class="input-group" id="email"><div class="input-group-prepend"><span class="input-group-text"><i class="icon-material-baseline-mail-outline"></i></span></div><input type="text" class="form-control" name="email" id="input-email" placeholder="E-Mail Address"/></div></div><div class="form-group"><div class="input-group" id="password"><div class="input-group-prepend"><span class="input-group-text"><i class="icon-material-outline-lock"></i></span></div><input type="password" class="form-control" name="password" id="input-password" placeholder="Password"/></div></div></form>',
+//       buttons: {
+//         success: {
+//           label: "Login",
+//           className: "button",
+//           callback: function (result) {
+            
+//           }
+//         }
+//        }
+//       }
+//     );
+// });
 	/*----------------------------------------------------*/
 });
 })(this.jQuery);

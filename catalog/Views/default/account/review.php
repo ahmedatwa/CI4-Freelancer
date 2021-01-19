@@ -234,6 +234,7 @@ $('#rateModal').on('shown.bs.modal', function (event) {
 		   		$('#form-for-freelancer').trigger('reset');
 		   		$('#rateModal').modal('hide');
 		   		$('.alert').remove();
+		   		button.prop('disabled', true);
 		   		$('#pills-tab').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> '+json['success']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 	        }
   		},

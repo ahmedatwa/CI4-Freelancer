@@ -56,6 +56,8 @@ class Category extends \Catalog\Controllers\BaseController
         ];
     
         $data['categories'] = [];
+
+        helper('text');
         
         $results = $categoryModel->getCategories($filter_data);
 
@@ -88,7 +90,7 @@ class Category extends \Catalog\Controllers\BaseController
                 'category_id' => $result['category_id'],
                 'name'        => $result['name'],
                 'icon'        => $result['icon'],
-                'description' => $result['description'],
+                'description' => word_limiter(strip_tags($result['description']), 10),
                 'href'        => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project?gid=' . $result['category_id']),
                 'children'    => $children_data,
             ];
