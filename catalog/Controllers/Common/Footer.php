@@ -40,7 +40,7 @@ class Footer extends \Catalog\Controllers\BaseController
             $data['categories'][] = [
             'category_id' => $result['category_id'],
             'name'        => $result['name'],
-            'href'        => ($keyword) ? route_to('categories', $result['category_id'], $keyword) : base_url('project/project/category?gid=' . $result['category_id']),
+            'href'        => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project/category?gid=' . $result['category_id']),
          ];
         }
 
