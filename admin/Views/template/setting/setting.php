@@ -381,6 +381,12 @@
 											</div>
 										</div>
 										<div class="form-group row">
+											<label for="global-alert" class="col-sm-3 col-form-label"><?php echo $entry_global_alert; ?></label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" name="config_global_alert" value="<?php echo $config_global_alert; ?>" placeholder="<?php echo $config_global_alert_help; ?>">
+											</div>
+										</div>
+										<div class="form-group row">
 											<label class="col-sm-3 control-label" for="input-file-ext-allowed"><?php echo $entry_file_ext_allowed; ?> <span data-toggle="tooltip" title="<?php echo $help_file_ext_allowed; ?>"><i class="fas fa-question-circle"></i></span></label>
 											<div class="col-sm-9">
 												<textarea name="config_file_ext_allowed" rows="5" placeholder="<?php echo $entry_file_ext_allowed; ?>" id="input-file-ext-allowed" class="form-control"><?php echo $config_file_ext_allowed; ?></textarea>

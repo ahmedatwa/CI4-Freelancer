@@ -60,6 +60,8 @@ return [
     'entry_linkedin'                 => 'Linkedin',
     'entry_instagram'                => 'Instagram',
     'entry_maintenance'              => 'Maintenance Mode',
+    'entry_global_alert'             => 'Announcement Alert',
+    'config_global_alert_help'       => 'System Alert for Front-End users like : System will be down from 2:00AM till 4:00AM for Maintenance',
     'entry_freelancer_fee'           => '%s Fee',
     'entry_processing_fee'           => 'Despoit Processing Fee',
     'entry_upgrade_sponser'          => 'Sponsored Bid Fee',

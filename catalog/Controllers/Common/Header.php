@@ -64,6 +64,12 @@ class Header extends \Catalog\Controllers\BaseController
         $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
         $data['markread']    = base_url('account/notifications/markRead');
 
+        if ($this->registry->get('config_global_alert')) {
+            $data['global_alert'] = $this->registry->get('config_global_alert');
+        } else {
+            $data['global_alert'] = '';
+        }
+
         if ($this->session->get('customer_id')) {
             $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
             $data['profile']     = route_to('freelancer_profile', $this->session->get('customer_id'), $this->session->get('username')) ? route_to('freelancer_profile', $this->session->get('customer_id'), $this->session->get('username')) : base_url('freelancer/freelancer?cid=' . $this->session->get('customer_id'));

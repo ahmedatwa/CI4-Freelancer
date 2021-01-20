@@ -340,6 +340,14 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_instagram'] = '#';
         }
 
+        if ($this->request->getPost('config_global_alert')) {
+            $data['config_global_alert'] = $this->request->getPost('config_global_alert');
+        } elseif (!empty($setting_info['config_global_alert'])) {
+            $data['config_global_alert'] = $setting_info['config_global_alert'];
+        } else {
+            $data['config_global_alert'] = '';
+        }
+
         $data['entry_freelancer_fee'] = sprintf(lang('setting/setting.list.entry_freelancer_fee'), $this->registry->get('config_name'));
 
         return $this->document->output('setting/setting', $data);

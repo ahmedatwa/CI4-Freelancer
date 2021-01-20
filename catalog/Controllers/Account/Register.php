@@ -8,7 +8,7 @@ class Register extends \Catalog\Controllers\BaseController
     {
         if ($this->customer->isLogged()) {
             return redirect()->route('account_dashboard');
-        } 
+        }
 
         $this->template->setTitle(lang('account/register.heading_title'));
 
@@ -22,22 +22,7 @@ class Register extends \Catalog\Controllers\BaseController
             'text' => lang('account/register.heading_title'),
             'href' => route_to('account_register') ? route_to('account_register') : base_url('account/register'),
         ];
-
-        $customerModel = new CustomerModel();
-
-        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-
-        $customer_id = $customerModel->addCustomer($this->request->getPost());
-
-            // Clear any previous login attempts for unregistered accounts.
-            $customerModel->deleteLoginAttempts($this->request->getPost('email'));
-
-            $this->customer->login($this->request->getPost('email'), $this->request->getPost('password'));
-
-            return redirect()->to('success')
-                             ->with('success', lang('account/register.text_success'));
-        }
-
+        
         $data['entry_email']     = lang('account/register.entry_email');
         $data['entry_password']  = lang('account/register.entry_password');
         $data['entry_confirm']   = lang('account/register.entry_confirm');
@@ -46,46 +31,15 @@ class Register extends \Catalog\Controllers\BaseController
         $data['text_register']   = lang('account/register.text_register');
         $data['button_register'] = lang('account/register.button_register');
 
-
-        $data['action'] = route_to('account_register') ? route_to('account_register') : base_url('account/register');
-
-        if ($this->request->getPost('email')) {
-            $data['email'] = $this->request->getPost('email');
-        } else {
-            $data['email'] = '';
-        }
-
-        if ($this->request->getPost('password')) {
-            $data['password'] = $this->request->getPost('password');
-        } else {
-            $data['password'] = '';
-        }
-
-        if ($this->request->getPost('confirm')) {
-            $data['confirm'] = $this->request->getPost('confirm');
-        } else {
-            $data['confirm'] = '';
-        }
-
-        if ($this->session->getFlashdata('error_warning')) {
-            $data['error_warning'] = $this->session->getFlashdata('error_warning');
-        } else {
-            $data['error_warning'] = '';
-        }
-
-        if ($this->session->getFlashdata('success')) {
-            $data['success'] = $this->session->getFlashdata('success');
-        } else {
-            $data['success'] = '';
-        }
-
         $this->template->output('account/register', $data);
     }
 
-    protected function validateForm()
+    public function create()
     {
-        // Fields Validation Rules
-        if (! $this->validate([
+        $json = [];
+
+        if ($this->request->isAJAX()) {
+            if (! $this->validate([
             'email' => [
                 'rules' => 'required|valid_email|is_unique[customer.email]',
                 'errors' => [
@@ -95,10 +49,26 @@ class Register extends \Catalog\Controllers\BaseController
             'password' => 'required|min_length[4]',
             'confirm'  => 'required_with[password]|matches[password]',
             ])) {
-            $this->session->setFlashData('error_warning', lang('account/register.text_warning'));
-            return false;
+                $json['errors'] = $this->validator->getErrors();
+                $json['error_warning'] = lang('account/register.text_warning');
+            }
+        
+            if (! $json && ($this->request->getMethod() == 'post')) {
+                $customerModel = new CustomerModel();
+                $customer_id = $customerModel->addCustomer($this->request->getPost());
+
+                // Clear any previous login attempts for unregistered accounts.
+                $customerModel->deleteLoginAttempts($this->request->getPost('email'));
+
+                $this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'));
+
+                $this->session->setFlashdata('success', lang('account/register.text_success'));
+                $json['redirect'] = base_url('account/success');
+            }
         }
-        return true;
+
+
+        return $this->response->setJSON($json);
     }
 
     //--------------------------------------------------------------------

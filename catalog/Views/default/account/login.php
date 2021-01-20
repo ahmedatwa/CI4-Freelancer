@@ -116,7 +116,7 @@ function onSuccess(googleUser) {
   			location = json['redirect'];
   		}
   		if (json['error']) {
-  			console.log(json['error']);
+  			alert(json['error']);
   		}
   	}
 

@@ -49,6 +49,9 @@
   <?php } ?>
 </head>
 <body class="grey">
+  <?php if ($global_alert) { ?>
+  <div class="alert alert-warning text-center border rounded-0" role="alert"><i class="fas fa-exclamation-circle"></i> <?php echo $global_alert; ?></div>
+<?php } ?>
   <div id="wrapper">
     <b class="screen-overlay"></b>
  <nav class="navbar navbar-expand navbar-light bg-white d-lg-none">
