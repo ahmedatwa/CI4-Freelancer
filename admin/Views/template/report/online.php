@@ -36,18 +36,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($reports) { ?>
-                        <?php foreach ($reports as $report) { ?>
+                    <?php if ($customers) { ?>
+                        <?php foreach ($customers as $customer) { ?>
                             <tr>
-                            <td><?php echo $report['ip']; ?></td>
-                            <td><?php echo $report['customer']; ?></td>
-                            <td><?php echo $report['url']; ?></td>
-                            <td><?php echo $report['referer']; ?></td>
-                            <td><?php echo $report['date_added']; ?></td>
-                            <td class="text-center">  
-                                <a href="<?php echo $report['edit']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>" ><i class="far fa-edit"></i></a></td>
+                            <td><?php echo $customer['ip']; ?></td>
+                            <td><?php echo $customer['customer']; ?></td>
+                            <td><?php echo $customer['url']; ?></td>
+                            <td><?php echo $customer['referer']; ?></td>
+                            <td><?php echo $customer['date_added']; ?></td>
+                            <td class="text-center"> 
+                            <?php if ($customer['customer_id']) { ?>
+                                <a href="<?php echo $report['edit']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>" ><i class="far fa-edit"></i></a>
                                     </tr>
-                                <?php } ?>
+                             <?php } else { ?>   
+                             <a href="#" class="btn btn-primary btn-sm disabled" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>"><i class="far fa-edit"></i></a>
+                             <?php } ?>  
+                             </td>     
+                              <?php } ?>  
                             <?php } ?>
                         </tbody>
                     </table>
@@ -63,7 +68,6 @@
 <script type="text/javascript">
     var table = $('#table-location').DataTable({
         "dom": 'lrtp',
-        "order":[[ 1, "asc" ]],
         "lengthMenu": [20, 25, 30]
     });
 // Search

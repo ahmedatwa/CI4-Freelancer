@@ -44,7 +44,7 @@ class Online extends \Admin\Controllers\BaseController
                 $customer = lang('en.list.text_guest');
             }
 
-            $data['reports'][] = [
+            $data['customers'][] = [
                     'customer_id' => $result['customer_id'],
                     'ip'          => $result['ip'],
                     'customer'    => $customer,
