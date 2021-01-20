@@ -29,7 +29,7 @@ class Menu extends \Catalog\Controllers\BaseController
 
                 $children_data[] = [
                     'name'  => $child['name'],
-                    'href'  => ($childKeyword) ? route_to('category', $child['category_id'], $childKeyword) : base_url('project/project?gid=' . $child['category_id']),
+                    'href'  => ($childKeyword) ? route_to('category', $child['category_id'], $childKeyword) : base_url('project/project/category?gid=' . $child['category_id']),
                     ];
                 }
 
@@ -38,7 +38,7 @@ class Menu extends \Catalog\Controllers\BaseController
                 'name'        => $category['name'],
                 'ico'         => $category['icon'],
                 'children'    => $children_data,
-                'href'        => ($keyword) ? route_to('category', $category['category_id'], $keyword) : base_url('project/project?gid=' . $category['category_id']),
+                'href'        => ($keyword) ? route_to('category', $category['category_id'], $keyword) : base_url('project/project/category?gid=' . $category['category_id']),
             ];
         }
 

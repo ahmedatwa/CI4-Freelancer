@@ -83,7 +83,7 @@ class Header extends \Catalog\Controllers\BaseController
                 $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
-                'href'           => ($keyword) ? route_to('information', $result['information_id'], $keyword) : base_url('information/Information?fid=' . $result['information_id']),
+                'href'           => ($keyword) ? route_to('information', $result['information_id'], $keyword) : base_url('information/Information/view?fid=' . $result['information_id']),
             ];
             }
         }
