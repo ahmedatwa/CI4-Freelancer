@@ -41,7 +41,7 @@ class Report extends \Admin\Controllers\BaseController
             if ($this->registry->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extensions/report/' . $code)) {
                 
                 $data['reports'][] = [
-                    'text'       => lang('report/'. $code .'.list.heading_title'),
+                    'text'       => lang('report/'. $code .'.list.report_heading_title'),
                     'code'       => $code,
                     'sort_order' => $this->registry->get('report_' . $code . '_sort_order'),
                     'href'       => base_url('report/report?user_token=' . $this->session->get('user_token') . '&code=' . $code)
