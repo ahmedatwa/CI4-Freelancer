@@ -99,6 +99,7 @@
 						<ul>
 							<li><a href="<?php echo $register; ?>"><span><?php echo $text_register; ?></span></a></li>
 							<li><a href="<?php echo $login; ?>"><span><?php echo $text_login; ?></span></a></li>
+							<li><a href="<?php echo $setting; ?>"><span><?php echo $text_setting; ?></span></a></li>
 						</ul>
 					</div>
 				</div>

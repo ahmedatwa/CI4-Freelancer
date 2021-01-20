@@ -10,5 +10,6 @@
 	'text_contact'     => 'Contact Us',
 	'text_account'     => 'Account',
 	'text_login'       => 'Login',
+	'text_setting'     => 'Setting',
 	'text_register'    => 'Sign Up',
 ];
