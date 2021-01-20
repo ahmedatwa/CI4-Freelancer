@@ -83,6 +83,16 @@
 						</ul>
 					</div>
 				</div>
+				<div class="col">
+					<div class="footer-links">
+						<h3><?php echo $text_categories; ?></h3>
+						<ul>
+							<?php foreach ($categories as $category) { ?>
+								<li><a href="<?php echo $category['href']; ?>"><span><?php echo $category['name']; ?></span></a></li>
+							<?php } ?>	
+						</ul>
+					</div>
+				</div>
 			   <div class="col">
 					<div class="footer-links">
 						<h3><?php echo $text_account; ?></h3>

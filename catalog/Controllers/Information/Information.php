@@ -4,6 +4,13 @@ use \Catalog\Models\Catalog\Informations;
 
 class Information extends \Catalog\Controllers\BaseController
 {
+    // --------------------
+    //  Child function for failed routes
+    public function view()
+    {
+        $this->index();
+    }
+    // -------------------
     public function index()
     {
         $informations = new Informations();

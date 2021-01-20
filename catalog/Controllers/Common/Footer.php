@@ -19,7 +19,7 @@ class Footer extends \Catalog\Controllers\BaseController
                 $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
-                'href'           => ($keyword) ? route_to('information', $result['information_id'], $keyword) : base_url('information/information?fid=' . $result['information_id']),
+                'href'           => ($keyword) ? route_to('information', $result['information_id'], $keyword) : base_url('information/information/view?fid=' . $result['information_id']),
             ];
             }
         }
@@ -30,7 +30,7 @@ class Footer extends \Catalog\Controllers\BaseController
 
         $filter_data = [
             'start'         => 0,
-            'limit'         => 6,
+            'limit'         => 5,
             'parent_id'     => 0,
         ];
 
@@ -40,7 +40,7 @@ class Footer extends \Catalog\Controllers\BaseController
             $data['categories'][] = [
             'category_id' => $result['category_id'],
             'name'        => $result['name'],
-            'href'        => ($keyword) ? route_to('categories', $result['category_id'], $keyword) : base_url('project/category?gid=' . $result['category_id']),
+            'href'        => ($keyword) ? route_to('categories', $result['category_id'], $keyword) : base_url('project/project/category?gid=' . $result['category_id']),
          ];
         }
 

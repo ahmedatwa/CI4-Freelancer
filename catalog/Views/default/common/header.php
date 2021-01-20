@@ -13,7 +13,7 @@
   <meta name="google-signin-client_id" content="135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com">
   <!-- CSS -->
   <link rel="stylesheet" href="catalog/default/vendor/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="catalog/default/stylesheet/stylesheet.css">
+  <link rel="stylesheet" href="catalog/default/stylesheet/stylesheet.min.css">
   <link rel="stylesheet" href="catalog/default/vendor/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="catalog/default/javascript/jquery-ui/jquery-ui.css">
   <!-- Animate -->

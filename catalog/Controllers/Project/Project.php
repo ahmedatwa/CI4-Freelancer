@@ -7,6 +7,13 @@ use \Catalog\Models\Tool\DownloadModel;
 
 class Project extends \Catalog\Controllers\BaseController
 {
+    // ---------------------
+    // child function for index, if failed route
+    public function category()
+    {
+        $this->index();
+    }
+    // ----------------------
     public function index()
     {
         $projectModel = new ProjectModel();
@@ -147,7 +154,7 @@ class Project extends \Catalog\Controllers\BaseController
                 'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
                 'type'        => ($result['type'] == 1) ? lang($this->locale . '.text_fixed_price') : lang($this->locale . '.text_per_hour'),
                 'date_added'  => $status,
-                'href'        => ($keyword) ? route_to('single_project', $result['project_id'], $keyword) : base_url('project/project/project?pid=' . $result['project_id']),
+                'href'        => ($keyword) ? route_to('single_project', $result['project_id'], $keyword) : base_url('project/project/view?pid=' . $result['project_id']),
             ];
         }
         
@@ -246,6 +253,12 @@ class Project extends \Catalog\Controllers\BaseController
     }
 
     // Single Project View
+    //  function in case of failed route, therfore 404 error won't be excuted
+    public function view()
+    {
+        $this->info();
+    }
+
     public function info()
     {
         if ($this->request->uri->getSegment(3)) {
