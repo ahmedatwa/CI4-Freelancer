@@ -50,7 +50,7 @@ class Online extends \Admin\Controllers\BaseController
                     'customer'    => $customer,
                     'url'         => $result['url'],
                     'referer'     => $result['referer'],
-                    'date_added'  => lang('en.medium_date', [strtotime($result['date_added'])]),
+                    'date_added'  => lang('en.medium_date', [strtotime($result['date_added'])]) .' '. lang('en.short_time', [strtotime($result['date_added'])]),
                     'edit'        => base_url('customer/customer/edit?user_token=' . $this->session->get('user_token') . '&customer_id=' . $result['customer_id'])
                 ];
         }
