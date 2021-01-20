@@ -3,8 +3,8 @@
     <div class="page-header">
       <div class="container-fluid">
         <div class="float-right">
-            <button type="button" id="button-delete" data-toggle="tooltip" data-placement="top" class="btn btn-danger" title="<?php echo $button_delete;?>" disabled><i class="fa fa-trash"></i></button>
-        </div>
+<!--             <button type="button" id="button-delete" data-toggle="tooltip" data-placement="top" class="btn btn-danger" title="<?php //echo $button_delete;?>" disabled><i class="fa fa-trash"></i></button>
+ -->        </div>
         <h1><?php echo $heading_title; ?> </h1>
         <nav aria-label="breadcrumb" id="breadcrumb">
            <ol class="breadcrumb">

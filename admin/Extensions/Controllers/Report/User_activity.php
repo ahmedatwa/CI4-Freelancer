@@ -108,7 +108,7 @@ class User_activity extends \Admin\Controllers\BaseController
                 base_url('index.php/user/user/edit?user_token=' . $this->request->getVar('user_token') . '&user_id='),
             ];
 
-            $comment = vsprintf(lang('report/user_activity.text_' . $result['key']), json_decode($result['data'], true));
+            $comment = vsprintf(lang('report/user_activity.list.text_' . $result['key']), json_decode($result['data'], true));
 
             $data['activities'][] = [
                 'activity_id' => $result['activity_id'],
@@ -124,10 +124,10 @@ class User_activity extends \Admin\Controllers\BaseController
             $data['selected'] = [];
         }
 
-        $data['column_comment']    = lang('report/user_activity.column_comment');
-        $data['column_ip']         = lang('report/user_activity.column_ip');
-        $data['column_date_added'] = lang('report/user_activity.column_date_added');
-        $data['heading_title']     = lang('report/user_activity.heading_title');
+        $data['column_comment']    = lang('report/user_activity.list.column_comment');
+        $data['column_ip']         = lang('report/user_activity.list.column_ip');
+        $data['column_date_added'] = lang('report/user_activity.list.column_date_added');
+        $data['heading_title']     = lang('report/user_activity.list.heading_title');
 
         $data['delete'] = base_url('index.php/report/activity/delete?user_token=' . $this->request->getVar('user_token'));
 
