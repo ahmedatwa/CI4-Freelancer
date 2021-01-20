@@ -39,6 +39,7 @@ return [
     'text_unselect_all' => 'Unselect All',
     'text_select_all'   => 'Select All',
     'text_select'       => ' --- Please Select --- ',
+    'text_guest'        => 'Guest',
     // Button
     'button_add'        => 'Add',
     'button_edit'       => 'Edit',

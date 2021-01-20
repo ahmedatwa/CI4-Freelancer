@@ -1,13 +1,12 @@
 <?php namespace Admin\Controllers\Report;
 
-use \Admin\Models\Setting\ExtensionModel;
+use \Admin\Models\Report\OnlineModel;
+use \Admin\Models\Customer\CustomerModel;
 
 class Online extends \Admin\Controllers\BaseController
 {
-
     public function index()
     {
-        
         $this->document->setTitle(lang('report/online.list.heading_title'));
 
         $data['breadcrumbs'] = [];
@@ -29,24 +28,31 @@ class Online extends \Admin\Controllers\BaseController
         }
 
         $data['user_token'] = $this->session->get('user_token');
-        $data['delete'] = '';
         // Reports
         $data['reports'] = [];
         
-        $extensionModel = new ExtensionModel();
+        $onlineModel = new OnlineModel();
+        $customerModel = new CustomerModel();
 
-        $extensions = $extensionModel->getInstalled('report');
+        $results = $onlineModel->findAll();
 
-        foreach ($extensions as $code) {
-            if ($this->registry->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extensions/report/' . $code)) {
-                
-                $data['reports'][] = [
-                    'text'       => lang('report/'. $code .'.list.heading_title'),
-                    'code'       => $code,
-                    'sort_order' => $this->registry->get('report_' . $code . '_sort_order'),
-                    'href'       => base_url('report/report?user_token=' . $this->session->get('user_token') . '&code=' . $code),
-                ];
+        foreach ($results as $result) {
+            $customer_info = $customerModel->find($result['customer_id']);
+            if ($customer_info) {
+                $customer = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
+            } else {
+                $customer = lang('en.list.text_guest');
             }
+
+            $data['reports'][] = [
+                    'customer_id' => $result['customer_id'],
+                    'ip'          => $result['ip'],
+                    'customer'    => $customer,
+                    'url'         => $result['url'],
+                    'referer'     => $result['referer'],
+                    'date_added'  => lang('en.medium_date', [strtotime($result['date_added'])]),
+                    'edit'        => base_url('customer/customer/edit?user_token=' . $this->session->get('user_token') . '&customer_id=' . $result['customer_id'])
+                ];
         }
         
         $this->document->output('report/online', $data);

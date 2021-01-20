@@ -1,6 +1,5 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-    <!-- Page Header Begin -->
     <div class="page-header">
       <div class="container-fluid">
         <div class="float-right">
@@ -28,7 +27,6 @@
                <table id="table-location" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th width="1%" class="no-sort"><input id="selectAll" type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
                         <th><?php echo $column_ip; ?></th>
                         <th><?php echo $column_customer; ?></th>
                         <th><?php echo $column_url; ?></th>
@@ -41,11 +39,13 @@
                     <?php if ($reports) { ?>
                         <?php foreach ($reports as $report) { ?>
                             <tr>
-                            <td><?php echo $report['text']; ?></td>
-                            <td><?php echo $report['code']; ?></td>
-                            <td><?php echo $report['sort_order']; ?></td>
+                            <td><?php echo $report['ip']; ?></td>
+                            <td><?php echo $report['customer']; ?></td>
+                            <td><?php echo $report['url']; ?></td>
+                            <td><?php echo $report['referer']; ?></td>
+                            <td><?php echo $report['date_added']; ?></td>
                             <td class="text-center">  
-                                <a href="<?php echo $report['href']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>" ><i class="far fa-edit"></i></a></td>
+                                <a href="<?php echo $report['edit']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>" ><i class="far fa-edit"></i></a></td>
                                     </tr>
                                 <?php } ?>
                             <?php } ?>
@@ -96,7 +96,7 @@ if (filter_status !== '*') {
         function(isConfirm) {
             if (isConfirm) {
                 $.ajax({
-                    url: '<?php echo $delete; ?>',
+                    url: '',
                     method:'post',
                     dataType: 'json',
                     data: $("input[type=\'hidden\'], input[name^=\'selected\']:checked").serialize(),
