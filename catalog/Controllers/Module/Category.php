@@ -26,7 +26,7 @@ class Category extends \Catalog\Controllers\BaseController
                 'name'  => $result['name'],
                 'total' => $categoryModel->getTotalProjectsByCategoryId($result['category_id']),
                 'icon'  => $result['icon'],
-                'href'  => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project?gid=' . $result['category_id']),
+                'href'  => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project/category?gid=' . $result['category_id']),
             ];
         }
 
