@@ -169,11 +169,15 @@
 				<!-- Sidebar -->
 				<div class="col-sm-12 col-md-3">
 					<div class="sidebar-container p-3 mb-5 bg-white">
-						<?php if ($days_left) { ?>
+						<?php if ($days_left != 'Expired') { ?>
 							<div class="alert alert-info text-center" role="alert">
 							  <?php echo $days_left; ?>
 							</div>
-						<?php } ?>
+						<?php } else { ?>
+							<div class="alert alert-danger text-center" role="alert">
+							  <?php echo $days_left; ?>
+							</div>
+						<?php } ?>	
 						<div class="sidebar-widget">
 							<div class="bidding-widget text-white text-center">
 							 <a href="<?php echo $add_project; ?>" class="button ripple-effect button-sliding-icon"><?php echo $button_post_project; ?> <i class="fas fa-long-arrow-alt-right"></i></a>
