@@ -8,19 +8,6 @@ class Forgotten extends \Catalog\Controllers\BaseController
     {
         $this->template->setTitle(lang('account/forgotten.heading_title'));
 
-        $customerModel = new CustomerModel();
-
-        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-
-            helper('text');
-
-            $customerModel->editCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), random_string('alnum', 40));
-
-            $this->session->setFlashdata('success', lang('account/forgotten.text_success'));
-
-            return redirect()->to(route_to('account_login') ? route_to('account_login') : base_url('account/login'));
-        }
-
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang('account/forgotten.text_home'),
@@ -32,18 +19,6 @@ class Forgotten extends \Catalog\Controllers\BaseController
             'href' => route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten'),
         ];
 
-        if ($this->session->getFlashdata('error_warning')) {
-            $data['error_warning'] = $this->session->getFlashdata('error_warning');
-        } else {
-            $data['error_warning'] = '';
-        }
-
-        if ($this->session->getFlashdata('success')) {
-            $data['success'] = $this->session->getFlashdata('success');
-        } else {
-            $data['success'] = '';
-        }
-
         $data['heading_title']   = lang('account/forgotten.heading_title');
         $data['text_heading']    = lang('account/forgotten.text_heading');
         $data['text_subheading'] = lang('account/forgotten.text_subheading');
@@ -51,34 +26,50 @@ class Forgotten extends \Catalog\Controllers\BaseController
         $data['entry_email']     = lang('account/forgotten.entry_email');
         $data['button_reset']    = lang('account/forgotten.button_reset');
 
-        if ($this->request->getPost('email')) {
-            $data['email'] = $this->request->getPost('email');
-        } else {
-            $data['email'] = '';
-        }
-
-        $data['action'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
         $data['login'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
 
         $this->template->output('account/forgotten', $data);
     }
 
-   
-    protected function validateForm()
+    public function forgotten()
     {
-        $customerModel = new CustomerModel();
-        
-        if (! $this->validate([
+        $json = [];
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
+            $customerModel = new CustomerModel();
+
+            if (! $this->validate([
               'email' => "required|valid_email",
-           ])  || ! $customerModel->getTotalCustomersByEmail($this->request->getPost('email', FILTER_SANITIZE_EMAIL)) ) {
+            ])) {
+                $json['error']['email'] = $this->validator->getError('email');
+            }
 
-                $this->session->setFlashData('error_warning', lang('account/forgotten.error_email'));
+            if (! $customerModel->getTotalCustomersByEmail($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
+                $json['error']['not_found'] = lang('account/forgotten.error_email');
+            }
 
-            return false;
+        if (! $json) {
+            $customerModel->editCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), random_string('alnum', 40));
+            $json['success'] = lang('account/forgotten.text_success');
+            $json['redirect'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
         }
-
-        return true;
     }
+        return $this->response->setJSON($json);
+    }
+   
+    // protected function validateForm()
+    // {
+    //     $customerModel = new CustomerModel();
+        
+    //     if (! $this->validate([
+    //           'email' => "required|valid_email",
+    //        ])  || ! $customerModel->getTotalCustomersByEmail($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
+    //         $this->session->setFlashData('error_warning', lang('account/forgotten.error_email'));
 
-   // ------------------------------------------------------------- 
-} 
+    //         return false;
+    //     }
+
+    //     return true;
+    // }
+
+    // -------------------------------------------------------------
+}

@@ -6,7 +6,7 @@
 		<div class="text-right mt-4 w-100">
 			<a href="<?php echo $add_project; ?>" class="button dark button-sliding-icon ripple-effect rounded"><?php echo $button_hire; ?></a>
 			<?php if (! $logged) { ?>
-			<a href="<?php echo $login; ?>" class="button button-sliding-icon ripple-effect rounded"><?php echo $button_work; ?></a>
+			<a href="<?php echo $login; ?>" class="button button-sliding-icon ripple-effect rounded ml-2"><?php echo $button_work; ?></a>
 		   <?php } ?>
 		</div>
 	</div>

@@ -60,7 +60,7 @@
 		<div class="container">
 			<div class="row">
 				<!-- Links -->
-				<div class="col">
+				<div class="col-sm-12 col-md-3">
 					<div class="footer-links">
 						<h3><?php echo $text_freelancer; ?></h3>
 						<ul>
@@ -72,7 +72,7 @@
 					</div>
 				</div>
 				<!-- Links -->
-				<div class="col">
+				<div class="col-sm-12 col-md-3">
 					<div class="footer-links">
 						<h3><?php echo $text_terms; ?></h3>
 						<ul>
@@ -83,7 +83,7 @@
 						</ul>
 					</div>
 				</div>
-				<div class="col">
+				<div class="col-sm-12 col-md-3">
 					<div class="footer-links">
 						<h3><?php echo $text_categories; ?></h3>
 						<ul>
@@ -93,7 +93,7 @@
 						</ul>
 					</div>
 				</div>
-			   <div class="col">
+			   <div class="col-sm-12 col-md-3">
 					<div class="footer-links">
 						<h3><?php echo $text_account; ?></h3>
 						<ul>

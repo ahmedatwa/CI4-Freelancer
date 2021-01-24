@@ -26,7 +26,7 @@ class BaseController extends \CodeIgniter\Controller
      *
      * @var array
      */
-    protected $helpers = [];
+    protected $helpers = ['text'];
 
     /**
      * Constructor.

@@ -2,6 +2,7 @@
 
 use \Catalog\Models\Extension\Bid\BidModel;
 use \Catalog\Models\Freelancer\BalanceModel;
+use \Catalog\Models\Account\ReviewModel;
 
 class Bid extends \Catalog\Controllers\BaseController
 {
@@ -41,7 +42,7 @@ class Bid extends \Catalog\Controllers\BaseController
 
         $results = $bidModel->getBids($filter_data);
         $total = $bidModel->getTotalBids($filter_data);
-        $reviewModel = new \Catalog\Models\Account\ReviewModel();
+        $reviewModel = new ReviewModel();
 
         foreach ($results as $result) {
             $data['bids'][] = [
@@ -52,7 +53,7 @@ class Bid extends \Catalog\Controllers\BaseController
                 'delivery'   => $result['delivery'] . ' ' . lang($this->locale . '.text_days'),
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'profile'    => route_to('customer_profile', $result['customer_id']),
-                'image'      => ($result['image']) ? $this->resize($result['image'], 80, 80) : $this->resize('catalog/avatar.jpg', 80, 80),
+                'image'      => (file_exists('images/' . $result['image'])) ? $this->resize($result['image'], 80, 80) : $this->resize('catalog/avatar.jpg', 80, 80),
                 'rating'     => $reviewModel->getAvgReviewByFreelancerId($result['freelancer_id'])
             ];
         }
@@ -83,7 +84,7 @@ class Bid extends \Catalog\Controllers\BaseController
         // Employer Balance Validation
         if (!empty($this->request->getPost('fee'))) {
             if (($balance == 0) || $this->request->getPost('fee') > $balance) {
-                  $json['fee'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
+                $json['fee'] = sprintf(lang('freelancer/freelancer.error_balance'), route_to('freelancer_deposit'));
             }
         }
 
@@ -96,9 +97,7 @@ class Bid extends \Catalog\Controllers\BaseController
         }
 
         if (!$json) {
-            
             if ($this->request->getPost('project_id') || $this->request->getPost('freelancer_id')) {
-
                 $bidModel = new BidModel();
 
                 if (($this->request->getMethod() == 'post')) {

@@ -56,8 +56,6 @@ class Category extends \Catalog\Controllers\BaseController
         ];
     
         $data['categories'] = [];
-
-        helper('text');
         
         $results = $categoryModel->getCategories($filter_data);
 

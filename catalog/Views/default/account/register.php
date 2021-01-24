@@ -70,6 +70,7 @@ $('#button-form-register').on('click', function() {
 			    	$('#input-' + i).addClass('is-invalid');
 		        }
 		    	$('.welcome-text').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+ json['error_warning']+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		        $('#register-wrapper').addClass('animate__animated animate__shakeX');
 		    }
 
 		    if (json['error_attempts']) {

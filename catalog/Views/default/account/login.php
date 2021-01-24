@@ -1,6 +1,5 @@
 <?php echo $header; ?>
 <div class="section gray padding-bottom-60 padding-top-60 full-width-carousel-fix">	
-	<!-- Page Content -->
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-5 offset-xl-3">				
@@ -29,7 +28,7 @@
 					</form>
 					<button class="button btn-block" type="button" id="button-form-login"><?php echo $button_login; ?> <i class="icon-material-outline-arrow-right-alt"></i></button>
 					<p class="mt-3">
-						<a href="<?php echo $forgotton; ?>" class="forgot-password text-secondary"><?php echo $text_forgotten; ?></a>
+						<a href="<?php echo $forgotton; ?>" class="forgot-password text-secondary"><i class="fas fa-key"></i> <?php echo $text_forgotten; ?></a>
 					</p>
 					<!-- Social Login -->
 					<div class="social-login-separator"><span>or</span></div>

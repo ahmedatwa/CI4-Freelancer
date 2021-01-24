@@ -114,8 +114,6 @@ class Project extends \Catalog\Controllers\BaseController
             $page = 1;
         }
 
-        helper('text');
-
         $filter_data = [
              'filter_category_id' => $filter_category_id,
              'filter_type'        => $filter_type,
@@ -253,7 +251,7 @@ class Project extends \Catalog\Controllers\BaseController
     }
 
     // Single Project View
-    //  function in case of failed route, therfore 404 error won't be excuted
+    //  function in case of failed route for info, therfore 404 error won't be excuted
     public function view()
     {
         $this->info();
@@ -261,13 +259,11 @@ class Project extends \Catalog\Controllers\BaseController
 
     public function info()
     {
-        if ($this->request->uri->getSegment(3)) {
+        if ($this->request->uri->getSegment(3) && $this->request->uri->getSegment(3) != 'view') {
             $keyword = $this->request->uri->getSegment(3);
         } else {
             $keyword = '';
         }
-
-        $this->template->setTitle($keyword);
 
         $projectModel = new ProjectModel();
 
@@ -306,11 +302,16 @@ class Project extends \Catalog\Controllers\BaseController
             'text' => $categoryModel->getCategoryByProjectId($project_id),
             'href' => route_to('projects') ? route_to('projects') : base_url('project/project?pid=' . $project_id),
         ];
-
-        $data['breadcrumbs'][] = [
-            'text' => $keyword ?? lang('project/project.text_project'),
-            'href' => '',
-        ];
+        // for pre-defined routes
+        if ($keyword) {
+            $this->template->setTitle($keyword);
+            $data['breadcrumbs'][] = [
+                'text' => $keyword ?? lang('project/project.text_project'),
+                'href' => '',
+            ];
+        } else {
+            $this->template->setTitle('Project');
+        }
 
         if ($this->customer->isLogged()) {
             $data['freelancer_id'] = $this->customer->getCustomerId();
@@ -351,9 +352,12 @@ class Project extends \Catalog\Controllers\BaseController
                 $projectModel->update($project_info['project_id'], $project_status);
             }
 
+
             if (! is_int($days_left)) {
                 $data['days_left'] = $project_info['status'];
-            } else {
+            } elseif($days_left <= 0) {
+            	$data['days_left'] = lang('project/project.text_expired');
+            } else {	
                 $data['days_left'] = lang('project/project.text_expire', [$days_left]);
             }
             
