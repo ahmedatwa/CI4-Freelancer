@@ -85,7 +85,6 @@
 <script src="catalog/default/javascript/markerclusterer.js"></script>
 <script src="catalog/default/javascript/maps.js"></script>
 <?php echo $footer;?>
-
 <script type="text/javascript">
 	$('#button-contact-us').on('click', function() {
 		var node = this;
