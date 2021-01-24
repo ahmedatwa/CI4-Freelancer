@@ -25,7 +25,6 @@ class Contact extends BaseController
         $data['text_help']        = lang('information/contact.text_help');
         $data['text_address']     = lang('information/contact.text_address');
 
-
         $this->template->output('information/contact', $data);
     }
 
@@ -47,10 +46,10 @@ class Contact extends BaseController
                 $email = \Config\Services::email();
 
                 $email->setFrom($this->registry->get('config_email'), $this->registry->get('config_name'));
-                $email->setTo(html_entity_decode($this->request->getPost('name'), ENT_QUOTES, 'UTF-8'));
+                $email->setTo(html_entity_decode($this->request->getPost('name', FILTER_SANITIZE_STRING), ENT_QUOTES, 'UTF-8'));
 
-                $email->setSubject(html_entity_decode(sprintf(lang('information/contact.email_subject'), $this->request->getPost('name')), ENT_QUOTES, 'UTF-8'));
-                $email->setMessage($this->request->getPost('enquiry'));
+                $email->setSubject(html_entity_decode(sprintf(lang('information/contact.email_subject'), $this->request->getPost('name', FILTER_SANITIZE_STRING)), ENT_QUOTES, 'UTF-8'));
+                $email->setMessage($this->request->getPost('enquiry', FILTER_SANITIZE_STRING));
             
                 if ($email->send()) {
                     $json['success'] = lang('information/contact.text_success');
