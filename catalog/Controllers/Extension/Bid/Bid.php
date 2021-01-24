@@ -52,7 +52,7 @@ class Bid extends \Catalog\Controllers\BaseController
                 'description' => nl2br($result['description']),
                 'delivery'   => $result['delivery'] . ' ' . lang($this->locale . '.text_days'),
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'profile'    => route_to('customer_profile', $result['customer_id']),
+                'profile'    => route_to('freelancer_profile', $result['customer_id'], $result['username']),
                 'image'      => (file_exists('images/' . $result['image'])) ? $this->resize($result['image'], 80, 80) : $this->resize('catalog/avatar.jpg', 80, 80),
                 'rating'     => $reviewModel->getAvgReviewByFreelancerId($result['freelancer_id'])
             ];

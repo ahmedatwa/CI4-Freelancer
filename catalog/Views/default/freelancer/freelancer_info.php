@@ -6,7 +6,7 @@
 	<div class="col-md-12">
 		<div class="single-page-header-inner">
 			<div class="left-side">
-				<div class="header-image freelancer-avatar"><img src="<?php echo $image; ?>" alt=""></div>
+				<div class="header-image freelancer-avatar rounded-pill"><img src="<?php echo $image; ?>" alt=""></div>
 				<div class="header-details">
 					<h3><?php echo $name; ?> <span><?php echo $tag_line; ?></span></h3>
 					<ul>

@@ -90,7 +90,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $total = $customerModel->getTotalCustomers($filter_data);
 
         foreach ($results as $result) {
-            if ($result['image']) {
+            if ($result['image'] && file_exists('images/' . $result['image'])) {
                 $image = $this->resize($result['image'], 110, 110);
             } else {
                 $image = $this->resize('catalog/avatar.jpg', 110, 110);
@@ -275,7 +275,13 @@ class Freelancer extends \Catalog\Controllers\BaseController
             $data['rate']          = $customer_info['rate'];
             $data['tag_line']      = ($customer_info['tag_line'] == 'NULL') ? '' : $customer_info['tag_line'];
             
-            $data['image']         = $customer_info['image'] ? $this->resize($customer_info['image'], 130, 130) : $this->resize('catalog/avatar.jpg', 130, 130);
+            if ($customer_info['image'] && file_exists('images/' . $customer_info['image'])) {
+                $image = $this->resize($customer_info['image'], 130, 130);
+            } else {
+                $image = $this->resize('catalog/avatar.jpg', 130, 130);
+            }
+
+            $data['image']         =  $image;
             // Widgets
             $data['rating']        = $reviewModel->getAvgReviewByFreelancerId($customer_id);
             $data['recommended']   = $reviewModel->getRecommendedByFreelancerId($customer_id);

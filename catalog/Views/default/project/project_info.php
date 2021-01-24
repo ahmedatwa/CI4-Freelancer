@@ -84,7 +84,7 @@
 				    <?php } ?>
 				<?php if ($logged && ($freelancer_id != $employer_id)) { ?>
 				<?php if ($days_left > 0) { ?>
-					<hr />
+				<hr />
 				<div class="single-page-section">
 						<div class="bidding-headline"><h3><?php echo $text_bid; ?></h3>
 							<p class="mb-4"><?php echo $text_bid_detail; ?></p></div>
