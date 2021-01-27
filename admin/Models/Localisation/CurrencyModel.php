@@ -108,7 +108,7 @@ class CurrencyModel extends Model
         } else {
             $currency_data = cache()->get('currency');
 
-            if (!$currency_data) {
+            if (! $currency_data) {
                 $currency_data = [];
                 $builder = $this->db->table('currency');
                 $builder->select();
@@ -180,7 +180,6 @@ class CurrencyModel extends Model
         $builder->set('date_modified', 'NOW()', false);
         $builder->where('code', $code);
         $builder->update();
-
         cache()->delete('currency');
     }
 
