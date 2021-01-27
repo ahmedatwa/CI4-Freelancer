@@ -914,7 +914,7 @@ $("#avatar-1").fileinput({
 				}
 
 				if (json['success']) {
-					$('#profile-form .content').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> '+ json['success'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$(node).before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> '+ json['success'] +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 					$('#profile-form-form input').val('');
 				}
 			},

@@ -15,7 +15,7 @@ class CurrencyModel extends \CodeIgniter\Model
 
 		$currency_data = cache()->get('currency');
 
-		if (!$currency_data) {
+		if (! $currency_data) {
 			$currency_data = [];
 
 			$builder = $this->db->table('currency');
@@ -23,7 +23,7 @@ class CurrencyModel extends \CodeIgniter\Model
 	   		$query = $builder->get();
 
 			foreach ($query->getResultArray() as $result) {
-				$currency_data[$result['code']] = array(
+				$currency_data[$result['code']] = [
 					'currency_id'   => $result['currency_id'],
 					'title'         => $result['title'],
 					'code'          => $result['code'],
@@ -33,7 +33,7 @@ class CurrencyModel extends \CodeIgniter\Model
 					'value'         => $result['value'],
 					'status'        => $result['status'],
 					'date_modified' => $result['date_modified']
-				);
+				];
 			}
 
 			cache()->save('currency', $currency_data);

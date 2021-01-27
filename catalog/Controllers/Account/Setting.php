@@ -744,51 +744,45 @@ class Setting extends \Catalog\Controllers\BaseController
     public function profileUpdate()
     {
         $json = [];
-        if ($this->request->isAJAX()) {
-            // Fields Validation Rules
-            if ($this->request->getMethod() == 'post') {
-                // Passowrd Update
-                if ($this->request->getPost('current') && $this->request->getPost('password')) {
-                    if (! $this->validate([
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
+            // Fields Validation Rules // Passowrd Update
+            if ($this->request->getPost('current') && $this->request->getPost('password')) {
+                if (! $this->validate([
                         'current'  => 'required',
                         'password' => 'required|min_length[4]|alpha_numeric_punct',
                         'confirm'  => 'required_with[password]|matches[password]',
                     ])) {
-                        $json['error'] = $this->validator->getErrors();
-                    }
+                    $json['error'] = $this->validator->getErrors();
+                }
 
-                    if (! $json) {
-                        $customerModel = new CustomerModel();
+                if (! $json) {
+                    $customerModel = new CustomerModel();
 
-                        $oldPassword = $customerModel->where('customer_id', $this->customer->getCustomerID())
-                                             ->findColumn('password');
-                        if (password_verify($this->request->getPost('current'), $oldPassword[0])) {
-                            // old password passed then update
-                            $customerModel->where('customer_id', $this->customer->getCustomerID())
-                                  ->set('password', $this->request->getPost('password'))
-                                  ->update();
-                            $json['success'] = lang('account/setting.text_password_success');
-                        } else {
-                            $json['error']['old_password'] = lang('account/setting.error_old_password');
-                        }
+                    $oldPassword = $customerModel->where('customer_id', $this->customer->getCustomerID())
+                                                 ->findColumn('password');
+                    if (password_verify($this->request->getPost('current'), $oldPassword[0])) {
+                        // old password passed then update
+                        $customerModel->where('customer_id', $this->customer->getCustomerID())
+                                      ->set('password', $this->request->getPost('password'))
+                                      ->update();
+                        $json['success'] = lang('account/setting.text_password_success');
+                    } else {
+                        $json['error']['old_password'] = lang('account/setting.error_old_password');
                     }
-                    // Name  
-                } else {
-                    if (! $this->validate([
+                }
+                // Name
+            } else {
+                if (! $this->validate([
                         'firstname' => 'required|alpha_numeric',
                         'lastname'  => 'required|alpha_numeric',
                     ])) {
-                        $json['error'] = $this->validator->getErrors();
-                    }
+                    $json['error'] = $this->validator->getErrors();
+                }
 
-                    if (! $json) {
-                        $customerModel = new CustomerModel();
-
-                        if (($this->request->getMethod() == 'post') && $this->validateForm()) {
-                            $customerModel->update($this->session->get('customer_id'), $this->request->getPost());
-                            $json['success'] = lang('account/setting.text_success');
-                        }                
-                    }
+                if (! $json) {
+                    $customerModel = new CustomerModel();
+                    $customerModel->update($this->session->get('customer_id'), $this->request->getPost());
+                    $json['success'] = lang('account/setting.text_success');
                 }
             }
         }
