@@ -57,9 +57,7 @@ class Google_Service_GoogleAnalyticsAdmin_Resource_PropertiesAndroidAppDataStrea
     return $this->call('delete', array($params), "Google_Service_GoogleAnalyticsAdmin_GoogleProtobufEmpty");
   }
   /**
-   * Lookup for a single AndroidAppDataStream Throws "Target not found" if no such
-   * android app data stream found, or if the caller does not have permissions to
-   * access it. (androidAppDataStreams.get)
+   * Lookup for a single AndroidAppDataStream (androidAppDataStreams.get)
    *
    * @param string $name Required. The name of the android app data stream to
    * lookup. Format: properties/{property_id}/androidAppDataStreams/{stream_id}
@@ -84,13 +82,13 @@ class Google_Service_GoogleAnalyticsAdmin_Resource_PropertiesAndroidAppDataStrea
    * "properties/123"
    * @param array $optParams Optional parameters.
    *
+   * @opt_param int pageSize The maximum number of resources to return. If
+   * unspecified, at most 50 resources will be returned. The maximum value is 200;
+   * (higher values will be coerced to the maximum)
    * @opt_param string pageToken A page token, received from a previous call.
    * Provide this to retrieve the subsequent page. When paginating, all other
    * parameters provided to `ListAndroidAppDataStreams` must match the call that
    * provided the page token.
-   * @opt_param int pageSize The maximum number of resources to return. If
-   * unspecified, at most 50 resources will be returned. The maximum value is 200;
-   * (higher values will be coerced to the maximum)
    * @return Google_Service_GoogleAnalyticsAdmin_GoogleAnalyticsAdminV1alphaListAndroidAppDataStreamsResponse
    */
   public function listPropertiesAndroidAppDataStreams($parent, $optParams = array())
@@ -108,8 +106,9 @@ class Google_Service_GoogleAnalyticsAdmin_Resource_PropertiesAndroidAppDataStrea
    * @param Google_Service_GoogleAnalyticsAdmin_GoogleAnalyticsAdminV1alphaAndroidAppDataStream $postBody
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string updateMask The list of fields to be updated. Omitted fields
-   * will not be updated.
+   * @opt_param string updateMask Required. The list of fields to be updated.
+   * Omitted fields will not be updated. To replace the entire entity, use one
+   * path with the string "*" to match all fields.
    * @return Google_Service_GoogleAnalyticsAdmin_GoogleAnalyticsAdminV1alphaAndroidAppDataStream
    */
   public function patch($name, Google_Service_GoogleAnalyticsAdmin_GoogleAnalyticsAdminV1alphaAndroidAppDataStream $postBody, $optParams = array())

@@ -18,6 +18,9 @@
     <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="assets/vendor/bootstrap-sweetalert/sweetalert.min.js"></script>
+           <?php foreach($scripts as $script) { ?>
+<script type="text/javascript" src="<?php echo $script; ?>"></script>
+       <?php } ?>
     <script src="assets/javascript/common.js"></script>
 </head>
 <body>

@@ -113,11 +113,11 @@ class Document
      */
     public function addStyle($href, $rel = 'stylesheet', $media = 'screen')
     {
-        $this->styles[$href] = array(
-            'href'  => $href,
+        $this->styles[$href] = [
             'rel'   => $rel,
+            'href'  => $href,
             'media' => $media
-        );
+        ];
     }
 
     /**

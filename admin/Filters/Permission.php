@@ -4,6 +4,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 use Config\Services;
+use \Admin\Libraries\User;
 
 class Permission implements FilterInterface
 {
@@ -15,7 +16,7 @@ class Permission implements FilterInterface
         }
 
         $session = \Config\Services::session();
-        $user = new \Admin\Libraries\User();
+        $user = new User();
         $loader = Services::locator(true);
 
         $segments = $request->uri->getSegments();

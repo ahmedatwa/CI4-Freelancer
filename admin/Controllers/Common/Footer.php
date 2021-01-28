@@ -4,8 +4,6 @@ class Footer extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $data['scripts'] = $this->document->getScripts();
-
 		$data['text_footer']  = sprintf(lang('common/footer.text_footer'), $this->registry->get('config_name'));
 		$data['text_version'] = lang('common/footer.text_version');
 

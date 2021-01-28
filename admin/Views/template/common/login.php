@@ -1,22 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title><?php echo $text_title; ?></title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="<?php echo csrf_token(); ?>" content="<?php echo csrf_hash(); ?>">
-    <base href="<?php echo $base; ?>">
-    <link rel="icon" type="image/png" href="assets/images/icons/favicon.ico"/>
-    <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/vendor/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/vendor/animate/animate.css">
-    <link rel="stylesheet" type="text/css" href="assets/stylesheet/util.css">
-    <link rel="stylesheet" type="text/css" href="assets/stylesheet/login.css">
-</head>
-<body>
+<?php echo $header; ?>
     <div class="limiter">
         <div class="container-login100">
-            <div class="wrap-login100" id="container">
+            <div class="wrap-login100" id="login-in-container">
               <div id="error" class="col-12"></div>
                 <div class="login100-pic js-tilt" data-tilt>
                     <img src="assets/images/img-01.png" alt="IMG">
@@ -59,9 +44,6 @@
             </div>
         </div>
     </div>
-<script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/vendor/tilt/tilt.jquery.min.js"></script>
 <script type="text/javascript">
     $('.js-tilt').tilt({
         scale: 1.1
@@ -69,6 +51,7 @@
 </script>
 <script type="text/javascript">
 $('#button-login').on('click', function() {
+    var node = this;
     $.ajax({
         url: 'index.php/common/login/authLogin',
         headers: {
@@ -82,10 +65,10 @@ $('#button-login').on('click', function() {
         beforeSend: function() {
             $('#form-login').removeClass('is-invalid');
             $('.alert, .text-danger, .invalid-feedback').remove();
-            $(this).prop('disabled', true);       
+            $(node).prop('disabled', true);       
         },
         complete: function() {
-            $(this).prop('disabled', false);  
+            $(node).prop('disabled', false);  
         },
         success: function(json) {
             if (json['validator']) {
@@ -110,16 +93,13 @@ $('#button-login').on('click', function() {
                 $('#button-login').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> Loading...');
                 setTimeout(function() { 
                     location = json['redirect'];
-                }, 2500);
+                }, 1500);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "Page will be reloaded for new access token!");
-            // refresh the page for new access token
-            location.reload();
+            $('#error').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> Action ' + thrownError + ': Reload for new access token to be generated! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         }
     });
 });
 </script>
-</body>
-</html>
+<?php echo $footer; ?>

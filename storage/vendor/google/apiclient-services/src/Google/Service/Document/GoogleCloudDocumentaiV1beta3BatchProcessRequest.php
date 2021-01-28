@@ -22,16 +22,17 @@ class Google_Service_Document_GoogleCloudDocumentaiV1beta3BatchProcessRequest ex
   protected $inputConfigsDataType = 'array';
   protected $outputConfigType = 'Google_Service_Document_GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig';
   protected $outputConfigDataType = '';
+  public $skipHumanReview;
 
   /**
-   * @param Google_Service_Document_GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig
+   * @param Google_Service_Document_GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig[]
    */
   public function setInputConfigs($inputConfigs)
   {
     $this->inputConfigs = $inputConfigs;
   }
   /**
-   * @return Google_Service_Document_GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig
+   * @return Google_Service_Document_GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig[]
    */
   public function getInputConfigs()
   {
@@ -50,5 +51,13 @@ class Google_Service_Document_GoogleCloudDocumentaiV1beta3BatchProcessRequest ex
   public function getOutputConfig()
   {
     return $this->outputConfig;
+  }
+  public function setSkipHumanReview($skipHumanReview)
+  {
+    $this->skipHumanReview = $skipHumanReview;
+  }
+  public function getSkipHumanReview()
+  {
+    return $this->skipHumanReview;
   }
 }
