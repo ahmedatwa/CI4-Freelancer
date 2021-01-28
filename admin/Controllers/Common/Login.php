@@ -29,7 +29,7 @@ class Login extends \Admin\Controllers\BaseController
         }
 
         $data['forgot'] = base_url('index.php/common/forgotten');
-
+        $data['login'] = base_url('index.php/common/login');
         $data['base'] = slash_item('baseURL');
     
         if (!empty($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
@@ -45,18 +45,10 @@ class Login extends \Admin\Controllers\BaseController
         }
 
         if ($this->request->getVar('redirect')) {
-            $data['redirect'] = base_url('index.php/' . $this->request->getVar('redirect'));
+            $data['redirect'] = base_url('index.php/' . $this->request->getVar('redirect', FILTER_SANITIZE_URL));
         } else {
             $data['redirect'] = '';
         }
-
-        $data['text_title']           = lang('common/login.text_title');
-        $data['button_login']         = lang('common/login.button_login');
-        $data['heading_title']        = lang('common/login.heading_title');
-        $data['text_forget_password'] = lang('common/login.text_forget_password');
-        $data['text_keep_signed']     = lang('common/login.text_keep_signed');
-        $data['entry_email']          = lang('common/login.entry_email');
-        $data['entry_password']       = lang('common/login.entry_password');
 
         return $this->document->output('common/login', $data);
     }

@@ -31,8 +31,9 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 //$routes->add('from', 'to', ['subdomain' => 'admin']);
+$routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
 
-$routes->get('/', 'Common/Login::index');
+$routes->add('/', 'Common/Login::index');
 
 // Extenstions
 $routes->group('extensions', ['namespace' => 'Extensions\Controllers'], function($routes)

@@ -13,6 +13,7 @@ return [
 		'text_activity_reset'     => '<a href="User_id=%d">%s</a> reset their account password.',
 		'text_activity_login'     => '<a href="User_id=%d">%s</a> logged in.',
 		'text_activity_forgotten' => '<a href="User_id=%d">%s</a> requested a reset password.',
+		'text_activity_customer_review'          => 'You have received new <a href="url="><strong class="text-danger">project feedback</strong></a>.',
 		// Column
 		'column_User'             => 'User',
 		'column_comment'          => 'Comment',

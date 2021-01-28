@@ -1,30 +1,45 @@
 <?php echo $header; ?>
-<div class="container">
-  <div class="row align-items-center justify-content-center h-100">
-    <div id="login" class="col-sm-12 col-md-6">
-        <div class="card">
-            <div class="card-header"><i class="fas fa-lock"></i> <?php echo $heading_title; ?></div>
-            <div class="card-body p-3">
-            <form class="form-horizontal" action="" method="" encrypt="multipart/form-data" accept-charset="utf-8" id="form-forgot">
-                <div class="form-group auth-form-group-custom mb-4">
-                    <i class="ri-mail-line auti-custom-input-icon"></i>
-                    <label for="useremail"><?php echo $entry_email; ?></label>
-                    <input type="email" class="form-control" id="input-email" name="email">
+<div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100" id="login-in-container" style="padding-bottom: 100px; padding-top: 100px">
+              <div id="error" class="col-12"></div>
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="assets/images/forgot.jpg" alt="IMG">
                 </div>
-                <div class="mt-4 text-center">
-                    <button class="btn btn-primary w-md waves-effect waves-light" type="button" id="button-forgot"><i class="fas fa-sign-in-alt"></i> <?php echo $button_reset; ?></button>
-                    <a class="btn btn-light" href="<?php echo $cancel; ?>">
-                        <i class="fas fa-reply"></i></a>
+                <form class="login100-form" id="form-forgot">
+                    <span class="login100-form-title" id="form-title">
+                        <?php echo $heading_title; ?>
+                    </span>
+                    <div class="wrap-input100 ">
+                        <input class="form-control input100" type="text" name="email" id="input-email" placeholder="Email">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn" id="button-forgot" type="button">
+                            <i class="fas fa-sign-in-alt mr-1"></i> <?php echo $button_reset; ?>
+                        </button>
+                    </div>
+                    <div class="text-center p-t-12">
+                        <a class="txt1" href="<?php echo $cancel; ?>">
+                            <i class="fas fa-reply"></i> Cancel</a>
+                        </a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
-</div>
+<script type="text/javascript">
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+</script>
 <?php echo $footer; ?>
 <script type="text/javascript">
 $('#button-forgot').on('click', function() {
+    var node = this;
     $.ajax({
         url: 'index.php/common/forgotten/resetPassword',
         headers: {
@@ -37,10 +52,10 @@ $('#button-forgot').on('click', function() {
         beforeSend: function() {
             $('#form-forgot').removeClass('is-invalid');
             $('.alert, .text-danger, .invalid-feedback').remove();
-            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+            $(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
         },
         complete: function() {
-            $(this).html('<i class="fas fa-sign-in-alt"></i> <?php echo $button_reset; ?>');
+            $(node).html('<i class="fas fa-sign-in-alt"></i> <?php echo $button_reset; ?>');
         },
         success: function(json) {
             if (json['error']) {
@@ -49,24 +64,26 @@ $('#button-forgot').on('click', function() {
             }
 
             if (json['error_record']) {
-                $('#form-forgot').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error_record'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+                $('#error').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error_record'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
             }
 
             if (json['throttler']) {
-                $('#form-forgot').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['throttler'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>') 
+                $('#error').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['throttler'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>') 
             }
 
             if (json['success']) {
-                $('#form-forgot').html('<div class="d-flex justify-content-center"><div class="spinner-border text-success" role="status"><span class="sr-only">Loading...</span></div></div><span class="mt-3 d-flex justify-content-center">' + json['success'] + '</span>');
+                $('#form-forgot').before('<div class="d-flex justify-content-center"><div class="spinner-border text-success" role="status"><span class="sr-only">Loading...</span></div></div><span class="mt-3 d-flex justify-content-center">' + json['success'] + '</span>');
 
                 setTimeout(function() { 
+                    $('#form-forgot input').prop('disabled', true);
+                    $(node).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> Loading...');
                     location = json['redirect'];
                 }, 2000);
             }
 
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            $('#error').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> Action ' + thrownError + ': <a class="text-primary" href="<?php echo $forgot; ?>"> Reload</a> for new access token to be generated! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         }
 
     });

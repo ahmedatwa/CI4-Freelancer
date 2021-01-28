@@ -7,6 +7,9 @@ class Forgotten extends \Admin\Controllers\BaseController
     public function index()
     {
         $this->document->setTitle(lang('common/forgotten.list.heading_title'));
+        $this->document->addScript('assets/vendor/tilt/tilt.jquery.min.js');
+        $this->document->addStyle('assets/stylesheet/util.css');
+        $this->document->addStyle('assets/stylesheet/login.css');
 
         $userModel = new UserModel();
 
@@ -15,6 +18,7 @@ class Forgotten extends \Admin\Controllers\BaseController
         }
 
         $data['cancel'] = base_url('index.php/common/login');
+        $data['forgot'] = base_url('index.php/common/forgotten');
 
         $this->document->output('common/forgotten', $data);
     }

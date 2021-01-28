@@ -10,29 +10,32 @@ class Permission implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        // Override / Page
-        if (current_url() == slash_item('baseURL')) {
-            return;
-        }
-
         $session = \Config\Services::session();
         $user = new User();
         $loader = Services::locator(true);
 
         $segments = $request->uri->getSegments();
 
-
-        if (in_array('extensions', $segments)) {
-            $controller = $loader->locateFile(ucfirst(end($segments)), ucfirst($request->uri->getSegment(1)) . '/Controllers/' . ucfirst($request->uri->getSegment(2)));
-        } else {
-            $controller = $loader->locateFile(ucfirst($request->uri->getSegment(2)), 'Controllers/' . ucfirst($request->uri->getSegment(1)));
+        if ($segments) {
+            if (in_array('extensions', $segments)) {
+                $controller = $loader->locateFile(ucfirst(end($segments)), ucfirst($request->uri->getSegment(1)) . '/Controllers/' . ucfirst($request->uri->getSegment(2)));
+            } else {
+                $controller = $loader->locateFile(ucfirst($request->uri->getSegment(2)), 'Controllers/' . ucfirst($request->uri->getSegment(1)));
+            }
         }
-
-        // get Correct Routes
-        if (in_array('extensions', $segments)) {
-            $route = rtrim($request->uri->getSegment(1) . '/' . $request->uri->getSegment(2) . '/' . $request->uri->getSegment(3), '/');
+        
+        // Check for Main Login Route
+        if ($segments) {
+            // get Correct Routes
+            if (in_array('extensions', $segments)) {
+                $route = rtrim($request->uri->getSegment(1) . '/' . $request->uri->getSegment(2) . '/' . $request->uri->getSegment(3), '/');
+            } else {
+                $route = rtrim($request->uri->getSegment(1) . '/' . $request->uri->getSegment(2), '/');
+            }
+        } elseif (current_url() == slash_item('baseURL')) {
+            $route = 'common/login';
         } else {
-            $route = rtrim($request->uri->getSegment(1) . '/' . $request->uri->getSegment(2), '/');
+            throw new \Exception("Error: No Valid URL Segments!");
         }
 
         if (! $route) {

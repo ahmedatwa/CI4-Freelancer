@@ -26,12 +26,12 @@
                     </div>
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn" id="button-login" type="button">
-                            Login
+                            <i class="fas fa-sign-in-alt mr-1"></i> Login
                         </button>
                     </div>
                     <div class="text-center p-t-12">
                         <span class="txt1">
-                            Forgot
+                            <i class="fas fa-key"></i> Forgot
                         </span>
                         <a class="txt2" href="<?php echo $forgot; ?>">
                             Username / Password?
@@ -97,7 +97,7 @@ $('#button-login').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            $('#error').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> Action ' + thrownError + ': Reload for new access token to be generated! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            $('#error').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> Action ' + thrownError + ': <a class="text-primary" href="<?php echo $login; ?>">Reload</a> for new access token to be generated! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         }
     });
 });
