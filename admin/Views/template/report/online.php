@@ -46,7 +46,7 @@
                             <td><?php echo $customer['date_added']; ?></td>
                             <td class="text-center"> 
                             <?php if ($customer['customer_id']) { ?>
-                                <a href="<?php echo $report['edit']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>" ><i class="far fa-edit"></i></a>
+                                <a href="<?php echo $customer['edit']; ?>" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>" ><i class="far fa-edit"></i></a>
                                     </tr>
                              <?php } else { ?>   
                              <a href="#" class="btn btn-primary btn-sm disabled" data-toggle="tooltip" data-placement="top" title="<?php echo $button_edit; ?>"><i class="far fa-edit"></i></a>
