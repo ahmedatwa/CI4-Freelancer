@@ -141,9 +141,22 @@
 											<input type="text" class="form-control" name="github" value="<?php echo $github; ?>">
 										</div>
 									</div>
-									
 									<div class="col-12">
 										<button type="submit" class="button ripple-effect big margin-top-30 float-right"><?php echo $button_submit; ?></button>
+									</div>
+									
+									<div class="col-12 mt-4">
+										<div class="dropdown-divider my-4"></div>
+										<h5 class="mb-4">Profile Background Image:</h5>
+										<div class="kv-avatar-2">
+											<div class="file-loading">
+												<input id="avatar-2" name="bg_image" type="file">
+											</div>
+										</div>
+										<div class="kv-avatar2-hint">
+											<small>Select file < 1500 KB | jpg,png,gif</small>
+										</div>
+										<div id="kv-avatar2-errors" class="center-block" style="width:100%;display:none"></div>
 									</div>
 								</div>
 							</li>
@@ -868,6 +881,39 @@ $("#avatar-1").fileinput({
     elErrorContainer: '#kv-avatar-errors',
     msgErrorClass: 'alert alert-block alert-danger',
     defaultPreviewContent: '<?php echo $thumb; ?>',
+    allowedFileExtensions: ["jpg", "png", "gif"]
+});
+
+// BG Image
+$("#avatar-2").fileinput({
+	uploadUrl: 'account/setting/backgroundImageUpload',
+    maxFileSize: 1500,
+    overwriteInitial: true,
+	initialPreviewAsData: true,
+    showClose: false,
+    showCaption: true,
+    showUpload: true,
+    showBrowse: true,
+	showRemove: true,
+    theme: 'fas',
+    browseOnZoneClick: true,
+    fileActionSettings: {
+       showZoom: false,
+       showDrag: false,
+	   removeClass: 'd-none',
+	   showUpload: false,
+    },
+    removeIcon: '<i class="far fa-window-close"></i>',
+	removeLabel: 'Remove',
+	removeTitle: 'Cancel or reset changes',
+    removeClass: 'btn btn-danger',
+    uploadExtraData: {
+        'csrf-token': $('meta[name="csrf-token"]').attr('content'),
+        'X-Requested-With': 'XMLHttpRequest'
+    },
+    elErrorContainer: '#kv-avatar2-errors',
+    msgErrorClass: 'alert alert-block alert-danger',
+    defaultPreviewContent: '<?php echo $bg_thumb; ?>',
     allowedFileExtensions: ["jpg", "png", "gif"]
 });
 </script>

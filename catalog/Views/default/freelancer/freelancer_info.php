@@ -1,6 +1,6 @@
 <?php echo $header; ?> 
 <!-- Titlebar  -->
-<div class="single-page-header freelancer-header margin-bottom-30" data-background-image="catalog/default/images/single-freelancer.jpg">
+<div class="single-page-header freelancer-header margin-bottom-30" data-background-image="<?php echo $bgImage; ?>">
 <div class="container">
 <div class="row">
 	<div class="col-md-12">

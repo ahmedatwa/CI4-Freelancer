@@ -282,6 +282,14 @@ class Freelancer extends \Catalog\Controllers\BaseController
             }
 
             $data['image']         =  $image;
+
+            if ($customer_info['bg_image'] && file_exists('images/' . $customer_info['bg_image'])) {
+                $bgImage = $this->resize($customer_info['bg_image'], 1200, 1200);
+            } else {
+                $bgImage = $this->resize('catalog/single-freelancer.jpg', 1200, 1200);
+            }
+
+            $data['bgImage'] = $bgImage;
             // Widgets
             $data['rating']        = $reviewModel->getAvgReviewByFreelancerId($customer_id);
             $data['recommended']   = $reviewModel->getRecommendedByFreelancerId($customer_id);

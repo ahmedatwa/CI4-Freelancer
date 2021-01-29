@@ -138,8 +138,18 @@ class Setting extends \Catalog\Controllers\BaseController
             $data['github'] = '';
         }
 
+        if ($this->request->getPost('bg_image')) {
+            $data['bg_image'] = $this->request->getPost('bg_image');
+        } elseif ($customer_info['bg_image']) {
+            $data['bg_image'] = $customer_info['bg_image'];
+        } else {
+            $data['bg_image'] = '';
+        }
+
         $data['thumb'] = (!empty($customer_info['image'])) ? '<img src="images/'.$customer_info['image'].'" style="height:260px;"alt="Your Avatar">' : '<img src="images/catalog/avatar.jpg" style="height:260px;"alt="Your Avatar"><h6 class="text-muted">Click to select</h6>';
         
+        $data['bg_thumb'] = (!empty($customer_info['bg_image'])) ? '<img src="images/'.$customer_info['bg_image'].'" style="height:260px;width:100%;" alt="Your Avatar">' : '<img src="images/no_image.jpg" style="height:260px;width:100%;" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>';
+
         $data['action'] = base_url('account/setting/edit?customer_id=' . $this->customer->getCustomerID());
 
         $data['heading_title']          = lang('account/setting.heading_title');
@@ -741,6 +751,35 @@ class Setting extends \Catalog\Controllers\BaseController
         return $this->response->setJSON($json);
     }
 
+    public function backgroundImageUpload()
+    {
+        $json = [];
+        if ($this->request->isAJAX()) {
+            if ($imagefile = $this->request->getFile('bg_image')) {
+                $customerModel = new CustomerModel();
+
+                if ($imagefile->isValid() && ! $imagefile->hasMoved()) {
+                    $newName = $imagefile->getRandomName();
+                    $imagefile->move('images/catalog', $newName);
+                    $customerModel->where('customer_id', $this->session->get('customer_id'))
+                              ->set('bg_image', 'catalog/' . $newName)
+                              ->update();
+                    // return fileInput Config
+                    $json = [
+                        'initialPreview' => base_url('images/catalog/' . $newName),
+                        'initialPreviewConfig' => [
+                            'caption' => $imagefile->getClientName(),
+                            'url'     => '',
+                            'key'     => $this->session->get('customer_id'),
+                        ],
+                        'append' => true,
+                   ];
+                }
+            }
+        }
+        return $this->response->setJSON($json);
+    }
+
     public function profileUpdate()
     {
         $json = [];
@@ -788,5 +827,6 @@ class Setting extends \Catalog\Controllers\BaseController
         }
         return $this->response->setJSON($json);
     }
+
     //--------------------------------------------------------------------
 }
