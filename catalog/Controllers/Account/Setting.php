@@ -149,7 +149,7 @@ class Setting extends \Catalog\Controllers\BaseController
 
         // Background image placeholder
         if (!empty($customer_info['bg_image']) && file_exists('images/' . $customer_info['bg_image'])) {
-            $bg_thumb = '<img src="images/'. $customer_info['bg_image'] . '" style="height:260px;width:100%;" alt="Your Avatar">';
+            $bg_thumb = '<img src="images/'. $customer_info['bg_image'] . '" style="height:260px; width:100%;" alt="Your Profile Background Image">';
         } else {
             $bg_thumb = '<img src="images/no_image.jpg" style="height:260px;width:100%;" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>';
         }
