@@ -138,17 +138,23 @@ class Setting extends \Catalog\Controllers\BaseController
             $data['github'] = '';
         }
 
-        if ($this->request->getPost('bg_image')) {
-            $data['bg_image'] = $this->request->getPost('bg_image');
-        } elseif ($customer_info['bg_image']) {
-            $data['bg_image'] = $customer_info['bg_image'];
+        // avatar placeholder
+        if (!empty($customer_info['image']) && file_exists('images/' . $customer_info['image'])) {
+            $thumb = '<img src="images/' . $customer_info['image'] . '" style="height:260px;" alt="Your Avatar">';
         } else {
-            $data['bg_image'] = '';
+            $thumb = '<img src="images/catalog/avatar.jpg" style="height:260px;"alt="Your Avatar"><h6 class="text-muted">Click to select</h6>';
         }
 
-        $data['thumb'] = (!empty($customer_info['image'])) ? '<img src="images/'.$customer_info['image'].'" style="height:260px;"alt="Your Avatar">' : '<img src="images/catalog/avatar.jpg" style="height:260px;"alt="Your Avatar"><h6 class="text-muted">Click to select</h6>';
+        $data['thumb'] = $thumb;
+
+        // Background image placeholder
+        if (!empty($customer_info['bg_image']) && file_exists('images/' . $customer_info['bg_image'])) {
+            $bg_thumb = '<img src="images/'. $customer_info['bg_image'] . '" style="height:260px;width:100%;" alt="Your Avatar">';
+        } else {
+            $bg_thumb = '<img src="images/no_image.jpg" style="height:260px;width:100%;" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>';
+        }
         
-        $data['bg_thumb'] = (!empty($customer_info['bg_image'])) ? '<img src="images/'.$customer_info['bg_image'].'" style="height:260px;width:100%;" alt="Your Avatar">' : '<img src="images/no_image.jpg" style="height:260px;width:100%;" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>';
+        $data['bg_thumb'] = $bg_thumb;
 
         $data['action'] = base_url('account/setting/edit?customer_id=' . $this->customer->getCustomerID());
 

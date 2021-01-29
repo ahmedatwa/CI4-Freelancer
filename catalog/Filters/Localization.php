@@ -3,8 +3,8 @@
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
-use Config\Services;
 use Catalog\Models\Localization\LanguageModel;
+use Config\Services;
 
 class Localization implements FilterInterface
 {
