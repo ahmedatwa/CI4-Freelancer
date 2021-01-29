@@ -4,48 +4,49 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-	// Makes reading things below nicer,
-	// and simpler to change out script that's used.
-	public $aliases = [
-		'csrf'         => \CodeIgniter\Filters\CSRF::class,
-		'toolbar'      => \CodeIgniter\Filters\DebugToolbar::class,
-		'honeypot'     => \CodeIgniter\Filters\Honeypot::class,
-		'seo_url'      => \Catalog\Filters\SeoUrl::class,
-		'localization' => \Catalog\Filters\Localization::class,
-		'maintenance'  => \Catalog\Filters\Maintenance::class,
-		'throttle'     => \Catalog\Filters\Throttle::class,
-	];
+    // Makes reading things below nicer,
+    // and simpler to change out script that's used.
+    public $aliases = [
+        'csrf'         => \CodeIgniter\Filters\CSRF::class,
+        'toolbar'      => \CodeIgniter\Filters\DebugToolbar::class,
+        'honeypot'     => \CodeIgniter\Filters\Honeypot::class,
+        'seo_url'      => \Catalog\Filters\SeoUrl::class,
+        'localization' => \Catalog\Filters\Localization::class,
+        'maintenance'  => \Catalog\Filters\Maintenance::class,
+        'throttle'     => \Catalog\Filters\Throttle::class,
+    ];
 
-	// Always applied before every request
-	public $globals = [
-		'before' => [
-			//'localization',
-		    'seo_url',
-		    'honeypot',
-		    'maintenance',
-		    'csrf',
-		    'throttle'
-		],
-		'after'  => [
-			'honeypot',
-			'toolbar',
-		],
-	];
+    // Always applied before every request
+    public $globals = [
+        'before' => [
+            'localization',
+            'seo_url',
+            'honeypot',
+            'maintenance',
+            'csrf',
+        ],
+        'after'  => [
+            'honeypot',
+            'toolbar',
+        ],
+    ];
 
-	// Works on all of a particular HTTP method
-	// (GET, POST, etc) as BEFORE filters only
-	//     like: 'post' => ['CSRF', 'throttle'],
-	public $methods = [];
+    // Works on all of a particular HTTP method
+    // (GET, POST, etc) as BEFORE filters only
+    //     like: 'post' => ['CSRF', 'throttle'],
+    public $methods = [
+       'post' => ['throttle']
+    ];
 
-	// List filter aliases and any before/after uri patterns
-	// that they should run on, like:
-	// 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']],
-	public $filters = [
-	    // 'isLoggedIn' => [
-	    // 	'before' => [
-	    // 		'account/*',
-	    // 		'project/*',
-	    // 	]
-	    // ],
+    // List filter aliases and any before/after uri patterns
+    // that they should run on, like:
+    // 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']],
+    public $filters = [
+        // 'isLoggedIn' => [
+        // 	'before' => [
+        // 		'account/*',
+        // 		'project/*',
+        // 	]
+        // ],
     ];
 }
