@@ -139,7 +139,7 @@ class Setting extends \Catalog\Controllers\BaseController
         }
 
         // avatar placeholder
-        if (!empty($customer_info['image']) && file_exists('images/' . $customer_info['image'])) {
+        if (!empty($customer_info['image']) && file_exists(DIR_IMAGE . $customer_info['image'])) {
             $thumb = '<img src="images/' . $customer_info['image'] . '" style="height:260px;" alt="Your Avatar">';
         } else {
             $thumb = '<img src="images/catalog/avatar.jpg" style="height:260px;"alt="Your Avatar"><h6 class="text-muted">Click to select</h6>';
@@ -148,7 +148,7 @@ class Setting extends \Catalog\Controllers\BaseController
         $data['thumb'] = $thumb;
 
         // Background image placeholder
-        if (!empty($customer_info['bg_image']) && file_exists('images/' . $customer_info['bg_image'])) {
+        if (!empty($customer_info['bg_image']) && file_exists(DIR_IMAGE . $customer_info['bg_image'])) {
             $bg_thumb = '<img src="images/'. $customer_info['bg_image'] . '" style="height:260px; width:100%;" alt="Your Profile Background Image">';
         } else {
             $bg_thumb = '<img src="images/no_image.jpg" style="height:260px;width:100%;" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>';
