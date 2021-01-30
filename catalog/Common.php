@@ -20,7 +20,7 @@ if (! function_exists('formError')) {
     {
         $validation =  \Config\Services::validation();
         if ($validation->hasError($name)) {
-            return esc("<span class='text-danger'>" . $validation->getError(esc($name)) . "</span>", 'html');
+            return "<span class='text-danger'>" . $validation->getError(esc($name)) . "</span>";
         }
     }
 }

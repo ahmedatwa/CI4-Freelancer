@@ -2,6 +2,7 @@
 
 use \Catalog\Models\Catalog\CategoryModel;
 use \Catalog\Models\Catalog\Informations;
+use \Catalog\Models\Tool\Online;
 
 class Footer extends \Catalog\Controllers\BaseController
 {
@@ -95,7 +96,8 @@ class Footer extends \Catalog\Controllers\BaseController
         }
 
         if ($this->registry->get('config_customer_online')) {
-            $online_model = new \Catalog\Models\Tool\Online();
+            $online_model = new Online();
+            $agent = $this->request->getUserAgent();
 
             if ($this->request->getIPAddress()) {
                 $ip = $this->request->getIPAddress();
@@ -109,10 +111,10 @@ class Footer extends \Catalog\Controllers\BaseController
                 $url = '';
             }
 
-            if (previous_url()) {
-                $referer = previous_url();
+            if ($agent->isReferral()) {
+                $referer = $agent->getReferrer();
             } else {
-                $referer = '';
+                $referer = previous_url();
             }
 
             if ($this->customer->getCustomerId()) {

@@ -7,19 +7,17 @@ use \Catalog\Models\Freelancer\MilestoneModel;
 
 class Activity
 {
-    // Catalog\Controllers\user\user::index
-    public static function login()
+    // Catalog\Controllers\Customer\Customer::authLogin
+    public static function login(int $customer_id, string $email)
     {
         $activityModel = new ActivityModel;
 
-        $customer = new Customer();
-
         $data = [
-            'user_id'     => $customer->getCustomerId(),
-            'username'    => $customer->getCustomerUserName(),
-            ];
+            'customer_id' => $customer_id,
+            'email'      => $email,
+        ];
 
-        $activityModel->addActivity('customer_login', $data);
+        $activityModel->addActivity('customer_login', $data, 1);
     }
 
     // Admin\Controllers\user\user::Rules

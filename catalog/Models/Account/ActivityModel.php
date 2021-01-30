@@ -42,7 +42,7 @@ class ActivityModel extends \CodeIgniter\Model
         return $builder->countAllResults();
     }
 
-    public function addActivity($key, $data)
+    public function addActivity($key, $data, int $seen = 0)
     {
         $builder = $this->db->table($this->table);
 
@@ -54,6 +54,7 @@ class ActivityModel extends \CodeIgniter\Model
             'data'          => json_encode($data),
             'ip'            => $request->getIPAddress(),
             'user_agent'    => $request->getUserAgent(),
+            'seen'          => $seen,
         ];
 
         $builder->set('date_added', 'NOW()', false);

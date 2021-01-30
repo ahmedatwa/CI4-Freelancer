@@ -48,8 +48,12 @@ class Dashboard extends \Catalog\Controllers\BaseController
         foreach ($results as $result) {
             $info = json_decode($result['data'], true);
 
+            if (strpos(lang('account/activity.text_activity_' . $result['key']), '/')) {
+               unset($result['key']);
+            } else {
+
             $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
-            
+
             $username  = '';
 
             if (isset($info['freelancer_id'])) {
@@ -61,11 +65,11 @@ class Dashboard extends \Catalog\Controllers\BaseController
             $milestone_status = '';
 
             switch (isset($info['milestone_status'])) {
-                case 0: $milestone_status = 'Pending'; break;
-                case 1: $milestone_status = 'Approved'; break;
-                case 2: $milestone_status = 'Paid'; break;
-                case 3: $milestone_status = 'Canceled'; break;
-                default: $milestone_status = 'Pending'; break;
+            case 0: $milestone_status = 'Pending'; break;
+            case 1: $milestone_status = 'Approved'; break;
+            case 2: $milestone_status = 'Paid'; break;
+            case 3: $milestone_status = 'Canceled'; break;
+            default: $milestone_status = 'Pending'; break;
             }
 
             $find = [
@@ -81,11 +85,11 @@ class Dashboard extends \Catalog\Controllers\BaseController
                 
             ];
 
-
             $data['news_feeds'][] = [
                 'comment'    => str_replace($find, $replace, $comment),
                 'date_added' => $this->dateDifference($result['date_added'])
             ];
+         }
         }
 
         $data['total_views']     = $customerModel->getCustomerProfileView($this->customer->getCustomerId());

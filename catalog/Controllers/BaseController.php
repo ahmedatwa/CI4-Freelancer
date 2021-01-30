@@ -60,12 +60,12 @@ class BaseController extends \CodeIgniter\Controller
         $image_new = 'cache/' . substr($filename, 0, strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
    
 
-        if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
+        if (! is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
             // Assign variables as if they were an array:
             list($original_width, $original_height, $original_type) = getimagesize(DIR_IMAGE . $image_old);
 
             // double check type is extension
-            if (!in_array($original_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF, IMAGETYPE_BMP))) {
+            if (! in_array($original_type, [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF, IMAGETYPE_BMP])) {
                 return DIR_IMAGE . $image_old;
             }
  
@@ -84,8 +84,8 @@ class BaseController extends \CodeIgniter\Controller
             if ($original_width != $width || $original_height != $height) {
                 try {
                     \Config\Services::image()->withFile(DIR_IMAGE . $image_old)
-                   ->resize($width, $height, false, 'height')
-                   ->save(DIR_IMAGE . $image_new);
+                                             ->resize($width, $height, false, 'height')
+                                             ->save(DIR_IMAGE . $image_new);
                 } catch (CodeIgniter\Images\ImageException $e) {
                     echo $e->getMessage();
                 }

@@ -65,6 +65,9 @@ class Login extends \Catalog\Controllers\BaseController
 
             if (! $json) {
                 $customerModel->deleteLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
+                // Register Login Event... for extra future security use
+                // Like trigger notification email for user if user_agent changed or IP
+                \CodeIgniter\Events\Events::trigger('customer_login', $this->session->get('customer_id'), $this->request->getPost('email'));
 
                 if ($this->session->get('redirect_url')) {
                     $json['redirect'] = (string) $this->session->get('redirect_url');

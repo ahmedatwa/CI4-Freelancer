@@ -84,9 +84,8 @@ class Customer
                 $this->session->set($session_data);
                 // Set the Online Status
                 $builder->set('online', 1)
-                    ->where('customer_id', $row['customer_id'])
-                    ->update();
-
+                        ->where('customer_id', $row['customer_id'])
+                        ->update();
                 return true;
             } else {
                 return false;
