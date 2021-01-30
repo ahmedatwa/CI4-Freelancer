@@ -347,8 +347,16 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $pager = \Config\Services::pager();
         $data['pagination'] = ($projects_total <= $limit) ? '' : $pager->makeLinks($page, $limit, $projects_total);
 
+        // Update Profile Views
         $customerModel->updateViewed($customer_id);
 
+        // get Profile Visibility Status
+        if ($customer_info['profile_strength'] < 100) {
+            $data['profileVisibility'] = lang('freelancer/freelancer.profile_notice');
+        } else {
+            $data['profileVisibility'] = '';
+        }
+        
         $this->template->output('freelancer/freelancer_info', $data);
     }
 
@@ -442,7 +450,6 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $total = $disputeModel->getTotalDisputes($filter_data);
 
         foreach ($results as $result) {
-
             $dispute_action = $disputeModel->getDisputeAction($result['dispute_action_id']);
             $name = $customerModel->where('customer_id', $result['employer_id'])->findColumn('username');
 
@@ -483,13 +490,11 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         if (! $this->validate([
            'comment' => "required|min_length[20]",
-        ]))
-        {
-         $json['error'] = $this->validator->getErrors();
+        ])) {
+            $json['error'] = $this->validator->getErrors();
         }
 
         if ($this->request->getMethod() == 'post') {
-           
             if (! $json) {
                 $dispute_data = [
                     'created_by'        => $this->request->getPost('freelancer_id'),

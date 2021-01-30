@@ -32,4 +32,5 @@ return [
     'text_transaction'    => 'Transaction is completed successfully',
     'error_balance'       => 'Warning, insufficient balance, please <a class="text-dark"href="%s">deposit funds</a>!',
     'error_unique'        => 'You have placed a bid previously on this project',
+    'profile_notice'      => 'Your Profile isn\'t visiable to employers yet, please complete your freelancer profile from <a href="account/setting">here</a>',
 ];

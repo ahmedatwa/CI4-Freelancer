@@ -35,7 +35,7 @@
 </div>
 <!-- Page Content -->
 <div class="container-fluid">
-			<div class="row">
+	<div class="row">
 		<div class="col-12">
 			<nav id="breadcrumbs">
 				<ul>
@@ -45,7 +45,12 @@
 				</ul>
 			</nav>
 		</div>
-	</div>
+		<div class="col-12 text-center">
+		<?php if ($profileVisibility) { ?>
+			<div class="alert alert-warning" role="alert"><i class="fas fa-flag"></i> <?php echo $profileVisibility; ?></div>
+		</div>
+		<?php } ?>
+		</div>
 <div class="row">
 	<!-- Content -->
 	<div class="col-sm-12 col-md-9 mb-4 shadow-sm p-3 mb-5 bg-white rounded border">
