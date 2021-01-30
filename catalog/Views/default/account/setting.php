@@ -86,7 +86,7 @@
 						<div class="progress my-2">
 							<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: <?php echo $profile_strength; ?>%" aria-valuenow="<?php echo $profile_strength; ?>" aria-valuemin="0" aria-valuemax="100">%<?php echo $profile_strength; ?></div>
 						</div></h3>
-						<small>Complete the information below to be considered as a Freelancer!</small>
+						<small>Complete the information below for your profile to be considered as a Freelancer!</small>
 					</div>
 					<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" accept-charset="utf-8"> 
 					<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />

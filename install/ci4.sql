@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2021 at 02:57 PM
+-- Generation Time: Jan 30, 2021 at 05:22 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.3.25
 
@@ -538,6 +538,7 @@ CREATE TABLE `ci_customer` (
   `linkedin` varchar(50) NOT NULL,
   `facebook` varchar(50) NOT NULL,
   `twitter` varchar(50) NOT NULL,
+  `profile_strength` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -546,10 +547,10 @@ CREATE TABLE `ci_customer` (
 -- Dumping data for table `ci_customer`
 --
 
-INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `bg_image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `date_added`, `date_modified`) VALUES
-(1, 1, 'Anna', 'Loue', 'employer', 'employer@employer.com', '', '$2y$10$1ixd5RAOq586ee7GY1Bw3uc5kdYYd1iERcRCihM65cp.eh/13lvXO', '', 12, 1, '', '', 'catalog/detail.jpg', 0, '', '', 0, '', 0, '#', '#', '#', '#', '2021-01-06 07:53:28', '2021-01-29 13:23:01'),
-(2, 1, 'Mike', 'Myers', 'freelancer', 'freelancer@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 101, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', 'catalog/1611926723_b36a2408dd4ad880e5e1.jpg', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 0, '', '', '', '', '2021-01-06 08:00:23', '2021-01-29 13:25:23'),
-(3, 1, 'Sindy', 'Forest', 'freelancer2', 'freelancer2@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 30, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', '', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 0, '', '', '', '', '2021-01-06 08:00:23', '2021-01-20 12:37:12');
+INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `bg_image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `profile_strength`, `date_added`, `date_modified`) VALUES
+(1, 1, 'Anna', 'Loue', 'employer', 'employer@employer.com', '', '$2y$10$1ixd5RAOq586ee7GY1Bw3uc5kdYYd1iERcRCihM65cp.eh/13lvXO', '', 12, 1, '', '', 'catalog/detail.jpg', 0, '', '', 0, '', 0, '', '', '', '', 0, '2021-01-06 07:53:28', '2021-01-30 14:55:07'),
+(2, 1, 'Mike', 'Myers', 'freelancer', 'freelancer@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 120, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', '', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 1, '', '', '', '', 70, '2021-01-06 08:00:23', '2021-01-30 17:18:36'),
+(3, 1, 'Sindy', 'Forest', 'freelancer2', 'freelancer2@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 30, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', '', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 0, '', '', '', '', 0, '2021-01-06 08:00:23', '2021-01-20 12:37:12');
 
 -- --------------------------------------------------------
 
@@ -568,17 +569,6 @@ CREATE TABLE `ci_customer_activity` (
   `date_added` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `ci_customer_activity`
---
-
-INSERT INTO `ci_customer_activity` (`customer_activity_id`, `customer_id`, `key`, `data`, `ip`, `user_agent`, `seen`, `date_added`) VALUES
-(1, 2, 'customer_review', '{\"customer_id\":\"2\",\"submitted_by\":\"1\",\"freelancer_id\":\"2\",\"project_id\":\"1\",\"url\":\"\\/account\\/review\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', 0, '2021-01-18 13:47:36'),
-(2, 1, 'customer_review', '{\"customer_id\":\"1\",\"submitted_by\":\"2\",\"freelancer_id\":\"2\",\"project_id\":\"1\",\"url\":\"\\/account\\/review\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', 0, '2021-01-18 19:22:31'),
-(3, 2, 'customer_review', '{\"customer_id\":\"2\",\"submitted_by\":\"1\",\"freelancer_id\":\"2\",\"project_id\":\"1\",\"url\":\"\\/account\\/review\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', 0, '2021-01-19 12:48:48'),
-(4, 4, 'customer_register', '{\"customer_id\":4,\"username\":\"new\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', 0, '2021-01-20 16:13:37'),
-(5, 5, 'customer_register', '{\"customer_id\":5,\"username\":\"res\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', 0, '2021-01-20 16:14:21');
-
 -- --------------------------------------------------------
 
 --
@@ -595,14 +585,6 @@ CREATE TABLE `ci_customer_deposit` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `ci_customer_deposit`
---
-
-INSERT INTO `ci_customer_deposit` (`balance_id`, `customer_id`, `amount`, `currency`, `gateway`, `status`, `date_added`, `date_modified`) VALUES
-(1, 1, '22.3000', 'EUR', '', 'completed', '2021-01-08 12:16:45', '0000-00-00 00:00:00'),
-(2, 1, '22.3000', 'EUR', '', 'completed', '2021-01-08 12:19:15', '2021-01-08 12:19:15');
 
 -- --------------------------------------------------------
 
@@ -671,14 +653,6 @@ CREATE TABLE `ci_customer_login` (
   `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `ci_customer_login`
---
-
-INSERT INTO `ci_customer_login` (`customer_login_id`, `email`, `ip`, `total`, `date_added`, `date_modified`) VALUES
-(1, 'customer_2@demo.com', '::1', 78, '2021-01-06 19:14:30', '2021-01-29 14:36:41'),
-(3, '', '::1', 77, '2021-01-29 14:36:24', '2021-01-29 14:36:41');
-
 -- --------------------------------------------------------
 
 --
@@ -698,7 +672,7 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 0, 'http://ci4.localhost/en/information/i2/about-us', 'http://ci4.localhost/local/jobs/j1/simple-local-job', '2021-01-29 14:55:28');
+('::1', 2, 'http://ci4.localhost/account/dashboard', 'http://ci4.localhost/account/review', '2021-01-30 17:20:34');
 
 -- --------------------------------------------------------
 
@@ -719,14 +693,6 @@ CREATE TABLE `ci_customer_to_balance` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `ci_customer_to_balance`
---
-
-INSERT INTO `ci_customer_to_balance` (`balance_id`, `customer_id`, `project_id`, `income`, `withdrawn`, `used`, `available`, `pending`, `currency`, `date_added`, `date_modified`) VALUES
-(1, 1, 0, '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '', '2021-01-08 12:16:45', '2021-01-08 12:24:24'),
-(2, 2, 0, '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '', '2021-01-08 12:16:45', '2021-01-08 12:24:24');
 
 -- --------------------------------------------------------
 
@@ -1862,7 +1828,9 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('b933sd1qh2tlj55077popbthieho0imp', '::1', 1611863689, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631313836333638393b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f757365722f757365722f6164643f757365725f746f6b656e3d6575394951726e576a7a784755464a71565a79356c766d53326348694c44456b223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226575394951726e576a7a784755464a71565a79356c766d53326348694c44456b223b),
 ('af6mtiikib3ls1ffq5aa2h865tj767a5', '::1', 1611863974, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631313836333638393b5f63695f70726576696f75735f75726c7c733a38383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f637573746f6d65722f637573746f6d65723f757365725f746f6b656e3d6575394951726e576a7a784755464a71565a79356c766d53326348694c44456b223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a226575394951726e576a7a784755464a71565a79356c766d53326348694c44456b223b),
 ('je5suom45g4lksu58nkmhu9vk0o4vrm2', '::1', 1611906323, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631313930363332323b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
-('iqc4t86vkv5ldfodje5bth5513gv7fef', '::1', 1611932105, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631313933323130343b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d);
+('iqc4t86vkv5ldfodje5bth5513gv7fef', '::1', 1611932105, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631313933323130343b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('6aornac5itgalb3f3mj7vido0sudvehr', '::1', 1612018361, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323031383336313b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d637573746f6d6572253246637573746f6d6572223b),
+('bo4jsa7sj9so80l7m32epu2kb8cqsvsa', '::1', 1612018361, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323031383336313b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d637573746f6d6572253246637573746f6d6572223b);
 
 -- --------------------------------------------------------
 
@@ -3112,13 +3080,13 @@ ALTER TABLE `ci_customer`
 -- AUTO_INCREMENT for table `ci_customer_activity`
 --
 ALTER TABLE `ci_customer_activity`
-  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_deposit`
 --
 ALTER TABLE `ci_customer_deposit`
-  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_group`
@@ -3136,13 +3104,13 @@ ALTER TABLE `ci_customer_history`
 -- AUTO_INCREMENT for table `ci_customer_login`
 --
 ALTER TABLE `ci_customer_login`
-  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_balance`
 --
 ALTER TABLE `ci_customer_to_balance`
-  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_certificate`
