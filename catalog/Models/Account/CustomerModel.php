@@ -5,7 +5,7 @@ class CustomerModel extends \CodeIgniter\Model
     protected $table          = 'customer';
     protected $primaryKey     = 'customer_id';
     protected $returnType     = 'array';
-    protected $allowedFields  = ['customer_group_id', 'email', 'password', 'firstname', 'lastname', 'image', 'bg_image', 'about', 'tag_line', 'rate', 'username', 'online', 'status', 'origin', 'github', 'linkedin', 'facebook', 'twitter'];
+    protected $allowedFields  = ['customer_group_id', 'email', 'password', 'firstname', 'lastname', 'image', 'bg_image', 'about', 'tag_line', 'rate', 'username', 'online', 'status', 'origin', 'github', 'linkedin', 'facebook', 'twitter', 'profile_strength'];
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
     // Password Hashing Events
@@ -70,7 +70,7 @@ class CustomerModel extends \CodeIgniter\Model
         $builder->join('customer_to_category c2c', 'c.customer_id = c2c.freelancer_id', 'left');
 
         if (isset($data['filter_freelancer'])) {
-            $builder->where('c.rate >', $data['filter_freelancer']);
+            $builder->where('c.profile_strength', $data['filter_freelancer']);
         }
 
         if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
@@ -134,8 +134,8 @@ class CustomerModel extends \CodeIgniter\Model
         $builder->select('CONCAT(c.firstname, " ", c.lastname) AS name, c.about, c.tag_line, c.image, c.customer_id, c.rate, c.online, c.username');
         $builder->join('customer_to_category c2c', 'c.customer_id = c2c.freelancer_id', 'left');
 
-                if (isset($data['filter_freelancer'])) {
-            $builder->where('c.rate >', $data['filter_freelancer']);
+        if (isset($data['filter_freelancer'])) {
+            $builder->where('c.profile_strength', $data['filter_freelancer']);
         }
 
         if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {

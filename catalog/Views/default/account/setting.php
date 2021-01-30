@@ -7,7 +7,7 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
-					<div class="shadow-sm p-3 mb-5 bg-white rounded">
+					<div class="shadow-sm p-3 mb-5 bg-white rounded border">
 						<div class="mb-4">
 							<h3><i class="icon-material-outline-account-circle"></i> <?php echo $text_account; ?></h3>
 						</div>
@@ -80,9 +80,12 @@
 					</div>
 			</div>	
 			<div class="col-12">
-				<div class="shadow-sm p-3 mb-5 bg-white rounded">
+				<div class="shadow-sm p-3 mb-5 bg-white rounded border">
 					<div class="headline mb-4">
-						<h3><i class="icon-material-outline-face"></i> <?php echo $text_profile; ?></h3>
+						<h3><i class="icon-material-outline-face"></i> <?php echo $text_profile; ?> 
+						<div class="progress my-2">
+							<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: <?php echo $profile_strength; ?>%" aria-valuenow="<?php echo $profile_strength; ?>" aria-valuemin="0" aria-valuemax="100">%<?php echo $profile_strength; ?></div>
+						</div></h3>
 						<small>Complete the information below to be considered as a Freelancer!</small>
 					</div>
 					<form enctype="multipart/form-data" method="post" action="<?php echo $action; ?>" accept-charset="utf-8"> 
@@ -896,7 +899,7 @@ $("#avatar-2").fileinput({
     showBrowse: true,
 	showRemove: true,
     theme: 'fas',
-    browseOnZoneClick: true,
+    browseOnZoneClick: false,
     fileActionSettings: {
        showZoom: false,
        showDrag: false,

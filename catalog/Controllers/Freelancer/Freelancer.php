@@ -75,7 +75,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
         }
 
         $filter_data = [
-            'filter_freelancer' => 0,
+            'filter_freelancer' => 100,
             'filter_skills'     => $filter_skills,
             'filter_rate'       => $filter_rate,
             'sort_by'           => $sort_by,

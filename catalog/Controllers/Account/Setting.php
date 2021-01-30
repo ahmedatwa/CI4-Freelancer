@@ -149,9 +149,9 @@ class Setting extends \Catalog\Controllers\BaseController
 
         // Background image placeholder
         if (!empty($customer_info['bg_image']) && file_exists(DIR_IMAGE . $customer_info['bg_image'])) {
-            $bg_thumb = '<img src="images/'. $customer_info['bg_image'] . '" style="height:260px; width:100%;" alt="Your Profile Background Image">';
+            $bg_thumb = '<img src="images/'. $customer_info['bg_image'] . '" style="height:260px;width:100%;" alt="Your Profile Background Image">';
         } else {
-            $bg_thumb = '<img src="images/no_image.jpg" style="height:260px;width:100%;" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>';
+            $bg_thumb = '<img src="images/no_image.jpg" style="height:260px;width:100%;" alt="Your Avatar">';
         }
         
         $data['bg_thumb'] = $bg_thumb;
@@ -293,6 +293,59 @@ class Setting extends \Catalog\Controllers\BaseController
         $data['customer_id'] = $this->customer->getCustomerID();
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
         $data['currency'] = $this->session->get('currency') ?? $this->registry->get('config_currency');
+
+        // Profile Progress Bar
+        $profile_strength = 100;
+
+        if ($customer_info) {
+            if ($customer_info['rate'] && $customer_info['tag_line'] && $customer_info['about']) {
+                $basic_info = 10;
+            } else {
+                $basic_info = 0;
+            }
+            if ($customer_info['github'] || $customer_info['linkedin'] || $customer_info['facebook'] || $customer_info['twitter']) {
+                $social_info = 10;
+            } else {
+                $social_info = 0;
+            }
+
+            if ($customer_info['bg_image']) {
+                $image_info = 10;
+            } else {
+                $image_info = 0;
+            }
+            // Certs
+            if ($customerModel->getTotalCertificatesByCustomerId($this->customer->getCustomerID())) {
+                $cert_info = 10;
+            } else {
+                $cert_info = 0;
+            }
+            // Edu
+            if ($customerModel->getTotalEducationsByCustomerID($this->customer->getCustomerID())) {
+                $edu_info = 10;
+            } else {
+                $edu_info = 0;
+            }
+            // Skills
+            if ($customerModel->getTotalSkillsByCustomerID($this->customer->getCustomerID())) {
+                $skills_info = 10;
+            } else {
+                $skills_info = 0;
+            }
+            // Lang
+            if ($customerModel->getTotalLanguagesByCustomerId($this->customer->getCustomerID())) {
+                $lang_info = 30;
+            } else {
+                $lang_info = 0;
+            }
+            $data['profile_strength'] = ($basic_info + $social_info + $image_info + $cert_info + $edu_info + $skills_info + $lang_info) * $profile_strength / 100;
+            // Update the current value if not 100%
+            if ($customer_info['profile_strength'] < 100) {
+                $customerModel->where('customer_id', $customer_id)
+                              ->set('profile_strength', $data['profile_strength'])
+                              ->update();
+            }
+        }
 
         $this->template->output('account/setting', $data);
     }

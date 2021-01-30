@@ -98,7 +98,7 @@ class Template
      */
     public function getLinks()
     {
-        return $this->links;
+        return esc($this->links);
     }
     /**
      *
@@ -123,7 +123,7 @@ class Template
      */
     public function getStyles()
     {
-        return $this->styles;
+        return esc($this->styles, 'html');
     }
     /**
      *
@@ -145,7 +145,7 @@ class Template
     public function getScripts($postion = 'footer')
     {
         if (isset($this->scripts[$postion])) {
-            return $this->scripts[$postion];
+            return esc($this->scripts[$postion], 'html');
         } else {
             return [];
         }
