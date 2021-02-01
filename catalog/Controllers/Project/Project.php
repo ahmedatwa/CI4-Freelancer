@@ -140,7 +140,9 @@ class Project extends \Catalog\Controllers\BaseController
 
             if (! is_int($days_left)) {
                 $status = $result['status'];
-            } else {
+            } elseif($days_left <= 0) {
+                $status = lang('project/project.text_expired');
+            } else {    
                 $status = lang('project/project.text_expire', [$days_left]);
             }
 
@@ -251,7 +253,7 @@ class Project extends \Catalog\Controllers\BaseController
     }
 
     // Single Project View
-    //  function in case of failed route for info, therfore 404 error won't be excuted
+    // function in case of failed route for info, therefore 404 error won't be excuted
     public function view()
     {
         $this->info();
