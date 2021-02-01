@@ -139,23 +139,10 @@ function gSignOut() {
   }
 
 </script>
-<!-- singout button -->
-<script type="text/javascript">
-	$(document).on('click', '#button-logout', function(){
-		$.ajax({
-			url: $(this).attr('href'),
-			dataType: 'json',
-			success: function(json) {
-				if (json['redirect']) {
-					gSignOut();
-					location = json['redirect'];
-				}
-			}
-		});
-	});
-</script>
+<!-- Chat Wdget Code -->
+<?php echo $config_chat_widget; ?>
+<!-- Chat Wdget Code -->
 <!-- New Project Global Alert -->
-
 <script type="text/javascript">
 var PUSHER_KEY = "<?php echo PUSHER_KEY; ?>";
 var PUSHER_CLUSTER = "<?php echo PUSHER_CLUSTER; ?>";

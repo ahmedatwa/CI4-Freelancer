@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2021 at 05:22 PM
+-- Generation Time: Feb 01, 2021 at 04:02 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.3.25
 
@@ -548,9 +548,9 @@ CREATE TABLE `ci_customer` (
 --
 
 INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `bg_image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `profile_strength`, `date_added`, `date_modified`) VALUES
-(1, 1, 'Anna', 'Loue', 'employer', 'employer@employer.com', '', '$2y$10$1ixd5RAOq586ee7GY1Bw3uc5kdYYd1iERcRCihM65cp.eh/13lvXO', '', 12, 1, '', '', 'catalog/detail.jpg', 0, '', '', 0, '', 0, '', '', '', '', 0, '2021-01-06 07:53:28', '2021-01-30 14:55:07'),
-(2, 1, 'Mike', 'Myers', 'freelancer', 'freelancer@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 120, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', '', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 1, '', '', '', '', 70, '2021-01-06 08:00:23', '2021-01-30 17:18:36'),
-(3, 1, 'Sindy', 'Forest', 'freelancer2', 'freelancer2@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 30, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', '', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 0, '', '', '', '', 0, '2021-01-06 08:00:23', '2021-01-20 12:37:12');
+(1, 1, 'Anna', 'Loue', 'employer', 'employer@employer.com', '', '$2y$10$1ixd5RAOq586ee7GY1Bw3uc5kdYYd1iERcRCihM65cp.eh/13lvXO', '', 12, 1, '', '', 'catalog/detail.jpg', 0, '', '', 0, '', 0, '', '', '', '', 10, '2021-01-06 07:53:28', '2021-02-01 14:20:45'),
+(2, 1, 'Mike', 'Myers', 'freelancer', 'freelancer@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 120, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', '', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 1, '', '', '', '', 70, '2021-01-06 08:00:23', '2021-01-31 11:42:02'),
+(3, 1, 'Sindy', 'Forest', 'freelancer2', 'freelancer2@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 30, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', '', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 1, '', '', '', '', 0, '2021-01-06 08:00:23', '2021-01-20 12:37:12');
 
 -- --------------------------------------------------------
 
@@ -641,6 +641,39 @@ CREATE TABLE `ci_customer_history` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ci_customer_ip`
+--
+
+CREATE TABLE `ci_customer_ip` (
+  `customer_ip_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `user_agent` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_customer_ip`
+--
+
+INSERT INTO `ci_customer_ip` (`customer_ip_id`, `customer_id`, `ip`, `user_agent`, `date_added`) VALUES
+(1, 2, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-30 18:58:13'),
+(2, 2, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-30 20:51:49'),
+(3, 2, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-30 20:52:33'),
+(4, 2, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-30 20:53:41'),
+(5, 2, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-31 11:40:47'),
+(6, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-31 15:21:33'),
+(7, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-31 15:23:17'),
+(8, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-31 15:23:43'),
+(9, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-31 16:20:30'),
+(10, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-31 16:22:35'),
+(11, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-31 16:23:11'),
+(12, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-31 16:24:07'),
+(13, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-02-01 10:33:06');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ci_customer_login`
 --
 
@@ -652,6 +685,13 @@ CREATE TABLE `ci_customer_login` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ci_customer_login`
+--
+
+INSERT INTO `ci_customer_login` (`customer_login_id`, `email`, `ip`, `total`, `date_added`, `date_modified`) VALUES
+(6, 'freelancer@freelancer.com', '::1', 2, '2021-01-31 13:39:53', '2021-01-31 13:51:23');
 
 -- --------------------------------------------------------
 
@@ -672,7 +712,7 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 2, 'http://ci4.localhost/account/dashboard', 'http://ci4.localhost/account/review', '2021-01-30 17:20:34');
+('::1', 0, 'http://ci4.localhost/projects', 'http://ci4.localhost/projects?sort_by=budget_max&order_by=DESC', '2021-02-01 15:58:09');
 
 -- --------------------------------------------------------
 
@@ -979,7 +1019,9 @@ INSERT INTO `ci_event` (`event_id`, `code`, `action`, `description`, `status`, `
 (26, 'mail_project_add', 'Catalog\\Events\\MailAlert::addProject', 'Send confirmation email to employer when new project posted', 1, 0),
 (27, 'mail_project_status_update', 'Catalog\\Events\\MailAlert::updateProjectStatus', 'Send an email to employer when project status completed ', 1, 0),
 (31, 'customer_review_add', 'Catalog\\Events\\Activity::addReview', '', 1, 0),
-(32, 'project_status_update', 'Catalog\\Events\\Activity::updateProjectStatus', 'Trigger Notification to employer when project status completed ', 1, 0);
+(32, 'project_status_update', 'Catalog\\Events\\Activity::updateProjectStatus', 'Trigger Notification to employer when project status completed ', 1, 0),
+(33, 'customer_login', 'Catalog\\Events\\Activity::login', 'Add Activity for new Customer Login', 1, 0),
+(34, 'customer_login_notify', 'Catalog\\Events\\MailAlert::loginAlertMail', 'Trigger an E-Mail to customer if IP address for login is not recognized', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1830,7 +1872,14 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('je5suom45g4lksu58nkmhu9vk0o4vrm2', '::1', 1611906323, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631313930363332323b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
 ('iqc4t86vkv5ldfodje5bth5513gv7fef', '::1', 1611932105, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631313933323130343b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
 ('6aornac5itgalb3f3mj7vido0sudvehr', '::1', 1612018361, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323031383336313b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d637573746f6d6572253246637573746f6d6572223b),
-('bo4jsa7sj9so80l7m32epu2kb8cqsvsa', '::1', 1612018361, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323031383336313b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d637573746f6d6572253246637573746f6d6572223b);
+('bo4jsa7sj9so80l7m32epu2kb8cqsvsa', '::1', 1612018361, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323031383336313b5f63695f70726576696f75735f75726c7c733a36383a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d637573746f6d6572253246637573746f6d6572223b),
+('sg846kg4eisgot68u107dbt0lp2hsb6a', '::1', 1612028851, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323032383835313b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f7265706f72742f6f6e6c696e653f757365725f746f6b656e3d7069794e5332646d4b437a495547636e6b454f673950656c5a363068764a4142223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227069794e5332646d4b437a495547636e6b454f673950656c5a363068764a4142223b),
+('ivu4ib2ovep3376sq76t8pku5m1290bn', '::1', 1612028986, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323032383835313b5f63695f70726576696f75735f75726c7c733a38343a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f7265706f72742f6f6e6c696e653f757365725f746f6b656e3d7069794e5332646d4b437a495547636e6b454f673950656c5a363068764a4142223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a227069794e5332646d4b437a495547636e6b454f673950656c5a363068764a4142223b),
+('tqu726dci9gienktcad6ljqfrln427ap', '::1', 1612093219, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323039333231383b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('pgq755o5srdr6p96ok88d2q2ivafkgg8', '::1', 1612175569, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323137353536383b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('jrikt9bmptd1u8sa2qkc4b0tusmvnj5p', '::1', 1612185825, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323138353832343b5f63695f70726576696f75735f75726c7c733a36333a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f636f6d6d6f6e2f6c6f67696e3f72656469726563743d617373657473253246666f6e7473223b6572726f727c733a34323a22496e76616c696420746f6b656e2073657373696f6e2e20506c65617365206c6f67696e20616761696e2e223b5f5f63695f766172737c613a313a7b733a353a226572726f72223b733a333a226f6c64223b7d),
+('2eemode9lk778gtpob8jmhon1bg7vtoe', '::1', 1612195074, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323139353037343b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d35497837413142436c6857386247717069734a6b336d7a455a304f7753324d51223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2235497837413142436c6857386247717069734a6b336d7a455a304f7753324d51223b737563636573737c733a32373a22596f752068617665206d6f6469666965642053657474696e677321223b5f5f63695f766172737c613a313a7b733a373a2273756363657373223b733a333a226f6c64223b7d),
+('476nsdm56t8f8guos03m3u9no3112qqh', '::1', 1612195152, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631323139353037343b5f63695f70726576696f75735f75726c7c733a38363a22687474703a2f2f6369342e6c6f63616c686f73742f61646d696e2f73657474696e672f73657474696e673f757365725f746f6b656e3d35497837413142436c6857386247717069734a6b336d7a455a304f7753324d51223b757365725f69647c733a313a2231223b757365726e616d657c733a383a224a6f686e2044756f223b757365725f67726f75705f69647c733a313a2231223b69734c6f676765647c623a313b757365725f746f6b656e7c733a33323a2235497837413142436c6857386247717069734a6b336d7a455a304f7753324d51223b);
 
 -- --------------------------------------------------------
 
@@ -1854,56 +1903,57 @@ CREATE TABLE `ci_setting` (
 INSERT INTO `ci_setting` (`setting_id`, `site_id`, `code`, `name`, `setting`, `serialized`) VALUES
 (515, 0, 'dashboard_activity', 'dashboard_activity_sort_order', '2', 0),
 (514, 0, 'dashboard_activity', 'dashboard_activity_status', '1', 0),
-(791, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\n\"application/zip\"\r\napplication/x-zip\r\n\"application/x-zip\"\r\napplication/x-zip-compressed\r\n\"application/x-zip-compressed\"\r\napplication/rar\r\n\"application/rar\"\r\napplication/x-rar\r\n\"application/x-rar\"\r\napplication/x-rar-compressed\r\n\"application/x-rar-compressed\"\r\napplication/octet-stream\r\n\"application/octet-stream\"\r\naudio/mpeg\r\nvideo/quicktime\r\napplication/pdf', 0),
+(856, 0, 'config', 'config_global_alert', '', 0),
+(857, 0, 'config', 'config_file_ext_allowed', 'zip\r\ntxt\r\npng\r\njpe\r\njpeg\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc', 0),
+(855, 0, 'config', 'config_maintenance', '0', 0),
+(854, 0, 'config', 'config_instagram', 'https://www.instagram.com/yallafreelancers/', 0),
+(853, 0, 'config', 'config_linkedin', 'https://www.linkedin.com/in/yallafreelancers/', 0),
 (518, 0, 'dashboard_online', 'dashboard_online_sort_order', '1', 0),
 (564, 0, 'blog_extension', 'blog_extension_status', '1', 0),
 (659, 0, 'job_extension', 'job_extension_status', '1', 0),
 (453, 0, 'module_category', 'module_category_status', '1', 0),
-(790, 0, 'config', 'config_file_ext_allowed', 'zip\r\ntxt\r\npng\r\njpe\r\njpeg\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc', 0),
+(851, 0, 'config', 'config_twitter', 'https://twitter.com/yallfreelancer', 0),
+(850, 0, 'config', 'config_facebook', 'https://www.facebook.com/Yallafreelancer/', 0),
 (344, 0, 'module_featured', 'module_featured_status', '1', 0),
 (343, 0, 'module_featured', 'module_featured_limit', '8', 0),
 (340, 0, 'theme_default', 'theme_default_status', '1', 0),
 (338, 0, 'theme_default', 'theme_default_directory', 'default', 0),
-(789, 0, 'config', 'config_global_alert', '', 0),
-(788, 0, 'config', 'config_maintenance', '0', 0),
-(783, 0, 'config', 'config_facebook', 'https://www.facebook.com/Yallafreelancer/', 0),
-(784, 0, 'config', 'config_twitter', 'https://twitter.com/yallfreelancer', 0),
-(785, 0, 'config', 'config_pintrest', 'https://www.pinterest.com/yallafreelancers/', 0),
 (339, 0, 'theme_default', 'theme_default_color', 'red.css', 0),
-(787, 0, 'config', 'config_instagram', 'https://www.instagram.com/yallafreelancers/', 0),
-(786, 0, 'config', 'config_linkedin', 'https://www.linkedin.com/in/yallafreelancers/', 0),
-(782, 0, 'config', 'config_upgrade_highlight', '2', 0),
-(781, 0, 'config', 'config_upgrade_sponser', '5', 0),
-(780, 0, 'config', 'config_processing_fee', '2.3', 0),
-(779, 0, 'config', 'config_freelancer_fee', '', 0),
-(777, 0, 'config', 'config_customer_activity', '1', 0),
-(778, 0, 'config', 'config_customer_online', '1', 0),
+(849, 0, 'config', 'config_chat_widget', '<!--Start of Tawk.to Script-->\r\n<script type=\"text/javascript\">\r\nvar Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\r\n(function(){\r\nvar s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\r\ns1.async=true;\r\ns1.src=\'https://embed.tawk.to/5f7ed980f0e7167d00172fcb/default\';\r\ns1.charset=\'UTF-8\';\r\ns1.setAttribute(\'crossorigin\',\'*\');\r\ns0.parentNode.insertBefore(s1,s0);\r\n})();\r\n</script>\r\n<!--End of Tawk.to Script-->', 0),
+(848, 0, 'config', 'config_upgrade_highlight', '2', 0),
+(847, 0, 'config', 'config_upgrade_sponser', '5', 0),
+(846, 0, 'config', 'config_processing_fee', '2.3', 0),
 (331, 0, 'extension_bid', 'extension_bid_status', '1', 0),
 (513, 0, 'dashboard_activity', 'dashboard_activity_width', '12', 0),
 (452, 0, 'module_freelancer', 'module_freelancer_status', '1', 0),
 (451, 0, 'module_freelancer', 'module_freelancer_limit', '8', 0),
 (517, 0, 'dashboard_online', 'dashboard_online_status', '1', 0),
 (516, 0, 'dashboard_online', 'dashboard_online_width', '3', 0),
-(776, 0, 'config', 'config_project_expired_status', '5', 0),
-(775, 0, 'config', 'config_project_completed_status', '2', 0),
-(774, 0, 'config', 'config_project_status_id', '8', 0),
-(773, 0, 'config', 'config_login_attempts', '5', 0),
-(772, 0, 'config', 'config_admin_limit', '20', 0),
-(771, 0, 'config', 'config_currency', 'EGP', 0),
-(770, 0, 'config', 'config_admin_language_id', '1', 0),
-(769, 0, 'config', 'config_language_id', '1', 0),
-(768, 0, 'config', 'config_telephone', '+00 000-00-000', 0),
-(767, 0, 'config', 'config_email', 'admin@admin.com', 0),
-(766, 0, 'config', 'config_address', '6th Forrest Ray, London - 10001 UK', 0),
-(765, 0, 'config', 'config_owner', 'Ahmed Atwa', 0),
-(764, 0, 'config', 'config_name', 'YallaFreelancer', 0),
-(763, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
-(762, 0, 'config', 'config_theme', 'default', 0),
-(759, 0, 'config', 'config_meta_title', 'Freelance Services Marketplace for Businesses in Egypt', 0),
-(760, 0, 'config', 'config_meta_description', 'Yallafreelancer mission is to change how the world works together. Yallafreelancer connects businesses with freelancers offering digital services in 300+ categories.', 0),
-(761, 0, 'config', 'config_meta_keyword', '', 0),
+(845, 0, 'config', 'config_freelancer_fee', '', 0),
+(844, 0, 'config', 'config_customer_online', '1', 0),
+(843, 0, 'config', 'config_customer_activity', '1', 0),
+(842, 0, 'config', 'config_project_expired_status', '5', 0),
+(841, 0, 'config', 'config_project_completed_status', '2', 0),
+(840, 0, 'config', 'config_project_status_id', '8', 0),
+(839, 0, 'config', 'config_login_attempts', '5', 0),
+(837, 0, 'config', 'config_currency', 'EGP', 0),
+(838, 0, 'config', 'config_admin_limit', '20', 0),
+(836, 0, 'config', 'config_admin_language_id', '1', 0),
+(835, 0, 'config', 'config_language_id', '1', 0),
+(834, 0, 'config', 'config_telephone', '+00 000-00-000', 0),
+(830, 0, 'config', 'config_name', 'YallaFreelancer', 0),
+(831, 0, 'config', 'config_owner', 'Ahmed Atwa', 0),
+(832, 0, 'config', 'config_address', '6th Forrest Ray, London - 10001 UK', 0),
+(833, 0, 'config', 'config_email', 'admin@admin.com', 0),
 (657, 0, 'report_user_activity', 'report_user_activity_sort_order', '1', 0),
-(656, 0, 'report_user_activity', 'report_user_activity_status', '1', 0);
+(656, 0, 'report_user_activity', 'report_user_activity_status', '1', 0),
+(852, 0, 'config', 'config_pintrest', 'https://www.pinterest.com/yallafreelancers/', 0),
+(825, 0, 'config', 'config_meta_title', 'Freelance Services Marketplace for Businesses in Egypt', 0),
+(826, 0, 'config', 'config_meta_description', 'Yallafreelancer mission is to change how the world works together. Yallafreelancer connects businesses with freelancers offering digital services in 300+ categories.', 0),
+(827, 0, 'config', 'config_meta_keyword', '', 0),
+(828, 0, 'config', 'config_theme', 'default', 0),
+(829, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
+(858, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\n\"application/zip\"\r\napplication/x-zip\r\n\"application/x-zip\"\r\napplication/x-zip-compressed\r\n\"application/x-zip-compressed\"\r\napplication/rar\r\n\"application/rar\"\r\napplication/x-rar\r\n\"application/x-rar\"\r\napplication/x-rar-compressed\r\n\"application/x-rar-compressed\"\r\napplication/octet-stream\r\n\"application/octet-stream\"\r\naudio/mpeg\r\nvideo/quicktime\r\napplication/pdf', 0);
 
 -- --------------------------------------------------------
 
@@ -2492,7 +2542,9 @@ INSERT INTO `ci_user_activity` (`activity_id`, `user_id`, `key`, `data`, `ip`, `
 (1, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36', '2021-01-18 19:21:19'),
 (2, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-20 09:51:25'),
 (3, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-28 15:22:00'),
-(4, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-28 16:50:40');
+(4, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-28 16:50:40'),
+(5, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-01-30 17:36:09'),
+(6, 1, 'activity_login', '{\"user_id\":\"1\",\"name\":\"John Duo\"}', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344', '2021-02-01 15:52:43');
 
 -- --------------------------------------------------------
 
@@ -2698,6 +2750,13 @@ ALTER TABLE `ci_customer_group_description`
 --
 ALTER TABLE `ci_customer_history`
   ADD PRIMARY KEY (`customer_history_id`);
+
+--
+-- Indexes for table `ci_customer_ip`
+--
+ALTER TABLE `ci_customer_ip`
+  ADD PRIMARY KEY (`customer_ip_id`),
+  ADD KEY `ip` (`ip`);
 
 --
 -- Indexes for table `ci_customer_login`
@@ -3101,10 +3160,16 @@ ALTER TABLE `ci_customer_history`
   MODIFY `customer_history_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `ci_customer_ip`
+--
+ALTER TABLE `ci_customer_ip`
+  MODIFY `customer_ip_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT for table `ci_customer_login`
 --
 ALTER TABLE `ci_customer_login`
-  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_to_balance`
@@ -3164,7 +3229,7 @@ ALTER TABLE `ci_download`
 -- AUTO_INCREMENT for table `ci_event`
 --
 ALTER TABLE `ci_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `ci_extension`
@@ -3308,7 +3373,7 @@ ALTER TABLE `ci_seo_url`
 -- AUTO_INCREMENT for table `ci_setting`
 --
 ALTER TABLE `ci_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=792;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=859;
 
 --
 -- AUTO_INCREMENT for table `ci_university`
@@ -3332,7 +3397,7 @@ ALTER TABLE `ci_user`
 -- AUTO_INCREMENT for table `ci_user_activity`
 --
 ALTER TABLE `ci_user_activity`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `ci_user_group`

@@ -1,6 +1,7 @@
 <?php namespace Catalog\Controllers\Account;
 
 use \Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Account\ActivityModel;
 
 class Login extends \Catalog\Controllers\BaseController
 {
@@ -57,7 +58,7 @@ class Login extends \Catalog\Controllers\BaseController
             if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
                 $json['error_attempts'] = lang('account/login.error_attempts');
             }
-        
+
             if (! $this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'))) {
                 $json['error_warning'] = lang('account/login.text_warning');
                 $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
@@ -65,9 +66,23 @@ class Login extends \Catalog\Controllers\BaseController
 
             if (! $json) {
                 $customerModel->deleteLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
-                // Register Login Event... for extra future security use
-                // Like trigger notification email for user if user_agent changed or IP
-                \CodeIgniter\Events\Events::trigger('customer_login', $this->session->get('customer_id'), $this->request->getPost('email'));
+                // Register Login Event...for extra future security use
+                // Like trigger notification email for user if user_agent changed or IP or blocked IPs
+                \CodeIgniter\Events\Events::trigger('customer_login', $this->session->get('customer_id'));
+
+                $activityModel = new ActivityModel;
+                $customer_ip_info = $activityModel->getCustomerIP($this->session->get('customer_id'));
+                // Fire the Event if IP is not recognized
+                if ($customer_ip_info['ip'] && ($this->request->getIPAddress() != $customer_ip_info['ip'])) {
+                    $agent = $this->request->getUserAgent();
+                    $ip_data = [
+                        'customer_id' => $this->session->get('customer_id'),
+                        'browser'     => $agent->getBrowser() . ' ' . $agent->getVersion(),
+                        'platform'    => $agent->getPlatform(),
+                    ];
+                    // Trigger Customer E-Mail as IP is different than usual one..
+                    \CodeIgniter\Events\Events::trigger('customer_login_notify', $ip_data);
+                }
 
                 if ($this->session->get('redirect_url')) {
                     $json['redirect'] = (string) $this->session->get('redirect_url');
@@ -83,6 +98,7 @@ class Login extends \Catalog\Controllers\BaseController
     public function googleAuth()
     {
         $json = [];
+
         if (($this->request->getMethod() == 'post') && $this->request->isAJAX()) {
             if ($this->request->getPost('id_token') && $this->request->getPost('client_id')) {
                 $customerModel = new CustomerModel();
@@ -98,55 +114,50 @@ class Login extends \Catalog\Controllers\BaseController
                         $customer_info = $customerModel->where('email', $payload['email'])->first();
                         // user doesn't exist create new one from Client Response
                         if (! $customer_info) {
-                            $customer_data = [
-                            'customer_group_id' => 1,
-                            'online'            => 1,
-                            'status'            => 1,
-                            'email'             => $payload['email'],
-                            'firstname'         => $payload['given_name'],
-                            'lastname'          => $payload['family_name'],
-                            'username'          => substr($payload['email'], 0, strpos($payload['email'], '@')),
-                            'origin'            => 'google',
-                        ];
+                            $customerData = [
+                                'customer_group_id' => 1,
+                                'online'            => 1,
+                                'status'            => 1,
+                                'email'             => $payload['email'],
+                                'firstname'         => $payload['given_name'],
+                                'lastname'          => $payload['family_name'],
+                                'username'          => substr($payload['email'], 0, strpos($payload['email'], '@')),
+                                'origin'            => 'google',
+                            ];
 
-                            $insertID = $customerModel->insert($customer_data);
+                            $insertID = $customerModel->insert($customerData);
                         }
 
                         if ($customer_info) {
-                            $session_data = [
-                            'customer_id'    => $insertID ?? $customer_info['customer_id'],
-                            'customer_image' => $payload['picture'],
-                            'customer_name'  => $payload['given_name'] . ' ' . $payload['family_name'],
-                            'username'       => substr($payload['email'], 0, strpos($payload['email'], '@')),
-                            'gtoken'         => $this->request->getVar('id_token'),
-                            'isLogged'       => true,
+                            $sessionData = [
+                                'customer_id'    => $insertID ?? $customer_info['customer_id'],
+                                'customer_image' => $payload['picture'],
+                                'customer_name'  => $payload['given_name'] . ' ' . $payload['family_name'],
+                                'username'       => substr($payload['email'], 0, strpos($payload['email'], '@')),
+                                'gtoken'         => $this->request->getVar('id_token'),
+                                'isLogged'       => true,
                             ];
 
-                            $this->session->set($session_data);
-
+                            $this->session->set($sessionData);
                             // Trigger Pusher Online Event
-                            $options = ['cluster' => 'eu', 'useTLS' => true];
+                            $options = ['cluster' => PUSHER_CLUSTER, 'useTLS' => PUSHER_USETLS];
 
-                            $pusher = new \Pusher\Pusher(
-                                'b4093000fa8e8cab989a',
-                                'fb4bfd2d78aac168d918',
-                                '1047280',
-                                $options
-                            );
+                            $pusher = new \Pusher\Pusher(PUSHER_KEY, PUSHER_SECRET, PUSHER_APP_ID, $options);
 
                             $data['message'] = [
-                            'customer_id' => $insertID,
-                            'username'    => $payload['given_name'] . ' ' . $payload['family_name']
+                                'customer_id' => $insertID ?? $customer_info['customer_id'],
+                                'username'    => $payload['given_name'] . ' ' . $payload['family_name']
                             ];
 
                             $pusher->trigger('chat-channel', 'online-event', $data);
-
-                            $json['redirect'] = base_url('account/dashboard');
                         }
+                        $json['redirect'] = base_url('account/dashboard');
                     } else {
-                        $json['error'] = 'Invalid ID token';
+                        $json['error'] = 'Unable to verifiy ID token';
                     }
                 }
+            } else {
+                $json['error'] = 'Invalid ID token or Client ID';
             }
         }
         

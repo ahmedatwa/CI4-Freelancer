@@ -126,6 +126,13 @@ class Footer extends \Catalog\Controllers\BaseController
             $online_model->addOnline($ip, $customer_id, $url, $referer);
         }
 
+        // Chat Widget Code 
+        if ($this->registry->get('config_chat_widget')) {
+            $data['config_chat_widget'] = $this->registry->get('config_chat_widget');
+        } else {
+            $data['config_chat_widget'] = '';
+        }
+
         $data['scripts'] = $this->template->getScripts();
 
         $data['currency'] = view_cell('\Catalog\Controllers\Common\Currency::index');

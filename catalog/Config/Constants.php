@@ -80,7 +80,6 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest auto
 |--------------------------------------------------------------------------
 | Custom Paths
 |--------------------------------------------------------------------------
-|
 */
 defined('DIR_IMAGE') || define('DIR_IMAGE', ROOTPATH . 'public_html/images/');
 
@@ -89,14 +88,9 @@ defined('DIR_IMAGE') || define('DIR_IMAGE', ROOTPATH . 'public_html/images/');
 |--------------------------------------------------------------------------
 | Pusher Config
 |--------------------------------------------------------------------------
-|
 */
-
 defined('PUSHER_APP_ID')  || define('PUSHER_APP_ID', '1047280');
 defined('PUSHER_KEY')     || define('PUSHER_KEY', 'b4093000fa8e8cab989a');
 defined('PUSHER_SECRET')  || define('PUSHER_SECRET', 'fb4bfd2d78aac168d918');
 defined('PUSHER_CLUSTER') || define('PUSHER_CLUSTER', 'eu');
 defined('PUSHER_USETLS') || define('PUSHER_USETLS', true);
-
-
-

@@ -348,6 +348,14 @@ class Setting extends \Admin\Controllers\BaseController
             $data['config_global_alert'] = '';
         }
 
+        if ($this->request->getPost('config_chat_widget')) {
+            $data['config_chat_widget'] = $this->request->getPost('config_chat_widget');
+        } elseif (!empty($setting_info['config_chat_widget'])) {
+            $data['config_chat_widget'] = $setting_info['config_chat_widget'];
+        } else {
+            $data['config_chat_widget'] = '';
+        }
+
         $data['entry_freelancer_fee'] = sprintf(lang('setting/setting.list.entry_freelancer_fee'), $this->registry->get('config_name'));
 
         return $this->document->output('setting/setting', $data);

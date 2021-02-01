@@ -13,7 +13,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
 		$data['text_view_profile']    = lang('module/freelancer.text_view_profile');
 		
         $filter_data = [
-			'filter_freelancer' => 0,
+			'filter_freelancer' => 100,
 			'limit'             => $this->registry->get('module_freelancer_limit'),
 			'start'             => 0,
         ];

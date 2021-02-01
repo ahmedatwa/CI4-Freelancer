@@ -61,5 +61,31 @@ class ActivityModel extends \CodeIgniter\Model
         $builder->insert($activity_data);
     }
 
+    public function AddCustomerIP(array $data)
+    {
+        $builder = $this->db->table('customer_ip');
+        $request = \Config\Services::request();
+
+        $ipData = [
+            'customer_id'   => $data['customer_id'],
+            'ip'            => $request->getIPAddress(),
+            'user_agent'    => $request->getUserAgent(),
+        ];
+
+        $builder->set('date_added', 'NOW()', false);
+        $builder->insert($ipData);
+    }
+
+    public function getCustomerIP(int $customer_id)
+    {
+      $builder = $this->db->table('customer_ip');
+      $builder->where('customer_id', $customer_id);
+      $query = $builder->get();
+      if ($builder->countAllResults()) {
+          return $query->getRowArray();
+      } else {
+        return;
+      } 
+    }
 
 } // END OF Activities Model FILE

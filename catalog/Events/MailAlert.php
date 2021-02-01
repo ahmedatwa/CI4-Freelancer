@@ -1,7 +1,8 @@
 <?php namespace Catalog\Events;
 
 use \Catalog\Models\Account\ActivityModel;
-use Catalog\Models\Account\CustomerModel;
+use \Catalog\Models\Account\CustomerModel;
+use CodeIgniter\I18n\Time;
 
 class MailAlert
 {
@@ -171,6 +172,39 @@ class MailAlert
         $config->setMessage(view('mail/bid_alert', $data));
 
         $config->send();
+    }
+
+    // Catalog\Controllers\Customer\Customer::authLogin
+    public static function loginAlertMail(array $args)
+    {
+        $config = \Config\Services::email();
+        $customerModel = new CustomerModel();
+        $myTime = Time::now();
+
+        $data['text_subject']  = sprintf(lang('mail/login_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_welcome']  = sprintf(lang('mail/login_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_platform'] = sprintf(lang('mail/login_alert.text_platform'), $args['platform']);
+        $data['text_time']     = sprintf(lang('mail/login_alert.text_time'), lang('en.fullDate', [$myTime]));
+        $data['text_browser']  = sprintf(lang('mail/login_alert.text_browser'), $args['browser']);
+
+        $data['text_body']  = sprintf(lang('mail/login_alert.text_body'), base_url('account/forgotten'));
+
+        $data['config_name']    = service('registry')->get('config_name');
+        $data['config_address'] = service('registry')->get('config_address');
+        
+        $data['text_thanks']    = lang('mail/login_alert.text_thanks');
+        $data['text_signature'] = sprintf(lang('mail/login_alert.text_signature'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+
+        $config->setFrom(service('registry')->get('config_email'));
+
+        $config->setTo($customerModel->getCustomer($args['customer_id'])['email']);
+
+        $config->setSubject(html_entity_decode(sprintf(lang('mail/login_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        
+        $config->setMessage(view('mail/login_alert', $data));
+
+        $config->send();
+
     }
     // --------------------------------------------------
 }

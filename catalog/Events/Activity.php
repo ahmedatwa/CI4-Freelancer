@@ -4,32 +4,32 @@ use \Catalog\Models\Account\ActivityModel;
 use Catalog\Libraries\Customer;
 use \Catalog\Models\Account\CustomerModel;
 use \Catalog\Models\Freelancer\MilestoneModel;
+use \Admin\Models\User\Users;
 
 class Activity
 {
     // Catalog\Controllers\Customer\Customer::authLogin
-    public static function login(int $customer_id, string $email)
+    public static function login(int $customer_id)
     {
         $activityModel = new ActivityModel;
 
         $data = [
             'customer_id' => $customer_id,
-            'email'      => $email,
         ];
 
-        $activityModel->addActivity('customer_login', $data, 1);
+        $activityModel->AddCustomerIP($data);
     }
 
     // Admin\Controllers\user\user::Rules
     public static function loginAttempts(string $email)
     {
-        $User = new \Admin\Models\User\Users();
+        $User = new Users();
 
         $User->addLoginAttempts($email);
     }
 
     // Catalog\Controllers\Account\Setting::update
-    public static function CustomerActivityUpdate($customer_id, $name)
+    public static function CustomerActivityUpdate(int $customer_id, string $name)
     {
         $activityModel = new ActivityModel;
 

@@ -58,7 +58,6 @@ $('#button-form-login').on('click', function() {
 		   $('.alert, .invalid-feedback').remove();
 		},
 		success: function(json) {
-
 		    if (json['error_warning']) {
 		    	if (json['validator']) {
 			    	for ( i in json['validator']) {
@@ -94,6 +93,8 @@ $('#button-form-login').on('click', function() {
 function onSuccess(googleUser) {
   var id_token = googleUser.getAuthResponse().id_token;
   var client_id = $('meta[name=\'google-signin-client_id\']').attr('content');
+  // disble Auto Sign-in
+  googleUser.disconnect();
   $.ajax({
   	url: 'account/login/googleAuth',
   	headers: {
@@ -123,7 +124,7 @@ function onSuccess(googleUser) {
 }
 
 function onFailure(error) {
-	console.log(error)
+	alert(error.error)
 }
 function renderButton() {
   gapi.signin2.render('my-signin2', {

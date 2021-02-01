@@ -319,6 +319,14 @@
 										</div>
 									</fieldset>
 									<fieldset>
+										<legend><?php echo $text_chat_widget; ?></legend>
+										<div class="form-group row">
+									    <label class="col-sm-3 control-label" for="chat_widget_code"><?php echo $entry_config_chat_widget; ?></label>
+									    <div class="col-sm-9">
+									    <textarea class="form-control" name="config_chat_widget" id="config_chat_widget" rows="5"><?php echo $config_chat_widget; ?></textarea>
+									</div>
+									  </div>
+									</fieldset>
 									</div><!-- ./End tab_option -->
 									<!-- ./tab_image -->
 									<div role="tabpanel" class="tab-pane fade mt-3" id="nav-social" aria-labelledby="nav-social-tab">

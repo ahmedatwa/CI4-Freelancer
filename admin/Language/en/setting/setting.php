@@ -22,6 +22,7 @@ return [
     'text_speed'                     => 'Performance',
     'text_customer'                  => 'Customer',
     'text_fees'                      => 'Fees',
+    'text_chat_widget'               => 'Chat Widget',
     // Tabs
     'tab_general'                    => 'General',
     'tab_site'                       => 'Site',
@@ -68,7 +69,7 @@ return [
     'entry_upgrade_highlight'        => 'Highlight Bid Fee',
     'entry_file_ext_allowed'         => 'Allowed File Extensions',
     'entry_file_mime_allowed'        => 'Allowed File Mime Types',
-
+    'entry_config_chat_widget'       => 'Chat Widget Code',
 
     // Help
     'help_user_activity'             => 'Allow system to track user activity',

@@ -42,10 +42,9 @@ class Customer
         }
     }
 
-    public function login($email, $password)
+    public function login(string $email, string $password): bool
     {
-        // From Table Users
-        $builder = $this->db->table($this->db->prefixTable('customer'));
+        $builder = $this->db->table('customer');
         $builder->where([
             'email'  => $email,
             'status' => 1
