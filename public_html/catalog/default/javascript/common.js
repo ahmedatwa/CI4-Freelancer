@@ -376,7 +376,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
       var notificationItems;
       
 			// Determines how many items are displayed based on items height
-      /* jshint shadow:true */
+            /* jshint shadow:true */
 			if (scrollContainerList.children("li").outerHeight() > 140) {
 				var notificationItems = 2;
 			} else {
@@ -400,10 +400,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 				$(this).find('.simplebar-track').hide();
 			}
 		});
-	}
-
-	// Init
-	userMenuScrollbar();
+	}userMenuScrollbar();
 
 
 	/*--------------------------------------------------*/
@@ -676,7 +673,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	});
 
   	/*----------------------------------------------------*/
-    /*  	// append fragment to url
+    /*  // append fragment to url
     /*----------------------------------------------------*/
 	var url = document.URL;
 	var hash = url.substring(url.indexOf('#'));
@@ -701,32 +698,6 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	        location.hash = $(this).attr('href');
 	    });
 	});
-
-	// Login
-// 	$('#button-glogin').on('click', function(e) {
-// 		e.preventDefault();
-//      var dialog = bootbox.dialog({
-//       title: "We're glad to see you again!",
-//       message: `<form method="post" action="" enctype="multipart/form-data" accept-charset="utf-8" id="form-login">
-//       <div class="input-group mb-3">
-//        <div class="input-group-prepend">
-//         <span class="input-group-text" id="basic-addon1">@</span>
-//        </div>
-//       <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-//       </div>
-//    			</form>`,
-//       buttons: {
-//         success: {
-//           label: "Login",
-//           className: "button",
-//           callback: function (result) {
-            
-//           }
-//         }
-//        }
-//       }
-//     );
-// });
 	/*----------------------------------------------------*/
 });
 })(this.jQuery);
