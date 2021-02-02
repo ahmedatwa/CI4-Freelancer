@@ -131,6 +131,8 @@ class Module extends \Admin\Controllers\BaseController
 
         $files = directory_map(APPPATH . 'Controllers/Module', 1);
 
+        sort($files);
+
         if ($files) {
             foreach ($files as $file) {
                 $basename = basename($file, '.php');

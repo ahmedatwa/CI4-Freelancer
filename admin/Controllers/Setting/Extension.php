@@ -42,6 +42,8 @@ class Extension extends \Admin\Controllers\BaseController
 
         $files = directory_map(APPPATH . 'Controllers/Extension', 1);
 
+        sort($files);
+
         foreach ($files as $file) {
             $basename = basename($file, '.php');
 

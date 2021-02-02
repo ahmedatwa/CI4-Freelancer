@@ -127,7 +127,7 @@ class User_activity extends \Admin\Controllers\BaseController
         $data['column_comment']    = lang('report/user_activity.list.column_comment');
         $data['column_ip']         = lang('report/user_activity.list.column_ip');
         $data['column_date_added'] = lang('report/user_activity.list.column_date_added');
-        $data['report_heading_title']     = lang('report/user_activity.list.report_heading_title');
+        $data['report_heading_title']     = lang('report/user_activity.list.heading_title');
 
         $data['delete'] = base_url('index.php/report/activity/delete?user_token=' . $this->request->getVar('user_token'));
 

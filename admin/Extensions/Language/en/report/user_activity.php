@@ -3,7 +3,7 @@ return [
 'text_success'                 => 'Success: You have modified User activity report!',
 'error_permission'             => 'Warning: You do not have permission to modify User activity report!',
 	'list' => [
-		'report_heading_title'    => 'User Activity Report',
+		'heading_title'    => 'User Activity Report',
 		// Text
 		'text_extension'          => 'Extensions',
 		'text_edit'               => 'Edit User Activity Report',
