@@ -238,7 +238,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	    }
 	    });
 	  }
-	  // Mark Read Notification button
+	 // Mark Read Notification button
 	$(document).on('click', '#button-mark-read', function() {
 	  $.ajax({
 		url: 'account/notifications/markRead',
@@ -675,7 +675,9 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	  }
 	});
 
-	// append fragment to url
+  	/*----------------------------------------------------*/
+    /*  	// append fragment to url
+    /*----------------------------------------------------*/
 	var url = document.URL;
 	var hash = url.substring(url.indexOf('#'));
 
@@ -701,10 +703,18 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	});
 
 	// Login
-// 	$('#button-glogin').on('click', function() {
+// 	$('#button-glogin').on('click', function(e) {
+// 		e.preventDefault();
 //      var dialog = bootbox.dialog({
 //       title: "We're glad to see you again!",
-//       message: '<form method="post" action="" enctype="multipart/form-data" accept-charset="utf-8" id="form-login"><div class="form-group"><div class="input-group" id="email"><div class="input-group-prepend"><span class="input-group-text"><i class="icon-material-baseline-mail-outline"></i></span></div><input type="text" class="form-control" name="email" id="input-email" placeholder="E-Mail Address"/></div></div><div class="form-group"><div class="input-group" id="password"><div class="input-group-prepend"><span class="input-group-text"><i class="icon-material-outline-lock"></i></span></div><input type="password" class="form-control" name="password" id="input-password" placeholder="Password"/></div></div></form>',
+//       message: `<form method="post" action="" enctype="multipart/form-data" accept-charset="utf-8" id="form-login">
+//       <div class="input-group mb-3">
+//        <div class="input-group-prepend">
+//         <span class="input-group-text" id="basic-addon1">@</span>
+//        </div>
+//       <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+//       </div>
+//    			</form>`,
 //       buttons: {
 //         success: {
 //           label: "Login",

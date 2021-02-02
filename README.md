@@ -34,8 +34,8 @@ They could be designed for Admin or Catalog.
 > <pre><code>$forge = \Config\Database::forge();
 >  $fields = [
 >    'bid_id' => [
->      'type'  => 'INT',
->      'constraint'     => '11',
+>      'type'       => 'INT',
+>      'constraint' => '11',
 >    ],
 > $forge->addField($fields);
 > $forge->addPrimaryKey('bid_id');

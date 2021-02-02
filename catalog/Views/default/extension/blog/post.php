@@ -105,7 +105,7 @@
 	</div>
 <!-- Leava a Comment -->
 <div class="row">
-	<div class="col-6">
+	<div class="col-sm-12 col-md-6">
 		<h3 class="margin-top-35 margin-bottom-30"><?php echo $text_add_comment; ?></h3>
 		<form action="" method="" id="form-comment" class="form-post-comment">
 			<div class="form-row">
