@@ -86,6 +86,7 @@ class ReviewModel extends Model
         $builder->select('CONCAT(c.firstname, " ", c.lastname) As author, r.project_id, r.comment, r.rating, r.date_added, r.status');
         $builder->join('project_description pd', 'r.project_id = pd.project_id', 'left');
         $builder->join('customer c', 'c.customer_id = r.submitted_by', 'left');
+        $builder->where('r.review_id', $review_id);
         $query = $builder->get();
         return $query->getRowArray();
     }

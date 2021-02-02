@@ -101,7 +101,7 @@ class Project extends \Admin\Controllers\BaseController
                 'project_id' => $result['project_id'],
                 'name'       => $result['name'],
                 'employer'   => $projectModel->getEmployerByProjectId($result['project_id']),
-                'price'      => number_format($result['budget_min'], 2) . ' - ' . number_format($result['budget_max'], 2) . $this->registry->get('config_currency'),
+                'price'      => number_format($result['budget_min'], 2) . ' - ' . number_format($result['budget_max'], 2) . ' ' . $this->registry->get('config_currency'),
                 'type'       => $type,
                 'status'     => $result['status'],
                 'edit'       => base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id=' . $result['project_id']),
