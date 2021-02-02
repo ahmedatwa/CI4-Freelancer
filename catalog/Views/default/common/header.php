@@ -54,11 +54,11 @@
 <?php } ?>
   <div id="wrapper">
     <b class="screen-overlay"></b>
- <nav class="navbar navbar-expand navbar-light bg-white d-lg-none">
+ <nav class="navbar navbar-expand navbar-light bg-white d-lg-none px-2 my-2">
   <!-- Mobile Menu Trigger -->
     <button data-trigger="#navbar_main" class="d-lg-none btn btn-light bg-white border border-white ml-0" type="button"><i class="fas fa-bars"></i></button>
     <!-- Logo -->
-    <a class="navbar-brand pt-0 ml-3" href="<?php echo $home; ?>">
+    <a class="navbar-brand pt-0 ml-2" href="<?php echo $home; ?>">
       <img src="<?php echo $logo; ?>" alt="<?php echo $config_name; ?>" class="d-inline-block align-top" loading="lazy">
     </a>
     <!-- ./Logo -->
