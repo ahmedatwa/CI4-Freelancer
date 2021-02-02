@@ -80,7 +80,7 @@ class ReviewModel extends Model
         return $query->getResultArray();
     }
 
-    public function getReview($review_id)
+    public function getReview(int $review_id)
     {
         $builder = $this->db->table('review r');
         $builder->select('CONCAT(c.firstname, " ", c.lastname) As author, r.project_id, r.comment, r.rating, r.date_added, r.status');
@@ -91,7 +91,7 @@ class ReviewModel extends Model
         return $query->getRowArray();
     }
 
-    public function addReview($data)
+    public function addReview(array $data)
     {
         $builder = $this->db->table($this->table);
         $review_data = [
@@ -106,7 +106,7 @@ class ReviewModel extends Model
         $builder->insert($review_data);
     }
     
-    public function editReview($review_id, $data)
+    public function editReview(int $review_id, array $data)
     {
         $builder = $this->db->table($this->table);
         $review_data = [
@@ -122,13 +122,13 @@ class ReviewModel extends Model
         $builder->update($review_data);
     }
 
-    public function deleteReview($review_id)
+    public function deleteReview(int $review_id)
     {
         $builder = $this->db->table($this->table);
         $builder->delete(['review_id' => $review_id]);
     }
 
-    public function getProjectByReviewID($review_id)
+    public function getProjectByReviewID(int $review_id)
     {
         $builder = $this->db->table('project_description pd');
         $builder->join('review r', 'pd.project_id = r.project_id', 'left');
