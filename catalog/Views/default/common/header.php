@@ -134,7 +134,8 @@
     <button type="button" class="close btn-close" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-    <h5 class="py-2 text-white text-center"></h5>
+    <h5 class=""> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a>
+</h5>
   </div>
 <!-- Logo -->
 <a class="navbar-brand pt-0 d-none d-lg-block ml-3" href="<?php echo $home; ?>">
@@ -224,6 +225,6 @@
           </div>
         </li>
       <?php } ?>
-      <li class="mt-lg-2 ml-4"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
+      <li class="mt-lg-2 ml-4 d-none d-lg-block"> <a role="button" href="<?php echo $add_project; ?>" class="add-project button ripple-effect rounded"><?php echo $text_add_project; ?></a></li>
     </ul>  
   </nav>
