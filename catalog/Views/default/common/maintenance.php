@@ -6,12 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700%7CPoppins:400,500" rel="stylesheet">	
-	<link href="catalog/default/stylesheet/countdown_styles.css" rel="stylesheet">
-	<link href="catalog/default/stylesheet/countdown_responsive.css" rel="stylesheet">
+	<link href="/catalog/default/stylesheet/countdown_styles.min.css" rel="stylesheet">
+	<link href="/catalog/default/stylesheet/countdown_responsive.min.css" rel="stylesheet">
 </head>
 <body>
 	
-	<div class="main-area center-text" style="background-image:url(catalog/default/images/countdown.jpg);">
+	<div class="main-area center-text" style="background-image:url(/catalog/default/images/countdown.jpg);">
 		<div class="display-table">
 			<div class="display-table-cell">
 				<h1 class="title font-white"><b><?php echo $text_maintenance; ?></b></h1>

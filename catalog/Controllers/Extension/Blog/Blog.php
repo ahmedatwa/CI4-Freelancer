@@ -128,7 +128,7 @@ class Blog extends \Catalog\Controllers\BaseController
 
     public function getPost()
     {
-    	$this->template->setTitle($this->request->uri->getSegment(3));
+    	$this->template->setTitle($this->request->uri->getSegment(4));
 
         if ($this->request->getGet('post_id')) {
             $post_id = $this->request->getGet('post_id');

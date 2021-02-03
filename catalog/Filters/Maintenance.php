@@ -13,6 +13,7 @@ class Maintenance implements FilterInterface
         if (service('registry')->get('config_maintenance')) {
             echo view_cell('Catalog\Controllers\Common\Maintenance::index');
             return Services::response()->setStatusCode(503);
+            exit(0);
         }
     }
 
