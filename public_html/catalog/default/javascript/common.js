@@ -698,7 +698,15 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	        location.hash = $(this).attr('href');
 	    });
 	});
+
+    /*----------------------------------------------------*/
+	/* Agree to Terms */
 	/*----------------------------------------------------*/
+	// $('.agree').on('click', function(e) {
+	// 	e.preventDefault();
+ //        bootbox.alert("This is the default alert!");
+ //    });
+   // -----------------------
 });
 })(this.jQuery);
 

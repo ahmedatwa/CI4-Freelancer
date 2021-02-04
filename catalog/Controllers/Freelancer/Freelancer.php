@@ -193,7 +193,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $categoryModel = new CategoryModel();
 
         $data['categories'] = [];
-        $categories = $categoryModel->getCategories(['start' => 0, 'limit' => 5]);
+        $categories = $categoryModel->getCategories();
         foreach ($categories as $category) {
             $data['categories'][] = [
                 'category_id' => $category['category_id'],
