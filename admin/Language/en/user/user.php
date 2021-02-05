@@ -20,5 +20,6 @@ return [
     'entry_password'   => 'Password',
     'entry_confirm'    => 'Confirm Password',
     'entry_user_group' => 'User Group',
+    'entry_username'   => 'UserName',
    ],
 ];

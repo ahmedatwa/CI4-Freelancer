@@ -114,7 +114,7 @@ class User extends \Admin\Controllers\BaseController
             $data['selected'] = [];
         }
 
-        $data['user_token'] = $this->request->getGet('user_token');
+        $data['user_token'] = $this->session->get('user_token');
 
         $this->document->output('user/user_list', $data);
     }
@@ -175,6 +175,14 @@ class User extends \Admin\Controllers\BaseController
             $data['lastname'] = $user_info['lastname'];
         } else {
             $data['lastname'] = '';
+        }
+
+        if ($this->request->getPost('username')) {
+            $data['username'] = $this->request->getPost('username');
+        } elseif (!empty($user_info)) {
+            $data['username'] = $user_info['username'];
+        } else {
+            $data['username'] = '';
         }
 
         if ($this->request->getPost('email', FILTER_SANITIZE_EMAIL)) {
@@ -245,6 +253,7 @@ class User extends \Admin\Controllers\BaseController
             if (! $this->validate([
                     'firstname' => 'required|alpha_numeric_space|min_length[3]',
                     'lastname'  => 'required|alpha_numeric_space|min_length[3]',
+                    'username'  => 'required|alpha_numeric_space|min_length[3]',
                     'email'     => 'required|valid_email|is_unique[user.email,user_id,{user_id}]',
                     'password'  => 'required|min_length[4]',
                     'confirm'   => 'required_with[password]|matches[password]',
@@ -256,6 +265,7 @@ class User extends \Admin\Controllers\BaseController
             if (! $this->validate([
                     'firstname' => 'required|alpha_numeric_space|min_length[3]',
                     'lastname'  => 'required|alpha_numeric_space|min_length[3]',
+                    'username'  => 'required|alpha_numeric_space|min_length[3]',
                     'email'     => 'required|valid_email|is_unique[user.email,user_id,{user_id}]',
                     ])) {
                 $this->session->setFlashdata('error_warning', lang('en.error.error_form'));

@@ -1,14 +1,17 @@
 <?php 
         
 return [
-    'text_title'           => 'Login',
     'text_warning'         => 'Some information you entered doesn\'t look right.',
     'error_attempts'       => 'Your account has exceeded allowed number of login attempts. Please try again in 1 hour.',
+'list' => [
+    'heading_title'        => 'Member Login',
     'button_login'         => 'Login',
-    'heading_title'        => 'Please enter your user information.',
-    'text_forget_password' => 'Forgot Password',
-    'text_keep_signed'     => 'Keep me signed in',
+    'text_title'           => 'Please enter your user information.',
+    'text_forget_password' => '<a href="%s" class="text-primary">Forgotten Password</a>',
+    'text_email'           => 'Email',
+    'text_password'        => 'Password',
     // Entry
-    'entry_email'    => 'Email',
-    'entry_password' => 'Password',
+    'entry_email'          => 'Email',
+    'entry_password'       => 'Password',
+],
 ];

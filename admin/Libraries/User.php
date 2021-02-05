@@ -4,8 +4,9 @@ class User
 {
     protected $userId;
     protected $userGroupId;
-    protected $permission = [];
     protected $userName;
+    protected $permission = [];
+    // Libs
     protected $session;
     protected $db;
     
@@ -49,32 +50,39 @@ class User
 
 
 
-    public function login($email, $password)
+    public function login(string $email, string $password): bool
     {
         // From Table Users
-        $builder = $this->db->table($this->db->prefixTable('user'));
+        $builder = $this->db->table('user');
         $builder->select();
-        $builder->where('email', $email)
-                ->where('status', 1);
+        $builder->where([
+            'email'  => $email,
+            'status' => 1,
+        ]);
+        
         if ($builder->countAllResults()) {
             $query = $builder->get();
             $row = $query->getRow();
-           // Verify stored hash against DB password
+            // Verify stored hash against DB password
             if (password_verify($password, $row->password)) {
-                // The cost parameter can change over time as hardware improves
-                 $options = array('cost' => 11);
-                // Check if a newer hashing algorithm is available
-                // or the cost has changed
-                if (password_needs_rehash($row->password, PASSWORD_BCRYPT, $options)) {
-                    // If so, create a new hash, and replace the old one
-                    $newHash = password_hash($password, PASSWORD_BCRYPT, $options);
-                }
+                $rehash = password_needs_rehash($row->password, PASSWORD_DEFAULT);
+            } elseif (isset($row->salt) && $row->password == sha1($row->salt . sha1($row->salt . sha1($password)))) {
+                $rehash = true;  
+            } elseif ($row->password == md5($password)) {
+                $rehash = true;
             } else {
                 return false;
             }
-            $this->userId = $row->user_id;
+
+            if ($rehash) {
+                $builder->where(['email'  => $email, 'status' => 1,])
+                        ->set('password', password_hash($password, PASSWORD_DEFAULT))
+                        ->update();
+            }
+
+            $this->userId      = $row->user_id;
             $this->userGroupId = $row->user_group_id;
-            $this->userName = $row->firstname . ' ' . $row->lastname;
+            $this->userName    = $row->firstname . ' ' . $row->lastname;
             // Build User Data Session Array
             $user_data = [
                 'user_id'       => $row->user_id,
@@ -112,10 +120,10 @@ class User
 
     public function logout()
     {
+        $this->session->destroy();
         $this->userId = '';
         $this->userName = '';
         $this->userGroupId = '';
-        $this->session->destroy();
     }
 
     public function isLogged()

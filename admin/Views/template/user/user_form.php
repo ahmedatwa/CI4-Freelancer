@@ -58,6 +58,13 @@
           </div>
         </div>
         <div class="form-group row">
+          <label for="input-username" class="col-md-2 col-form-label"><?php echo $entry_username; ?></label>
+          <div class="col-md-10">
+            <input class="form-control" type="text" id="input-username" name="username" value="<?php echo $username; ?>">
+            <?php echo form_error('username'); ?>
+          </div>
+        </div>
+        <div class="form-group row">
           <label for="input-email" class="col-md-2 col-form-label"><?php echo $entry_email; ?></label>
           <div class="col-md-10">
             <input class="form-control" type="text" id="input-email" name="email" value="<?php echo $email; ?>">

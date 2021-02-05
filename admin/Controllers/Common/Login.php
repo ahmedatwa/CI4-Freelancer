@@ -6,10 +6,8 @@ class Login extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-        $this->document->setTitle(lang('common/login.text_title'));
+        $this->document->setTitle(lang('common/login.list.heading_title'));
         $this->document->addScript('assets/vendor/tilt/tilt.jquery.min.js');
-        $this->document->addStyle('assets/stylesheet/util.css');
-        $this->document->addStyle('assets/stylesheet/login.css');
 
         if ($this->user->isLogged() && $this->session->get('user_token')) {
             return redirect()->to(base_url('index.php/common/dashboard?user_token=' . $this->session->get('user_token')));
@@ -22,15 +20,9 @@ class Login extends \Admin\Controllers\BaseController
             $this->user->logout();
         }
 
-        if ($this->session->getFlashdata('warning')) {
-            $data['warning'] = $this->session->getFlashdata('warning');
-        } else {
-            $data['warning'] = '';
-        }
-
-        $data['forgot'] = base_url('index.php/common/forgotten');
-        $data['login'] = base_url('index.php/common/login');
-        $data['base'] = slash_item('baseURL');
+        $data['forgot'] = sprintf(lang('common/login.list.text_forget_password'), base_url('index.php/common/forgotten'));
+        $data['login']  = base_url('index.php/common/login');
+        $data['base']   = slash_item('baseURL');
     
         if (!empty($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
             $data['email'] = $this->request->getPost('email');

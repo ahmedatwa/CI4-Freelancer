@@ -7,7 +7,7 @@ class UserModel extends Model
     protected $table          = 'user';
     protected $primaryKey     = 'user_id';
     protected $returnType     = 'array';
-    protected $allowedFields  = ['firstname', 'lastname', 'email', 'password', 'status', 'user_group_id', 'image'];
+    protected $allowedFields  = ['firstname', 'lastname', 'username', 'email', 'password', 'salt', 'status', 'user_group_id', 'image'];
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
     // Password Hashing Events
@@ -24,10 +24,14 @@ class UserModel extends Model
     protected function hashPassword(array $data)
     {
         if (isset($data['data']['password']) && !empty($data['data']['password'])) {
-            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
+            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
         } else {
             unset($data['data']['password']);
         }
+        if (! isset($data['data']['salt'])) {
+            $data['data']['salt'] = token('sha1', 9);
+        }
+
         return $data;
     }
 

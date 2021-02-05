@@ -8,8 +8,6 @@ class Forgotten extends \Admin\Controllers\BaseController
     {
         $this->document->setTitle(lang('common/forgotten.list.heading_title'));
         $this->document->addScript('assets/vendor/tilt/tilt.jquery.min.js');
-        $this->document->addStyle('assets/stylesheet/util.css');
-        $this->document->addStyle('assets/stylesheet/login.css');
 
         $userModel = new UserModel();
 
@@ -30,7 +28,7 @@ class Forgotten extends \Admin\Controllers\BaseController
         if ($this->request->isAJAX()) {
             $userModel = new UserModel();
             if (! $this->validate([
-             'email' => 'required|valid_email',
+                'email' => 'required|valid_email',
             ])) {
                 $json['error'] = $this->validator->getError('email');
             }
@@ -44,7 +42,7 @@ class Forgotten extends \Admin\Controllers\BaseController
                 $json['throttler'] = $this->response->setStatusCode(429);
             }
 
-            if ((! $json) && ($this->request->getMethod() == 'post')) {
+            if ((! $json) && ($this->request->getMethod(TRUE) == 'POST')) {
                 $userModel->editCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), token('alpha', 40));
                 $json['success'] = lang('common/forgotten.text_success');
                 $json['redirect'] = 'index.php/common/login';

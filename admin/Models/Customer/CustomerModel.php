@@ -21,7 +21,7 @@ class CustomerModel extends \CodeIgniter\Model
     protected function hashPassword(array $data)
     {
         if (isset($data['data']['password']) && !empty($data['data']['password'])) {
-            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
+            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
         } else {
             unset($data['data']['password']);
         }
