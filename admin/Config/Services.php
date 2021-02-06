@@ -1,8 +1,8 @@
-<?php namespace Config;
+<?php
 
-use CodeIgniter\Config\Services as CoreServices;
+namespace Config;
 
-require_once SYSTEMPATH . 'Config/Services.php';
+use CodeIgniter\Config\BaseService;
 
 /**
  * Services Configuration file.
@@ -17,36 +17,42 @@ require_once SYSTEMPATH . 'Config/Services.php';
  * method format you should use for your service methods. For more examples,
  * see the core Services file at system/Config/Services.php.
  */
-class Services extends CoreServices
+class Services extends BaseService
 {
+	// public static function example($getShared = true)
+	// {
+	//     if ($getShared)
+	//     {
+	//         return static::getSharedInstance('example');
+	//     }
+	//
+	//     return new \CodeIgniter\Example();
+	// }
 
-	   public static function registry($getShared = true)
-	   {
-	       if ($getShared)
-	       {
-	           return static::getSharedInstance('Registry');
-	       }
-	
-	       return new \Admin\Libraries\Registry();
-	   }	  
+	public static function registry($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('registry');
+        }
 
-	   public static function document($getShared = true)
-	   {
-	       if ($getShared)
-	       {
-	           return static::getSharedInstance('Document');
-	       }
-	
-	       return new \Admin\Libraries\Document();
-	   }
+        return new \Admin\Libraries\Registry();
+    }
 
-	   public static function user($getShared = true)
-	   {
-	       if ($getShared)
-	       {
-	           return static::getSharedInstance('User');
-	       }
-	
-	       return new \Admin\Libraries\User();
-	   }
+    public static function document($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('document');
+        }
+
+        return new \Admin\Libraries\Document();
+    }
+
+    public static function user($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('user');
+        }
+
+        return new \Admin\Libraries\User();
+    }
 }

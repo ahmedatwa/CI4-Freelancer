@@ -1,6 +1,6 @@
 <?php namespace Extensions\Controllers\Dashboard;
 
-use Extensions\Models\Dashboard\ActivityModel;
+use Extensions\Models\Dashboard\CustomerActivityModel;
 use Admin\Models\Setting\SettingModel;
 use Admin\Models\Customer\CustomerModel;
 
@@ -91,13 +91,12 @@ class Activity extends \Admin\Controllers\BaseController
   
         $data['activities'] = [];
   
-        $activityModel = new ActivityModel();
+        $activityModel = new CustomerActivityModel();
         $customerModel = new CustomerModel();
 
         $results = $activityModel->findAll(5);
 
         foreach ($results as $result) {
-
             $username = $customerModel->where('customer_id', $result['customer_id'])->findColumn('username');
 
             $text = vsprintf(lang('dashboard/activity.list.text_activity_' . $result['key']), json_decode($result['data'], true));
@@ -109,15 +108,15 @@ class Activity extends \Admin\Controllers\BaseController
             ];
   
             $replace = [
-              base_url('index.php/customer/customer/edit?user_token=' . $this->request->getVar('user_token') . '&customer_id='),
-              $username[0],
-              base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id='),
+                base_url('index.php/customer/customer/edit?user_token=' . $this->request->getVar('user_token') . '&customer_id='),
+                $username[0],
+                base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id='),
             ];
   
             $data['activities'][] = [
-              'comment'    => str_replace($find, $replace, $text),
-              'date_added' => date(lang('en.datetime_format'), strtotime($result['date_added']))
-        ];
+                'comment'    => str_replace($find, $replace, $text),
+                'date_added' => date(lang('en.datetime_format'), strtotime($result['date_added']))
+            ];
         }
   
         return view('Extensions\Views\template\dashboard\activity_info', $data);

@@ -1,7 +1,11 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 use CodeIgniter\Events\Events;
-use \Admin\Models\Setting\EventModel;
+use CodeIgniter\Exceptions\FrameworkException;
+use Admin\Models\Setting\EventModel;
+
 /*
  * --------------------------------------------------------------------
  * Application Events
@@ -21,27 +25,35 @@ use \Admin\Models\Setting\EventModel;
 
 Events::on('pre_system', function () {
     if (ENVIRONMENT !== 'testing') {
-        while (\ob_get_level() > 0) {
-            \ob_end_flush();
+        if (ini_get('zlib.output_compression')) {
+            throw FrameworkException::forEnabledZlibOutputCompression();
         }
 
-        \ob_start(function ($buffer) {
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
+
+        ob_start(function ($buffer) {
             return $buffer;
         });
     }
 
-// Fetch Events from DB
-$eventModel = new EventModel();
-$results = $eventModel->where(['status' => 1])->findAll();
-foreach ($results as $result) {
-    if ((substr($result['action'], 0, 6) == 'Admin\\')) {
-        if ($result['priority'] != 0) {
-            Events::on($result['code'], $result['action'], $result['priority']);
-        } else {
-            Events::on($result['code'], $result['action']);
+    /*
+     * --------------------------------------------------------------------
+     * Collect DB Events
+     * --------------------------------------------------------------------
+     */
+    $eventModel = new EventModel();
+    $results = $eventModel->where(['status' => 1])->findAll();
+    foreach ($results as $result) {
+        if ((substr($result['action'], 0, 6) == 'Admin\\')) {
+            if ($result['priority'] != 0) {
+                Events::on($result['code'], $result['action'], $result['priority']);
+            } else {
+                Events::on($result['code'], $result['action']);
+            }
         }
     }
-}
 
     /*
      * --------------------------------------------------------------------
@@ -49,7 +61,7 @@ foreach ($results as $result) {
      * --------------------------------------------------------------------
      * If you delete, they will no longer be collected.
      */
-    if (ENVIRONMENT !== 'production') {
+    if (CI_DEBUG) {
         Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
         Services::toolbar()->respond();
     }

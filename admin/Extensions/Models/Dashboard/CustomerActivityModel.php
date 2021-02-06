@@ -2,7 +2,7 @@
 
 use CodeIgniter\Model;
 
-class ActivityModel extends Model
+class CustomerActivityModel extends Model
 {
     protected $table          = 'customer_activity';
     protected $primaryKey     = 'customer_id';

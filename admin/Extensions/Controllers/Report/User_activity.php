@@ -98,6 +98,7 @@ class User_activity extends \Admin\Controllers\BaseController
                 'review_id=',
                 'customer_id=',
                 'customer_group_id=',
+                'category_id=',
             ];
 
             $replace = [
@@ -108,6 +109,7 @@ class User_activity extends \Admin\Controllers\BaseController
                 base_url('index.php/catalog/review/edit?user_token=' . $this->request->getVar('user_token') . '&review_id='),
                 base_url('index.php/customer/customer/edit?user_token=' . $this->request->getVar('user_token') . '&customer_id='),
                 base_url('index.php/customer/customer_group/edit?user_token=' . $this->request->getVar('user_token') . '&customer_group_id='),
+                base_url('index.php/catalog/category/edit?user_token=' . $this->request->getVar('user_token') . '&category_id='),
             ];
 
             $data['activities'][] = [
