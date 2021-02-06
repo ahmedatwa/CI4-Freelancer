@@ -1,12 +1,15 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
 // Load the system's routing file first, so that the app and ENVIRONMENT
 // can override as needed.
-if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
-    require SYSTEMPATH . 'Config/Routes.php';
+if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
+{
+	require SYSTEMPATH . 'Config/Routes.php';
 }
 
 /**
@@ -24,8 +27,7 @@ $routes->set404Override(function () {
     echo view_cell('\Catalog\Controllers\Error\NotFound::index');
 });
 
-
-/**
+/*
  * --------------------------------------------------------------------
  * Route Definitions
  * --------------------------------------------------------------------
@@ -33,7 +35,6 @@ $routes->set404Override(function () {
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-
 $routes->add('/', 'Common/Home::index');
 // Information
 $routes->group('{locale}/information', function ($routes) {
@@ -83,19 +84,20 @@ $routes->add('projects', 'Project\Project::index', ['as' => 'projects']);
 $routes->add('service/s(:num)/(:any)', 'Project\Project::info/$1/$2', ['as' => 'single_project']);
 // Category
 $routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
-/**
+/*
  * --------------------------------------------------------------------
  * Additional Routing
  * --------------------------------------------------------------------
  *
  * There will often be times that you need additional routing and you
- * need to it be able to override any defaults in this file. Environment
+ * need it to be able to override any defaults in this file. Environment
  * based routes is one such time. require() additional route files here
  * to make that happen.
  *
  * You will have access to the $routes object within that file without
  * needing to reload it.
  */
-if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
-    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
+{
+	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }

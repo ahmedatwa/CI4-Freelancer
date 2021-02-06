@@ -1,11 +1,11 @@
 <?php
+
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
 class Email extends BaseConfig
 {
-
 	/**
 	 * @var string
 	 */
@@ -33,7 +33,7 @@ class Email extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $protocol = 'sendmail';
+	public $protocol = 'mail';
 
 	/**
 	 * The server path to Sendmail.
