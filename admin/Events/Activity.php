@@ -43,35 +43,41 @@ class Activity
     }
 
     // Admin\Models\*\::insert
-    public static function afterInsert(int $id = 0, string $name = '')
+    public static function afterInsert(...$args)
     {
         $activityModel = new ActivityModel();
         $user = new User();
-
-        $data = [
-            'user_id' => $user->getUserId(),
-            'name'    => $user->getUserName(),
-            'id'      => $id,
-            'name'    => $name
-            ];
-
-        $activityModel->addActivity('activity_add', $data);
+        if (isset($args)) {
+            if (isset($args[2])) {
+                foreach ($args[2] as $key => $value) {
+                    $user_data = [
+                        "user_id"           => $user->getUserId(),
+                        "name"              => $user->getUserName(),
+                        "{$args[1]["key"]}" => $args[1]['value'],
+                        "{$key}"            => $value,
+                    ];
+                }
+            }
+        }
+        $activityModel->addActivity('activity_' . $args[0], $user_data);
     }
    
     // Admin\Models\*\::Update
-    public static function afterUpdate(int $id = 0, string $name = '')
+    public static function afterUpdate(...$args)
     {
         $activityModel = new ActivityModel();
         $user = new User();
- 
-        $data = [
-             'user_id' => $user->getUserId(),
-             'name'    => $user->getUserName(),
-             'id'      => $id,
-             'name'    => $name
-             ];
- 
-        $activityModel->addActivity('activity_edit', $data);
+        if (isset($args)) {
+            foreach ($args[2] as $key => $value) {
+                $user_data = [
+                    "user_id"           => $user->getUserId(),
+                    "name"              => $user->getUserName(),
+                    "{$args[1]["key"]}" => $args[1]['value'],
+                    "{$key}"            => $value,
+                ];
+            }
+        }
+        $activityModel->addActivity('activity_' . $args[0], $user_data);
     }
 
     // Admin\Models\*\::delete
@@ -85,32 +91,10 @@ class Activity
              'name'    => $user->getUserName(),
              'id'      => $id,
              'name'    => $name
-             ];
+        ];
  
         $activityModel->addActivity('activity_user_delete', $data);
     }
     
-    public static function purgeLogFiles()
-    {
-        if (service('registry')->get('config_purge_logs')) {
-            $myTime = new Time('now');
-
-            $time = Time::parse('August 12, 2016 4:15:23pm');
-            $time = $time->addDays(30);
-
-
-
-
-            helper('filesystem');
-            delete_files('./path/to/directory/', true, false);
-        }
-    }
-
-
-
-
-
-
-
     // --------------------------------------------
 }

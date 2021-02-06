@@ -80,6 +80,51 @@ class User_activity extends \Admin\Controllers\BaseController
 
     public function report()
     {
+        $data['activities'] = [];
+
+        $activityModel = new ActivityModel();
+
+        $total = $activityModel->getTotalActivities();
+        $results = $activityModel->getActivities();
+
+        foreach ($results as $result) {
+            $comment = vsprintf(lang('report/user_activity.user_' . $result['key']), json_decode($result['data'], true));
+
+            $find = [
+                'user_id=',
+                'user_group_id=',
+                'project_id=',
+                'information_id=',
+                'review_id=',
+                'customer_id=',
+                'customer_group_id=',
+            ];
+
+            $replace = [
+                base_url('index.php/user/user/edit?user_token=' . $this->request->getVar('user_token') . '&user_id='),
+                base_url('index.php/user/user_group/edit?user_token=' . $this->request->getVar('user_token') . '&user_group_id='),
+                base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id='),
+                base_url('index.php/catalog/information/edit?user_token=' . $this->request->getVar('user_token') . '&information_id='),
+                base_url('index.php/catalog/review/edit?user_token=' . $this->request->getVar('user_token') . '&review_id='),
+                base_url('index.php/customer/customer/edit?user_token=' . $this->request->getVar('user_token') . '&customer_id='),
+                base_url('index.php/customer/customer_group/edit?user_token=' . $this->request->getVar('user_token') . '&customer_group_id='),
+            ];
+
+            $data['activities'][] = [
+                'activity_id' => $result['activity_id'],
+                'ip'          => $result['ip'],
+                'date_added'  => dateFormatLong($result['date_added']),
+                'comment'     => str_replace($find, $replace, $comment),
+                'user_agent'  => $result['user_agent'],
+            ];
+        }
+
+        if ($this->request->getPost('selected')) {
+            $data['selected'] = (array) $this->request->getPost('selected');
+        } else {
+            $data['selected'] = [];
+        }
+
         if ($this->session->getFlashdata('success')) {
             $data['success'] = $this->session->getFlashdata('success');
         } else {
@@ -92,42 +137,11 @@ class User_activity extends \Admin\Controllers\BaseController
             $data['error'] = '';
         }
 
-        $data['activities'] = [];
-
-        $activityModel = new ActivityModel();
-
-        $total = $activityModel->getTotalActivities();
-        $results = $activityModel->getActivities();
-
-        foreach ($results as $result) {
-            $find = [
-                'user_id=',
-            ];
-
-            $replace = [
-                base_url('index.php/user/user/edit?user_token=' . $this->request->getVar('user_token') . '&user_id='),
-            ];
-
-            $comment = vsprintf(lang('report/user_activity.list.text_' . $result['key']), json_decode($result['data'], true));
-
-            $data['activities'][] = [
-                'activity_id' => $result['activity_id'],
-                'ip'          => $result['ip'],
-                'date_added'  => $result['date_added'],
-                'comment'    => str_replace($find, $replace, $comment),
-            ];
-        }
-
-        if ($this->request->getPost('selected')) {
-            $data['selected'] = (array) $this->request->getPost('selected');
-        } else {
-            $data['selected'] = [];
-        }
-
-        $data['column_comment']    = lang('report/user_activity.list.column_comment');
-        $data['column_ip']         = lang('report/user_activity.list.column_ip');
-        $data['column_date_added'] = lang('report/user_activity.list.column_date_added');
-        $data['report_heading_title']     = lang('report/user_activity.list.heading_title');
+        $data['column_comment']       = lang('report/user_activity.list.column_comment');
+        $data['column_ip']            = lang('report/user_activity.list.column_ip');
+        $data['column_date_added']    = lang('report/user_activity.list.column_date_added');
+        $data['column_user_agent']    = lang('report/user_activity.list.column_user_agent');
+        $data['report_heading_title'] = lang('report/user_activity.list.heading_title');
 
         $data['delete'] = base_url('index.php/report/activity/delete?user_token=' . $this->request->getVar('user_token'));
 

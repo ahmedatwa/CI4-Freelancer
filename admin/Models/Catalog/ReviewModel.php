@@ -11,8 +11,8 @@ class ReviewModel extends Model
     protected $useSoftDeletes = false;
     protected $allowedFields = ['status', 'comment', 'rating'];
     // User Activity Events
-    //protected $afterInsert = ['afterInsertEvent'];
-    //protected $afterUpdate = ['afterUpdateEvent'];
+    protected $afterInsert = ['afterInsertEvent'];
+    protected $afterUpdate = ['afterUpdateEvent'];
     // should use for keep data record create timestamp
     protected $createdField = 'date_added';
     protected $updatedField = 'date_modified';
@@ -21,22 +21,28 @@ class ReviewModel extends Model
 
     protected function afterInsertEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
+        if (isset($data['data'])) {
+            $data['id'] = [
+                'key'   => 'review_id',
+                'value' => $data['id']
+            ];
+
+            \CodeIgniter\Events\Events::trigger('user_activity_add', 'review_add', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     protected function afterUpdateEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
+        if (isset($data['data']) && isset($data['id'])) {
+            $data['id'] = [
+                'key'   => 'review_id',
+                'value' => $data['id'][0]
+            ];
+            
+            \CodeIgniter\Events\Events::trigger('user_activity_update', 'review_edit', $data['id'], $data['data']);
         }
+        return $data;
     }
 
 

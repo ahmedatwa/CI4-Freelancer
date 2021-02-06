@@ -17,22 +17,28 @@ class InformationModel extends \CodeIgniter\Model
 
     protected function afterInsertEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
+        if (isset($data['data'])) {
+            $data['id'] = [
+                'key'   => 'information_id',
+                'value' => $data['id'][0]
+            ];
+
+            \CodeIgniter\Events\Events::trigger('user_activity_add', 'information_add', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     protected function afterUpdateEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
+        if (isset($data['data']) && isset($data['id'])) {
+            $data['id'] = [
+                'key'   => 'information_id',
+                'value' => $data['id'][0]
+            ];
+            
+            \CodeIgniter\Events\Events::trigger('user_activity_update', 'information_edit', $data['id'], $data['data']);
         }
+        return $data;
     }
 
 
@@ -135,6 +141,14 @@ class InformationModel extends \CodeIgniter\Model
                 $seo_url->insert($seo_url_data);
             }
         }
+        // Event Call 
+        $eventData = [
+            'id' => [
+                '0' => $information_id
+            ],
+            'data' => $information_data
+        ];
+        $this->afterInsertEvent($eventData);
     }
     
     public function editInformation($information_id, $data)
@@ -144,7 +158,6 @@ class InformationModel extends \CodeIgniter\Model
             'sort_order' => $data['sort_order'],
             'status'     => $data['status'],
             'bottom'     => $data['bottom'],
-
         ];
         
         $builder->set('date_modified', 'NOW()', false);
@@ -178,6 +191,15 @@ class InformationModel extends \CodeIgniter\Model
                 $seo_url->insert($seo_url_data);
             }
         }
+        // Event Call 
+        $eventData = [
+            'id' => [
+                '0' => $information_id
+            ],
+            'data' => $information_data
+        ];
+        //var_dump($eventData);die;
+        $this->afterUpdateEvent($eventData);
     }
 
     public function deleteInformation($information_id)

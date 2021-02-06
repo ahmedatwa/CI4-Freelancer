@@ -154,7 +154,7 @@ class Customer_group extends \Admin\Controllers\BaseController
         $customerGroupModel = new CustomerGroupModel();
 
         if ($this->request->getVar('customer_group_id') && ($this->request->getMethod() != 'post')) {
-            $customer_group_info = $this->customers_group->getCustomerGroup($this->request->getVar('customer_group_id'));
+            $customer_group_info = $customerGroupModel->getCustomerGroup($this->request->getVar('customer_group_id'));
         }
 
         if ($this->request->getPost('customer_group_description')) {

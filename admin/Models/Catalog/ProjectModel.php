@@ -17,22 +17,28 @@ class ProjectModel extends \CodeIgniter\Model
 
     protected function afterInsertEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
+        if (isset($data['data'])) {
+            $data['id'] = [
+                'key'   => 'project_id',
+                'value' => $data['id']
+            ];
+
+            \CodeIgniter\Events\Events::trigger('user_activity_add', 'project_add', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     protected function afterUpdateEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
+        if (isset($data['data']) && isset($data['id'])) {
+            $data['id'] = [
+                'key' => 'project_id',
+                'value' => $data['id'][0]
+            ];
+            
+        \CodeIgniter\Events\Events::trigger('user_activity_update', 'project_edit', $data['id'], $data['data']);
         }
+        return $data;
     }
 
 
@@ -187,7 +193,6 @@ class ProjectModel extends \CodeIgniter\Model
                         'keyword'     => generateSeoUrl($value['name']),
                     ];
                 $seo_url->insert($seo_url_data);
-
             }
         }
     }
@@ -202,7 +207,6 @@ class ProjectModel extends \CodeIgniter\Model
         //  seo_url
         $seo_url = $this->db->table('seo_url');
         $seo_url->delete(['language_id' => $language_id, 'query' => 'project_id=' . $project_id]);
-
     }
 
     public function getTotalProjects($data = array())

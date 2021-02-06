@@ -30,22 +30,26 @@ class CustomerModel extends \CodeIgniter\Model
 
     protected function afterInsertEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
+        if (isset($data['data'])) {
+            $data['id'] = [
+                'key'   => 'customer_id',
+                'value' => $data['id']
+            ];
+            \CodeIgniter\Events\Events::trigger('user_activity_add', 'customer_add', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     protected function afterUpdateEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
+        if (isset($data['data'])) {
+            $data['id'] = [
+                'key'   => 'customer_id',
+                'value' => $data['id'][0]
+            ];
+            \CodeIgniter\Events\Events::trigger('user_activity_add', 'customer_add', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     public function getCustomers(array $data = [])

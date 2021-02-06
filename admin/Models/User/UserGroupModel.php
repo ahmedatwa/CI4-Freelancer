@@ -1,8 +1,6 @@
 <?php namespace Admin\Models\User;
 
-use CodeIgniter\Model;
-
-class UserGroupModel extends Model
+class UserGroupModel extends \CodeIgniter\Model
 {
     protected $table          = 'user_group';
     protected $primaryKey     = 'user_group_id';
@@ -19,20 +17,32 @@ class UserGroupModel extends Model
 
     protected function afterInsertEvent(array $data)
     {
-        if (isset($data['data']['name'])) {
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
+        if (isset($data['data'])) {
+            $data['id'] = [
+                'key'   => 'user_group_id',
+                'value' => $data['id']
+            ];
+
+            $data['data'] = [
+                'name' => $data['data']['name'],
+            ];
+
+            \CodeIgniter\Events\Events::trigger('user_activity_add', 'user_group_add', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     protected function afterUpdateEvent(array $data)
     {
-        if (isset($data['data']['name'])) {
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
+        if (isset($data['data']) && isset($data['id'])) {
+            $data['id'] = [
+                'key'   => 'user_group_id',
+                'value' => $data['id']
+            ];
+            
+            \CodeIgniter\Events\Events::trigger('user_activity_update', 'user_group_edit', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     // can't use find method as permission must be decoded
@@ -43,40 +53,57 @@ class UserGroupModel extends Model
         $builder->where('user_group_id', $user_group_id);
         $query = $builder->get();
         $row = $query->getRowArray();
-        $user_group = array(
+        $user_group = [
              'name'       => $row['name'],
              'permission' => json_decode($row['permission'], true),
-        );
+        ];
         return $user_group;
     }
 
     public function addUserGroup(array $data = [])
     {
         $builder = $this->db->table($this->table);
-        $user_group_data = array(
+        $user_group_data = [
             'name'       => $data['name'],
             'permission' => isset($data['permission']) ? json_encode($data['permission']) : '',
-        );
+        ];
 
         $builder->set('date_added', 'NOW()', false);
         $builder->set('date_modified', 'NOW()', false);
         $builder->insert($user_group_data);
+        $user_group_id = $this->db->insertID();
+        // Event Call
+        $eventData = [
+            'id'   => $user_group_id,
+            'data' => [
+                'user_group' => $user_group_data['name']
+            ]
+        ];
+        $this->afterInsertEvent($eventData);
     }
 
     public function editUserGroup(int $user_group_id, array $data = [])
     {
         $builder = $this->db->table($this->table);
-        $user_group_data = array(
+        $user_group_data = [
             'name'       => $data['name'],
             'permission' => isset($data['permission']) ? json_encode($data['permission']) : '',
-        );
+        ];
 
         $builder->where('user_group_id', $user_group_id);
         $builder->set('date_modified', 'NOW()', false);
         $builder->update($user_group_data);
+        // Event Call
+        $eventData = [
+            'id'   => $user_group_id,
+            'data' => [
+                'user_group' => $user_group_data['name']
+            ]
+        ];
+        $this->afterUpdateEvent($eventData);
     }
 
-    public function addPermission($user_group_id, $type, $route)
+    public function addPermission(int $user_group_id, string $type, string $route)
     {
         $builder = $this->db->table($this->table);
         $builder->distinct();

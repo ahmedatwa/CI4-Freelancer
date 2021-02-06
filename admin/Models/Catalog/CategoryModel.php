@@ -18,22 +18,28 @@ class CategoryModel extends Model
 
     protected function afterInsertEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
+        if (isset($data['data'])) {
+            $data['id'] = [
+                'key'   => 'category_id',
+                'value' => $data['id'][0]
+            ];
+
+            \CodeIgniter\Events\Events::trigger('user_activity_add', 'category_add', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     protected function afterUpdateEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
+        if (isset($data['data']) && isset($data['id'])) {
+            $data['id'] = [
+                'key'   => 'category_id',
+                'value' => $data['id'][0]
+            ];
+            
+            \CodeIgniter\Events\Events::trigger('user_activity_update', 'category_edit', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     public function editCategory($category_id, $data)
@@ -83,7 +89,14 @@ class CategoryModel extends Model
                 $seo_url->insert($seo_url_data);
             }
         }
-
+        // Event Call 
+        $eventData = [
+            'id' => [
+                '0' => $category_id
+            ],
+            'data' => $category_data
+        ];
+        $this->afterUpdateEvent($eventData);
     }
 
     public function addCategory($data)
@@ -131,6 +144,14 @@ class CategoryModel extends Model
                 $seo_url->insert($seo_url_data);
             }
         }
+        // Event Call 
+        $eventData = [
+            'id' => [
+                '0' => $category_id
+            ],
+            'data' => $category_data
+        ];
+        $this->afterInsertEvent($eventData);
     }
 
     public function deleteCategory($category_id)
@@ -141,7 +162,6 @@ class CategoryModel extends Model
         $builder_description->delete(['category_id' => $category_id]);
 
     }
-
 
     public function getCategory($category_id)
     {

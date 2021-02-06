@@ -18,45 +18,64 @@ class CustomerGroupModel extends Model
 
     protected function afterInsertEvent(array $data)
     {
-        if (isset($data['data']['name'])) {
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
+        if (isset($data['data'])) {
+            $data['id'] = [
+                'key'   => 'customer_group_id',
+                'value' => $data['id'][0]
+            ];
+
+            \CodeIgniter\Events\Events::trigger('user_activity_add', 'customer_group_add', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     protected function afterUpdateEvent(array $data)
     {
-        if (isset($data['data']['name'])) {
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
+        if (isset($data['data'])) {
+            $data['id'] = [
+                'key'   => 'customer_group_id',
+                'value' => $data['id'][0]
+            ];
+
+            \CodeIgniter\Events\Events::trigger('user_activity_add', 'customer_group_edit', $data['id'], $data['data']);
         }
+        return $data;
     }
 
 
-    public function addCustomerGroup($data)
+    public function addCustomerGroup(array $data)
     {
         $builder = $this->db->table('customer_group');
         $builder->set('sort_order', $data['sort_order']);
         $builder->insert();
 
         $customer_group_id = $this->db->insertID();
+
         $description = $this->db->table('customer_group_description');
         foreach ($data['customer_group_description'] as $language_id => $value) {
-            $customer_group_description_data = array(
+            $customer_group_description_data = [
                 'customer_group_id'  => $customer_group_id,
                 'language_id'        => $language_id,
                 'name'               => $value['name'],
                 'description'        => $value['description'],
-            );
+            ];
             $description->insert($customer_group_description_data);
         }
-        
+        // Event Call 
+        $eventData = [
+            'id' => [
+                '0' => $customer_group_id
+            ],
+            'data' => [
+                'name' => $value['name']
+            ]
+        ];
+        $this->afterInsertEvent($eventData);
+
         return $customer_group_id;
     }
 
-    public function editCustomerGroup($customer_group_id, $data)
+    public function editCustomerGroup(int $customer_group_id, array $data)
     {
         $builder = $this->db->table('customer_group');
         $builder->set('sort_order', $data['sort_order']);
@@ -67,15 +86,27 @@ class CustomerGroupModel extends Model
         $description->delete(['customer_group_id' => $customer_group_id]);
 
         foreach ($data['customer_group_description'] as $language_id => $value) {
-            $customer_group_description_data = array(
+            $customer_group_description_data = [
                 'customer_group_id'  => $customer_group_id,
                 'language_id'        => $language_id,
                 'name'               => $value['name'],
                 'description'        => $value['description'],
-            );
+            ];
             $description->insert($customer_group_description_data);
         }
+        // Event Call 
+        $eventData = [
+            'id' => [
+                '0' => $customer_group_id
+            ],
+            'data' => [
+                'name' => $value['name']
+            ]
+        ];
+        $this->afterUpdateEvent($eventData);
+
     }
+
     public function deleteCustomerGroup($customer_group_id)
     {
         $customer_group = $this->db->table('customer_group');
@@ -127,19 +158,19 @@ class CustomerGroupModel extends Model
         return $query->getRowArray();
     }
 
-    public function getCustomerGroupDescriptions($customer_group_id)
+    public function getCustomerGroupDescriptions(int $customer_group_id)
     {
-        $customer_group_data = array();
+        $customer_group_data = [];
         
         $builder = $this->db->table('customer_group_description');
         $builder->select();
         $builder->where('customer_group_id', $customer_group_id);
         $query = $builder->get();
         foreach ($query->getResultArray() as $result) {
-            $customer_group_data[$result['language_id']] = array(
+            $customer_group_data[$result['language_id']] = [
                 'name'        => $result['name'],
                 'description' => $result['description']
-            );
+            ];
         }
 
         return $customer_group_data;

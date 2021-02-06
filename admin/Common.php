@@ -68,10 +68,6 @@ if (!function_exists('verifyHashedPassword')) {
 
 /**
  * Short Date Format
- *
- * @param string   $where  Where something interesting takes place
- * @throws Exception If something interesting cannot happen
- * @return string
  **/
 if (!function_exists('DateShortFormat')) {
     function DateShortFormat(string $date)
@@ -147,8 +143,8 @@ if (! function_exists('resizeImage')) {
             if ($original_width != $width || $original_height != $height) {
                 try {
                     \Config\Services::image()->withFile(DIR_IMAGE . $image_old)
-               ->resize($width, $height, false, 'height')
-               ->save(DIR_IMAGE . $image_new);
+                                             ->resize($width, $height, false, 'height')
+                                             ->save(DIR_IMAGE . $image_new);
                 } catch (CodeIgniter\Images\ImageException $e) {
                     echo $e->getMessage();
                 }
@@ -166,5 +162,16 @@ if (! function_exists('generateSeoUrl')) {
     {
         helper('text');
         return url_title(convert_accented_characters($string), '-', true);
+    }
+}
+
+if (! function_exists('dateFormatLong')) {
+    function dateFormatLong($date): string
+    {
+        if (extension_loaded('intl')) {
+            return lang('en.medium_date', [strtotime($date)]) . ' ' . lang('en.short_time', [strtotime($date)]);
+        } else {
+            return $date;
+        }
     }
 }

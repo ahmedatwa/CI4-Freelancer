@@ -1,8 +1,6 @@
 <?php namespace Admin\Models\User;
 
-use CodeIgniter\Model;
-
-class UserModel extends Model
+class UserModel extends \CodeIgniter\Model
 {
     protected $table          = 'user';
     protected $primaryKey     = 'user_id';
@@ -28,6 +26,7 @@ class UserModel extends Model
         } else {
             unset($data['data']['password']);
         }
+
         if (! isset($data['data']['salt'])) {
             $data['data']['salt'] = token('sha1', 9);
         }
@@ -37,22 +36,33 @@ class UserModel extends Model
 
     protected function afterInsertEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_add', $this->db->insertID(), $data['data']['name']);
+        if (isset($data['data'])) {
+            $data['id'] = [
+                'key'   => 'id',
+                'value' => $data['id']
+            ];
+
+            $data['data'] = [
+                'username' => $data['data']['username'],
+                'email'    => $data['data']['username'],
+            ];
+
+            \CodeIgniter\Events\Events::trigger('user_activity_add', 'user_add', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     protected function afterUpdateEvent(array $data)
     {
-        if (isset($data['data']['firstname'])) {
-            $data['data']['name'] = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
-        } else {
-            \CodeIgniter\Events\Events::trigger('user_activity_update', $data['id'], $data['data']['name']);
+        if (isset($data['data']) && isset($data['id'])) {
+            $data['id'] = [
+                'key'   => 'id',
+                'value' => $data['id'][0]
+            ];
+            
+            \CodeIgniter\Events\Events::trigger('user_activity_update', 'user_edit', $data['id'], $data['data']);
         }
+        return $data;
     }
 
     // Login Attempts
