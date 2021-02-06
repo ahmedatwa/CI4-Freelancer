@@ -208,7 +208,7 @@ $('#rateModal').on('shown.bs.modal', function (event) {
   	$.ajax({
   		url: 'account/review/add?project_id=' + project_id + '&freelancer_id=' + freelancer_id + '&employer_id=' + employer_id,
   		headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
             'X-Requested-With': 'XMLHttpRequest'
         },
   		method: 'post',

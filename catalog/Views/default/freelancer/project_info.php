@@ -50,7 +50,7 @@
         uploadUrl: "tool/upload?cid=<?php echo $customer_id; ?>&pid=<?php echo $project_id; ?>",
         enableResumableUpload: false,
         uploadExtraData: {
-            'csrf-token': $('meta[name="csrf-token"]').attr('content'), 
+            'csrf-token': $('meta[name="<?= csrf_token() ?>"]').attr('content'), 
             'X-Requested-With': 'XMLHttpRequest'
         },
         maxFileCount: 3,
@@ -66,7 +66,7 @@
         theme: 'fas',
         deleteUrl: "tool/upload/remove?project_id=<?php echo $project_id; ?>&freelancer_id=<?php echo $customer_id; ?>",
         deleteExtraData: {
-            'csrf-token': $('meta[name="csrf-token"]').attr('content'), 
+            'csrf-token': $('meta[name="<?= csrf_token() ?>"]').attr('content'), 
             'X-Requested-With': 'XMLHttpRequest'
         },
         fileActionSettings: {

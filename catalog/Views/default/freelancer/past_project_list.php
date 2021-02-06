@@ -69,7 +69,7 @@ function openDispute(employer_id, freelancer_id, project_id) {
       $.ajax({
             url: 'freelancer/freelancer/openDispute',
             headers: {
-             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content')
             },
             dataType: 'json',
             method:'post',

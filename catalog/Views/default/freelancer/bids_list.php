@@ -104,7 +104,7 @@ function sendMessage(sender_id, receiver_id, project_id) {
          $.ajax({
             url: 'account/message/sendMessage',
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
                 "X-Requested-With": "XMLHttpRequest"
             },
             dataType: 'json',

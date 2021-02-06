@@ -48,7 +48,7 @@ $('#button-login').on('click', function() {
     $.ajax({
         url: 'index.php/common/login/authLogin',
         headers: {
-           "X-CSRF-TOKEN": $('meta[name="csrf-token-admin"]').attr('content'),
+           "X-CSRF-TOKEN": $('meta[name="<?= csrf_token() ?>"]').attr('content'),
            "X-Requested-With": "XMLHttpRequest",
            'Content-Type': 'application/x-www-form-urlencoded',
         },

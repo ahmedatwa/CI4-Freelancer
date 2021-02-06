@@ -132,7 +132,7 @@ $(document).ready(function(){
 		    $.ajax({
 		      url: 'account/message/sendMessage',
 		      headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
                 'X-Requested-With': 'XMLHttpRequest'
               },
 		      type: 'post',

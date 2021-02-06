@@ -109,7 +109,7 @@ $('#button-submit').on('click', function() {
 	$.ajax({
 		url: 'freelancer/withdraw/add',
 		headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
               'X-Requested-With': 'XMLHttpRequest'
         },
 		method: 'post',

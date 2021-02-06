@@ -92,7 +92,7 @@ function payFreelancer(employer_id, freelancer_id, project_id, amount) {
       $.ajax({
             url: 'employer/employer/transferFunds',
             headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
               'X-Requested-With': 'XMLHttpRequest'
             },
             dataType: 'json',
@@ -151,7 +151,7 @@ function openDispute(employer_id, freelancer_id, project_id) {
       $.ajax({
             url: 'employer/employer/openDispute',
             headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
               'X-Requested-With': 'XMLHttpRequest'
             },
             dataType: 'json',

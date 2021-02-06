@@ -77,7 +77,7 @@ function addMilestone() {
              $.ajax({
                 url: 'freelancer/milestone/addMilestone?project_id=<?php echo $project_id; ?>',
                 headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                  'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
                   'X-Requested-With': 'XMLHttpRequest',
                 },
                 dataType: 'json',
@@ -134,7 +134,7 @@ function cancelMilestone(milestone_id) {
     $.ajax({
         url: 'freelancer/milestone/cancelMilestone?milestone_id=' + milestone_id,
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
           'X-Requested-With': 'XMLHttpRequest',
         },
         dataType: 'json',
@@ -180,7 +180,7 @@ function approveMilestone(milestone_id) {
     $.ajax({
         url: 'freelancer/milestone/approveMilestone?milestone_id=' + milestone_id,
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
           'X-Requested-With': 'XMLHttpRequest',
         },
         dataType: 'json',
@@ -231,7 +231,7 @@ function payMilestone(milestone_id, amount, employer_id, freelancer_id) {
     $.ajax({
         url: 'freelancer/milestone/payMilestone',
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
           'X-Requested-With': 'XMLHttpRequest',
         },
         dataType: 'json',

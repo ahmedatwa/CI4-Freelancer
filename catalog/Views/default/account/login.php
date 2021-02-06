@@ -45,7 +45,7 @@ $('#button-form-login').on('click', function() {
 	$.ajax({
 		url: 'account/login/authLogin',
 		headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
           'X-Requested-With': 'XMLHttpRequest',
           'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -98,7 +98,7 @@ function onSuccess(googleUser) {
   $.ajax({
   	url: 'account/login/googleAuth',
   	headers: {
-       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+       'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
        'Content-Type': 'application/x-www-form-urlencoded',
        'X-Requested-With': 'XMLHttpRequest'
     },

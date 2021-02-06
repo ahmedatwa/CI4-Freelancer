@@ -180,7 +180,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 		$.ajax({
 	      url: 'common/header/getCustomerBalance',
 	      headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-CSRF-TOKEN': $('meta[name="csrf_token_catalog"]').attr('content'),
               'X-Requested-With': 'XMLHttpRequest'
           },
 	      dataType: 'json',
@@ -243,7 +243,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	  $.ajax({
 		url: 'account/notifications/markRead',
 	    headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-CSRF-TOKEN': $('meta[name="csrf_token_catalog"]').attr('content'),
             'X-Requested-With': 'XMLHttpRequest'
         },
         method: 'post',
@@ -298,7 +298,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	  $.ajax({
 	      url: 'account/message/markRead?message_id='+ $(this).attr('data-messageId'),
 	      headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-CSRF-TOKEN': $('meta[name="csrf_token_catalog"]').attr('content'),
             'X-Requested-With': 'XMLHttpRequest'
           },
           method: 'post',

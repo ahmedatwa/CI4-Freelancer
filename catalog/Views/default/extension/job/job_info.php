@@ -157,7 +157,7 @@ $('#button-apply-job').on('click', function() {
 	 $.ajax({
 	    url: 'extension/job/job/apply?uri=' + encodeURIComponent(uri),
 	    headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content')
         },
 	    dataType: 'json',
 	    method: 'post',
@@ -208,7 +208,7 @@ $('#input-upload').fileinput({
 	uploadUrl: 'tool/upload?type=1',
 	enableResumableUpload: false,
     uploadExtraData: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content')
     },
     maxFileCount: 1,
     showPreview: false,

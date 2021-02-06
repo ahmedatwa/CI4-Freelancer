@@ -350,7 +350,7 @@ $('#add-certificate').on('click', function(){
     $.ajax({
         url: 'account/setting/addCertificate',
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
 			'X-Requested-With': 'XMLHttpRequest'
         },
         type: 'post',
@@ -417,7 +417,7 @@ $('#certificates-list').on('click', 'button[id^=\'button-delete-certificate\']',
     	 $.ajax({
             url: 'account/setting/deleteCertificate?certificate_id=' + $(node).val(),
             headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+               'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
 			   'X-Requested-With': 'XMLHttpRequest'
             },
             method : 'post',
@@ -504,7 +504,7 @@ $('#add-education').on('click', function() {
     $.ajax({
         url: 'account/setting/addEducation',
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
 		  'X-Requested-With': 'XMLHttpRequest'
         },
         type: 'post',
@@ -570,7 +570,7 @@ $('#educations-list').on('click', 'button[id^=\'button-delete-education\']', fun
     	 $.ajax({
             url: 'account/setting/deleteEducation?education_id=' + $(node).val(),
             headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+               'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
 			   'X-Requested-With': 'XMLHttpRequest'
             },
             method: 'post',
@@ -633,7 +633,7 @@ $('#add-language').on('click', function() {
     $.ajax({
         url: 'account/setting/addLanguage',
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
 		  'X-Requested-With': 'XMLHttpRequest'
         },
         type: 'post',
@@ -698,7 +698,7 @@ $('#languages-list').on('click', 'button[id^=\'button-delete-language\']', funct
         $.ajax({
             url: 'account/setting/deleteLanguage?language_id=' + $(node).val(),
             headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
 			  'X-Requested-With': 'XMLHttpRequest'
             },
             method: 'post',
@@ -759,7 +759,7 @@ $('#button-add-skill').on('click', function() {
     $.ajax({
         url: 'account/setting/addSkill',
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
 		  'X-Requested-With': 'XMLHttpRequest'
         },
         type: 'post',
@@ -820,7 +820,7 @@ $('#skills-list').on('click', 'button[id^=\'button-delete-skill\']', function() 
         $.ajax({
             url: 'account/setting/deleteSkill?category_id=' + $(node).val(),
             headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
 			  'X-Requested-With': 'XMLHttpRequest'
             },
             method: 'post',
@@ -878,7 +878,7 @@ $("#avatar-1").fileinput({
 	removeTitle: 'Cancel or reset changes',
     removeClass: 'btn btn-danger',
     uploadExtraData: {
-        'csrf-token': $('meta[name="csrf-token"]').attr('content'),
+        'csrf-token': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
         'X-Requested-With': 'XMLHttpRequest'
     },
     elErrorContainer: '#kv-avatar-errors',
@@ -911,7 +911,7 @@ $("#avatar-2").fileinput({
 	removeTitle: 'Cancel or reset changes',
     removeClass: 'btn btn-danger',
     uploadExtraData: {
-        'csrf-token': $('meta[name="csrf-token"]').attr('content'),
+        'csrf-token': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
         'X-Requested-With': 'XMLHttpRequest'
     },
     elErrorContainer: '#kv-avatar2-errors',
@@ -927,7 +927,7 @@ $("#avatar-2").fileinput({
 		$.ajax({
 			url: 'account/setting/profileUpdate',
 			headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+               'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
                 'X-Requested-With': 'XMLHttpRequest'
             },
 			method: 'post',

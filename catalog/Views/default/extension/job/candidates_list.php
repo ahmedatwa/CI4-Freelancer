@@ -83,7 +83,7 @@ function setStatus(job_applicant_id) {
 				$.ajax({
                     url: 'account/jobs/setJobApplicationStatus',
                     headers: {
-                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                      'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content')
                     },
                     method: 'post',
 					data: {'<?= csrf_token() ?>': '<?= csrf_hash() ?>', 'job_applicant_id': job_applicant_id, 'status': $('.bootbox-input-radio ').val()},

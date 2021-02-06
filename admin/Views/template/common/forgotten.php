@@ -41,7 +41,7 @@ $('#button-forgot').on('click', function() {
     $.ajax({
         url: 'index.php/common/forgotten/resetPassword',
         headers: {
-           "X-CSRF-TOKEN": $('meta[name="csrf-token-admin"]').attr('content'),
+           "X-CSRF-TOKEN": $('meta[name="<?= csrf_token() ?>"]').attr('content'),
            "X-Requested-With": "XMLHttpRequest"
         },
         method: 'POST',

@@ -31,7 +31,7 @@
 	$.ajax({
 		url: 'account/forgotten/forgotten',
 		headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
           'X-Requested-With': 'XMLHttpRequest',
           'Content-Type': 'application/x-www-form-urlencoded',
         },

@@ -15,7 +15,7 @@
     $.ajax({
           url: 'account/message/getThreadMessages?thread_id=' + $(this).attr('data-thread'),
           headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
             "X-Requested-With": "XMLHttpRequest"
           },
           dataType: 'html',

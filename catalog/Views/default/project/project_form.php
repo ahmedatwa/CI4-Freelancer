@@ -161,7 +161,7 @@ $("#input-upload").fileinput({
 	uploadUrl: 'tool/upload?type=1',
 	enableResumableUpload: false,
     uploadExtraData: {
-        'csrf-token': $('meta[name="csrf-token"]').attr('content'), 
+        'csrf-token': $('meta[name="<?= csrf_token() ?>"]').attr('content'), 
         'X-Requested-With': 'XMLHttpRequest'
     },
     maxFileCount: 1,
@@ -205,7 +205,7 @@ $('#button-project-add').on('click', function() {
 	$.ajax({
 	    url: 'project/project/add',
 	    headers: {
-	      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+	      'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content'),
 	      'X-Requested-With': 'XMLHttpRequest',
 	      'Content-Type': 'application/x-www-form-urlencoded',
 	    },

@@ -65,7 +65,7 @@ function markComeplete(project_id, freelancer_id, employer_id) {
 		$.ajax({
 		url: 'freelancer/project/completeProject?project_id=' + project_id,
 		headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="<?= csrf_token() ?>"]').attr('content')
         },
 		dataType: 'json',
 		method: 'post',
