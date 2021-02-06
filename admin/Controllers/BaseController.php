@@ -1,4 +1,12 @@
-<?php namespace Admin\Controllers;
+<?php 
+
+namespace Admin\Controllers;
+
+use CodeIgniter\Controller;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
+
 /**
  * Class BaseController
  *
@@ -8,10 +16,9 @@
  *     class Home extends BaseController
  *
  * For security be sure to declare any new methods as protected or private.
- *
- * @package CodeIgniter
  */
-class BaseController extends \CodeIgniter\Controller
+
+class BaseController extends Controller
 {
 
     /**
@@ -55,7 +62,7 @@ class BaseController extends \CodeIgniter\Controller
         return sprintf(lang('en.list.text_pagination'), $page, (($total >= $limit) ? $limit : $total), $total);
     }
 
-    /***
+    /*
     // return string of current route controller path without methods
     // unlike getPath return full path
     @ return string
@@ -65,11 +72,13 @@ class BaseController extends \CodeIgniter\Controller
         $route  = $this->request->uri->getSegment(1) . '/' . $this->request->uri->getSegment(2);
         if ($route) {
             return (string) $route;
+        } else {
+            return '';
         }
     }
-    /**
+    /*
     @ return the Bid Remaining Days
-    **/
+    */
     public function getOpenDays(string $start, string $end): string
     {
         return ceil(abs(strtotime($start) - strtotime($end)) / 86400);
