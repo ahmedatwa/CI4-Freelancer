@@ -47,10 +47,10 @@ class Login extends \Catalog\Controllers\BaseController
                 'password' => 'required|min_length[4]',
             ])) {
                 $json['error_warning'] = lang('account/login.text_warning');
-                $json['validator'] = $this->validator->getErrors();
-            }
-            
-            if (! $json['validator']) {
+                $json['validator'] = $this->validator->getErrors() ?? 'false';
+            } 
+
+            if (! $json) {
                 $customerModel = new CustomerModel();
 
                 // Check how many login attempts have been made.
@@ -89,7 +89,7 @@ class Login extends \Catalog\Controllers\BaseController
                 if ($this->session->get('redirect_url')) {
                     $json['redirect'] = (string) $this->session->get('redirect_url');
                 } else {
-                    $json['redirect'] = (route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard'));
+                    $json['redirect'] = route_to('account_dashboard');
                 }
             }
         }

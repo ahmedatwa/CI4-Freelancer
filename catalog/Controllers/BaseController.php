@@ -6,6 +6,7 @@ use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use \Catalog\Models\Localization\CurrencyModel;
 
 /**
  * Class BaseController
@@ -17,9 +18,6 @@ use Psr\Log\LoggerInterface;
  *
  * For security be sure to declare any new methods as protected or private.
  */
-
-use \Catalog\Models\Localization\CurrencyModel;
-
 class BaseController extends \CodeIgniter\Controller
 {
 
