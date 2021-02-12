@@ -12,7 +12,7 @@ class Dashboard extends \Admin\Controllers\BaseController
 
         $this->document->setTitle(lang('common/dashboard.list.heading_dashboard'));
 
-        $data['user_token'] = $this->request->getVar('user_token');
+        $data['user_token'] = $this->session->get('user_token');
         
         $data['breadcrumbs'] = [];
 
@@ -28,7 +28,7 @@ class Dashboard extends \Admin\Controllers\BaseController
         
 
         // Check install directory exists
-        if (is_dir(ROOTPATH . 'install')) {
+        if ((is_dir(ROOTPATH . 'install')) || (is_dir(FCPATH . '../install'))) {
             $data['error_install'] = sprintf(lang('common/dashboard.error_install'), base_url('common/dashboard/removeInstall'));
         } else {
             $data['error_install'] = '';
@@ -72,15 +72,31 @@ class Dashboard extends \Admin\Controllers\BaseController
             $data['dashboards'][] = $dashboard;
         }
         
-
         return $this->document->output('common/dashboard', $data);
     }
 
-    protected function removeInstall()
+    public function removeInstall()
     {
-        if (is_dir(ROOTPATH . 'install')) {
-            delete_files();
+        $json = [];
+        if ($this->request->isAJAX() && $this->request->getMethod() == 'post') {
+            if ((is_dir(ROOTPATH . 'install')) || (is_dir(FCPATH . '../install'))) {
+                helper('filesystem');
+                if (is_dir(ROOTPATH . 'install')) {
+                    // Remove Main Root Install Dir
+                    delete_files(ROOTPATH . 'install', true, false, true);
+                    rmdir(ROOTPATH . 'install');
+                }
+                // remove public install filder
+                if (is_dir(FCPATH . '../install')) {
+                    delete_files(FCPATH . '../install', true, false, true);
+                    rmdir(realpath(FCPATH . '../install'));
+                }
+                $json['success'] = 'Install Folder Deleted Successfully!';
+            } else {
+                $json['error'] = 'Install Folder Not Found!';
+            }
         }
+        return $this->response->setJSON($json);
     }
 
     //--------------------------------------------------------------------

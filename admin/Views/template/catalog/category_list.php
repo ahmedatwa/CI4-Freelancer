@@ -141,13 +141,12 @@ if (filter_status !== '*') {
                         }
                 }, // success
                 error: function(xhr, ajaxOptions, thrownError) {
-                    swal("Error!", thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr
-                        .responseText, "error");
+                    swal("Error!", thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText, "error");
                 }
             });
         } // Confirm        
     });
-    });
+});
 </script>
 <?php if ($success) { ?>
     <!-- Success SweetAlert -->

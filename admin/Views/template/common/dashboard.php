@@ -38,3 +38,48 @@
     </div><!-- container-fluid -->
 </div>
 <?php echo $footer; ?>
+<script type="text/javascript">
+$(document).on('click', '#delete-install-button', function(e) {
+    e.preventDefault();
+        swal({
+            title: "<?php echo $text_confirm; ?>",
+            text: "<?php echo $text_no_recover; ?>",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "<?php echo $button_delete; ?>",
+            cancelButtonText: "<?php echo $button_cancel; ?>",
+            closeOnConfirm: false,
+            closeOnCancel: true,
+            showLoaderOnConfirm: true,
+        },
+    function(isConfirm) {
+    if (isConfirm) {
+    $.ajax({
+        url: 'common/dashboard/removeInstall?user_token=<?php echo $user_token; ?>',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf_token_admin"]').attr('content'),
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'post',
+        dataType: 'json',
+        success: function(json) {
+            if (json['error_warning']) {
+                swal("Error!", json['error_warning'], "error");
+            }
+            if (json['success']) {
+                setTimeout(function() {
+                    swal("Success!", json['success'], "success");
+                    location = json['redirect'];
+                }, 800);
+            }
+        }, // success
+        error: function(xhr, ajaxOptions, thrownError) {
+            swal("Error!", thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText, "error");
+        }
+    });
+        } // Confirm        
+    });
+});
+
+</script>
