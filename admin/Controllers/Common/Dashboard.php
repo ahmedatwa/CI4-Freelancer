@@ -29,7 +29,7 @@ class Dashboard extends \Admin\Controllers\BaseController
 
         // Check install directory exists
         if (is_dir(ROOTPATH . 'install')) {
-            $data['error_install'] = lang('common/dashboard.error_install');
+            $data['error_install'] = sprintf(lang('common/dashboard.error_install'), base_url('common/dashboard/removeInstall'));
         } else {
             $data['error_install'] = '';
         }
@@ -76,6 +76,12 @@ class Dashboard extends \Admin\Controllers\BaseController
         return $this->document->output('common/dashboard', $data);
     }
 
+    protected function removeInstall()
+    {
+        if (is_dir(ROOTPATH . 'install')) {
+            delete_files();
+        }
+    }
 
     //--------------------------------------------------------------------
 }

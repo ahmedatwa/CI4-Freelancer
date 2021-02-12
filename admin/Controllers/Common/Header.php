@@ -44,7 +44,7 @@ class Header extends \Admin\Controllers\BaseController
                 $data['lastname']      = $user_info['lastname'];
                 $data['username']      = $user_info['username'];
                 $data['user_group_id'] = $user_info['user_group_id'];
-    
+
                 if (is_file(DIR_IMAGE . $user_info['image'])) {
                     $data['image'] = resizeImage($user_info['image'], 45, 45);
                 } else {

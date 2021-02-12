@@ -1,5 +1,11 @@
 <?php
+
 namespace Catalog\Controllers;
+
+use CodeIgniter\Controller;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class BaseController
@@ -10,8 +16,6 @@ namespace Catalog\Controllers;
  *     class Home extends BaseController
  *
  * For security be sure to declare any new methods as protected or private.
- *
- * @package CodeIgniter
  */
 
 use \Catalog\Models\Localization\CurrencyModel;

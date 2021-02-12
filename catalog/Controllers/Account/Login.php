@@ -49,19 +49,21 @@ class Login extends \Catalog\Controllers\BaseController
                 $json['error_warning'] = lang('account/login.text_warning');
                 $json['validator'] = $this->validator->getErrors();
             }
+            
+            if (! $json['validator']) {
+                $customerModel = new CustomerModel();
 
-            $customerModel = new CustomerModel();
+                // Check how many login attempts have been made.
+                $login_info = $customerModel->getLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
 
-            // Check how many login attempts have been made.
-            $login_info = $customerModel->getLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
+                if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+                    $json['error_attempts'] = lang('account/login.error_attempts');
+                }
 
-            if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
-                $json['error_attempts'] = lang('account/login.error_attempts');
-            }
-
-            if (! $this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'))) {
-                $json['error_warning'] = lang('account/login.text_warning');
-                $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
+                if (! $this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'))) {
+                    $json['error_warning'] = lang('account/login.text_warning');
+                    $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
+                }
             }
 
             if (! $json) {

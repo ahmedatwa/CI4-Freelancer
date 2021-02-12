@@ -24,7 +24,7 @@ class App extends BaseConfig
 	 * @var string
 	 */
 	public $baseURL = 'http://ci4.localhost/';
-	public $adminURL = 'http://admin.ci4.localhost/';
+	public $adminURL = 'http://ci4.localhost/admin/';
 
 	/**
 	 * --------------------------------------------------------------------------

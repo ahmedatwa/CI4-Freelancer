@@ -6,20 +6,11 @@
     'aliases' => 
     array (
     ),
-    'reference' => '58aae00484c3d1e6ff1c7453f82834f4ab45ee09',
-    'name' => '__root__',
+    'reference' => '25e55eab98e3de436cbc33ef2f35e2cd15af0b25',
+    'name' => 'freelancer_app/freelancer_app',
   ),
   'versions' => 
   array (
-    '__root__' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '58aae00484c3d1e6ff1c7453f82834f4ab45ee09',
-    ),
     'firebase/php-jwt' => 
     array (
       'pretty_version' => 'v5.2.0',
@@ -28,6 +19,15 @@
       array (
       ),
       'reference' => 'feb0e820b8436873675fd3aca04f3728eb2185cb',
+    ),
+    'freelancer_app/freelancer_app' => 
+    array (
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '25e55eab98e3de436cbc33ef2f35e2cd15af0b25',
     ),
     'google/apiclient' => 
     array (
@@ -40,21 +40,21 @@
     ),
     'google/apiclient-services' => 
     array (
-      'pretty_version' => 'v0.157.0',
-      'version' => '0.157.0.0',
+      'pretty_version' => 'v0.158.0',
+      'version' => '0.158.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '957846303c28c10033fa83d8688ffd325c260a3e',
+      'reference' => '859f9c95ed85df02370f355b69c0dcad99367728',
     ),
     'google/auth' => 
     array (
-      'pretty_version' => 'v1.14.3',
-      'version' => '1.14.3.0',
+      'pretty_version' => 'v1.15.0',
+      'version' => '1.15.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c1503299c779af0cbc99b43788f75930988852cf',
+      'reference' => 'b346c07de6613e26443d7b4830e5e1933b830dc4',
     ),
     'guzzlehttp/guzzle' => 
     array (

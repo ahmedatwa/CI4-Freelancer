@@ -1,4 +1,11 @@
 {
+  "name": "freelancer_app/freelancer_app",
+  "description": "FreelancerApp",
+  "type": "project",
+  "keywords": [
+    "freelancer",
+    "codeIgniter"
+  ],
 	"require": {
 		"php": ">=5.3.7",
 		"pusher/pusher-php-server": "^4.1",

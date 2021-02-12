@@ -1,20 +1,14 @@
 <?php
 
 // Valid PHP Version?
-$minPHPVersion = '7.2';
-if (phpversion() < $minPHPVersion)
-{
-	die("Your PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: " . phpversion());
+$minPHPVersion = '7.3';
+if (version_compare(PHP_VERSION, $minPHPVersion, '<')) {
+    die("Your PHP version must be {$minPHPVersion} or higher to run CodeIgniter. Current version: " . PHP_VERSION);
 }
 unset($minPHPVersion);
 
 // Path to the front controller (this file)
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
-
-// Location of the Paths config file.
-// This is the line that might need to be changed, depending on your folder structure.
-$pathsPath = realpath(FCPATH . '../catalog/Config/Paths.php');
-// ^^^ Change this if you move your application folder
 
 /*
  *---------------------------------------------------------------
@@ -29,12 +23,23 @@ $pathsPath = realpath(FCPATH . '../catalog/Config/Paths.php');
 chdir(__DIR__);
 
 // Load our paths config file
-require $pathsPath;
+// This is the line that might need to be changed, depending on your folder structure.
+require realpath(FCPATH . '../catalog/Config/Paths.php') ?: FCPATH . '../catalog/Config/Paths.php';
+// ^^^ Change this if you move your application folder
+
 $paths = new Config\Paths();
 
 // Location of the framework bootstrap file.
-$app = require rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
+$bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
+$app       = require realpath($bootstrap) ?: $bootstrap;
 
+// Install
+if (! file_exists('../catalog/Config/App.php')) {
+    $redir = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+    $redir .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+    header( 'Location: ' . $redir . 'install/index.php' ) ;
+    exit;
+}
 /*
  *---------------------------------------------------------------
  * LAUNCH THE APPLICATION

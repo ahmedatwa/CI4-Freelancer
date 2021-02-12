@@ -23,7 +23,7 @@ defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'Admin');
  | The path that Composer's autoload file is expected to live. By default,
  | the vendor folder is in the Root directory, but you can customize that here.
  */
-defined('COMPOSER_PATH') || define('COMPOSER_PATH', ROOTPATH . 'vendor/autoload.php');
+defined('COMPOSER_PATH') || define('COMPOSER_PATH', ROOTPATH . 'storage/vendor/autoload.php');
 
 /*
  |--------------------------------------------------------------------------
@@ -84,5 +84,5 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest auto
  | --------------------------------------------------------------------------
 */
 defined('PANEL_NAME') || define('PANEL_NAME', 'CI4 Admin Panel');
-defined('VERSION') || define('VERSION', '1.0');
-defined('DIR_IMAGE') || define('DIR_IMAGE', ROOTPATH . 'public_html/images/');
+defined('APP_VERSION') || define('APP_VERSION', '2.0');
+defined('DIR_IMAGE') || define('DIR_IMAGE', realpath(FCPATH . '../images') . '/');
