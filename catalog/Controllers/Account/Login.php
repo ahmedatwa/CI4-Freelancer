@@ -143,9 +143,7 @@ class Login extends \Catalog\Controllers\BaseController
                             $this->session->set($sessionData);
                             // Trigger Pusher Online Event
                             $options = ['cluster' => PUSHER_CLUSTER, 'useTLS' => PUSHER_USETLS];
-
                             $pusher = new \Pusher\Pusher(PUSHER_KEY, PUSHER_SECRET, PUSHER_APP_ID, $options);
-
                             $data['message'] = [
                                 'customer_id' => $insertID ?? $customer_info['customer_id'],
                                 'username'    => $payload['given_name'] . ' ' . $payload['family_name']

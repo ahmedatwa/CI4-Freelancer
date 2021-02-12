@@ -326,9 +326,11 @@ class Project extends \Catalog\Controllers\BaseController
         $data['register']        = route_to('register') ? route_to('register') : base_url('acocunt/register');
         $data['add_project']     = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
         
+        $project_info = [];
+
         if ($project_id) {
             $project_info = $projectModel->getProject($project_id);
-        }
+        } 
 
         if ($project_info) {
             $reviewModel = new ReviewModel();
@@ -419,7 +421,13 @@ class Project extends \Catalog\Controllers\BaseController
 
         $data['isLogged'] = $this->customer->isLogged();
         $data['login'] = route_to('account_login');
-        $this->session->set('redirect_url', current_url());
+        // save refereal Url in session
+        $url_query = $this->request->uri->getQuery();
+        $url = '';
+        if ($url_query) {
+            $url = '?' . $url_query;
+        } 
+        $this->session->set('redirect_url', base_url(current_url() . $url));
 
         $projectModel->updateViewed($project_id);
 
