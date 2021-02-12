@@ -356,7 +356,6 @@ class Project extends \Catalog\Controllers\BaseController
                 $projectModel->update($project_info['project_id'], $project_status);
             }
 
-
             if (! is_int($days_left)) {
                 $data['days_left'] = $project_info['status'];
             } elseif($days_left <= 0) {
