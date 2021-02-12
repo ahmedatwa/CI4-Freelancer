@@ -96,7 +96,7 @@
 								<div class="row">
 									<div class="col-xl-6">
 										<div class="submit-field">
-											<span class="bidding-detail"><?php echo $text_hourly_rate; ?> : <?php echo $currency; ?></span>
+											<span class="bidding-detail"><?php echo $text_hourly_rate; ?> : <?php echo $rate . ' ' .$currency; ?></span>
 											<input class="range-slider" type="text" value="" data-provide="slider" data-slider-currency="$" data-slider-min="5" data-slider-max="150" data-slider-step="5" data-slider-value="<?php echo $rate; ?>" name="rate"/>
 										</div>
 									</div>
