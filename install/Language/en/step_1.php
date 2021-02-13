@@ -48,8 +48,10 @@ return [
 'error_zip'              => 'Warning: ZIP extension needs to be loaded for the system to work!',
 'error_mbstring'         => 'Warning: mbstring extension needs to be loaded for the system to work!',
 'error_intl'             => 'Warning: intl extension needs to be loaded for the system to work!',
-'error_catalog_writable' => 'Warning: config.php needs to be writable for the system to be installed!',
-'error_admin_writable'   => 'Warning: admin/config.php needs to be writable for the system to be installed!',
+'error_catalog_writable' => 'Warning: App.php needs to be writable for the system to be installed!',
+'error_admin_writable'   => 'Warning: admin/App.php needs to be writable for the system to be installed!',
 'error_unwritable'       => 'Unwritable',
+'error_catalog_exist'    => 'Warning: App.php does not exist. You need to rename App-dist.php to App.php!',
+'error_admin_exist'      => 'Warning: admin/App.php does not exist. You need to rename admin/App-dist.php to admin/App.php!',
 
 ];

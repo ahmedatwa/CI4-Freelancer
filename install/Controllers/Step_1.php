@@ -2,8 +2,8 @@
 
 namespace Install\Controllers;
 
-use Install\Libraries\Document;
 use CodeIgniter\Controller;
+use Install\Libraries\Document;
 
 class Step_1 extends Controller
 {
@@ -12,10 +12,6 @@ class Step_1 extends Controller
     public function index()
     {   
         
-        if (file_exists(ROOTPATH . 'catalog/Config/App.php')) {
-            return redirect()->to(BASE_URL);
-        }
-
         if (($this->request->getMethod(true) == 'POST') && $this->validateForm()) {
             return redirect()->to(base_url('index.php/step_2'));
         }
@@ -40,7 +36,7 @@ class Step_1 extends Controller
             'pdo'
         ];
 
-        if (!array_filter($db, 'extension_loaded')) {
+        if (! array_filter($db, 'extension_loaded')) {
             $data['db'] = false;
         } else {
             $data['db'] = true;
@@ -55,10 +51,10 @@ class Step_1 extends Controller
         $data['mbstring'] = extension_loaded('mbstring');
         $data['intl']     = extension_loaded('intl');
 
-        $data['catalog_config'] = ROOTPATH . 'catalog/config/app.php';
-        $data['admin_config']   = ROOTPATH . 'admin/config/app.php';
-        $data['image']          = FCPATH . '../images';
-        $data['image_cache']    = FCPATH . '../images/cache';
+        $data['catalog_config'] = ROOTPATH . 'catalog/Config/App.php';
+        $data['admin_config']   = ROOTPATH . 'admin/Config/App.php';
+        $data['image']          = realpath(FCPATH . '../images');
+        $data['image_cache']    = realpath(FCPATH . '../images/cache');
         $data['cache']          = ROOTPATH . 'storage/cache';
         $data['logs']           = ROOTPATH . 'storage/logs';
         $data['download']       = ROOTPATH . 'storage/download';
@@ -157,11 +153,11 @@ class Step_1 extends Controller
             $this->error['warning'] = lang('step_1.error_admin_writable');
         }
 
-        if (!is_writable(ROOTPATH . 'public_html/images')) {
+        if (!is_writable(FCPATH . '../images')) {
             $this->error['warning'] = lang('step_1.error_image');
         }
 
-        if (!is_writable(ROOTPATH . 'public_html/images/cache')) {
+        if (!is_writable(FCPATH . '../images/cache')) {
             $this->error['warning'] = lang('step_1.error_image_cache');
         }
 

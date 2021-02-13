@@ -108,7 +108,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $appTimezone = 'America/Chicago';
+	public $appTimezone = 'UTC';
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -162,7 +162,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $sessionCookieName = 'ci_session';
+	public $sessionCookieName = 'ci_install_session';
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -338,7 +338,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $CSRFTokenName = 'csrf_test_name';
+	public $CSRFTokenName = 'csrf_install_app';
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -364,7 +364,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $CSRFCookieName = 'csrf_cookie_name';
+	public $CSRFCookieName = 'csrf_cookie_install';
 
 	/**
 	 * --------------------------------------------------------------------------

@@ -10,6 +10,13 @@ unset($minPHPVersion);
 // Path to the front controller (this file)
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
+// Install
+if (! file_exists('../catalog/Config/App.php')) {
+    $redir = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+    $redir .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+    header( 'Location: ' . $redir . 'install/index.php' ) ;
+    exit;
+}
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP THE APPLICATION
@@ -32,14 +39,6 @@ $paths = new Config\Paths();
 // Location of the framework bootstrap file.
 $bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
 $app       = require realpath($bootstrap) ?: $bootstrap;
-
-// Install
-if (! file_exists('../catalog/Config/App.php')) {
-    $redir = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
-    $redir .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-    header( 'Location: ' . $redir . 'install/index.php' ) ;
-    exit;
-}
 /*
  *---------------------------------------------------------------
  * LAUNCH THE APPLICATION

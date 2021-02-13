@@ -17,7 +17,7 @@ class Filters extends BaseConfig
 	 */
 	public $aliases = [
 		'csrf'     => CSRF::class,
-		'toolbar'  => DebugToolbar::class,
+		//'toolbar'  => DebugToolbar::class,
 		'honeypot' => Honeypot::class,
 	];
 
@@ -33,7 +33,7 @@ class Filters extends BaseConfig
 			// 'csrf',
 		],
 		'after'  => [
-			'toolbar',
+			//'toolbar',
 			// 'honeypot',
 		],
 	];

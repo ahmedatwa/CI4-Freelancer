@@ -12,10 +12,6 @@ class Step_2 extends Controller
 
     public function index()
     {
-        if (file_exists(ROOTPATH . 'catalog/Config/App.php')) {
-            return redirect()->to(BASE_URL);
-        }
-
         $document = new Document();
 
         if (($this->request->getMethod(true) == 'POST') && $this->validateForm()) {
@@ -256,7 +252,7 @@ class Step_2 extends Controller
         $data['config_name'] = 'CI4-App';
 
         $data['base']   = HTTP_SERVER;
-        $data['back']   = base_url('install/step_1');
+        $data['back']   = base_url('index.php/step_1');
         $data['footer'] = sprintf(lang('footer.text_footer'), 'CI4-App');
 
         $data['csrf_token'] = csrf_token();

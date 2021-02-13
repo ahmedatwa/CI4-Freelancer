@@ -32,7 +32,7 @@
     <h5 class="my-0 mr-md-auto font-weight-normal"><img src="../images/catalog/logo.png" alt="{{ config_name }}"></h5>
   </div>
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h3 class="display-4"> 1<small>/4</small> {{ heading_title }}</h3>
+    <h3 class="display-4"> 1<small>/2</small> {{ heading_title }}</h3>
     <p class="lead">{{ text_step_1 }}</p>
   </div>
   <div class="container">
@@ -44,8 +44,10 @@
       {% endif %}
       <form action="{{ action }}" method="post" enctype="multipart/form-data">
       <input type="hidden" name="{{ csrf_token }}" value="{{ csrf_hash }}" />
+      <div class="card">
+       <div class="card-body">
+        <h5 class="card-title">{{ text_install_php }}</h5>
         <fieldset>
-          <p>{{ text_install_php }} </p>
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
@@ -126,8 +128,12 @@
           </tbody>
         </table>
         </fieldset>
+        </div>
+        </div>
+        <div class="card mt-4">
+         <div class="card-body">
+        <h5 class="card-title">{{ text_install_extension }}</h5>
         <fieldset>
-        <p>{{ text_install_extension }}</p>
         <table class="table table-bordered">
             <thead>
               <tr>
@@ -255,7 +261,11 @@
             </tbody>
           </table>
         </fieldset>
-        <p>{{ text_install_file }}</p>
+        </div>
+        </div>
+        <div class="card mt-4">
+       <div class="card-body">
+        <h5 class="card-title">{{ text_install_file }}</h5>
         <fieldset>
           <table class="table table-bordered">
             <thead>
@@ -284,7 +294,11 @@
             </tbody>
           </table>
         </fieldset>
-        <p>{{ text_install_directory }}</p>
+        </div>
+        </div>
+        <div class="card mt-4">
+        <div class="card-body">
+        <h5 class="card-title">{{ text_install_directory }}</h5>
         <fieldset>
           <table class="table table-bordered">
             <thead>
@@ -345,6 +359,8 @@
             </tbody>
           </table>
         </fieldset>
+        </div>
+        </div>
           <div class="col-12 mt-4">
           <div class="text-right">
             <input type="submit" class="btn btn-primary" value="{{ button_continue }}">
