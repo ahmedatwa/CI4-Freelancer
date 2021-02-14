@@ -84,5 +84,5 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest auto
  | --------------------------------------------------------------------------
 */
 defined('PANEL_NAME') || define('PANEL_NAME', 'CI4 Admin Panel');
-defined('APP_VERSION') || define('APP_VERSION', '2.0');
+defined('APP_VERSION') || define('APP_VERSION', '2.1.1');
 defined('DIR_IMAGE') || define('DIR_IMAGE', realpath(FCPATH . '../images') . '/');
