@@ -2,7 +2,7 @@
 <div class="container my-4 overflow-hidden">
     <div class="d-flex align-items-center justify-content-center">
         <div class="card w-75 shadow-sm bg-white rounded" style="margin-top:70px;">
-            <div class="card-header">
+            <div class="card-header mb-1">
                 <i class="fas fa-lock"></i> <?php echo $text_title; ?>
             </div>
             <div class="card-body p-auto my-4">
