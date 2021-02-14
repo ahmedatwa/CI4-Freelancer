@@ -3,9 +3,8 @@ Thanks to [Codeigniter 4](https://codeigniter.com) Team who made all of this pos
 [User Guide](https://codeigniter.com/user_guide/index.html) could be found here as your primary resource.
 
 ## Install ##
-* install .SQL file located in install folder to your new DB
-* open App.php in admin=>config/catalog=>config folder change baseURL & httpCatalog to your domain name
-* open Database.php in admin=>config/catalog=>config folder, add your DB connection params.
+* system will land on the installtion page.
+* rename the App.php located in catalog/Config to App.php
 
 ## Description ##
 Freelancer Platform to help people find paid quick, paid Jobs in no time.
