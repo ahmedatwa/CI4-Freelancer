@@ -11,22 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Correct App version in Admin Constants.php File.
 - App is ready for server deployment.
 
-### Changed
-### Deprecated
-### Removed
-### Fixed
-### Security
-
 ## [2.1-alpha] - 2021-02-13
 ### Added
 - install wizard has been added to simplify the App installation process.
 
-### Changed
 ### Deprecated
 - dropped formError function and ajax validation used instead in common.php.
 
-### Removed
-### Fixed
 ### Security
 - Codeigniter 4.1.1 upgrade.
 - fixed some bugs and security issues.
