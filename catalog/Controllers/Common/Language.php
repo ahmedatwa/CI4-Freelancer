@@ -8,7 +8,7 @@ class Language extends \Catalog\Controllers\BaseController
     {
         $data['action'] = base_url('common/language/language');
 
-        $data['code'] = $this->session->get('language');
+        $data['code'] = $this->request->getCookie(config('App')->cookiePrefix . 'language', FILTER_SANITIZE_STRING);
 
         $languageModel = new LanguageModel();
 
@@ -54,13 +54,22 @@ class Language extends \Catalog\Controllers\BaseController
                 $redirect = '';
             }
 
-            $this->session->remove('language');
-            $this->session->set('language', $code);
+            $cookie = [
+                'name'     => 'language',
+                'value'    => (string) $this->request->getPost('code'),
+                'expire'   => '86500',
+                'domain'   => config('App')->cookieDomain,
+                'path'     => config('App')->cookiePath,
+                'prefix'   => config('App')->cookiePrefix,
+                'secure'   => config('App')->cookieSecure,
+                'httponly' => config('App')->cookieHTTPOnly,
+                'samesite' => config('App')->cookieSameSite
+            ];
 
             if ($redirect && substr($redirect, 0, strlen($this->registry->get('config_url'))) == $this->registry->get('config_url')) {
-                return redirect()->to($redirect);
+                return redirect()->to($redirect)->withCookies();
             } else {
-                return redirect('/');
+                return redirect('/')->withCookies();
             }
         }
     }

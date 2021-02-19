@@ -26,7 +26,7 @@ class Step_2 extends Controller
                 if (is_file($catalogAppFile)) {
                     $getAppFileContents = file_get_contents($catalogAppFile);
 
-                    $baseURLString = str_replace(["http://ci4.localhost/", "http://ci4.localhost/admin/"], [BASE_URL, BASE_URL . 'admin/'], $getAppFileContents);
+                    $baseURLString = str_replace(["http://freelancer.localhost/", "http://freelancer.localhost/admin/"], [BASE_URL, BASE_URL . 'admin/'], $getAppFileContents);
 
                     file_put_contents($catalogAppFile, $baseURLString);
                 }
@@ -41,7 +41,7 @@ class Step_2 extends Controller
                         'hostname' => '127.0.0.1',
                         'username' => 'root',
                         'password' => '',
-                        'database' => 'ci4',
+                        'database' => 'freelancer',
                         'DBPrefix' => 'ci_',
                         'port'     => 3306,
                     ];
@@ -69,7 +69,7 @@ class Step_2 extends Controller
                     $baseURL = base_url() . '/';
                     $adminURL = base_url('admin') . '/';
 
-                    $baseURLString = str_replace(["http://ci4.localhost/", "http://ci4.localhost/admin/"], [BASE_URL, BASE_URL . 'admin/'], $getAdminAppFileContents);
+                    $baseURLString = str_replace(["http://freelancer.localhost/", "http://freelancer.localhost/admin/"], [BASE_URL, BASE_URL . 'admin/'], $getAdminAppFileContents);
 
                     file_put_contents($adminAppFile, $baseURLString);
                 }
@@ -84,7 +84,7 @@ class Step_2 extends Controller
                         'hostname' => '127.0.0.1',
                         'username' => 'root',
                         'password' => '',
-                        'database' => 'ci4',
+                        'database' => 'freelancer',
                         'DBPrefix' => 'ci_',
                         'port'     => 3306,
                     ];

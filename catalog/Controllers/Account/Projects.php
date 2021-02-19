@@ -2,6 +2,7 @@
 
 use \Catalog\Models\Catalog\ProjectModel;
 use \Catalog\Models\Localization\ProjectStatusModel;
+use DateTime;
 
 class Projects extends \Catalog\Controllers\BaseController
 {
@@ -39,7 +40,7 @@ class Projects extends \Catalog\Controllers\BaseController
             $customer_id = 0;
         }
 
-       // Status
+        // Status
         $data['project_statuses'] = [];
         $projectStatusesModel = new ProjectStatusModel();
         $projectStatuses = $projectStatusesModel->getProjectSatuses();
@@ -54,7 +55,7 @@ class Projects extends \Catalog\Controllers\BaseController
 
         $data['customer_id'] = $customer_id;
         $data['pid'] = $customer_id;
-        
+
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
         $this->template->output('account/projects', $data);

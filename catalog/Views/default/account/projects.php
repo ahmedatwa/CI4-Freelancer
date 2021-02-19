@@ -74,7 +74,6 @@
 			<!-- Row / End -->
 		</div>
 	</div>
-
 <!-- // Employer  -->
 <script type="text/javascript">
 $('#employerTab #openprojects-tab').on('click', function (e) {

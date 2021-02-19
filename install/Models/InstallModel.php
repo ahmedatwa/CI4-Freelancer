@@ -29,7 +29,7 @@ class InstallModel extends Model {
 
         $db = \Config\Database::connect($custom);
 
-		$file = ROOTPATH . 'install/ci4.sql';
+		$file = ROOTPATH . 'install/freelancer.sql';
 
 		if (!file_exists($file)) {
 			exit('Could not load sql file: ' . $file);

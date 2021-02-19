@@ -85,9 +85,13 @@ class Login extends \Catalog\Controllers\BaseController
                     // Trigger Customer E-Mail as IP is different than usual one..
                     \CodeIgniter\Events\Events::trigger('customer_login_notify', $ip_data);
                 }
+                // load the cookie helper for redirect url  
+                helper('cookie');
 
                 if ($this->session->get('redirect_url')) {
                     $json['redirect'] = (string) $this->session->get('redirect_url');
+                } elseif (! is_null($this->request->getCookie(config('App')->cookiePrefix . 'redirect_url', FILTER_SANITIZE_STRING))) {
+                    $json['redirect'] = $this->request->getCookie(config('App')->cookiePrefix . 'redirect_url', FILTER_SANITIZE_STRING);
                 } else {
                     $json['redirect'] = route_to('account_dashboard');
                 }
