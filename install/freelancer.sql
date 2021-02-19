@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2021 at 11:32 AM
+-- Generation Time: Feb 19, 2021 at 11:43 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.3.25
 
@@ -548,7 +548,7 @@ CREATE TABLE `ci_customer` (
 --
 
 INSERT INTO `ci_customer` (`customer_id`, `customer_group_id`, `firstname`, `lastname`, `username`, `email`, `telephone`, `password`, `ip`, `viewed`, `status`, `code`, `image`, `bg_image`, `newsletter`, `about`, `tag_line`, `rate`, `origin`, `online`, `github`, `linkedin`, `facebook`, `twitter`, `profile_strength`, `date_added`, `date_modified`) VALUES
-(1, 1, 'Anna', 'Loue', 'anna_loue', 'employer@employer.com', '', '$2y$10$1ixd5RAOq586ee7GY1Bw3uc5kdYYd1iERcRCihM65cp.eh/13lvXO', '', 12, 1, '', '', '', 0, '', '', 0, '', 1, '', '', '', '', 0, '2021-01-06 07:53:28', '2021-02-15 06:37:59'),
+(1, 1, 'Anna', 'Loue', 'anna_loue', 'employer@employer.com', '', '$2y$10$1ixd5RAOq586ee7GY1Bw3uc5kdYYd1iERcRCihM65cp.eh/13lvXO', '', 12, 1, '', '', '', 0, '', '', 0, '', 1, '', '', '', '', 0, '2021-01-06 07:53:28', '2021-02-18 14:12:16'),
 (2, 1, 'Mike', 'Myers', 'mike_myers', 'freelancer@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 120, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', '', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 1, '', '', '', '', 70, '2021-01-06 08:00:23', '2021-02-12 08:46:47'),
 (3, 1, 'Sindy', 'Forest', 'sindy_forest', 'freelancer2@freelancer.com', '', '$2y$10$.XDdX8.lbpe9urwdF914fexBnzZMLR2vyV1dIDarg8SMEuq3lqqym', '', 30, 1, '', 'catalog/1610096668_6900a7ee7f037456b8de.png', '', 0, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of ', 'UX|UI Developer', 40, '', 1, '', '', '', '', 0, '2021-01-06 08:00:23', '2021-01-20 12:37:12'),
 (8, 1, 'new', 'newww', '', 'neeww@nnn.com', '', '$2y$10$GjtRbx/hKFZz9D3dzSzDiOovfandoinbZY6cXSvw4ian/K0.YuN96', '', 0, 1, '', '', '', 0, NULL, 'NULL', 0, '', 0, '', '', '', '', 0, '2021-02-06 15:16:29', '2021-02-06 15:16:29');
@@ -687,7 +687,24 @@ INSERT INTO `ci_customer_ip` (`customer_ip_id`, `customer_id`, `ip`, `user_agent
 (22, 2, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-12 08:14:34'),
 (23, 2, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-12 08:17:50'),
 (24, 2, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-12 08:25:57'),
-(25, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-15 06:33:09');
+(25, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-15 06:33:09'),
+(26, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 08:00:14'),
+(27, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 08:11:22'),
+(28, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 08:35:42'),
+(29, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 08:36:05'),
+(30, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 09:23:36'),
+(31, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 09:51:56'),
+(32, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 10:01:08'),
+(33, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 10:06:01'),
+(34, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 10:23:22'),
+(35, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 10:28:17'),
+(36, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 10:30:51'),
+(37, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 10:43:46'),
+(38, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 10:46:07'),
+(39, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 11:02:19'),
+(40, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 13:17:24'),
+(41, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 14:11:15'),
+(42, 1, '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 OPR/74.0.3911.107', '2021-02-18 14:12:47');
 
 -- --------------------------------------------------------
 
@@ -731,7 +748,7 @@ CREATE TABLE `ci_customer_online` (
 --
 
 INSERT INTO `ci_customer_online` (`ip`, `customer_id`, `url`, `referer`, `date_added`) VALUES
-('::1', 0, 'http://freelancer.localhost/categories', 'http://freelancer.localhost/categories', '2021-02-18 05:32:09');
+('::1', 0, 'http://freelancer.localhost/account/login', 'http://freelancer.localhost/account/login', '2021-02-19 05:30:22');
 
 -- --------------------------------------------------------
 
@@ -3146,7 +3163,7 @@ ALTER TABLE `ci_customer_history`
 -- AUTO_INCREMENT for table `ci_customer_ip`
 --
 ALTER TABLE `ci_customer_ip`
-  MODIFY `customer_ip_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `customer_ip_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `ci_customer_login`
