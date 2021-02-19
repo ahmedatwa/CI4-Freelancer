@@ -6,10 +6,11 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
-use Catalog\Filters\SeoUrl;
-use Catalog\Filters\Localization;
-use Catalog\Filters\Maintenance;
-use Catalog\Filters\Throttle;
+use Catalog\Filters\SeoUrlFilter;
+use Catalog\Filters\LocalizationFilter;
+use Catalog\Filters\MaintenanceFilter;
+use Catalog\Filters\ThrottleFilter;
+use Catalog\Filters\EncryptionFilter;
 
 class Filters extends BaseConfig
 {
@@ -23,11 +24,11 @@ class Filters extends BaseConfig
 		'csrf'         => CSRF::class,
 		'toolbar'      => DebugToolbar::class,
 		'honeypot'     => Honeypot::class,
-		'seo_url'      => SeoUrl::class,
-		'localization' => Localization::class,
-		'maintenance'  => Maintenance::class,
-		'throttle'     => Throttle::class,
-
+		'seo_url'      => SeoUrlFilter::class,
+		'localization' => LocalizationFilter::class,
+		'maintenance'  => MaintenanceFilter::class,
+		'throttle'     => ThrottleFilter::class,
+		'encryption'   => EncryptionFilter::class,
 	];
 
 	/**
@@ -40,13 +41,13 @@ class Filters extends BaseConfig
 		'before' => [
             'localization',
             'seo_url',
-            //'honeypot',
             'maintenance',
             'csrf',
 		],
 		'after'  => [
             'honeypot',
             'toolbar',
+            'encryption'
 		],
 	];
 

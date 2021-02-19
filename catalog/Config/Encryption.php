@@ -23,7 +23,7 @@ class Encryption extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $key = '';
+	public $key = 'hex2bin:338f572a0fe7888063b3c84ab400bc8244c8bcfcf224e9f72974116fa8ee2367';
 
 	/**
 	 * --------------------------------------------------------------------------

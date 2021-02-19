@@ -3,17 +3,27 @@
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
-use Config\Services;
 
-class Maintenance implements FilterInterface
+class SeoUrlFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        
-        if (service('registry')->get('config_maintenance')) {
-            echo view_cell('Catalog\Controllers\Common\Maintenance::index');
-            return Services::response()->setStatusCode(503);
-            exit(0);
+        $data = [];
+
+        $slug = '';
+
+        $segments = explode('/', uri_string());
+
+        $slug = end($segments);
+
+        if ($slug) {
+            $seoUrl = service('seo_url');
+
+            $query = $seoUrl->getQueryByKeyword(urldecode($slug));
+
+            parse_str($query, $data);
+
+            $request->setGlobal('get', $data);
         }
     }
 

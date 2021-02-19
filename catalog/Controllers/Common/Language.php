@@ -56,7 +56,7 @@ class Language extends \Catalog\Controllers\BaseController
 
             $cookie = [
                 'name'     => 'language',
-                'value'    => (string) $this->request->getPost('code'),
+                'value'    => hex2bin(\Config\Services::encrypter()->encrypt($this->request->getPost('code'))),
                 'expire'   => '86500',
                 'domain'   => config('App')->cookieDomain,
                 'path'     => config('App')->cookiePath,

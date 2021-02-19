@@ -109,7 +109,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $appTimezone = 'America/Chicago';
+	public $appTimezone = 'UTC';
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -243,7 +243,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $cookiePrefix = '_admin';
+	public $cookiePrefix = '_admin-';
 
 	/**
 	 * --------------------------------------------------------------------------

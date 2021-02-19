@@ -6,7 +6,7 @@ use CodeIgniter\Filters\FilterInterface;
 use Catalog\Models\Localization\LanguageModel;
 use Config\Services;
 
-class Localization implements FilterInterface
+class LocalizationFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {

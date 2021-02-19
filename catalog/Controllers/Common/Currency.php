@@ -6,9 +6,11 @@ class Currency extends \Catalog\Controllers\BaseController
 {
     public function index()
     {
+        var_dump(   $this->request->getCookie(config('App')->cookiePrefix . 'currency', FILTER_SANITIZE_STRING)  );
         $data['action'] = base_url('common/currency/currency');
 
-        $data['code'] = $this->request->getCookie(config('App')->cookiePrefix . 'currency', FILTER_SANITIZE_STRING);
+        $data['code'] = '';
+                //$data['code'] = \Config\Services::encrypter()->decrypt(hex2bin($this->request->getCookie(config('App')->cookiePrefix . 'currency', FILTER_SANITIZE_STRING)));
 
         $currencyModel = new CurrencyModel();
 
@@ -50,7 +52,7 @@ class Currency extends \Catalog\Controllers\BaseController
             if ($this->request->getPost('code')) {
                 $cookie = [
                     'name'     => 'currency',
-                    'value'    => (string) $this->request->getPost('code'),
+                    'value'    => \Config\Services::encrypter()->encrypt($this->request->getPost('code')),
                     'expire'   => '86500',
                     'domain'   => config('App')->cookieDomain,
                     'path'     => config('App')->cookiePath,

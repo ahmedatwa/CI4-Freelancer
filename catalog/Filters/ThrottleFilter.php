@@ -5,7 +5,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 
-class Throttle implements FilterInterface
+class ThrottleFilter implements FilterInterface
 {
     /**
      *
