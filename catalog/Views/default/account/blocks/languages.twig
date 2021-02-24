@@ -1,0 +1,32 @@
+{% if languages %}
+<hr />
+<div class="table-responsive col-md-12">
+    <table class="table table-bordered" id="languages-table">
+        <thead>
+            <tr>
+                <th>{{ column_name }}</th>
+                <th width="20%">{{ column_level }}</th>
+                <th width="10%">{{ column_action }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for language in languages %}
+            <tr>
+                <td>{{ language.name }}</td>
+                <td>{{ language.level }}</td>
+                <td><button type="button" value="{{ language.language_id }}"
+                        id="button-delete-language{{ language.language_id }}" data-toggle="tooltip"
+                        title="{{ button_delete }}" class="btn btn--icon btn-sm btn-danger"><i
+                            class="icon-feather-trash-2"></i>
+                    </button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="float-left">
+        {{ pagination }}
+    </div>
+</div>
+{% endif %}

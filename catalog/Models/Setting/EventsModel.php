@@ -1,14 +1,13 @@
-<?php namespace Catalog\Models\Setting;
+<?php 
 
-class EventsModel extends \CodeIgniter\Model
+namespace Catalog\Models\Setting;
+
+use CodeIgniter\Model;
+
+class EventsModel extends Model
 {
     protected $table          = 'event';
     protected $primaryKey     = 'event_id';
     protected $returnType     = 'array';
-    protected $allowedFields  = ['code', 'action', 'status', 'priority'];
-    protected $useTimestamps  = true;
-    protected $useSoftDeletes = false;
-
-
     // ----------------------------------------------------
 }

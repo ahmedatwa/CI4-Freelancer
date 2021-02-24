@@ -16,7 +16,7 @@ class View extends BaseView
 	 *
 	 * @var boolean
 	 */
-	public $saveData = true;
+	public $saveData = false;
 
 	/**
 	 * Parser Filters map a filter name with any PHP callable. When the

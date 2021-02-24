@@ -1,6 +1,7 @@
 <?php 
         
 return [
+    // Text
     'text_dashboard'       => 'Dashboard',
     'text_messages'        => 'Messages',
     'text_reviews'         => 'Feedback',
@@ -13,4 +14,5 @@ return [
     'text_manage_bidders'  => 'Manage Bidders',
     'text_active_bids'     => 'Active Bids',
     'text_post_project'    => 'Post a Project',
+'list' => []
 ];

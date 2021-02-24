@@ -109,7 +109,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $appTimezone = 'America/Chicago';
+	public $appTimezone = 'UTC';
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -446,12 +446,4 @@ class App extends BaseConfig
 	 * @var boolean
 	 */
 	public $CSPEnabled = false;
-
-	/*
-	 * --------------------------------------------------------------------------
-	 * Content Security Policy
-	 * --------------------------------------------------------------------------
-	 *
-	*/
-	public $templateEngine = '';
 }

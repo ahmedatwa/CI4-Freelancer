@@ -1,16 +1,22 @@
-<?php namespace Catalog\Models\Extension\Job;
+<?php
 
-class JobModel extends \CodeIgniter\Model
+namespace Catalog\Models\Extension\Job;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class JobModel extends Model
 {
-    protected $table          = 'job';
-    protected $primaryKey     = 'job_id';
-    protected $returnType     = 'array';
-    protected $useTimestamps  = true;
+    protected $table         = 'job';
+    protected $primaryKey    = 'job_id';
+    protected $returnType    = 'array';
     // should use for keep data record create timestamp
     protected $allowedFields = ['status'];
-
-    protected $createdField = 'date_added';
-    protected $updatedField = 'date_modified';
+    // should use for keep data record create timestamp
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'int';
+    protected $createdField  = 'date_added';
+    protected $updatedField  = 'date_modified';
 
     public function getJobs(array $data = [])
     {
@@ -75,15 +81,14 @@ class JobModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table($this->table);
         $job_data = [
-            'sort_order' => $data['sort_order'] ?? 0,
-            'status'     => $data['status'] ?? 1,
-            'type'       => $data['type'],
-            'salary'     => $data['salary'] ?? 0,
-            'employer_id'=> $data['customer_id'],
+            'sort_order'    => $data['sort_order'] ?? 0,
+            'status'        => $data['status'] ?? 1,
+            'type'          => $data['type'],
+            'salary'        => $data['salary'] ?? 0,
+            'employer_id'   => $data['customer_id'],
+            'date_added'    => Time::now()->getTimestamp(),
+            'date_modified' => Time::now()->getTimestamp()
         ];
-
-        $builder->set('date_added', 'NOW()', false);
-        $builder->set('date_modified', 'NOW()', false);
         $builder->insert($job_data);
         // Get Last Inserted ID
         $jobID = $this->db->insertID();
@@ -118,15 +123,13 @@ class JobModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table($this->table);
         $job_data = [
-            'sort_order' => $data['sort_order'],
-            'status'     => $data['status'],
-            'type'       => $data['type'],
-            'salary'     => $data['salary'],
-            'employer_id'=> $data['employer_id'],
-
+            'sort_order'    => $data['sort_order'],
+            'status'        => $data['status'],
+            'type'          => $data['type'],
+            'salary'        => $data['salary'],
+            'employer_id'   => $data['employer_id'],
+            'date_modified' => Time::now()->getTimestamp()
         ];
-        
-        $builder->set('date_modified', 'NOW()', false);
         $builder->where('job_id', $job_id);
         $builder->update($job_data);
 
@@ -151,7 +154,7 @@ class JobModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table($this->table);
         $builder->delete(['job_id' => $job_id]);
-
+        // Job Description Table
         $builder_description = $this->db->table('job_description');
         $builder_description->delete(['job_id' => $job_id]);
     }
@@ -206,12 +209,12 @@ class JobModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table('job_applicants');
         $applicant_data = [
-        'customer_id' => $data['customer_id'],
-        'job_id'      => $data['job_id'],
-        'download_id' => $data['download_id'],
-        'status'      => 1
-    ];
-        $builder->set('date_added', 'NOW()', false);
+            'customer_id' => $data['customer_id'],
+            'job_id'      => $data['job_id'],
+            'download_id' => $data['download_id'],
+            'status'      => 1,
+            'date_added'  => Time::now()->getTimestamp()
+        ];
         $builder->insert($applicant_data);
     }
 

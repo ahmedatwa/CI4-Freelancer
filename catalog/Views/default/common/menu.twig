@@ -1,0 +1,32 @@
+<div class="clearfix"></div>
+<nav class="navbar navbar-expand navbar-light bg-white shadow-sm border-bottom p-0" id="navbar-header-category">
+	<div class="navbar-collapse">
+		<ul class="navbar-nav mx-auto">
+			{% for category in categories %}
+			{% if category.children %}
+			<li class="nav-item dropdown megamenu-li" id="cats-navbar-dropdown">
+				<a class="nav-link dropdown-toggle" href="{{ category.href }}" id="dropdown{{ category.category_id }}"
+					aria-haspopup="true" aria-expanded="false">{{ category.name }}</a>
+				<div class="dropdown-menu megamenu rounded-0" aria-labelledby="dropdown{{ category.category_id }}"
+					id="cats-navbar-dropdown">
+					<div class="row">
+						{% for children in category.children|batch(category.children|length / 4|round(1, 'ceil')) %}
+						<ul class="col list-unstyled">
+							{% for child in children %}
+							<li class="ml-4"><a class="dropdown-item" href="{{ child.href }}">{{ child.name }}</a></li>
+							{% endfor %}
+						</ul>
+						{% endfor %}
+						<!-- <div class="col m-auto"><i class="<?php //echo $category['ico']; ?> fa-10x"></i></div> -->
+					</div>
+				</div>
+			</li>
+			{% else %}
+			<li class="nav-item d-sm-none d-md-block">
+				<a class="nav-link" href="{{ category.href }}">{{ category.name }}</a>
+			</li>
+			{% endif %}
+			{% endfor %}
+		</ul>
+	</div>
+</nav>

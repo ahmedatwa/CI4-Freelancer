@@ -1,0 +1,232 @@
+<!doctype html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="{{ lang }}" direction="{{ direction }}">
+<head>
+  <title>{{ title }}</title>
+  <base href="{{ base }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="{{ csrf_token() }}" content="{{ csrf_hash() }}">
+  <meta name="google-signin-client_id" content="135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com">
+  <!-- CSS -->
+  <link rel="stylesheet" href="catalog/default/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="catalog/default/stylesheet/stylesheet.min.css">
+  <link rel="stylesheet" href="catalog/default/vendor/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="catalog/default/javascript/jquery-ui/jquery-ui.css">
+  <!-- Animate -->
+  <link href="catalog/default/vendor/animate/animate.min.css" rel="stylesheet" type="text/css">
+  <!-- Select2 -->
+  <link href="catalog/default/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+  <link href="catalog/default/vendor/select2/css/select2-bootstrap4.min.css" rel="stylesheet" type="text/css">
+  <!-- Color Scheme -->
+  <link rel="stylesheet" href="catalog/default/stylesheet/colors/{{ defaut_color_scheme }}">
+  {% for style in styles %}
+    <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+  {% endfor %}
+  <!--[if IE]><link rel="shortcut icon" href="favicon.ico"><![endif]-->
+  <link rel="icon" href="favicon.ico">
+  <!-- Scripts -->
+  <script src="catalog/default/javascript/jquery-3.5.1.min.js"></script>
+  <script src="catalog/default/javascript/jquery-ui/jquery-ui.js"></script>
+  <script src="catalog/default/javascript/moment.js"></script>
+  <script src="catalog/default/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="catalog/default/vendor/bootstrap-slider/js/bootstrap-slider.js"></script> 
+  <script src="catalog/default/vendor/slick/slick.min.js"></script>
+  <script src="catalog/default/javascript/magnific-popup.min.js"></script>
+  <!-- Notify JS -->
+  <script src="catalog/default/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <script src="catalog/default/javascript/jquery.counterup.min.js"></script>
+  <script src="catalog/default/vendor/select2/js/select2.min.js"></script> 
+  <script src="catalog/default/vendor/bootbox/bootbox.min.js"></script> 
+  <!-- Moment -->
+  <script src="catalog/default/javascript/moment.js"></script>
+  <!-- Pusher -->
+  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+  <script src="catalog/default/javascript/common.js"></script>
+  {% for script in scripts %}
+    <script src="{{ script }}" type="text/javascript"></script>
+  {% endfor %}
+</head>
+<body class="grey">
+{% if global_alert %}
+  <div class="alert alert-warning text-center border rounded-0" role="alert"><i class="fas fa-exclamation-circle"></i> {{ global_alert }}</div>
+{% endif %}
+  <div id="wrapper">
+    <b class="screen-overlay"></b>
+ <nav class="navbar navbar-expand navbar-light bg-white d-lg-none px-2 my-2">
+  <!-- Mobile Menu Trigger -->
+    <button data-trigger="#navbar_main" class="d-lg-none btn btn-light bg-white border border-white ml-0" type="button"><i class="fas fa-bars"></i></button>
+    <!-- Logo -->
+    <a class="navbar-brand pt-0 ml-2" href="{{ home }}">
+      <img src="{{ logo }}" alt="{{ config_name }}" class="d-inline-block align-top" loading="lazy">
+    </a>
+    <!-- ./Logo -->
+    <ul class="navbar-nav ml-auto" id="nav-user-main">
+      {% if not logged %}
+        <li class="nav-item"><a class="nav-link" href="{{ login }}">{{ text_login }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ register }}">{{ text_register }}</a></li>
+      {% else %}
+       <ul class="navbar-nav" id="notifications">
+        <li class="nav-item my-auto">
+          <div class="dropdown" id="notifications-dropdown">
+           <a class="dropdown-toggle" href="#" role="button" id="header-notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="icon-feather-bell fa-lg text-dark" id="notifications-count"></i>
+          </a>
+          <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-notifications">
+            <div class="d-flex w-100 justify-content-between">
+              <h4 class="mb-1">Notifications</h4>
+              <small><button type="button" id="button-mark-read" class="btn btn-sm float-right rounded-pill mark-as-read" title="Mark all as read" data-placement="left" data-toggle="tooltip">
+              <i class="icon-feather-check-square"></i>
+            </button></small>
+            </div>
+            <ul id="notifications-list" class="text-left list-group list-group-flush"></ul>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item mx-3 my-auto">
+        <div class="dropdown" id="notifications-dropdown">
+          <a class="dropdown-toggle" href="#" role="button" id="header-messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="icon-feather-mail fa-lg text-dark" id="message-count"></i>
+          </a>
+          <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-messages">
+            <div class="d-flex w-100 justify-content-between">
+              <h4 class="mb-1">Messages</h4>
+              <!-- <small><a role="button" href="<?php //echo $all_messages }}" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
+              <i class="far fa-eye"></i>
+              </a></small> -->
+            </div>
+            <ul id="message-list" class="text-left list-group list-group-flush"></ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <img src="{{ image }}" alt="{{ username }}" class="rounded-circle" width="42px" height="42px" loading="lazy"> {{ username }}</a>
+      <div class="row justify-content-md-center">
+        <div class="dropdown-menu multi-column animate slideIn" aria-labelledby="headerLoginDropdown">
+          <div class="multi-column-dropdown col-6 border-right">
+            <h4>{{ text_finance }}</h4>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="javascript:void(0)">{{ text_balances }} <span id="customer-balance" class="badge badge-info"></span></a>
+            <a class="dropdown-item" href="{{ deposit }}"> {{ text_deposite_funds }}</a>
+            <a class="dropdown-item" href="{{ withdraw }}"> {{ text_withdraw_funds }}</a>
+          </div>
+          <div class="multi-column-dropdown col-6">
+            <h4>{{ text_account }}</h4>
+            <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ dashboard }}"> {{ text_dashboard }}</a>
+                <a class="dropdown-item" href="{{ setting }}"> {{ text_setting }}</a>
+                <a class="dropdown-item" href="{{ account_project }}"> {{ text_my_projects }}</a>
+                <a class="dropdown-item" href="{{ profile }}"> {{ text_profile }}</a>
+                <a class="dropdown-item" href="{{ logout }}" id="button-logout"> {{ text_logout }}</a>
+          </div>
+        </div>
+      </div>
+    </li>
+  {% endif %}
+  </ul>
+</nav>
+<!-- Main Nav -->
+ <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-light p-sm-0 bg-white border-bottom">
+  <div class="offcanvas-header p-2">  
+    <button type="button" class="close btn-close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h5 class=""> <a role="button" href="{{ add_project }}" class="add-project button ripple-effect rounded">{{ text_add_project }}</a>
+</h5>
+  </div>
+<!-- Logo -->
+<a class="navbar-brand pt-0 d-none d-lg-block ml-3" href="{{ home }}">
+ <img src="{{ logo }}" alt="{{ config_name }}" class="d-inline-block align-top" loading="lazy"></a>
+ <!-- Logo End -->
+ <ul class="navbar-nav p-md-3">
+ {% for information in informations %} 
+   <li class="nav-item"><a class="nav-link" href="{{ information.href }}">{{ information.title }}</a></li>
+ {% endfor %}
+ <li class="nav-item"><a class="nav-link" href="{{ blog }}"> {{ text_blog }}</a></li>
+ <li class="nav-item"><a class="nav-link" href="{{ local_jobs }}"> {{ text_job }}</a></li>
+<li><a class="nav-link" href="{{ projects }}">{{ text_projects }}</a></li>
+{% if logged %}
+<ul class="list-unstyled d-lg-none mt-3">
+  <h3>freelancer</h3>
+   <div class="dropdown-divider"></div>
+  <li class="ml-4"><a class="nav-link" href="{{ dashboard }}"><i class="fas fa-angle-right"></i> {{ text_dashboard }}</a></li>
+  <li class="ml-4"><a class="nav-link" href="{{ my_projects }}"><i class="fas fa-angle-right"></i> {{ text_my_projects }}</a></li>
+  <li class="ml-4"><a class="nav-link" href="{{ messages }}"><i class="fas fa-angle-right"></i> {{ text_messages }}</a></li>
+  <li class="ml-4"><a class="nav-link" href="{{ reviews }}"><i class="fas fa-angle-right"></i> {{ text_reviews }}</a></li>
+</ul>
+{% endif %}
+</ul>
+<ul class="navbar-nav ml-auto mr-3" id="nav-user-main">
+    {% if not logged %}
+      <li class="nav-item d-none d-lg-block"><a id="button-glogin" class="nav-link" href="{{ login }}">{{ text_login }} </a></li>
+      <li class="nav-item d-none d-lg-block"><a id="" class="nav-link" href="{{ register }}"> {{ text_register }} </a></li>
+    {% else %}
+      <!-- Messages -->
+      <ul class="navbar-nav" id="notifications">
+        <li class="nav-item d-none d-lg-block my-auto">
+          <div class="dropdown" id="notifications-dropdown">
+           <a class="dropdown-toggle" href="#" role="button" id="header-notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="icon-feather-bell fa-lg text-dark" id="notifications-count"></i>
+          </a>
+          <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-notifications">
+            <div class="d-flex w-100 justify-content-between">
+              <h4 class="mb-1">Notifications</h4>
+              <small><button type="button" id="button-mark-read" class="btn btn-sm float-right rounded-pill mark-as-read" title="Mark all as read" data-placement="left" data-toggle="tooltip">
+              <i class="icon-feather-check-square"></i>
+            </button></small>
+            </div>
+            <ul id="notifications-list" class="text-left list-group list-group-flush"></ul>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item mx-3 d-none d-lg-block my-auto">
+        <div class="dropdown" id="notifications-dropdown">
+          <a class="dropdown-toggle" href="#" role="button" id="header-messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="icon-feather-mail fa-lg text-dark" id="message-count"></i>
+          </a>
+          <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-messages">
+            <div class="d-flex w-100 justify-content-between">
+              <h4 class="mb-1">Messages</h4>
+              <!-- <small><a role="button" href="<?php //echo $all_messages }}" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
+              <i class="far fa-eye"></i>
+              </a></small> -->
+            </div>
+            <ul id="message-list" class="text-left list-group list-group-flush"></ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <a class="nav-link dropdown-toggle" href="#" id="headerLoginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="{{ image }}" alt="{{ username }}" class="rounded-circle" width="42px" height="42px" loading="lazy"> @{{ username }}
+          </a>
+          <div class="row justify-content-md-center">
+            <div class="dropdown-menu multi-column  animate slideIn" aria-labelledby="headerLoginDropdown">
+              <div class="multi-column-dropdown col-6">
+                <h4>{{ text_finance }}</h4>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0)">{{ text_balances }} <span id="customer-balance" class="badge badge-info"></span></a>
+                <a class="dropdown-item" href="{{ deposit }}"> {{ text_deposite_funds }}</a>
+                <a class="dropdown-item" href="{{ withdraw }}"> {{ text_withdraw_funds }}</a>
+              </div>
+              <div class="multi-column-dropdown col-6 border-left">
+                <h4>{{ text_account }}</h4>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ dashboard }}"> {{ text_dashboard }}</a>
+                <a class="dropdown-item" href="{{ setting }}"> {{ text_setting }}</a>
+                <a class="dropdown-item" href="{{ account_project }}"> {{ text_my_projects }}</a>
+                <a class="dropdown-item" href="{{ profile }}"> {{ text_profile }}</a>
+                <a class="dropdown-item" href="{{ logout }}" id="button-logout"> {{ text_logout }}</a>
+              </div>
+            </div>
+          </div>
+        </li>
+      {% endif %}
+      <li class="mt-lg-2 ml-4 d-none d-lg-block"> <a role="button" href="{{ add_project }}" class="add-project button ripple-effect rounded">{{ text_add_project }}</a></li>
+    </ul>  
+  </nav>

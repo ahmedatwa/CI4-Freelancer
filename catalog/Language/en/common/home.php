@@ -1,5 +1,8 @@
 <?php 
         
 return [
-    'text_title'           => 'Home',
+	'list' => [
+		// text
+ 	   'text_title' => 'Home',
+    ]
 ];

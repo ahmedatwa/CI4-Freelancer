@@ -1,0 +1,373 @@
+{{ header }} {{ menu }}
+<div class="jumbotron">
+	<div class="container-fluid">
+		<h2 class="display-5">{{ heading_title }}</h2>
+		<p class="lead">{{ lead }}</p>
+		<div class="text-right mt-4 w-100">
+			<a href="{{ add_project }}"
+				class="button dark button-sliding-icon ripple-effect rounded">{{ button_hire }}</a>
+			{% if not logged %}
+			<a href="{{ login }}" class="button button-sliding-icon ripple-effect rounded ml-2">{{ button_work }}</a>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<nav id="breadcrumbs">
+				<ul>
+					{% for breadcrumb in breadcrumbs %}
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+					{% endfor %}
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<div class="section mb-5 bg-white margin-top-30">
+		<div class="row">
+			<div class="col">
+				<div class="sidebar-container">
+					<p><i class="fas fa-filter"></i> {{ text_sidebar }}</p>
+					<div class="dropdown-divider"></div>
+					<div class="sidebar-widget">
+						<h3>{{ text_type }}</h3>
+						{% for type in types %}
+						{% if type.value in filter_type %}
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="{{ type.value }}"
+								name="filter_type[]" checked>
+							<label class="form-check-label" for="defaultCheck1">
+								{{ type.text }}
+							</label>
+						</div>
+						{% else %}
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="{{ type.value }}"
+								name="filter_type[]">
+							<label class="form-check-label" for="defaultCheck1">
+								{{ type.text }}
+							</label>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+					<div class="dropdown-divider"></div>
+					<!-- Budget -->
+					<div class="sidebar-widget">
+						<h3>{{ text_budget }}</h3>
+						<div class="form-row">
+							<input class="range-slider" type="text" value="" data-provide="slider"
+								data-slider-currency="$" data-slider-min="5" data-slider-max="2500" data-slider-step="5"
+								data-slider-value="[{{ filter_budget|replace({"_":","}) }}]" name="filter_budget" />
+						</div>
+					</div>
+					<div class="dropdown-divider"></div>
+					<!-- Tags -->
+					<div class="sidebar-widget">
+						<h3>{{ text_skills }}</h3>
+						<div class="keywords-container margin-top-20">
+							<div class="input-group keyword-input-container">
+								<select class="form-control" name="filter_category[]" data-width="100%"
+									multiple="multiple">
+									{% for category in categories %}
+									{% if category.category_id in filter_skills %}
+									<option value="{{ category.category_id }}" selected>{{ category.name }}</option>
+									{% else %}
+									<option value="{{ category.category_id }}">{{ category.name }}</option>
+									{% endif %}
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="keywords-list mt-4"></div>
+					<div class="dropdown-divider"></div>
+					<div class="sidebar-widget">
+						<h3>{{ text_state }}</h3>
+						{% for state in states %}
+						{% if state.value == filter_state %}
+						<div class="form-check">
+							<input class="form-check-input" type="radio" value="{{ state.value }}" name="filter_state[]"
+								checked>
+							<label class="form-check-label" for="exampleRadios1">
+								{{ state.text }}
+							</label>
+						</div>
+						{% else %}
+						<div class="form-check">
+							<input class="form-check-input" type="radio" value="{{ state.value }}"
+								name="filter_state[]">
+							<label class="form-check-label" for="exampleRadios1">
+								{{ state.text }}
+							</label>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-9 mb-4">
+				<!-- Tasks Container -->
+				<div class="tasks-list-container compact-list shadow-sm mb-5 bg-white rounded border">
+					<div class="notify-box">
+						<h3 class="float-left mx-4 mt-2">{{ text_found }}</h3>
+						<div class=" col-md-3 float-right">
+							<div class="form-group">
+								<select class="custom-select" onchange="location = this.value;">
+									{% for sort in sorts %}
+									{% if sort.value == sort_by %}
+									<option value="{{ sort.href }}" selected>{{ sort.text }}</option>
+									{% else %}
+									<option value="{{ sort.href }}">{{ sort.text }}</option>
+									{% endif %}
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<!-- Task -->
+					{% if projects %}
+					{% for project in projects %}
+					<a href="{{ project.href }}" class="task-listing">
+						<div class="task-listing-details">
+							<div class="task-listing-description">
+								<h3 class="task-listing-title">{{ project.name }}</h3>
+								<ul class="task-icons">
+									<li><i class="icon-material-outline-access-time"></i>
+										<span id="project-countdown-timer{{ project.project_id }}" data-final="{{ project.final_date }}"></span>
+									</li>
+								</ul>
+								<p class="col task-listing-text text-wrap">{{ project.description }}</p>
+								{% if project.meta_keyword %}
+								<div class="task-tags">
+									{% for meta_keyword in project.meta_keyword %}
+									<span>{{ meta_keyword }}</span>
+									{% endfor %}
+								</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="task-listing-bid">
+							<div class="task-listing-bid-inner">
+								<div class="task-offers">
+									<strong>{{ project.budget }}</strong>
+									<span>{{ project.type }}</span>
+								</div>
+								<span class="button button-sliding-icon ripple-effect">{{ button_bid_now }} <i
+										class="fas fa-gavel"></i></span>
+							</div>
+						</div>
+					</a>
+					{% endfor %}
+					<!-- ./Task END-->
+					{% else %}
+					<div class="col-12 text-center p-4">
+						<p class="p-4">No Projects Found !</p>
+						<a role="button" href="{{ add_project }}" class="btn btn-danger btn-lg">Add Project</a>
+					</div>
+					{% endif %}
+				</div>
+				<div class="clearfix"></div>
+				<div class="col-12">
+					{{ pagination }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{# <!---- content-wrapper ----> #}
+<link href="catalog/default/vendor/select2/customSelectionAdapter/css/select2.customSelectionAdapter.min.css">
+<script src="catalog/default/vendor/select2/customSelectionAdapter/js/select2.customSelectionAdapter.min.js"></script>
+<script type="text/javascript">
+	var uri = document.URL;
+
+	// Skills
+	var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
+	$('select[name^=\'filter_category\']').select2({
+		ajax: {
+			url: "project/category/autocomplete",
+			dataType: 'json',
+			delay: 250,
+			data: function (params) {
+				return {
+					filter_category: params.term,
+				};
+			},
+			processResults: function (data, params) {
+				var results = $.map(data, function (item) {
+					item.id = item.category_id;
+					item.text = item.name;
+					return item;
+				});
+				return {
+					results: results,
+				};
+			},
+			cache: true
+		},
+		theme: 'bootstrap4',
+		placeholder: '{{ text_select }}',
+		allowClear: false,
+		minimumResultsForSearch: 5,
+		selectionAdapter: CustomSelectionAdapter,
+		selectionContainer: $('.keywords-list'),
+
+	}).on("select2:select", function (e) {
+		var select_val = $(e.currentTarget).val();
+
+		$.ajax({
+			url: 'project/project/filter?url=' + encodeURIComponent(uri),
+			headers: {
+				"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+				"X-Requested-With": "XMLHttpRequest"
+			},
+			dataType: 'json',
+			method: 'post',
+			data: {
+				skills: select_val.join('_')
+			},
+			beforeSend: function () {
+				$('#overlay').fadeIn().delay(2000);
+			},
+			complete: function () {
+				$('#overlay').fadeOut();
+			},
+			success: function (json) {
+				location = json['uri'];
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+
+	}).on('select2:unselect', function (e) {
+		var select_val = $(e.currentTarget).val();
+
+		$.ajax({
+			url: 'project/project/filter?url=' + encodeURIComponent(uri),
+			headers: {
+				"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+				"X-Requested-With": "XMLHttpRequest"
+			},
+			dataType: 'json',
+			method: 'post',
+			data: {
+				clear: 'skills'
+			},
+			beforeSend: function () {
+				$('#overlay').fadeIn().delay(2000);
+			},
+			complete: function () {
+				$('#overlay').fadeOut();
+			},
+			success: function (json) {
+				location = json['uri'];
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+
+	// <!-- // Filters -->
+	$('input[name^=\'filter_state\']').on('click', function () {
+
+		var filter = [];
+
+		$('input[name^=\'filter_state\']:checked').each(function (element) {
+			filter.push(this.value);
+		});
+
+		$.ajax({
+			url: 'project/project/filter?url=' + encodeURIComponent(uri),
+			headers: {
+				"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+				"X-Requested-With": "XMLHttpRequest"
+			},
+			dataType: 'json',
+			method: 'post',
+			data: {
+				state: filter.join('_')
+			},
+			beforeSend: function () {
+				$('#overlay').fadeIn().delay(2000);
+			},
+			complete: function () {
+				$('#overlay').fadeOut();
+			},
+			success: function (json) {
+				location = json['uri'];
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+
+	$('input[name^=\'filter_type\']').on('click', function () {
+
+		var filter = [];
+
+		$('input[name^=\'filter_type\']:checked').each(function (element) {
+			filter.push(this.value);
+		});
+
+		$.ajax({
+			url: 'project/project/filter?url=' + encodeURIComponent(uri),
+			headers: {
+				"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+				"X-Requested-With": "XMLHttpRequest"
+			},
+			dataType: 'json',
+			method: 'post',
+			data: {
+				type: filter.join('_')
+			},
+			beforeSend: function () {
+				$('#overlay').fadeIn().delay(2000);
+			},
+			complete: function () {
+				$('#overlay').fadeOut();
+			},
+			success: function (json) {
+				location = json['uri'];
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		})
+	});
+
+	// <!-- // Filter Budget -->
+	var mySlider = $("input[name=\'filter_budget\']").slider();
+	mySlider.on('slideStop', function (e) {
+		var filter = e.value;
+		$.ajax({
+			url: 'project/project/filter?url=' + encodeURIComponent(uri),
+			headers: {
+				"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+				"X-Requested-With": "XMLHttpRequest"
+			},
+			dataType: 'json',
+			method: 'post',
+			data: {
+				budget: filter.join('_')
+			},
+			beforeSend: function () {
+				$('#overlay').fadeIn().delay(2000);
+			},
+			complete: function () {
+				$('#overlay').fadeOut();
+			},
+			success: function (json) {
+				location = json['uri'];
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+</script>
+{{ footer }}

@@ -1,10 +1,13 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
+namespace Catalog\Controllers\Account;
+
+use Catalog\Controllers\BaseController;
 use \Catalog\Models\Catalog\ProjectModel;
 use \Catalog\Models\Account\ReviewModel;
 use \Catalog\Models\Account\CustomerModel;
 
-class Review extends \Catalog\Controllers\BaseController
+class Review extends BaseController
 {
     public function add()
     {
@@ -157,25 +160,15 @@ class Review extends \Catalog\Controllers\BaseController
                 'employer_id'          => $result['employer_id'],
                 'name'                 => $result['name'],
                 'status'               => $result['status'],
-                'employer'             => $employer['firstname'] . ' ' . $employer['lastname'],
-                'freelancer'           => $freelancer['firstname'] . ' ' . $freelancer['lastname'],
+                'employer'             => isset($employer['username']) ? $employer['username'] : '',
+                'freelancer'           => isset($freelancer['username']) ? $freelancer['username'] : '',
                 'freelancer_review_id' => $projectModel->where('project_id', $result['project_id'])->findColumn('freelancer_review_id')[0] ,
                 'employer_review_id'   => $projectModel->where('project_id', $result['project_id'])->findColumn('employer_review_id')[0] ,
             ];
         }
 
-
-        $data['heading_title']     = lang('account/review.heading_title');
-        $data['column_name']       = lang('account/review.column_name');
-        $data['column_employer']   = lang('account/review.column_employer');
-        $data['column_status']     = lang('account/review.column_status');
-        $data['column_action']     = lang('account/review.column_action');
-        $data['column_freelancer'] = lang('account/review.column_freelancer');
-        $data['button_edit']       = lang($this->locale . '.button_edit');
-        $data['text_no_results']   = lang($this->locale . '.text_no_results');
-        $data['column_feedback']   = lang('account/review.column_feedback');
-
         $data['customer_id'] = $customer_id;
+        $data['langData'] = lang('account/review.list');
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 

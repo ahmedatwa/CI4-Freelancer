@@ -1,6 +1,8 @@
 <?php
 return [
-'heading_title'       => 'Browse all Categories',
-'text_by' => 'Browse by Category',
-
+	// Heading
+	'heading_title' => 'Browse all Categories',
+	'list' => [
+		'text_by'       => 'Browse by Category',
+	]
 ];

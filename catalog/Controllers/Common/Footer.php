@@ -1,16 +1,19 @@
-<?php namespace Catalog\Controllers\Common;
+<?php 
 
-use \Catalog\Models\Catalog\CategoryModel;
-use \Catalog\Models\Catalog\Informations;
-use \Catalog\Models\Tool\Online;
+namespace Catalog\Controllers\Common;
 
-class Footer extends \Catalog\Controllers\BaseController
+use \Catalog\Controllers\BaseController;
+use Catalog\Models\Catalog\CategoryModel;
+use Catalog\Models\Catalog\InformationModel;
+use Catalog\Models\Tool\OnlineModel;
+
+class Footer extends BaseController
 {
     public function index()
     {
         $data['informations'] = [];
         
-        $informations = new Informations();
+        $informations = new InformationModel();
         $seo_url = service('seo_url');
 
         foreach ($informations->getInformations() as $result) {
@@ -45,24 +48,7 @@ class Footer extends \Catalog\Controllers\BaseController
          ];
         }
 
-        $data['text_terms']       = lang('common/footer.text_terms');
-        $data['text_freelancers'] = lang('common/footer.text_freelancers');
-        $data['text_freelancer']  = lang('common/footer.text_freelancer');
-        $data['text_categories']  = lang('common/footer.text_categories');
-        $data['text_projects']    = lang('common/footer.text_projects');
-        $data['text_freelancers'] = lang('common/footer.text_freelancers');
-        $data['text_contact']     = lang('common/footer.text_contact');
-        $data['text_account']     = lang('common/footer.text_account');
-        $data['text_login']       = lang('common/footer.text_login');
-        $data['text_setting']     = lang('common/footer.text_setting');
-        $data['text_register']    = lang('common/footer.text_register');
-        
-        
-        $data['text_footer']      = lang('common/footer.text_footer');
-        $data['text_newsletter']  = lang('common/footer.text_newsletter');
-        $data['help_newsletter']  = lang('common/footer.help_newsletter');
-        $data['entry_email']      = lang('common/footer.entry_email');
-
+        $data['text_footer'] = sprintf(lang('common/footer.list.text_footer'), $this->registry->get('config_name'));
         // Social
         $data['facebook']      = $this->registry->get('config_facebook');
         $data['twitter']       = $this->registry->get('config_twitter');
@@ -96,7 +82,7 @@ class Footer extends \Catalog\Controllers\BaseController
         }
 
         if ($this->registry->get('config_customer_online')) {
-            $online_model = new Online();
+            $online_model = new OnlineModel();
             $agent = $this->request->getUserAgent();
 
             if ($this->request->getIPAddress()) {
@@ -137,6 +123,8 @@ class Footer extends \Catalog\Controllers\BaseController
 
         $data['currency'] = view_cell('\Catalog\Controllers\Common\Currency::index');
         $data['language'] = view_cell('\Catalog\Controllers\Common\Language::index');
+
+        $data['langData'] = lang('common/footer.list');
 
         return view('common/footer', $data);
     }

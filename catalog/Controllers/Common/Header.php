@@ -1,15 +1,18 @@
-<?php namespace Catalog\Controllers\Common;
+<?php 
 
-use \Catalog\Models\Account\CustomerModel;
-use \Catalog\Models\Catalog\Informations;
-use \Catalog\Models\Catalog\CategoryModel;
-use \Catalog\Models\Account\MessageModel;
-use \Catalog\Models\Freelancer\BalanceModel;
+namespace Catalog\Controllers\Common;
 
-class Header extends \Catalog\Controllers\BaseController
+use \Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Catalog\InformationModel;
+use Catalog\Models\Catalog\CategoryModel;
+use Catalog\Models\Account\MessageModel;
+use Catalog\Models\Freelancer\BalanceModel;
+
+class Header extends BaseController
 {
     public function index()
-    {
+    {        
         $data['title']       = $this->template->getTitle();
         $data['description'] = $this->template->getDescription();
         $data['keywords']    = $this->template->getKeywords();
@@ -21,16 +24,6 @@ class Header extends \Catalog\Controllers\BaseController
         
         $data['base'] = slash_item('baseURL');
 
-        $data['text_home']        = lang('common/header.text_home');
-        $data['text_logout']      = lang('common/header.text_logout');
-        $data['text_login']       = lang('common/header.text_login');
-        $data['text_register']    = lang('common/header.text_register');
-        $data['text_projects']    = lang('common/header.text_projects');
-        $data['text_dashboard']   = lang('common/header.text_dashboard');
-        $data['text_setting']     = lang('common/header.text_setting');
-        $data['text_profile']     = lang('common/header.text_profile');
-        $data['text_add_project'] = lang('common/header.text_add_project');
-
         $balanceModel = new BalanceModel();
 
         if ($this->customer->getCustomerID()) {
@@ -39,14 +32,8 @@ class Header extends \Catalog\Controllers\BaseController
             $customer_id = 0;
         }
 
-        $data['text_finance']              = lang('common/header.text_finance');
-        $data['text_account']              = lang('common/header.text_account');
-        $data['text_balances']             = lang('common/header.text_balances');
-        $data['customer_balance']          = base_url('common/header/getCustomerBalace');
-        $data['text_deposite_funds']       = lang('common/header.text_deposite_funds');
-        $data['text_withdraw_funds']       = lang('common/header.text_withdraw_funds');
-        $data['text_transactions_history'] = lang('common/header.text_transactions_history');
-
+        $data['customer_balance'] = base_url('common/header/getCustomerBalace');
+        
         $data['config_name'] = $this->registry->get('config_name');
 
         if (is_file(DIR_IMAGE . $this->registry->get('config_logo'))) {
@@ -80,7 +67,7 @@ class Header extends \Catalog\Controllers\BaseController
 
         $data['informations'] = [];
         
-        $informations = new Informations();
+        $informations = new InformationModel();
         $seo_url = service('seo_url');
 
         foreach ($informations->getInformations() as $result) {
@@ -96,24 +83,17 @@ class Header extends \Catalog\Controllers\BaseController
 
         // Blog
         if ($this->registry->get('blog_extension_status')) {
-            $data['text_blog'] = lang('common/header.text_blog');
             $data['blog'] = route_to('blog') ? route_to('blog') : base_url('extension/blog/blog');
         } else {
-            $data['text_blog'] = '';
             $data['blog'] = '';
         }
 
         // Local Jobs
         if ($this->registry->get('job_extension_status')) {
-            $data['text_job'] = lang('common/header.text_job');
             $data['local_jobs'] = route_to('local_jobs') ? route_to('local_jobs') : base_url('extension/job/job');
         } else {
-            $data['text_job'] = '';
             $data['local_jobs'] = '';
         }
-        // customer Menu
-        $data['text_dashboard']   = lang('account/menu.text_dashboard');
-        $data['text_my_projects'] = lang('account/menu.text_my_projects');
 
         $data['dashoard']         = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
         $data['account_project']  = route_to('account_project') ? route_to('account_project') : base_url('account/project');
@@ -144,17 +124,13 @@ class Header extends \Catalog\Controllers\BaseController
 
         $data['defaut_color_scheme'] = $this->registry->get('theme_default_color') ?? 'red.css';
         $data['all_messages']        = route_to('account_project');
-
-        // Logged Menu
-        $data['text_dashboard']   = lang('account/menu.text_dashboard');
-        $data['text_my_projects'] = lang('account/menu.text_my_projects');
-        $data['text_messages']    = lang('account/menu.text_messages');
-        $data['text_reviews']     = lang('account/menu.text_reviews');
         
         $data['dashboard']        = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
         $data['my_projects']      = route_to('account_project') ? route_to('account_project') : base_url('account/project');
         $data['messages']         = route_to('account_message') ? route_to('account_message') : base_url('account/message');
         $data['reviews']          = route_to('account_review') ? route_to('account_review') : base_url('account/review');
+        
+        $data['langData'] = lang('common/header.list');
 
         return view('common/header', $data);
     }

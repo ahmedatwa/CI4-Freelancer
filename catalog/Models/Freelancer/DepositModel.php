@@ -1,28 +1,24 @@
-<?php namespace Catalog\Models\Freelancer;
+<?php 
 
-class DepositModel extends \CodeIgniter\Model
+namespace Catalog\Models\Freelancer;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class DepositModel extends Model
 {
-    protected $table          = 'customer_deposit';
-    protected $primaryKey     = 'balance_id';
-    protected $returnType     = 'array';
-    protected $allowedFields  = ['available', 'status', 'customer_id'];
-    protected $useTimestamps  = true;
-    protected $useSoftDeletes = false;
+    protected $table         = 'customer_deposit';
+    protected $primaryKey    = 'balance_id';
+    protected $returnType    = 'array';
+    protected $allowedFields = ['available', 'status', 'customer_id'];
     // User Activity Events
-    protected $afterInsert = ['afterInsertEvent'];
-    protected $afterUpdate = ['afterUpdateEvent'];
+    //protected $afterInsert = ['afterInsertEvent'];
+    protected $afterUpdate   = ['afterUpdateEvent'];
     // should use for keep data record create timestamp
-    protected $createdField = 'date_added';
-    protected $updatedField = 'date_modified';
-
-
-    protected function afterInsertEvent(array $data)
-    {
-        if (isset($data['data']['firstname'])) {
-            //\CodeIgniter\Events\Events::trigger('customer_activity_update', $data['id'], $name);
-        }
-        return $data;
-    }
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'int';
+    protected $createdField  = 'date_added';
+    protected $updatedField  = 'date_modified';
 
     protected function afterUpdateEvent(array $data)
     {
@@ -37,13 +33,13 @@ class DepositModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table($this->table);
         $fund_data = [
-            'customer_id' => $data['customer_id'],
-            'amount'      => $data['amount'],
-            'currency'    => $data['currency'],
-            'status'      => $data['status']
+            'customer_id'   => $data['customer_id'],
+            'amount'        => $data['amount'],
+            'currency'      => $data['currency'],
+            'status'        => $data['status'],
+            'date_added'    => Time::now()->getTimestamp(),
+            'date_modified' => Time::now()->getTimestamp()
         ];
-        $builder->set('date_added', 'NOW()', false);
-        $builder->set('date_modified', 'NOW()', false);
         $builder->set($fund_data);
         $builder->insert();
         // update balance
@@ -55,18 +51,18 @@ class DepositModel extends \CodeIgniter\Model
 
         if ($row) {
             $balance_data = [
-               'available'   => $row->available + $data['amount']
+               'available'     => $row->available + $data['amount'],
+               'date_modified' => Time::now()->getTimestamp()
             ];
             $balance_table->where('customer_id', $data['customer_id']);
-            $balance_table->set('date_modified', 'NOW()', false);
             $balance_table->update($balance_data);
         } else {
             $balance_data = [
                 'available'   => $data['amount'],
-                'customer_id' => $data['customer_id']
+                'customer_id' => $data['customer_id'],
+                'date_added'    => Time::now()->getTimestamp(),
+                'date_modified' => Time::now()->getTimestamp()
             ];
-            $balance_table->set('date_added', 'NOW()', false);
-            $balance_table->set('date_modified', 'NOW()', false);
             $balance_table->insert($balance_data);
         }
     }

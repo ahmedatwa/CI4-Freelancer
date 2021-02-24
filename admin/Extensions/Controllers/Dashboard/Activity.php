@@ -1,4 +1,6 @@
-<?php namespace Extensions\Controllers\Dashboard;
+<?php 
+
+namespace Extensions\Controllers\Dashboard;
 
 use Extensions\Models\Dashboard\CustomerActivityModel;
 use Admin\Models\Setting\SettingModel;
@@ -87,7 +89,7 @@ class Activity extends \Admin\Controllers\BaseController
         $data['heading_title'] = lang('dashboard/activity.list.heading_title');
         $data['text_no_results'] = lang('en.text_no_results');
 
-        $data['user_token'] = $this->request->getVar('user_token');
+        $data['user_token'] = $this->session->get('user_token');
   
         $data['activities'] = [];
   
@@ -97,26 +99,26 @@ class Activity extends \Admin\Controllers\BaseController
         $results = $activityModel->findAll(5);
 
         foreach ($results as $result) {
-            $username = $customerModel->where('customer_id', $result['customer_id'])->findColumn('username');
+            if ((substr($result['key'], 0, 6) == 'admin_')) {
+                $text = vsprintf(lang('dashboard/activity.list.text_activity_' . substr($result['key'], 6, strlen($result['key']))), json_decode($result['data'], true));
 
-            $text = vsprintf(lang('dashboard/activity.list.text_activity_' . $result['key']), json_decode($result['data'], true));
-
-            $find = [
-              'customer_id=',
-              'name=',
-              'project_id=',
-            ];
+                $find = [
+                    'customer_id=',
+                    'name=',
+                    'project_id=',
+                ];
   
-            $replace = [
-                base_url('index.php/customer/customer/edit?user_token=' . $this->request->getVar('user_token') . '&customer_id='),
-                $username[0],
-                base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id='),
-            ];
+                $replace = [
+                    base_url('index.php/customer/customer/edit?user_token=' . $this->session->get('user_token') . '&customer_id='),
+                    $customerModel->where('customer_id', $result['customer_id'])->findColumn('username')[0],
+                    base_url('index.php/catalog/project/edit?user_token=' . $this->session->get('user_token') . '&project_id='),
+                ];
   
-            $data['activities'][] = [
-                'comment'    => str_replace($find, $replace, $text),
-                'date_added' => date(lang('en.datetime_format'), strtotime($result['date_added']))
-            ];
+                $data['activities'][] = [
+                    'comment'    => str_replace($find, $replace, $text),
+                    'date_added' => dateFormatLong($result['date_added'])
+                ];
+            }
         }
   
         return view('Extensions\Views\template\dashboard\activity_info', $data);

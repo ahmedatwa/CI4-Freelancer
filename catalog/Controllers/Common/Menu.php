@@ -1,8 +1,11 @@
-<?php namespace Catalog\Controllers\Common;
+<?php 
 
-use \Catalog\Models\Catalog\CategoryModel;
+namespace Catalog\Controllers\Common;
 
-class Menu extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Catalog\CategoryModel;
+
+class Menu extends BaseController
 {
     public function index()
     {
@@ -44,7 +47,6 @@ class Menu extends \Catalog\Controllers\BaseController
 
         return view('common/menu', $data);
     }
-
 
     //--------------------------------------------------------------------
 }

@@ -1,16 +1,17 @@
-<?php namespace Catalog\Controllers\Module;
+<?php 
 
-use \Catalog\Models\Catalog\CategoryModel;
+namespace Catalog\Controllers\Module;
 
-class Category extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Catalog\CategoryModel;
+
+class Category extends BaseController
 {
 	public function index() {
 
-		$data['heading_title'] = lang('module/category.heading_title');
-
         $filter_data = [
-			'limit'             => 8,
-			'start'             => 0,
+			'limit' => 8,
+			'start' => 0,
         ];
         
         $data['categories'] = [];
@@ -29,6 +30,8 @@ class Category extends \Catalog\Controllers\BaseController
                 'href'  => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project/category?gid=' . $result['category_id']),
             ];
         }
+
+        $data['langData'] = lang('module/category.list');
 
 		return view('module/category', $data);
 	}

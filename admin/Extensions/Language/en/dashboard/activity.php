@@ -8,6 +8,7 @@ return [
 	// Text
 	'text_extension'                         => 'Extensions',
 	'text_edit'                              => 'Edit Dashboard Recent Activity',
+	'text_activity_customer_login'           => '<a href="customer_id=%d">%s</a> logged in.',
 	'text_activity_customer_register'        => '<a href="customer_id=%d">%s</a> registered a new account.',
 	'text_activity_edit'                     => '<a href="customer_id=%d">%s</a> updated their account details.',
 	'text_activity_password'                 => '<a href="customer_id=%d">%s</a> updated their account password.',

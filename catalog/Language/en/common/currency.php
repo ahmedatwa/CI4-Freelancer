@@ -1,6 +1,7 @@
 <?php
 return [
-// Text
-'text_currency' => 'Currency',
-
+	'list' => [
+		// Text
+		'text_currency' => 'Currency',
+    ]
 ];

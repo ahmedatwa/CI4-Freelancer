@@ -42,7 +42,7 @@ class Services extends BaseService
         if ($getShared) {
             return static::getSharedInstance('seo_url');
         }
-        return new \Catalog\Models\Design\Seo_urls;
+        return new \Catalog\Models\Design\SeoUrlModel;
     }
 
     public static function customer($getShared = true)

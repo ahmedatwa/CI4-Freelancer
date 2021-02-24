@@ -1,17 +1,23 @@
-<?php namespace Catalog\Models\Extension\Bid;
+<?php
 
-class BidModel extends \CodeIgniter\Model
+namespace Catalog\Models\Extension\Bid;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class BidModel extends Model
 {
-    protected $table          = 'project_bids';
-    protected $primaryKey     = 'bid_id';
-    protected $returnType     = 'array';
+    protected $table         = 'project_bids';
+    protected $primaryKey    = 'bid_id';
+    protected $returnType    = 'array';
     protected $allowedFields = ['project_id', 'freelancer_id', 'quote', 'delivery', 'status', 'paid'];
     // User Activity Events
-    protected $afterInsert = ['afterInsertEvent'];
+    protected $afterInsert   = ['afterInsertEvent'];
     // should use for keep data record create timestamp
     protected $useTimestamps = true;
-    protected $createdField = 'date_added';
-    protected $updatedField = 'date_modified';
+    protected $dateFormat    = 'int';
+    protected $createdField  = 'date_added';
+    protected $updatedField  = 'date_modified';
 
     protected function afterInsertEvent(array $data)
     {
@@ -91,10 +97,10 @@ class BidModel extends \CodeIgniter\Model
             'delivery'      => $data['delivery'],
             'description'   => $data['description'],
             'status'        => 1,
-            'paid'          => 0
+            'paid'          => 0,
+            'date_added'    => Time::now()->getTimestamp()
         ];
 
-        $builder->set('date_added', 'NOW()', false);
         $builder->insert($bid_data);
         $bid_id = $this->db->insertID();
         // trigger Bid Emailto Employer
@@ -108,9 +114,8 @@ class BidModel extends \CodeIgniter\Model
                 'bid_id'     => $bid_id,
                 'amount'     => $data['fee'],
                 'reason'     => 'Optional Upgrade',
+                'date_added' => Time::now()->getTimestamp()
             ];
-
-            $revenue->set('date_added', 'NOW()', false);
             $revenue->insert($revenue_data);
         }
     }
@@ -120,8 +125,8 @@ class BidModel extends \CodeIgniter\Model
         $builder = $this->db->table('project_bids');
         $builder->select('selected');
         $builder->where([
-            'freelancer_id' => $freelancer_id, 
-            'project_id' => $project_id, 
+            'freelancer_id' => $freelancer_id,
+            'project_id' => $project_id,
         ]);
         $row = $builder->get()->getRow();
         if ($row->selected != 0) {
@@ -136,8 +141,8 @@ class BidModel extends \CodeIgniter\Model
         $builder = $this->db->table('project_bids');
         $builder->select('accepted');
         $builder->where([
-            'freelancer_id' => $freelancer_id, 
-            'project_id' => $project_id, 
+            'freelancer_id' => $freelancer_id,
+            'project_id'    => $project_id,
         ]);
         $row = $builder->get()->getRow();
         if ($row->accepted != 0) {
@@ -174,7 +179,30 @@ class BidModel extends \CodeIgniter\Model
             return false;
         }
     }
+    
+    // Award Freelancer for Project
+    public function addWinner($data)
+    {
+        $builder = $this->db->table('project_bids');
+        $builder->set('selected', 1);
+        $builder->where([
+            'freelancer_id' =>  $data['freelancer_id'],
+            'project_id'    =>  $data['project_id'],
+            'bid_id'        =>  $data['bid_id'],
+            'date_modified' =>  Time::now()->getTimestamp(),
+        ]);
 
+        $builder->update();
+
+        // Update Project Status
+        $projects = $this->db->table('project');
+        $projects->where('project_id', $data['project_id']);
+        $projects->set('status_id', 6);
+        $projects->update();
+
+        // trigget new offer for freelancer
+        \CodeIgniter\Events\Events::trigger('project_offer_selected', $data);
+    }
 
     // -----------------------------------------------------------------
 }

@@ -1,8 +1,11 @@
-<?php namespace Catalog\Controllers\Project;
+<?php 
 
-use \Catalog\Models\Catalog\CategoryModel;
+namespace Catalog\Controllers\Project;
 
-class Category extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Catalog\CategoryModel;
+
+class Category extends BaseController
 {
    public function index()
     {

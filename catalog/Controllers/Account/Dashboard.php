@@ -1,10 +1,13 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
-use \Catalog\Models\Account\CustomerModel;
-use \Catalog\Models\Account\ActivityModel;
-use \Catalog\Models\Freelancer\BalanceModel;
+namespace Catalog\Controllers\Account;
 
-class Dashboard extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Account\ActivityModel;
+use Catalog\Models\Freelancer\BalanceModel;
+
+class Dashboard extends BaseController
 {
     public function index()
     {
@@ -21,7 +24,7 @@ class Dashboard extends \Catalog\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('account/dashboard.heading_title'),
+            'text' => lang('account/dashboard.list.heading_title'),
             'href' => route_to('account_dashboard'),
         ];
 
@@ -46,50 +49,46 @@ class Dashboard extends \Catalog\Controllers\BaseController
         $results = $activityModel->getActivitiesByCustomerID($customer_id);
 
         foreach ($results as $result) {
-            $info = json_decode($result['data'], true);
+            if (substr($result['key'], 0, 6) != 'admin_') {
+                $info = json_decode($result['data'], true);
 
-            if (strpos(lang('account/activity.text_activity_' . $result['key']), '/')) {
-               unset($result['key']);
-            } else {
+                $comment = vsprintf(lang('account/activity.list.text_activity_' . $result['key']), $info);
 
-            $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
+                $username  = '';
 
-            $username  = '';
+                if (isset($info['freelancer_id'])) {
+                    $username = $customerModel->where('customer_id', $info['freelancer_id'])->findColumn('username')[0];
+                } elseif (isset($info['employer_id'])) {
+                    $username = $customerModel->where('customer_id', $info['employer_id'])->findColumn('username')[0];
+                }
 
-            if (isset($info['freelancer_id'])) {
-                $username = $customerModel->where('customer_id', $info['freelancer_id'])->findColumn('username')[0];
-            } elseif (isset($info['employer_id'])) {
-                $username = $customerModel->where('customer_id', $info['employer_id'])->findColumn('username')[0];
+                $milestone_status = '';
+
+                switch (isset($info['milestone_status'])) {
+                    case 0: $milestone_status  = 'Pending'; break;
+                    case 1: $milestone_status  = 'Approved'; break;
+                    case 2: $milestone_status  = 'Paid'; break;
+                    case 3: $milestone_status  = 'Canceled'; break;
+                    default: $milestone_status = 'Pending'; break;
+                }
+
+                $find = [
+                    'url=',
+                    'freelancer_id=',
+                    'milestone_status=',
+                ];
+
+                $replace = [
+                    isset($info['url']) ? $info['url'] : '',
+                    '@' . $username,
+                    $milestone_status,
+                ];
+
+                $data['news_feeds'][] = [
+                    'comment'    => str_replace($find, $replace, $comment),
+                    'date_added' => $this->dateDifference($result['date_added'])
+                ];
             }
-
-            $milestone_status = '';
-
-            switch (isset($info['milestone_status'])) {
-            case 0: $milestone_status = 'Pending'; break;
-            case 1: $milestone_status = 'Approved'; break;
-            case 2: $milestone_status = 'Paid'; break;
-            case 3: $milestone_status = 'Canceled'; break;
-            default: $milestone_status = 'Pending'; break;
-            }
-
-            $find = [
-                'url=',
-                'freelancer_id=',
-                'milestone_status=',
-            ];
-
-            $replace = [
-                isset($info['url']) ? $info['url'] : '',
-                '@' . $username,
-                $milestone_status,
-                
-            ];
-
-            $data['news_feeds'][] = [
-                'comment'    => str_replace($find, $replace, $comment),
-                'date_added' => $this->dateDifference($result['date_added'])
-            ];
-         }
         }
 
         $data['total_views']     = $customerModel->getCustomerProfileView($this->customer->getCustomerId());
@@ -98,13 +97,11 @@ class Dashboard extends \Catalog\Controllers\BaseController
         $data['total_withdrawn'] = $this->currencyFormat($balanceModel->getWithdrawnByCustomerID($this->customer->getCustomerId()));
         $data['total_used']      = $this->currencyFormat($balanceModel->getUsedByCustomerID($this->customer->getCustomerId()));
 
-        $data['text_dashboard'] = lang('account/dashboard.text_dashboard');
         $data['text_greeting']  = sprintf(lang('account/dashboard.text_greeting'), $this->session->get('username'));
-        $data['heading_title']  = lang('account/dashboard.heading_title');
-        $data['text_news_feed'] = lang('account/dashboard.text_news_feed');
-
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
+
+        $data['langData'] = lang('account/dashboard.list');
 
         $this->template->output('account/dashboard', $data);
     }
@@ -119,15 +116,14 @@ class Dashboard extends \Catalog\Controllers\BaseController
 
         if ($results) {
             foreach ($results as $key => $value) {
-                $json['labels'][] = $value['month'];
+                $json['labels'][]        = $value['month'];
                 $json['data']['total'][] =  $value['total'];
             }
         } else {
-            $json['labels'][] = 0;
+            $json['labels'][]        = 0;
             $json['data']['total'][] = 0;
         }
-        
-
+    
         return $this->response->setJSON($json);
     }
 

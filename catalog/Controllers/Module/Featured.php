@@ -1,30 +1,32 @@
-<?php namespace Catalog\Controllers\Module;
+<?php 
 
-use \Catalog\Models\Catalog\ProjectModel;
+namespace Catalog\Controllers\Module;
 
-class Featured extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Catalog\ProjectModel;
+
+class Featured extends BaseController
 {
     public function index($setting)
     {
-        $data['heading_title'] = lang('module/account.heading_title');
 
 		$seoUrl = service('seo_url');
 
         // featured block
-        $data['featured'] = [];
+        $data['featureds'] = [];
 
         $projectModel = new ProjectModel();
 
         $filter_data = [
-			'limit'         => $this->registry->get('module_featured_limit'),
-			'start'         => 0,
+			'limit'  => $this->registry->get('module_featured_limit'),
+			'start'  => 0,
 		];
 
         $results = $projectModel->getProjects($filter_data);
 
         foreach ($results as $result) {
             $keyword = $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']);
-            $data['featured'][] = [
+            $data['featureds'][] = [
 				'project_id'  => $result['project_id'],
 				'name'        => $result['name'],
 				'type'        => ($result['type'] == 1) ? lang($this->locale . '.text_fixed_price') : lang($this->locale . '.text_per_hour'),
@@ -33,14 +35,11 @@ class Featured extends \Catalog\Controllers\BaseController
 			];
         }
 
-		$data['heading_title'] = lang('module/featured.heading_title');
-		$data['text_browse']   = lang('module/featured.text_browse');
-		$data['text_apply']    = lang('module/featured..text_apply');
-
-
 		$data['projects_all']  = route_to('projects') ? route_to('projects') : base_url('project/project');
-
+        
+        $data['langData'] = lang('module/featured.list');
 
         return view('module/featured', $data);
     }
+    // -----------------------------------------------------
 }

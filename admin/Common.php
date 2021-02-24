@@ -14,13 +14,7 @@
  * @link: https://codeigniter4.github.io/CodeIgniter4/
  */
 
- /**
- * Short Date Format
- *
- * @param string | int   $where  Where something interesting takes place
- * @throws Exception If something interesting cannot happen
- * @return string
- **/
+use CodeIgniter\I18n\Time;
 
 if (!function_exists('token')) {
     function token(string $type, int $len)
@@ -49,13 +43,7 @@ if (!function_exists('token')) {
         }
     }
 }
-/**
- * Short Date Format
- *
- * @param string   $where  Where something interesting takes place
- * @throws Exception If something interesting cannot happen
- * @return string
- **/
+
 if (!function_exists('verifyHashedPassword')) {
     function verifyHashedPassword(string $password, string $hashedPassword)
     {
@@ -63,20 +51,6 @@ if (!function_exists('verifyHashedPassword')) {
             throw new \Exception("Please add the desired Password and hash to be verified");
         }
         return password_verify($password, $hashedPassword) ? true : false;
-    }
-}
-
-/**
- * Short Date Format
- **/
-if (!function_exists('DateShortFormat')) {
-    function DateShortFormat(string $date)
-    {
-        if (!$date) {
-            throw new \Exception("Date is missing in function!");
-        }
-        $fmt = date_create($date);
-        return date_format($fmt, lang(config('App')->defaultLocale . '.date_format_short'));
     }
 }
 
@@ -165,11 +139,31 @@ if (! function_exists('generateSeoUrl')) {
     }
 }
 
-if (! function_exists('dateFormatLong')) {
-    function dateFormatLong($date): string
+/**
+ * Short Date Format
+ * @var date int
+ * @return string|int
+ **/
+if (!function_exists('dateFormatShort')) {
+    function dateFormatShort(int $date)
     {
         if (extension_loaded('intl')) {
-            return lang('en.medium_date', [strtotime($date)]) . ' ' . lang('en.short_time', [strtotime($date)]);
+           return lang(config('App')->defaultLocale . '.short_date', [$date]);
+        } else {
+           return $date;
+        }
+    }
+}
+/**
+ * Short Date Format
+ * @var date int
+ * @return string
+ **/
+if (! function_exists('dateFormatLong')) {
+    function dateFormatLong(int $date): string
+    {
+        if (extension_loaded('intl')) {
+            return lang(config('App')->defaultLocale . '.medium_date', [$date]) . ' ' . lang('en.short_time', [$date]);
         } else {
             return $date;
         }

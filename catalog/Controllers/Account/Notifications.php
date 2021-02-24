@@ -22,45 +22,45 @@ class Notifications extends \Catalog\Controllers\BaseController
         $customerModel = new CustomerModel();
 
         foreach ($results as $result) {
-            $info = json_decode($result['data'], true);
+            if (substr($result['key'], 0, 6) != 'admin_') {
+                $info = json_decode($result['data'], true);
 
-            $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
+                $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
             
-            $username  = '';
+                $username  = '';
 
-            if (isset($info['freelancer_id'])) {
-                $username = $customerModel->where('customer_id', $info['freelancer_id'])->findColumn('username')[0];
-            } elseif (isset($info['employer_id'])) {
-                $username = $customerModel->where('customer_id', $info['employer_id'])->findColumn('username')[0];
+                if (isset($info['freelancer_id'])) {
+                    $username = $customerModel->where('customer_id', $info['freelancer_id'])->findColumn('username')[0];
+                } elseif (isset($info['employer_id'])) {
+                    $username = $customerModel->where('customer_id', $info['employer_id'])->findColumn('username')[0];
+                }
+
+                $milestone_status = '';
+
+                switch (isset($info['milestone_status'])) {
+                    case 0: $milestone_status = 'Pending'; break;
+                    case 1: $milestone_status = 'Approved'; break;
+                    case 2: $milestone_status = 'Paid'; break;
+                    case 3: $milestone_status = 'Canceled'; break;
+                    default: $milestone_status = 'Pending'; break;
+                }
+
+                $find = [
+                    'url=',
+                    'freelancer_id=',
+                    'milestone_status=',
+                ];
+
+                $replace = [
+                    isset($info['url']) ? $info['url'] : '',
+                    '@' . $username,
+                    $milestone_status,
+                ];
+
+                $json[] = [
+                    'comment' => str_replace($find, $replace, $comment),
+                ];
             }
-
-            $milestone_status = '';
-
-            switch (isset($info['milestone_status'])) {
-                case 0: $milestone_status = 'Pending'; break;
-                case 1: $milestone_status = 'Approved'; break;
-                case 2: $milestone_status = 'Paid'; break;
-                case 3: $milestone_status = 'Canceled'; break;
-                default: $milestone_status = 'Pending'; break;
-            }
-
-            $find = [
-                'url=',
-                'freelancer_id=',
-                'milestone_status=',
-            ];
-
-            $replace = [
-                isset($info['url']) ? $info['url'] : '',
-                '@' . $username,
-                $milestone_status,
-                
-            ];
-
-
-            $json[] = [
-                'comment' => str_replace($find, $replace, $comment),
-            ];
         }
 
         return $this->response->setJSON($json);
@@ -78,12 +78,8 @@ class Notifications extends \Catalog\Controllers\BaseController
             $customer_id = 0;
         }
 
-        $total = $activityModel->getTotalActivitiesByCustomerID($customer_id);
-       
-        $json = [
-            'total' => $total
-        ];
-        
+        $json = $activityModel->getTotalActivitiesByCustomerID($customer_id);
+               
         return $this->response->setJSON($json);
     }
 
@@ -102,7 +98,7 @@ class Notifications extends \Catalog\Controllers\BaseController
             $activityModel->where('customer_id', $customer_id)
                                ->set('seen', 1)
                                ->update();
-            $json['success'] = 'Cleared';                   
+            $json['success'] = 'Cleared';
         }
        
         return $this->response->setJSON($json);

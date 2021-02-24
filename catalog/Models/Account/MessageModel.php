@@ -1,14 +1,21 @@
-<?php namespace Catalog\Models\Account;
+<?php
 
-class MessageModel extends \CodeIgniter\Model
+namespace Catalog\Models\Account;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class MessageModel extends Model
 {
     protected $table          = 'project_to_message';
     protected $primaryKey     = 'message_id';
     protected $returnType     = 'array';
     protected $allowedFields  = ['project_id', 'sender_id', 'receiver_id', 'message'];
+    // should use for keep data record create timestamp
     protected $useTimestamps  = true;
-    protected $createdField = 'date_added';
-    protected $updatedField = 'date_modified';
+    protected $dateFormat     = 'int';
+    protected $createdField   = 'date_added';
+    protected $updatedField   = 'date_modified';
 
     public function getMessages($thread_id)
     {
@@ -19,22 +26,6 @@ class MessageModel extends \CodeIgniter\Model
         $query = $builder->get();
         return $query->getResultArray();
     }
-
-    // public function getMessagesBySenderId($project_id, $customer_id)
-    // {
-    //     $messages_data = [];
-    //     $builder = $this->db->table($this->table);
-    //     $builder->select();
-    //     $builder->where(['project_id' => $project_id, 'from_id' => $customer_id]);
-    //     $query = $builder->get();
-    //     foreach ($query->getResultArray() as $result) {
-    //         $messages_data[] = [
-    //             'message' => $result['message'],
-    //             'from_id' => $result['from_id']
-    //         ];
-    //     }
-    //     return $messages_data;
-    // }
 
     // get Chat Members by Customer ID
     public function getMembers($customer_id)
@@ -80,7 +71,7 @@ class MessageModel extends \CodeIgniter\Model
         return $query->getRowArray();
     }
 
-    public function getMessageByCustomerId($seen, $customer_id, $start= 0, $limit = 5)
+    public function getMessageByCustomerId(int $seen, int $customer_id, int $start= 0, int $limit = 5)
     {
         $messages = [];
 
@@ -134,11 +125,10 @@ class MessageModel extends \CodeIgniter\Model
         $builder = $this->db->table($this->table);
         $builder->where('message_id', $message_id);
         $builder->set('seen', 1);
-        $builder->set('date_modified', 'NOW()', false);
+        $builder->set('date_modified', Time::now()->getTimestamp());
         $builder->update();
     }
 
-    // Start From Here
     public function addProjectMessage(array $data)
     {
         $builder = $this->db->table($this->table);
@@ -148,10 +138,6 @@ class MessageModel extends \CodeIgniter\Model
             $builder->where([
                 'thread_id' => $data['thread_id'],
             ]);
-            // $builder->orWhere([
-            //     'sender_id' => $data['receiver_id'],
-            //     'receiver_id' => $data['sender_id'],
-            // ]);
             $query = $builder->get();
             $row = $query->getRowArray();
 
@@ -170,63 +156,17 @@ class MessageModel extends \CodeIgniter\Model
         }
 
         $message_data = [
-            'project_id'  => $data['project_id'] ?? $project_id,
-            'thread_id'   => $thread_id,
-            'sender_id'   => $data['sender_id'],
-            'receiver_id' => $data['receiver_id'],
-            'message'     => $data['message']
+            'project_id'    => $data['project_id'] ?? $project_id,
+            'thread_id'     => $thread_id,
+            'sender_id'     => $data['sender_id'],
+            'receiver_id'   => $data['receiver_id'],
+            'message'       => $data['message'],
+            'date_added'    => Time::now()->getTimestamp(),
+            'date_modified' => Time::now()->getTimestamp()
         ];
 
-        $builder->set('date_added', 'NOW()', false);
-        $builder->set('date_modified', 'NOW()', false);
         $builder->insert($message_data);
     }
-
-    // public function addMessage(array $data)
-    // {
-    //     $builder = $this->db->table($this->table);
-
-    //     if (isset($data['thread_id']) && !empty($data['thread_id'])) {
-    //         $builder->select('thread_id');
-    //         $builder->where('thread_id', $data['thread_id']);
-    //         $query = $builder->get();
-    //         $row = $query->getRowArray();
-    //         $thread_id = $row['thread_id'];
-    //     } else {
-    //         helper('text');
-    //         $thread_id = random_string('crypto', 10);
-    //     }
-
-    //     $message_data = [
-    //         'project_id'  => $data['project_id'] ?? 0,
-    //         'thread_id'   => $thread_id,
-    //         'sender_id'   => $data['sender_id'],
-    //         'receiver_id' => $data['receiver_id'],
-    //         'message'     => $data['message'],
-    //     ];
-
-    //     $builder->set('date_added', 'NOW()', false);
-    //     $builder->set('date_modified', 'NOW()', false);
-    //     $builder->insert($message_data);
-    // }
-
-    // public function editMessage(string $thread_id, array $data)
-    // {
-    //     $builder = $this->db->table($this->table);
-    //     $builder->where('thread_id', $thread_id);
-
-    //     $message_data = [
-    //         'message' => json_encode([
-    //             'sender_id'   => $data['sender_id'],
-    //             'receiver_id' => $data['receiver_id'],
-    //             'message'     => $data['message']
-    //         ]),
-    //     ];
-
-    //     $builder->set('date_added', 'NOW()', false);
-    //     $builder->set('date_modified', 'NOW()', false);
-    //     $builder->insert($message_data);
-    // }
     
     // -----------------------------------------------------------------
 }

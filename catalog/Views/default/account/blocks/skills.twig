@@ -1,0 +1,29 @@
+{% if skills %}
+<hr />
+<div class="table-responsive col-md-12">
+    <table class="table table-bordered" id="skills-table">
+        <thead>
+            <tr>
+                <th>{{ column_name }}</th>
+                <th width="10%">{{ column_action }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for skill in skills %}
+            <tr>
+                <td>{{ skill.name }}</td>
+                <td><button type="button" value="{{ skill.skill_id }}" id="button-delete-skill{{ skill.skill_id }}"
+                        data-toggle="tooltip" title="{{ button_delete }}" class="btn btn--icon btn-sm btn-danger"><i
+                            class="icon-feather-trash-2"></i>
+                    </button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="float-left">
+        {{ pagination }}
+    </div>
+</div>
+{% endif %}

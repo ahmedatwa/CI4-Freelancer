@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark shadow-sm p-1 mb-5" style="overflow-y: auto;">
+  <div class="collapse navbar-collapse" id="navbarDashboard">
+    <ul class="navbar-nav mx-auto">
+      {% for menu in menus %}
+      {% if menu.children %}
+      <li class="nav-item dropdown my-auto" style="width: 90px">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="{{ menu.icon }}"></i> {{ menu.name }}
+        </a>
+        <div class="dropdown-menu mt-1" aria-labelledby="navbarDropdown">
+          {% for child in menu.children %}
+          <a class="dropdown-item" href="{{ child.href }}"><i class="<?php echo $child['icon']; ?>"></i>
+            {{ child.name }}</a>
+          {% endfor %}
+        </div>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{{ menu.href }}"><span class="d-none d-sm-inline-block"><i
+              class="{{ menu.icon }}"></i></span> {{ menu.name }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>

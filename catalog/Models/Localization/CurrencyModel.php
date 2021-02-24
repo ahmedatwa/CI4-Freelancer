@@ -1,6 +1,10 @@
-<?php namespace Catalog\Models\Localization;
+<?php 
 
-class CurrencyModel extends \CodeIgniter\Model
+namespace Catalog\Models\Localization;
+
+use CodeIgniter\Model;
+
+class CurrencyModel extends Model
 {
 
    public function getCurrencyByCode($currency) {

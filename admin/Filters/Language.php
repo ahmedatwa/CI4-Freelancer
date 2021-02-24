@@ -1,4 +1,6 @@
-<?php namespace Admin\Filters;
+<?php 
+
+namespace Admin\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -11,16 +13,16 @@ class Language implements FilterInterface
 
     public function before(RequestInterface $request, $arguments = null)
     {
+        /**
+        * @var renderer \Config\Services::renderer 
+        */
         $view = \Config\Services::renderer();
 
         // Getting the Current Url Segment
-        $uri = new \CodeIgniter\HTTP\URI((string) current_url(true));
-
         $language = [];
-
         $route = '';
 
-        $uriParts = $uri->getSegments();
+        $uriParts = $request->uri->getSegments();
 
         if ($uriParts) {
             if (isset($uriParts[0]) && ($uriParts[0] == 'admin')) {

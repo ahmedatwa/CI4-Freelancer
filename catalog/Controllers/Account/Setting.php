@@ -1,9 +1,12 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
-use \Catalog\Models\Account\CustomerModel;
-use \Catalog\Models\Localization\CountryModel;
+namespace Catalog\Controllers\Account;
 
-class Setting extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Localization\CountryModel;
+
+class Setting extends BaseController
 {
     public function edit()
     {
@@ -109,33 +112,12 @@ class Setting extends \Catalog\Controllers\BaseController
         } else {
             $data['rate'] = 0;
         }
-        if ($this->request->getPost('facebook')) {
-            $data['facebook'] = $this->request->getPost('facebook');
-        } elseif ($customer_info['facebook']) {
-            $data['facebook'] = $customer_info['facebook'];
+        if ($this->request->getPost('social')) {
+            $data['social'] = $this->request->getPost('social');
+        } elseif ($customer_info['social']) {
+            $data['social'] = json_decode($customer_info['social'], true);
         } else {
-            $data['facebook'] = '';
-        }
-        if ($this->request->getPost('twitter')) {
-            $data['twitter'] = $this->request->getPost('twitter');
-        } elseif ($customer_info['twitter']) {
-            $data['twitter'] = $customer_info['twitter'];
-        } else {
-            $data['twitter'] = '';
-        }
-        if ($this->request->getPost('linkedin')) {
-            $data['linkedin'] = $this->request->getPost('linkedin');
-        } elseif ($customer_info['linkedin']) {
-            $data['linkedin'] = $customer_info['linkedin'];
-        } else {
-            $data['linkedin'] = '';
-        }
-        if ($this->request->getPost('github')) {
-            $data['github'] = $this->request->getPost('github');
-        } elseif ($customer_info['github']) {
-            $data['github'] = $customer_info['github'];
-        } else {
-            $data['github'] = '';
+            $data['social'] = '';
         }
 
         // avatar placeholder
@@ -157,68 +139,6 @@ class Setting extends \Catalog\Controllers\BaseController
         $data['bg_thumb'] = $bg_thumb;
 
         $data['action'] = base_url('account/setting/edit?customer_id=' . $this->customer->getCustomerID());
-
-        $data['heading_title']          = lang('account/setting.heading_title');
-        $data['entry_firstname']        = lang('account/setting.entry_firstname');
-        $data['entry_lastname']         = lang('account/setting.entry_lastname');
-        $data['entry_email']            = lang('account/setting.entry_email');
-        $data['text_profile']           = lang('account/setting.text_profile');
-        $data['text_account']           = lang('account/setting.text_account');
-        $data['text_about']             = lang('account/setting.text_about');
-        $data['entry_tagline']          = lang('account/setting.entry_tagline');
-        $data['entry_nationality']      = lang('account/setting.entry_nationality');
-        $data['text_password_security'] = lang('account/setting.text_password_security');
-        $data['text_2step']             = lang('account/setting.text_2step');
-        $data['text_skills']            = lang('account/setting.text_skills');
-        $data['text_hourly_rate']       = lang('account/setting.text_hourly_rate');
-        $data['text_loading']           = lang('en.text_loading');
-        $data['button_add']             = lang('en.button_add');
-        
-        $data['text_certification'] = lang('account/setting.text_certification');
-        $data['text_loading']       = lang('account/setting.text_loading');
-        $data['text_select']        = lang('en.text_select');
-        $data['text_confirm']       = lang('en.text_confirm');
-        $data['text_education']     = lang('account/setting.text_education');
-        $data['text_social']        = lang('account/setting.text_social');
-        
-        $data['entry_year']          = lang('account/setting.entry_year');
-        $data['entry_university']    = lang('account/setting.entry_university');
-        $data['entry_country']       = lang('account/setting.entry_country');
-        $data['entry_uni_title']     = lang('account/setting.entry_uni_title');
-        $data['entry_major']         = lang('account/setting.entry_major');
-        $data['entry_certification'] = lang('account/setting.entry_certification');
-        $data['entry_facebook']      = lang('account/setting.entry_facebook');
-        $data['entry_twitter']       = lang('account/setting.entry_twitter');
-        $data['entry_linkedin']      = lang('account/setting.entry_linkedin');
-        $data['entry_github']        = lang('account/setting.entry_github');
-
-        $data['tab_certificates']          = lang('account/setting.tab_certificates');
-        $data['tab_education']             = lang('account/setting.tab_education');
-        $data['tab_languages']             = lang('account/setting.tab_languages');
-        $data['tab_skill']                 = lang('account/setting.tab_skill');
-        
-        $data['text_professional_heading'] = lang('account/setting.text_professional_heading');
-        $data['text_professional_sub']     = lang('account/setting.text_professional_sub');
-        $data['text_add_language']         = lang('account/setting.text_add_language');
-        $data['text_basic']                = lang('account/setting.text_basic');
-        $data['text_conversational']       = lang('account/setting.text_conversational');
-        $data['text_fluent']               = lang('account/setting.text_fluent');
-        $data['text_native_or_bilingual']  = lang('account/setting.text_native_or_bilingual');
-        $data['text_beginner']             = lang('account/setting.text_beginner');
-        $data['text_intermediate']         = lang('account/setting.text_intermediate');
-        $data['text_expert']               = lang('account/setting.text_expert');
-        $data['text_add_skill']            = lang('account/setting.text_add_skill');
-        $data['entry_language']            = lang('account/setting.entry_language');
-        $data['entry_language_level']      = lang('account/setting.entry_language_level');
-        $data['entry_skill']               = lang('account/setting.entry_skill');
-        $data['entry_skill_level']         = lang('account/setting.entry_skill_level');
-        
-        $data['entry_current_password']    = lang('account/setting.entry_current_password');
-        $data['entry_password']            = lang('account/setting.entry_password');
-        $data['entry_confirm']             = lang('account/setting.entry_confirm');
-        $data['entry_hourly_rate']         = lang('account/setting.entry_hourly_rate');
-
-        $data['button_submit'] = lang('account/setting.button_submit');
 
         //  Education Title
         $data['education_titles'][] = [
@@ -303,7 +223,7 @@ class Setting extends \Catalog\Controllers\BaseController
             } else {
                 $basic_info = 0;
             }
-            if ($customer_info['github'] || $customer_info['linkedin'] || $customer_info['facebook'] || $customer_info['twitter']) {
+            if ($customer_info['social']) {
                 $social_info = 10;
             } else {
                 $social_info = 0;
@@ -347,6 +267,8 @@ class Setting extends \Catalog\Controllers\BaseController
             }
         }
 
+        $data['langData'] = lang('account/setting.list');
+        
         $this->template->output('account/setting', $data);
     }
 
@@ -395,14 +317,7 @@ class Setting extends \Catalog\Controllers\BaseController
             $page = 1;
         }
 
-        $data['certificates'] = [];
-
-        $data['text_loading']  = lang('en.text_loading');
-        $data['column_name']   = lang('account/setting.column_name');
-        $data['column_year']   = lang('account/setting.column_year');
-        $data['column_action'] = lang('account/setting.column_action');
-        $data['button_delete'] = lang('account/setting.button_delete');
-       
+        $data['certificates'] = [];       
 
         $results = $customerModel->getCustomerCertificates($this->customer->getCustomerID(), ($page - 1) * 5, 5);
         $total = $customerModel->getTotalCertificatesByCustomerId($this->request->getVar('customer_id'));
@@ -560,13 +475,6 @@ class Setting extends \Catalog\Controllers\BaseController
                 'country'      => $result['country'],
             ];
         }
-
-        $data['column_country']    = lang('account/setting.column_country');
-        $data['column_university'] = lang('account/setting.column_university');
-        $data['column_major']      = lang('account/setting.column_major');
-        $data['column_year']       = lang('account/setting.column_year');
-        $data['column_action']     = lang('account/setting.column_action');
-        $data['button_delete']     = lang('account/setting.button_delete');
         
         // Pagination
         $pager = \Config\Services::pager();
@@ -683,12 +591,6 @@ class Setting extends \Catalog\Controllers\BaseController
            ];
         }
 
-        $data['column_name']   = lang('account/setting.column_name');
-        $data['column_level']  = lang('account/setting.column_level');
-        $data['column_action'] = lang('account/setting.column_action');
-        $data['button_delete'] = lang('account/setting.button_delete');
-
-
         // Pagination
         $pager = \Config\Services::pager();
         $data['pagination'] = $pager->makeLinks($page, 5, $total);
@@ -709,7 +611,7 @@ class Setting extends \Catalog\Controllers\BaseController
         }
     }
 
-    //  Skills
+    /* Skills */
     public function addSkill()
     {
         $json = [];
@@ -743,12 +645,6 @@ class Setting extends \Catalog\Controllers\BaseController
         }
 
         $data['skills'] = [];
-
-        $data['column_name']   = lang('account/setting.column_name');
-        $data['column_level']  = lang('account/setting.column_level');
-        $data['column_action'] = lang('account/setting.column_action');
-        $data['text_loading']  = lang('account/setting.text_loading');
-        $data['button_delete'] = lang('account/setting.button_delete');
 
         $results = $customerModel->getCustomerSkills($this->customer->getCustomerID(), ($page - 1) * 5, 5);
         $total = $customerModel->getTotalSkillsByCustomerID($this->customer->getCustomerID());

@@ -1,6 +1,10 @@
-<?php namespace Catalog\Controllers\Module;
+<?php 
 
-class Video extends \Catalog\Controllers\BaseController
+namespace Catalog\Controllers\Module;
+
+use Catalog\Controllers\BaseController;
+
+class Video extends BaseController
 {
     public function index($setting)
     {

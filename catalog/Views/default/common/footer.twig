@@ -1,0 +1,185 @@
+<!-- Footer -->
+<div id="footer">
+	<!-- Footer Top Section -->
+	<div class="footer-top-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+					<!-- Footer Rows Container -->
+					<div class="footer-rows-container">
+						<!-- Left Side -->
+						<div class="footer-rows-left">
+							<div class="footer-row">
+								<div class="footer-row-inner footer-logo">
+									<img src="{{ logo }}" alt="{{ config_name }}">
+								</div>
+							</div>
+						</div>
+						<!-- Right Side -->
+						<div class="footer-rows-right">
+							<!-- Social Icons -->
+							<div class="footer-row">
+								<div class="footer-row-inner">
+									<ul class="footer-social-links">
+										<li>
+											<a href="{{ facebook }}" target="_blank" data-toggle="tooltip" title="Facebook" data-placement="bottom">
+												<i class="icon-brand-facebook-f"></i>
+											</a>
+										</li>
+										<li>
+											<a href="{{ twitter }}" target="_blank" data-toggle="tooltip" title="Twitter" data-placement="bottom">
+												<i class="icon-brand-twitter"></i>
+											</a>
+										</li>
+										<li>
+											<a href="{{ instagram }}" target="_blank" data-toggle="tooltip" title="Instagram" data-placement="bottom">
+												<i class="icon-brand-instagram"></i>
+											</a>
+										</li>
+										<li>
+											<a href="{{ linkedin }}" target="_blank" data-toggle="tooltip" title="LinkedIn" data-placement="bottom">
+												<i class="icon-brand-linkedin-in"></i>
+											</a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+							</div>							
+							{{ language }}
+							{{ currency }}
+						</div>
+					</div>
+					<!-- Footer Rows Container / End -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Top Section / End -->
+	<!-- Footer Middle Section -->
+	<div class="footer-middle-section">
+		<div class="container">
+			<div class="row">
+				<!-- Links -->
+				<div class="col-sm-12 col-md-3">
+					<div class="footer-links">
+						<h3>{{ text_freelancer }}</h3>
+						<ul>
+							<li><a href="{{ category }}"><span>{{ text_categories }}</span></a></li>
+							<li><a href="{{ projects }}"><span>{{ text_projects }}</span></a></li>
+							<li><a href="{{ freelancers }}"><span>{{ text_freelancers }}</span></a></li>
+							
+						</ul>
+					</div>
+				</div>
+				<!-- Links -->
+				<div class="col-sm-12 col-md-3">
+					<div class="footer-links">
+						<h3>{{ text_terms }}</h3>
+						<ul>
+						{% for information in informations %}
+								<li><a href="{{ information.href }}"><span>{{ information.title }}</span></a></li>
+						{% endfor %}
+							<li><a href="{{ contact }}"><span>{{ text_contact }}</span></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-3">
+					<div class="footer-links">
+						<h3>{{ text_categories }}</h3>
+						<ul>
+						{% for category in categories %}
+								<li><a href="{{ category.href }}"><span>{{ category.name }}</span></a></li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+			   <div class="col-sm-12 col-md-3">
+					<div class="footer-links">
+						<h3>{{ text_account }}</h3>
+						<ul>
+							<li><a href="{{ register }}"><span>{{ text_register }}</span></a></li>
+							<li><a href="{{ login }}"><span>{{ text_login }}</span></a></li>
+							<li><a href="{{ setting }}"><span>{{ text_setting }}</span></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Middle Section / End -->
+	<!-- Footer Copyrights -->
+	<div class="footer-bottom-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+					{{ text_footer }}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Copyrights / End -->
+</div>
+</div>
+<!-- loader overlay -->
+<div id="overlay">
+	<div class="spinner"></div> Loading...
+</div>
+<!-- Gmail Sign in  -->
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+<script>
+function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+ }
+
+function gSignOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut();
+  }
+
+</script>
+<!-- Chat Wdget Code -->
+{{ config_chat_widget }}
+<!-- Chat Wdget Code -->
+<!-- New Project Global Alert -->
+<script type="text/javascript">
+var PUSHER_KEY = "{{ PUSHER_KEY }}";
+var PUSHER_CLUSTER = "{{ PUSHER_CLUSTER }}";
+
+var pusher = new Pusher(PUSHER_KEY, {
+  cluster: PUSHER_CLUSTER
+});
+
+var channel = pusher.subscribe('global-channel');
+channel.bind('new-project-event', function(data) {
+{% if customer_id != data.employer_id %}
+$.notify({
+   // options
+	icon: 'fas fa-desktop',
+	title: data.name,
+	message: data.budget,
+	url: data.href,
+	target: '_blank'
+    },{
+	// settings
+	newest_on_top: true,
+	placement: {
+		from: "bottom",
+		align: "left"
+	},
+	offset: 20,
+	spacing: 10,
+	z_index: 1031,
+	delay: 8000,
+	timer: 1000,
+	animate: {
+		enter: 'animate__animated animate__fadeInUpBig',
+		exit: 'animate__animated animate__fadeOutDownBig'
+	},
+  });
+ {% endif %}
+});	
+</script>
+</body>
+</html>

@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use \Catalog\Models\Localization\CurrencyModel;
+use CodeIgniter\I18n\Time;
 
 /**
  * Class BaseController
@@ -29,7 +30,7 @@ class BaseController extends \CodeIgniter\Controller
      * @var array
      */
     protected $helpers = ['text'];
-
+    public $data = [];
     /**
      * Constructor.
      */
@@ -43,7 +44,7 @@ class BaseController extends \CodeIgniter\Controller
         //--------------------------------------------------------------------
         // E.g.:
         $this->session  = \Config\Services::session();
-        $language = \Config\Services::language();
+        $language       = \Config\Services::language();
         $this->locale   = $language->getLocale();
         $this->registry = service('registry');
         $this->template = service('template');
@@ -98,72 +99,75 @@ class BaseController extends \CodeIgniter\Controller
         return base_url() . '/images/' . $image_new;
     }
 
-    public function dateAfter(string $date_end)
+    public function dateAfter(string $date_end): bool
     {
-        $time  = new \CodeIgniter\I18n\Time;
-
-        $time1 = $time::now();
-        $time2 = $time::parse($date_end);
-
-        return $time1->isAfter($time2);
+        return Time::now()->isAfter(Time::createFromTimestamp($date_end));
     }
 
-    public function dateModify(string $data_added, int $num)
+    public function dateModify(string $data_added, int $num): string
     {
-        $time  = new \CodeIgniter\I18n\Time;
-
-        $time = $time::parse($data_added);
+        $time = Time::createFromTimestamp($data_added);
         $time->subDays($num);
         return $time->toDateTimeString();
     }
 
     public function dateDifference(string $date_added, int $runtime = 0)
     {
-        $time  = new \CodeIgniter\I18n\Time;
 
         if ($runtime == 0) {
-            $date = $time::parse($date_added);
+            $date = Time::createFromTimestamp($date_added);
             return $date->humanize();
         }
 
-        $time = $time::parse($date_added);
-
+        $time = Time::createFromTimestamp($date_added);
         // the bidding endDate
-        $endDate = $time->addDays($runtime)->toDateTimeString();
+        $diff = Time::today()->difference($time->addDays($runtime)->toDateTimeString());
 
-        $today = $time::today(null, $this->locale);
-        
-        $diff = $today->difference($endDate);
-
-        return $diff->getDays();
+        return [
+            $diff->getDays(), 
+            $diff->getHours()
+        ];
     }
 
-    public function addDays(string $date_added, string $runtime)
+    public function addDays(string $date_added, string $runtime): string
     {
-        $timeLib  = new \CodeIgniter\I18n\Time;
-        $time = $timeLib::parse($date_added);
+        $time = Time::createFromTimestamp($date_added);
 
-        $sub = $time->addDays($runtime);
+        $_ = $time->addDays($runtime);
 
-        return $sub->toDateString();
+        return $_->toDateString();
     }
 
-    public function currencyFormat(float $number, int $fraction = 2)
+    public function currencyFormat(float $number, int $fraction = 2): string
     {
         $currencyModel = new CurrencyModel();
 
-        $currency_info = $currencyModel->getCurrencyByCode($this->session->get('currency'));
+        if ($this->request->getCookie(config('App')->cookiePrefix . 'currency')) {
+            $code = \Config\Services::encrypter()->decrypt(base64_decode($this->request->getCookie(config('App')->cookiePrefix . 'currency', FILTER_SANITIZE_STRING)));
+        } else {
+            $code = $this->registry->get('config_currency');
+        }
+
+        $currency_info = $currencyModel->getCurrencyByCode($code);
 
         helper('number');
 
         $value = $currency_info['value'] ? (float) $number * $currency_info['value'] : (float) $number;
 
         if ($this->session->get('currency')) {
-            return number_to_currency($value, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, $fraction);
+            return number_to_currency($value, $code, $this->locale, $fraction);
         } else {
-            return number_to_currency($number, $this->session->get('currency') ?? $this->registry->get('config_currency'), $this->locale, $fraction);
+            return number_to_currency($number, $code, $this->locale, $fraction);
         }
     }
 
+    public function setLang(string $filename)
+    {
+        $langData = lang($filename . '.list');
+        foreach ($langData as $key => $value) {
+            $this->data[$key] = $value;
+        }
+        return $this->data;
+    }
     // -----------------------------------------------------------------
 }

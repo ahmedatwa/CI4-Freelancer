@@ -1,6 +1,10 @@
-<?php namespace Catalog\Models\Localization;
+<?php 
 
-class LanguageModel extends \CodeIgniter\Model
+namespace Catalog\Models\Localization;
+
+use CodeIgniter\Model;
+
+class LanguageModel extends Model
 {
 	protected $table      = 'language';
 	protected $primaryKey = 'language_id';

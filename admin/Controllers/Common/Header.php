@@ -7,7 +7,6 @@ class Header extends \Admin\Controllers\BaseController
 {
     public function index()
     {
-
         $data['title']       = $this->document->getTitle();
         $data['description'] = $this->document->getDescription();
         $data['keywords']    = $this->document->getKeywords();
@@ -62,21 +61,23 @@ class Header extends \Admin\Controllers\BaseController
 
         $data['notifications'] = [];
         
-        $filter_data = [
-            'filter_date_added' => date("Y-m-d"),
-            'sort_by'           => 'pd.name',
-            'order_by'          => 'DESC',
-            'start'             => 0,
-            'limit'             => 5,
-        ];
+        if ($this->user->isLogged()) {
+            $filter_data = [
+                'filter_date_added' => strtotime(date("Y-m-d")),
+                'sort_by'           => 'pd.name',
+                'order_by'          => 'DESC',
+                'start'             => 0,
+                'limit'             => 5,
+            ];
 
-        $data['notifications_total'] = $projectModel->getTotalProjects($filter_data);
-        $results = $projectModel->getProjects($filter_data);
-        foreach ($results as $result) {
-            $data['notifications'][] = [
-                'name' => substr($result['name'], 0, 30) . '...', 
+            $data['notifications_total'] = $projectModel->getTotalProjects($filter_data);
+            $results = $projectModel->getProjects($filter_data);
+            foreach ($results as $result) {
+                $data['notifications'][] = [
+                'name' => substr($result['name'], 0, 30) . '...',
                 'href' => base_url('index.php/catalog/project/edit?user_token=' . $this->request->getVar('user_token') . '&project_id=' . $result['project_id']),
             ];
+            }
         }
 
         return view('common/header', $data);

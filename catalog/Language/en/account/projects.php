@@ -1,6 +1,7 @@
 <?php 
         
 return [
-    'heading_title'   => 'My Projects',
-
+	// Heading
+	'heading_title'   => 'My Projects',
+	'list' => []
 ];

@@ -1,11 +1,18 @@
-<?php namespace Catalog\Models\Catalog;
+<?php 
 
-class ProjectModel extends \CodeIgniter\Model
+namespace Catalog\Models\Catalog;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class ProjectModel extends Model
 {
-    protected $table          = 'project';
-    protected $primaryKey     = 'project_id';
-    protected $returnType     = 'array';
+    protected $table         = 'project';
+    protected $primaryKey    = 'project_id';
+    protected $returnType    = 'array';
     protected $allowedFields = ['status_id', 'employer_review_id', 'freelancer_review_id'];
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'int';
     protected $createdField  = 'date_added';
     protected $updatedField  = 'date_modified';
 
@@ -21,10 +28,10 @@ class ProjectModel extends \CodeIgniter\Model
             'budget_max'    => $data['budget_max'],
             'delivery_time' => $data['delivery_time'],
             'status_id'     => service('registry')->get('config_project_status_id') ?? 8,
+            'date_added'    => Time::now()->getTimestamp(),
+            'date_modified' => Time::now()->getTimestamp(),
         ];
 
-        $builder->set('date_added', 'NOW()', false);
-        $builder->set('date_modified', 'NOW()', false);
         $builder->insert($project_data);
         // Get Last Inserted ID
         $project_id = $this->db->insertID();
@@ -50,7 +57,6 @@ class ProjectModel extends \CodeIgniter\Model
                 \CodeIgniter\Events\Events::trigger('mail_project_add', $data['employer_id'], $value['name']);
                 // Trigger Pusher Notification event
                 $options = ['cluster' => PUSHER_CLUSTER, 'useTLS' => PUSHER_USETLS];
-
                 $pusher = new \Pusher\Pusher(PUSHER_KEY, PUSHER_SECRET, PUSHER_APP_ID, $options);
                 // SEO URL
                 $seoUrl = service('seo_url');
@@ -102,10 +108,9 @@ class ProjectModel extends \CodeIgniter\Model
             'employer_id' => $data['employer_id'],
             'budget_min'  => $data['budget_min'],
             'budget_max'  => $data['budget_max'],
+            'date_modified' => $data['date_modified'],
         ];
         
-        $builder->set('date_modified', 'NOW()', false);
-        $builder->where('project_id', $project_id);
         $builder->update($project_data);
 
         // project_description Query

@@ -1,18 +1,23 @@
-<?php namespace Catalog\Models\Freelancer;
+<?php 
 
-class WithdrawModel extends \CodeIgniter\Model
+namespace Catalog\Models\Freelancer;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class WithdrawModel extends Model
 {
-    protected $table          = 'withdraw';
-    protected $primaryKey     = 'withdraw_id';
-    protected $returnType     = 'array';
-    protected $allowedFields  = ['customer_id', 'amount', 'currency', 'withdraw_status_id'];
-    protected $useTimestamps  = true;
-    protected $useSoftDeletes = false;
+    protected $table         = 'withdraw';
+    protected $primaryKey    = 'withdraw_id';
+    protected $returnType    = 'array';
+    protected $allowedFields = ['customer_id', 'amount', 'currency', 'withdraw_status_id'];
     // should use for keep data record create timestamp
-    protected $createdField = 'date_added';
-    protected $updatedField = 'date_modified';
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'int';
+    protected $createdField  = 'date_added';
+    protected $updatedField  = 'date_modified';
 
-    public function getWithdrawalByCustomerId($customer_id)
+    public function getWithdrawalByCustomerId(int $customer_id)
     {
         $builder = $this->db->table('withdraw w');
         $builder->select('w.customer_id, ws.name as status, w.amount, w.date_added, w.withdraw_id, w.date_processed');
@@ -22,17 +27,17 @@ class WithdrawModel extends \CodeIgniter\Model
         return $query->getResultArray();
     }
 
-    public function addRequest($data)
+    public function addRequest(array $data)
     {
         $builder = $this->db->table($this->table);
         $data = [
             'customer_id'        => $data['customer_id'],
             'amount'             => $data['amount'],
             'currency'           => $data['currency'] ?? service('registry')->get('config_currency'),
-            'withdraw_status_id' => $data['status_id']
+            'withdraw_status_id' => $data['status_id'],
+            'date_added'         => Time::now()->getTimestamp(),
+            'date_modified'      => Time::now()->getTimestamp()
         ];
-        $builder->set('date_added', 'NOW()', false);
-        $builder->set('date_modified', 'NOW()', false);
         $builder->set($data);
         $builder->insert();
         // update balance
@@ -43,9 +48,9 @@ class WithdrawModel extends \CodeIgniter\Model
         $row = $query->getRow();
         if ($row) {
             $balance_data = [
-            'available'   => $row->available - $data['amount']
+            'available'     => $row->available - $data['amount'],
+            'date_modified' => Time::now()->getTimestamp()
         ];
-            $balance_table->set('date_modified', 'NOW()', false);
             $balance_table->update($balance_data);
         } 
         //Event Trigget

@@ -1,15 +1,18 @@
-<?php namespace Catalog\Controllers\Freelancer;
+<?php 
 
-use \Catalog\Models\Account\CustomerModel;
-use \Catalog\Models\Catalog\CategoryModel;
-use \Catalog\Models\Freelancer\FreelancerModel;
-use \Catalog\Models\Account\ReviewModel;
-use \Catalog\Models\Freelancer\BalanceModel;
-use \Catalog\Models\Freelancer\DisputeModel;
-use \Catalog\Models\Account\MessageModel;
-use \Catalog\Models\Catalog\ProjectModel;
+namespace Catalog\Controllers\Freelancer;
 
-class Freelancer extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Catalog\CategoryModel;
+use Catalog\Models\Freelancer\FreelancerModel;
+use Catalog\Models\Account\ReviewModel;
+use Catalog\Models\Freelancer\BalanceModel;
+use Catalog\Models\Freelancer\DisputeModel;
+use Catalog\Models\Account\MessageModel;
+use Catalog\Models\Catalog\ProjectModel;
+
+class Freelancer extends BaseController
 {
     public function view()
     {
@@ -122,28 +125,6 @@ class Freelancer extends \Catalog\Controllers\BaseController
                 
         $data['action_skills'] = route_to('freelancers') . $url;
 
-
-
-        // $data['sorts'] = [];
-
-        // $data['sorts'][] = [
-        //     'text'  => lang('common/search.text_newest'),
-        //     'value' => 'p.date_added-ASC',
-        //     'href'  => base_url('freelancer/freelancer?sort_by=budget_min&order_by=ASC' . $url)
-        // ];
-
-        // $data['sorts'][] = [
-        //     'text'  => lang('common/search.text_lowest'),
-        //     'value' => 'p.budget_min-ASC',
-        //     'href'  => base_url('freelancer/freelancer?sort_by=budget_min&order_by=ASC' . $url)
-        // ];
-
-        // $data['sorts'][] = [
-        //     'text'  => lang('common/search.text_highest'),
-        //     'value' => '< 10',
-        //     'href'  => base_url('freelancer/freelancer?sort_by=budget_min&order_by=DESC' . $url)
-        // ];
-
         $url = '';
 
         if ($this->request->getVar('order_by')) {
@@ -161,31 +142,31 @@ class Freelancer extends \Catalog\Controllers\BaseController
         $data['rates'] = [];
 
         $data['rates'][] = [
-            'text'  => lang('freelancer/freelancer.text_10'),
+            'text'  => lang('freelancer/freelancer.list.text_10'),
             'value' => '10',
             'href'  => route_to('freelancers') .'?rate=10&order_by=ASC' . $url
         ];
 
         $data['rates'][] = [
-            'text'  => lang('freelancer/freelancer.text_10_20'),
+            'text'  => lang('freelancer/freelancer.list.text_10_20'),
             'value' => '10_20',
             'href'  => route_to('freelancers') .'?rate=10_20&order_by=ASC' . $url
         ];
 
         $data['rates'][] = [
-            'text'  => lang('freelancer/freelancer.text_20_30'),
+            'text'  => lang('freelancer/freelancer.list.text_20_30'),
             'value' => '20_30',
             'href'  => route_to('freelancers') .'?rate=20_30&order_by=ASC' . $url
         ];
 
         $data['rates'][] = [
-            'text'  => lang('freelancer/freelancer.text_30_40'),
+            'text'  => lang('freelancer/freelancer.list.text_30_40'),
             'value' => '30_40',
             'href'  => route_to('freelancers') . '?rate=30_40&order_by=DESC' . $url
         ];
 
         $data['rates'][] = [
-            'text'  => lang('freelancer/freelancer.text_40'),
+            'text'  => lang('freelancer/freelancer.list.text_40'),
             'value' => '40',
             'href'  => route_to('freelancers') . '?rate=40&order_by=DESC' . $url
         ];
@@ -201,13 +182,7 @@ class Freelancer extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['button_view']      = lang('freelancer/freelancer.button_view');
-        $data['text_rate']        = lang('freelancer/freelancer.text_rate');
-        $data['heading_title']    = lang('freelancer/freelancer.heading_title');
-        $data['text_found']       = lang('freelancer/freelancer.text_found', [$total]);
-        $data['text_skills']      = lang('freelancer/freelancer.text_skills');
-        $data['text_select']      = lang('en.text_select');
-        $data['text_hourly_rate'] = lang('freelancer/freelancer.text_hourly_rate');
+        $data['text_found']       = lang('freelancer/freelancer.list.text_found', [$total]);
 
         $data['filter_skills'] = $filter_skills;
         $data['filter_rate']   = $filter_rate;
@@ -434,11 +409,11 @@ class Freelancer extends \Catalog\Controllers\BaseController
         }
 
         $filter_data = [
-         'freelancer_id' => $customer_id,
-         'sort_by'     => $sort_by,
-         'order_by'    => $order_by,
-         'limit'       => $limit,
-         'start'       => ($page - 1) * $limit,
+             'freelancer_id' => $customer_id,
+             'sort_by'     => $sort_by,
+             'order_by'    => $order_by,
+             'limit'       => $limit,
+             'start'       => ($page - 1) * $limit,
         ];
 
         $data['disputes'] = [];
@@ -465,20 +440,10 @@ class Freelancer extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['column_project_id']    = lang('employer/employer.column_project_id');
-        $data['column_freelancer_id'] = lang('employer/employer.column_freelancer_id');
-        $data['column_employer_id']   = lang('employer/employer.column_employer_id');
-        $data['column_comment']       = lang('employer/employer.column_comment');
-        $data['column_status']        = lang('employer/employer.column_status');
-        $data['column_action']        = lang('employer/employer.column_action');
-        $data['column_date_added']    = lang('employer/employer.column_date_added');
-
         $data['customer_id'] = $customer_id;
 
-        // Pagination
-        $pager = \Config\Services::pager();
-        $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
-
+        $data['langData'] = lang('freelancer/dispute.list');
+        
         return view('freelancer/dispute_list', $data);
     }
 

@@ -1,5 +1,7 @@
 <?php
 return [
-// Text
-'text_language' => 'Language',
+	'list' => [
+		// Text
+		'text_language' => 'Language',
+    ]
 ];

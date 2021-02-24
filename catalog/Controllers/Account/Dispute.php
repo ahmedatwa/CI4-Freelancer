@@ -1,9 +1,12 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
+namespace Catalog\Controllers\Account;
+
+use Catalog\Controllers\BaseController;
 use \Catalog\Models\Catalog\ProjectModel;
 use \Catalog\Models\Localization\ProjectStatusModel;
 
-class Dispute extends \Catalog\Controllers\BaseController
+class Dispute extends BaseController
 {
     public function index()
     {
@@ -42,6 +45,8 @@ class Dispute extends \Catalog\Controllers\BaseController
         $data['heading_title'] = lang('account/dispute.heading_title');
 
         $data['customer_id'] = $customer_id;
+        
+        $data['langData'] = lang('account/dispute.list');
         
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 

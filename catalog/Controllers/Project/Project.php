@@ -1,15 +1,20 @@
-<?php namespace Catalog\Controllers\Project;
+<?php 
 
+namespace Catalog\Controllers\Project;
+
+use Catalog\Controllers\BaseController;
 use \Catalog\Models\Catalog\ProjectModel;
 use \Catalog\Models\Catalog\CategoryModel;
 use \Catalog\Models\Account\ReviewModel;
 use \Catalog\Models\Tool\DownloadModel;
 
-class Project extends \Catalog\Controllers\BaseController
+class Project extends BaseController
 {
-    // ---------------------
-    // child function for index, if failed route
-    public function category()
+    /**
+    * Callback function to override reversed routes.
+    * in case not located by SEO_URL service in DB
+    */
+    public function project()
     {
         $this->index();
     }
@@ -21,6 +26,7 @@ class Project extends \Catalog\Controllers\BaseController
         $seoUrl = service('seo_url');
 
         $this->template->setTitle(lang('project/project.heading_title'));
+        $this->template->addScript('catalog/default/javascript/jquery.countdown.min.js');
             
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -29,7 +35,7 @@ class Project extends \Catalog\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('project/project.text_projects'),
+            'text' => lang('project/project.list.text_projects'),
             'href' => route_to('projects'),
         ];
 
@@ -54,9 +60,9 @@ class Project extends \Catalog\Controllers\BaseController
             $data['icon']          = $category_info['icon'];
             $data['button_hire']   = lang('Hire For ' . $category_info['name']);
         } else {
-            $data['heading_title'] = lang('project/project.text_projects');
+            $data['heading_title'] = lang('project/project.list.text_projects');
             $data['lead']          = '';
-            $data['button_hire']   = lang($this->locale . '.button_hire');
+            $data['button_hire']   = lang($this->locale . '.list.button_hire');
             $data['icon']          = '';
         }
 
@@ -138,12 +144,12 @@ class Project extends \Catalog\Controllers\BaseController
             $keyword = $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']);
             $days_left = $this->dateDifference($result['date_added'], $result['runtime']);
 
-            if (! is_int($days_left)) {
-                $status = $result['status'];
-            } elseif($days_left <= 0) {
-                $status = lang('project/project.text_expired');
+            if ($days_left) {
+                $status = lang('project/project.list.text_expire', $days_left);
+            } elseif($days_left[0] <= 0 && ($days_left[1] <= 0)) {
+                $status = lang('project/project.list.text_expired');
             } else {    
-                $status = lang('project/project.text_expire', [$days_left]);
+                $status = $result['status']; 
             }
 
             $data['projects'][] = [
@@ -152,30 +158,31 @@ class Project extends \Catalog\Controllers\BaseController
                 'description' => word_limiter($result['description'], 50),
                 'meta_keyword'=> ($result['meta_keyword']) ? explode(',', $result['meta_keyword']) : '',
                 'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                'type'        => ($result['type'] == 1) ? lang($this->locale . '.text_fixed_price') : lang($this->locale . '.text_per_hour'),
+                'type'        => ($result['type'] == 1) ? lang($this->locale . '.list.text_fixed_price') : lang($this->locale . '.list.text_per_hour'),
                 'date_added'  => $status,
+                'final_date'  => getDateTimeString($result['date_added'], $result['runtime']),
                 'href'        => ($keyword) ? route_to('single_project', $result['project_id'], $keyword) : base_url('project/project/view?pid=' . $result['project_id']),
             ];
         }
-        
+            
         $uri = $this->request->uri;
- 
+
         $data['sorts'] = [];
 
         $data['sorts'][] = [
-            'text'  => lang('common/search.text_newest'),
+            'text'  => lang('common/search.list.text_newest'),
             'value' => 'date_added',
             'href'  => $uri->addQuery('sort_by', 'date_added')->addQuery('order_by', 'ASC')
         ];
 
         $data['sorts'][] = [
-            'text'  => lang('common/search.text_lowest'),
+            'text'  => lang('common/search.list.text_lowest'),
             'value' => 'budget_min',
             'href'  => $uri->addQuery('sort_by', 'budget_min')->addQuery('order_by', 'ASC')
         ];
 
         $data['sorts'][] = [
-            'text'  => lang('common/search.text_highest'),
+            'text'  => lang('common/search.list.text_highest'),
             'value' => 'budget_max',
             'href'  => $uri->addQuery('sort_by', 'budget_max')->addQuery('order_by', 'DESC')
         ];
@@ -185,12 +192,12 @@ class Project extends \Catalog\Controllers\BaseController
         $data['states'][] = [
             'id'    => 'open',
             'value' => '8',
-            'text'  => lang('project/project.text_all_open'),
+            'text'  => lang('project/project.list.text_all_open'),
         ];
         $data['states'][] = [
             'id'    => 'open_closed',
             'value' => 'all',
-            'text'  => lang('project/project.text_all_open_closed'),
+            'text'  => lang('project/project.list.text_all_open_closed'),
         ];
 
         $data['types'] = [];
@@ -198,12 +205,12 @@ class Project extends \Catalog\Controllers\BaseController
         $data['types'][] = [
             'id'    => 'fixed_price',
             'value' => '1',
-            'text'  => lang($this->locale . '.text_fixed_price'),
+            'text'  => lang($this->locale . '.list.text_fixed_price'),
         ];
         $data['types'][] = [
             'id'    => 'per_hour',
             'value' => '2',
-            'text'  => lang($this->locale . '.text_per_hour'),
+            'text'  => lang($this->locale . '.list.text_per_hour'),
         ];
 
         $data['categories'] = [];
@@ -215,25 +222,15 @@ class Project extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['text_search_keyword'] = lang('project/project.text_search_keyword');
-        $data['button_search']       = lang('project/project.button_search');
-        $data['text_found']          = lang('project/project.text_found', [$total]);
-        $data['text_sidebar']        = lang('project/project.text_sidebar');
-        $data['text_type']           = lang('project/project.text_type');
-        $data['text_skills']         = lang('project/project.text_skills');
-        $data['text_languages']      = lang('project/project.text_languages');
-        $data['text_state']          = lang('project/project.text_state');
-        $data['text_budget']         = lang('project/project.text_budget');
-        
-        $data['text_projects']       = lang('project/project.text_projects');
-        $data['button_work']         = lang($this->locale . '.button_work');
-        $data['button_bid_now']      = lang('project/project.button_bid_now');
-        $data['text_select']         = lang($this->locale . '.text_select');
+        $data['text_found']          = lang('project/project.list.text_found', [$total]);
+        $data['button_work']         = lang($this->locale . '.list.button_work');
+        $data['text_select']         = lang($this->locale . '.list.text_select');
 
         $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
         $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
         $data['logged'] = $this->customer->isLogged();
 
+        // set the redirect url
         $this->session->set('redirect_url', current_url());
 
         $data['filter_type']   = $filter_type;
@@ -248,6 +245,8 @@ class Project extends \Catalog\Controllers\BaseController
         // Pagination
         $pager = \Config\Services::pager();
         $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
+
+        $data['langData'] = lang('project/project.list');
 
         $this->template->output('project/project_list', $data);
     }
@@ -343,25 +342,34 @@ class Project extends \Catalog\Controllers\BaseController
             $data['viewed']      = $project_info['viewed'];
 
             // attachments
-            $downloadModel = new DownloadModel();
-            $data['download']        = base_url('tool/download?download_id=' . $project_info['download_id']);
-            $data['attachment']      = $downloadModel->where('download_id', $project_info['download_id'])->findColumn('filename')[0];
-            $data['attachment_ext']  =  strtoupper($downloadModel->where('download_id', $project_info['download_id'])->findColumn('ext')[0]);
+            if ($project_info['download_id']) {
+                $downloadModel = new DownloadModel();
+
+                $data['download']        = base_url('tool/download?download_id=' . $project_info['download_id']);
+                $data['attachment']      = $downloadModel->where('download_id', $project_info['download_id'])->findColumn('filename')[0];
+                $data['attachment_ext']  =  strtoupper($downloadModel->where('download_id', $project_info['download_id'])->findColumn('ext')[0]);
+            } else {
+                $data[''] = '';
+                $data['attachment'] = '';
+                $data['attachment_ext'] = '';
+            }
 
             // Calculate the Bidding Time
             $days_left = $this->dateDifference($project_info['date_added'], $project_info['runtime']);
-
-            if ($project_info['runtime'] != 0) {
-                $project_status = ['status_id' => $this->registry->get('config_project_expired_status')];
+            // update the project status if expired
+            if (($days_left[0] <= 0) && ($days_left[1] <= 0)) {
+                $project_status = [
+                    'status_id' => $this->registry->get('config_project_expired_status')
+                ];
                 $projectModel->update($project_info['project_id'], $project_status);
             }
 
-            if (! is_int($days_left)) {
-                $data['days_left'] = $project_info['status'];
-            } elseif($days_left <= 0) {
-            	$data['days_left'] = lang('project/project.text_expired');
+            if ($days_left) {
+                $data['days_left'] = lang('project/project.list.text_expire', $days_left);
+            } elseif(($days_left[0] <= 0) && ($days_left[1] <= 0)) {
+            	$data['days_left'] = lang('project/project.list.text_expired');
             } else {	
-                $data['days_left'] = lang('project/project.text_expire', [$days_left]);
+                $data['days_left'] = $project_info['status'];
             }
             
 
@@ -410,7 +418,7 @@ class Project extends \Catalog\Controllers\BaseController
         $data['text_twitter']        = lang($this->locale . '.text_twitter');
         $data['text_gplus']          = lang($this->locale . '.text_gplus');
         $data['button_bid']          = lang('project/project.button_bid');
-        $data['text_expired']        = lang('project/project.text_expired');
+        $data['text_expired']        = lang('project/project.list.text_expired');
         $data['text_similar']        = lang('project/project.text_similar');
         $data['button_post_project'] = lang('project/project.button_post_project');
 
@@ -429,6 +437,8 @@ class Project extends \Catalog\Controllers\BaseController
         $this->session->set('redirect_url', base_url(current_url() . $url));
 
         $projectModel->updateViewed($project_id);
+
+        $data['langData'] = lang('project/project.list');
 
         $this->template->output('project/project_info', $data);
     }

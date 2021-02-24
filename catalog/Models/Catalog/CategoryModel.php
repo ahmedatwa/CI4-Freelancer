@@ -1,6 +1,10 @@
-<?php namespace Catalog\Models\Catalog;
+<?php 
 
-class CategoryModel extends \CodeIgniter\Model
+namespace Catalog\Models\Catalog;
+
+use CodeIgniter\Model;
+
+class CategoryModel extends Model
 {
     protected $table          = 'category';
     protected $primaryKey     = 'category_id';

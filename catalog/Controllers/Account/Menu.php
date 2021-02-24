@@ -1,8 +1,11 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
-use \Catalog\Models\Account\CustomerModel;
+namespace Catalog\Controllers\Account;
 
-class Menu extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+
+class Menu extends BaseController
 {
     public function index()
     {
@@ -53,15 +56,6 @@ class Menu extends \Catalog\Controllers\BaseController
             'href'     => route_to('account_dispute') ? route_to('account_dispute') : base_url('account/dispute'),
             'children' => [],
         ];
-
-        // $data['menus'][] = [
-        //     'id'       => 'menu-start',
-        //     'icon'     => 'icon-material-outline-question-answer',
-        //     'class'    => '',
-        //     'name'     => lang('account/menu.text_messages'),
-        //     'href'     => route_to('account_message') ? route_to('account_message') : base_url('account/message'),
-        //     'children' => [],
-        // ];
 
         $data['menus'][] = [
             'id'       => 'menu-start',

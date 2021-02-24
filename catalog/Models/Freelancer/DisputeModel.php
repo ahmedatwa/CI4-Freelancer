@@ -1,15 +1,21 @@
-<?php namespace Catalog\Models\Freelancer;
+<?php 
 
-class DisputeModel extends \CodeIgniter\Model
+namespace Catalog\Models\Freelancer;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class DisputeModel extends Model
 {
-    protected $table          = 'dispute';
-    protected $primaryKey     = 'dispute_id';
-    protected $returnType     = 'array';
-    protected $allowedFields  = ['project_id', 'freelancer_id', 'employer_id', 'created_by', 'comment', 'dispute_status_id', 'dispute_reason_id'];
-    protected $useTimestamps  = true;
+    protected $table         = 'dispute';
+    protected $primaryKey    = 'dispute_id';
+    protected $returnType    = 'array';
+    protected $allowedFields = ['project_id', 'freelancer_id', 'employer_id', 'created_by', 'comment', 'dispute_status_id', 'dispute_reason_id'];
     // should use for keep data record create timestamp
-    protected $createdField = 'date_added';
-    protected $updatedField = 'date_modified';
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'int';
+    protected $createdField  = 'date_added';
+    protected $updatedField  = 'date_modified';
 
     public function getDisputeReasons()
     {

@@ -1,5 +1,7 @@
 <?php
 return [
-// Text
- 'text_error' => 'Information Page Not Found!',
+	'list' => [
+		// Text
+		'text_error' => 'Information Page Not Found!',
+	]
 ];

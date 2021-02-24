@@ -42,19 +42,25 @@ class EncryptionFilter implements FilterInterface
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        $cookies = [];
-
         if ($request->getMethod() == 'post') {
-            foreach ($response->getCookies() as $key => $cookie) {
-                $cookies[$key] = [
-                    'value' => bin2hex(\Config\Services::encrypter()->encrypt($cookie['value'])),
-                ];
+            foreach ($response->getCookies() as $key => $value) {
+                if ($response->hasCookie(substr($value['name'], strlen(config('App')->cookiePrefix)))) {
+                    $cookieData = [
+                        'name'     => substr($value['name'], strlen(config('App')->cookiePrefix)),
+                        'value'    => base64_encode(\Config\Services::encrypter()->encrypt($value['value'])),
+                        'expire'   => $value['expire'] ?? '86500', // 1 Day
+                        'domain'   => $value['domain'] ?? config('App')->cookieDomain,
+                        'path'     => $value['path'] ?? config('App')->cookiePath,
+                        'prefix'   => $value['prefix'] ?? config('App')->cookiePrefix,
+                        'secure'   => $value['secure'] ?? config('App')->cookieSecure,
+                        'httponly' => $value['httponly'] ?? config('App')->cookieHTTPOnly,
+                        'samesite' => $value['samesite'] ?? config('App')->cookieSameSite,
+                    ];
+
+                    $response->setCookie($cookieData);
+                }
             }
-
-            array_replace($cookies, $response->getCookies());
-
-            var_dump($response->getCookies());
-            die;
         }
     }
+ // ------------------------------------------------------ 
 }

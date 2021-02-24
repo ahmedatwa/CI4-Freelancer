@@ -1,6 +1,10 @@
-<?php namespace Catalog\Models\Localization;
+<?php 
 
-class ProjectStatusModel extends \CodeIgniter\Model
+namespace Catalog\Models\Localization;
+
+use CodeIgniter\Model;
+
+class ProjectStatusModel extends Model
 {
 
    public function getProjectStatus($status_id) {

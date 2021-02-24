@@ -1,9 +1,12 @@
-<?php namespace Catalog\Controllers\Common;
+<?php 
 
-use \Catalog\Models\Design\Layouts;
-use \Catalog\Models\Setting\Modules;
+namespace Catalog\Controllers\Common;
 
-class Content_top extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Design\LayoutModel;
+use Catalog\Models\Setting\ModulesModel;
+
+class Content_top extends BaseController
 {
     public function index()
     {
@@ -12,12 +15,12 @@ class Content_top extends \Catalog\Controllers\BaseController
             $route = $this->request->uri->getPath();
         } 
 
-        if (!$route || $route == '/') {
+        if (! $route || $route == '/') {
              $route = 'common/home';
         }
             
-        $moduleModel = new Modules();
-        $layoutModel = new Layouts();
+        $moduleModel = new ModulesModel();
+        $layoutModel = new LayoutModel();
 
         $data['modules'] = [];
 
@@ -34,7 +37,6 @@ class Content_top extends \Catalog\Controllers\BaseController
             $part = explode('.', $module['code']);
 
             $basename = ucfirst($part[0]);
-
 
             if (isset($part[0]) && $this->registry->get('module_' . $part[0] . '_status')) {
 
@@ -59,10 +61,7 @@ class Content_top extends \Catalog\Controllers\BaseController
             }
         }
 
-
         return view ('common/content_top', $data);
     }
-
-
     //--------------------------------------------------------------------
 }

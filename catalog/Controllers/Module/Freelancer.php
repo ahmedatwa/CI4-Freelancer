@@ -1,31 +1,30 @@
-<?php namespace Catalog\Controllers\Module;
+<?php 
 
-use \Catalog\Models\Catalog\ProjectModel;
-use \Catalog\Models\Account\CustomerModel;
+namespace Catalog\Controllers\Module;
 
-class Freelancer extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Catalog\ProjectModel;
+use Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Account\ReviewModel;
+
+class Freelancer extends BaseController
 {
     public function index($setting)
-    {
-		$data['heading_title']        = lang('module/freelancer.heading_title');
-		$data['text_freelancers']     = lang('module/freelancer.text_freelancers');
-		$data['text_all_freelancers'] = lang('module/freelancer.text_all_freelancers');
-		$data['text_view_profile']    = lang('module/freelancer.text_view_profile');
-		
+    {		
         $filter_data = [
 			'filter_freelancer' => 100,
-			'limit'             => $this->registry->get('module_freelancer_limit'),
 			'start'             => 0,
+            'limit'             => $this->registry->get('module_freelancer_limit'),
         ];
         
         $data['freelancers'] = [];
 
         $customerModel = new CustomerModel();
+        $reviewModel   = new ReviewModel();
 
-        $results = $customerModel->getCustomers($filter_data);
-        $reviewModel = new \Catalog\Models\Account\ReviewModel();
+        $results        = $customerModel->getCustomers($filter_data);
         $total_services = $reviewModel->getTotalJobsByFreelancerId($this->customer->getCustomerId()) ?? null;
-        $ontime =  $reviewModel->getOntimeByFreelancerId($this->customer->getCustomerId()) ?? null;
+        $ontime         =  $reviewModel->getOntimeByFreelancerId($this->customer->getCustomerId()) ?? null;
 
         foreach ($results as $result) {
 
@@ -49,6 +48,9 @@ class Freelancer extends \Catalog\Controllers\BaseController
 
         $data['freelancers_all'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');
       
+        $data['langData'] = lang('module/freelancer.list');
+
         return view('module/freelancer', $data);
     }
+    // -------------------------------------------------------
 }

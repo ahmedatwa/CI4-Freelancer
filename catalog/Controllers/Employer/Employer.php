@@ -1,10 +1,13 @@
-<?php namespace Catalog\Controllers\Employer;
+<?php
 
-use \Catalog\Models\Freelancer\BalanceModel;
-use \Catalog\Models\Freelancer\DisputeModel;
-use \Catalog\Models\Account\CustomerModel;
+namespace Catalog\Controllers\Employer;
 
-class Employer extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Freelancer\BalanceModel;
+use Catalog\Models\Freelancer\DisputeModel;
+use Catalog\Models\Account\CustomerModel;
+
+class Employer extends BaseController
 {
     public function transferFunds()
     {
@@ -22,7 +25,6 @@ class Employer extends \Catalog\Controllers\BaseController
 
             if (! $json) {
                 $balanceModel->transferProjectFunds($this->request->getPost());
-
                 $json['success'] = lang('freelancer/freelancer.text_transaction');
             }
         }
@@ -81,13 +83,12 @@ class Employer extends \Catalog\Controllers\BaseController
         $total = $disputeModel->getTotalDisputes($filter_data);
 
         foreach ($results as $result) {
-
             $dispute_action = $disputeModel->getDisputeAction($result['dispute_action_id']);
             $name = $customerModel->where('customer_id', $result['freelancer_id'])->findColumn('username');
 
             $data['disputes'][] = [
                 'dispute_id' => $result['project_id'],
-                'freelancer' => $name[0],
+                'freelancer' => isset($name[0]) ? $name[0] : '',
                 'project_id' => $result['project_id'],
                 'comment'    => $result['comment'],
                 'status'     => $result['status'],
@@ -97,19 +98,9 @@ class Employer extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['column_project_id']    = lang('employer/employer.column_project_id');
-        $data['column_freelancer_id'] = lang('employer/employer.column_freelancer_id');
-        $data['column_employer_id']   = lang('employer/employer.column_employer_id');
-        $data['column_comment']       = lang('employer/employer.column_comment');
-        $data['column_status']        = lang('employer/employer.column_status');
-        $data['column_action']        = lang('employer/employer.column_action');
-        $data['column_date_added']    = lang('employer/employer.column_date_added');
-
         $data['customer_id'] = $customer_id;
 
-        // Pagination
-        $pager = \Config\Services::pager();
-        $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
+        $data['langData'] = lang('employer/dispute.list');
 
         return view('employer/dispute_list', $data);
     }
@@ -118,17 +109,15 @@ class Employer extends \Catalog\Controllers\BaseController
     {
         $json = [];
 
-        $disputeModel = new DisputeModel();
+        if (($this->request->getMethod() == 'post') && $this->request->isAJAX()) {
+            $disputeModel = new DisputeModel();
 
-        if (! $this->validate([
-           'comment' => "required|min_length[20]",
-        ]))
-        {
-         $json['error'] = $this->validator->getErrors();
-        }
+            if (! $this->validate([
+                'comment' => "required|min_length[20]",
+            ])) {
+                $json['error'] = $this->validator->getErrors();
+            }
 
-
-        if ($this->request->getMethod() == 'post') {
             if (! $json) {
                 $dispute_data = [
                     'created_by'        => $this->request->getPost('employer_id'),
@@ -137,11 +126,10 @@ class Employer extends \Catalog\Controllers\BaseController
                     'project_id'        => $this->request->getPost('project_id'),
                     'comment'           => $this->request->getPost('comment'),
                     'dispute_reason_id' => $this->request->getPost('dispute_reason_id'),
-                ];
+            ];
 
-                $disputeModel->insert($dispute_data);
-
-                $json['success'] = lang('freelancer/dispute.text_success');
+            $disputeModel->insert($dispute_data);
+            $json['success'] = lang('freelancer/dispute.text_success');
             }
         }
         

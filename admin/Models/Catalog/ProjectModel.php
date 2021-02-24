@@ -7,13 +7,14 @@ class ProjectModel extends \CodeIgniter\Model
     protected $returnType     = 'array';
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
-    protected $allowedFields = ['status_id'];
+    protected $allowedFields  = ['status_id'];
     // User Activity Events
-    protected $afterInsert = ['afterInsertEvent'];
-    protected $afterUpdate = ['afterUpdateEvent'];
+    protected $afterInsert    = ['afterInsertEvent'];
+    protected $afterUpdate    = ['afterUpdateEvent'];
     // should use for keep data record create timestamp
-    protected $createdField = 'date_added';
-    protected $updatedField = 'date_modified';
+    protected $dateFormat     = 'int';
+    protected $createdField   = 'date_added';
+    protected $updatedField   = 'date_modified';
 
     protected function afterInsertEvent(array $data)
     {
@@ -51,7 +52,7 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->where('project_description.language_id', (int) service('registry')->get('config_language_id'));
 
         if (!empty($data['filter_date_added'])) {
-            $builder->where('project.date_added', 'DATE("' . $data['filter_date_added'] .'")');
+            $builder->where('project.date_added', date("Y-m-d H:m:s", strtotime($data['filter_date_added'])));
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
@@ -217,7 +218,7 @@ class ProjectModel extends \CodeIgniter\Model
         $builder->where('project_description.language_id', (int) service('registry')->get('config_language_id'));
 
         if (!empty($data['filter_date_added'])) {
-            $builder->where('project.date_added', 'DATE("' . $data['filter_date_added'] .'")');
+            $builder->where('project.date_added', date("Y-m-d H:m:s", strtotime($data['filter_date_added'])));
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {

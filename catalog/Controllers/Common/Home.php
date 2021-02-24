@@ -1,8 +1,11 @@
-<?php namespace Catalog\Controllers\Common;
+<?php 
 
-use \Catalog\Models\Account\CustomerModel;
+namespace Catalog\Controllers\Common;
 
-class Home extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+
+class Home extends BaseController
 {
 	public function index()
 	{

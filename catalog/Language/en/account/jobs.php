@@ -1,5 +1,7 @@
 <?php 
         
 return [
-    'heading_title'   => 'My Local Jobs',
+	// Heading
+	'heading_title'   => 'My Local Jobs',
+	'list' => []
 ];

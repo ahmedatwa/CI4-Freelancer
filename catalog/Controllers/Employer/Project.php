@@ -1,19 +1,22 @@
-<?php namespace Catalog\Controllers\Employer;
+<?php 
 
-use \Catalog\Models\Catalog\ProjectModel;
-use \Catalog\Models\Account\CustomerModel;
-use \Catalog\Models\Freelancer\MilestoneModel;
-use \Catalog\Models\Extension\Bid\BidModel;
-use \Catalog\Models\Freelancer\BalanceModel;
-use \Catalog\Models\Employer\EmployerModel;
-use \Catalog\Models\Freelancer\DisputeModel;
-use \Catalog\Models\Account\ReviewModel;
-use \Catalog\Models\Account\MessageModel;
+namespace Catalog\Controllers\Employer;
 
-class Project extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Catalog\ProjectModel;
+use Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Freelancer\MilestoneModel;
+use Catalog\Models\Extension\Bid\BidModel;
+use Catalog\Models\Freelancer\BalanceModel;
+use Catalog\Models\Employer\EmployerModel;
+use Catalog\Models\Freelancer\DisputeModel;
+use Catalog\Models\Account\ReviewModel;
+use Catalog\Models\Account\MessageModel;
+
+class Project extends BaseController
 {
     public function view()
-    {
+    {        
         if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
             return redirect('account_login');
         }
@@ -71,22 +74,24 @@ class Project extends \Catalog\Controllers\BaseController
             // get Bid info
             $bid_info = $bidModel->getBidByProjectId($project_id);
 
-            $data['bid_amount'] = ($bid_info['quote']) ? $this->currencyFormat($bid_info['quote']) : '';
-
-            $customerModel = new CustomerModel();
-            $freelancer_info = $customerModel->getCustomer($bid_info['freelancer_id']);
-
-            $data['freelancer'] = $freelancer_info['username'] ?? '';
-            
-            if ($bid_info['freelancer_id'] == $customer_id) {
-                $data['created_for'] = $project_info['employer_id'];
+            if (! is_null($bid_info)) {
+                $data['bid_amount']         = $this->currencyFormat($bid_info['quote']);
+                $customerModel              = new CustomerModel();
+                $freelancer_info            = $customerModel->getCustomer($bid_info['freelancer_id']);
+                $data['freelancer']         = $freelancer_info['username'];
+                $data['freelancer_id']      = $bid_info['freelancer_id'];
+                $data['freelancer_profile'] = ($bid_info['freelancer_id']) ? route_to('freelancer_profile', $bid_info['freelancer_id'], $freelancer_info['username']) : '';
+                if ($bid_info['freelancer_id'] == $customer_id) {
+                    $data['created_for'] = $project_info['employer_id'];
+                } else {
+                    $data['created_for'] = $bid_info['freelancer_id'];
+                }
             } else {
-                $data['created_for'] = $bid_info['freelancer_id'];
-            }
-
-            $data['freelancer_id'] = $bid_info['freelancer_id'];
-
-            $data['freelancer_profile'] = ($bid_info['freelancer_id']) ? route_to('freelancer_profile', $bid_info['freelancer_id'], $freelancer_info['username']) : '';
+                $data['bid_amount'] = '';
+                $data['freelancer'] = '';
+                $data['freelancer_id'] = '';
+                $data['freelancer_profile'] = '';
+            }         
 
             $data['status'] = $projectModel->getStatusByProjectId($project_info['project_id']);
             // Project PMs Data
@@ -185,7 +190,6 @@ class Project extends \Catalog\Controllers\BaseController
         $total = $bidModel->getTotalBidsByProjectId($project_id);
         $reviewModel = new ReviewModel();
 
-
         foreach ($results as $result) {
             $data['bidders'][] = [
                 'bid_id'        => $result['bid_id'],
@@ -203,9 +207,6 @@ class Project extends \Catalog\Controllers\BaseController
                 'profile'       => route_to('freelancer_profile', $result['freelancer_id'], $result['username'])
             ];
         }
-
-        $data['heading_title'] = lang('project/project.text_manage_bidders');
-        $data['text_total_bidders'] = sprintf(lang('project/project.text_total_bidders'), $total);
 
         $data['customer_id'] = $customer_id;
         $data['project_id'] = $project_id;
@@ -271,8 +272,8 @@ class Project extends \Catalog\Controllers\BaseController
             $data['open_projects'][] = [
                 'project_id' => $result['project_id'],
                 'name'       => $result['name'],
-                'budget'     => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                'type'       => ($result['type'] == 1) ? lang('project/project.text_fixed_price') : lang('project/project.text_per_hour'),
+                'budget'     => $this->currencyFormat($result['budget_min']) . ' - ' . $this->currencyFormat($result['budget_max']),
+                'type'       => ($result['type'] == 1) ? lang('project/project.list.text_fixed_price') : lang('project/project.list.text_per_hour'),
                 'date_added' => $this->dateDifference($result['date_added']),
                 'total_bids' => $projectModel->getTotalBidsByProjectId($result['project_id']),
                 'expiry'     => $this->addDays($result['date_added'], $result['runtime']),
@@ -284,25 +285,15 @@ class Project extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['column_project_id'] = lang('employer/project.column_project_id');
-        $data['column_name']       = lang('employer/project.column_name');
-        $data['column_budget']     = lang('employer/project.column_budget');
-        $data['column_type']       = lang('employer/project.column_type');
-        $data['column_bids']       = lang('employer/project.column_bids');
-        $data['column_avg_bids']   = lang('employer/project.column_avg_bids');
-        $data['column_expiry']     = lang('employer/project.column_expiry');
-        $data['column_status']     = lang('employer/project.column_status');
-        $data['column_action']     = lang('employer/project.column_action');
-
-        // Pagination
-        $pager = \Config\Services::pager();
-        $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
+        $data['langData'] = lang('employer/project.list');
 
         return view('employer/open_project_list', $data);
     }
 
     public function getInProgressProjects()
     {
+        $data['langData'] = lang('employer/project.list');
+
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
         } elseif ($this->customer->getCustomerId()) {
@@ -370,13 +361,6 @@ class Project extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['column_project_id'] = lang('employer/project.column_project_id');
-        $data['column_name']       = lang('employer/project.column_name');
-        $data['column_budget']     = lang('employer/project.column_budget');
-        $data['column_type']       = lang('employer/project.column_type');
-        $data['column_status']     = lang('employer/project.column_status');
-        $data['column_action']     = lang('employer/project.column_action');
-
         $data['customer_id'] = $customer_id;
 
         // Pagination
@@ -385,10 +369,11 @@ class Project extends \Catalog\Controllers\BaseController
 
         return view('employer/progress_project_list', $data);
     }
-
     
     public function getPastProjects()
     {
+        $data['langData'] = lang('employer/project.list');
+
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
         } elseif ($this->customer->getCustomerId()) {
@@ -422,41 +407,40 @@ class Project extends \Catalog\Controllers\BaseController
         }
 
         $filter_data = [
-         'employer_id' => $customer_id,
-         'status_id'   => '5,7,1,2',
-         'sort_by'     => $sort_by,
-         'order_by'    => $order_by,
-         'limit'       => $limit,
-         'start'       => ($page - 1) * $limit,
+            'employer_id' => $customer_id,
+            'status_id'   => '5,7,1,2',
+            'sort_by'     => $sort_by,
+            'order_by'    => $order_by,
+            'limit'       => $limit,
+            'start'       => ($page - 1) * $limit,
         ];
 
         $data['past_projects'] = [];
 
-        $projectModel = new ProjectModel();
-        $bidModel = new BidModel();
+        $projectModel   = new ProjectModel();
+        $bidModel       = new BidModel();
         $MilestoneModel = new MilestoneModel();
-        $disputeModel = new DisputeModel();
+        $disputeModel   = new DisputeModel();
 
         $results = $projectModel->getProjects($filter_data);
-        $total = $projectModel->getTotalProjects($filter_data);
+        $total   = $projectModel->getTotalProjects($filter_data);
 
         foreach ($results as $result) {
-            $paidStatus = $bidModel->where('project_id', $result['project_id'])->findColumn('paid');
-
+            $paidStatus      = $bidModel->where('project_id', $result['project_id'])->findColumn('paid');
             $milestoneAmount = $MilestoneModel->where(['project_id' => $result['project_id'], 'status' => 2])->findColumn('amount');
-
-            if ($paidStatus[0] == 0) {
-                $paid = lang('employer/project.text_unpaid');
-            } elseif ($paidStatus[0] == 1) {
-                $paid = lang('employer/project.text_paid');
-            } else {
-                $paid = lang('employer/project.text_partial');
+            $quoteAmount     = $bidModel->where('project_id', $result['project_id'])->findColumn('quote');
+            $inDispute       = $disputeModel->inDispute($result['project_id']);
+            
+            if (isset($paidStatus[0])) {
+                if ($paidStatus[0]== 0) {
+                    $paid = lang('employer/project.text_unpaid');
+                } elseif ($paidStatus[0] == 1) {
+                    $paid = lang('employer/project.text_paid');
+                } else {
+                    $paid = lang('employer/project.text_partial');
+                }
             }
             
-            $amount = $bidModel->where('project_id', $result['project_id'])->findColumn('quote');
-
-            $inDispute =  $disputeModel->inDispute($result['project_id']);
-
             $data['past_projects'][] = [
                 'project_id'    => $result['project_id'],
                 'employer_id'   => $result['employer_id'],
@@ -472,8 +456,8 @@ class Project extends \Catalog\Controllers\BaseController
                 'expired'       => $result['runtime'],
                 'view'          => base_url('employer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
                 'bidders'       => base_url('employer/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
-                'amount'        => $amount[0] - $milestoneAmount[0],
-                'paid'          => ($amount[0] == 0) ? '-' : $paid,
+                'amount'        => (! is_null($quoteAmount) ? $quoteAmount[0] : 0) - (! is_null($milestoneAmount) ? $milestoneAmount[0] : 0),
+                'paid'          => ((! is_null($quoteAmount) ? $quoteAmount[0] : 0) == 0) ? '-' : $paid,
                 'inDispute'     => $inDispute,
             ];
         }
@@ -488,19 +472,6 @@ class Project extends \Catalog\Controllers\BaseController
                 'name'              => $reason['name']
             ];
         }
-
-        $data['column_project_id'] = lang('employer/project.column_project_id');
-        $data['column_name']       = lang('employer/project.column_name');
-        $data['column_project_id'] = lang('employer/project.column_project_id');
-        $data['column_budget']     = lang('employer/project.column_budget');
-        $data['column_type']       = lang('employer/project.column_type');
-        $data['column_bids']       = lang('employer/project.column_bids');
-        $data['column_avg_bids']   = lang('employer/project.column_avg_bids');
-        $data['column_status']     = lang('employer/project.column_status');
-        $data['column_status']     = lang('employer/project.column_status');
-        $data['column_amount']     = lang('employer/project.column_amount');
-        $data['column_paid']       = lang('employer/project.column_paid');
-        $data['column_action']     = lang('employer/project.column_action');
 
         $balanceModel = new BalanceModel();
         $data['balance'] = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId())['total']);

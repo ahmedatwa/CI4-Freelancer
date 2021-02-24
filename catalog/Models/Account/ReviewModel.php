@@ -1,19 +1,22 @@
-<?php namespace Catalog\Models\Account;
+<?php 
 
-class ReviewModel extends \CodeIgniter\Model
+namespace Catalog\Models\Account;
+
+use CodeIgniter\Model;
+
+class ReviewModel extends Model
 {
-    protected $table          = 'review';
-    protected $primaryKey     = 'review_id';
-    protected $returnType     = 'array';
-    protected $useSoftDeletes = true;
-
+    protected $table         = 'review';
+    protected $primaryKey    = 'review_id';
+    protected $returnType    = 'array';
     protected $allowedFields = ['project_id', 'freelancer_id', 'employer_id', 'comment', 'rating', 'recommended', 'ontime', 'submitted_by', 'status'];
-
+    // should use for keep data record create timestamp
     protected $useTimestamps = true;
+    protected $dateFormat    = 'int';
     protected $createdField  = 'date_added';
     protected $updatedField  = 'date_modified';
-
-    protected $afterInsert = ['afterInsert'];
+    // User Activity Events
+    protected $afterInsert   = ['afterInsert'];
 
     protected function afterInsert(array $data)
     {
@@ -76,7 +79,6 @@ class ReviewModel extends \CodeIgniter\Model
         return round($query['total']);
     }
 
-
     public function getFreelancerReviews($freelancer_id)
     {
         $builder = $this->db->table('review r');
@@ -94,88 +96,5 @@ class ReviewModel extends \CodeIgniter\Model
        }
     }
 
-
-    // public function getFreelancerReviews($data = [])
-    // {
-    //     $builder = $this->db->table('review r');
-    //     $builder->select('r.comment, r.rating, r.status, r.review_id, r.project_id, r.freelancer_id, r.employer_id');
-    //     $builder->join('project_description pd', 'r.project_id = pd.project_id', 'left');
-    //     $builder->join('customer c', 'r.freelancer_id = c.customer_id', 'left');
-      
-    //     if (isset($data['customer_id'])) {
-    //        $builder->where('c.customer_id', $data['customer_id']);
-    //     }
-
-    //     $sortData = [
-    //         'p.date_added',
-    //     ];
-
-    //     if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
-    //         $data['order_by'] = 'DESC';
-    //     } else {
-    //         $data['order_by'] = 'ASC';
-    //     }
-
-    //     if (isset($data['sort_by']) && in_array($data['sort_by'], $sortData)) {
-    //         $builder->orderBy($data['sort_by'], 'DESC');
-    //     } else {
-    //         $builder->orderBy('r.date_added', 'ASC');
-    //     }
-
-    //     if (isset($data['start']) || isset($data['limit'])) {
-    //         if ($data['start'] < 0) {
-    //             $data['start'] = 0;
-    //         }
-    //         if ($data['limit'] < 1) {
-    //             $data['limit'] = 20;
-    //         }
-    //         $builder->limit($data['limit'], $data['start']);
-    //     }
-
-    //     $query = $builder->get();
-    //     return $query->getResultArray();
-    // }
-
-    // public function getEmployerReviews($data = [])
-    // {
-    //     $builder = $this->db->table('review r');
-    //     $builder->select('r.comment, r.rating, r.status, r.review_id, r.project_id, r.freelancer_id, r.employer_id');
-    //     $builder->join('project_description pd', 'r.project_id = pd.project_id', 'left');
-    //     $builder->join('customer c', 'r.employer = c.customer_id', 'left');
-      
-    //     if (isset($data['customer_id'])) {
-    //        $builder->where('c.customer_id', $data['customer_id']);
-    //     }
-
-    //     $sortData = [
-    //         'p.date_added',
-    //     ];
-
-    //     if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
-    //         $data['order_by'] = 'DESC';
-    //     } else {
-    //         $data['order_by'] = 'ASC';
-    //     }
-
-    //     if (isset($data['sort_by']) && in_array($data['sort_by'], $sortData)) {
-    //         $builder->orderBy($data['sort_by'], 'DESC');
-    //     } else {
-    //         $builder->orderBy('r.date_added', 'ASC');
-    //     }
-
-    //     if (isset($data['start']) || isset($data['limit'])) {
-    //         if ($data['start'] < 0) {
-    //             $data['start'] = 0;
-    //         }
-    //         if ($data['limit'] < 1) {
-    //             $data['limit'] = 20;
-    //         }
-    //         $builder->limit($data['limit'], $data['start']);
-    //     }
-
-    //     $query = $builder->get();
-    //     return $query->getResultArray();
-    // }
-
-    // -----------------------------------------------------------------
+  // -----------------------------------------------------------------
 }

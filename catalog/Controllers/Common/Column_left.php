@@ -1,9 +1,12 @@
-<?php namespace Catalog\Controllers\Common;
+<?php 
 
-use \Catalog\Models\Design\Layouts;
-use \Catalog\Models\Setting\Modules;
+namespace Catalog\Controllers\Common;
 
-class Column_left extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Design\LayoutModel;
+use Catalog\Models\Setting\ModulesModel;
+
+class Column_left extends BaseController
 {
     public function index()
     {
@@ -11,23 +14,22 @@ class Column_left extends \Catalog\Controllers\BaseController
             $route = $this->request->uri->getPath();
         } 
 
-        if (!$route || $route == '/') {
+        if (! $route || $route == '/') {
              $route = 'common/home';
         }
 
-        $layout_model = new Layouts();
+        $layoutModel = new LayoutModel();
+        $moduleModel = new ModulesModel();
 
-        $module_model = new Modules();
+        $layout_id = $layoutModel->getLayout($route);
 
-        $layout_id = $layout_model->getLayout($route);
-
-        if (!$layout_id) {
+        if (! $layout_id) {
              $layout_id = $this->registry->get('config_layout_id');
         }
 
         $data['modules'] = [];
 
-        $modules = $layout_model->getLayoutModules($layout_id, 'column_left');
+        $modules = $layoutModel->getLayoutModules($layout_id, 'column_left');
 
         foreach ($modules as $module) {
             $part = explode('.', $module['code']);
@@ -44,7 +46,7 @@ class Column_left extends \Catalog\Controllers\BaseController
             }
 
             if (isset($part[1])) {
-                $setting_info = $module_model->getModule($part[1]);
+                $setting_info = $moduleModel->getModule($part[1]);
                 if ($setting_info && $setting_info['status']) {
                     $output = view_cell("Catalog\Controllers\Module\\{$basename}::index", $setting_info);
 

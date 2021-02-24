@@ -1,0 +1,29 @@
+{% if certificates %}
+<div class="table-responsive">
+    <table class="table table-bordered" id="certificats-table">
+        <thead>
+            <tr>
+                <th>{{ column_name }}</th>
+                <th>{{ column_year }}</th>
+                <th width="10%">{{ column_action }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for certificate in certificates %}
+            <tr>
+                <td>{{ certificate.name }}</td>
+                <td>{{ certificate.year }}</td>
+                <td><button type="button" value="<?php echo $certificate.certificate_id ?>"
+                        id="button-delete-certificate<?php echo $certificate.certificate_id ?>"
+                        data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}"
+                        class="btn btn--icon btn-sm btn-danger"><i class="icon-feather-trash-2"></i>
+                    </button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="mt-4 float-left">
+    {{ pagination }}
+</div>
+{% endif %}

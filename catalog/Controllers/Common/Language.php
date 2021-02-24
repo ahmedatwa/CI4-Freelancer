@@ -1,14 +1,23 @@
-<?php namespace Catalog\Controllers\Common;
+<?php 
 
-use \Catalog\Models\Localization\LanguageModel;
+namespace Catalog\Controllers\Common;
 
-class Language extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Localization\LanguageModel;
+
+class Language extends BaseController
 {
     public function index()
     {
         $data['action'] = base_url('common/language/language');
 
-        $data['code'] = $this->request->getCookie(config('App')->cookiePrefix . 'language', FILTER_SANITIZE_STRING);
+        if ($this->request->getCookie(config('App')->cookiePrefix . 'language')) {
+            $code = \Config\Services::encrypter()->decrypt(base64_decode($this->request->getCookie(config('App')->cookiePrefix . 'language', FILTER_SANITIZE_STRING)));
+        } else {
+            $code = $this->registry->get('config_language');
+        }
+
+        $data['code'] = $code;
 
         $languageModel = new LanguageModel();
 
@@ -56,7 +65,7 @@ class Language extends \Catalog\Controllers\BaseController
 
             $cookie = [
                 'name'     => 'language',
-                'value'    => hex2bin(\Config\Services::encrypter()->encrypt($this->request->getPost('code'))),
+                'value'    => $this->request->getPost('code', FILTER_SANITIZE_STRING),
                 'expire'   => '86500',
                 'domain'   => config('App')->cookieDomain,
                 'path'     => config('App')->cookiePath,

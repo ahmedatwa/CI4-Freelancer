@@ -117,6 +117,10 @@ $(document).on('click', '.dropdown-menu', function (e) {
     $(document).ajaxStop(function() {
         $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
     });
+    // tooltip remove
+    $('[data-toggle=\'tooltip\']').on('remove', function() {
+        $(this).tooltip('dispose');
+    });
 
     // Dismiss Alerts
     setTimeout(function() { 
@@ -686,12 +690,10 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	    $(val).on('click', function(ky, vl) {
 	        location.hash = $(this).attr('href');
 	        // By default, the cookie is deleted when the browser is closed
-	        document.cookie = "__catalog-redirect_url=" + location.href + ";samesite=lax;max-age=3600";
+	        var encoded = btoa(location.href);
+	        document.cookie = "__catalog-redirect_url=" + encoded + ";samesite=lax;max-age=3600";
 	    });
 	});
-	var x = document.cookie;
-
-	console.log(x);
 
 	// Main tabs
 	$(".nav-pills").find("li a").each(function(key, val) {
@@ -702,10 +704,30 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	    $(val).click(function(ky, vl) {
 	        location.hash = $(this).attr('href');
 	        // By default, the cookie is deleted when the browser is closed
-	        document.cookie = "__catalog-redirect_url=" + location.href + ";samesite=lax;max-age=3600";
+	        var encoded = btoa(location.href);
+	        document.cookie = "__catalog-redirect_url=" + encoded + ";samesite=lax;max-age=3600";
 	    });
 	});
-
+    /*----------------------------------------------------*/
+	// Project List Timer
+	/*----------------------------------------------------*/
+	$('span[id^=\'project-countdown-timer\']').each(function() {
+		$(this).countdown($(this).attr('data-final')).on('update.countdown', function(event) {
+			var format = '%H:%M:%S';
+			if(event.offset.totalDays > 0) {
+			    format = '<span class="text-success">%-d day%!d ' + format + '</span>';
+			} else {
+				format = '<span class="text-warning">%H:%M:%S</span>';
+			}
+			if(event.offset.weeks > 0) {
+			    format = '<span class="text-success">%-w week%!w ' + format + '</span>';
+			}
+			  $(this).html(event.strftime(format));
+			}).on('finish.countdown', function(event) {
+		       $(this).html('<span class="text-danger"> project expired!</span>').parent().addClass('disabled');
+		    });
+		});   
+       
     /*----------------------------------------------------*/
 	/* Agree to Terms */
 	/*----------------------------------------------------*/

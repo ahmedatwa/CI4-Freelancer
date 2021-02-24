@@ -1,50 +1,52 @@
-<?php namespace Catalog\Models\Account;
+<?php
 
-class CustomerModel extends \CodeIgniter\Model
+namespace Catalog\Models\Account;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class CustomerModel extends Model
 {
     protected $table          = 'customer';
     protected $primaryKey     = 'customer_id';
     protected $returnType     = 'array';
-    protected $allowedFields  = ['customer_group_id', 'email', 'password', 'firstname', 'lastname', 'image', 'bg_image', 'about', 'tag_line', 'rate', 'username', 'online', 'status', 'origin', 'github', 'linkedin', 'facebook', 'twitter', 'profile_strength'];
-    protected $useTimestamps  = true;
+    protected $allowedFields  = ['customer_group_id', 'email', 'password', 'firstname', 'lastname', 'image', 'bg_image', 'about', 'tag_line', 'rate', 'username', 'online', 'status', 'origin', 'social', 'profile_strength'];
     protected $useSoftDeletes = false;
     // Password Hashing Events
-    protected $beforeInsert = ['hashPassword'];
-    protected $beforeUpdate = ['hashPassword'];
+    protected $beforeInsert   = ['hashPassword'];
+    protected $beforeUpdate   = ['hashPassword'];
     // User Activity Events
-    // protected $afterInsert = ['afterInsertEvent'];
-    protected $afterUpdate = ['afterUpdateEvent'];
+    protected $afterUpdate    = ['afterUpdateEvent'];
     // should use for keep data record create timestamp
-    protected $createdField = 'date_added';
-    protected $updatedField = 'date_modified';
+    protected $useTimestamps  = true;
+    protected $dateFormat     = 'int';
+    protected $createdField   = 'date_added';
+    protected $updatedField   = 'date_modified';
 
-    protected function hashPassword(array $data)
+    protected function hashPassword(array $data = [])
     {
         if (isset($data['data']['password']) && !empty($data['data']['password'])) {
-            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
+            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
         } else {
             unset($data['data']['password']);
         }
+        // Social Network
+        if (isset($data['data']['social'])) {
+            $data['data']['social'] = json_encode($data['data']['social']);
+        } else {
+            $data['data']['social'] = '';
+        }
+
         return $data;
     }
-
-    // protected function afterInsertEvent(array $data)
-    // {
-    //     if (isset($data['data']['firstname'])) {
-    //         //\CodeIgniter\Events\Events::trigger('customer_activity_update', $data['id'], $name);
-    //     }
-    //     return $data;
-    // }
 
     protected function afterUpdateEvent(array $data)
     {
-        if (isset($data['data']['firstname']) || isset($data['data']['lastname'])) {
-            $name  = $data['data']['firstname'] . ' ' . $data['data']['lastname'];
-            \CodeIgniter\Events\Events::trigger('customer_activity_update', $data['id'], $name);
+        if (isset($data['id'])) {
+            \CodeIgniter\Events\Events::trigger('customer_update', $data['id'][0]);
         }
         return $data;
     }
-
 
     public function addCustomer($data)
     {
@@ -52,11 +54,12 @@ class CustomerModel extends \CodeIgniter\Model
         $customer_data = [
             'username'          => substr($data['email'], 0, strpos($data['email'], '@')),
             'email'             => $data['email'],
-            'password'          => password_hash($data['password'], PASSWORD_BCRYPT),
+            'password'          => password_hash($data['password'], PASSWORD_DEFAULT),
             'customer_group_id' => 1,
             'status'            => 1,
+            'date_added'        => Time::now()->getTimestamp(),
         ];
-        $builder->set('date_added', 'NOW()', false);
+
         $builder->insert($customer_data);
         // Events
         \CodeIgniter\Events\Events::trigger('customer_register', $this->db->insertID(), explode('@', $data['email'])[0]);
@@ -141,7 +144,6 @@ class CustomerModel extends \CodeIgniter\Model
         if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
             $builder->whereIn('c2c.category_id', $data['filter_skills']);
         }
-
        
         if (isset($data['filter_rate'])) {
             switch ($data['filter_rate']) {
@@ -195,7 +197,7 @@ class CustomerModel extends \CodeIgniter\Model
 
         if ($builder->countAllResults() != 0) {
             $builder->set('total', 'total + 1', false);
-            $builder->set('date_modified', 'NOW()', false);
+            $builder->set('date_modified', Time::now()->getTimestamp());
             $builder->update();
         } else {
             $data = [
@@ -203,7 +205,7 @@ class CustomerModel extends \CodeIgniter\Model
                 'ip'         => $ipAddress,
                 'total'      => '1',
             ];
-            $builder->set('date_added', 'NOW()', false);
+            $builder->set('date_added', Time::now()->getTimestamp());
             $builder->set($data);
             $builder->insert($data);
         }
@@ -233,7 +235,7 @@ class CustomerModel extends \CodeIgniter\Model
           'year'          => $data['certificate_year'],
         ];
 
-        $builder->set('date_added', 'NOW()', false);
+        $builder->set('date_added', Time::now()->getTimestamp());
         $builder->insert($data);
     }
 
@@ -281,7 +283,7 @@ class CustomerModel extends \CodeIgniter\Model
           'country'       => $data['education_country'],
         ];
 
-        $builder->set('date_added', 'NOW()', false);
+        $builder->set('date_added', Time::now()->getTimestamp());
         $builder->insert($data);
     }
 
@@ -376,7 +378,7 @@ class CustomerModel extends \CodeIgniter\Model
           'freelancer_id' => $data['freelancer_id'],
         ];
         $builder->delete(['category_id' => $data['category_id']]);
-        $builder->set('date_added', 'NOW()', false);
+        $builder->set('date_added', Time::now()->getTimestamp());
         $builder->insert($data);
     }
 
@@ -448,7 +450,7 @@ class CustomerModel extends \CodeIgniter\Model
           'level'       => $data['language_level'],
           
         ];
-        $builder->set('date_added', 'NOW()', false);
+        $builder->set('date_added', Time::now()->getTimestamp());
         $builder->insert($data);
     }
 
@@ -518,7 +520,7 @@ class CustomerModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table($this->table);
         $builder->where('email', $email);
-        $builder->set('password', password_hash($password, PASSWORD_BCRYPT));
+        $builder->set('password', password_hash($password, PASSWORD_DEFAULT));
         $builder->update();
     }
 
@@ -538,8 +540,7 @@ class CustomerModel extends \CodeIgniter\Model
         $builder = $this->db->table($this->table);
         $builder->selectCount('*', 'total');
         $builder->where('email', $email);
-        $query = $builder->get();
-        $row = $query->getRowArray();
+        $row = $builder->get()->getRowArray();
         return $row['total'];
     }
 

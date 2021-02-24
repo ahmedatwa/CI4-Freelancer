@@ -1,4 +1,6 @@
-<?php namespace Catalog\Libraries;
+<?php 
+
+namespace Catalog\Libraries;
 
 class Registry
 {

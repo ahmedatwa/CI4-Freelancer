@@ -1,8 +1,11 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
-use \Catalog\Models\Account\CustomerModel;
+namespace Catalog\Controllers\Account;
 
-class Forgotten extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+
+class Forgotten extends BaseController
 {
     public function index()
     {
@@ -19,14 +22,10 @@ class Forgotten extends \Catalog\Controllers\BaseController
             'href' => route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten'),
         ];
 
-        $data['heading_title']   = lang('account/forgotten.heading_title');
-        $data['text_heading']    = lang('account/forgotten.text_heading');
-        $data['text_subheading'] = lang('account/forgotten.text_subheading');
-        $data['text_login']      = lang('account/forgotten.text_login');
-        $data['entry_email']     = lang('account/forgotten.entry_email');
-        $data['button_reset']    = lang('account/forgotten.button_reset');
-
         $data['login'] = route_to('account_login') ? route_to('account_login') : base_url('account/login');
+        $data['heading_title'] = lang('account/forgotten.heading_title');
+        
+        $data['langData'] = lang('account/forgotten.list');
 
         $this->template->output('account/forgotten', $data);
     }
@@ -55,21 +54,6 @@ class Forgotten extends \Catalog\Controllers\BaseController
     }
         return $this->response->setJSON($json);
     }
-   
-    // protected function validateForm()
-    // {
-    //     $customerModel = new CustomerModel();
-        
-    //     if (! $this->validate([
-    //           'email' => "required|valid_email",
-    //        ])  || ! $customerModel->getTotalCustomersByEmail($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
-    //         $this->session->setFlashData('error_warning', lang('account/forgotten.error_email'));
-
-    //         return false;
-    //     }
-
-    //     return true;
-    // }
 
     // -------------------------------------------------------------
 }

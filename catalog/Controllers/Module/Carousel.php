@@ -1,12 +1,15 @@
-<?php namespace Catalog\Controllers\Module;
+<?php 
 
-use \Catalog\Models\Design\Banners;
+namespace Catalog\Controllers\Module;
 
-class Carousel extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Design\BannerModel;
+
+class Carousel extends BaseController
 {
     public function index($setting)
     {
-        $bannerModel = new Banners();
+        $bannerModel = new BannerModel();
         
         $data['banners'] = [];
 

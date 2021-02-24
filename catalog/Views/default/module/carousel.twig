@@ -1,0 +1,39 @@
+<div class="video-container" id="carousel-slick-carousel">
+  {% for banner in banners %}
+  {% if banner.link %}
+  <div> <a href="{{ banner.link }}">
+      <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a></div>
+  {% else %}
+  <div><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></div>
+  {% endif %}
+  {% endfor %}
+</div>
+
+<script type="text/javascript">
+  $('#carousel-slick-carousel').slick({
+    centerMode: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    dots: {
+      {
+        dots
+      }
+    },
+    infinite: {
+      {
+        infinite
+      }
+    },
+    autoplay: {
+      {
+        autoplay
+      }
+    },
+    arrows: {
+      {
+        arrows
+      }
+    },
+    fade: true,
+  });
+</script>

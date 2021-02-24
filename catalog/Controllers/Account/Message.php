@@ -193,8 +193,9 @@ class Message extends \Catalog\Controllers\BaseController
             $receiver_id = 0;
         }
 
+        $data['members'] = [];
+
         $messageModel = new MessageModel();
-         
         $customerModel = new CustomerModel();
 
         $data['customer_id'] = $customer_id;

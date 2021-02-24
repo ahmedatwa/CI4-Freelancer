@@ -1,17 +1,21 @@
-<?php namespace Catalog\Models\Freelancer;
+<?php 
 
-class BalanceModel extends \CodeIgniter\Model
+namespace Catalog\Models\Freelancer;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class BalanceModel extends Model
 {
-    protected $table          = 'customer_to_balance';
-    protected $primaryKey     = 'balance_id';
-    protected $returnType     = 'array';
-    protected $allowedFields  = ['customer_id', 'project_id', 'income', 'withdrawn', 'used', 'available', 'pending'];
-    
-    protected $useTimestamps  = true;
-    protected $useSoftDeletes = false;
+    protected $table         = 'customer_to_balance';
+    protected $primaryKey    = 'balance_id';
+    protected $returnType    = 'array';
+    protected $allowedFields = ['customer_id', 'project_id', 'income', 'withdrawn', 'used', 'available', 'pending'];
     // should use for keep data record create timestamp
-    protected $createdField = 'date_added';
-    protected $updatedField = 'date_modified';
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'int';
+    protected $createdField  = 'date_added';
+    protected $updatedField  = 'date_modified';
 
     public function payMilestone(array $data, $project_id)
     {
@@ -19,26 +23,25 @@ class BalanceModel extends \CodeIgniter\Model
 
       if (isset($data['freelancer_id'])) {
             $freelancer_data = [
-                'customer_id' => $data['freelancer_id'],
-                'project_id'  => $project_id,
-                'income'      => $data['amount'],
+                'customer_id'   => $data['freelancer_id'],
+                'project_id'    => $project_id,
+                'income'        => $data['amount'],
+                'date_added'    => Time::now()->getTimestamp(),
+                'date_modified' => Time::now()->getTimestamp()
             ];
-
-        $builder->set('date_added', 'NOW()', false);
-        $builder->set('date_modified', 'NOW()', false);
         $builder->insert($freelancer_data);
         $balance_id = $this->db->insertID();
       }  
       // Employer Balance
       if (isset($data['employer_id'])) {
             $employer_data = [
-                'customer_id' => $data['employer_id'],
-                'project_id'  => $project_id,
-                'used'        => $data['amount'],
+                'customer_id'   => $data['employer_id'],
+                'project_id'    => $project_id,
+                'used'          => $data['amount'],
+                'date_added'    => Time::now()->getTimestamp(),
+                'date_modified' => Time::now()->getTimestamp()
             ];
 
-        $builder->set('date_added', 'NOW()', false);
-        $builder->set('date_modified', 'NOW()', false);
         $builder->insert($employer_data);
         
         \CodeIgniter\Events\Events::trigger('customer_milestone_payment', $data['freelancer_id'], $project_id, $balance_id);
@@ -57,29 +60,29 @@ class BalanceModel extends \CodeIgniter\Model
             ]);
 
             $amount_data = [
-                'customer_id' => $data['freelancer_id'],
-                'project_id'  => $data['project_id'],
-                'income'      => $data['amount'],
+                'customer_id'   => $data['freelancer_id'],
+                'project_id'    => $data['project_id'],
+                'income'        => $data['amount'],
+                'date_modified' => Time::now()->getTimestamp()
             ];
             
-            $builder->set('date_modified', 'NOW()', false);
             $builder->replace($amount_data);
         }
 
         // update emplyer balance
         if (isset($data['employer_id'])) {
             $builder->where([
-            'customer_id'   => $data['employer_id'],
-            'project_id'    => $data['project_id'],
+                'customer_id'   => $data['employer_id'],
+                'project_id'    => $data['project_id'],
             ]);
 
             $amount_data = [
-            'customer_id' => $data['employer_id'],
-            'project_id'  => $data['project_id'],
-            'used'        => $data['amount'],
-        ];
+                'customer_id'   => $data['employer_id'],
+                'project_id'    => $data['project_id'],
+                'used'          => $data['amount'],
+                'date_modified' => Time::now()->getTimestamp()
+            ];
 
-            $builder->set('date_modified', 'NOW()', false);
             $builder->replace($amount_data);
         }
         // update project bid query
@@ -92,7 +95,6 @@ class BalanceModel extends \CodeIgniter\Model
         ]);
 
         $project_bid->set('paid', 1)->update();
-
         \CodeIgniter\Events\Events::trigger('customer_transfer_funds', $data);
         \CodeIgniter\Events\Events::trigger('mail_payment', $data);
     }

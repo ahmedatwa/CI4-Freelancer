@@ -1,16 +1,21 @@
-<?php namespace Catalog\Models\Freelancer;
+<?php 
 
-class FreelancerModel extends \CodeIgniter\Model
+namespace Catalog\Models\Freelancer;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class FreelancerModel extends Model
 {
-    protected $table          = 'project_bids';
-    protected $primaryKey     = 'bid_id';
-    protected $returnType     = 'array';
-    protected $allowedFields  = ['customer_id', 'amount', 'currency', 'status_id'];
-    protected $useTimestamps  = true;
-    protected $useSoftDeletes = false;
+    protected $table         = 'project_bids';
+    protected $primaryKey    = 'bid_id';
+    protected $returnType    = 'array';
+    protected $allowedFields = ['customer_id', 'amount', 'currency', 'status_id'];
     // should use for keep data record create timestamp
-    protected $createdField = 'date_added';
-    protected $updatedField = 'date_modified';
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'int';
+    protected $createdField  = 'date_added';
+    protected $updatedField  = 'date_modified';
 
     
     public function getFreelancerBidsById($freelancer_id)
@@ -27,16 +32,13 @@ class FreelancerModel extends \CodeIgniter\Model
     public function addWinner($data)
     {
         $builder = $this->db->table('project_bids');
-        $builder->set('selected', 1);
         $builder->where([
             'freelancer_id' =>  $data['freelancer_id'],
             'project_id'    =>  $data['project_id'],
-            'bid_id'        =>  $data['bid_id']
+            'bid_id'        =>  $data['bid_id'],
+            'date_modified' => Time::now()->getTimestamp()
         ]);
-
-        $builder->set('date_modified', 'NOW()', false);
-        $builder->update();
-
+        $builder->set('selected', 1)->update();
         // Update Project Status
         $projects = $this->db->table('project');
         $projects->where('project_id', $data['project_id']);
@@ -56,16 +58,17 @@ class FreelancerModel extends \CodeIgniter\Model
             'bid_id'        => $bid_id,
         ]);
 
-        $builder->set('accepted', 1);
-        $builder->update();
+        $builder->set('accepted', 1)->update();
         // Notfication Event
         \CodeIgniter\Events\Events::trigger('project_offer_accepted', $freelancer_id, $project_id, $bid_id, $employer_id);
 
         // Update Project Status
         $projects = $this->db->table('project');
         $projects->where('project_id', $project_id);
-        $projects->set('status_id', 4);
-        $projects->set('freelancer_id', $freelancer_id);
+        $projects->set([
+            'status_id'     => 4,
+            'freelancer_id' => $freelancer_id
+        ]);
         $projects->update();
     }
 
@@ -73,8 +76,7 @@ class FreelancerModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table('project');
         $builder->where('project_id', $project_id);
-        $builder->set('status_id', 2);
-        $builder->update(); 
+        $builder->set('status_id', 2)->update(); 
 
         \CodeIgniter\Events\Events::trigger('mail_project_status_update', $project_id, $data['freelancer_id'], $data['employer_id']);
         \CodeIgniter\Events\Events::trigger('project_status_update', $project_id, $data['freelancer_id'], $data['employer_id']);

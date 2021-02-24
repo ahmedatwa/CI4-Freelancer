@@ -1,8 +1,11 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
-use \Catalog\Models\Account\CustomerModel;
+namespace Catalog\Controllers\Account;
 
-class Register extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+
+class Register extends BaseController
 {
     public function index()
     {
@@ -23,13 +26,9 @@ class Register extends \Catalog\Controllers\BaseController
             'href' => route_to('account_register') ? route_to('account_register') : base_url('account/register'),
         ];
         
-        $data['entry_email']     = lang('account/register.entry_email');
-        $data['entry_password']  = lang('account/register.entry_password');
-        $data['entry_confirm']   = lang('account/register.entry_confirm');
-        $data['heading_title']   = lang('account/register.heading_title');
-        $data['text_login']      = sprintf(lang('account/register.text_login'), route_to('account_login') ? route_to('account_login') : base_url('account/login'));
-        $data['text_register']   = lang('account/register.text_register');
-        $data['button_register'] = lang('account/register.button_register');
+        $data['text_login'] = sprintf(lang('account/register.text_login'), route_to('account_login') ? route_to('account_login') : base_url('account/login'));
+
+        $data['langData'] = lang('account/register.list');
 
         $this->template->output('account/register', $data);
     }

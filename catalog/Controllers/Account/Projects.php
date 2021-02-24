@@ -1,10 +1,12 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
-use \Catalog\Models\Catalog\ProjectModel;
-use \Catalog\Models\Localization\ProjectStatusModel;
-use DateTime;
+namespace Catalog\Controllers\Account;
 
-class Projects extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Catalog\ProjectModel;
+use Catalog\Models\Localization\ProjectStatusModel;
+
+class Projects extends BaseController
 {
     public function index()
     {
@@ -47,7 +49,7 @@ class Projects extends \Catalog\Controllers\BaseController
         foreach ($projectStatuses as $status) {
             $data['project_statuses'][] = [
                 'status_id' => $status['status_id'],
-                'name' => $status['name']
+                'name'      => $status['name']
             ];
         }
 

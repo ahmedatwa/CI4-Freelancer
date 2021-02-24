@@ -1,9 +1,12 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
-use \Catalog\Models\Account\CustomerModel;
-use \Catalog\Models\Account\ActivityModel;
+namespace Catalog\Controllers\Account;
 
-class Login extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Account\ActivityModel;
+
+class Login extends BaseController
 {
     public function index()
     {
@@ -11,7 +14,7 @@ class Login extends \Catalog\Controllers\BaseController
             return redirect()->route('account_dashboard');
         }
 
-        $this->template->setTitle(lang('account/login.heading_title'));
+        $this->template->setTitle(lang('account/login.list.heading_title'));
 
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -24,16 +27,12 @@ class Login extends \Catalog\Controllers\BaseController
             'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
         ];
 
-        $data['heading_title']  = lang('account/login.heading_title');
-        $data['text_login']     = lang('account/login.text_login');
-        $data['text_forgotten'] = lang('account/login.text_forgotten');
         $data['text_register']  = sprintf(lang('account/login.text_register'), route_to('acount_register') ? route_to('acount_register') : base_url('account/register'));
-        $data['entry_email']    = lang('account/login.entry_email');
-        $data['entry_password'] = lang('account/login.entry_password');
-        $data['button_login']   = lang('account/login.button_login');
 
         $data['forgotton'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
 
+        $data['langData'] = lang('account/login.list');
+        
         $this->template->output('account/login', $data);
     }
 
@@ -68,9 +67,14 @@ class Login extends \Catalog\Controllers\BaseController
 
             if (! $json) {
                 $customerModel->deleteLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
-                // Register Login Event...for extra future security use
-                // Like trigger notification email for user if user_agent changed or IP or blocked IPs
-                \CodeIgniter\Events\Events::trigger('customer_login', $this->session->get('customer_id'));
+                /**
+                * Register Login Event...for extra future security use
+                * Like trigger notification email for user if user_agent changed or IP or blocked IPs
+                * Admin will be registered with the same event for more info.
+                */
+                $customer_info = $customerModel->find($this->session->get('customer_id'));
+
+                \CodeIgniter\Events\Events::trigger('customer_login', $customer_info['customer_id'], $customer_info['username']);
 
                 $activityModel = new ActivityModel;
                 $customer_ip_info = $activityModel->getCustomerIP($this->session->get('customer_id'));
@@ -85,13 +89,12 @@ class Login extends \Catalog\Controllers\BaseController
                     // Trigger Customer E-Mail as IP is different than usual one..
                     \CodeIgniter\Events\Events::trigger('customer_login_notify', $ip_data);
                 }
-                // load the cookie helper for redirect url  
-                helper('cookie');
 
+                // check for any saved redirect url
                 if ($this->session->get('redirect_url')) {
                     $json['redirect'] = (string) $this->session->get('redirect_url');
-                } elseif (! is_null($this->request->getCookie(config('App')->cookiePrefix . 'redirect_url', FILTER_SANITIZE_STRING))) {
-                    $json['redirect'] = $this->request->getCookie(config('App')->cookiePrefix . 'redirect_url', FILTER_SANITIZE_STRING);
+                } elseif (! is_null($this->request->getCookie(config('App')->cookiePrefix . 'redirect_url'))) {
+                    $json['redirect'] = base64_decode($this->request->getCookie(config('App')->cookiePrefix . 'redirect_url', FILTER_SANITIZE_STRING));
                 } else {
                     $json['redirect'] = route_to('account_dashboard');
                 }
@@ -167,37 +170,6 @@ class Login extends \Catalog\Controllers\BaseController
         
         return $this->response->setJSON($json);
     }
-
-    // protected function validateForm()
-    // {
-    //     // Fields Validation Rules
-    //     // if (! $this->validate([
-    //     //     'email'    => 'required|valid_email',
-    //     //     'password' => 'required|min_length[4]',
-    //     // ])) {
-    //     //     $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
-    //     //     $this->error = $this->validator->getErrors();
-    //     // }
-
-    //     $customerModel = new CustomerModel();
-    //     // Check how many login attempts have been made.
-    //     $login_info = $customerModel->getLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
-
-    //     if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
-    //         $this->session->setFlashData('error_warning', lang('account/login.error_attempts'));
-    //         return false;
-    //     }
-        
-    //     if (!$this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'))) {
-    //         $this->session->setFlashData('error_warning', lang('account/login.text_warning'));
-    //         $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
-    //         return false;
-    //     } else {
-    //         $customerModel->deleteLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
-    //     }
-
-    //     return true;
-    // }
 
     //--------------------------------------------------------------------
 }

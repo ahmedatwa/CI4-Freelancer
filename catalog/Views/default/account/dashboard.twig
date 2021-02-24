@@ -1,0 +1,211 @@
+{{ header }} {{ dashboard_menu }}
+<!-- Dashboard Content -->
+<div class="dashboard-content-container container">
+	<section class="gray">
+		<div class="m-4">
+			<!-- Dashboard Headline -->
+			<div class="dashboard-headline">
+				<h3>{{ text_greeting }}</h3>
+			</div>
+			<div class="mb-4 card-deck">
+				<div class="card mx-2">
+					<div class="card-body row">
+						<div class="col-9">
+							<h2>Profile Views</h2>
+						</div>
+						<div class="col-3">
+							<span class="text-right"><i class="far fa-eye fa-2x text-primary"></i></span>
+						</div>
+						<div class="col-12">
+							<h1 class="text-center">{{ total_views }}</h1>
+						</div>
+					</div>
+				</div>
+				<div class="card mx-2">
+					<div class="card-body row">
+						<div class="col-9">
+							<h2>Total Projects</h2>
+						</div>
+						<div class="col-3">
+							<span class="text-right"><i class="fas fa-briefcase fa-2x text-warning"></i></span>
+						</div>
+						<div class="col-12">
+							<h1 class="text-center">{{ total_projects }}</h1>
+						</div>
+					</div>
+				</div>
+				<div class="card mx-2">
+					<div class="card-body row">
+						<div class="col-9">
+							<h2>Balance</h2>
+						</div>
+						<div class="col-3">
+							<span class="text-right"><i class="fas fa-wallet fa-2x text-success"></i></span>
+						</div>
+						<div class="col-12">
+							<h1 class="text-center">{{ total_balance }}</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="d-flex justify-content-center">
+				<div class="mb-4 card-deck">
+					<div class="card mx-2">
+						<div class="card-body row">
+							<div class="col-9">
+								<h2>Withdrawn</h2>
+							</div>
+							<div class="col-3">
+								<span class="text-right"><i class="fas fa-comment-dollar fa-2x text-danger"></i></span>
+							</div>
+							<div class="col-12">
+								<h1 class="text-center">{{ total_withdrawn }}</h1>
+							</div>
+						</div>
+					</div>
+					<div class="card mx-2">
+						<div class="card-body row">
+							<div class="col-9">
+								<h2>Balance Used</h2>
+							</div>
+							<div class="col-3">
+								<span class="text-right"><i class="fas fa-minus-square fa-2x text-secondary"></i></span>
+							</div>
+							<div class="col-12">
+								<h1 class="text-center">{{ total_used }}</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="content mt-4">
+				<!-- Chart -->
+				<div class="chart">
+					<h3 class="mb-3"><i class="fas fa-chart-line text-danger"></i> Income Monthly</h3>
+					<canvas id="chart" width="100" height="45"></canvas>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Dashboard Box -->
+				<div class="col">
+					<div class="dashboard-box mt-4">
+						<div class="headline">
+							<h3><i class="icon-material-baseline-notifications-none"></i> {{ text_news_feed }}</h3>
+						</div>
+						<div class="content shadow-sm m-2 border">
+							{% if news_feeds %}
+							<ul class="dashboard-box-list">
+								{% for news_feed in news_feeds %}
+								<li>
+									<span class="notification-icon"><i class="icon-material-outline-group"></i></span>
+									<span class="notification-text">
+										{{ news_feed.comment }}. <small>{{ news_feed.date_added }}</small>
+									</span>
+								</li>
+								{% endfor %}
+							</ul>
+							{% else %}
+							<div class="d-flex justify-content-center">
+								<p class="text-center m-4">No Feeds! </p>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+</div>
+<!-- Chart.js // documentation: http://www.chartjs.org/docs/latest/ -->
+<script src="catalog/default/javascript/chart.min.js"></script>
+<script>
+	Chart.defaults.global.defaultFontFamily = "Nunito";
+	Chart.defaults.global.defaultFontColor = '#888';
+	Chart.defaults.global.defaultFontSize = '14';
+
+	var ctx = document.getElementById('chart').getContext('2d');
+
+	var chart = new Chart(ctx, {
+		type: 'line',
+
+		// The data for our dataset
+		data: {
+			labels: [],
+			// Information about the dataset
+			datasets: [{
+				label: "income",
+				backgroundColor: 'rgba(42,65,232,0.08)',
+				borderColor: '#2a41e8',
+				borderWidth: "3",
+				data: [],
+				pointRadius: 5,
+				pointHoverRadius: 5,
+				pointHitRadius: 10,
+				pointBackgroundColor: "#fff",
+				pointHoverBackgroundColor: "#fff",
+				pointBorderWidth: "2",
+			}]
+		},
+
+		// Configuration options
+		options: {
+
+			layout: {
+				padding: 10,
+			},
+
+			legend: {
+				display: false
+			},
+			title: {
+				display: false
+			},
+
+			scales: {
+				yAxes: [{
+					scaleLabel: {
+						display: false
+					},
+					gridLines: {
+						borderDash: [6, 10],
+						color: "#d8d8d8",
+						lineWidth: 1,
+					},
+				}],
+				xAxes: [{
+					scaleLabel: {
+						display: false
+					},
+					gridLines: {
+						display: false
+					},
+				}],
+			},
+
+			tooltips: {
+				backgroundColor: '#333',
+				titleFontSize: 13,
+				titleFontColor: '#fff',
+				bodyFontColor: '#fff',
+				bodyFontSize: 13,
+				displayColors: false,
+				xPadding: 10,
+				yPadding: 10,
+				intersect: false
+			}
+		},
+	});
+
+	ajax_chart(chart, 'account/dashboard/chart');
+	// function to update our chart
+	function ajax_chart(chart, url, data) {
+		var data = data || {};
+		$.getJSON('account/dashboard/chart', data).done(function (response) {
+			chart.data.labels = response.labels;
+			chart.data.datasets[0].data = response.data.total;
+			chart.update();
+		});
+	}
+</script>
+{{ footer }}

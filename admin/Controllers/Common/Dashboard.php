@@ -78,7 +78,7 @@ class Dashboard extends \Admin\Controllers\BaseController
     public function removeInstall()
     {
         $json = [];
-        if ($this->request->isAJAX() && $this->request->getMethod() == 'post') {
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
             if ((is_dir(ROOTPATH . 'install')) || (is_dir(FCPATH . '../install'))) {
                 helper('filesystem');
                 if (is_dir(ROOTPATH . 'install')) {

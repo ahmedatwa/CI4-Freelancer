@@ -1,4 +1,6 @@
-<?php namespace Catalog\Models\Localization;
+<?php 
+
+namespace Catalog\Models\Localization;
 
 use CodeIgniter\Model;
 

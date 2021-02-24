@@ -55,21 +55,25 @@ class Milestone extends \Catalog\Controllers\BaseController
 
         $bid_info = $bidModel->getBidByProjectId($project_id);
 
-        $data['bid_quote']     = $bid_info['quote'];
-        $data['employer_id']   = $bid_info['employer_id'];
-        $data['freelancer_id'] = $bid_info['freelancer_id'];
-        $data['project_id']    = $bid_info['project_id'];
-        
-        if ($project_id) {
-            $project_info = $projectModel->getProject($project_id);
-        }
+        if ($bid_info) {
+            $data['bid_quote']     = $bid_info['quote'];
+            $data['employer_id']   = $bid_info['employer_id'];
+            $data['freelancer_id'] = $bid_info['freelancer_id'];
+            $data['project_id']    = $bid_info['project_id'];
 
-        if ($bid_info['freelancer_id'] == $customer_id) {
-            $data['created_for'] = $project_info['employer_id'];
+            if ($bid_info['freelancer_id'] == $customer_id) {
+                $data['created_for'] = $projectModel->getProject($project_id)['employer_id'];
+            } else {
+                $data['created_for'] = $bid_info['freelancer_id'];
+            }
         } else {
-            $data['created_for'] = $bid_info['freelancer_id'];
+            $data['bid_quote']     = '';
+            $data['employer_id']   = '';
+            $data['freelancer_id'] = '';
+            $data['project_id']    = '';
+            $data['created_for']   = '';
         }
-
+        
         $data['customer_id'] = $this->customer->getCustomerId();
 
         $data['heading_title'] = lang('project/project.text_manage_bidders');

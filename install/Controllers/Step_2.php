@@ -40,7 +40,7 @@ class Step_2 extends Controller
                     $oldDBVars = [
                         'hostname' => '127.0.0.1',
                         'username' => 'root',
-                        'password' => '',
+                        'password' => '^%tE:yVsM447',
                         'database' => 'freelancer',
                         'DBPrefix' => 'ci_',
                         'port'     => 3306,
@@ -83,7 +83,7 @@ class Step_2 extends Controller
                     $oldDBVars = [
                         'hostname' => '127.0.0.1',
                         'username' => 'root',
-                        'password' => '',
+                        'password' => '^%tE:yVsM447',
                         'database' => 'freelancer',
                         'DBPrefix' => 'ci_',
                         'port'     => 3306,

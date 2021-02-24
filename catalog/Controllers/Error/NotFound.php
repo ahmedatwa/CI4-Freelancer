@@ -1,6 +1,10 @@
-<?php namespace Catalog\Controllers\Error;
+<?php 
 
-class NotFound extends \Catalog\Controllers\BaseController
+namespace Catalog\Controllers\Error;
+
+use Catalog\Controllers\BaseController;
+
+class NotFound extends BaseController
 {
 	public function index() 
 	{
@@ -9,19 +13,15 @@ class NotFound extends \Catalog\Controllers\BaseController
 
         $data['base'] = slash_item('baseURL');
         
-		$data['text_not_found'] = lang('error/not_found.text_not_found');
-		$data['text_404']       = lang('error/not_found.text_404');
-		$data['text_sorry']     = lang('error/not_found.text_sorry');
-
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
-			'text' => lang($this->locale . '.text_home'),
+			'text' => lang($this->locale . '.list.text_home'),
 			'href' => base_url(),
 		];
 
 		$data['breadcrumbs'][] = [
-			'text' => lang('error/not_found.text_not_found'),
+			'text' => lang('error/not_found.list.text_not_found'),
 			'href' => '',
 		];
 
@@ -35,6 +35,8 @@ class NotFound extends \Catalog\Controllers\BaseController
             log_message('error', 'System failed to load URI: {uri} logged from IP Address {ip_address}', $info);
 		}
 
+		$data['langData'] = lang('error/not_found.list');
+		
 	    $data['header'] = view_cell('\Catalog\Controllers\Common\Header::index');
         $data['footer'] = view_cell('\Catalog\Controllers\Common\Footer::index');
 

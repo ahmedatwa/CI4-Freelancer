@@ -1,6 +1,11 @@
-<?php namespace Catalog\Models\Extension\Blog;
+<?php 
 
-class BlogModel extends \CodeIgniter\Model
+namespace Catalog\Models\Extension\Blog;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class BlogModel extends Model
 {
     protected $table          = 'blog_post';
     protected $primaryKey     = 'post_id';
@@ -102,13 +107,13 @@ class BlogModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table('blog_post_to_comment');
         $data = [
-            'post_id' => $post_id,
-            'name'    => $data['name'],
-            'email'   => $data['email'],
-            'comment' => $data['comment'],
-            'status'  => 0,
+            'post_id'    => $post_id,
+            'name'       => $data['name'],
+            'email'      => $data['email'],
+            'comment'    => $data['comment'],
+            'status'     => 0,
+            'date_added' => Time::now()->getTimestamp()
         ];
-        $builder->set('date_added', 'NOW()', false);
         $builder->insert($data);
     }
 
