@@ -22,7 +22,7 @@ class Category extends BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('project/category.text_by'),
+            'text' => lang('project/category.list.text_by'),
             'href' => route_to('categories') ? route_to('categories') : base_url('project/category'),
         ];
 
@@ -75,30 +75,27 @@ class Category extends BaseController
             $children_data = [];
             
             foreach ($children as $child) {
-                $keyword_2 = $seoUrl->getKeywordByQuery('category_id=' . $child['category_id']);
+                $childKeyword = $seoUrl->getKeywordByQuery('category_id=' . $child['category_id']);
 
                 $children_data[] = [
                     'category_id' => $child['category_id'],
                     'parent_id'   => $child['parent_id'],
                     'name'        => $child['name'],
-                    'icon'        => $child['icon'],
+                    'icon'        => $child['icon'] ? $child['icon'] : 'fas fa-hockey-puck',
                     'description' => $child['description'],
-                    'href'        => ($keyword_2) ? route_to('category', $child['category_id'], $keyword_2) : base_url('project/project/category?gid=' . $child['category_id']),
+                    'href'        => ($childKeyword) ? route_to('projects') . '?skills=' . $result['category_id'] : base_url('project/project/list?skills=' . $child['category_id']),
                 ];
             }
 
             $data['categories'][] = [
                 'category_id' => $result['category_id'],
                 'name'        => $result['name'],
-                'icon'        => $result['icon'],
+                'icon'        => $result['icon'] ? $result['icon'] : 'fas fa-hockey-puck',
                 'description' => word_limiter(strip_tags($result['description']), 10),
-                'href'        => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project/category?gid=' . $result['category_id']),
+                'href'        => ($keyword) ? route_to('projects') . '?skills=' . $result['category_id'] : base_url('project/project/list?skills=' . $result['category_id']),
                 'children'    => $children_data,
             ];
         }
-
-        $data['heading_title'] = lang('project/category.heading_title');
-        $data['text_by'] = lang('project/category.text_by');
 
         $data['add_project'] = base_url('project/project/add');
         $data['login']       = base_url('account/login');
@@ -111,6 +108,8 @@ class Category extends BaseController
         // Pagination
         $pager = \Config\Services::pager();
         $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
+
+        $data['langData'] = lang('project/category.list');
 
         $this->template->output('project/category', $data);
     }

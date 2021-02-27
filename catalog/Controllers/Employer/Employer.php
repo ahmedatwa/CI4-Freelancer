@@ -36,8 +36,8 @@ class Employer extends BaseController
     {
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
-        } elseif ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
+        } elseif ($this->customer->getID()) {
+            $customer_id = $this->customer->getID();
         } else {
             $customer_id = 0;
         }

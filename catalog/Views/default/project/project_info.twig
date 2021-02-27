@@ -1,0 +1,380 @@
+{{ header }}{{ menu }}
+<!-- Titlebar -->
+<div class="single-page-header" data-background-image="catalog/default/images/single-task.jpg">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="single-page-header-inner">
+					<div class="left-side">
+						<div class="header-details">
+							<h3 class="">{{ name }}</h3>
+							<ul>
+								<li><i class="icon-material-outline-business"></i> {{ employer }}</li>
+								<li>
+									<div class="rating">
+										<ul>
+											{% for i in 1..5 %}
+											{% if rating < i %}
+											<li><span class="fa-stack"><i class="far fa-star fa-stack-2x"></i></span>
+											</li>
+											{% else %}
+											<li><span class="fa-stack">
+													<i class="fas fa-star fa-stack-2x"></i></span></li>
+											{% endif %}
+											{% endfor %}
+										</ul>
+									</div>
+								</li>
+								<li>
+									<div class="verified-badge-with-title">Verified</div>
+								</li>
+								{% if status != 'Expired' %}
+								<li>
+									<div class="verified-badge-with-title">{{ status }}</div>
+								</li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+					<div class="right-side">
+						<div class="salary-box">
+							<div class="salary-type">{{ text_budget }}</div>
+							<div class="salary-amount">{{ budget }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<nav id="breadcrumbs">
+				<ul>
+					{% for breadcrumb in breadcrumbs %}
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+					{% endfor %}
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<!-- Page Content-->
+	<div class="row align-items-start">
+		<div class="col-sm-12 col-md-9 mb-4 p-4 shadow-sm rounded border bg-white">
+			<div class="single-page-section">
+				<h3>{{ text_description }}</h3>
+				<p>{{ description }}</p>
+			</div>
+			<h4 class="mb-4">Viewed: <span class="badge badge-success">{{ viewed }}</span></h4>
+			<h4 class="mb-4">Project ID: {{ project_id }}</h4>
+			<div class="single-page-section">
+				<h3>{{ text_skills }}:</h3>
+				{% if categories %}
+				<div class="task-tags">
+					{% for category in categories %}
+					<span>{{ category.name }}</span>
+					{% endfor %}
+				</div>
+				{% endif %}
+			</div>
+			<!-- Atachments -->
+			{% if attachment %}
+			<div class="single-page-section">
+				<h3>Attachments</h3>
+				<div class="attachments-container">
+					<a href="{{ download }}"
+						class="attachment-box ripple-effect"><span>{{ attachment }}</span><i>{{ attachment_ext }}</i></a>
+				</div>
+			</div>
+			{% endif %}
+			<!-- Bidding Block -->
+			{% if days_left > 0 and total_bids > 0 %}
+			<ul class="nav nav-tabs" id="biddingBlock" role="tablist">
+				{% if days_left > 0 %}
+				<li class="nav-item" role="presentation">
+					<a class="nav-link active" id="bidder-form-tab" data-toggle="tab" href="#bidder-form" role="tab"
+						aria-controls="bidder-form" aria-selected="true">{{ tab_bid }}</a>
+				</li>
+				{% endif %}
+				{% if total_bids > 0 %}
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" id="bidders-tab" data-toggle="tab" href="#bidders" role="tab"
+						aria-controls="bidders" aria-selected="false">{{ tab_freelancers }} {{ total_bids }}</a>
+				</li>
+				{% endif %}
+			</ul>
+			{% endif %}
+			<div class="tab-content">
+				<div class="tab-pane fade show active mt-4" id="bidder-form" role="tabpanel"
+					aria-labelledby="bidder-form-tab">
+					{% if freelancer_id != employer_id and days_left > 0 %}
+					<div class="single-page-section">
+						<div class="bidding-headline">
+							<h3>{{ text_bid }}</h3>
+							<p class="mb-4">{{ text_bid_detail }}</p>
+						</div>
+						<form action="" enctype="multipart/form-data" id="bidding-form" accept-charset="UTF-8">
+							<input type="hidden" name="project_id" value="{{ project_id }}" />
+							<input type="hidden" name="freelancer_id" value="{{ freelancer_id }}" />
+							<input type="hidden" name="employer_id" value="{{ employer_id }}" />
+							<input type="hidden" name="fee" value="" />
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="inputEmail4">{{ text_rate }}</label>
+									<div class="input-group">
+										<input class="form-control" type="text" id="input-quote" name="quote"
+											value="" />
+										<div class="input-group-append">
+											<span class="input-group-text"
+												id="basic-addon2">{{ config_currency }}</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputEmail4">{{ text_delivery }}</label>
+									<div class="input-group">
+										<input type="number" class="form-control" id="input-delivery" name="delivery"
+											min="1">
+										<div class="input-group-prepend">
+											<span class="input-group-text">{{ text_days }}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlTextarea1">{{ text_describe }}</label>
+								<textarea class="form-control" id="input-description" name="description" rows="7"
+									cols="10"></textarea>
+							</div>
+						</form>
+						<div class="margin-top-30">
+							<span>{{ text_optional_upgrade }}</span>
+							<table class="table table-hover" id="upgrade-options-table">
+								<thead>
+								</thead>
+								<tbody>
+									<tr>
+										<td width="11%">
+											<div class="form-check">
+												<input class="form-check-input" name="upgrade_checkbox" type="checkbox"
+													value="{{ config_upgrade_sponser|number_format(2) }}" id="sponsor">
+												<label class="form-check-label" for="input-sponser">
+													{{ config_upgrade_sponser|number_format(2) }} {{ config_currency }}
+												</label>
+											</div>
+										</td>
+										<td><span class="badge badge-warning">{{ text_sponsored }}</span></td>
+										<td>{{ text_sponsored_help }}</td>
+									</tr>
+									<tr>
+										<td width="11%">
+											<div class="form-check">
+												<input class="form-check-input" name="upgrade_checkbox" type="checkbox" value="{{ config_upgrade_highlight|number_format(2) }}" id="upgrade-fee">
+													<label class="form-check-label" for="input-highlight">
+														{{ config_upgrade_highlight|number_format(2) }} {{ config_currency }}
+													</label>
+												</div>
+											</td>
+											<td><span class="badge badge-info">{{ text_highlight }}</span></td>
+											<td>{{ text_highlight_help }}</td>
+										</tr>
+									</tbody>
+								</table> 
+						<!-- Button -->
+					<button id="button-place-bid" onclick="" class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right">{{ button_bid }}</button>
+					</div>
+				</div>
+				{% endif %}
+				</div>  <!-- ../bidding form tab-->
+				<div class="tab-pane fade" id="bidders" role="tabpanel" aria-labelledby="bidders-tab">
+					<div id="bid-container" class="my-4"></div>	
+				</div> <!-- ../ Bidders-->
+			  </div>			
+			</div>
+				<!-- Sidebar -->
+				<div class="col-sm-12 col-md-3">
+					<div class="sidebar-container pb-3 mb-5 bg-white">
+						<div class="card p-0 border-0">
+							<div class="badge badge-pill badge-light text-center mb-4 p-4"><i class="icon-material-outline-access-time "></i> <span style="font-size: 14px;" data-countdown="{{ final_date }}"></span></div>
+					</div>
+						<div class="sidebar-widget">
+							<div class="bidding-widget text-white text-center">
+							 <a href="{{ add_project }}" class="button ripple-effect button-sliding-icon">{{ button_post_project }} <i class="fas fa-long-arrow-alt-right"></i></a>
+							</div>
+						</div>
+					<div class="dropdown-divider"></div>
+					<div class="sidebar-widget">
+						<h4><i class="fas fa-info-circle"></i> {{ text_write_bid }} </h4>
+						{{ help_bid }}
+					</div>
+					<!-- Sidebar Widget -->
+					{% if other_projects %}
+						<div class="dropdown-divider"></div>
+						<div class="sidebar-widget">
+							<h3 class="mb-1">{{ text_similar }}</h3>
+							<ul class="list-group list-group-flush">
+								{% for other in other_projects %}
+							    <li class="list-group-item"><a class="text-primary" href="{{ other.href }}"><i class="fas fa-arrow-alt-circle-right"></i> {{ other.name }}</a></li>
+							    {% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+					</div>
+				</div>
+			</div>
+	</div>
+<script type="text/javascript" src="catalog/default/javascript/jquery.countdown.min.js"></script>
+<script type="text/javascript">
+$('#button-place-bid').on('click', function() {
+bootbox.confirm({
+	message: "Are you sure?",
+	size: 'small',
+    className: 'animate__animated animate__fadeInUpBig',
+    buttons: {
+        cancel: {
+            label: '<i class="fa fa-times"></i> Cancel',
+            className: 'btn-danger'
+        },
+        confirm: {
+            label: '<i class="fa fa-check"></i> Confirm',
+            className: 'btn-success'
+        }
+    },
+    onShow: function(e) {
+		{% if not logged %}
+		 $(this).find('.modal-body').html('<p class="text-center">You are not logged in.</p><p class="text-center"><i class="fas fa-spinner fa-spin"></i> We will redirect you in <span id="redirect-html" data-redirect-countdown="5000"></span> seconds</p>');
+		 $(this).find('.modal-footer, .modal-header').remove();
+		 setTimeout(function() { 
+			 location = "{{ login }}";
+		  }, 5000);
+		{% else %}
+		var fee = $('input[name=\'fee\']').val();
+		if (fee !== '') {
+			$(this).find('.modal-body').before('<div class="modal-header"><h5 class="modal-title">Are you sure?</h5><button type="button" class="bootbox-close-button close" aria-hidden="true">×</button></div>')
+			$(this).find('.modal-body').text(fee + '.00 EGP will be deducted from your balance' )
+		}
+		{% endif %}
+    },
+    callback: function (result) {
+    if (result) {
+		$.ajax({
+			url: 'extension/bid/bid/placeBid',
+			headers: {
+	            'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+	            'X-Requested-With': 'XMLHttpRequest',
+	            'Content-Type': 'application/x-www-form-urlencoded',
+	        },
+			method:'post',
+			data: $('#bidding-form').serialize(),
+			dataType: 'json',
+			beforeSend: function() {
+				$('.bootbox-accept').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+				$('.alert, .text-danger').remove();
+			},
+			complete: function() {
+	  		    $('.bootbox-accept').html('{{ button_bid }}');
+			},
+			success: function(json) {
+				if (json['error']) {
+	                for (i in json['error']) {
+	                 var element = $('#input-' + i.replace('_', '-'));
+
+	                 if (element.parent().hasClass('input-group')) {
+	                   $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+	                 } else {
+	                  $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+	                }
+	              }
+	              $('html, body').animate({
+                         scrollTop: $('.bidding-headline').offset().top
+                   }, 1000, 'linear');
+	            }
+
+				if (json['no_allawed']) {
+					$('#bidding-form').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> ' + json['no_allawed'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('html, body').animate({
+                         scrollTop: $('.bidding-headline').offset().top
+                    }, 1000, 'linear');
+				}
+
+				if (json['fee']) {
+					$('#bidding-form').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> ' + json['fee'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('html, body').animate({
+                         scrollTop: $('.bidding-headline').offset().top
+                    }, 1000, 'linear');
+				}
+
+				if(json['success']) {
+					$('#bidding-form').before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('#bid-container').load("extension/bid/bid?pid={{ project_id }}");
+					// Reset the Form 
+					$('#bidding-form').trigger('reset');
+					$('html, body').animate({
+                         scrollTop: $('.bidding-headline').offset().top
+                    }, 1000, 'linear');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	   } // if end
+    } // callback end
+   });  // bootbox end
+});	
+
+</script>
+<script type='text/javascript'>
+$('#bid-container').on('click', '.pagination a', function(e) {
+	e.preventDefault();
+
+	$('#bid-container').fadeOut('slow');
+	$('#bid-container').load(this.href);
+	$('#bid-container').fadeIn('slow');
+});
+
+$('#bid-container').load("extension/bid/bid?pid={{ project_id }}");
+</script>
+<!-- Paid Upgrade -->
+<script type="text/javascript">
+$('#upgrade-options-table input[name=\'upgrade_checkbox\']').on('change', function() {
+	var values = [], total = 0;
+	$('#upgrade-options-table input[name=\'upgrade_checkbox\']').each(function() { 
+		if($(this).is(":checked")) {
+			values.push($(this).val());
+            total += isNaN(parseInt($(this).val())) ? 0 : parseInt($(this).val());
+	    }	
+    });  
+	if (total === 0 ) {
+		$('#button-place-bid').html('Place bid');
+	} else { 
+		$('#button-place-bid').html('Place bid and Pay ' + total + '.00 EGP');
+		$('input[name=\'fee\']').val(total);
+	}
+});
+</script>
+{% if success %}
+<script type="text/javascript">
+	$.notify({
+	// options
+	icon: 'fas fa-check-circle',
+	title: 'Success:',
+	message: "{{ success }}",
+},{
+	// settings
+	element: 'body',
+	type: "success",
+	allow_dismiss: false,
+	placement: {
+		from: "top",
+		align: "center"
+	},
+	animate: {
+		enter: 'animate__animated animate__fadeInDown',
+		exit: 'animate__animated animate__fadeOutUp'
+	},
+});	
+</script>	
+{% endif %}
+{{ footer }}

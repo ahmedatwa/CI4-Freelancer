@@ -163,8 +163,11 @@ class Template
     {
         // merge the langData if sent from controller
         $primaryLang = lang(config('App')->defaultLocale . '.list');
-        if (isset($data['langData']) && is_array($primaryLang)) {
-            $data = array_merge($data['langData'], $data, $primaryLang);
+        if (isset($data['langData'])) {
+            if (is_array($primaryLang)) {
+                $all = array_merge($data['langData'], $primaryLang);
+            }
+            $data = array_merge($all, $data);
         }
 
         if (config('Config')->templateEngine == 'twig') {

@@ -1,6 +1,6 @@
 <?php 
 
-namespace Catalog\Models\Freelancer;
+namespace Catalog\Models\Account;
 
 use CodeIgniter\Model;
 use CodeIgniter\I18n\Time;

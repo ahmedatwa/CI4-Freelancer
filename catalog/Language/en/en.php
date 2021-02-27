@@ -1,8 +1,8 @@
 <?php
 
 return [
+    'text_home'        => 'Home',
     'list' => [
-        'text_home'        => 'Home',
         // Locale
         'code'             => 'en',
         'direction'        => 'ltr',
@@ -31,14 +31,19 @@ return [
         'text_per_hour'    => 'Hourly Rate',
         'text_no_results'  => 'No Results !',
         'text_confirm'     => 'Are you sure?',
+        'text_yes'         => 'Yes',
+        'text_no'          => 'No',
+        'text_cancel'      => 'Cancel',
         // Button
-        'button_add'       => 'Add',
-        'button_edit'      => 'Edit',
+        'button_add'       => 'Add a Project',
+        'button_edit'      => 'Edit Project',
         'button_delete'    => 'Delete',
         'button_hire'      => 'I want to Hire',
         'button_work'      => 'I want to Work',
         // Entry
         'entry_date_added' => 'Date Added',        
         'entry_status'     => 'Status',
+        // Help
+        'help_two_step'    => 'Verification Code will be sent to your email prior login',
     ]
 ];

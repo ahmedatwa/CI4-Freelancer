@@ -1,6 +1,8 @@
-<?php namespace Catalog\Controllers\Information;
+<?php 
 
-use \Catalog\Controllers\BaseController;
+namespace Catalog\Controllers\Information;
+
+use Catalog\Controllers\BaseController;
 
 class Contact extends BaseController
 {
@@ -11,7 +13,7 @@ class Contact extends BaseController
         $data['breadcrumbs'] = [];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('text_home'),
+            'text' => lang($this->locale . '.text_home'),
             'href' => base_url('common/home')
         ];
 
@@ -20,10 +22,7 @@ class Contact extends BaseController
         $data['open']       = $this->registry->get('config_open');
         $data['telephone']  = $this->registry->get('config_telephone');
 
-        $data['heading_title']    = lang('information/contact.heading_title');
-        $data['text_help_center'] = lang('information/contact.text_help_center');
-        $data['text_help']        = lang('information/contact.text_help');
-        $data['text_address']     = lang('information/contact.text_address');
+        $data['langData'] = lang('information/contact.list');
 
         $this->template->output('information/contact', $data);
     }
@@ -38,7 +37,6 @@ class Contact extends BaseController
                 'subject' => 'required',
                 'inquiry' => 'required|min_length[10]|max_length[300]',
             ])) {
-                //$json['error_warning'] = lang($this->locale . '.error_form');
                 $json['errors'] = $this->validator->getErrors();
             }
 

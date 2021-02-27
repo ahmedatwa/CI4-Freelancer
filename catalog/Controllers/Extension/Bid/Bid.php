@@ -1,10 +1,13 @@
-<?php namespace Catalog\Controllers\Extension\Bid;
+<?php
 
-use \Catalog\Models\Extension\Bid\BidModel;
-use \Catalog\Models\Freelancer\BalanceModel;
-use \Catalog\Models\Account\ReviewModel;
+namespace Catalog\Controllers\Extension\Bid;
 
-class Bid extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Extension\Bid\BidModel;
+use Catalog\Models\Freelancer\BalanceModel;
+use Catalog\Models\Account\ReviewModel;
+
+class Bid extends BaseController
 {
     public function index()
     {
@@ -45,17 +48,19 @@ class Bid extends \Catalog\Controllers\BaseController
         $reviewModel = new ReviewModel();
 
         foreach ($results as $result) {
-            $data['bids'][] = [
-                'bid_id'     => $result['bid_id'],
-                'freelancer' => $result['username'],
-                'quote'      => $this->currencyFormat($result['quote'], 0),
-                'description' => nl2br($result['description']),
-                'delivery'   => $result['delivery'] . ' ' . lang($this->locale . '.text_days'),
-                'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                'profile'    => route_to('freelancer_profile', $result['customer_id'], $result['username']),
-                'image'      => (file_exists('images/' . $result['image'])) ? $this->resize($result['image'], 80, 80) : $this->resize('catalog/avatar.jpg', 80, 80),
-                'rating'     => $reviewModel->getAvgReviewByFreelancerId($result['freelancer_id'])
-            ];
+            if ($this->registry->get('extension_bid_status')) {
+                $data['bids'][] = [
+                    'bid_id'      => $result['bid_id'],
+                    'freelancer'  => $result['username'],
+                    'quote'       => $this->currencyFormat($result['quote'], 0),
+                    'description' => nl2br($result['description']),
+                    'delivery'    => $result['delivery'] . ' ' . lang($this->locale . '.text_days'),
+                    'status'      => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                    'profile'     => route_to('freelancer_profile', $result['customer_id'], $result['username']),
+                    'image'       => (file_exists('images/' . $result['image'])) ? $this->resize($result['image'], 80, 80) : $this->resize('catalog/avatar.jpg', 80, 80),
+                    'rating'      => $reviewModel->getAvgReviewByFreelancerId($result['freelancer_id'])
+                ];
+            }
         }
 
         // Pagination

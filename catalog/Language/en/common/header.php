@@ -22,6 +22,8 @@ return [
 		'text_balances'             => 'Balances',
 		'text_deposite_funds'       => 'Deposit Funds',
 		'text_withdraw_funds'       => 'Withdraw Funds',
-		'text_transactions_history' => 'Transaction History'
+		'text_transactions_history' => 'Transaction History',
+		'text_notifications'        => 'Notifications',
+		'text_inbox' 				=> 'Inbox',
     ]
 ];

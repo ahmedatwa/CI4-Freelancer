@@ -21,13 +21,9 @@ class Column_left extends BaseController
         $layoutModel = new LayoutModel();
         $moduleModel = new ModulesModel();
 
-        $layout_id = $layoutModel->getLayout($route);
-
-        if (! $layout_id) {
-             $layout_id = $this->registry->get('config_layout_id');
-        }
-
         $data['modules'] = [];
+
+        $layout_id = $layoutModel->getLayout($route);
 
         $modules = $layoutModel->getLayoutModules($layout_id, 'column_left');
 

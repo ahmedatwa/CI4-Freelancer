@@ -1,0 +1,19 @@
+{% if news_feeds %}
+    <ul class="list-group list-group-flush">
+        {% for news_feed in news_feeds %}
+        <li class="list-group-item">
+            <span class="notification-icon"><i class="icon-material-outline-group"></i></span>
+            <span class="notification-text">
+                {{ news_feed.comment }}. <small>{{ news_feed.date_added }}</small>
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="d-flex justify-content-center">
+        <p class="text-center m-4">{{ text_no_results }}</p>
+    </div>
+    {% endif %}
+    <div class="d-flex justify-content-center my-4">
+        {{ pagination }}
+    </div>

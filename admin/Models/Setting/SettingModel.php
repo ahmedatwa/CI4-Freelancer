@@ -1,6 +1,10 @@
-<?php namespace Admin\Models\Setting;
+<?php 
 
-class SettingModel extends \CodeIgniter\Model
+namespace Admin\Models\Setting;
+
+use CodeIgniter\Model;
+
+class SettingModel extends Model
 {
     protected $table          = 'setting';
     protected $primaryKey     = 'setting_id';
@@ -22,7 +26,7 @@ class SettingModel extends \CodeIgniter\Model
         $builder->select();
         $query = $builder->get();
         foreach ($query->getResultArray() as $result) {
-            if (!$result['serialized']) {
+            if (! $result['serialized']) {
                 $setting_data[$result['name']] = $result['setting'];
             } else {
                 $setting_data[$result['name']] = json_decode($result['setting'], true);
@@ -37,9 +41,8 @@ class SettingModel extends \CodeIgniter\Model
         $builder->delete(['site_id' => $site_id, 'code' => $code]);
 
         foreach ($data as $key => $value) {
-
             if (substr($key, 0, strlen($code)) == $code) {
-                if (!is_array($value)) {
+                if (! is_array($value)) {
                     $setting  = $value;
                     $serialized = 0;
                 } else {

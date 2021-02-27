@@ -10,7 +10,7 @@ class Register extends BaseController
     public function index()
     {
         if ($this->customer->isLogged()) {
-            return redirect()->route('account_dashboard');
+            return redirect()->to('account_dashboard', $this->customer->getUserName());
         }
 
         $this->template->setTitle(lang('account/register.heading_title'));

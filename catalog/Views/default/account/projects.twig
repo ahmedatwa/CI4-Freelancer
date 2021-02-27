@@ -8,11 +8,11 @@
 			<ul class="nav nav-pills float-right" id="myTab" role="tablist">
 				<li class="nav-item" role="presentation">
 					<a class="nav-link active" id="employer-tab" data-toggle="tab" href="#employer" role="tab"
-						aria-controls="employer" aria-selected="true">Employer</a>
+						aria-controls="employer" aria-selected="true">{{ tab_employer }}</a>
 				</li>
 				<li class="nav-item" role="presentation">
 					<a class="nav-link" id="freelancer-tab" data-toggle="tab" href="#freelancer" role="tab"
-						aria-controls="freelancer" aria-selected="false">Freelancer</a>
+						aria-controls="freelancer" aria-selected="false">{{ tab_freelancer }}</a>
 				</li>
 			</ul>
 		</div>
@@ -25,17 +25,17 @@
 							<li class="nav-item" role="presentation">
 								<a class="nav-link" id="openprojects-tab" data-toggle="tab" href="#open-projects"
 									data-status-id="8,6" role="tab" aria-controls="openprojects"
-									aria-selected="true">Open Projects</a>
+									aria-selected="true">{{ tab_open }}</a>
 							</li>
 							<li class="nav-item" role="presentation">
 								<a class="nav-link" id="workinprogress-tab" data-toggle="tab" href="#in-progress"
 									role="tab" data-status-id="4" aria-controls="workinprogress"
-									aria-selected="false">Work in progress</a>
+									aria-selected="false">{{ tab_progress }}</a>
 							</li>
 							<li class="nav-item" role="presentation">
 								<a class="nav-link" id="pastprojects-tab" data-toggle="tab" href="#past-projects"
 									role="tab" data-status-id="5,7,1,2" aria-controls="pastprojects"
-									aria-selected="false">Past projects</a>
+									aria-selected="false">{{ tab_past }}</a>
 							</li>
 						</ul>
 						<div class="tab-content" id="employerTabContent">
@@ -58,17 +58,17 @@
 						<ul class="nav nav-tabs mb-4" id="freelancerTab" role="tablist">
 							<li class="nav-item" role="presentation">
 								<a class="nav-link" id="freelancer-bids-tab" data-toggle="tab" href="#freelancer-bids"
-									role="tab" aria-controls="freelancer-bids" aria-selected="false">Active Bids</a>
+									role="tab" aria-controls="freelancer-bids" aria-selected="false">{{ tab_active_bids }}</a>
 							</li>
 							<li class="nav-item" role="presentation">
 								<a class="nav-link" id="workinprogress-tab" data-toggle="tab"
 									href="#freelancer-in-progress" role="tab" data-status-id="8"
-									aria-controls="freelancer-in-progress" aria-selected="false">Work in progress</a>
+									aria-controls="freelancer-in-progress" aria-selected="false">{{ tab_progress }}</a>
 							</li>
 							<li class="nav-item" role="presentation">
 								<a class="nav-link" id="pastprojects-tab" data-toggle="tab"
 									href="#freelancer-past-projects" role="tab" data-status-id="5,7,1,2"
-									aria-controls="pastprojects" aria-selected="false">Past projects</a>
+									aria-controls="pastprojects" aria-selected="false">{{ tab_past }}</a>
 							</li>
 						</ul>
 						<div class="tab-content" id="freelancerTabContent">
@@ -97,7 +97,7 @@
 <script type="text/javascript">
 	$('#employerTab #openprojects-tab').on('click', function (e) {
 		$.ajax({
-			url: 'employer/Project/getOpenProjects',
+			url: 'employer/project/getOpenProjects',
 			dataType: 'html',
 			beforeSend: function () {
 				$('#employer-open-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
@@ -125,7 +125,7 @@
 	// Employer In-progress List
 	$('#employerTab #workinprogress-tab').on('click', function (e) {
 		$.ajax({
-			url: 'employer/Project/getInProgressProjects',
+			url: 'employer/project/getInProgressProjects',
 			dataType: 'html',
 			beforeSend: function () {
 				$('#employer-progress-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
@@ -153,7 +153,7 @@
 	// Employer Past List
 	$('#employerTab #pastprojects-tab').on('click', function (e) {
 		$.ajax({
-			url: 'employer/Project/getPastProjects',
+			url: 'employer/project/getPastProjects',
 			dataType: 'html',
 			beforeSend: function () {
 				$('#employer-past-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
@@ -179,8 +179,7 @@
 	});
 
 	// Select first tab
-	$('#employerTab li:first-child a').tab('show');
-	$('#employerTab li:first-child a').trigger('click');
+	$('#employerTab li:first-child a').tab('show').trigger('click');
 </script>
 
 <!-- Freelancer Part Start -->
@@ -208,7 +207,7 @@
 	// Employer In-progress List
 	$('#freelancerTab #workinprogress-tab').on('click', function (e) {
 		$.ajax({
-			url: 'freelancer/Project/getInProgressProjects',
+			url: 'freelancer/project/getInProgressProjects',
 			dataType: 'html',
 			beforeSend: function () {
 				$('#freelancer-progress-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
@@ -236,7 +235,7 @@
 	// Freelancer Past Projects
 	$('#freelancerTab #pastprojects-tab').on('click', function (e) {
 		$.ajax({
-			url: 'freelancer/Project/getPastProjects',
+			url: 'freelancer/project/getPastProjects',
 			dataType: 'html',
 			beforeSend: function () {
 				$('#freelancer-past-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
@@ -262,7 +261,6 @@
 	});
 
 	// Select first tab
-	$('#freelancerTab li:first-child a').tab('show');
-	$('#freelancerTab li:first-child a').trigger('click');
+	$('#freelancerTab #freelancer-bids-tab li:first-child a').tab('show').trigger('click');
 </script>
 {{ footer }}

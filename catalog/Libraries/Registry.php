@@ -8,9 +8,8 @@ class Registry
 
     public function __construct()
     {
-        /***
-        // fetch the setting vars when needed instead of loading model in controllers
-        @ return string
+        /**
+        * fetch the setting vars when needed instead of loading model in controllers
         */
         $db = db_connect();
         $builder = $db->table('setting');
@@ -22,10 +21,10 @@ class Registry
         log_message('info', 'Registry class initialized');
     }
 
-    public function get($key)
+    public function get(string $key)
     {
         if (is_array($key)) {
-            $result = array();
+            $result = [];
 
             foreach ($key as $k) {
                 $result[$k] = $this->get($k);
@@ -34,8 +33,6 @@ class Registry
             return $result;
         }
 
-        $key = (string) $key;
-
         if ($key != '' && array_key_exists($key, $this->data)) {
             return $this->data[$key];
         }
@@ -43,12 +40,12 @@ class Registry
         return null;
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         return $this->data;
     }
 
-    public function set($key, string $value = null)
+    public function set(string $key, string $value = null): void
     {
         if (is_array($key)) {
             foreach ($key as $k => $v) {
@@ -60,14 +57,12 @@ class Registry
         }
     }
 
-    public function has($key)
+    public function has(string $key)
     {
-        $key = (string) $key;
-
         return $key != '' && array_key_exists($key, $this->data);
     }
 
-    public function remove($key)
+    public function remove(string $key): void
     {
         if (is_array($key)) {
             foreach ($key as $k) {

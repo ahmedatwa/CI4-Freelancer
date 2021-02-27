@@ -34,16 +34,11 @@ $routes->set404Override(function () {
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->add('/', 'Common/Home::index');
-// Information
-$routes->group('{locale}/information', function ($routes) {
-    $routes->add('i(:num)/(:any)', 'Information\Information::index/$1/$2', ['as' => 'information']);
-});
-$routes->add('contact', 'Information\Contact::index');
+$routes->get('/', 'Common/Home::index');
 // Blog
-$routes->group('{locale}/blog', function ($routes) {
-    $routes->add('/', 'Extension\Blog\Blog::index', ['as' => 'blog']);
-    $routes->add('p(:num)/(:any)', 'Extension\Blog\Blog::getPost/$1/$2', ['as' => 'blog_post']);
+$routes->group('blog', function ($routes) {
+    $routes->get('/', 'Extension\Blog\Blog::index', ['as' => 'blog']);
+    $routes->get('p(:num)/(:any)', 'Extension\Blog\Blog::getPost/$1/$2', ['as' => 'blog_post']);
 });
 // Local Jobs
 $routes->group('local', function ($routes) {
@@ -53,31 +48,37 @@ $routes->group('local', function ($routes) {
 // Freelancers
 $routes->add('freelancers', 'Freelancer\Freelancer::index');
 $routes->add('freelancer/u(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
-$routes->add('deposit', 'Freelancer\Deposit::index', ['as' => 'freelancer_deposit']);
-$routes->add('withdraw', 'Freelancer\Withdraw::index', ['as' => 'freelancer_withdraw']);
+
 // Account
-$routes->group('account', function ($routes) {
-    $routes->add('dashboard', 'Account\Dashboard::index', ['as' => 'account_dashboard']);
-    $routes->add('setting', 'Account\Setting::index', ['as' => 'account_setting']);
-    $routes->add('message', 'Account\Message::index', ['as' => 'account_message']);
-    $routes->add('review', 'Account\Review::index', ['as' => 'account_review']);
-    $routes->add('login', 'Account\Login::index', ['as' => 'account_login']);
-    $routes->add('register', 'Account\Register::index', ['as' => 'account_register']);
-    $routes->add('forgotten', 'Account\Forgotten::index', ['as' => 'account_forgotten']);
-    $routes->add('reset', 'Account\Reset::index', ['as' => 'account_reset']);
-    $routes->add('logout', 'Account\Logout::index', ['as' => 'account_logout']);
-    $routes->add('projects', 'Account\Projects::index', ['as' => 'account_project']);
-    $routes->add('dispute', 'Account\Dispute::index', ['as' => 'account_dispute']);
-    $routes->add('jobs', 'Account\Jobs::index', ['as' => 'account_jobs']);
+$routes->group('account/(:segment)', function ($routes) {
+    $routes->add('dashboard', 'Account\Dashboard::index/$1', ['as' => 'account_dashboard']);
+    $routes->add('setting', 'Account\Setting::index/$1', ['as' => 'account_setting']);
+    $routes->add('inbox', 'Account\Message::index/$1', ['as' => 'account_message']);
+    $routes->add('review', 'Account\Review::index/$1', ['as' => 'account_review']);
+    $routes->add('projects', 'Account\Projects::index/$1', ['as' => 'account_project']);
+    $routes->add('dispute', 'Account\Dispute::index/$1', ['as' => 'account_dispute']);
+    $routes->add('jobs', 'Account\Jobs::index/$1', ['as' => 'account_jobs']);
+    $routes->add('deposit', 'Account\Deposit::index', ['as' => 'freelancer_deposit']);
+    $routes->add('withdraw', 'Account\Withdraw::index', ['as' => 'freelancer_withdraw']);
 });
-// projects
-$routes->add('add-project', 'Project\Project::getForm', ['as' => 'add-project']);
-// single category for projects
-$routes->add('category/c(:num)/(:any)', 'Project\Project::index', ['as' => 'category']);
-$routes->add('projects', 'Project\Project::index', ['as' => 'projects']);
-$routes->add('service/s(:num)/(:any)', 'Project\Project::info/$1/$2', ['as' => 'single_project']);
+// 2-Step verification
+$routes->get('verify', 'Account\Verify::index', ['as' => 'account_verify']);
+$routes->get('login', 'Account\Login::index', ['as' => 'account_login']);
+$routes->get('reset', 'Account\Reset::index', ['as' => 'account_reset']);
+$routes->get('logout', 'Account\Logout::index', ['as' => 'account_logout']);
+$routes->get('register', 'Account\Register::index', ['as' => 'account_register']);
+$routes->get('forgotten', 'Account\Forgotten::index', ['as' => 'account_forgotten']);
 // Category
-$routes->add('categories', 'Project\Category::index', ['as' => 'categories']);
+$routes->get('categories', 'Project\Category::index', ['as' => 'categories']);
+// Add Project
+$routes->get('add-project', 'Project\Project::getForm', ['as' => 'add-project']);
+// Project List
+$routes->get('projects', 'Project\Project::index', ['as' => 'projects']);
+// Single Project View
+$routes->get('service/(:any)', 'Project\Project::info/$1', ['as' => 'single_project']);
+// Information
+$routes->get('(:segment)', 'Information\Information::index/$1', ['as' => 'information']);
+$routes->get('contact', 'Information\Contact::index');
 
 /*
  * --------------------------------------------------------------------

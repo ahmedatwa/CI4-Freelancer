@@ -1,7 +1,9 @@
-<?php namespace Catalog\Events;
+<?php 
 
-use \Catalog\Models\Account\ActivityModel;
-use \Catalog\Models\Account\CustomerModel;
+namespace Catalog\Events;
+
+use Catalog\Models\Account\ActivityModel;
+use Catalog\Models\Account\CustomerModel;
 use CodeIgniter\I18n\Time;
 
 class MailEvent
@@ -205,6 +207,27 @@ class MailEvent
 
         $config->send();
 
+    }
+
+    // Catalog\Model\Account\CustomerModel\editCode
+    public static function twoStepVerify(string $email, string $code)
+    {
+        $config = \Config\Services::email();
+
+        $data['text_subject']     = sprintf(lang('mail/verify.text_greeting'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $data['text_welcome']     = lang('mail/verify.text_welcome');
+        $data['text_body']        = sprintf(lang('mail/verify.text_body'), $code, service('registry')->get('config_name'), route_to('contact'));
+        $data['text_signature']   = sprintf(lang('mail/verify.text_signature'), service('registry')->get('config_name'));
+        
+        $config->setFrom(service('registry')->get('config_email'));
+
+        $config->setTo($email);
+
+        $config->setSubject(html_entity_decode(sprintf(lang('mail/verify.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+        
+        $config->setMessage(view('mail/verify', $data));
+
+        $config->send();
     }
     // --------------------------------------------------
 }

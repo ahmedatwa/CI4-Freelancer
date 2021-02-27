@@ -330,36 +330,33 @@
 									</div><!-- ./End tab_option -->
 									<!-- ./tab_image -->
 									<div role="tabpanel" class="tab-pane fade mt-3" id="nav-social" aria-labelledby="nav-social-tab">
-										<div class="form-group row">
-											<label for="facebook" class="col-sm-2 col-form-label"><?php echo $entry_facebook; ?></label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="config_facebook" value="<?php echo $config_facebook; ?>">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="facebook" class="col-sm-2 col-form-label"><?php echo $entry_twitter; ?></label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="config_twitter" value="<?php echo $config_twitter; ?>">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="facebook" class="col-sm-2 col-form-label"><?php echo $entry_pintrest; ?></label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="config_pintrest" value="<?php echo $config_pintrest; ?>">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="facebook" class="col-sm-2 col-form-label"><?php echo $entry_linkedin; ?></label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="config_linkedin" value="<?php echo $config_linkedin; ?>">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="facebook" class="col-sm-2 col-form-label"><?php echo $entry_instagram; ?></label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="config_instagram" value="<?php echo $config_instagram; ?>">
-											</div>
-										</div>
+										<?php $social_row = 0; ?>
+										<table class="table table-bordered" id="table-social-networks">
+										  <thead>
+										    <tr>
+										      <th>Name</th>
+										      <th>Link</th>
+										      <th>Action</th>
+										    </tr>
+										  </thead>
+										  <tbody>
+										  	<?php foreach ($config_social_networks as $social) { ?>
+										    <tr id="social-row<?php echo $social_row; ?>">
+										      <td width="20%"><input name="config_social_networks[<?php echo $social_row; ?>][name]" value="<?php echo $social['name']; ?>" class="form-control" id="input-social-name" /></td>
+										      <td><input name="config_social_networks[<?php echo $social_row; ?>][href]" value="<?php echo $social['href']; ?>" class="form-control" id="input-social-name" /></td>
+										      <td width="4%"><button type="button" onclick="$('#social-row<?php echo $social_row; ?>, .tooltip').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+										    </tr>
+										    <?php $social_row++; ?>
+										    <?php } ?>
+										  </tbody>
+										  <tfoot>
+										  	<tr>
+										    	<td colspan="3" class="text-right">
+										    		<button id="button-social-add" type="button" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_add; ?>" data-placement="top"><i class="fas fa-plus-circle"></i></button>
+										    	</td>
+										    </tr>
+										  </tfoot>
+										</table>
 
 									</div><!-- ./End tab_social -->
 									<!-- ./tab_server -->
@@ -422,14 +419,27 @@ $('textarea[data-toggle=\'tagsinput\']').tagsinput({
 		confirmKeys: [13, 44, 32]
 	});
 </script> 
+<script type="text/javascript">
+	var social_row = <?php echo $social_row; ?>;
+	$('#button-social-add').on('click', function(){
+		html = '<tr id="social-row'+ social_row +'">';
+		html += '<td width="20%"><input type="text" class="form-control" name="config_social_networks['+ social_row +'][name]"/></td>';
+		html += '<td><input type="text" class="form-control" name="config_social_networks['+ social_row +'][href]"/></td>';
+		html += '<td><button type="button" class="btn btn-danger" id="button-delete" onclick="$(\'#social-row' + social_row  + ', .tooltip\').remove();" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></button></td>';
+		html += '</tr>';
+	$('#table-social-networks').append(html);
+	social_row++;
+    });		      
+	$('#button-delete').remove();							      									
+</script>
 <?php if ($success) { ?>
-    <!-- Success SweetAlert -->
-    <script type="text/javascript">
-        swal({
-            title: 'Success!',
-            text: '<?php echo $success; ?>',
-            type: "success",
-        }); 
+<!-- Success SweetAlert -->
+<script type="text/javascript">
+    swal({
+        title: 'Success!',
+        text: '<?php echo $success; ?>',
+        type: "success",
+    }); 
     </script>
 <?php } ?>
 <?php echo $footer; ?>

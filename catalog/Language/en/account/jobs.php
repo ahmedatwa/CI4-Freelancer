@@ -2,6 +2,6 @@
         
 return [
 	// Heading
-	'heading_title'   => 'My Local Jobs',
+	'heading_title'   => 'Local Jobs',
 	'list' => []
 ];

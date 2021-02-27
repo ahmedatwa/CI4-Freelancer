@@ -3,7 +3,7 @@
 return [
     // Text
     'text_dashboard'       => 'Dashboard',
-    'text_messages'        => 'Messages',
+    'text_inbox'           => 'Inbox',
     'text_reviews'         => 'Feedback',
     'text_settings'        => 'Settings',
     'text_logout'          => 'Logout',

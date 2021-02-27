@@ -11,7 +11,8 @@
 					<div class="mb-4">
 						<h3><i class="icon-material-outline-account-circle"></i> {{ text_account }}</h3>
 					</div>
-					<div class="content with-padding padding-bottom-0" id="profile-form">
+					<div class="content with-padding padding-bottom-0">
+						<form id="profile-form">
 						<div class="row">
 							<div class="col-sm-4 text-center">
 								<div class="kv-avatar">
@@ -38,6 +39,12 @@
 											<h5>{{ entry_lastname }}</h5>
 											<input type="text" class="form-control" id="input-lastname" name="lastname"
 												value="{{ lastname }}">
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="submit-field">
+											<h5>{{ entry_username }}</h5>
+											<input type="text" class="form-control" value="{{ username }}" name="username">
 										</div>
 									</div>
 									<div class="col-12">
@@ -75,6 +82,23 @@
 												name="confirm">
 										</div>
 									</div>
+									<div class="col">
+									<div class="form-group row">
+										<label class="col-sm-3 control-label"><span data-toggle="tooltip" title="{{ help_two_step }}"><i class="fas fa-info-circle"></i></span> {{ text_two_step }} </label>
+										<div class="col-sm-6">
+										  <label class="radio-inline"> {% if two_step %}
+											<input type="radio" name="two_step" value="1" checked="checked" /> {{ text_yes }}
+											{% else %}
+											<input type="radio" name="two_step" value="1" /> {{ text_yes }}
+											{% endif %} </label>
+										  <label class="radio-inline"> {% if not two_step %}
+											<input type="radio" name="two_step" value="0" checked="checked" /> {{ text_no }}
+											{% else %}
+											<input type="radio" name="two_step" value="0" /> {{ text_no }}
+											{% endif %} </label>
+										</div>
+									  </div>
+									</div>
 								</div>
 							</div>
 							<div class="col-12">
@@ -82,6 +106,7 @@
 									class="button ripple-effect big margin-top-30 float-right">Update</button>
 							</div>
 						</div>
+					</form>
 					</div>
 				</div>
 			</div>
@@ -109,7 +134,7 @@
 												<span class="bidding-detail">{{ text_hourly_rate }} :
 													{{ [rate, currency]|join(' ') }}</span>
 												<input class="range-slider" type="text" value="" data-provide="slider"
-													data-slider-currency="$" data-slider-min="5" data-slider-max="150"
+													data-slider-currency="$" data-slider-min="0" data-slider-max="300"
 													data-slider-step="5" data-slider-value="{{ rate }}" name="rate" />
 											</div>
 										</div>
@@ -121,7 +146,7 @@
 											<div class="submit-field">
 												<h5>{{ entry_tagline }}</h5>
 												<input type="text" class="form-control" name="tag_line"
-													value="{{ tag_line }}">
+													value="{{ tag_line }}" placeholder="{{ help_tagline }}">
 											</div>
 										</div>
 										<div class="col-xl-12">
@@ -406,37 +431,26 @@
 			beforeSend: function () {
 				$('.alert, .text-danger, .invalid-feedback').remove();
 				$('#input-certificate-name, #input-certificate-year').removeClass('is-invalid');
-				$('#add-certificate').html(
-					'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-					);
-				$('#certificates-list').html(
-					'<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>'
-					)
+				$('#add-certificate').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+				$('#certificates-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 			},
 			complete: function () {
 				$('#spinner').remove();
-				$('#add-certificate').html(
-					'<i class="icon-material-outline-add"></i> {{ button_add }}');
+				$('#add-certificate').html('<i class="icon-material-outline-add"></i> {{ button_add }}');
 			},
 			success: function (json) {
-
 				if (json['error']) {
 					for (i in json['error']) {
 						var element = i.replace('_', '-');
 						$('#input-' + element).addClass('is-invalid')
-						$('#input-' + element).after('<div class="invalid-feedback">' + json['error'][
-							i] + '</div>');
+						$('#input-' + element).after('<div class="invalid-feedback">' + json['error'][i] + '</div>');
 					}
 				}
 
 				if (json['success']) {
 					$('#certificates-list').load('account/setting/getCertificates');
 
-					$('#certificates').before(
-						'<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +
-						json['success'] +
-						' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-						);
+					$('#certificates').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
@@ -475,20 +489,15 @@
 						url: 'account/setting/deleteCertificate?certificate_id=' + $(node)
 						.val(),
 						headers: {
-							'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr(
-								'content'),
+							'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
 							'X-Requested-With': 'XMLHttpRequest'
 						},
 						method: 'post',
 						dataType: 'json',
 						beforeSend: function () {
 							$('.alert, .text-danger').remove();
-							$(node).html(
-								'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-								);
-							$('#certificates-list').html(
-								'<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>'
-								)
+							$(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+							$('#certificates-list').html('<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 						},
 						complete: function () {
 							$(node).html('<i class="icon-feather-trash-2"></i>');
@@ -497,25 +506,16 @@
 
 							if (json['error']) {
 								$('#certificates-list').before(
-									'<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' +
-									json['error'] +
-									' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-									);
+									'<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 							}
 
 							if (json['success']) {
-								$('#certificates-list').load(
-									'account/setting/getCertificates');
-								$('#certificates').before(
-									'<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +
-									json['success'] +
-									' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-									);
+								$('#certificates-list').load('account/setting/getCertificates');
+								$('#certificates').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 							}
 						},
 						error: function (xhr, ajaxOptions, thrownError) {
-							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr
-								.responseText);
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 						}
 					});
 				}
@@ -588,12 +588,8 @@
 			beforeSend: function () {
 				$('.alert, .text-danger, .invalid-feedback').remove();
 				$('#education input, #education select').removeClass('is-invalid')
-				$('#add-education').html(
-					'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-					);
-				$('#languages-list').html(
-					'<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>'
-					)
+				$('#add-education').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+				$('#languages-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 			},
 			complete: function () {
 				$('#spinner').remove();
@@ -605,18 +601,13 @@
 					for (i in json['error']) {
 						var element = i.replace('_', '-');
 						$('#input-' + element).addClass('is-invalid')
-						$('#input-' + element).after('<div class="invalid-feedback">' + json['error'][
-							i] + '</div>');
+						$('#input-' + element).after('<div class="invalid-feedback">' + json['error'][i] + '</div>');
 					}
 				}
 
 				if (json['success']) {
 					$('#educations-list').load('account/setting/getEducation');
-					$('#education').before(
-						'<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +
-						json['success'] +
-						' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-						);
+					$('#education').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
@@ -654,20 +645,15 @@
 					$.ajax({
 						url: 'account/setting/deleteEducation?education_id=' + $(node).val(),
 						headers: {
-							'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr(
-								'content'),
+							'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
 							'X-Requested-With': 'XMLHttpRequest'
 						},
 						method: 'post',
 						dataType: 'json',
 						beforeSend: function () {
 							$('.alert, .text-danger').remove();
-							$(node).html(
-								'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-								);
-							$('#educations-list-list').html(
-								'<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>'
-								)
+							$(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+							$('#educations-list-list').html('<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 
 						},
 						complete: function () {
@@ -676,25 +662,16 @@
 						success: function (json) {
 
 							if (json['error']) {
-								$('#educations-list').before(
-									'<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' +
-									json['error'] +
-									' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-									);
+								$('#educations-list').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 							}
 
 							if (json['success']) {
 								$('#educations-list').load('account/setting/getEducation');
-								$('#educations-list').before(
-									'<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +
-									json['success'] +
-									' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-									);
+								$('#educations-list').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 							}
 						},
 						error: function (xhr, ajaxOptions, thrownError) {
-							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr
-								.responseText);
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 						}
 					});
 				}
@@ -705,84 +682,75 @@
 <!-- Education END -->
 <!-- Languages Start -->
 <script type="text/javascript">
-	$('input[name=\'language_name\']').autocomplete({
-		'source': function (request, response) {
-			$.ajax({
-				url: 'account/setting/languagesAutocomplete?filter_language=' + encodeURIComponent(
-					request.term),
-				dataType: 'json',
-				success: function (json) {
-					response($.map(json, function (item) {
-						return {
-							label: item['text'],
-							value: item['language_id'],
-						}
-					}));
-				}
-			});
-		},
-		'select': function (event, ui) {
-			event.preventDefault();
-			$('input[name=\'language_name\']').val(ui.item.label);
-			$('input[name=\'language_id\']').val(ui.item.value);
-		}
-	});
-
-	$('#add-language').on('click', function () {
+$('input[name=\'language_name\']').autocomplete({
+	'source': function (request, response) {
 		$.ajax({
-			url: 'account/setting/addLanguage',
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
-				'X-Requested-With': 'XMLHttpRequest'
-			},
-			type: 'post',
+			url: 'account/setting/languagesAutocomplete?filter_language=' + encodeURIComponent(
+				request.term),
 			dataType: 'json',
-			data: $('#language select, #language input'),
-			beforeSend: function () {
-				$('.alert, .text-danger').remove();
-				$('#input-language-name, #input-language-level').removeClass('is-invalid');
-				$('#add-language').html(
-					'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-					);
-				$('#languages-list').html(
-					'<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>'
-					)
-			},
-			complete: function () {
-				$('#spinner').remove();
-				$('#add-language').html('<i class="icon-material-outline-add"></i> {{ button_add }}');
-			},
 			success: function (json) {
-				if (json['error']) {
-					for (i in json['error']) {
-						var element = i.replace('_', '-');
-						$('#input-' + element).addClass('is-invalid')
-						$('#input-' + element).after('<div class="invalid-feedback">' + json['error'][
-							i] + '</div>');
+				response($.map(json, function (item) {
+					return {
+						label: item['text'],
+						value: item['language_id'],
 					}
-				}
-
-				if (json['success']) {
-					$('#languages-list').load('account/setting/getLanguages');
-					$('#language').before(
-						'<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +
-						json['success'] +
-						' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-						);
-				}
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}));
 			}
 		});
+	},
+	'select': function (event, ui) {
+		event.preventDefault();
+		$('input[name=\'language_name\']').val(ui.item.label);
+		$('input[name=\'language_id\']').val(ui.item.value);
+	}
+});
+
+$('#add-language').on('click', function () {
+	$.ajax({
+		url: 'account/setting/addLanguage',
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			'X-Requested-With': 'XMLHttpRequest'
+		},
+		type: 'post',
+		dataType: 'json',
+		data: $('#language select, #language input'),
+		beforeSend: function () {
+			$('.alert, .text-danger').remove();
+			$('#input-language-name, #input-language-level').removeClass('is-invalid');
+			$('#add-language').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+			$('#languages-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+		},
+		complete: function () {
+			$('#spinner').remove();
+			$('#add-language').html('<i class="icon-material-outline-add"></i> {{ button_add }}');
+		},
+		success: function (json) {
+			if (json['error']) {
+				for (i in json['error']) {
+					var element = i.replace('_', '-');
+					$('#input-' + element).addClass('is-invalid')
+					$('#input-' + element).after('<div class="invalid-feedback">' + json['error'][i] + '</div>');
+				}
+			}
+
+			if (json['success']) {
+				$('#languages-list').load('account/setting/getLanguages');
+				$('#language').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
 	});
-	// Languages List Table Pagination
-	$('#languages-list').on('click', '.pagination a', function (e) {
-		e.preventDefault();
-		$('#languages-list').fadeOut('slow');
-		$('#languages-list').load(this.href);
-		$('#languages-list').fadeIn('slow');
-	});
+});
+// Languages List Table Pagination
+$('#languages-list').on('click', '.pagination a', function (e) {
+	e.preventDefault();
+	$('#languages-list').fadeOut('slow');
+	$('#languages-list').load(this.href);
+	$('#languages-list').fadeIn('slow');
+});
 	// load the Languages List Table 
 	$('#languages-list').load('account/setting/getLanguages');
 	//  Languages Delete Button 
@@ -806,42 +774,30 @@
 					$.ajax({
 						url: 'account/setting/deleteLanguage?language_id=' + $(node).val(),
 						headers: {
-							'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr(
-								'content'),
+							'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
 							'X-Requested-With': 'XMLHttpRequest'
 						},
 						method: 'post',
 						dataType: 'json',
 						beforeSend: function () {
 							$('.alert, .text-danger').remove();
-							$('#languages-list').html(
-								'<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>'
-								)
+							$('#languages-list').html('<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 						},
 						complete: function () {
 							$('#languages-list').html('');
 						},
 						success: function (json) {
 							if (json['error']) {
-								$('#language').before(
-									'<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' +
-									json['error'] +
-									' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-									);
+								$('#language').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 							}
 
 							if (json['success']) {
 								$('#languages-list').load('account/setting/getLanguages');
-								$('#language').before(
-									'<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +
-									json['success'] +
-									' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-									);
+								$('#language').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 							}
 						},
 						error: function (xhr, ajaxOptions, thrownError) {
-							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr
-								.responseText);
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 						}
 					});
 				}
@@ -887,12 +843,8 @@
 			data: $('#skillsAccordion input[type=\'hidden\']'),
 			beforeSend: function () {
 				$('.alert, .text-danger, .invalid-feedback').remove();
-				$(this).html(
-					'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-					);
-				$('#skills-list').html(
-					'<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>'
-					)
+				$(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+				$('#skills-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 			},
 			complete: function () {
 				$('#spinner').remove();
@@ -901,17 +853,12 @@
 			success: function (json) {
 				if (json['error']) {
 					$('#input-filter-skill').addClass('is-invalid');
-					$('#skills .input-group').after('<div class="invalid-feedback d-block">' + json[
-						'error'] + '</div>');
+					$('#skills .input-group').after('<div class="invalid-feedback d-block">' + json['error'] + '</div>');
 				}
 
 				if (json['success']) {
 					$('#skills-list').load('account/setting/getSkills');
-					$('#skills').before(
-						'<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +
-						json['success'] +
-						' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-						);
+					$('#skills').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
@@ -949,42 +896,30 @@
 					$.ajax({
 						url: 'account/setting/deleteSkill?category_id=' + $(node).val(),
 						headers: {
-							'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr(
-								'content'),
+							'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
 							'X-Requested-With': 'XMLHttpRequest'
 						},
 						method: 'post',
 						dataType: 'json',
 						beforeSend: function () {
 							$('.alert, .text-danger').remove();
-							$(node).html(
-								'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-								);
+							$(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
 						},
 						complete: function () {
 							$(node).html('<i class="icon-feather-trash-2"></i>');
 						},
 						success: function (json) {
 							if (json['error']) {
-								$('#skills-list').before(
-									'<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' +
-									json['error'] +
-									' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-									);
+								$('#skills-list').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 							}
 
 							if (json['success']) {
 								$('#skills-list').load('account/setting/getSkills');
-								$('#skills').before(
-									'<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' +
-									json['success'] +
-									' <button type="button" class="close" data-dismiss="alert">&times;</button></div>'
-									);
+								$('#skills').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 							}
 						},
 						error: function (xhr, ajaxOptions, thrownError) {
-							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr
-								.responseText);
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 						}
 					});
 				}
@@ -992,8 +927,7 @@
 		});
 	});
 </script>
-<link href="catalog/default/vendor/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet"
-	type="text/css">
+<link href="catalog/default/vendor/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet"ype="text/css">
 <script src="catalog/default/vendor/bootstrap-fileinput/js/fileinput.min.js"></script>
 <script src="catalog/default/vendor/bootstrap-fileinput/themes/fas/theme.min.js"></script>
 <script type="text/javascript">
@@ -1074,13 +1008,11 @@
 			},
 			method: 'post',
 			dataType: 'json',
-			data: $('#profile-form input'),
+			data: $('#profile-form').serialize(),
 			beforeSend: function () {
 				$('.alert, .text-danger, .invalid-feedback').remove();
 				$('#profile-form input').removeClass('is-invalid');
-				$(node).html(
-					'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-					);
+				$(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
 			},
 			complete: function () {
 				$('.spinner-border').remove();
@@ -1098,26 +1030,16 @@
 					}
 
 					if (json['error']['error_password']) {
-						$('input-password').prepend('<div class="invalid-feedback">' + json['error'][
-							'error_password'
-						] + '</div>');
+						$('input-password').prepend('<div class="invalid-feedback">' + json['error']['error_password'] + '</div>');
 					}
 
 					if (json['error']['old_password']) {
-						$('#profile-form-form .content').before(
-							'<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' +
-							json['error']['old_password'] +
-							'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
-							);
+						$('#profile-form-form .content').before('<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error']['old_password'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 					}
 				}
 
 				if (json['success']) {
-					$(node).before(
-						'<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' +
-						json['success'] +
-						'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
-						);
+					$(node).before('<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 					$('#profile-form-form input').val('');
 				}
 			},
@@ -1133,6 +1055,7 @@
 var social_row = {{ social_row }};
 		var x = 1;
 		$('#add_field_button').on('click', function(e) { 
+			$(this).tooltip('hide');
 			e.preventDefault();
 			if(x < 5) {
 				x++;

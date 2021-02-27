@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Catalog\Models\Catalog;
 
@@ -9,19 +9,6 @@ class CategoryModel extends Model
     protected $table          = 'category';
     protected $primaryKey     = 'category_id';
     protected $returnType     = 'array';
-
-    public function getCategory($category_id)
-    {
-        $builder = $this->db->table('category');
-        $builder->select('category.category_id, category_description.name, category_description.description, category.status, category.icon');
-        $builder->join('category_description', 'category.category_id = category_description.category_id', 'left');
-        $builder->where([
-            'category.category_id' => $category_id,
-            'language_id' => service('registry')->get('config_language_id'),
-        ]);
-        $query = $builder->get();
-        return $query->getRowArray();
-    }
 
     public function getCategories(array $data = [])
     {
@@ -59,6 +46,19 @@ class CategoryModel extends Model
         return $query->getResultArray();
     }
 
+    public function getCategory($category_id)
+    {
+        $builder = $this->db->table('category');
+        $builder->select('category.category_id, category_description.name, category_description.description, category.status, category.icon');
+        $builder->join('category_description', 'category.category_id = category_description.category_id', 'left');
+        $builder->where([
+            'category.category_id' => $category_id,
+            'language_id' => service('registry')->get('config_language_id'),
+        ]);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
+
     public function getCategoriesByProjectId($project_id)
     {
         $builder = $this->db->table('project_to_category p2c');
@@ -68,7 +68,6 @@ class CategoryModel extends Model
         $builder->where('cd.language_id', service('registry')->get('config_language_id'));
         $query = $builder->get();
         return $query->getResultArray();
-         
     }
 
     public function getCategoryByProjectId($project_id)
@@ -79,15 +78,11 @@ class CategoryModel extends Model
         $builder->where('p2c.project_id', $project_id);
         $query = $builder->get()
                          ->getRowArray();
-        return $query['name'];                 
-         
-    }
-
-    public function getTotalProjectsByCategoryId($category_id)
-    {
-        $builder = $this->db->table('project_to_category');
-        $builder->where('category_id', $category_id);
-        return $builder->countAllResults();
+        if ($query) {
+            return $query['name'];
+        } else {
+            return '';
+        }
     }
 
     public function getTotalCategories()
@@ -95,6 +90,13 @@ class CategoryModel extends Model
         $builder = $this->db->table('category');
         return $builder->countAll();
     }
-    
+
+    // Category Module
+    public function getTotalProjectsByCategoryId($category_id)
+    {
+        $builder = $this->db->table('project_to_category');
+        $builder->where('category_id', $category_id);
+        return $builder->countAllResults();
+    }
     // -----------------------------------------------------------------
 }

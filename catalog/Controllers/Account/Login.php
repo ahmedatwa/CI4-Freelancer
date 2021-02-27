@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Catalog\Controllers\Account;
 
@@ -11,10 +11,10 @@ class Login extends BaseController
     public function index()
     {
         if ($this->customer->isLogged()) {
-            return redirect()->route('account_dashboard');
+            return redirect()->to(route_to('account_dashboard', $this->customer->getUserName()));
         }
 
-        $this->template->setTitle(lang('account/login.list.heading_title'));
+        $this->template->setTitle(lang('account/login.heading_title'));
 
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -28,7 +28,6 @@ class Login extends BaseController
         ];
 
         $data['text_register']  = sprintf(lang('account/login.text_register'), route_to('acount_register') ? route_to('acount_register') : base_url('account/register'));
-
         $data['forgotton'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
 
         $data['langData'] = lang('account/login.list');
@@ -41,27 +40,31 @@ class Login extends BaseController
         $json = [];
 
         if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
+            $customerModel = new CustomerModel();
+
             if (! $this->validate([
                 'email'    => 'required|valid_email',
                 'password' => 'required|min_length[4]',
             ])) {
                 $json['error_warning'] = lang('account/login.text_warning');
                 $json['validator'] = $this->validator->getErrors() ?? 'false';
-            } 
+            }
 
-            if (! $json) {
-                $customerModel = new CustomerModel();
-
+            // 2-step verification
+            if (! $json && $this->customer->checkTwoStepVerification($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
+                $this->customer->editAccessCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), random_string('numeric', 7));
+                $json['redirect'] = route_to('account_verify');
+            } else {
                 // Check how many login attempts have been made.
                 $login_info = $customerModel->getLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
 
-                if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+                if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < $login_info['date_modified']) {
                     $json['error_attempts'] = lang('account/login.error_attempts');
                 }
 
-                if (! $this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password'))) {
-                    $json['error_warning'] = lang('account/login.text_warning');
-                    $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
+                if (! $this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password', FILTER_SANITIZE_STRING))) {
+                        $json['error_warning'] = lang('account/login.text_warning');
+                        $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
                 }
             }
 
@@ -96,7 +99,7 @@ class Login extends BaseController
                 } elseif (! is_null($this->request->getCookie(config('App')->cookiePrefix . 'redirect_url'))) {
                     $json['redirect'] = base64_decode($this->request->getCookie(config('App')->cookiePrefix . 'redirect_url', FILTER_SANITIZE_STRING));
                 } else {
-                    $json['redirect'] = route_to('account_dashboard');
+                    $json['redirect'] = route_to('account_dashboard', $this->session->get('username'));
                 }
             }
         }

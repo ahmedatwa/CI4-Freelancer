@@ -7,7 +7,7 @@
 			<a href="{{ add_project }}"
 				class="button dark button-sliding-icon ripple-effect rounded">{{ button_hire }}</a>
 			{% if not logged %}
-			<a href="{{ login }}" class="button button-sliding-icon ripple-effect rounded ml-2">{{ button_work }}</a>
+			<a href="{{ login }}" class="button button-sliding-icon ripple-effect rounded ml-2">{{ button_work }} {{ category_name }}</a>
 			{% endif %}
 		</div>
 	</div>
@@ -111,7 +111,7 @@
 				<!-- Tasks Container -->
 				<div class="tasks-list-container compact-list shadow-sm mb-5 bg-white rounded border">
 					<div class="notify-box">
-						<h3 class="float-left mx-4 mt-2">{{ text_found }}</h3>
+						<h3 class="float-left mx-4 mt-2">{{ total_projects }} {{ text_found }}</h3>
 						<div class=" col-md-3 float-right">
 							<div class="form-group">
 								<select class="custom-select" onchange="location = this.value;">
@@ -136,7 +136,7 @@
 								<h3 class="task-listing-title">{{ project.name }}</h3>
 								<ul class="task-icons">
 									<li><i class="icon-material-outline-access-time"></i>
-										<span id="project-countdown-timer{{ project.project_id }}" data-final="{{ project.final_date }}"></span>
+										<span data-countdown="{{ project.final_date }}"></span>
 									</li>
 								</ul>
 								<p class="col task-listing-text text-wrap">{{ project.description }}</p>
@@ -164,8 +164,8 @@
 					<!-- ./Task END-->
 					{% else %}
 					<div class="col-12 text-center p-4">
-						<p class="p-4">No Projects Found !</p>
-						<a role="button" href="{{ add_project }}" class="btn btn-danger btn-lg">Add Project</a>
+						<p class="p-4"><i class="far fa-frown"></i> {{ text_no_results }}</p>
+						<a role="button" href="{{ add_project }}" class="btn btn-danger btn-lg">{{ button_add }}</a>
 					</div>
 					{% endif %}
 				</div>
@@ -182,7 +182,6 @@
 <script src="catalog/default/vendor/select2/customSelectionAdapter/js/select2.customSelectionAdapter.min.js"></script>
 <script type="text/javascript">
 	var uri = document.URL;
-
 	// Skills
 	var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
 	$('select[name^=\'filter_category\']').select2({

@@ -1,43 +1,47 @@
-<?php namespace Catalog\Controllers\Account;
+<?php
 
-use \Catalog\Models\Account\ActivityModel;
-use \Catalog\Models\Account\CustomerModel;
+namespace Catalog\Controllers\Account;
 
-class Notifications extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\ActivityModel;
+use Catalog\Models\Account\CustomerModel;
+
+class Notifications extends BaseController
 {
     public function getNotifications()
     {
         $json = [];
 
-        if ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
-        } else {
-            $customer_id = 0;
-        }
+        if ($this->customer->isLogged()) {
+            if ($this->customer->getID()) {
+                $customer_id = $this->customer->getID();
+            } else {
+                $customer_id = 0;
+            }
 
-        $activityModel = new ActivityModel();
+            $activityModel = new ActivityModel();
 
-        $results = $activityModel->getActivitiesByCustomerID($customer_id);
+            $results = $activityModel->getActivitiesByCustomerID($customer_id);
 
-        $customerModel = new CustomerModel();
+            $customerModel = new CustomerModel();
 
-        foreach ($results as $result) {
-            if (substr($result['key'], 0, 6) != 'admin_') {
-                $info = json_decode($result['data'], true);
+            foreach ($results as $result) {
+                if (substr($result['key'], 0, 6) != 'admin_') {
+                    $info = json_decode($result['data'], true);
 
-                $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
+                    $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
             
-                $username  = '';
+                    $username  = '';
 
-                if (isset($info['freelancer_id'])) {
-                    $username = $customerModel->where('customer_id', $info['freelancer_id'])->findColumn('username')[0];
-                } elseif (isset($info['employer_id'])) {
-                    $username = $customerModel->where('customer_id', $info['employer_id'])->findColumn('username')[0];
-                }
+                    if (isset($info['freelancer_id'])) {
+                        $username = $customerModel->where('customer_id', $info['freelancer_id'])->findColumn('username')[0];
+                    } elseif (isset($info['employer_id'])) {
+                        $username = $customerModel->where('customer_id', $info['employer_id'])->findColumn('username')[0];
+                    }
 
-                $milestone_status = '';
+                    $milestone_status = '';
 
-                switch (isset($info['milestone_status'])) {
+                    switch (isset($info['milestone_status'])) {
                     case 0: $milestone_status = 'Pending'; break;
                     case 1: $milestone_status = 'Approved'; break;
                     case 2: $milestone_status = 'Paid'; break;
@@ -45,21 +49,22 @@ class Notifications extends \Catalog\Controllers\BaseController
                     default: $milestone_status = 'Pending'; break;
                 }
 
-                $find = [
+                    $find = [
                     'url=',
                     'freelancer_id=',
                     'milestone_status=',
                 ];
 
-                $replace = [
+                    $replace = [
                     isset($info['url']) ? $info['url'] : '',
                     '@' . $username,
                     $milestone_status,
                 ];
 
-                $json[] = [
+                    $json[] = [
                     'comment' => str_replace($find, $replace, $comment),
                 ];
+                }
             }
         }
 
@@ -69,16 +74,17 @@ class Notifications extends \Catalog\Controllers\BaseController
     public function getTotalNotifications()
     {
         $json = [];
+        if ($this->customer->isLogged()) {
+            $activityModel = new ActivityModel();
 
-        $activityModel = new ActivityModel();
+            if ($this->customer->getID()) {
+                $customer_id = $this->customer->getID();
+            } else {
+                $customer_id = 0;
+            }
 
-        if ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
-        } else {
-            $customer_id = 0;
+            $json = $activityModel->getTotalActivitiesByCustomerID($customer_id);
         }
-
-        $json = $activityModel->getTotalActivitiesByCustomerID($customer_id);
                
         return $this->response->setJSON($json);
     }
@@ -86,19 +92,21 @@ class Notifications extends \Catalog\Controllers\BaseController
     public function markRead()
     {
         $json = [];
-        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
-            $activityModel = new ActivityModel();
+        if ($this->customer->isLogged()) {
+            if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
+                $activityModel = new ActivityModel();
 
-            if ($this->customer->getCustomerId()) {
-                $customer_id = $this->customer->getCustomerId();
-            } else {
-                $customer_id = 0;
-            }
+                if ($this->customer->getID()) {
+                    $customer_id = $this->customer->getID();
+                } else {
+                    $customer_id = 0;
+                }
 
-            $activityModel->where('customer_id', $customer_id)
+                $activityModel->where('customer_id', $customer_id)
                                ->set('seen', 1)
                                ->update();
-            $json['success'] = 'Cleared';
+                $json['success'] = 'Cleared';
+            }
         }
        
         return $this->response->setJSON($json);

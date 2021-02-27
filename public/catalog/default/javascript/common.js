@@ -711,8 +711,11 @@ $(document).on('click', '.dropdown-menu', function (e) {
     /*----------------------------------------------------*/
 	// Project List Timer
 	/*----------------------------------------------------*/
-	$('span[id^=\'project-countdown-timer\']').each(function() {
-		$(this).countdown($(this).attr('data-final')).on('update.countdown', function(event) {
+	$('span[data-countdown]').each(function() {
+		var $this = $(this), finalDate = $(this).data('countdown');
+
+		$this.countdown(finalDate)
+		.on('update.countdown', function(event) {
 			var format = '%H:%M:%S';
 			if(event.offset.totalDays > 0) {
 			    format = '<span class="text-success">%-d day%!d ' + format + '</span>';
@@ -722,12 +725,24 @@ $(document).on('click', '.dropdown-menu', function (e) {
 			if(event.offset.weeks > 0) {
 			    format = '<span class="text-success">%-w week%!w ' + format + '</span>';
 			}
+			if(event.offset.months > 0) {
+			    format = '<span class="text-success">%-m month%!m ' + format + '</span>';
+			}
 			  $(this).html(event.strftime(format));
-			}).on('finish.countdown', function(event) {
-		       $(this).html('<span class="text-danger"> project expired!</span>').parent().addClass('disabled');
+
+			})
+		.on('finish.countdown', function(event) {
+		       $(this).html('<span class="text-danger"> Project Expired!</span>').parent().addClass('disabled');
 		    });
-		});   
-       
+		});  
+
+       // Redirect
+       $(document).on('shown.bs.modal', '.bootbox', function (event) {
+	       var $this = $(this), seconds = $($this).find('.modal-body span').attr('data-redirect-countdown'), finalCount = new Date().getTime() + parseInt(seconds);
+       	   $($this).find('.modal-body #redirect-html').countdown(finalCount).on('update.countdown', function(event) {
+    	   $($this).find('.modal-body #redirect-html').html(event.strftime('<span>%S</span>'));
+		})
+       }); 
     /*----------------------------------------------------*/
 	/* Agree to Terms */
 	/*----------------------------------------------------*/

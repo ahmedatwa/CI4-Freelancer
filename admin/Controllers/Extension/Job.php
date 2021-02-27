@@ -32,7 +32,7 @@ class Job extends \Admin\Controllers\BaseController
 
             $settingModel = new SettingModel();
 
-            $settingModel->editSetting('job_extension', ['job_extension_status' => 1]);
+            $settingModel->editSetting('extension_job', ['extension_job_status' => 1]);
             // Call install Method is exists
             $jobModel = new JobModel();
             if (method_exists($jobModel, 'install')) {
@@ -61,7 +61,7 @@ class Job extends \Admin\Controllers\BaseController
             }
 
             $settingModel = new SettingModel();
-            $settingModel->editSetting('job_extension', ['job_extension_status' => 0]);
+            $settingModel->editSetting('extension_job', ['extension_job_status' => 0]);
 
             $this->session->setFlashdata('success', lang('extension/job.text_success'));
         }
@@ -107,7 +107,7 @@ class Job extends \Admin\Controllers\BaseController
                 
                 $data['extensions'][] = [
                     'name'       => lang('job/' . strtolower($basename) . '.list.heading_title'),
-                    'status'     => ($this->registry->get('job_extension_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                    'status'     => ($this->registry->get('extension_job_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'install'    => base_url('index.php/extension/job/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/job/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'installed'  => in_array(strtolower($basename), $installedExtensions),

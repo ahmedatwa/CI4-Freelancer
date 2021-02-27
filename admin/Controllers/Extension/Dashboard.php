@@ -31,9 +31,9 @@ class Dashboard extends \Admin\Controllers\BaseController
 
             $settingModel = new SettingModel();
             $dashboard_data = [
-                'dashboard_' . $this->request->getVar('extension') . '_status' => 1,
-                'dashboard_' . $this->request->getVar('extension') . '_width' => 6,
-                'dashboard_' . $this->request->getVar('extension') .  '_sort_order' => 0,
+                'extension_dashboard_' . $this->request->getVar('extension') . '_status' => 1,
+                'extension_dashboard_' . $this->request->getVar('extension') . '_width' => 6,
+                'extension_dashboard_' . $this->request->getVar('extension') .  '_sort_order' => 0,
             ];
             
             $settingModel->editSetting('dashboard_' . $this->request->getVar('extension'), $dashboard_data);
@@ -51,7 +51,7 @@ class Dashboard extends \Admin\Controllers\BaseController
         $extensionsModel = new ExtensionModel();
 
         if ($this->validateForm()) {
-            $extensionsModel->uninstall('dashboard', $this->request->getVar('extension'));
+            $extensionsModel->uninstall('extension_dashboard', $this->request->getVar('extension'));
             $this->session->setFlashdata('success', lang('extension/dashboard.text_success'));
         }
 
@@ -96,8 +96,8 @@ class Dashboard extends \Admin\Controllers\BaseController
                 
                 $data['extensions'][] = array(
                     'name'       => lang('dashboard/' . strtolower($basename) . '.list.heading_title'),
-                    'width'      => $this->registry->get('dashboard_' . strtolower($basename) . '_width'),
-                    'status'     => ($this->registry->get('dashboard_' . strtolower($basename) . '_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                    'width'      => $this->registry->get('extension_dashboard_' . strtolower($basename) . '_width'),
+                    'status'     => ($this->registry->get('extension_dashboard_' . strtolower($basename) . '_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'sort_order' => $this->registry->get('dashboard_' . strtolower($basename) . '_sort_order'),
                     'install'    => base_url('index.php/extension/dashboard/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/dashboard/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),

@@ -1,8 +1,11 @@
-<?php namespace Catalog\Controllers\Freelancer;
+<?php 
 
-use \Catalog\Models\Freelancer\DepositModel;
+namespace Catalog\Controllers\Account;
 
-class Deposit extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\DepositModel;
+
+class Deposit extends BaseController
 {
     public function index()
     {
@@ -10,7 +13,7 @@ class Deposit extends \Catalog\Controllers\BaseController
             return redirect('account_login');
         }
 
-        $this->template->setTitle(lang('freelancer/deposit.heading_title'));
+        $this->template->setTitle(lang('account/deposit.heading_title'));
 
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -23,20 +26,13 @@ class Deposit extends \Catalog\Controllers\BaseController
             'href' => base_url('freelancer/freelancer'),
         ];
 
-        $data['heading_title'] = lang('freelancer/deposit.heading_title');
-        $data['text_fee']      = lang('freelancer/deposit.text_fee');
-        $data['text_total']    = lang('freelancer/deposit.text_total');
-        $data['entry_amount']  = lang('freelancer/deposit.entry_amount');
-        $data['']              = lang('freelancer/deposit.button_view');
-        $data['']              = lang('freelancer/deposit.button_view');
-
         $data['processing_fee'] = $this->registry->get('config_processing_fee');
 
         $data['currency'] = $this->session->get('currency') ? $this->session->get('currency') : $this->registry->get('config_currency');
    
         $data['customer_id'] = $this->session->get('customer_id') ?? 0;
 
-        $this->template->output('freelancer/deposit', $data);
+        $this->template->output('account/deposit', $data);
     }
 
 
@@ -59,7 +55,7 @@ class Deposit extends \Catalog\Controllers\BaseController
 
                 $depositModel->insertFunds($data);
 
-                $json['success'] = lang('freelancer/deposit.text_success');
+                $json['success'] = lang('account/deposit.text_success');
             }
         }
         return $this->response->setJSON($json);

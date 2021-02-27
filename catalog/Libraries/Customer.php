@@ -1,16 +1,21 @@
-<?php namespace Catalog\Libraries;
+<?php
+
+namespace Catalog\Libraries;
+
+use CodeIgniter\I18n\Time;
 
 class Customer
 {
-    protected $customerID;
-    protected $customerGroupID;
-    protected $customerName;
-    protected $customerImage;
-    protected $customerUsername;
-    protected $customerEmail;
+    protected $customerID = 0;
+    protected $customerGroupID = 0;
+    protected $customerName = '';
+    protected $customerImage = '';
+    protected $customerUsername = '';
+    protected $customerEmail = '';
     protected $permission = [];
     protected $session;
     protected $db;
+    protected $table = 'customer';
 
     public function __construct()
     {
@@ -21,14 +26,15 @@ class Customer
         $this->session = \Config\Services::session();
 
         if ($this->session->get('customer_id')) {
-            $builder = $this->db->table($this->db->prefixTable('customer'));
+            $builder = $this->db->table($this->db->prefixTable($this->table));
 
             $builder->where([
                 'customer_id' => $this->session->get('customer_id'),
                 'status'      => 1
             ]);
 
-            $row = $builder->get()->getRowArray();
+            $row = $builder->get()
+                           ->getRowArray();
             if ($row) {
                 $this->customerID       = $row['customer_id'];
                 $this->customerGroupID  = $row['customer_group_id'];
@@ -44,7 +50,7 @@ class Customer
 
     public function login(string $email, string $password): bool
     {
-        $builder = $this->db->table('customer');
+        $builder = $this->db->table($this->db->prefixTable($this->table));
         $builder->where([
             'email'  => $email,
             'status' => 1
@@ -52,64 +58,134 @@ class Customer
         
         $query = $builder->get();
         if ($builder->countAllResults() > 0) {
-            $row = $query->getRowArray();
+            $row = $query->getRow();
             // Verify stored hash against DB password
-            if (password_verify($password, $row['password'])) {
-                // The cost parameter can change over time as hardware improves
-                $options = ['cost' => 11];
-                // Check if a newer hashing algorithm is available
-                // or the cost has changed
-                if (password_needs_rehash($row['password'], PASSWORD_BCRYPT, $options)) {
-                    // If so, create a new hash, and replace the old one
-                    $newHash = password_hash($password, PASSWORD_BCRYPT, $options);
-                }
-              
-                $this->customerID       = $row['customer_id'];
-                $this->customerGroupID  = $row['customer_group_id'];
-                $this->customerName     = $row['firstname'] . ' ' . $row['lastname'];
-                $this->customerUsername = $row['username'];
-                $this->customerImage    = $row['image'];
-                $this->customerEmail    = $row['email'];
-                // Build User Data Session []
-                $session_data = [
-                    'customer_id'       => $row['customer_id'],
-                    'customer_name'     => $row['firstname'] . ' ' . $row['lastname'],
-                    'username'          => $row['username'],
-                    'customer_group_id' => $row['customer_group_id'],
-                    'customer_email'    => $row['email'],
-                    'isLogged'          => (bool) true,
-                ];
-                // close any open sessions
-                $this->session->set($session_data);
-                // Set the Online Status
-                $builder->set('online', 1)
-                        ->where('customer_id', $row['customer_id'])
-                        ->update();
-                return true;
+            if (password_verify($password, $row->password)) {
+                $rehash = password_needs_rehash($row->password, PASSWORD_DEFAULT);
+            } elseif (isset($row->salt) && $row->password == sha1($row->salt . sha1($row->salt . sha1($password)))) {
+                $rehash = true;
+            } elseif ($row->password == md5($password)) {
+                $rehash = true;
             } else {
                 return false;
             }
+
+            if ($rehash) {
+                $builder->where(['email'  => $email, 'status' => 1,])
+                        ->set('password', password_hash($password, PASSWORD_DEFAULT))
+                        ->update();
+            }
+              
+            $this->customerID       = $row->customer_id;
+            $this->customerGroupID  = $row->customer_group_id;
+            $this->customerName     = $row->firstname . ' ' . $row->lastname;
+            $this->customerUsername = $row->username;
+            $this->customerImage    = $row->image;
+            $this->customerEmail    = $row->email;
+            // Build User Data Session []
+            $session_data = [
+                'customer_id'       => $row->customer_id,
+                'customer_name'     => $row->firstname . ' ' . $row->lastname,
+                'username'          => $row->username,
+                'customer_group_id' => $row->customer_group_id,
+                'customer_email'    => $row->email,
+                'isLogged'          => (bool) true,
+            ];
+            $this->session->set($session_data);
+            // Set the Online Status
+            $builder->set('online', 1)
+                        ->where('customer_id', $row->customer_id)
+                        ->update();
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public function getCustomerId()
+    public function LoginAccessVerify(string $email, string $code)
     {
-        return $this->customerID ?? 0;
+        $builder = $this->db->table($this->db->prefixTable($this->table));
+        $builder->where([
+            'email'  => $email,
+            'code'   => $code,
+            'status' => 1,
+        ]);
+
+        $query = $builder->get();
+        if ($builder->countAllResults() > 0) {
+            $row = $query->getRow();
+            $this->customerID       = $row->customer_id;
+            $this->customerGroupID  = $row->customer_group_id;
+            $this->customerName     = $row->firstname . ' ' . $row->lastname;
+            $this->customerUsername = $row->username;
+            $this->customerImage    = $row->image;
+            $this->customerEmail    = $row->email;
+            // Build User Data Session []
+            $session_data = [
+                'customer_id'       => $row->customer_id,
+                'customer_name'     => $row->firstname . ' ' . $row->lastname,
+                'username'          => $row->username,
+                'customer_group_id' => $row->customer_group_id,
+                'customer_email'    => $row->email,
+                'isLogged'          => (bool) true,
+            ];
+            // close any open sessions
+            $this->session->set($session_data);
+            // Set the Online Status
+            $builder->set('online', 1)
+                    ->where('customer_id', $row->customer_id)
+                    ->update();
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function getCustomerName()
+    // 2-step verification
+    public function checkTwoStepVerification(string $email): bool
     {
-        return $this->customerName ?? '';
+        $builder = $this->db->table($this->db->prefixTable($this->table));
+        $builder->where('email', $email);
+        $query = $builder->get();
+        $row = $query->getRow();
+        if ($row->two_step == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    } 
+
+    public function editAccessCode(string $email, string $code)
+    {
+        $builder = $this->db->table($this->db->prefixTable($this->table));
+        $builder->where('email', $email);
+        $builder->set([
+            'code'          => $code,
+            'date_modified' => Time::now()->getTimestamp(),
+        ]);
+        $builder->update();
+        // trigger forgotton email event
+        \CodeIgniter\Events\Events::trigger('mail_twostep_verification', $email, $code);
     }
 
-    public function getCustomerUserName()
+    public function getID(): int
     {
-        return $this->customerUsername ?? '';
+        return $this->customerID;
+    }
+
+    public function getName(): string
+    {
+        return $this->customerName;
+    }
+
+    public function getUserName(): string
+    {
+        return $this->customerUsername;
     }
 
     public function logout()
     {
-        $builder = $this->db->table($this->db->prefixTable('customer'));
+        $builder = $this->db->table($this->db->prefixTable($this->table));
         $builder->set('online', 0)
                 ->where('customer_id', $this->session->get('customer_id'))
                 ->update();
@@ -119,24 +195,24 @@ class Customer
         $this->session->destroy();
     }
 
-    public function isLogged()
+    public function isLogged(): bool
     {
-        return $this->customerID ?? false;
+        return $this->customerID;
     }
 
-    public function getCustomerGroupId()
+    public function getGroupID(): bool
     {
-        return $this->customerGroupID ?? 0;
+        return $this->customerGroupID;
     }
 
-    public function getCustomerImage()
+    public function getImage(): string
     {
-        return $this->customerImage ?? '';
+        return $this->customerImage;
     }
 
-    public function getCustomerEmail()
+    public function getEmail(): string
     {
-        return $this->customerEmail ?? '';
+        return $this->customerEmail;
     }
 
     // _________________________________________________

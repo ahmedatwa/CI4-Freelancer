@@ -1,15 +1,18 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
-use \Catalog\Models\Account\CustomerModel;
+namespace Catalog\Controllers\Account;
 
-class Reset extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+
+class Reset extends BaseController
 {
     public function index()
     {
         if ($this->customer->isLogged()) {
-            return redirect()->route('account_dashboard');
-        } 
-
+            return redirect()->to('account_dashboard', $this->customer->getUserName());
+        }
+        
         if ($this->request->getVar('code')) {
             $code = $this->request->getVar('code');
         } else {
@@ -87,9 +90,7 @@ class Reset extends \Catalog\Controllers\BaseController
 
             $this->template->output('account/reset', $data);
         } else {
-            $this->session->set('error', lang('account/reset.error_code'));
-
-            return redirect()->route('account_login');
+            return redirect()->to('account_login')->with('error', lang('account/reset.error_code'));
         }
     }
 

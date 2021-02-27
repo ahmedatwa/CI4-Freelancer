@@ -1,6 +1,6 @@
 <?php 
 
-namespace Catalog\Models\Freelancer;
+namespace Catalog\Models\Catalog;
 
 use CodeIgniter\Model;
 

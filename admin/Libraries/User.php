@@ -1,4 +1,6 @@
-<?php namespace Admin\Libraries;
+<?php 
+
+namespace Admin\Libraries;
 
 class User
 {

@@ -32,8 +32,8 @@ class Menu extends BaseController
 
                 $children_data[] = [
                     'name'  => $child['name'],
-                    'href'  => ($childKeyword) ? route_to('category', $child['category_id'], $childKeyword) : base_url('project/project/category?gid=' . $child['category_id']),
-                    ];
+                    'href'  => ($childKeyword) ? route_to('projects', $child['category_id'], $childKeyword . '?skills=' . $child['category_id']) : base_url('project/project/list?gid=' . $child['category_id'] . '&skills=' . $child['category_id'])
+                ];
                 }
 
             $data['categories'][] = [
@@ -41,7 +41,7 @@ class Menu extends BaseController
                 'name'        => $category['name'],
                 'ico'         => $category['icon'],
                 'children'    => $children_data,
-                'href'        => ($keyword) ? route_to('category', $category['category_id'], $keyword) : base_url('project/project/category?gid=' . $category['category_id']),
+                'href'        => ($keyword) ? route_to('projects', $category['category_id'], $keyword . '?skills=' . $category['category_id']) : base_url('project/project/list?gid=' . $category['category_id'] . '&skills=' . $category['category_id'])
             ];
         }
 

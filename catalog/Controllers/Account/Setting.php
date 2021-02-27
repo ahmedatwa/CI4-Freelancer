@@ -22,7 +22,7 @@ class Setting extends BaseController
         $this->index();
     }
 
-    public function index()
+    public function index(string $username = '')
     {
         if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
             return redirect('account_login');
@@ -33,7 +33,7 @@ class Setting extends BaseController
         if ($this->request->getVar('cid')) {
             $customer_id = $this->request->getVar('cid');
         } elseif ($this->session->get('customer_id')) {
-            $customer_id = $this->customer->getCustomerId();
+            $customer_id = $this->customer->getID();
         } else {
             $customer_id = 0;
         }
@@ -48,12 +48,12 @@ class Setting extends BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/dashboard.heading_title'),
-            'href' => route_to('account_dashboard'),
+            'href' => route_to('account_dashboard', $username),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => lang('account/setting.heading_title'),
-            'href' => route_to('account_setting', $this->customer->getCustomerUserName()),
+            'href' => route_to('account_setting', $username),
         ];
 
 
@@ -105,6 +105,7 @@ class Setting extends BaseController
         } else {
             $data['tag_line'] = '';
         }
+
         if ($this->request->getPost('rate')) {
             $data['rate'] = $this->request->getPost('rate');
         } elseif ($customer_info['rate']) {
@@ -112,12 +113,27 @@ class Setting extends BaseController
         } else {
             $data['rate'] = 0;
         }
+
         if ($this->request->getPost('social')) {
             $data['social'] = $this->request->getPost('social');
         } elseif ($customer_info['social']) {
             $data['social'] = json_decode($customer_info['social'], true);
         } else {
             $data['social'] = '';
+        }
+
+        if ($customer_info['two_step']) {
+            $data['two_step'] = $customer_info['two_step'];
+        } else {
+            $data['two_step'] = 0;
+        }
+
+        if ($this->request->getPost('username')) {
+            $data['username'] = strtolower($this->request->getPost('username'));
+        } elseif ($customer_info['username']) {
+            $data['username'] = $customer_info['username'];
+        } else {
+            $data['username'] = '';
         }
 
         // avatar placeholder
@@ -138,7 +154,7 @@ class Setting extends BaseController
         
         $data['bg_thumb'] = $bg_thumb;
 
-        $data['action'] = base_url('account/setting/edit?customer_id=' . $this->customer->getCustomerID());
+        $data['action'] = base_url('account/setting/edit?customer_id=' . $this->customer->getID());
 
         //  Education Title
         $data['education_titles'][] = [
@@ -210,56 +226,43 @@ class Setting extends BaseController
         $countryModel = new CountryModel();
         $data['countries'] = $countryModel->where('status', 1)->findAll();
 
-        $data['customer_id'] = $this->customer->getCustomerID();
+        $data['customer_id'] = $this->customer->getID();
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
         $data['currency'] = $this->session->get('currency') ?? $this->registry->get('config_currency');
 
         // Profile Progress Bar
-        $profile_strength = 100;
-
         if ($customer_info) {
+            $data['profile_strength'] = 0;
+
             if ($customer_info['rate'] && $customer_info['tag_line'] && $customer_info['about']) {
-                $basic_info = 10;
-            } else {
-                $basic_info = 0;
-            }
+                $data['profile_strength'] = 10;
+            } 
+
             if ($customer_info['social']) {
-                $social_info = 10;
-            } else {
-                $social_info = 0;
-            }
+                $data['profile_strength'] += 10;
+            } 
 
             if ($customer_info['bg_image']) {
-                $image_info = 10;
-            } else {
-                $image_info = 0;
-            }
+                $data['profile_strength'] += 10;
+            } 
             // Certs
-            if ($customerModel->getTotalCertificatesByCustomerId($this->customer->getCustomerID())) {
-                $cert_info = 10;
-            } else {
-                $cert_info = 0;
-            }
+            if ($customerModel->getTotalCertificatesByCustomerId($this->customer->getID())) {
+                $data['profile_strength'] += 10;
+            } 
             // Edu
-            if ($customerModel->getTotalEducationsByCustomerID($this->customer->getCustomerID())) {
-                $edu_info = 10;
-            } else {
-                $edu_info = 0;
-            }
+            if ($customerModel->getTotalEducationsByCustomerID($this->customer->getID())) {
+                $data['profile_strength'] += 10;
+            } 
             // Skills
-            if ($customerModel->getTotalSkillsByCustomerID($this->customer->getCustomerID())) {
-                $skills_info = 10;
-            } else {
-                $skills_info = 0;
-            }
+            if ($customerModel->getTotalSkillsByCustomerID($this->customer->getID())) {
+                $data['profile_strength'] += 10;
+            } 
             // Lang
-            if ($customerModel->getTotalLanguagesByCustomerId($this->customer->getCustomerID())) {
-                $lang_info = 30;
-            } else {
-                $lang_info = 0;
-            }
-            $data['profile_strength'] = ($basic_info + $social_info + $image_info + $cert_info + $edu_info + $skills_info + $lang_info) * $profile_strength / 100;
-            // Update the current value if not 100%
+            if ($customerModel->getTotalLanguagesByCustomerId($this->customer->getID())) {
+                $data['profile_strength'] += 30;
+            } 
+
+            // Update the current value if not 100
             if ($customer_info['profile_strength'] < 100) {
                 $customerModel->where('customer_id', $customer_id)
                               ->set('profile_strength', $data['profile_strength'])
@@ -300,7 +303,7 @@ class Setting extends BaseController
 
         if (! $json) {
             $customerModel->addCertificate($this->request->getPost());
-            $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Certificates');
+            $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Certificates');
         }
 
         return $this->response->setJSON($json);
@@ -319,7 +322,7 @@ class Setting extends BaseController
 
         $data['certificates'] = [];       
 
-        $results = $customerModel->getCustomerCertificates($this->customer->getCustomerID(), ($page - 1) * 5, 5);
+        $results = $customerModel->getCustomerCertificates($this->customer->getID(), ($page - 1) * 5, 5);
         $total = $customerModel->getTotalCertificatesByCustomerId($this->request->getVar('customer_id'));
 
         foreach ($results as $result) {
@@ -332,20 +335,22 @@ class Setting extends BaseController
 
         // Pagination
         $pager = \Config\Services::pager();
-        $data['pagination'] = $pager->makeLinks($page, 5, $total);
+        $data['pagination'] = $pager->makeLinks($page, 5, $total, 'default_simple');
 
-        echo view('account/blocks/certificates', $data);
+        $data['langData'] = lang('account/setting.list');
+
+        return view('account/blocks/certificates', $data);
     }
 
     // Delete certificate
     public function deleteCertificate()
     {
         $json = [];
-        if ($this->customer->getCustomerId() && $this->request->getMethod() == 'post') {
+        if ($this->customer->getID() && $this->request->getMethod() == 'post') {
             $customerModel = new CustomerModel();
             if ($this->request->getVar('certificate_id')) {
                 $customerModel->deleteCustomerCertificate($this->request->getVar('certificate_id'));
-                $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Certificates');
+                $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Certificates');
             }
             return $this->response->setJSON($json);
         }
@@ -444,7 +449,7 @@ class Setting extends BaseController
 
         if (! $json) {
             $customerModel->addEducation($this->request->getPost());
-            $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Educations');
+            $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Education');
         }
 
         return $this->response->setJSON($json);
@@ -462,8 +467,8 @@ class Setting extends BaseController
 
         $data['educations'] = [];
 
-        $results = $customerModel->getEducations($this->customer->getCustomerID(), ($page - 1) * 5, 5);
-        $total = $customerModel->getTotalEducationsByCustomerId($this->customer->getCustomerID());
+        $results = $customerModel->getEducations($this->customer->getID(), ($page - 1) * 5, 5);
+        $total = $customerModel->getTotalEducationsByCustomerId($this->customer->getID());
 
         foreach ($results as $result) {
             $data['educations'][] = [
@@ -478,20 +483,22 @@ class Setting extends BaseController
         
         // Pagination
         $pager = \Config\Services::pager();
-        $data['pagination'] = $pager->makeLinks($page, 5, $total);
+        $data['pagination'] = $pager->makeLinks($page, 5, $total, 'default_simple');
 
-        echo view('account/blocks/educations', $data);
+        $data['langData'] = lang('account/setting.list');
+
+        return view('account/blocks/educations', $data);
     }
 
     // Delete certificate
     public function deleteEducation()
     {
         $json = [];
-        if ($this->customer->getCustomerId()) {
+        if ($this->customer->getID()) {
             $customerModel = new CustomerModel();
             if ($this->request->getVar('education_id')) {
                 $customerModel->deleteCustomerEducation($this->request->getVar('education_id'));
-                $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Educations');
+                $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Education');
             }
             return $this->response->setJSON($json);
         }
@@ -534,7 +541,7 @@ class Setting extends BaseController
             if (! $this->validate([
                 'language_name'  => [
                     'label'  => 'Language Name',
-                    'rules' => 'required|alpha',
+                    'rules' => 'required|alpha_dash',
                 ],
                 'language_level' => [
                     'label'  => 'Language Level',
@@ -546,7 +553,7 @@ class Setting extends BaseController
 
             if (! $json) {
                 $customerModel->addCustomerLanguage($this->request->getPost());
-                $json['success'] = sprintf(lang('account/setting.text_success_edu'), lang('account/setting.text_languages'));
+                $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Languages');
             }
         }
         return $this->response->setJSON($json);
@@ -565,22 +572,22 @@ class Setting extends BaseController
 
         $data['languages'] = [];
 
-        $results = $customerModel->getCustomerLanguages($this->customer->getCustomerID(), ($page - 1) * 5, 5);
-        $total = $customerModel->getTotalLanguagesByCustomerId($this->request->getVar('seller_id'));
+        $results = $customerModel->getCustomerLanguages($this->customer->getID(), ($page - 1) * 5, 5);
+        $total = $customerModel->getTotalLanguagesByCustomerId($this->customer->getID());
 
         foreach ($results as $result) {
             switch ($result['level']) {
                 case '1':
-                $level = lang('account/setting.text_basic');
+                $level = lang('account/setting.list.text_basic');
                   break;
                 case '2':
-                $level = lang('account/setting.text_conversational');
+                $level = lang('account/setting.list.text_conversational');
                  break;
                 case '3':
-                $level = lang('account/setting.text_fluent');
+                $level = lang('account/setting.list.text_fluent');
                  break;
                 case '4':
-                $level = lang('account/setting.text_native_or_bilingual');
+                $level = lang('account/setting.list.text_native_or_bilingual');
                  break;
             }
 
@@ -593,19 +600,22 @@ class Setting extends BaseController
 
         // Pagination
         $pager = \Config\Services::pager();
-        $data['pagination'] = $pager->makeLinks($page, 5, $total);
-        echo view('account/blocks/languages', $data);
+        $data['pagination'] = $pager->makeLinks($page, 5, $total, 'default_simple');
+
+        $data['langData'] = lang('account/setting.list');
+
+        return view('account/blocks/languages', $data);
     }
 
     // Delete Language
     public function deleteLanguage()
     {
         $json = [];
-        if ($this->customer->getCustomerId()) {
+        if ($this->customer->getID()) {
             $customerModel = new CustomerModel();
             if ($this->request->getVar('language_id')) {
                 $customerModel->deleteCustomerLanguage($this->request->getVar('language_id'));
-                $json['success'] = sprintf(lang('account/setting.text_success_edu'), lang('account/setting.text_languages'));
+                $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Languages');
             }
             return $this->response->setJSON($json);
         }
@@ -646,8 +656,8 @@ class Setting extends BaseController
 
         $data['skills'] = [];
 
-        $results = $customerModel->getCustomerSkills($this->customer->getCustomerID(), ($page - 1) * 5, 5);
-        $total = $customerModel->getTotalSkillsByCustomerID($this->customer->getCustomerID());
+        $results = $customerModel->getCustomerSkills($this->customer->getID(), ($page - 1) * 5, 5);
+        $total = $customerModel->getTotalSkillsByCustomerID($this->customer->getID());
 
         foreach ($results as $result) {
             $data['skills'][] = [
@@ -658,9 +668,11 @@ class Setting extends BaseController
 
         // Pagination
         $pager = \Config\Services::pager();
-        $data['pagination'] = $pager->makeLinks($page, 5, $total);
+        $data['pagination'] = $pager->makeLinks($page, 5, $total. 'default_simple');
 
-        echo view('account/blocks/skills', $data);
+        $data['langData'] = lang('account/setting.list');
+
+        return view('account/blocks/skills', $data);
     }
 
     // Delete skill
@@ -752,11 +764,11 @@ class Setting extends BaseController
                 if (! $json) {
                     $customerModel = new CustomerModel();
 
-                    $oldPassword = $customerModel->where('customer_id', $this->customer->getCustomerID())
+                    $oldPassword = $customerModel->where('customer_id', $this->customer->getID())
                                                  ->findColumn('password');
                     if (password_verify($this->request->getPost('current'), $oldPassword[0])) {
                         // old password passed then update
-                        $customerModel->where('customer_id', $this->customer->getCustomerID())
+                        $customerModel->where('customer_id', $this->customer->getID())
                                       ->set('password', $this->request->getPost('password'))
                                       ->update();
                         $json['success'] = lang('account/setting.text_password_success');
@@ -764,7 +776,7 @@ class Setting extends BaseController
                         $json['error']['old_password'] = lang('account/setting.error_old_password');
                     }
                 }
-                // Name
+                // 
             } else {
                 if (! $this->validate([
                         'firstname' => 'required|alpha_numeric',
@@ -775,7 +787,7 @@ class Setting extends BaseController
 
                 if (! $json) {
                     $customerModel = new CustomerModel();
-                    $customerModel->update($this->session->get('customer_id'), $this->request->getPost());
+                    $customerModel->update($this->customer->getID(), $this->request->getPost());
                     $json['success'] = lang('account/setting.text_success');
                 }
             }

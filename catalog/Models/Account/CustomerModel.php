@@ -10,7 +10,7 @@ class CustomerModel extends Model
     protected $table          = 'customer';
     protected $primaryKey     = 'customer_id';
     protected $returnType     = 'array';
-    protected $allowedFields  = ['customer_group_id', 'email', 'password', 'firstname', 'lastname', 'image', 'bg_image', 'about', 'tag_line', 'rate', 'username', 'online', 'status', 'origin', 'social', 'profile_strength'];
+    protected $allowedFields  = ['customer_group_id', 'email', 'password', 'firstname', 'lastname', 'image', 'bg_image', 'about', 'tag_line', 'rate', 'username', 'online', 'status', 'origin', 'social', 'profile_strength', 'two_step'];
     protected $useSoftDeletes = false;
     // Password Hashing Events
     protected $beforeInsert   = ['hashPassword'];
@@ -185,7 +185,6 @@ class CustomerModel extends Model
 
         return $builder->countAllResults();
     }
-
 
     // Login Attempts
     public function addLoginAttempt($email, $ipAddress)
@@ -524,14 +523,16 @@ class CustomerModel extends Model
         $builder->update();
     }
 
-    public function getCustomerByCode($code)
+    public function getCustomerByCode(string $code)
     {
-        $builder = $this->db->table($this->table);
-        $builder->select('customer_id, firstname, lastname, email');
-        $builder->where('code', $code);
-        $builder->where('code !=', '');
-        $query = $builder->get();
-        return $query->getRowArray();
+        if ($code && (! empty($code))) {
+            $builder = $this->db->table($this->table);
+            $builder->select('customer_id, firstname, lastname, email, date_modified');
+            $builder->where('code', $code);
+            $query = $builder->get();
+            return $query->getRowArray();
+        }
+       return false; 
     }
 
 

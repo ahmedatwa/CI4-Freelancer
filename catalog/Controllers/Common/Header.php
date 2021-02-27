@@ -1,18 +1,18 @@
-<?php 
+<?php
 
 namespace Catalog\Controllers\Common;
 
-use \Catalog\Controllers\BaseController;
+use Catalog\Controllers\BaseController;
 use Catalog\Models\Account\CustomerModel;
 use Catalog\Models\Catalog\InformationModel;
 use Catalog\Models\Catalog\CategoryModel;
 use Catalog\Models\Account\MessageModel;
-use Catalog\Models\Freelancer\BalanceModel;
+use Catalog\Models\Account\BalanceModel;
 
 class Header extends BaseController
 {
     public function index()
-    {        
+    {
         $data['title']       = $this->template->getTitle();
         $data['description'] = $this->template->getDescription();
         $data['keywords']    = $this->template->getKeywords();
@@ -26,13 +26,11 @@ class Header extends BaseController
 
         $balanceModel = new BalanceModel();
 
-        if ($this->customer->getCustomerID()) {
-            $customer_id = $this->customer->getCustomerID();
+        if ($this->customer->getID()) {
+            $customer_id = $this->customer->getID();
         } else {
             $customer_id = 0;
         }
-
-        $data['customer_balance'] = base_url('common/header/getCustomerBalace');
         
         $data['config_name'] = $this->registry->get('config_name');
 
@@ -41,29 +39,12 @@ class Header extends BaseController
         } else {
             $data['logo'] = '';
         }
-        
-        $data['home']        = base_url();
-        $data['register']    = route_to('account_register') ? route_to('account_register') : base_url('account/register');
-        $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
-        $data['forgotton']   = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
-        $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/project');
-        $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
-        $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
-        $data['markread']    = base_url('account/notifications/markRead');
 
         if ($this->registry->get('config_global_alert')) {
             $data['global_alert'] = $this->registry->get('config_global_alert');
         } else {
             $data['global_alert'] = '';
         }
-
-        if ($this->session->get('customer_id')) {
-            $data['logout']      = route_to('account_logout') ? route_to('account_logout') : base_url('account/logout');
-            $data['profile']     = route_to('freelancer_profile', $this->session->get('customer_id'), $this->session->get('username')) ? route_to('freelancer_profile', $this->session->get('customer_id'), $this->session->get('username')) : base_url('freelancer/freelancer?cid=' . $this->session->get('customer_id'));
-            $data['setting']     = route_to('account_setting') ? route_to('account_setting') : base_url('account/setting?cid=' . $this->session->get('customer_id'));
-            $data['dashboard']   = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard?cid=' . $this->session->get('customer_id'));
-        }
-
 
         $data['informations'] = [];
         
@@ -74,48 +55,53 @@ class Header extends BaseController
             if ($result['bottom'] == 0) {
                 $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
                 $data['informations'][] = [
-                'information_id' => $result['information_id'],
-                'title'          => $result['title'],
-                'href'           => ($keyword) ? route_to('information', $result['information_id'], $keyword) : base_url('information/Information/view?fid=' . $result['information_id']),
-            ];
+                    'information_id' => $result['information_id'],
+                    'title'          => $result['title'],
+                    'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/Information/view?fid=' . $result['information_id']),
+                ];
             }
         }
-
         // Blog
         if ($this->registry->get('blog_extension_status')) {
-            $data['blog'] = route_to('blog') ? route_to('blog') : base_url('extension/blog/blog');
+            $data['blog'] = route_to('blog');
         } else {
             $data['blog'] = '';
         }
 
         // Local Jobs
         if ($this->registry->get('job_extension_status')) {
-            $data['local_jobs'] = route_to('local_jobs') ? route_to('local_jobs') : base_url('extension/job/job');
+            $data['local_jobs'] = route_to('local_jobs');
         } else {
             $data['local_jobs'] = '';
         }
 
-        $data['dashoard']         = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
-        $data['account_project']  = route_to('account_project') ? route_to('account_project') : base_url('account/project');
-        
-        $data['text_messages']    = lang('account/menu.text_messages');
-        $data['account_message']  = route_to('account_message') ? route_to('account_message') : base_url('account/message');
-        $data['text_reviews']     = lang('account/menu.text_reviews');
-        $data['account_review']   = route_to('account_review') ? route_to('account_review') : base_url('account/review');
-        // finance menu
-        $data['deposit']          = route_to('freelancer_deposit') ? route_to('freelancer_deposit') : base_url('freelancer/deposit');
-        $data['withdraw']         = route_to('freelancer_withdraw') ? route_to('freelancer_withdraw') : base_url('freelancer/withdraw');
-        $data['balance']          = route_to('freelancer_balance') ? route_to('freelancer_balance') : base_url('freelancer/balance');
-        $data['transaction']      = route_to('freelancer_transaction') ? route_to('freelancer_transaction') : base_url('account/review');
+        if ($this->customer->isLogged()) {
+            $data['account_dashoard']   = route_to('account_dashboard', $this->customer->getUserName());
+            $data['account_project']    = route_to('account_project', $this->customer->getUserName());
+            $data['account_inbox']      = route_to('account_inbox', $this->customer->getUserName());
+            $data['account_review']     = route_to('account_review', $this->customer->getUserName());
+            $data['freelancer_profile'] = route_to('freelancer_profile', $this->customer->getID(), $this->customer->getUserName());
+            $data['account_setting']    = route_to('account_setting', $this->customer->getUserName());
+            $data['deposit']            = route_to('freelancer_deposit', $this->customer->getUserName());
+            $data['withdraw']           = route_to('freelancer_withdraw', $this->customer->getUserName());
+            $data['balance']            = route_to('freelancer_balance', $this->customer->getUserName());
+            $data['transaction']        = route_to('freelancer_transaction', $this->customer->getUserName()); 
+        } 
 
+        $data['home']        = base_url();
+        $data['register']    = route_to('account_register');
+        $data['login']       = route_to('account_login');
+        $data['projects']    = route_to('projects');
+        $data['add_project'] = route_to('add-project');
+        // finance menu
+        $data['markread']    = base_url('account/notifications/markRead');
+        $data['logout']      = route_to('account_logout');
 
         $data['logged'] = $this->customer->isLogged();
-        $data['username'] = $this->session->get('username');
+        $data['username'] = $this->customer->getUserName();
 
-        if (is_file(DIR_IMAGE . $this->customer->getcustomerImage())) {
-            $data['image'] = slash_item('baseURL')  . 'images/' . $this->customer->getcustomerImage();
-        } elseif ($this->session->get('customer_image')) {
-            $data['image'] = $this->session->get('customer_image');
+        if (is_file(DIR_IMAGE . $this->customer->getImage())) {
+            $data['image'] = slash_item('baseURL')  . 'images/' . $this->customer->getImage();
         } else {
             $data['image'] = base_url() . '/images/profile.png';
         }
@@ -123,12 +109,6 @@ class Header extends BaseController
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
         $data['defaut_color_scheme'] = $this->registry->get('theme_default_color') ?? 'red.css';
-        $data['all_messages']        = route_to('account_project');
-        
-        $data['dashboard']        = route_to('account_dashboard') ? route_to('account_dashboard') : base_url('account/dashboard');
-        $data['my_projects']      = route_to('account_project') ? route_to('account_project') : base_url('account/project');
-        $data['messages']         = route_to('account_message') ? route_to('account_message') : base_url('account/message');
-        $data['reviews']          = route_to('account_review') ? route_to('account_review') : base_url('account/review');
         
         $data['langData'] = lang('common/header.list');
 
@@ -140,8 +120,8 @@ class Header extends BaseController
         $json = [];
         
         if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
-            if ($this->customer->getCustomerID()) {
-                $customer_id = $this->customer->getCustomerID();
+            if ($this->customer->getID()) {
+                $customer_id = $this->customer->getID();
             } else {
                 $customer_id = 0;
             }
@@ -177,18 +157,17 @@ class Header extends BaseController
 
             foreach ($results as $result) {
                 $json[] = [
-                'thread_id'   => $result['thread_id'],
-                'message_id'  => $result['message_id'],
-                'receiver_id' => $result['receiver_id'],
-                'project_id'  => $result['project_id'],
-                'sender_id'   => $result['sender_id'],
-                'name'        => $result['name'],
-                'image'       => ($result['image']) ? $this->resize($result['image'], 42, 42) : $this->resize('catalog/avatar.jpg', 42, 42),
-                'message'     => word_limiter($result['message']),
-                'date_added'  => $this->dateDifference($result['date_added']),
-                'count'       => $result['total'],
-
-            ];
+                    'thread_id'   => $result['thread_id'],
+                    'message_id'  => $result['message_id'],
+                    'receiver_id' => $result['receiver_id'],
+                    'project_id'  => $result['project_id'],
+                    'sender_id'   => $result['sender_id'],
+                    'name'        => $result['name'],
+                    'image'       => ($result['image']) ? $this->resize($result['image'], 42, 42) : $this->resize('catalog/avatar.jpg', 42, 42),
+                    'message'     => word_limiter($result['message']),
+                    'date_added'  => $this->dateDifference($result['date_added']),
+                    'count'       => $result['total'],
+                ];
             }
         }
 

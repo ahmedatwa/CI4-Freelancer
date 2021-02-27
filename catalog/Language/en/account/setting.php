@@ -8,7 +8,7 @@ return [
         'text_account'              => 'My Account',
         'text_about'                => 'About Yourself',
         'text_password_security'    => 'Password & Security',
-        'text_2step'                => 'Enable Two-Step Verification via Email',
+        'text_two_step'             => 'Enable Two-Step Verification:',
         'text_skills'               => 'Skills',
         'text_hourly_rate'          => 'Set your <strong>minimal hourly rate</strong>',
         'text_certification'        => 'Certification',
@@ -43,13 +43,13 @@ return [
         'text_intermediate'         => 'Intermediate',
         'text_expert'               => 'Expert',
         'text_add_skill'            => 'Add Skill',
-        'text_social' => 'Social Networks:',
+        'text_social'               => 'Social Networks:',
         
         // entry
         'entry_firstname'           => 'First Name',
         'entry_lastname'            => 'Last Name',
         'entry_email'               => 'Email',
-        'entry_tagline'             => 'Tagline',
+        'entry_tagline'             => 'Professional Headline',
         'entry_current_password'    => 'Current Password',
         'entry_password'            => 'New Password',
         'entry_confirm'             => 'Confirm New Password',
@@ -64,10 +64,7 @@ return [
         'entry_skill'               => 'Skills Name',
         'entry_skill_level'         => 'Skill Level',
         'entry_hourly_rate'         => 'Hourly Rate',
-        'entry_facebook'            => 'Facebook',
-        'entry_twitter'             => 'Twitter',
-        'entry_linkedin'            => 'LindedIn',
-        'entry_github'              => 'GitHub',
+        'entry_username'            => 'Username',
         // column
         'column_name'               => 'Name',
         'column_year'               => 'Year',
@@ -85,12 +82,12 @@ return [
         'tab_certificates'          => 'Certificates',
         'tab_education'             => 'Education',
         'tab_languages'             => 'Languages',
+        'help_tagline'              => 'Passionate Web Developer',
     ],
     // error
     'error_old_password'        => 'Old password doesn\'t match the our records',
     'text_warning'              => 'Please check the form for errors.',
     // success
-    'text_success_edu'          => 'Success: You have modified %s',
+    'text_success_tab'          => 'Success: You have modified %s',
     'text_success'              => 'Your account has been successfully updated.',
-    'text_password_success'     => 'Your passowrd has been successfully updated.',
 ];

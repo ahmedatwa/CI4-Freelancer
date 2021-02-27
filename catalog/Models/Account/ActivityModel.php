@@ -17,41 +17,59 @@ class ActivityModel extends Model
     protected $dateFormat    = 'int';
     protected $createdField  = 'date_added';
 
-    public function getActivitiesByCustomerID(int $customer_id)
+    public function getActivitiesByCustomerID(array $data = [])
     {
         $builder = $this->db->table($this->table);
         $builder->select('customer_id, data, key, date_added');
-        $builder->where([
+        if (isset($data['customer_id'])) {
+           $builder->where([
             'seen' => 0,
-            'customer_id' => $customer_id
+            'customer_id' => $data['customer_id']
         ]);
+        }
+
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+            if ($data['limit'] < 1) {
+                $data['limit'] = 10;
+            }
+            $builder->limit($data['limit'], $data['start']);
+        }
+        
         $builder->orderBy('date_added', 'DESC');
+        $builder->notLike('key', 'admin_', 'both');
         $query = $builder->get();
         return $query->getResultArray();
     }
 
-    public function getDashboardActivitiesByCustomerId(int $customer_id)
+    public function getTotalActivitiesByCustomerID(array $data = [])
     {
         $builder = $this->db->table($this->table);
         $builder->distinct();
-        $builder->where('customer_id', $customer_id);
-        $builder->like('date_added', Time::now()->getTimestamp(), 'after');
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
-
-    public function getTotalActivitiesByCustomerID(int $customer_id)
-    {
-        $builder = $this->db->table($this->table);
-        $builder->distinct();
-        $builder->where([
+        if (isset($data['customer_id'])) {
+           $builder->where([
             'seen' => 0,
-            'customer_id' => $customer_id,
+            'customer_id' => $data['customer_id']
         ]);
+        }
+
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+            if ($data['limit'] < 1) {
+                $data['limit'] = 10;
+            }
+            $builder->limit($data['limit'], $data['start']);
+        }
+        
+        $builder->orderBy('date_added', 'DESC');
         $builder->notLike('key', 'admin_', 'both');
         return $builder->countAllResults();
     }
-
+    
     public function addActivity(string $key, array $data, int $seen = 0)
     {
         $builder = $this->db->table($this->table);

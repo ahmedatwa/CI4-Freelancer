@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class SeoUrlModel extends Model
 {
-    public function getQueryByKeyword($keyword)
+    public function getQueryByKeyword(string $keyword)
     {
         $builder = $this->db->table('seo_url');
         $builder->where('keyword', $keyword);
@@ -20,7 +20,7 @@ class SeoUrlModel extends Model
          }
     }
 
-    public function getKeywordByQuery($query)
+    public function getKeywordByQuery(string $query)
     {
        $builder = $this->db->table('seo_url');
        $builder->where('query', $query);

@@ -13,7 +13,7 @@
   <meta name="google-signin-client_id" content="135080641897-8bvr7qigp836nhjfe8hff7jd9asdf58l.apps.googleusercontent.com">
   <!-- CSS -->
   <link rel="stylesheet" href="catalog/default/vendor/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="catalog/default/stylesheet/stylesheet.min.css">
+  <link rel="stylesheet" href="catalog/default/stylesheet/stylesheet.css">
   <link rel="stylesheet" href="catalog/default/vendor/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="catalog/default/javascript/jquery-ui/jquery-ui.css">
   <!-- Animate -->
@@ -77,7 +77,7 @@
           </a>
           <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-notifications">
             <div class="d-flex w-100 justify-content-between">
-              <h4 class="mb-1">Notifications</h4>
+              <h4 class="mb-1">{{ text_notifications }}</h4>
               <small><button type="button" id="button-mark-read" class="btn btn-sm float-right rounded-pill mark-as-read" title="Mark all as read" data-placement="left" data-toggle="tooltip">
               <i class="icon-feather-check-square"></i>
             </button></small>
@@ -93,10 +93,7 @@
           </a>
           <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-messages">
             <div class="d-flex w-100 justify-content-between">
-              <h4 class="mb-1">Messages</h4>
-              <!-- <small><a role="button" href="<?php //echo $all_messages }}" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
-              <i class="far fa-eye"></i>
-              </a></small> -->
+              <h4 class="mb-1">{{ text_inbox }}</h4>
             </div>
             <ul id="message-list" class="text-left list-group list-group-flush"></ul>
           </div>
@@ -118,10 +115,10 @@
           <div class="multi-column-dropdown col-6">
             <h4>{{ text_account }}</h4>
             <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ dashboard }}"> {{ text_dashboard }}</a>
-                <a class="dropdown-item" href="{{ setting }}"> {{ text_setting }}</a>
+                <a class="dropdown-item" href="{{ account_dashboard }}"> {{ text_dashboard }}</a>
+                <a class="dropdown-item" href="{{ account_setting }}"> {{ text_setting }}</a>
                 <a class="dropdown-item" href="{{ account_project }}"> {{ text_my_projects }}</a>
-                <a class="dropdown-item" href="{{ profile }}"> {{ text_profile }}</a>
+                <a class="dropdown-item" href="{{ freelancer_profile }}"> {{ text_profile }}</a>
                 <a class="dropdown-item" href="{{ logout }}" id="button-logout"> {{ text_logout }}</a>
           </div>
         </div>
@@ -154,10 +151,10 @@
 <ul class="list-unstyled d-lg-none mt-3">
   <h3>freelancer</h3>
    <div class="dropdown-divider"></div>
-  <li class="ml-4"><a class="nav-link" href="{{ dashboard }}"><i class="fas fa-angle-right"></i> {{ text_dashboard }}</a></li>
-  <li class="ml-4"><a class="nav-link" href="{{ my_projects }}"><i class="fas fa-angle-right"></i> {{ text_my_projects }}</a></li>
-  <li class="ml-4"><a class="nav-link" href="{{ messages }}"><i class="fas fa-angle-right"></i> {{ text_messages }}</a></li>
-  <li class="ml-4"><a class="nav-link" href="{{ reviews }}"><i class="fas fa-angle-right"></i> {{ text_reviews }}</a></li>
+  <li class="ml-4"><a class="nav-link" href="{{ account_dashoard }}"><i class="fas fa-angle-right"></i> {{ text_dashboard }}</a></li>
+  <li class="ml-4"><a class="nav-link" href="{{ account_project }}"><i class="fas fa-angle-right"></i> {{ text_my_projects }}</a></li>
+  <li class="ml-4"><a class="nav-link" href="{{ account_inbox }}"><i class="fas fa-angle-right"></i> {{ text_messages }}</a></li>
+  <li class="ml-4"><a class="nav-link" href="{{ account_review }}"><i class="fas fa-angle-right"></i> {{ text_reviews }}</a></li>
 </ul>
 {% endif %}
 </ul>
@@ -175,7 +172,7 @@
           </a>
           <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-notifications">
             <div class="d-flex w-100 justify-content-between">
-              <h4 class="mb-1">Notifications</h4>
+              <h4 class="mb-1">{{ text_notifications }}</h4>
               <small><button type="button" id="button-mark-read" class="btn btn-sm float-right rounded-pill mark-as-read" title="Mark all as read" data-placement="left" data-toggle="tooltip">
               <i class="icon-feather-check-square"></i>
             </button></small>
@@ -191,10 +188,7 @@
           </a>
           <div class="dropdown-menu animate slideIn p-2" aria-labelledby="header-messages">
             <div class="d-flex w-100 justify-content-between">
-              <h4 class="mb-1">Messages</h4>
-              <!-- <small><a role="button" href="<?php //echo $all_messages }}" class="btn btn-sm float-right rounded-pill mark-as-read" title="View All Messages" data-placement="left" data-toggle="tooltip">
-              <i class="far fa-eye"></i>
-              </a></small> -->
+              <h4 class="mb-1">{{ text_inbox }}</h4>
             </div>
             <ul id="message-list" class="text-left list-group list-group-flush"></ul>
           </div>
@@ -217,10 +211,10 @@
               <div class="multi-column-dropdown col-6 border-left">
                 <h4>{{ text_account }}</h4>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ dashboard }}"> {{ text_dashboard }}</a>
-                <a class="dropdown-item" href="{{ setting }}"> {{ text_setting }}</a>
+                <a class="dropdown-item" href="{{ account_dashoard }}"> {{ text_dashboard }}</a>
+                <a class="dropdown-item" href="{{ account_setting }}"> {{ text_setting }}</a>
                 <a class="dropdown-item" href="{{ account_project }}"> {{ text_my_projects }}</a>
-                <a class="dropdown-item" href="{{ profile }}"> {{ text_profile }}</a>
+                <a class="dropdown-item" href="{{ freelancer_profile }}"> {{ text_profile }}</a>
                 <a class="dropdown-item" href="{{ logout }}" id="button-logout"> {{ text_logout }}</a>
               </div>
             </div>

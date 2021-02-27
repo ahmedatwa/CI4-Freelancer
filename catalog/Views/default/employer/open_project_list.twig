@@ -14,8 +14,8 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% if open_projects %}
-		{% for project in open_projects %}
+		{% if projects %}
+		{% for project in projects %}
 				<tr>
 					<td>{{ project.name }}</td>
 					<td>{{ project.budget }}</td>
@@ -38,7 +38,7 @@
 <link rel="stylesheet" href="catalog/default/vendor/DataTables/datatables.css" media="all" type="text/css" />
 <script src="catalog/default/vendor/DataTables/datatables.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-	$('#table-openprojects-tab').DataTable({
-		"lengthMenu": [10, 25],
-	});
+var table = $('#table-openprojects-tab').DataTable({
+	"lengthMenu": [10, 20, 30],
+});
 </script>

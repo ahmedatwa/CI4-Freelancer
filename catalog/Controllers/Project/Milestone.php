@@ -1,9 +1,11 @@
-<?php namespace Catalog\Controllers\Freelancer;
+<?php 
 
-use \Catalog\Models\Freelancer\MilestoneModel;
-use \Catalog\Models\Freelancer\BalanceModel;
-use \Catalog\Models\Extension\Bid\BidModel;
-use \Catalog\Models\Catalog\ProjectModel;
+namespace Catalog\Controllers\Project;
+
+use Catalog\Models\Catalog\MilestoneModel;
+use Catalog\Models\Account\BalanceModel;
+use Catalog\Models\Extension\Bid\BidModel;
+use Catalog\Models\Catalog\ProjectModel;
 
 class Milestone extends \Catalog\Controllers\BaseController
 {

@@ -23,8 +23,8 @@ class Freelancer extends BaseController
         $reviewModel   = new ReviewModel();
 
         $results        = $customerModel->getCustomers($filter_data);
-        $total_services = $reviewModel->getTotalJobsByFreelancerId($this->customer->getCustomerId()) ?? null;
-        $ontime         =  $reviewModel->getOntimeByFreelancerId($this->customer->getCustomerId()) ?? null;
+        $total_services = $reviewModel->getTotalJobsByFreelancerId($this->customer->getID()) ?? null;
+        $ontime         =  $reviewModel->getOntimeByFreelancerId($this->customer->getID()) ?? null;
 
         foreach ($results as $result) {
 
@@ -46,7 +46,7 @@ class Freelancer extends BaseController
         }
 
 
-        $data['freelancers_all'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');
+        $data['freelancers_all'] = route_to('freelancers');
       
         $data['langData'] = lang('module/freelancer.list');
 

@@ -300,44 +300,12 @@ class Setting extends \Admin\Controllers\BaseController
         }
 
         // Social Networks
-        if ($this->request->getPost('config_facebook')) {
-            $data['config_facebook'] = $this->request->getPost('config_facebook');
-        } elseif (!empty($setting_info['config_facebook'])) {
-            $data['config_facebook'] = $setting_info['config_facebook'];
+        if ($this->request->getPost('config_social_networks')) {
+            $data['config_social_networks'] = $this->request->getPost('config_social_networks');
+        } elseif (!empty($setting_info['config_social_networks'])) {
+            $data['config_social_networks'] = $setting_info['config_social_networks'];
         } else {
-            $data['config_facebook'] = '#';
-        }
-
-        if ($this->request->getPost('config_twitter')) {
-            $data['config_twitter'] = $this->request->getPost('config_twitter');
-        } elseif (!empty($setting_info['config_twitter'])) {
-            $data['config_twitter'] = $setting_info['config_twitter'];
-        } else {
-            $data['config_twitter'] = '#';
-        }
-
-        if ($this->request->getPost('config_pintrest')) {
-            $data['config_pintrest'] = $this->request->getPost('config_pintrest');
-        } elseif (!empty($setting_info['config_pintrest'])) {
-            $data['config_pintrest'] = $setting_info['config_pintrest'];
-        } else {
-            $data['config_pintrest'] = '#';
-        }
-
-        if ($this->request->getPost('config_linkedin')) {
-            $data['config_linkedin'] = $this->request->getPost('config_linkedin');
-        } elseif (!empty($setting_info['config_linkedin'])) {
-            $data['config_linkedin'] = $setting_info['config_linkedin'];
-        } else {
-            $data['config_linkedin'] = '#';
-        }
-
-        if ($this->request->getPost('config_instagram')) {
-            $data['config_instagram'] = $this->request->getPost('config_instagram');
-        } elseif (!empty($setting_info['config_instagram'])) {
-            $data['config_instagram'] = $setting_info['config_instagram'];
-        } else {
-            $data['config_instagram'] = '#';
+            $data['config_social_networks'] = [];
         }
 
         if ($this->request->getPost('config_global_alert')) {

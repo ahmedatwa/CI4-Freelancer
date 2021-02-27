@@ -85,34 +85,18 @@
 					<canvas id="chart" width="100" height="45"></canvas>
 				</div>
 			</div>
-			<div class="row">
-				<!-- Dashboard Box -->
-				<div class="col">
-					<div class="dashboard-box mt-4">
-						<div class="headline">
-							<h3><i class="icon-material-baseline-notifications-none"></i> {{ text_news_feed }}</h3>
-						</div>
-						<div class="content shadow-sm m-2 border">
-							{% if news_feeds %}
-							<ul class="dashboard-box-list">
-								{% for news_feed in news_feeds %}
-								<li>
-									<span class="notification-icon"><i class="icon-material-outline-group"></i></span>
-									<span class="notification-text">
-										{{ news_feed.comment }}. <small>{{ news_feed.date_added }}</small>
-									</span>
-								</li>
-								{% endfor %}
-							</ul>
-							{% else %}
-							<div class="d-flex justify-content-center">
-								<p class="text-center m-4">No Feeds! </p>
-							</div>
-							{% endif %}
-						</div>
-					</div>
-				</div>
-
+			<div class="dropdown-divider my-4"></div>
+				<ul class="nav nav-tabs" id="dashboardTab" role="tablist">
+					<li class="nav-item" role="presentation">
+					  <a class="nav-link active" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="true"><i class="icon-material-baseline-notifications-none"></i> {{ text_news_feed }}</a>
+					</li>
+				  </ul>
+				  <div class="tab-content" id="dashboardTabContent">
+					<div class="tab-pane fade show active border-right border-bottom border-left" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+						<div id="activity-list"></div>
+					</div><!-- ../End activity content tab-->
+				  </div>
+				
 			</div>
 		</div>
 	</section>
@@ -207,5 +191,34 @@
 			chart.update();
 		});
 	}
+</script>
+<script>
+// Employer In-progress List
+$('#activity-tab').on('click', function (e) {
+	$.ajax({
+		url: 'account/dashboard/activities',
+		dataType: 'html',
+		beforeSend: function () {
+			$('#activity-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
+		},
+		complete: function () {
+			$('#spinner').remove();
+		},
+		success: function (html) {
+			$('#activity-list').html(html);
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	});
+});
+
+$('#activity-list').on('click', '.pagination a', function (e) {
+	e.preventDefault();
+	$('#activity-list').fadeOut('slow');
+	$('#activity-list').load(this.href);
+	$('#activity-list').fadeIn('slow');
+});
+$('#dashboardTab li:first-child a').tab('show').trigger('click');	
 </script>
 {{ footer }}

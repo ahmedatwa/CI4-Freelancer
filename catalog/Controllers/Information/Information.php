@@ -1,21 +1,29 @@
-<?php namespace Catalog\Controllers\Information;
+<?php 
 
-use \Catalog\Models\Catalog\Informations;
+namespace Catalog\Controllers\Information;
 
-class Information extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Catalog\InformationModel;
+
+class Information extends BaseController
 {
-    // --------------------
+    // ---------------------------------
     //  Child function for failed routes
+    // ---------------------------------
     public function view()
     {
         $this->index();
     }
-    // -------------------
-    public function index()
-    {
-        $informations = new Informations();
 
+    public function index(string $keyword = '')
+    {
         $seo_url = service('seo_url');
+
+        if ($keyword) {
+            $query_id = substr($seo_url->getQueryByKeyword($keyword), -1);
+        } 
+
+        $informations = new InformationModel();
 
         $data['breadcrumbs'] = [];
 
@@ -26,10 +34,10 @@ class Information extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('fid')) {
             $information_id = $this->request->getVar('fid');
+        } elseif ($query_id) {
+            $information_id = $query_id;
         } elseif ($this->request->getGet('information_id')) {
             $information_id = $this->request->getGet('information_id');
-        } elseif ($this->request->uri->getSegment(2)) {
-            $information_id = substr($this->request->uri->getSegment(2), 1);
         } else {
             $information_id = 0;
         }
@@ -45,7 +53,7 @@ class Information extends \Catalog\Controllers\BaseController
 
             $data['breadcrumbs'][] = [
                 'text' => $information_info['title'],
-                'href' => ($keyword) ? route_to('information/', $keyword) : base_url('information/Information?fid=' . $information_id),
+                'href' => ($keyword) ? route_to('information', $keyword) : base_url('information/Information/view?fid=' . $information_id),
             ];
 
             $data['heading_title'] = $information_info['title'];
@@ -57,6 +65,6 @@ class Information extends \Catalog\Controllers\BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
     }
-
+    
     //--------------------------------------------------------------------
 }

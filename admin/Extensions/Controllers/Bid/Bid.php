@@ -1,8 +1,11 @@
-<?php namespace Extensions\Controllers\Bid;
+<?php 
 
+namespace Extensions\Controllers\Bid;
+
+use Admin\Controllers\BaseController;
 use Extensions\Models\Bid\BidModel;
 
-class Bid extends \Admin\Controllers\BaseController
+class Bid extends BaseController
 {
     public function index()
     {

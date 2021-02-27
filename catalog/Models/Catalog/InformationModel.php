@@ -34,7 +34,7 @@ class InformationModel extends Model
         return $query->getResultArray();
     }
 
-    public function getInformation($information_id)
+    public function getInformation(int $information_id)
     {
 		$builder = $this->db->table('information');
 
@@ -45,7 +45,7 @@ class InformationModel extends Model
         $query = $builder->get();
         return $query->getRowArray();
     }
-
+    
     public function getInformationDescription($information_id)
     {
 		$builder = $this->db->table('information_description');

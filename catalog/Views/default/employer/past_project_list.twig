@@ -16,8 +16,8 @@
         </thead>
         </thead>
         <tbody>
-            {% if past_projects %}
-            {% for project in past_projects %}
+            {% if projects %}
+            {% for project in projects %}
             <tr>
                 <td>{{ project.project_id }}</td>
                 <td>{{ project.name }}</td>
@@ -61,7 +61,7 @@
 <script src="catalog/default/vendor/DataTables/datatables.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$('#table-pastprojects-tab').DataTable({
-		"lengthMenu": [10, 25],
+		"lengthMenu": [10, 20, 30],
 	});
 </script>
 <!-- Tranfer amount -->

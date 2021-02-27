@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class LayoutModel extends Model
 {
-    public function getLayout(string $route)
+    public function getLayout(string $route): int
     {
         $builder = $this->db->table('layout_route');
         $builder->select()->like('route', $route)
@@ -17,11 +17,11 @@ class LayoutModel extends Model
         if ($row) {
             return $row['layout_id'];
         } else {
-            return 0;
+            return 1;
         }
     }
 
-    public function getLayoutModules(int $layout_id, string $position)
+    public function getLayoutModules(int $layout_id, string $position): array
     {
         $builder = $this->db->table('layout_module');
         $builder->select()

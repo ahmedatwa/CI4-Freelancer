@@ -32,7 +32,7 @@ class Blog extends \Admin\Controllers\BaseController
             $userGroupModel->addPermission($this->user->getGroupId(), 'modify', 'extensions/blog/' . $this->request->getVar('extension'));
 
             $settingModel = new SettingModel();
-            $settingModel->editSetting('blog_extension', ['blog_extension_status' => 1]);
+            $settingModel->editSetting('extension_blog', ['extension_blog_status' => 1]);
 
             // Call install Method is exists
             $blogModel = new BlogModel();
@@ -61,7 +61,7 @@ class Blog extends \Admin\Controllers\BaseController
             }
 
             $settingModel = new SettingModel();
-            $settingModel->editSetting('blog_extension', ['blog_extension_status' => 0]);
+            $settingModel->editSetting('extension_blog', ['extension_blog_status' => 0]);
 
             $this->session->setFlashdata('success', lang('extension/blog.text_success'));
         }
@@ -106,7 +106,7 @@ class Blog extends \Admin\Controllers\BaseController
                 
                 $data['extensions'][] = [
                     'name'       => lang('blog/' . strtolower($basename) . '.list.heading_title'),
-                    'status'     => ($this->registry->get('blog_extension_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
+                    'status'     => ($this->registry->get('extension_blog_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                     'install'    => base_url('index.php/extension/blog/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/blog/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'installed'  => in_array(strtolower($basename), $installedExtensions),

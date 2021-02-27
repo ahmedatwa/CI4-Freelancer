@@ -1,8 +1,11 @@
-<?php namespace Catalog\Controllers\Account;
+<?php
 
-use \Catalog\Models\Account\CustomerModel;
+namespace Catalog\Controllers\Account;
 
-class Logout extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+
+class Logout extends BaseController
 {
     public function index()
     {
@@ -27,12 +30,12 @@ class Logout extends \Catalog\Controllers\BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('account/logout.text_account'),
+            'text' => lang('account/logout.list.text_account'),
             'href' => base_url('account/account')
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => lang('account/logout.text_logout'),
+            'text' => lang('account/logout.list.text_logout'),
             'href' => base_url('account/logout')
         ];
 
@@ -42,10 +45,9 @@ class Logout extends \Catalog\Controllers\BaseController
             $data['success'] = '';
         }
 
-        $data['heading_title'] = lang('account/logout.heading_title');
-        $data['text_message'] = lang('account/logout.text_message');
+        $data['langData'] = lang('account/logout.list');
 
-        $this->template->output('common/success', $data); 
+        $this->template->output('common/success', $data);
     }
 
     //--------------------------------------------------------------------

@@ -60,6 +60,8 @@ class Projects extends BaseController
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
+        $data['langData'] = lang('account/projects.list');
+
         $this->template->output('account/projects', $data);
     }
 

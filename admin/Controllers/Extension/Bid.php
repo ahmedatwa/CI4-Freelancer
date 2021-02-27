@@ -1,11 +1,14 @@
-<?php namespace Admin\Controllers\Extension;
+<?php 
 
-use \Admin\Models\Setting\ExtensionModel;
-use \Admin\Models\User\UserGroupModel;
-use \Admin\Models\Setting\SettingModel;
-use \Extensions\Models\Bid\BidModel;
+namespace Admin\Controllers\Extension;
 
-class Bid extends \Admin\Controllers\BaseController
+use Admin\Controllers\BaseController;
+use Admin\Models\Setting\ExtensionModel;
+use Admin\Models\User\UserGroupModel;
+use Admin\Models\Setting\SettingModel;
+use Extensions\Models\Bid\BidModel;
+
+class Bid extends BaseController
 {
     public function index()
     {
@@ -59,6 +62,10 @@ class Bid extends \Admin\Controllers\BaseController
                 $bidsModel->uninstall();
             }
 
+            $settingModel = new SettingModel();
+            $settingModel->editSetting('extension_bid', ['extension_bid_status' => 0]);
+
+
             $this->session->setFlashdata('success', lang('extension/bid.text_success'));
         }
 
@@ -103,7 +110,7 @@ class Bid extends \Admin\Controllers\BaseController
                 $data['extensions'][] = [
                     'name'       => lang('bid/' . strtolower($basename) . '.list.heading_title'),
                     'status'     => ($this->registry->get('extension_bid_status')) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
-                    'install'    => base_url('index.php//bid/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
+                    'install'    => base_url('index.php/extension/bid/install?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'uninstall'  => base_url('index.php/extension/bid/uninstall?user_token=' . $this->request->getVar('user_token') . '&extension=' . strtolower($basename)),
                     'installed'  => in_array(strtolower($basename), $installedExtensions),
                     'edit'       => base_url('index.php/extensions/bid/' . strtolower($basename) .'?user_token=' . $this->request->getVar('user_token')),

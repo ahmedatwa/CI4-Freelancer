@@ -3,7 +3,7 @@
   <div class="dashboard-box margin-top-0">
     <div class="content">
       <ul class="dashboard-box-list">
-        {% bidder in bidders %}
+        {% for bidder in bidders %}
         <li>
           <div class="freelancer-overview manage-candidates">
             <div class="freelancer-overview-inner">
@@ -19,7 +19,8 @@
                 <div class="freelancer-rating">
                   <div class="rating">
                     <ul>
-                      {% if bidder.rating < 1..5 %}
+                      {% for i in 1..5 %}
+                      {% if bidder.rating < i %}
                       <li><span class="fa-stack"><i class="far fa-star fa-stack"></i></span></li>
                       {% else %}
                       <li><span class="fa-stack">
@@ -66,7 +67,7 @@ function awardFreelancer(freelancer_id, bid_id) {
    bootbox.confirm({
     message: "Are you sure?",
     size: 'small',
-    className: 'animate__animated animate__fadeInDown',
+    className: 'animate__animated animate__fadeInUpBig',
     buttons: {
         cancel: {
             label: '<i class="fa fa-times"></i> Cancel',
@@ -80,7 +81,7 @@ function awardFreelancer(freelancer_id, bid_id) {
     callback: function (result) {
     if (result) {
          $.ajax({
-            url: 'employer/project/awardWinner?pid=<?php echo $project_id; ?>',
+            url: 'employer/employerbid/awardWinner?pid=<?php echo $project_id; ?>',
             headers: {
               'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
               'X-Requested-With': 'XMLHttpRequest'
@@ -113,7 +114,7 @@ function sendMessage(sender_id, receiver_id) {
   var dialog = bootbox.prompt({
     title: 'Send A Message',
     message: "",
-    className: 'animate__animated animate__fadeInDown',
+    className: 'animate__animated animate__fadeInUpBig',
     inputType: 'textarea',
     buttons: {
         cancel: {

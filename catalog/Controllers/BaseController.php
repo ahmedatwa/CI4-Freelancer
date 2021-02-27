@@ -30,7 +30,6 @@ class BaseController extends \CodeIgniter\Controller
      * @var array
      */
     protected $helpers = ['text'];
-    public $data = [];
     /**
      * Constructor.
      */
@@ -159,15 +158,6 @@ class BaseController extends \CodeIgniter\Controller
         } else {
             return number_to_currency($number, $code, $this->locale, $fraction);
         }
-    }
-
-    public function setLang(string $filename)
-    {
-        $langData = lang($filename . '.list');
-        foreach ($langData as $key => $value) {
-            $this->data[$key] = $value;
-        }
-        return $this->data;
     }
     // -----------------------------------------------------------------
 }

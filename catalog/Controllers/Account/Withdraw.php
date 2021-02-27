@@ -1,10 +1,13 @@
-<?php namespace Catalog\Controllers\Freelancer;
+<?php 
 
-use \Catalog\Models\Freelancer\WithdrawModel;
-use \Catalog\Models\Account\CustomerModel;
-use \Catalog\Models\Freelancer\BalanceModel;
+namespace Catalog\Controllers\Account;
 
-class Withdraw extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\WithdrawModel;
+use Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Account\BalanceModel;
+
+class Withdraw extends BaseController
 {
     public function add()
     {
@@ -25,7 +28,7 @@ class Withdraw extends \Catalog\Controllers\BaseController
 
     public function index()
     {
-        if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
+        if (! $this->customer->isLogged()) {
             return redirect('account_login');
         }
 
@@ -96,19 +99,9 @@ class Withdraw extends \Catalog\Controllers\BaseController
             $data['status_id'] = 1;
         }
 
-        $data['action'] = base_url('freelancer/withdrwa/add');
-
-        $data['heading_title'] = lang('freelancer/withdraw.heading_title');
-        $data['entry_amount']  = lang('freelancer/withdraw.entry_amount');
-        $data['text_balance']  = lang('freelancer/withdraw.text_balance');
-        $data['text_total']    = lang('freelancer/withdraw.text_total');
-        $data['button_submit'] = lang('freelancer/withdraw.button_submit');
-        $data['column_amount'] = lang('freelancer/withdraw.column_amount');
-        $data['column_status'] = lang('freelancer/withdraw.column_status');
-        $data['column_date'] = lang('freelancer/withdraw.column_date');
-        $data['column_date_added'] = lang('freelancer/withdraw.column_date_added');
-
-        $this->template->output('freelancer/withdraw', $data);
+        $data['langData'] = lang('account/withdraw.list');
+        
+        $this->template->output('account/withdraw', $data);
     }
 
     //--------------------------------------------------------------------

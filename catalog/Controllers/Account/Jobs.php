@@ -1,17 +1,20 @@
-<?php namespace Catalog\Controllers\Account;
+<?php 
 
-use \Catalog\Models\Extension\Job\JobModel;
-use \Catalog\Models\Tool\DownloadModel;
+namespace Catalog\Controllers\Account;
 
-class Jobs extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Extension\Job\JobModel;
+use Catalog\Models\Tool\DownloadModel;
+
+class Jobs extends BaseController
 {
-    public function index()
+    public function index(string $username = '')
     {
         if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
             return redirect('account_login');
         }
 
-        $this->template->setTitle(lang('account/jobs.heading_title'));
+        $this->template->setTitle($username . ' ' . lang('account/jobs.heading_title'));
             
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -37,9 +40,11 @@ class Jobs extends \Catalog\Controllers\BaseController
             $customer_id = 0;
         }
 
-        $data['heading_title'] = lang('account/jobs.heading_title');
+        $data['heading_title'] = '@' . $username . ' ' . lang('account/jobs.heading_title');
 
         $data['customer_id'] = $customer_id;
+
+        $data['langData'] = lang('account/jobs.list');
 
         $data['dashboard_menu'] = view_cell('Catalog\Controllers\Account\Menu::index');
 
@@ -50,8 +55,8 @@ class Jobs extends \Catalog\Controllers\BaseController
     {
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
-        } elseif ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
+        } elseif ($this->customer->getID()) {
+            $customer_id = $this->customer->getID();
         } else {
             $customer_id = 0;
         }
@@ -154,8 +159,8 @@ class Jobs extends \Catalog\Controllers\BaseController
     {
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
-        } elseif ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
+        } elseif ($this->customer->getID()) {
+            $customer_id = $this->customer->getID();
         } else {
             $customer_id = 0;
         }
@@ -261,8 +266,8 @@ class Jobs extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
-        } elseif ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
+        } elseif ($this->customer->getID()) {
+            $customer_id = $this->customer->getID();
         } else {
             $customer_id = 0;
         }

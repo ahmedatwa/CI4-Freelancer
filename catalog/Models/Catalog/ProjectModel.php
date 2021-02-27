@@ -102,12 +102,12 @@ class ProjectModel extends Model
         $language_id = service('registry')->get('config_language_id');
         $builder = $this->db->table($this->table);
         $project_data = [
-            'status_id'   => $data['status'],
-            'type'        => $data['type'],
-            'upload'      => $data['upload'],
-            'employer_id' => $data['employer_id'],
-            'budget_min'  => $data['budget_min'],
-            'budget_max'  => $data['budget_max'],
+            'status_id'     => $data['status'],
+            'type'          => $data['type'],
+            'upload'        => $data['upload'],
+            'employer_id'   => $data['employer_id'],
+            'budget_min'    => $data['budget_min'],
+            'budget_max'    => $data['budget_max'],
             'date_modified' => $data['date_modified'],
         ];
         
@@ -161,12 +161,19 @@ class ProjectModel extends Model
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
 
-        $builder->where('pd.language_id', service('registry')->get('config_language_id'));
-        $builder->where('p.draft', 0);
+        $builder->where([
+            'pd.language_id' => service('registry')->get('config_language_id'),
+            'p.draft'        => 0,
+        ]);
 
-        if ((isset($data['filter_category_id']) && ! is_null($data['filter_category_id'])) || (isset($data['filter_skills']) && !empty($data['filter_skills']))) {
+        if (isset($data['filter_skills'])) {
             $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
-            $builder->where('p2c.category_id', $data['filter_category_id']);
+            if (strpos($data['filter_skills'], '_')) {
+                $explode = explode('_', $data['filter_skills']);
+                $builder->whereIn('p2c.category_id', $explode);
+            } else {
+                $builder->where('p2c.category_id', $data['filter_skills']);
+            }
         }
 
         if (isset($data['employer_id'])) {
@@ -247,8 +254,6 @@ class ProjectModel extends Model
             $builder->limit($data['limit'], $data['start']);
         }
 
-        //$builder->groupBy('p.project_id');
-
         $query = $builder->get();
         return $query->getResultArray();
     }
@@ -261,9 +266,9 @@ class ProjectModel extends Model
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
         $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
-        if ((isset($data['filter_category_id']) && !empty($data['filter_category_id']))|| (isset($data['filter_skills']) && !empty($data['filter_skills']))) {
+        if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
             $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
-            $builder->where('p2c.category_id', $data['filter_category_id']);
+            $builder->where('p2c.category_id', $data['filter_skills']);
         }
 
         if (isset($data['employer_id'])) {
@@ -378,109 +383,7 @@ class ProjectModel extends Model
         return $query->getRowArray();
     }
 
-    public function getEmployerProjects(array $data = [])
-    {
-        $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.type, p.status, p.runtime');
-        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
-        $builder->join('customer c', 'p.employer_id = c.customer_id', 'left');
-        $builder->where('pd.language_id', service('registry')->get('config_language_id'));
-
-        if (isset($data['employer_id'])) {
-            $builder->where('p.employer_id', $data['employer_id']);
-        }
-
-        if (isset($data['orderBy']) && $data['orderBy'] == 'DESC') {
-            $data['orderBy'] = 'DESC';
-        } else {
-            $data['orderBy'] = 'ASC';
-        }
-
-        $sortData = ['p.date_added'];
-
-        if (isset($data['sortBy']) && in_array($data['sortBy'], $sortData)) {
-            $builder->orderBy($data['sortBy'], 'DESC');
-        } else {
-            $builder->orderBy('p.date_added', 'ASC');
-        }
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-            $builder->limit($data['limit'], $data['start']);
-        }
-
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
-
-    public function getAvgBidsByProjectId($project_id)
-    {
-        $builder = $this->db->table('project_bids');
-        $builder->selectAvg('quote', 'total');
-        $builder->where('project_id', $project_id);
-        $query = $builder->get()->getRowArray();
-        return round($query['total']);
-    }
-
-    public function getFeedbackProjects($data = [])
-    {
-        $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.type, p.status_id, p.runtime, p.employer_id, p.freelancer_id, ps.name as status, p.freelancer_review_id, p.employer_review_id');
-        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
-        $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
-        $builder->where([
-            'pd.language_id' => service('registry')->get('config_language_id'),
-            'p.status_id'    => service('registry')->get('config_project_completed_status'),
-            'p.freelancer_review_id'    => 0,
-        ]);
-
-        $builder->orWhere([
-            'p.employer_review_id'    => 0,
-        ]);
-
-        if (isset($data['status'])) {
-            $builder->where('p.status_id', $data['status']);
-        }
-
-        if (isset($data['customer_id'])) {
-            $builder->where('p.freelancer_id', $data['customer_id']);
-            $builder->orWhere('p.employer_id', $data['customer_id']);
-        }
-
-        if (isset($data['orderBy']) && $data['orderBy'] == 'DESC') {
-            $data['orderBy'] = 'DESC';
-        } else {
-            $data['orderBy'] = 'ASC';
-        }
-
-        $sortData = ['pa.date_added'];
-
-        if (isset($data['sortBy']) && in_array($data['sortBy'], $sortData)) {
-            $builder->orderBy($data['sortBy'], 'DESC');
-        } else {
-            $builder->orderBy('p.date_added', 'ASC');
-        }
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-            $builder->limit($data['limit'], $data['start']);
-        }
-
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
-
-    public function getStatusByProjectId($project_id)
+    public function getStatusByProjectId(int $project_id)
     {
         $builder = $this->db->table('project p');
         $builder->select('ps.name');
@@ -491,13 +394,6 @@ class ProjectModel extends Model
         return $row['name'];
     }
 
-    public function getTotalAwardsByFreelancerId($freelancer_id)
-    {
-        $builder = $this->db->table('project_award');
-        $builder->where(['freelancer_id' => $freelancer_id, 'status_id' => service('registry')->get('config_project_completed_status')]);
-        return $builder->countAllResults();
-    }
-
     public function updateViewed(int $project_id)
     {
         $builder = $this->db->table('project');
@@ -506,102 +402,109 @@ class ProjectModel extends Model
         $builder->update();
     }
 
-    public function getTotalBidsByProjectId($project_id)
-    {
-        $builder = $this->db->table('project_bids');
-        $builder->where('project_id', $project_id);
-        return $builder->countAllResults();
-    }
+    // public function getTotalAwardsByFreelancerId($freelancer_id)
+    // {
+    //     $builder = $this->db->table('project_award');
+    //     $builder->where(['freelancer_id' => $freelancer_id, 'status_id' => service('registry')->get('config_project_completed_status')]);
+    //     return $builder->countAllResults();
+    // }
+
+    // public function getTotalBidsByProjectId($project_id)
+    // {
+    //     $builder = $this->db->table('project_bids');
+    //     $builder->where('project_id', $project_id);
+    //     return $builder->countAllResults();
+    // }
 
     // Bootstrap FileInput
-    public function getFilesByProjectId($project_id)
-    {
-        $image = [];
-        $builder = $this->db->table('project_to_upload');
-        $builder->select();
-        $builder->where('project_id', $project_id);
-        $query = $builder->get();
-        foreach ($query->getResultArray() as $result) {
-            $url = $result['filename'];
-            $image[] = "<img src=" . $url ." class=\"kv-preview-data file-preview-other\">";
-        }
-        return json_encode($image);
-    }
+    // public function getFilesByProjectId($project_id)
+    // {
+    //     $image = [];
+    //     $builder = $this->db->table('project_to_upload');
+    //     $builder->select();
+    //     $builder->where('project_id', $project_id);
+    //     $query = $builder->get();
+    //     foreach ($query->getResultArray() as $result) {
+    //         $url = $result['filename'];
+    //         $image[] = "<img src=" . $url ." class=\"kv-preview-data file-preview-other\">";
+    //     }
+    //     return json_encode($image);
+    // }
 
-    public function getFilesPreviewConfig($project_id)
-    {
-        $config_data = [];
-        $builder = $this->db->table('project_to_upload');
-        $builder->select();
-        $builder->where('project_id', $project_id);
-        $query = $builder->get();
-        foreach ($query->getResultArray() as $value) {
-            $config_data[] = [
-                'key'         => $value['code'],
-                'type'        => $value['type'],
-                'caption'     => $value['filename'],
-                'downloadUrl' => $this->downloadProjectFiles($project_id),
-                'size'        => $value['size'],
-           ];
-        }
-        return json_encode($config_data);
-    }
+    // public function getFilesPreviewConfig($project_id)
+    // {
+    //     $config_data = [];
+    //     $builder = $this->db->table('project_to_upload');
+    //     $builder->select();
+    //     $builder->where('project_id', $project_id);
+    //     $query = $builder->get();
+    //     foreach ($query->getResultArray() as $value) {
+    //         $config_data[] = [
+    //             'key'         => $value['code'],
+    //             'type'        => $value['type'],
+    //             'caption'     => $value['filename'],
+    //             'downloadUrl' => $this->downloadProjectFiles($project_id),
+    //             'size'        => $value['size'],
+    //        ];
+    //     }
+    //     return json_encode($config_data);
+    // }
 
-    public function downloadProjectFiles($project_id)
-    {
-        $builder = $this->db->table('project_to_upload');
-        $builder->select();
-        $builder->where('project_id', $project_id);
-        $query = $builder->get();
-        $row = $query->getRowArray();
-        if ($row) {
-            $response = \Config\Services::response();
-            $file = WRITEPATH . 'uploads/' . $row['code'];
-            if (file_exists($file)) {
-                return $response->download($file, null);
-            } else {
-                return;
-            }
-        } 
-    }
+    // public function downloadProjectFiles($project_id)
+    // {
+    //     $builder = $this->db->table('project_to_upload');
+    //     $builder->select();
+    //     $builder->where('project_id', $project_id);
+    //     $query = $builder->get();
+    //     $row = $query->getRowArray();
+    //     if ($row) {
+    //         $response = \Config\Services::response();
+    //         $file = WRITEPATH . 'uploads/' . $row['code'];
+    //         if (file_exists($file)) {
+    //             return $response->download($file, null);
+    //         } else {
+    //             return;
+    //         }
+    //     } 
+    // }
 
-    public function deleteProjectFiles(int $project_id, int $freelancer_id)
-    {
-        $builder = $this->db->table('project_to_upload');
-        $builder->delete([
-            'project_id' => $project_id,
-            'freelancer_id' => $freelancer_id
-        ]);
-    }
+    // public function deleteProjectFiles(int $project_id, int $freelancer_id)
+    // {
+    //     $builder = $this->db->table('project_to_upload');
+    //     $builder->delete([
+    //         'project_id' => $project_id,
+    //         'freelancer_id' => $freelancer_id
+    //     ]);
+    // }
 
-    public function getProjectUploadedFile(int $project_id, int $freelancer_id)
-    {
-        $builder = $this->db->table('project_to_upload');
-        $builder->select();
-        $builder->where([
-            'project_id' => $project_id,
-            'freelancer_id' => $freelancer_id,
-            ]);
-        $query = $builder->get();
-        return $query->getRowArray();
-    }
+    // public function getProjectUploadedFile(int $project_id, int $freelancer_id)
+    // {
+    //     $builder = $this->db->table('project_to_upload');
+    //     $builder->select();
+    //     $builder->where([
+    //         'project_id' => $project_id,
+    //         'freelancer_id' => $freelancer_id,
+    //         ]);
+    //     $query = $builder->get();
+    //     return $query->getRowArray();
+    // }
     // Freelancer In-progress Projects
-    public function getfreelancerProjects(int $freelancer_id)
-    {
-        $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status');
-        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
-        $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
-        $builder->join('project_bids pb', 'pb.project_id = p.project_id', 'left');
-        $builder->where([
-            'pd.language_id' => service('registry')->get('config_language_id'),
-            'pb.freelancer_id' => $freelancer_id,
-            'pb.accepted' => 1,
-        ]);
+    // public function getfreelancerProjects(int $freelancer_id)
+    // {
+    //     $builder = $this->db->table('project p');
+    //     $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status');
+    //     $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
+    //     $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
+    //     $builder->join('project_bids pb', 'pb.project_id = p.project_id', 'left');
+    //     $builder->where([
+    //         'pd.language_id' => service('registry')->get('config_language_id'),
+    //         'pb.freelancer_id' => $freelancer_id,
+    //         'pb.accepted' => 1,
+    //     ]);
 
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
+    //     $query = $builder->get();
+    //     return $query->getResultArray();
+    // }
 
     
     // -----------------------------------------------------------------

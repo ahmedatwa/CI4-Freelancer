@@ -1,9 +1,9 @@
-<?php echo $header;?>
+{{ header }}
 <div id="titlebar" class="gradient">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h2><?php echo $heading_title; ?></h2>
+				<h2>{{ heading_title }}</h2>
 			</div>
 		</div>
 	</div>
@@ -16,8 +16,8 @@
 				<div class="contact-address">
 					<ul>
 						<li class="contact-address-headline">Our Office</li>
-						<li><?php echo $address; ?></li>
-						<li><?php echo $telephone; ?></li>
+						<li>{{ address }}</li>
+						<li>{{ telephone }}</li>
 					</ul>
 				</div>
 				<div id="single-job-map-container">
@@ -28,7 +28,7 @@
 		<div class="col">
 			<section class="margin-bottom-60">
 				<h3 class="headline margin-top-15 margin-bottom-35">Any questions? Feel free to contact us! <br />
-				<small><?php echo $text_help; ?></small></h3>
+				<small>{{ text_help }}</small></h3>
 				<form enctype="multipart/form-data" id="form-contact-us" accept-charset="utf-8"> 
 					<div class="form-group row">
 						<label for="formGroupExampleInput" class="col-sm-2 col-form-label">Name</label>
@@ -84,14 +84,13 @@
 <script src="catalog/default/javascript/infobox.min.js"></script>
 <script src="catalog/default/javascript/markerclusterer.js"></script>
 <script src="catalog/default/javascript/maps.js"></script>
-<?php echo $footer;?>
 <script type="text/javascript">
 	$('#button-contact-us').on('click', function() {
 		var node = this;
 		$.ajax({
 			url: 'information/contact/send',
 			headers: {
-              "X-CSRF-TOKEN": $('meta[name="<?= csrf_token() ?>"]').attr('content'),
+              "X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
               "X-Requested-With": "XMLHttpRequest"
            },
 		   dataType: 'json',
@@ -125,3 +124,4 @@
 		});
 	});
 </script>
+{{ footer }}

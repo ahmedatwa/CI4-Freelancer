@@ -26,10 +26,6 @@ class Content_top extends BaseController
 
         $layout_id = $layoutModel->getLayout($route);
 
-        if (!$layout_id) {
-            $layout_id = $this->registry->get('config_layout_id');
-        }
-
         $modules = $layoutModel->getLayoutModules($layout_id, 'content_top');
 
         foreach ($modules as $module) {

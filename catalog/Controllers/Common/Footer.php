@@ -19,11 +19,10 @@ class Footer extends BaseController
         foreach ($informations->getInformations() as $result) {
             if ($result['bottom']) {
                 $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
-
                 $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
-                'href'           => ($keyword) ? route_to('information', $result['information_id'], $keyword) : base_url('information/information/view?fid=' . $result['information_id']),
+                'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/information/view?fid=' . $result['information_id']),
             ];
             }
         }
@@ -50,29 +49,27 @@ class Footer extends BaseController
 
         $data['text_footer'] = sprintf(lang('common/footer.list.text_footer'), $this->registry->get('config_name'));
         // Social
-        $data['facebook']      = $this->registry->get('config_facebook');
-        $data['twitter']       = $this->registry->get('config_twitter');
-        $data['pintrest']      = $this->registry->get('config_pintrest');
-        $data['linkedin']      = $this->registry->get('config_linkedin');
-        $data['instagram']     = $this->registry->get('config_instagram');
+        $data['social_networks'] = json_decode($this->registry->get('config_social_networks'), true);
 
-        $data['contact']     = route_to('contact') ? route_to('contact') : base_url('information/contact');
-        $data['login']       = route_to('account_login') ? route_to('account_login') : base_url('account/login');
-        $data['register']    = route_to('account_register') ? route_to('account_register') : base_url('account/register');
-        $data['setting']     = route_to('account_setting') ? route_to('account_setting') : base_url('account/setting');
+        $data['contact']     = route_to('contact');
+        $data['login']       = route_to('account_login');
+        $data['register']    = route_to('account_register');
+        if ($this->customer->isLogged()) {
+            $data['setting']     = route_to('account_setting', $this->customer->getUserName());
+        }
         $data['blog']        = base_url('blog');
         
-        $data['freelancers'] = route_to('freelancers') ? route_to('freelancers') : base_url('freelancer/freelancer');
-        $data['projects']    = route_to('projects') ? route_to('projects') : base_url('project/project');
-        $data['category']    = route_to('categories') ? route_to('categories') : base_url('project/category');
-        $data['add_project'] = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
+        $data['freelancers'] = route_to('freelancers');
+        $data['projects']    = route_to('projects');
+        $data['category']    = route_to('categories');
+        $data['add_project'] = route_to('add-project');
 
         $data['project_added'] = $this->session->getFlashdata('project_added');
 
         $data['config_name'] = $this->registry->get('config_name');
 
         $data['logged'] = $this->customer->isLogged();
-        $data['customer_id'] = $this->customer->getCustomerId();
+        $data['customer_id'] = $this->customer->getID();
 
         
         if (is_file(DIR_IMAGE . $this->registry->get('config_logo'))) {
@@ -103,8 +100,8 @@ class Footer extends BaseController
                 $referer = previous_url();
             }
 
-            if ($this->customer->getCustomerId()) {
-                $customer_id = $this->customer->getCustomerId();
+            if ($this->customer->getID()) {
+                $customer_id = $this->customer->getID();
             } else {
                 $customer_id = 0;
             }
