@@ -14507,6 +14507,19 @@ body.offcanvas-active{
     }
 }
 
+.table a.asc:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900; 
+    content: "\f106";
+    padding-left: 4px;
+}
+
+.table a.desc:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900; 
+    content: "\f107";
+    padding-left: 4px;
+}
 
 .text-count-wrapper.error .text-count-message{
     display: inline;

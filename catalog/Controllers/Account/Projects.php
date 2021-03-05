@@ -16,7 +16,7 @@ class Projects extends BaseController
 
         $projectModel = new ProjectModel();
 
-        $this->template->setTitle(lang('account/projects.heading_title'));
+        $this->template->setTitle(sprintf(lang('account/projects.heading_title'), $this->customer->getUserName()));
             
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -53,7 +53,7 @@ class Projects extends BaseController
             ];
         }
 
-        $data['heading_title'] = lang('account/projects.heading_title');
+        $data['heading_title'] = sprintf(lang('account/projects.heading_title'), $this->customer->getUserName());
 
         $data['customer_id'] = $customer_id;
         $data['pid'] = $customer_id;

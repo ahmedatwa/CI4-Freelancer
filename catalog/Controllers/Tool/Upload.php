@@ -1,9 +1,12 @@
-<?php namespace Catalog\Controllers\Tool;
+<?php
 
-use \Catalog\Models\Tool\UploadModel;
-use \Catalog\Models\Catalog\ProjectModel;
+namespace Catalog\Controllers\Tool;
 
-class Upload extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Tool\UploadModel;
+use Catalog\Models\Catalog\ProjectModel;
+
+class Upload extends BaseController
 {
     public function index()
     {
@@ -27,9 +30,7 @@ class Upload extends \Catalog\Controllers\BaseController
             $json['error'] = 'Please login';
         }
 
-
         if ($file = $this->request->getFile('file')) {
-
             // Validate the filename length
             if ((strlen($file->getName()) < 3) || (strlen($file->getName()) > 64)) {
                 $json['error'] = lang('tool/upload.error_filename');
@@ -75,20 +76,20 @@ class Upload extends \Catalog\Controllers\BaseController
                         if (is_dir($folder)) {
                             $file->move($folder, $newName);
                         } else {
-                        mkdir(WRITEPATH . 'uploads/project-' . $project_id, 0777);
-                        $file->move($folder, $newName);
-                       }
+                            mkdir(WRITEPATH . 'uploads/project-' . $project_id, 0777);
+                            $file->move($folder, $newName);
+                        }
                     } else {
                         $file->move(WRITEPATH . 'uploads/', $newName);
-                    } 
+                    }
 
                     $json['initialPreview'] = '';
 
                     $json['initialPreviewConfig'][] = [
-                            'type'     => 'image',      
+                            'type'     => 'image',
                             'caption'  => $file->getClientName(),
                             'key'      => $newName,
-                            'fileId'   => $newName, 
+                            'fileId'   => $newName,
                             'size'     => $file->getSize(),
                             'url'      => base_url('tool/upload/remove?freelancer_id=' . $customer_id . '&project_id=' . $project_id),
                     ];
@@ -104,18 +105,41 @@ class Upload extends \Catalog\Controllers\BaseController
                         'ext'           => $file->getClientExtension(),
                         'size'          => $file->getSize()
                     ];
-                    // check if uploading attachment or project files
-                    if ($this->request->getVar('type')) {
-                        $json['download_id'] = $uploadModel->addAttachment($data);
-                    } else {
-                        $uploadModel->insert($data);
-                    }
 
+                    $uploadModel->insert($data);
                     $json['success'] = lang('tool/upload.text_upload');
                 }
             }
         }
         return $this->response->setJSON($json);
+    }
+
+    public function getUpload(int $upload_id, int $project_id)
+    {
+        if($this->request->getMethod() == 'get') {
+            if ($upload_id) {
+                $upload_id = $upload_id;
+            } else {
+                $upload_id = 0;
+            }
+
+            if ($project_id) {
+                $project_id = $project_id;
+            } else {
+                $project_id = 0;
+            }
+
+            if ($upload_id) {
+                $uploadModel = new UploadModel();
+                $file_info = $uploadModel->find($upload_id);
+                if ($file_info) {
+                    $file = WRITEPATH . 'uploads/project' . $project_id . '/' . $file_info['code'];
+                    return $this->response->download($file, NULL)->setFileName($file_info['filename']);
+                } else {
+                    throw new \Exception('Error: Could not find file ' . $file_info['filename'] . '!');
+                }
+            }
+        }
     }
 
     public function remove()
@@ -137,7 +161,7 @@ class Upload extends \Catalog\Controllers\BaseController
                         $projectModel->deleteProjectFiles($this->request->getVar('project_id'), $this->request->getVar('freelancer_id'));
                     }
                 } else {
-                        $json['error'] = 'Error: Please contact system administrator';
+                    $json['error'] = 'Error: Please contact system administrator';
                 }
             }
         }

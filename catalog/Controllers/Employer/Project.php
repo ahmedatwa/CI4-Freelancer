@@ -5,10 +5,10 @@ namespace Catalog\Controllers\Employer;
 use Catalog\Controllers\BaseController;
 use Catalog\Models\Employer\EmployerModel;
 use Catalog\Models\Account\CustomerModel;
-use Catalog\Models\Freelancer\MilestoneModel;
+use Catalog\Models\Catalog\MilestoneModel;
 use Catalog\Models\Extension\Bid\BidModel;
-use Catalog\Models\Freelancer\BalanceModel;
-use Catalog\Models\Freelancer\DisputeModel;
+use Catalog\Models\Account\BalanceModel;
+use Catalog\Models\Account\DisputeModel;
 use Catalog\Models\Account\MessageModel;
 
 class Project extends BaseController
@@ -138,16 +138,16 @@ class Project extends BaseController
             $customer_id = 0;
         }
 
-        if ($this->request->getVar('sort_by')) {
-            $sort_by = $this->request->getVar('sort_by');
+        if ($this->request->getVar('sort')) {
+            $sortBy = $this->request->getVar('sort');
         } else {
-            $sort_by = 'p.date_added';
+            $sortBy = 'p.date_added';
         }
 
-        if ($this->request->getVar('order_by')) {
-            $order_by = $this->request->getVar('order_by');
+        if ($this->request->getVar('order')) {
+            $orderBy = $this->request->getVar('order');
         } else {
-            $order_by = 'DESC';
+            $orderBy = 'DESC';
         }
 
         if ($this->request->getVar('limit')) {
@@ -165,8 +165,8 @@ class Project extends BaseController
         $filter_data = [
             'employer_id' => $customer_id,
             'status_id'   => '8,6',
-            'sort_by'     => $sort_by,
-            'order_by'    => $order_by,
+            'sort'        => $sortBy,
+            'order'       => $orderBy,
             'limit'       => $limit,
             'start'       => ($page - 1) * $limit,
         ];
@@ -176,6 +176,7 @@ class Project extends BaseController
         $employerModel = new EmployerModel();
 
         $results = $employerModel->getEmployerProjects($filter_data);
+        $total = $employerModel->getTotalEmployerProjects($filter_data);
 
         foreach ($results as $result) {
             $data['projects'][] = [
@@ -185,10 +186,11 @@ class Project extends BaseController
                 'type'       => ($result['type'] == 1) ? lang('project/project.list.text_fixed_price') : lang('project/project.list.text_per_hour'),
                 'date_added' => $this->dateDifference($result['date_added']),
                 'total_bids' => $employerModel->getTotalBidsByProjectId($result['project_id']),
-                'expiry'     => $this->addDays($result['date_added'], $result['runtime']),
+                'expiry'     => lang('en.list.mediumDate', [$this->addDays($result['date_added'], $result['runtime'])]),
                 'avgBids'    => $employerModel->getEmployerAvgBidsByProjectId($result['project_id']),
                 'status'     => $employerModel->getProjectStatusByProjectId($result['project_id']) ?? 'Open',
                 'expired'    => $result['runtime'],
+                'date_added' => lang('en.list.mediumDate', [$result['date_added']]),
                 'view'       => base_url('employer/project/view?pid=' . $result['project_id'] . '&cid=' . $customer_id),
                 'bidders'    => base_url('employer/project/bidders?pid=' . $result['project_id'] . '&cid=' . $customer_id),
             ];
@@ -248,6 +250,7 @@ class Project extends BaseController
         $employerModel = new EmployerModel();
 
         $results = $employerModel->getEmployerProjects($filter_data);
+        $total = $employerModel->getTotalEmployerProjects($filter_data);
 
         foreach ($results as $result) {
             $data['projects'][] = [
@@ -327,6 +330,7 @@ class Project extends BaseController
         $disputeModel   = new DisputeModel();
 
         $results = $employerModel->getEmployerProjects($filter_data);
+        $total = $employerModel->getTotalEmployerProjects($filter_data);
 
         foreach ($results as $result) {
             $paidStatus      = $bidModel->where('project_id', $result['project_id'])->findColumn('paid');

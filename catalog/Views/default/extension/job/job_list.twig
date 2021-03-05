@@ -1,0 +1,250 @@
+{{ header }}{{ menu }}
+<div class="jumbotron">
+	<div class="container-fluid">
+		<h2 class="display-5">{{ heading_title }}</h2>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<nav id="breadcrumbs">
+				<ul>
+					{% for breadcrumb in breadcrumbs %}
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+					{% endfor %}
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<div class="section mb-5 bg-white margin-top-30">
+		<div class="row">
+			<div class="col">
+				<div class="sidebar-container">
+					<p><i class="fas fa-filter"></i> {{ text_sidebar }}</p>
+					<div class="dropdown-divider"></div>
+					<div class="sidebar-widget">
+						<h3>{{ text_type }}</h3>
+						{% for type in types %}
+						{% if type.value in filter_type %}
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="{{ type.value }}"
+								name="filter_type[]" checked>
+							<label class="form-check-label" for="defaultCheck1">
+								{{ type.text }}
+							</label>
+						</div>
+						{% else %}
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="{{ type.value }}"
+								name="filter_type[]">
+							<label class="form-check-label" for="defaultCheck1">
+								{{ type.text }}
+							</label>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+
+					<!-- Keywords -->
+					<!-- 				<div class="sidebar-widget">
+					<h3>Keywords</h3>
+					<div class="keywords-container">
+						<div class="keyword-input-container">
+							<input type="text" class="keyword-input" placeholder="e.g. job title"/>
+							<button class="keyword-input-button ripple-effect"><i class="icon-material-outline-add"></i></button>
+						</div>
+						<div class="keywords-list">/div>
+						<div class="clearfix"></div>
+					</div>
+				</div> -->
+					<!-- Tags -->
+					<!--<div class="dropdown-divider"></div>
+					 <div class="sidebar-widget">
+						<h3><?php //echo $text_tags }}</h3>
+						<div class="keywords-container margin-top-20">
+							<div class="input-group keyword-input-container">
+								<select class="form-control" name="filter_category[]" data-width="100%" multiple="multiple">
+									<?php //foreach($tags as $tag) { ?>
+									<?php //if (in_array($tag.id, $filter_tags)) { ?>
+										<option value="<?php //echo $tag.id }}" selected><?php //echo $tag.text }}</option>
+										<?php //} else { ?>
+										<option value="<?php //echo $tag.id }}"><?php //echo $tag.text }}</option>
+										<?php //} ?>
+										<?php //} ?>
+									</select>
+							</div> 
+						</div>
+					</div> -->
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-9 mb-4">
+				<div class="notify-box margin-top-15">
+					<div class="switch-container">
+						{{ text_found }}
+					</div>
+					<div class="sort-by">
+						<div class="form-group">
+							<select class="custom-select" onchange="location = this.value;">
+								{% for sort in sorts %}
+								{% if sort.value == sort_by %}
+								<option value="{{ sort.href }}" selected>{{ sort.text }}</option>
+								{% else %}
+								<option value="{{ sort.href }}">{{ sort.text }}</option>
+								{% endif %}
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="listings-container margin-top-35">
+						{% for job in jobs %}
+						<a href="{{ job.href }}" class="job-listing">
+							<div class="job-listing-details">
+								<div class="job-listing-description">
+									<h3 class="job-listing-title">{{ job.name }}</h3>
+									<p class="job-listing-text">{{ job.description }}</p>
+								</div>
+							</div>
+							<div class="job-listing-footer">
+								<ul>
+									<li><i class="icon-material-outline-business-center"></i> {{ job.type }}</li>
+									<li><i class="icon-material-outline-access-time"></i> {{ job.date_added }}</li>
+								</ul>
+							</div>
+						</a>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="col-12">
+					{{ pagination }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div> <!-- content-wrapper -->
+<link href="catalog/default/vendor/select2/customSelectionAdapter/css/select2.customSelectionAdapter.min.css">		
+<script src="catalog/default/vendor/select2/customSelectionAdapter/js/select2.customSelectionAdapter.min.js"></script>
+<script type="text/javascript">
+var uri = document.URL;
+
+// Skills
+var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
+$('select[name^=\'filter_category\').select2({
+ajax: {
+	url: "project/category/autocomplete",
+	dataType: 'json',
+	delay: 250,
+	data: function (params) {
+		return {
+			filter_category: params.term,
+		};
+	},
+	processResults: function (data, params) {
+		var results = $.map(data, function (item) {
+			item.id = item.category_id;
+			item.text = item.name;
+			return item;
+		});
+		return {
+			results: results,
+		};
+	},
+	cache: true
+},
+theme: 'bootstrap4',
+placeholder: '{{ text_select }}',
+allowClear: false,
+minimumResultsForSearch: 5,
+selectionAdapter: CustomSelectionAdapter,
+selectionContainer: $('.keywords-list'),
+
+}).on("select2:select", function (e) { 
+	var select_val = $(e.currentTarget).val();
+
+	$.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+	    headers: {
+          "X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
+        },
+		dataType: 'json',
+		method: 'post',
+		data: {skills: select_val.join('_')},
+		beforeSend: function() {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function() {
+  		    $('#overlay').fadeOut();
+		},
+		success: function(json) {
+			location = json.uri;
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	});
+  
+}).on('select2:unselect', function (e) {
+	  var select_val = $(e.currentTarget).val();
+	  console.log(select_val)
+
+	  $.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+	    headers: {
+          "X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
+        },
+		dataType: 'json',
+		method: 'post',
+		data: {clear: 'skills'},
+		beforeSend: function() {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function() {
+  		    $('#overlay').fadeOut();
+		},
+		success: function(json) {
+			location = json.uri;
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	});
+});
+
+// <!-- // Filters -->
+
+$('input[name^=\'filter_type\').on('click', function() {
+
+    var filter = [];
+
+    $('input[name^=\'filter_type\:checked').each(function(element) {
+        filter.push(this.value);
+    });
+
+	$.ajax({
+		url: 'extension/job/job/filter?url=' + encodeURIComponent(uri),
+	    headers: {
+          "X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
+        },
+		dataType: 'json',
+		method: 'post',
+		data: {type: filter.join('_')},
+		beforeSend: function() {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function() {
+  		    $('#overlay').fadeOut();
+		},
+		success: function(json) {
+			location = json.uri;
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
+	});
+}); 
+</script>
+{{ footer }}

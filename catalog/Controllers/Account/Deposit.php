@@ -28,9 +28,15 @@ class Deposit extends BaseController
 
         $data['processing_fee'] = $this->registry->get('config_processing_fee');
 
-        $data['currency'] = $this->session->get('currency') ? $this->session->get('currency') : $this->registry->get('config_currency');
+        if ($this->request->getCookie(config('App')->cookiePrefix . 'currency')) {
+            $data['currency'] = \Config\Services::encrypter()->decrypt(base64_decode($this->request->getCookie(config('App')->cookiePrefix . 'currency', FILTER_SANITIZE_STRING)));
+        } else {
+            $data['currency'] = $this->registry->get('config_currency');
+        }
    
         $data['customer_id'] = $this->session->get('customer_id') ?? 0;
+
+        $data['langData'] = lang('account/deposit.list');
 
         $this->template->output('account/deposit', $data);
     }
@@ -53,7 +59,7 @@ class Deposit extends BaseController
                     'status'      => strtolower($this->request->getPost('status')),
                 ];
 
-                $depositModel->insertFunds($data);
+                $depositModel->deposit($data);
 
                 $json['success'] = lang('account/deposit.text_success');
             }

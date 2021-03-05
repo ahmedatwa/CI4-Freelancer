@@ -21,7 +21,13 @@ class Notifications extends BaseController
 
             $activityModel = new ActivityModel();
 
-            $results = $activityModel->getActivitiesByCustomerID($customer_id);
+            $filter_data = [
+                'customer_id' => $customer_id,
+                'start'       => 0,
+                'limit'       => 5
+            ];
+
+            $results = $activityModel->getActivitiesByCustomerID($filter_data);
 
             $customerModel = new CustomerModel();
 
@@ -29,7 +35,7 @@ class Notifications extends BaseController
                 if (substr($result['key'], 0, 6) != 'admin_') {
                     $info = json_decode($result['data'], true);
 
-                    $comment = vsprintf(lang('account/activity.text_activity_' . $result['key']), $info);
+                    $comment = vsprintf(lang('account/activity.list.text_activity_' . $result['key']), $info);
             
                     $username  = '';
 
@@ -83,7 +89,7 @@ class Notifications extends BaseController
                 $customer_id = 0;
             }
 
-            $json = $activityModel->getTotalActivitiesByCustomerID($customer_id);
+            $json = $activityModel->getTotalActivitiesByCustomerID(['customer_id' => $customer_id]);
         }
                
         return $this->response->setJSON($json);

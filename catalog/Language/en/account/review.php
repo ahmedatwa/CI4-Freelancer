@@ -2,7 +2,7 @@
         
 return [
     // Heading
-    'heading_title'     => 'Projects Feedback',
+    'heading_title'     => '%s Feedback',
     'list' => [
         // column
         'column_name'       => 'Project Name',

@@ -1,0 +1,116 @@
+{{ header }} 
+<div class="jumbotron">
+	<div class="container-fluid">
+		<h2 class="display-5">{{ heading_title }}</h2>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+
+		</div>
+	</div>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12 col-md-8">
+			<h3 class="">Payment Method</h3>
+			<div class="payment margin-top-30">
+
+				<div class="payment-tab payment-tab-active">
+					<div class="payment-tab-trigger">
+						<input checked id="paypal" name="cardType" type="radio" value="paypal">
+						<label for="paypal">PayPal</label>
+						<img class="payment-logo paypal" src="https://i.imgur.com/ApBxkXU.png" alt="">
+					</div>
+
+					<div class="payment-tab-content">
+						<p>  <div id="paypal-button-container"></div></p>
+					</div>
+				</div>
+			</div>
+ 		</div>
+		<div class="col margin-top-60">
+			<!-- Summary -->
+			<div class="boxed-widget summary margin-top-0">
+				<div class="boxed-widget-headline" id="payment-summery">
+					<h3>Summary</h3>
+					<input type="hidden" name="amount">
+					<input type="hidden" name="status">
+				</div>
+				<div class="boxed-widget-inner">
+					<ul>
+						<li>
+							<div class="form-group row">
+								<label for="amount" class="col-sm-6 col-form-label">{{ entry_amount }}</label>
+								<div class="col-sm-6">
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="basic-addon1">{{ currency }}</span>
+										</div>
+										<input type="number" value="20" class="form-control" id="input-amount">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>{{ text_fee }}<span id="processing_fee">{{ processing_fee }}</span></li>
+						<li class="total-costs">{{ text_total }} <span id="total">22.3</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div class="margin-bottom-30"></div>
+<script type="text/javascript">
+$('#input-amount').on('input', function(){
+	var amount = $(this).val();
+	var fee = $('#processing_fee').text();
+   $('#total').text(parseInt(amount) + parseFloat(fee));
+});
+</script>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AQsYMy9yvvuJQgYo5ZWjdHbtCoA-9fBjezG3Kuwi3RQy0WutI14gCAnS9Y74MneOOIBeqbfvav9uVOcn&currency={{ currency }}" data-namespace="paypal_sdk"></script>
+ <script>
+  paypal_sdk.Buttons({
+    createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: $('#total').text()
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        $.ajax({
+        	url: 'account/deposit/addFunds?customer_id={{ customer_id }}',
+        	headers: {
+              'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+              'X-Requested-With': 'XMLHttpRequest'
+            },
+        	method: 'post',
+        	dataType: 'json',
+        	data: {'amount': details.purchase_units[0].amount.value, 'currency': details.purchase_units[0].amount.currency_code, 'status':details.status},
+        	success: function(json) {
+        		if (json['success']) {
+        			$.notify({
+        				icon: 'fas fa-check-circle',
+						title: 'Success:',
+						message: json['success'],
+						type: 'success'
+					});
+
+        		}
+        	}
+
+        });
+      });
+    }
+  }).render('#paypal-button-container');
+</script>
+{{ footer }}

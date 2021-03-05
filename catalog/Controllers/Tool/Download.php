@@ -1,8 +1,11 @@
-<?php namespace Catalog\Controllers\Tool;
+<?php 
 
-use \Catalog\Models\Tool\DownloadModel;
+namespace Catalog\Controllers\Tool;
 
-class Download extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Tool\DownloadModel;
+
+class Download extends BaseController
 {
     public function index()
     {

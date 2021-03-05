@@ -127,7 +127,7 @@ class BalanceModel extends Model
         }
     }
 
-    public function getWithdrawnByCustomerID($customer_id)
+    public function getWithdrawnByCustomerID(int $customer_id)
     {
         $builder = $this->db->table('customer_to_balance');
         $builder->selectSum('withdrawn', 'total');

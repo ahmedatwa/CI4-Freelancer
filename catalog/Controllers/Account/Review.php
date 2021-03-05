@@ -3,9 +3,9 @@
 namespace Catalog\Controllers\Account;
 
 use Catalog\Controllers\BaseController;
-use \Catalog\Models\Catalog\ProjectModel;
-use \Catalog\Models\Account\ReviewModel;
-use \Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Catalog\ProjectModel;
+use Catalog\Models\Account\ReviewModel;
+use Catalog\Models\Account\CustomerModel;
 
 class Review extends BaseController
 {
@@ -71,7 +71,7 @@ class Review extends BaseController
 
         $this->template->setTitle(lang('account/review.heading_title'));
 
-        $projectModel = new ProjectModel();
+        $data['heading_title'] = sprintf(lang('account/review.heading_title'), $this->customer->getUserName());
             
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -121,19 +121,7 @@ class Review extends BaseController
             $page = 1;
         }
 
-        $url = '';
-
-        if ($this->request->getVar('limit')) {
-            $url .= '&limit=' . $this->request->getVar('limit');
-        }
-
-        if ($this->request->getVar('sort_by')) {
-            $url .= '&sort_by=' . $this->request->getVar('sort_by');
-        }
-
-        if ($this->request->getVar('order_by')) {
-            $url .= '&order_by=' . $this->request->getVar('order_by');
-        }
+        $reviewModel = new ReviewModel();
 
         $filter_data = [
             'customer_id' => $customer_id,
@@ -146,10 +134,10 @@ class Review extends BaseController
     
         $data['projects'] = [];
         
-        $results = $projectModel->getFeedbackProjects($filter_data);
+        $results = $reviewModel->getFeedbackProjects($filter_data);
 
         $customerModel = new CustomerModel();
-        //$total = $reviewModel->getTotalReviews();
+        $projectModel = new ProjectModel();
 
         foreach ($results as $result) {
             $employer = $customerModel->getCustomer($result['employer_id']);

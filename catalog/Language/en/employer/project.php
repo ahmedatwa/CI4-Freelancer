@@ -21,6 +21,7 @@ return [
         'column_amount'     => 'Due Amount',
         'column_paid'       => 'Status',
         'column_project_id' => 'Project ID',
+        'column_date_added' => 'Date Added',
         // button
         'button_view'       => 'View',
         'button_cancel'     => 'Cancel',

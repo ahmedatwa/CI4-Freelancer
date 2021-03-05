@@ -2,7 +2,7 @@
         
 return [
     // Heading
-    'heading_title'       => 'Freelancers',
+    'heading_title'       => 'Freelancers For Hire',
     'list' => [
         'text_profile'        => 'Profile',
         'text_about'          => 'About Me',
@@ -20,20 +20,21 @@ return [
         'text_canned'         => 'Hi %s, I noticed your profile and would like to offer you my project. We can discuss any details over chat.',
         'text_budget_min'     => 'Budget (Min)',
         'text_offer_accepted' => 'Proposal offer has been accepted.',
-        // button
-        'button_hire'         => 'Hire Now!',
         'text_skills'         => 'Skills',
-        'text_found'          => '{0, number} Freelancer Found',
         'text_hourly_rate'    => 'Hourly Rate',
         'text_10'             => '< 10 /hour',
         'text_10_20'          => '10-20 /hour',
         'text_20_30'          => '20-30 /hour',
         'text_30_40'          => '30-40 /hour',
         'text_40'             => '> 40 /hour',
+        'text_countries'      => 'Countries',
+        // button
+        'button_hire'         => 'Hire Now!',
     ],
+    'text_found'          => '{0, number} Freelancer Found',
     'text_success'        => 'Your Message has been sent, awating freelancer acceptance',
     'text_transaction'    => 'Transaction is completed successfully',
     'error_balance'       => 'Warning, insufficient balance, please <a class="text-dark"href="%s">deposit funds</a>!',
     'error_unique'        => 'You have placed a bid previously on this project',
-    'profile_notice'      => 'Your Profile isn\'t visiable to employers yet, please complete your freelancer profile from <a href="account/setting">here</a>',
+    'profile_notice'      => 'Your Profile isn\'t visiable to employers yet, please complete your freelancer profile from <a href="%s">here</a>',
 ];

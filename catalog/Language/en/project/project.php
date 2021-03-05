@@ -23,7 +23,7 @@ return [
         'text_total_bidders'    => '%s Bidders',
         'text_budget_list'      => '<strong>%s</strong><span>%s</span>',
         'text_fixed_price'      => 'Fixed Rate',
-        'text_per_hour'         => 'Hour Rate',
+        'text_hourly_rate'      => 'Hour Rate',
         'text_total_bids'       => '<strong>%s</strong><span>Bids</span>',
         'text_average_bids'     => '<strong>%s</strong><span>Avg. Bid</span>',
         'text_submission'       => 'Project Submission Form',
@@ -31,6 +31,7 @@ return [
         'text_required_skills'  => 'Skills',
         'text_type'             => 'Project Type',
         'text_expired'          => 'Expired',
+        'text_active'           => 'Active',
         'text_similar'          => 'Also from this employer',
         'text_tell_us'          => 'Tell us what you need done',
         'text_projects'         => 'Browse All Projects',
@@ -50,6 +51,7 @@ return [
         'text_max'              => 'Budget Max',
         'text_write_bid'        => 'How to write a winning bid',
         'text_sub'              => 'Contact skilled freelancers within minutes. View profiles, ratings, portfolios and chat with them.<br/> Pay the freelancer only when you are 100% satisfied with their work.',
+        'text_per_hour'         => 'per hour',
         // Entry
         'entry_name'            => 'Choose a name for your project.',
         'entry_category'        => 'Required Skills',
@@ -74,12 +76,13 @@ return [
         'help_delivery'         => 'Required timeframe for the project to be done. Maximum days: 30',
         'help_budget'           => 'Freelancers can bid their proposals between this budget range.',
         'text_error_bid'        => 'Warning: the requested operation isn\'t allowed',
-        'help_upload'           => 'Upload Image, or PDF file to support your project',
-        'help_bid'              => '<p>Your best chance of winning this project is writing a great bid proposal here!</p><p>Great bids are ones that:</p><ul><li>Are engaging and well written without spelling or grammatical errors</li><li>Show a clear understanding of what is required for this specific project - personalize your response!</li><li>Explain how your skills & experience relate to the project and your approach to working on it</li><li>Ask questions to clarify any unclear details</li></ul><p>Most of all - don\'t spam or post cut-and-paste bids. You will be penalized or banned if you do so.</p>'
+        'help_upload'           => 'Upload multiple files to support your project CMD on a MAC or CTRL on Windows',
+        'help_bid'              => '<p>Your best chance of winning this project is writing a great bid proposal here!</p><p>Great bids are ones that:</p><ul><li>Are engaging and well written without spelling or grammatical errors</li><li>Show a clear understanding of what is required for this specific project - personalize your response!</li><li>Explain how your skills & experience relate to the project and your approach to working on it</li><li>Ask questions to clarify any unclear details</li></ul><p>Most of all - don\'t spam or post cut-and-paste bids. You will be penalized or banned if you do so.</p>',
+        'help_proposal'         => 'What makes you the best candidate for this project?'
     ],
     'text_success'          => 'Success: Bid has been placed successfully!',
     'text_login_error'      => 'Warning: Please <a href="%s">login</a> to bid on this project',
     'text_error_bid'        => 'Warning: You can\'t Bid your own project',
-    'text_warning'          => 'Please check the errors below.',
+    'text_warning'          => 'Warning: Please complete all required fields correctly.',
     'success_new_project'   => 'Your Project is live now.',
 ];

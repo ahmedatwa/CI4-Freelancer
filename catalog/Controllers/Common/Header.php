@@ -80,7 +80,7 @@ class Header extends BaseController
             $data['account_project']    = route_to('account_project', $this->customer->getUserName());
             $data['account_inbox']      = route_to('account_inbox', $this->customer->getUserName());
             $data['account_review']     = route_to('account_review', $this->customer->getUserName());
-            $data['freelancer_profile'] = route_to('freelancer_profile', $this->customer->getID(), $this->customer->getUserName());
+            $data['freelancer_profile'] = route_to('freelancer_profile', $this->customer->getUserName());
             $data['account_setting']    = route_to('account_setting', $this->customer->getUserName());
             $data['deposit']            = route_to('freelancer_deposit', $this->customer->getUserName());
             $data['withdraw']           = route_to('freelancer_withdraw', $this->customer->getUserName());

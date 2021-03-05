@@ -15,6 +15,7 @@
  */
 use Config\Services;
 use CodeIgniter\I18n\Time;
+use Twig\Extra\Intl\IntlExtension;
 
 // Override the View function to extend it engine and templating
 if (! function_exists('view')) {
@@ -39,6 +40,8 @@ if (! function_exists('view')) {
             ];
 
             $twig  = new \Twig\Environment($loader, $config);
+            $twig->addExtension(new \Twig\Extension\DebugExtension());
+            $twig->addExtension(new IntlExtension());
             // CI PHP functions
             $functions_safe = ['csrf_field', 'csrf_token', 'csrf_hash'];
             foreach ($functions_safe as $value) {

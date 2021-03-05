@@ -135,15 +135,15 @@
 							<div class="task-listing-description">
 								<h3 class="task-listing-title">{{ project.name }}</h3>
 								<ul class="task-icons">
-									<li><i class="icon-material-outline-access-time"></i>
+									<li><i class="fas fa-hourglass-start"></i>
 										<span data-countdown="{{ project.final_date }}"></span>
 									</li>
 								</ul>
 								<p class="col task-listing-text text-wrap">{{ project.description }}</p>
-								{% if project.meta_keyword %}
+								{% if project.skills %}
 								<div class="task-tags">
-									{% for meta_keyword in project.meta_keyword %}
-									<span>{{ meta_keyword }}</span>
+									{% for skill in project.skills %}
+									<span class="text-dark">{{ skill.name }}</span>
 									{% endfor %}
 								</div>
 								{% endif %}
@@ -180,6 +180,7 @@
 {# <!---- content-wrapper ----> #}
 <link href="catalog/default/vendor/select2/customSelectionAdapter/css/select2.customSelectionAdapter.min.css">
 <script src="catalog/default/vendor/select2/customSelectionAdapter/js/select2.customSelectionAdapter.min.js"></script>
+<script type="text/javascript" src="catalog/default/javascript/jquery.countdown.min.js" defer></script>
 <script type="text/javascript">
 	var uri = document.URL;
 	// Skills

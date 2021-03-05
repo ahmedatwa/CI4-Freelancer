@@ -134,7 +134,7 @@ class BaseController extends \CodeIgniter\Controller
 
         $_ = $time->addDays($runtime);
 
-        return $_->toDateString();
+        return $_->getTimestamp();
     }
 
     public function currencyFormat(float $number, int $fraction = 2): string
@@ -153,7 +153,7 @@ class BaseController extends \CodeIgniter\Controller
 
         $value = $currency_info['value'] ? (float) $number * $currency_info['value'] : (float) $number;
 
-        if ($this->session->get('currency')) {
+        if ($this->request->getCookie(config('App')->cookiePrefix . 'currency')) {
             return number_to_currency($value, $code, $this->locale, $fraction);
         } else {
             return number_to_currency($number, $code, $this->locale, $fraction);

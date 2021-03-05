@@ -3,8 +3,8 @@
 namespace Catalog\Controllers\Employer;
 
 use Catalog\Controllers\BaseController;
-use Catalog\Models\Freelancer\BalanceModel;
-use Catalog\Models\Freelancer\DisputeModel;
+use Catalog\Models\Account\BalanceModel;
+use Catalog\Models\Account\DisputeModel;
 use Catalog\Models\Account\CustomerModel;
 
 class Employer extends BaseController

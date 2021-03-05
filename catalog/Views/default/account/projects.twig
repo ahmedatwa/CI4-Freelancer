@@ -4,7 +4,7 @@
 	<div class="dashboard-content-inner">
 		<!-- Dashboard Headline -->
 		<div class="dashboard-headline">
-			<h3>{{ heading_title }}</h3>
+			<h3>@{{ heading_title }}</h3>
 			<ul class="nav nav-pills float-right" id="myTab" role="tablist">
 				<li class="nav-item" role="presentation">
 					<a class="nav-link active" id="employer-tab" data-toggle="tab" href="#employer" role="tab"
@@ -95,172 +95,131 @@
 </div>
 <!-- // Employer  -->
 <script type="text/javascript">
-	$('#employerTab #openprojects-tab').on('click', function (e) {
-		$.ajax({
-			url: 'employer/project/getOpenProjects',
-			dataType: 'html',
-			beforeSend: function () {
-				$('#employer-open-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
-					);
-			},
-			complete: function () {
-				$('#spinner').remove();
-			},
-			success: function (html) {
-				$('#employer-open-list').html(html);
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError);
-			}
-		});
+$('#employerTab #openprojects-tab').on('click', function (e) {
+	$.ajax({
+		url: 'employer/project/getOpenProjects',
+		dataType: 'html',
+		beforeSend: function () {
+			$('#employer-open-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
+		},
+		complete: function () {
+			$('#spinner').remove();
+		},
+		success: function (html) {
+			$('#employer-open-list').html(html);
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
 	});
+});
 
-	$('#employer-open-list').on('click', '.pagination a', function (e) {
-		e.preventDefault();
-		$('#employer-open-list').fadeOut('slow');
-		$('#employer-open-list').load(this.href);
-		$('#employer-open-list').fadeIn('slow');
+// Employer In-progress List
+$('#employerTab #workinprogress-tab').on('click', function (e) {
+	$.ajax({
+		url: 'employer/project/getInProgressProjects',
+		dataType: 'html',
+		beforeSend: function () {
+			$('#employer-progress-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
+		},
+		complete: function () {
+			$('#spinner').remove();
+		},
+		success: function (html) {
+			$('#employer-progress-list').html(html);
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
 	});
+});
 
-	// Employer In-progress List
-	$('#employerTab #workinprogress-tab').on('click', function (e) {
-		$.ajax({
-			url: 'employer/project/getInProgressProjects',
-			dataType: 'html',
-			beforeSend: function () {
-				$('#employer-progress-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
-					);
-			},
-			complete: function () {
-				$('#spinner').remove();
-			},
-			success: function (html) {
-				$('#employer-progress-list').html(html);
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError);
-			}
-		});
+// Employer Past List
+$('#employerTab #pastprojects-tab').on('click', function (e) {
+	$.ajax({
+		url: 'employer/project/getPastProjects',
+		dataType: 'html',
+		beforeSend: function () {
+			$('#employer-past-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
+		},
+		complete: function () {
+			$('#spinner').remove();
+		},
+		success: function (html) {
+			$('#employer-past-list').html(html);
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
 	});
+});
 
-	$('#employer-progress-list').on('click', '.pagination a', function (e) {
-		e.preventDefault();
-		$('#employer-progress-list').fadeOut('slow');
-		$('#employer-progress-list').load(this.href);
-		$('#employer-progress-list').fadeIn('slow');
-	});
-
-	// Employer Past List
-	$('#employerTab #pastprojects-tab').on('click', function (e) {
-		$.ajax({
-			url: 'employer/project/getPastProjects',
-			dataType: 'html',
-			beforeSend: function () {
-				$('#employer-past-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
-					);
-			},
-			complete: function () {
-				$('#spinner').remove();
-			},
-			success: function (html) {
-				$('#employer-past-list').html(html);
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError);
-			}
-		});
-	});
-
-	$('#employer-past-list').on('click', '.pagination a', function (e) {
-		e.preventDefault();
-		$('#employer-past-list').fadeOut('slow');
-		$('#employer-past-list').load(this.href);
-		$('#employer-past-list').fadeIn('slow');
-	});
-
-	// Select first tab
-	$('#employerTab li:first-child a').tab('show').trigger('click');
+// Select first tab
+$('#employerTab li:first-child a').tab('show').trigger('click');
 </script>
-
 <!-- Freelancer Part Start -->
 <script type="text/javascript">
-	$('#freelancerTab #freelancer-bids-tab').on('click', function () {
-		$.ajax({
-			url: 'freelancer/project/getFreelancerBids?customer_id={{ customer_id }} ',
-			dataType: 'html',
-			beforeSend: function () {
-				$('#freelancer-bids-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
-					);
-			},
-			complete: function () {
-				$('#spinner').remove();
-			},
-			success: function (html) {
-				$('#freelancer-bids-list').html(html);
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
+$('#freelancerTab #freelancer-bids-tab').on('click', function () {
+	$.ajax({
+		url: 'freelancer/project/getFreelancerBids?customer_id={{ customer_id }} ',
+		dataType: 'html',
+		beforeSend: function () {
+			$('#freelancer-bids-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
+		},
+		complete: function () {
+			$('#spinner').remove();
+		},
+		success: function (html) {
+			$('#freelancer-bids-list').html(html);
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
 	});
+});
 
-	// Employer In-progress List
-	$('#freelancerTab #workinprogress-tab').on('click', function (e) {
-		$.ajax({
-			url: 'freelancer/project/getInProgressProjects',
-			dataType: 'html',
-			beforeSend: function () {
-				$('#freelancer-progress-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
-					);
-			},
-			complete: function () {
-				$('#spinner').remove();
-			},
-			success: function (html) {
-				$('#freelancer-progress-list').html(html);
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError);
-			}
-		});
+// Employer In-progress List
+$('#freelancerTab #workinprogress-tab').on('click', function (e) {
+	$.ajax({
+		url: 'freelancer/project/getInProgressProjects',
+		dataType: 'html',
+		beforeSend: function () {
+			$('#freelancer-progress-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
+		},
+		complete: function () {
+			$('#spinner').remove();
+		},
+		success: function (html) {
+			$('#freelancer-progress-list').html(html);
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
 	});
+});
 
-	$('#freelancer-progress-list').on('click', '.pagination a', function (e) {
-		e.preventDefault();
-		$('#freelancer-progress-list').fadeOut('slow');
-		$('#freelancer-progress-list').load(this.href);
-		$('#freelancer-progress-list').fadeIn('slow');
+// Freelancer Past Projects
+$('#freelancerTab #pastprojects-tab').on('click', function (e) {
+	$.ajax({
+		url: 'freelancer/project/getPastProjects',
+		dataType: 'html',
+		beforeSend: function () {
+			$('#freelancer-past-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
+				);
+		},
+		complete: function () {
+			$('#spinner').remove();
+		},
+		success: function (html) {
+			$('#freelancer-past-list').html(html);
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		}
 	});
+});
 
-	// Freelancer Past Projects
-	$('#freelancerTab #pastprojects-tab').on('click', function (e) {
-		$.ajax({
-			url: 'freelancer/project/getPastProjects',
-			dataType: 'html',
-			beforeSend: function () {
-				$('#freelancer-past-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
-					);
-			},
-			complete: function () {
-				$('#spinner').remove();
-			},
-			success: function (html) {
-				$('#freelancer-past-list').html(html);
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError);
-			}
-		});
-	});
-
-	$('#freelancer-past-list').on('click', '.pagination a', function (e) {
-		e.preventDefault();
-		$('#freelancer-past-list').fadeOut('slow');
-		$('#freelancer-past-list').load(this.href);
-		$('#freelancer-past-list').fadeIn('slow');
-	});
-
-	// Select first tab
-	$('#freelancerTab #freelancer-bids-tab li:first-child a').tab('show').trigger('click');
+// Select first tab
+$('#freelancerTab li:first-child a').tab('show').trigger('click');
 </script>
 {{ footer }}

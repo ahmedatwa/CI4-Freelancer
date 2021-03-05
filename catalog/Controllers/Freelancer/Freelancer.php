@@ -3,14 +3,12 @@
 namespace Catalog\Controllers\Freelancer;
 
 use Catalog\Controllers\BaseController;
-use Catalog\Models\Account\CustomerModel;
 use Catalog\Models\Catalog\CategoryModel;
 use Catalog\Models\Freelancer\FreelancerModel;
 use Catalog\Models\Account\ReviewModel;
 use Catalog\Models\Freelancer\BalanceModel;
-use Catalog\Models\Freelancer\DisputeModel;
-use Catalog\Models\Account\MessageModel;
-use Catalog\Models\Catalog\ProjectModel;
+use Catalog\Models\Account\InboxModel;
+use Catalog\Models\Localization\CountryModel;
 
 class Freelancer extends BaseController
 {
@@ -18,7 +16,7 @@ class Freelancer extends BaseController
     {
         $this->template->setTitle(lang('freelancer/freelancer.text_profile'));
 
-        $customerModel = new CustomerModel();
+        $freelancerModel = new FreelancerModel();
 
         $this->profile();
     }
@@ -26,9 +24,6 @@ class Freelancer extends BaseController
     public function index()
     {
         $this->template->setTitle(lang('freelancer/freelancer.heading_title'));
-
-        $customerModel = new CustomerModel();
-        $reviewModel = new ReviewModel();
 
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
@@ -51,6 +46,12 @@ class Freelancer extends BaseController
             $filter_rate = $this->request->getVar('rate');
         } else {
             $filter_rate = null;
+        }
+
+        if ($this->request->getVar('country')) {
+            $filter_country = $this->request->getVar('country');
+        } else {
+            $filter_country = null;
         }
 
         if ($this->request->getVar('sort_by')) {
@@ -78,19 +79,22 @@ class Freelancer extends BaseController
         }
 
         $filter_data = [
-            'filter_freelancer' => 100,
             'filter_skills'     => $filter_skills,
             'filter_rate'       => $filter_rate,
+            'filter_country'    => $filter_country,
             'sort_by'           => $sort_by,
             'order_by'          => $order_by,
             'limit'             => $limit,
             'start'             => ($page - 1) * $limit,
         ];
         
+        $freelancerModel = new FreelancerModel();
+        $reviewModel = new ReviewModel();
+
         $data['freelancers'] = [];
 
-        $results = $customerModel->getCustomers($filter_data);
-        $total = $customerModel->getTotalCustomers($filter_data);
+        $results = $freelancerModel->getFreelancers($filter_data);
+        $total = $freelancerModel->getTotalFreelancers($filter_data);
 
         foreach ($results as $result) {
             if ($result['image'] && file_exists('images/' . $result['image'])) {
@@ -105,70 +109,36 @@ class Freelancer extends BaseController
                 'tag_line' => $result['tag_line'],
                 'rate'     => $this->currencyFormat($result['rate']),
                 'rating'   => $reviewModel->getAvgReviewByFreelancerId($result['customer_id']),
-                'href'     => route_to('freelancer_profile', $result['customer_id'], $result['username']) ? route_to('freelancer_profile', $result['customer_id'], $result['username']) : base_url('freelancer/freelancer/view?cid=' . $result['customer_id'])
+                'href'     => route_to('freelancer_profile', $result['username']) ? route_to('freelancer_profile', $result['username']) : base_url('freelancer/freelancer/view?freelancer_id=' . $result['customer_id'])
             ];
         }
 
-        $url = '';
-
-        if ($this->request->getVar('order_by')) {
-            $url .= '&order_by=' . $this->request->getVar('order_by');
-        }
-
-        if ($this->request->getVar('sort_by')) {
-            $url .= '&sort_by=' . $this->request->getVar('sort_by');
-        }
-        
-        if ($this->request->getVar('rate')) {
-            $url .= '&rate=' . $this->request->getVar('rate');
-        }
-                
-        $data['action_skills'] = route_to('freelancers') . $url;
-
-        $url = '';
-
-        if ($this->request->getVar('order_by')) {
-            $url .= '&order_by=' . $this->request->getVar('order_by');
-        }
-
-        if ($this->request->getVar('sort_by')) {
-            $url .= '&sort_by=' . $this->request->getVar('sort_by');
-        }
-        
-        if ($this->request->getVar('skills')) {
-            $url .= '&skills=' . $this->request->getVar('skills');
-        }
-
+        // Freelancer Rates Filter
         $data['rates'] = [];
 
         $data['rates'][] = [
             'text'  => lang('freelancer/freelancer.list.text_10'),
             'value' => '10',
-            'href'  => route_to('freelancers') .'?rate=10&order_by=ASC' . $url
         ];
 
         $data['rates'][] = [
             'text'  => lang('freelancer/freelancer.list.text_10_20'),
             'value' => '10_20',
-            'href'  => route_to('freelancers') .'?rate=10_20&order_by=ASC' . $url
         ];
 
         $data['rates'][] = [
             'text'  => lang('freelancer/freelancer.list.text_20_30'),
             'value' => '20_30',
-            'href'  => route_to('freelancers') .'?rate=20_30&order_by=ASC' . $url
         ];
 
         $data['rates'][] = [
             'text'  => lang('freelancer/freelancer.list.text_30_40'),
             'value' => '30_40',
-            'href'  => route_to('freelancers') . '?rate=30_40&order_by=DESC' . $url
         ];
 
         $data['rates'][] = [
             'text'  => lang('freelancer/freelancer.list.text_40'),
             'value' => '40',
-            'href'  => route_to('freelancers') . '?rate=40&order_by=DESC' . $url
         ];
 
         $categoryModel = new CategoryModel();
@@ -180,16 +150,24 @@ class Freelancer extends BaseController
                 'category_id' => $category['category_id'],
                 'name'        => $category['name']
             ];
-        }
+        }   
 
-        $data['text_found']       = lang('freelancer/freelancer.list.text_found', [$total]);
+        // Country
+        $countryModel = new CountryModel();
+        $data['countries'] = $countryModel->where('status', 1)->findAll();
 
-        $data['filter_skills'] = $filter_skills;
-        $data['filter_rate']   = $filter_rate;
-        $data['sort_by']       = $sort_by;
-        $data['order_by']      = $order_by;
-        $data['limit']         = $limit;
-        $data['page']          = $page;
+        $data['text_found']    = lang('freelancer/freelancer.text_found', [$total]);
+        $data['heading_title'] = lang('freelancer/freelancer.heading_title');
+
+        $data['filter_skills']  = $filter_skills;
+        $data['filter_rate']    = $filter_rate;
+        $data['filter_country'] = $filter_country;
+        $data['sort_by']        = $sort_by;
+        $data['order_by']       = $order_by;
+        $data['limit']          = $limit;
+        $data['page']           = $page;
+
+        $data['langData'] = lang('freelancer/freelancer.list');
 
         // Pagination
         $pager = \Config\Services::pager();
@@ -198,27 +176,24 @@ class Freelancer extends BaseController
         $this->template->output('freelancer/freelancer_list', $data);
     }
 
-    public function profile()
+    public function profile(string $username = '')
     {
         $this->template->setTitle(lang('freelancer/freelancer.text_profile'));
 
-        $customerModel = new CustomerModel();
+        $freelancerModel = new FreelancerModel();
+
+        if ($username) {
+            $freelancer_info = $freelancerModel->getFreelancer($username);
+        }
 
         if ($this->request->getVar('cid')) {
-            $customer_id = $this->request->getVar('cid');
-        } elseif ($this->request->uri->getSegment(2)) {
-            $customer_id = substr($this->request->uri->getSegment(2), 1);
+            $freelancer_id = $this->request->getVar('cid');
+        } elseif ($freelancer_info['customer_id']) {
+            $freelancer_id = $freelancer_info['customer_id'];
         } else {
-            $customer_id = 0;
+            $freelancer_id = 0;
         }
-
-        $data['customer_profile_id'] = $customer_id;
-        $data['customer_id'] = $this->session->get('customer_id');
        
-        if ($customer_id) {
-            $customer_info = $customerModel->getCustomer($customer_id);
-        }
-
         $data['breadcrumbs'] = [];
         $data['breadcrumbs'][] = [
             'text' => lang($this->locale . '.text_home'),
@@ -231,59 +206,59 @@ class Freelancer extends BaseController
         ];
 
         $data['breadcrumbs'][] = [
-            'text' => $customer_info['firstname'],
+            'text' => $username,
             'href' => base_url('freelancer/freelancer'),
         ];
 
-        $reviewModel = new ReviewModel();
-        $projectModel = new ProjectModel();
+        if ($freelancer_info) {
+            $reviewModel = new ReviewModel();
 
-        if ($customer_info) {
-            $data['text_hire_me']     = sprintf(lang('freelancer/freelancer.text_hire_me'), $customer_info['username']);
-            $data['text_canned']      = sprintf(lang('freelancer/freelancer.text_canned'), $customer_info['username']);
+            $data['text_hire_me']     = sprintf(lang('freelancer/freelancer.text_hire_me'), $freelancer_info['username']);
+            $data['text_canned']      = sprintf(lang('freelancer/freelancer.text_canned'), $freelancer_info['username']);
 
-            $name                  = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
-            $data['name']          = (strlen($name) > 1) ? $name : '@'.$customer_info['username'];
-            $data['freelancer_id'] = $customer_info['customer_id'];
-            $data['employer_id']   = $this->session->get('customer_id');
-            $data['about']         = $customer_info['about'];
-            $data['rate']          = $customer_info['rate'];
-            $data['tag_line']      = ($customer_info['tag_line'] == 'NULL') ? '' : $customer_info['tag_line'];
+            $name                  = $freelancer_info['firstname'] . ' ' . $freelancer_info['lastname'];
+            $data['name']          = (strlen($name) > 1) ? $name : '@'. $freelancer_info['username'];
+            $data['freelancer_id'] = $freelancer_info['customer_id'];
+            $data['employer_id']   = $this->customer->getID();
+            $data['about']         = $freelancer_info['about'];
+            $data['rate']          = $freelancer_info['rate'];
+            $data['tag_line']      = $freelancer_info['tag_line'];
             
-            if ($customer_info['image'] && file_exists('images/' . $customer_info['image'])) {
-                $image = $this->resize($customer_info['image'], 130, 130);
+            if ($freelancer_info['image'] && file_exists('images/' . $freelancer_info['image'])) {
+                $data['image'] = $this->resize($freelancer_info['image'], 130, 130);
             } else {
-                $image = $this->resize('catalog/avatar.jpg', 130, 130);
+                $data['image'] = $this->resize('catalog/avatar.jpg', 130, 130);
             }
 
-            $data['image']         =  $image;
-
-            if ($customer_info['bg_image'] && file_exists('images/' . $customer_info['bg_image'])) {
-                $bgImage = $this->resize($customer_info['bg_image'], 1200, 1200);
+            if ($freelancer_info['bg_image'] && file_exists('images/' . $freelancer_info['bg_image'])) {
+                $data['bgImage'] = $this->resize($freelancer_info['bg_image'], 1200, 1200);
             } else {
-                $bgImage = $this->resize('catalog/single-freelancer.jpg', 1200, 1200);
+                $data['bgImage'] = $this->resize('catalog/single-freelancer.jpg', 1200, 1200);
             }
 
-            $data['bgImage'] = $bgImage;
             // Widgets
-            $data['rating']        = $reviewModel->getAvgReviewByFreelancerId($customer_id);
-            $data['recommended']   = $reviewModel->getRecommendedByFreelancerId($customer_id);
-            $data['ontime']        = $reviewModel->getOntimeByFreelancerId($customer_id);
+            $data['rating']        = $reviewModel->getAvgReviewByFreelancerId($freelancer_id);
+            $data['recommended']   = $reviewModel->getRecommendedByFreelancerId($freelancer_id);
+            $data['ontime']        = $reviewModel->getOntimeByFreelancerId($freelancer_id);
             // Social
-            $data['facebook']      = $customer_info['facebook'];
-            $data['twitter']       = $customer_info['twitter'];
-            $data['linkedin']      = $customer_info['linkedin'];
-            $data['github']        = $customer_info['github'];
-            
-            $data['skills']        = $customerModel->getCustomerSkills($customer_id);
-            $data['languages']     = $customerModel->getCustomerLanguages($customer_id);
-            $data['educations']    = $customerModel->getEducations($customer_id);
-            $data['certificates']  = $customerModel->getCustomerCertificates($customer_id);
+            $data['social']        = json_decode($freelancer_info['social'], true);
+            $data['skills']        = $freelancerModel->getFreelancerSkills($freelancer_id);
+            // Languages
+            $data['languages'] = [];
+            $languages  = $freelancerModel->getFreelancerLanguages(['freelancer_id' => $freelancer_id]);
+
+            foreach ($languages as $language) {
+                $data['languages'][] = $language['text'];
+            }
+
+            $data['educations']    = $freelancerModel->getFreelancerEducation($freelancer_id);
+            $data['certificates']  = $freelancerModel->getFreelancerCertificates($freelancer_id);
 
             // reviews
             $data['reviews'] = [];
-            $freelancer_reviews = $reviewModel->getFreelancerReviews($customer_id);
-            foreach ($freelancer_reviews as $result) {
+            $reviews = $reviewModel->getFreelancerReviews($freelancer_id);
+            $reviews_total = $reviewModel->getTotalFreelancerReviews($freelancer_id);
+            foreach ($reviews as $result) {
                 $data['reviews'][] = [
                     'name'          => $result['name'],
                     'comment'       => $result['comment'],
@@ -291,192 +266,94 @@ class Freelancer extends BaseController
                     'date_added'    => lang('en.mediumDate', [strtotime($result['date_added'])]),
                 ];
             }
-            // Project PMs Data
-            $messageModel = new MessageModel();
-            $message_info = $messageModel->getMessageThread($this->customer->getCustomerID());
-            $data['thread_id'] = $message_info['thread_id'] ?? '';
-        } else {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-        }
 
-        $data['heading_title']    = lang('freelancer/freelancer.text_profile');
-        $data['text_about']       = lang('freelancer/freelancer.text_about');
-        $data['text_history']     = lang('freelancer/freelancer.text_history');
-        $data['text_social']      = lang('freelancer/freelancer.text_social');
-        $data['text_skills']      = lang('freelancer/freelancer.text_skills');
-        $data['text_languages']   = lang('freelancer/freelancer.text_languages');
-        $data['text_education']   = lang('freelancer/freelancer.text_education');
-        $data['text_cert']        = lang('freelancer/freelancer.text_cert');
-        $data['button_offer']     = lang('freelancer/freelancer.button_offer');
-        $data['text_message']     = lang('freelancer/freelancer.text_message');
-        $data['text_budget_min']  = lang('freelancer/freelancer.text_budget_min');
-        $data['button_hire']      = lang('freelancer/freelancer.button_hire');
-        $data['text_fixed_price'] = lang('en.text_fixed_price');
-        $data['text_per_hour']    = lang('en.text_per_hour');
-
-        $projects_total = $projectModel->getTotalAwardsByFreelancerId($customer_id);
        
         $limit = 5;
         $page = 1;
 
         $pager = \Config\Services::pager();
-        $data['pagination'] = ($projects_total <= $limit) ? '' : $pager->makeLinks($page, $limit, $projects_total);
+        $data['pagination'] = ($reviews_total <= $limit) ? '' : $pager->makeLinks($page, $limit, $reviews_total, 'default_simple');
+
+            // Project PMs Data
+            $inboxModel = new InboxModel();
+            $message_info = $inboxModel->getMessageThread($freelancer_id);
+            $data['thread_id'] = $message_info['thread_id'] ?? '';
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
 
         // Update Profile Views
-        $customerModel->updateViewed($customer_id);
+        $freelancerModel->updateViewed($freelancer_id);
 
-        // get Profile Visibility Status
-        if ($customer_info['profile_strength'] < 100) {
-            $data['profileVisibility'] = lang('freelancer/freelancer.profile_notice');
-        } else {
-            $data['profileVisibility'] = '';
-        }
+        $data['langData'] = lang('freelancer/freelancer.list');
         
         $this->template->output('freelancer/freelancer_info', $data);
     }
 
-    public function acceptOffer()
+   /**
+   *  overwrite any existing query variables.
+   *  add a value to the query variables collection without destroying the existing query variables
+   */
+    public function filter()
     {
         $json = [];
 
-        if ($this->request->getVar('freelancer_id')) {
-            if ($this->request->getVar('freelancer_id')) {
-                $freelancer_id = $this->request->getVar('freelancer_id');
+        if ($this->request->getPost('uri')) {
+            $uri = new \CodeIgniter\HTTP\URI(base64_decode($this->request->getPost('uri', FILTER_SANITIZE_STRING)));
+
+            if ($this->request->getPost('skills') && ($this->request->getPost('skills') != 0)) {
+                $uri->addQuery('skills', $this->request->getPost('skills'));
             } else {
-                $freelancer_id = 0;
+                $uri->stripQuery('skills');
             }
 
-            if ($this->request->getVar('project_id')) {
-                $project_id = $this->request->getVar('project_id');
-            } else {
-                $project_id = 0;
+            if ($this->request->getPost('rate')) {
+                $uri->addQuery('rate', $this->request->getPost('rate'));
             }
 
-            if ($this->request->getVar('bid_id')) {
-                $bid_id = $this->request->getVar('bid_id');
-            } else {
-                $bid_id = 0;
-            }
 
-            if ($this->request->getVar('employer_id')) {
-                $employer_id = $this->request->getVar('employer_id');
-            } else {
-                $employer_id = 0;
-            }
-
-            $freelancerModel = new FreelancerModel();
-
-            $freelancerModel->acceptOffer($freelancer_id, $project_id, $bid_id, $employer_id);
-
-            $json['success'] = lang('freelancer/freelancer.text_offer_accepted');
+            $json['uri'] = (string) $uri;
         }
-
+        
         return $this->response->setJSON($json);
     }
-
-    public function getDisputes()
-    {
-        if ($this->request->getVar('customer_id')) {
-            $customer_id = $this->request->getVar('customer_id');
-        } elseif ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
-        } else {
-            $customer_id = 0;
-        }
-
-        if ($this->request->getVar('sort_by')) {
-            $sort_by = $this->request->getVar('sort_by');
-        } else {
-            $sort_by = 'p.date_added';
-        }
-
-        if ($this->request->getVar('order_by')) {
-            $order_by = $this->request->getVar('order_by');
-        } else {
-            $order_by = 'DESC';
-        }
-
-        if ($this->request->getVar('limit')) {
-            $limit = $this->request->getVar('limit');
-        } else {
-            $limit = $this->registry->get('theme_default_projects_limit') ?? 15;
-        }
-
-        if ($this->request->getVar('page')) {
-            $page = $this->request->getVar('page');
-        } else {
-            $page = 1;
-        }
-
-        $filter_data = [
-             'freelancer_id' => $customer_id,
-             'sort_by'     => $sort_by,
-             'order_by'    => $order_by,
-             'limit'       => $limit,
-             'start'       => ($page - 1) * $limit,
-        ];
-
-        $data['disputes'] = [];
-
-        $disputeModel = new DisputeModel();
-        $customerModel = new CustomerModel;
-
-        $results = $disputeModel->getDisputes($filter_data);
-        $total = $disputeModel->getTotalDisputes($filter_data);
-
-        foreach ($results as $result) {
-            $dispute_action = $disputeModel->getDisputeAction($result['dispute_action_id']);
-            $name = $customerModel->where('customer_id', $result['employer_id'])->findColumn('username');
-
-            $data['disputes'][] = [
-                'dispute_id' => $result['project_id'],
-                'employer'   => $name[0],
-                'project_id' => $result['project_id'],
-                'comment'    => $result['comment'],
-                'status'     => $result['status'],
-                'action'     => $dispute_action ?? '-',
-                'date_added' => lang('en.longDate', [strtotime($result['date_added'])]),
-
-            ];
-        }
-
-        $data['customer_id'] = $customer_id;
-
-        $data['langData'] = lang('freelancer/dispute.list');
-        
-        return view('freelancer/dispute_list', $data);
-    }
-
-    public function openDispute()
+    
+    public function profileUpdate()
     {
         $json = [];
 
-        $disputeModel = new DisputeModel();
+        if ($this->request->getPost('pk')) {
+            $freelancer_id = $this->request->getPost('pk');
+        } else {
+            $freelancer_id = 0;
+        }
+        var_dump( $this->request->getPost());die;
+        $freelancerModel = new FreelancerModel();
 
         if (! $this->validate([
-           'comment' => "required|min_length[20]",
+            // 'certificate_name' => [
+            //     'label' => 'Certificate Name',
+            //     'rules' => 'required|alpha_numeric|is_unique[customer_to_certificate.name]'
+            // ],
+            // 'certificate_year' => [
+            //     'label' => 'Certificate Year',
+            //     'rules' => 'required|numeric'
+            // ]
         ])) {
             $json['error'] = $this->validator->getErrors();
         }
 
-        if ($this->request->getMethod() == 'post') {
-            if (! $json) {
-                $dispute_data = [
-                    'created_by'        => $this->request->getPost('freelancer_id'),
-                    'employer_id'       => $this->request->getPost('employer_id'),
-                    'freelancer_id'     => $this->request->getPost('freelancer_id'),
-                    'project_id'        => $this->request->getPost('project_id'),
-                    'comment'           => $this->request->getPost('comment'),
-                    'dispute_reason_id' => $this->request->getPost('dispute_reason_id'),
-                ];
-
-                $disputeModel->insert($dispute_data);
-
-                $json['success'] = lang('freelancer/dispute.text_success');
-            }
+        if (! $json) {
+            $freelancerModel->edit($freelancer_id, $this->request->getPost());
+            $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Certificates');
         }
-        
+
         return $this->response->setJSON($json);
     }
+
+
+
+
+
     //--------------------------------------------------------------------
 }

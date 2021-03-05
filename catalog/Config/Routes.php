@@ -46,14 +46,13 @@ $routes->group('local', function ($routes) {
     $routes->add('jobs/j(:num)/(:any)', 'Extension\Job\Job::info/$1/$2', ['as' => 'local_job']);
 });
 // Freelancers
-$routes->add('freelancers', 'Freelancer\Freelancer::index');
-$routes->add('freelancer/u(:num)/(:any)', 'Freelancer\Freelancer::profile/$1/$2', ['as' => 'freelancer_profile']);
-
+$routes->get('freelancers', 'Freelancer\Freelancer::index', ['as' => 'freelancers']);
+$routes->get('f/(:segment)', 'Freelancer\Freelancer::profile/$1', ['as' => 'freelancer_profile']);
 // Account
 $routes->group('account/(:segment)', function ($routes) {
     $routes->add('dashboard', 'Account\Dashboard::index/$1', ['as' => 'account_dashboard']);
     $routes->add('setting', 'Account\Setting::index/$1', ['as' => 'account_setting']);
-    $routes->add('inbox', 'Account\Message::index/$1', ['as' => 'account_message']);
+    $routes->add('inbox', 'Account\Inbox::index/$1', ['as' => 'account_inbox']);
     $routes->add('review', 'Account\Review::index/$1', ['as' => 'account_review']);
     $routes->add('projects', 'Account\Projects::index/$1', ['as' => 'account_project']);
     $routes->add('dispute', 'Account\Dispute::index/$1', ['as' => 'account_dispute']);
@@ -79,7 +78,8 @@ $routes->get('service/(:any)', 'Project\Project::info/$1', ['as' => 'single_proj
 // Information
 $routes->get('(:segment)', 'Information\Information::index/$1', ['as' => 'information']);
 $routes->get('contact', 'Information\Contact::index');
-
+// Hide the upload url
+$routes->get('upload/(:num)/(:num)', 'Tool\Upload::getUpload/$1/$2', ['as' => 'get_upload']);
 /*
  * --------------------------------------------------------------------
  * Additional Routing

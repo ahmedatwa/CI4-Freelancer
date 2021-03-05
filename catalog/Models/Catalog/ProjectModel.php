@@ -23,7 +23,6 @@ class ProjectModel extends Model
             'type'          => $data['type'],
             'runtime'       => $data['runtime'],
             'employer_id'   => $data['employer_id'],
-            'download_id'   => $data['download_id'],
             'budget_min'    => $data['budget_min'],
             'budget_max'    => $data['budget_max'],
             'delivery_time' => $data['delivery_time'],
@@ -38,6 +37,7 @@ class ProjectModel extends Model
 
         // // project_description Query
         if (isset($data['project_description'])) {
+            $seoUrl = service('seo_url');
             $project_description_table = $this->db->table('project_description');
             $seo_url = $this->db->table('seo_url');
 
@@ -52,26 +52,7 @@ class ProjectModel extends Model
                     'meta_keyword'     => $value['meta_keyword'] ?? '',
                 ];
                 $project_description_table->insert($project_description);
-
-                // Mail Alert
-                \CodeIgniter\Events\Events::trigger('mail_project_add', $data['employer_id'], $value['name']);
-                // Trigger Pusher Notification event
-                $options = ['cluster' => PUSHER_CLUSTER, 'useTLS' => PUSHER_USETLS];
-                $pusher = new \Pusher\Pusher(PUSHER_KEY, PUSHER_SECRET, PUSHER_APP_ID, $options);
                 // SEO URL
-                $seoUrl = service('seo_url');
-                $keyword = $seoUrl->getKeywordByQuery('project_id=' . $project_id);
-                
-                $pusher_data = [
-                    'name'        => $value['name'],
-                    'employer_id' => $data['employer_id'],
-                    'budget'      => $data['budget_min'] . ' - ' . $data['budget_max'],
-                    'href'        => route_to('single_project', $project_id, $keyword)
-                ];
-
-                $event = $pusher->trigger('global-channel', 'new-project-event', $pusher_data);
-                //  Seo Urls
-                helper('text');
                 $seo_url->delete(['query' => 'project_id=' . $project_id]);
                 $seo_url_data = [
                         'site_id'     => 0,
@@ -80,6 +61,19 @@ class ProjectModel extends Model
                         'keyword'     => url_title(convert_accented_characters($value['name']), '-', true),
                     ];
                 $seo_url->insert($seo_url_data);
+                $keyword = $seoUrl->getKeywordByQuery('project_id=' . $project_id);
+                // Trigger Pusher Notification event
+                $pusher_data = [
+                    'name'        => $value['name'],
+                    'employer_id' => $data['employer_id'],
+                    'budget'      => $data['budget_min'] . ' - ' . $data['budget_max'],
+                    'href'        => route_to('single_project', $project_id, $keyword)
+                ];
+                $options = ['cluster' => PUSHER_CLUSTER, 'useTLS' => PUSHER_USETLS];
+                $pusher = new \Pusher\Pusher(PUSHER_KEY, PUSHER_SECRET, PUSHER_APP_ID, $options);
+                $pusher->trigger('global-channel', 'new-project-event', $pusher_data);
+                // Mail Alert
+                \CodeIgniter\Events\Events::trigger('mail_project_add', $pusher_data);
             }
         }
         // project_categories
@@ -157,7 +151,7 @@ class ProjectModel extends Model
     public function getProjects(array $data = [])
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status, p.employer_id, p.freelancer_id');
+        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status, p.employer_id, p.freelancer_id');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
 
@@ -226,6 +220,8 @@ class ProjectModel extends Model
             $builder->orWhereIn('p.status', str_replace('_', ',', $data['filter']));
         }
 
+        $builder->groupBy('p.project_id');
+
         $sortData = [
             'p.budget_min',
             'p.budget_max',
@@ -261,10 +257,9 @@ class ProjectModel extends Model
     public function getTotalProjects(array $data = [])
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status, p.employer_id, p.freelancer_id');
+        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status, p.employer_id, p.freelancer_id');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
-        $builder->where('pd.language_id', service('registry')->get('config_language_id'));
        
         if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
             $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
@@ -314,6 +309,8 @@ class ProjectModel extends Model
             $builder->whereIn('p.type', (array) $data['filter']);
             $builder->orWhereIn('p.status', str_replace('_', ',', $data['filter']));
         }
+
+        $builder->groupBy('p.project_id');
 
         $sortData = [
             'p.budget_min',
@@ -370,7 +367,7 @@ class ProjectModel extends Model
     public function getProject(int $project_id)
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, ps.name AS status, p.viewed, p.download_id, c.username');
+        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, ps.name AS status, p.viewed, c.username, p.delivery_time');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
         $builder->join('customer c', 'p.employer_id = c.customer_id', 'left');
@@ -402,12 +399,6 @@ class ProjectModel extends Model
         $builder->update();
     }
 
-    // public function getTotalAwardsByFreelancerId($freelancer_id)
-    // {
-    //     $builder = $this->db->table('project_award');
-    //     $builder->where(['freelancer_id' => $freelancer_id, 'status_id' => service('registry')->get('config_project_completed_status')]);
-    //     return $builder->countAllResults();
-    // }
 
     // public function getTotalBidsByProjectId($project_id)
     // {

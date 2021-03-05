@@ -23,7 +23,7 @@ class CategoryModel extends Model
         }
 
         if (isset($data['filter_name'])) {
-            $builder->like('cd.name', $data['filter_name'], 'after');
+            $builder->like('cd.name', $data['filter_name'], 'both');
         }
 
         if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
@@ -59,7 +59,7 @@ class CategoryModel extends Model
         return $query->getRowArray();
     }
 
-    public function getCategoriesByProjectId($project_id)
+    public function getCategoriesByProjectId(int $project_id)
     {
         $builder = $this->db->table('project_to_category p2c');
         $builder->select();

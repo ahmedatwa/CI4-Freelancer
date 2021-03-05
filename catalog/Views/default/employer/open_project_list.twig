@@ -1,44 +1,44 @@
-<div class="table-responsive">		
-<table class="table table-striped table-bordered w-100" id="table-openprojects-tab">
-	<thead>
-		<tr>
-			<th>{{ column_name }}</th>
-			<th>{{ column_budget }}</th>
-			<th>{{ column_type }}</th>
-			<th>{{ column_bids }}</th>
-			<th>{{ column_avg_bids }}</th>
-			<th>{{ column_expiry }}</th>
-			<th>{{ column_status }}</th>
-			<th>{{ column_action }}</th>
-
-		</tr>
-	</thead>
-	<tbody>
-		{% if projects %}
-		{% for project in projects %}
-				<tr>
-					<td>{{ project.name }}</td>
-					<td>{{ project.budget }}</td>
-					<td>{{ project.type }}</td>
-					<td>{% if project.total_bids > 0 %}
-						<span class="badge badge-success">{{ project.total_bids }}</span>
+<div class="table-responsive">
+	<table class="table table-striped table-bordered w-100" id="table-openprojects-tab">
+		<thead>
+			<tr>
+				<th>{{ column_name }}</th>
+				<th>{{ column_budget }}</th>
+				<th>{{ column_type }}</th>
+				<th>{{ column_bids }}</th>
+				<th>{{ column_avg_bids }}</th>
+				<th>{{ column_date_added }}</th>
+				<th>{{ column_expiry }}</th>
+				<th>{{ column_status }}</th>
+				<th>{{ column_action }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for project in projects %}
+			<tr>
+				<td>{{ project.name }}</td>
+				<td>{{ project.budget }}</td>
+				<td>{{ project.type }}</td>
+				<td>{% if project.total_bids > 0 %}
+					<span class="badge badge-success">{{ project.total_bids }}</span>
 					{% else %}
-						<span class="badge badge-danger">{{ project.total_bids }}</span>
+					<span class="badge badge-danger">{{ project.total_bids }}</span>
 					{% endif %}</td>
-						<td>{{ project.avgBids }}</td>
-						<td>{{ project.expiry }}</td>
-						<td>{{ project.status }}</td>
-						<td><a href="{{ project.view }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="view"><i class="far fa-eye"></i></a></td>
-					</tr>
-				{% endfor %}
-				{% endif %}
-		</tbody> 
+				<td>{{ project.avgBids }}</td>
+				<td>{{ project.date_added }}</td>
+				<td>{{ project.expiry }}</td>
+				<td>{{ project.status }}</td>
+				<td><a href="{{ project.view }}" class="btn btn-primary btn-sm" data-toggle="tooltip"
+						data-placement="top" title="view"><i class="far fa-eye"></i></a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
 	</table>
-</div> 
+</div>
 <link rel="stylesheet" href="catalog/default/vendor/DataTables/datatables.css" media="all" type="text/css" />
 <script src="catalog/default/vendor/DataTables/datatables.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-var table = $('#table-openprojects-tab').DataTable({
-	"lengthMenu": [10, 20, 30],
-});
+	$('#table-openprojects-tab').DataTable({
+		"lengthMenu": [10, 20, 30],
+	});
 </script>

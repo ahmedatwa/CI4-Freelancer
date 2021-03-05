@@ -2,7 +2,7 @@
         
 return [
 	// Heading
-	'heading_title'   => 'My Projects',
+	'heading_title'   => '%s Projects',
 	'list' => [
 		// tabs
 		'tab_open'        => 'Open Projects',

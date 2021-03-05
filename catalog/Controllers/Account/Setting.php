@@ -16,7 +16,7 @@ class Setting extends BaseController
 
         if (($this->request->getMethod() == 'post')) {
             $customerModel->update($this->session->get('customer_id'), $this->request->getPost());
-            return redirect()->route('account_setting')->with('success', lang('account/setting.text_success'));
+            return redirect('account_setting')->with('success', lang('account/setting.text_success'));
         }
 
         $this->index();

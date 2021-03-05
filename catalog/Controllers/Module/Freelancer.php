@@ -4,7 +4,7 @@ namespace Catalog\Controllers\Module;
 
 use Catalog\Controllers\BaseController;
 use Catalog\Models\Catalog\ProjectModel;
-use Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Freelancer\FreelancerModel;
 use Catalog\Models\Account\ReviewModel;
 
 class Freelancer extends BaseController
@@ -12,19 +12,18 @@ class Freelancer extends BaseController
     public function index($setting)
     {		
         $filter_data = [
-			'filter_freelancer' => 100,
 			'start'             => 0,
             'limit'             => $this->registry->get('module_freelancer_limit'),
         ];
         
-        $data['freelancers'] = [];
-
-        $customerModel = new CustomerModel();
+        $freelancerModel = new FreelancerModel();
         $reviewModel   = new ReviewModel();
 
-        $results        = $customerModel->getCustomers($filter_data);
+        $data['freelancers'] = [];
+
+        $results        = $freelancerModel->getFreelancers($filter_data);
         $total_services = $reviewModel->getTotalJobsByFreelancerId($this->customer->getID()) ?? null;
-        $ontime         =  $reviewModel->getOntimeByFreelancerId($this->customer->getID()) ?? null;
+        $ontime         = $reviewModel->getOntimeByFreelancerId($this->customer->getID()) ?? null;
 
         foreach ($results as $result) {
 

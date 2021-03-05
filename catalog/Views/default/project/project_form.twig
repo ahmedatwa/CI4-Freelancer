@@ -33,9 +33,10 @@
 							<div class="form-group row margin-top-30">
 							<label for="input-upload" class="col-sm-3 col-form-label">{{ entry_upload }}<span data-toggle="tooltip" title="{{ help_upload }}" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
 								<div class="col-sm-9">
-									<input type="file" class="form-control" name="file" id="input-upload" value="">
-									<input type="hidden" name="download_id" value="">
-									<div id="kartik-file-errors"></div>
+									<div class="file-loading">
+									<input id="input-upload" type="file" class="form-control" name="projectfiles[]" multiple>
+									</div>
+									<small id="emailHelp" class="form-text text-muted">{{ help_upload }}</small>
 								</div>
 							</div>
 							<div class="clearfix"></div>
@@ -55,49 +56,56 @@
 									<span id="input-category"></span>
 								</div>
 							</div>
-							<div class="form-group row align-items-center mb-3">
-								<label for="input-budget" class="col-sm-3 col-form-label">{{ text_budget }}<span data-toggle="tooltip" title="{{ help_budget }}" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
-								<div class="col">
-									<label class="sr-only" for="inlineFormInput">{{ entry_min }}</label>
-									<div class="input-group mb-2">
-										<div class="input-group-prepend">
-											<div class="input-group-text">{{ config_currency }}</div>
-										</div>
-										<input type="number" class="form-control" placeholder="{{ entry_min }}" name="budget_min" value="" min="1" id="input-budget_min">
-									</div>
-								</div>
-								<div class="col">
-									<label class="sr-only" for="inlineFormInputGroup">{{ entry_max }}</label>
-									<div class="input-group mb-2">
-										<div class="input-group-prepend">
-											<div class="input-group-text">{{ config_currency }}</div>
-										</div>
-										<input type="number" class="form-control" placeholder="{{ entry_max }}" name="budget_max" value="" min="1" id="input-budget_max">
-									</div>
-								</div>
-							</div>
-							<div class="form-group row">
+							<div class="form-group row" id="input-form-type">
 								<label for="input-type" class="col-sm-3 col-form-label">{{ text_type }}</label>
 								<div class="col-sm-9">
-									{% if type %}
+									{% if type == 1 %}
 										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="type" value="1" checked>
-											<label class="form-check-label" for="inlineRadio1">{{ text_fixed_price }}</label>
+											<input class="form-check-input" type="radio" name="type" id="fixed-price" value="1" checked>
+											<label class="form-check-label" for="input-type">{{ text_fixed_price }}</label>
 										</div>
 										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="type" value="2">
-											<label class="form-check-label" for="inlineRadio1">{{ text_per_hour }}</label>
+											<input class="form-check-input" type="radio" name="type" id="hourly" value="2">
+											<label class="form-check-label" for="input-type">{{ text_hourly_rate }}</label>
+										</div>
+									{% elseif type == 2 %}
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="type" id="fixed-price" value="1">
+											<label class="form-check-label" for="input-type">{{ text_fixed_price }}</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="type" id="hourly" value="2" checked>
+											<label class="form-check-label" for="input-type">{{ text_hourly_rate }}</label>
 										</div>
 									{% else %}
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="type" value="1">
-											<label class="form-check-label" for="inlineRadio1">{{ text_fixed_price }}</label>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="type" value="1" id="fixed-price" checked>
+										<label class="form-check-label" for="input-type">{{ text_fixed_price }}</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="type" id="hourly" value="2">
+										<label class="form-check-label" for="input-type">{{ text_hourly_rate }}</label>
+									</div>	
+									{% endif %}
+								</div>
+							</div>
+							<div id="budget-container">
+								<div class="form-group row mt-3">
+									<label for="input-budget" class="col-sm-3 col-form-label">{{ text_budget }}<span data-toggle="tooltip" title="{{ help_budget }}" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
+									<div class="col-sm-9">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">{{ config_currency }}</div>
+											</div>
+											<input type="number" class="form-control" placeholder="{{ entry_min }}" name="budget_min" value="" min="1" id="input-budget_min">
 										</div>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="type" value="2" checked>
-											<label class="form-check-label" for="inlineRadio1">{{ text_per_hour }}</label>
+										<div class="input-group mt-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">{{ config_currency }}</div>
+											</div>
+											<input type="number" class="form-control" placeholder="{{ entry_max }}" name="budget_max" value="" min="1" id="input-budget_max">
 										</div>
-										{% endif %}
+									</div>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -124,10 +132,11 @@
 		</div>
 	</div>
 </div>
-<script src="catalog/default/vendor/jQuery-Text-Counter/textcounter.min.js"></script> 
 <link href="catalog/default/vendor/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css">
+<link href="catalog/default/vendor/bootstrap-fileinput/themes/explorer-fas/theme.min.css" rel="stylesheet" type="text/css">
 <script src="catalog/default/vendor/bootstrap-fileinput/js/fileinput.min.js"></script>
-<script src="catalog/default/vendor/bootstrap-fileinput/themes/fas/theme.min.js"></script>
+<script src="catalog/default/vendor/bootstrap-fileinput/themes/explorer-fas/theme.min.js"></script>
+<script src="catalog/default/vendor/jQuery-Text-Counter/textcounter.min.js"></script> 
 <script type="text/javascript">
 $('select[name^=\'category\']').select2({
 ajax: {
@@ -154,31 +163,27 @@ ajax: {
 theme: 'bootstrap4',
 placeholder: '{{ text_select }}',
 allowClear: true,
-minimumResultsForSearch: 5
 });
 </script>
 <script type="text/javascript">
 $("#input-upload").fileinput({
-	uploadUrl: 'tool/upload?type=1',
-	enableResumableUpload: false,
-    uploadExtraData: {
-        'csrf-token': $('meta[name="{{ csrf_token() }}"]').attr('content'), 
-        'X-Requested-With': 'XMLHttpRequest'
-    },
-    maxFileCount: 1,
-    showPreview: false,
-    showUpload: true,
-    showCancel: true,
-    autoReplace: true,
-	theme: 'fas',
-    preferIconicPreview: true, 
-    elErrorContainer: '#kartik-file-errors',
+	preferIconicPreview:true,
+	theme: 'explorer-fas',
+	showUpload:false,
+    reversePreviewOrder: true,
+    initialPreviewAsData: true,
+    overwriteInitial: false,
+	fileActionSettings: {
+		showZoom: false,
+		showDrag: false,
+		showUpload: true,
+	},
+	maxFileSize: 1000,
+	removeClass: 'btn btn-kv btn btn-danger',
+	removeFromPreviewOnError: true,
+	dropZoneEnabled: false,
+	showCancel: true,
     allowedFileExtensions: {{ allowedFileExtensions|json_encode() }},
- }).on('fileuploaded', function(event, data, previewId, index) {
- 	   var response = data.response, reader = data.reader;
-       $('input[name=\'download_id\']').val(response.download_id);
-       $('#input-upload').fileinput('lock');
-	   //$('#input-upload').fileinput('refresh', {showUpload: false}).fileinput('disable');
  });
 
 </script>
@@ -201,18 +206,21 @@ $('#input-{{ language_id }}-name').textcounter({
 </script>
 <!-- Add Project -->
 <script type="text/javascript">
-$('#button-project-add').on('click', function() {
+$('#button-project-add').on('click', function(e) {
+	e.preventDefault();
 	const node = this;
 	$.ajax({
 	    url: 'project/project/add',
 	    headers: {
 	      'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
 	      'X-Requested-With': 'XMLHttpRequest',
-	      'Content-Type': 'application/x-www-form-urlencoded',
 	    },
 	    type: 'post',
 	    dataType: 'json',
-	    data: $('#form-project-add').serialize(),
+	    data: new FormData($('#form-project-add')[0]),
+		processData: false,
+		contentType: false,
+		cache: false,
 	    beforeSend: function() {
 	    	$('.invalid-feedback, .alert').remove();
 			$('input, textarea').removeClass('is-invalid');
@@ -237,8 +245,15 @@ $('#button-project-add').on('click', function() {
 	    		    $('#input-' + i).after('<div class="invalid-feedback">' + json['error'][i]+ '</div>');
 	    		
 				}
-	            $('#form-project-add').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error_warning'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+	            $('#form-project-add').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error_warning'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				$('html, body').animate({
+					scrollTop: $('.headline').offset().top
+			  }, 1000, 'linear');
 	    	}
+
+			if (json['error_file']) {
+				$('#form-project-add').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error_file'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+			}
 
 			if (json['redirect']) {
 				location = json['redirect'];
@@ -249,6 +264,52 @@ $('#button-project-add').on('click', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }	
     });
+});
+</script>
+<script>
+//$('#input-form-type input[type=\'radio\']').on('change', function() {
+$('#input-form-type input[type=\'radio\']').on('change', function() { 
+	if($(this).is(":checked")) {
+		if ($(this).val() == 1) {
+			html = `<div class="form-group row mt-3">
+				<label for="input-budget" class="col-sm-3 col-form-label">{{ text_budget }}<span data-toggle="tooltip" title="{{ help_budget }}" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
+				<div class="col-sm-9">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<div class="input-group-text">{{ config_currency }}</div>
+						</div>
+						<input type="number" class="form-control" placeholder="{{ entry_min }}" name="budget_min" value="" min="1" id="input-budget_min">
+					</div>
+					<div class="input-group mt-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text">{{ config_currency }}</div>
+						</div>
+						<input type="number" class="form-control" placeholder="{{ entry_max }}" name="budget_max" value="" min="1" id="input-budget_max">
+					</div>
+				</div>
+			</div>`;
+			$('#budget-container').html(html);
+			} else {
+			html = `<div class="form-group row mt-3">
+				<label for="input-budget" class="col-sm-3 col-form-label">{{ text_budget }}<span data-toggle="tooltip" title="{{ help_budget }}" datat-placement="top" class="text-primary"> <i class="icon-material-outline-help-outline"></i></span></label>
+				<div class="col-sm-9">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<div class="input-group-text">{{ config_currency }} / {{ text_per_hour }}</div>
+						</div>
+						<input type="number" class="form-control" placeholder="{{ entry_min }}" name="budget_min" value="" min="1" id="input-budget_min">
+					</div>
+					<div class="input-group mt-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text">{{ config_currency }} / {{ text_per_hour }}</div>
+						</div>
+						<input type="number" class="form-control" placeholder="{{ entry_max }}" name="budget_max" value="" min="1" id="input-budget_max">
+					</div>
+				</div>
+			</div>`;
+			$('#budget-container').html(html);
+		}
+	}
 });
 </script>
 {{ footer }}

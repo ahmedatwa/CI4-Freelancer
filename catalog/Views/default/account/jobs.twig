@@ -113,9 +113,7 @@
 			url: 'account/jobs/getEmployerJobs',
 			dataType: 'html',
 			beforeSend: function () {
-				$('#employer-job-list').html(
-					'<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
-				);
+				$('#employer-job-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
 			},
 			complete: function () {
 				$('#spinner').remove();
@@ -145,9 +143,7 @@
 			url: 'account/jobs/getApplicantJobs',
 			dataType: 'html',
 			beforeSend: function () {
-				$('#applicant-job-list').html(
-					'<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>'
-				);
+				$('#applicant-job-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border mr-2" role="status"><span class="sr-only">Loading...</span></div>Loading...</div>');
 			},
 			complete: function () {
 				$('#spinner').remove();
@@ -168,5 +164,4 @@
 		$('#applicant-job-list').fadeIn('slow');
 	});
 </script>
-
 {{ footer }}

@@ -19,7 +19,7 @@
 										<li>
 											<a href="{{ social.href }}" target="_blank" data-toggle="tooltip"
 												title="{{ social.name }}" data-placement="bottom">
-												<i class="fab fa-{{ social.name }}"></i>
+												<i class="fab fa-{{ social.name|lower }}"></i>
 											</a>
 										</li>
 										{% endfor %}
@@ -126,10 +126,7 @@
 
 	var channel = pusher.subscribe('global-channel');
 	channel.bind('new-project-event', function (data) {
-		{
-			%
-			if customer_id != data.employer_id %
-		}
+		{% if customer_id != data.employer_id %}
 		$.notify({
 			// options
 			icon: 'fas fa-desktop',
@@ -153,11 +150,40 @@
 				enter: 'animate__animated animate__fadeInUpBig',
 				exit: 'animate__animated animate__fadeOutDownBig'
 			},
-		}); {
-			% endif %
-		}
-	});
+		}); {% endif %}
+	});	
+</script>
+<script>
+// refresh notification count
+function totalUnseen() {
+	$.ajax({
+		url: 'account/message/getTotalUnseenMessages',
+		dataType: 'json',
+		success: function(json) {
+			if (json['total']) {
+				$('#nav-user-main #message-count').html('<span>' + json['total'] + '</span>');
+			   } 
+			}
+		});
+}totalUnseen();
+// get Live Notification Alerts
+function totalNotifications() {
+	$.ajax({
+		url: 'account/notifications/getTotalNotifications',
+		dataType: 'json',
+		success: function(json) {
+			if (json['total']) {
+				$('#nav-user-main #notifications-count').html('<span>' + json['total'] + '</span>');
+			} 
+			}
+		});
+}totalNotifications();
+{% if logged %}
+	setInterval(function() {
+		totalUnseen();
+		totalNotifications();
+	 }, 7000);
+{% endif %}
 </script>
 </body>
-
 </html>

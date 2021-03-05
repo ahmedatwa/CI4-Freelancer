@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'f36f53c394f4858be21d7b0afc71bb3ce5e4b7d2',
+    'reference' => '3e1749e69dc4dfbb9d3647b9529a20270ce695ff',
     'name' => 'freelancer_app/framework',
   ),
   'versions' => 
@@ -54,7 +54,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'f36f53c394f4858be21d7b0afc71bb3ce5e4b7d2',
+      'reference' => '3e1749e69dc4dfbb9d3647b9529a20270ce695ff',
     ),
     'google/apiclient' => 
     array (

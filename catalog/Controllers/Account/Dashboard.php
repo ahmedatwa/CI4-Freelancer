@@ -128,6 +128,9 @@ class Dashboard extends BaseController
                 ];
             }
         }
+
+        $data['text_no_results'] = lang($this->locale . '.list.text_no_results');
+
         // Pagination
         $pager = \Config\Services::pager();
         $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total, 'default_simple');

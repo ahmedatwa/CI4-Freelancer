@@ -1,0 +1,311 @@
+{{ header }}{{ menu }}
+<div class="jumbotron">
+	<div class="container-fluid">
+		<h2 class="display-5">{{ heading_title }}</h2>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<nav id="breadcrumbs">
+				<ul>
+					{% for breadcrumb in breadcrumbs %}
+						<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+					{% endfor %}
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<div class="section mb-5 bg-white margin-top-30">		
+		<div class="row">
+			<div class="col">
+				<div class="sidebar-container">
+					<!-- Hourly Rate -->
+					<div class="sidebar-widget">
+						<h3>{{ text_hourly_rate }}</h3>
+						<div class="form-group">
+							<select class="custom-select" name="filter_rates">
+								<option>{{ text_select }}</option>
+								{% for rate in rates %}
+									{% if rate.value == filter_rate %}
+										<option value="{{ rate.value }}" selected>{{ rate.text }}</option>
+									{% else %}
+										<option value="{{ rate.value }}">{{ rate.text }}</option>  
+									{% endif %}
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					{# Filter Countries #}
+					<div class="sidebar-widget">
+						<h3>{{ text_countries }}</h3>
+						<div class="form-group">
+							<select class="custom-select" name="filter_countries">
+								<option>{{ text_select }}</option>
+								{% for country in countries %}
+									{% if country.name == filter_country %}
+										<option value="{{ country.country_id }}" selected>{{ country.name }}</option>
+									{% else %}
+										<option value="{{ country.country_id }}">{{ country.name }}</option>  
+									{% endif %}
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					{# <!-- Filter Category --> #}
+					<div class="sidebar-widget">
+						<h3>{{ text_skills }}</h3>
+						<div class="keywords-container margin-top-20 mb-3">
+							<div class="input-group keyword-input-container">
+								<select class="form-control" name="filter_category[]" data-width="100%" multiple="multiple">
+									{% for category in categories %}
+									{% if category.category_id in filter_skills %}
+											<option value="{{ category.category_id }}" selected>{{ category.name }}</option>
+										{% else %}
+											<option value="{{ category.category_id }}">{{ category.name }}</option>
+										{% endif %}
+										{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="keywords-list"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-9 mb-4">
+			<!-- Freelancers List Container -->
+			<div class="freelancers-container freelancers-list-layout compact-list shadow-sm p-3 mb-5 bg-white rounded border">
+				<div class="notify-box w-100">
+					<h3 class="float-left mx-4 mt-2">{{ text_found }}</h3>
+				</div>
+				{% if freelancers %}
+				{% for freelancer in freelancers %}	
+				<!--Freelancer -->
+				<div class="freelancer">
+					<!-- Overview -->
+					<div class="freelancer-overview">
+						<div class="freelancer-overview-inner">
+							<!-- Bookmark Icon -->
+							<span class="bookmark-icon"></span>
+							<div class="freelancer-avatar">
+								<div class="verified-badge"></div>
+								<a href="{{ freelancer.href }}"><img src="{{ freelancer.image }}" alt=""></a>
+							</div>
+
+							<!-- Name -->
+							<div class="freelancer-name">
+								<h4><a href="{{ freelancer.href }}">{{ freelancer.name }}</a></h4>
+								<span>{{ freelancer.tag_line }}</span>
+								<!-- Rating -->
+								<div class="freelancer-rating">
+								<div class="rating">
+									<ul>
+										{% for i in 1..5 %}
+										{% if freelancer.rating < i %}
+												<li><span class="fa-stack"><i class="far fa-star fa-stack-1x"></i></span></li>
+										{% else %}
+												<li><span class="fa-stack">
+													<i class="fas fa-star fa-stack-1x"></i></span></li>
+												{% endif %}
+												{% endfor %}
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="freelancer-details">
+						<div class="freelancer-details-list">
+							<ul>
+								<li>Location <strong><i class="icon-material-outline-location-on"></i> {{ freelancer.country }}</strong></li>
+								<li>Rate <strong>{{ freelancer.rate }} / hr</strong></li>
+								<!-- <li>Job Success <strong>95%</strong></li> -->
+							</ul>
+						</div>
+						<div class="clearfix"></div>
+						<a href="{{ freelancer.href }}" class="button button-sliding-icon ripple-effect">View Profile <i class="icon-material-outline-arrow-right-alt"></i></a>
+					</div>
+				</div>
+				{% endfor %}	
+				{% else %}
+						<div class="col-12 text-center p-4">
+						<p class="p-4"><i class="far fa-frown"></i> {{ text_no_results }}</p>
+					</div>
+			     {% endif %}
+			</div>
+			<div class="clearfix"></div>
+			{{ pagination }}
+		</div>
+	</div>
+   </div>
+ </div>
+</div>
+<!-- Spacer -->
+<div class="margin-top-15"></div>
+<!-- Spacer / End-->
+<link href="catalog/default/vendor/select2/customSelectionAdapter/css/select2.customSelectionAdapter.min.css">		
+<script src="catalog/default/vendor/select2/customSelectionAdapter/js/select2.customSelectionAdapter.min.js"></script>
+
+<script type="text/javascript">
+var uri = window.location.href;
+var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
+// Skills
+$('select[name^=\'filter_category\']').select2({
+ajax: {
+	url: "project/category/autocomplete",
+	dataType: 'json',
+	delay: 250,
+	data: function (params) {
+		return {
+			filter_category: params.term,
+		};
+	},
+	processResults: function (data, params) {
+		var results = $.map(data, function (item) {
+			item.id = item.category_id;
+			item.text = item.name;
+			return item;
+		});
+		return {
+			results: results,
+		};
+	},
+	cache: true
+},
+theme: 'bootstrap4',
+placeholder: '{{ text_select }}',
+allowClear: true,
+minimumResultsForSearch: 5,
+selectionAdapter: CustomSelectionAdapter,
+selectionContainer: $('.keywords-list'),
+}).on("select2:select", function (e) {
+	var select_val = $(e.currentTarget).val();
+	$.ajax({
+		url: 'freelancer/freelancer/filter',
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+		dataType: 'json',
+		method: 'post',
+		data: {'skills': select_val.join('_'), 'uri': btoa(encodeURI(uri))},
+		beforeSend: function () {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function () {
+			$('#overlay').fadeOut();
+		},
+		success: function (json) {
+			location = json['uri'];
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+
+}).on('select2:unselect', function (e) {
+	var select_val = $(e.currentTarget).val();
+	if (select_val.length == 0) {
+		var skills = 0; 
+	} else {
+		var skills = select_val.join('_');
+	}
+	$.ajax({
+		url: 'freelancer/freelancer/filter',
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+		dataType: 'json',
+		method: 'post',
+		data: {'skills': skills, 'uri': btoa(encodeURI(uri))},
+		beforeSend: function () {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function () {
+			$('#overlay').fadeOut();
+		},
+		success: function (json) {
+			location = json['uri'];
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}).on('select2:clear', function (e) {
+	$.ajax({
+		url: 'freelancer/freelancer/filter',
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+		dataType: 'json',
+		method: 'post',
+		data: {'skills': 0, 'uri': btoa(encodeURI(uri))},
+		beforeSend: function () {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function () {
+			$('#overlay').fadeOut();
+		},
+		success: function (json) {
+			location = json['uri'];
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name=\'filter_rates\']').on('change', function () {
+	$.ajax({
+		url: 'freelancer/freelancer/filter',
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+		dataType: 'json',
+		method: 'post',
+		data: {'rate': $(this).val(), 'uri': btoa(encodeURI(uri))},
+		beforeSend: function () {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function () {
+			$('#overlay').fadeOut();
+		},
+		success: function (json) {
+			location = json['uri'];
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name=\'filter_countries\']').on('change', function () {
+	$.ajax({
+		url: 'freelancer/freelancer/filter',
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+		dataType: 'json',
+		method: 'post',
+		data: {'rate': $(this).val(), 'uri': btoa(encodeURI(uri))},
+		beforeSend: function () {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function () {
+			$('#overlay').fadeOut();
+		},
+		success: function (json) {
+			location = json['uri'];
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	})
+});
+
+</script>	
+{{ footer }}

@@ -32,16 +32,20 @@ class EmployerModel extends Model
             $builder->whereIn('p.status_id', explode('_', $data['status_id']));
         }
 
-        if (isset($data['orderBy']) && $data['orderBy'] == 'DESC') {
-            $data['orderBy'] = 'DESC';
+        if (isset($data['order']) && $data['order'] == 'DESC') {
+            $orderBy = 'DESC';
         } else {
-            $data['orderBy'] = 'ASC';
+            $orderBy = 'ASC';
         }
 
-        $sortData = ['p.date_added'];
+        $sortData = [
+            'p.date_added',
+            'pd.name',
+            'p.type',
+        ];
 
-        if (isset($data['sortBy']) && in_array($data['sortBy'], $sortData)) {
-            $builder->orderBy($data['sortBy'], 'DESC');
+        if (isset($data['sort']) && in_array($data['sort'], $sortData)) {
+            $builder->orderBy($data['sort'], $orderBy);
         } else {
             $builder->orderBy('p.date_added', 'ASC');
         }
@@ -60,7 +64,7 @@ class EmployerModel extends Model
         return $query->getResultArray();
     }
 
-    public function getTotalEmployerProjects()
+    public function getTotalEmployerProjects(array $data = [])
     {
         $builder = $this->db->table('project p');
         $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.type, p.status, p.runtime');
@@ -269,8 +273,6 @@ class EmployerModel extends Model
     }
 
     // Bootstrap FileInput
-
-
     public function downloadProjectFiles($project_id)
     {
         $builder = $this->db->table('project_to_upload');
@@ -309,24 +311,5 @@ class EmployerModel extends Model
         $query = $builder->get();
         return $query->getRowArray();
     }
-    // Freelancer In-progress Projects
-    public function getfreelancerProjects(int $freelancer_id)
-    {
-        $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.date_added, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status');
-        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
-        $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
-        $builder->join('project_bids pb', 'pb.project_id = p.project_id', 'left');
-        $builder->where([
-            'pd.language_id' => service('registry')->get('config_language_id'),
-            'pb.freelancer_id' => $freelancer_id,
-            'pb.accepted' => 1,
-        ]);
-
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
-
-    
     // -----------------------------------------------------------------
 }

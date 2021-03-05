@@ -29,7 +29,7 @@ class DepositModel extends Model
         return $data;
     }
 
-    public function insertFunds($data)
+    public function deposit(array $data)
     {
         $builder = $this->db->table($this->table);
         $fund_data = [
@@ -40,16 +40,14 @@ class DepositModel extends Model
             'date_added'    => Time::now()->getTimestamp(),
             'date_modified' => Time::now()->getTimestamp()
         ];
-        $builder->set($fund_data);
-        $builder->insert();
+        $builder->insert($fund_data);
         // update balance
         $balance_table = $this->db->table('customer_to_balance');
-        $balance_table->select();
+        $balance_table->select('available');
         $balance_table->where('customer_id', $data['customer_id']);
         $query = $balance_table->get();
-        $row = $query->getRow();
 
-        if ($row) {
+        if ($row = $query->getRow()) {
             $balance_data = [
                'available'     => $row->available + $data['amount'],
                'date_modified' => Time::now()->getTimestamp()
@@ -58,8 +56,9 @@ class DepositModel extends Model
             $balance_table->update($balance_data);
         } else {
             $balance_data = [
-                'available'   => $data['amount'],
-                'customer_id' => $data['customer_id'],
+                'available'     => $data['amount'],
+                'customer_id'   => $data['customer_id'],
+                'currency'      => $data['currency'],
                 'date_added'    => Time::now()->getTimestamp(),
                 'date_modified' => Time::now()->getTimestamp()
             ];

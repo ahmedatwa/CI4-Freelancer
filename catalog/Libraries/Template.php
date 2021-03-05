@@ -3,6 +3,7 @@
 namespace Catalog\Libraries;
 
 use Config\Services;
+use Twig\Extra\Intl\IntlExtension;
 
 class Template
 {
@@ -44,7 +45,7 @@ class Template
      */
     public function getTitle(): string
     {
-        return service('registry')->get('config_name') . ' | ' . (string) $this->title;
+        return service('registry')->get('config_name') . ' | ' . $this->title;
     }
 
     /**
@@ -183,6 +184,8 @@ class Template
             ];
 
             $twig  = new \Twig\Environment($loader, $config);
+            $twig->addExtension(new \Twig\Extension\DebugExtension());
+            $twig->addExtension(new IntlExtension());
             // Safe csrf PHP function
             foreach ($this->functions_safe as $value) {
                 if (function_exists($value)) {

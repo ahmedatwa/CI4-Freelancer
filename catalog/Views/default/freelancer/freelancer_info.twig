@@ -1,0 +1,288 @@
+{{ header }}
+<div class="single-page-header freelancer-header margin-bottom-30" data-background-image="{{ bgImage }}">
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="single-page-header-inner">
+					<div class="left-side">
+						<div class="header-image freelancer-avatar rounded-pill"><img src="{{ image }}" alt=""></div>
+						<div class="header-details">
+							<h3><a href="#" id="name" class="text-dark" data-type="text" data-pk="{{ freelancer_id }}">{{ name }}</a><span>
+								<a href="#" id="tag_line" class="text-dark" data-type="text" data-pk="{{ freelancer_id }}">{{ tag_line }}</a></span></h3>
+							<ul>
+								<li>
+									<div class="rating">
+										<ul>
+											{% for i in 1..5 %}
+											{% if rating < i %}
+											<li><span class="fa-stack"><i class="far fa-star fa-stack-2x"></i></span>
+											</li>
+											{% else %}
+											<li><span class="fa-stack">
+													<i class="fas fa-star fa-stack-2x"></i></span></li>
+											{% endif %}
+											{% endfor %}
+										</ul>
+									</div>
+								</li>
+								<li>
+									<div class="verified-badge-with-title">Verified</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Page Content -->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<nav id="breadcrumbs">
+				<ul>
+					{% for breadcrumb in breadcrumbs %}
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+					{% endfor %}
+				</ul>
+			</nav>
+		</div>
+		<!-- Content -->
+		<div class="col-sm-12 col-md-9">
+		<div class="shadow-sm p-3 mb-3 bg-white rounded border">
+			<!-- Page Content -->
+			<div class="single-page-section mb-3">
+				<h3 class="mb-4">{{ text_about }}</h3>
+				<p><a href="#" id="about" class="text-dark" data-type="textarea" data-pk="{{ freelancer_id }}">{{ about }}</a></p>
+			</div>
+		</div>
+
+		<div class="shadow-sm p-3 mb-3 bg-white rounded border">
+			<div class="single-page-section mb-3">
+				<h3 class="mb-3">{{ text_education }}</h3>
+				{% for educations in education %}
+				<p>{{ education.title|upper }} in {{ education['major'] }} | {{ education.university }} |
+					{{ education.year }}| {{ education.country }}</p>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="shadow-sm p-3 mb-3 bg-white rounded border">	
+			<div class="single-page-section mb-3">
+				<h3 class="mb-3">{{ text_cert }}</h3>
+				{% for cert in certificates %}
+				<p>{{ cert.name }}| {{ cert.year }}</p>
+				{% endfor %}
+			</div>
+		</div>	
+			<div class="shadow-sm p-3 mb-3 bg-white rounded border">
+			<div class="single-page-section mb-3">
+				<h3 class="mb-3">{{ text_skills }}</h3>
+				<div class="task-tags">
+					{% for skill in skills %}
+					<span>{{ skill.name }}</span>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+			<div class="shadow-sm p-3 mb-3 bg-white rounded border">
+			<div class="single-page-section mb-3">
+				<h3 class="mb-3">{{ text_languages }}</h3>
+				<div class="task-tags mt-0">
+					{% for language in languages %}
+					<span>{{ language }}</span>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+		<!-- Sidebar -->
+		<div class="col">
+			<div class="sidebar-container">
+				<!-- Profile Overview -->
+				<div class="profile-overview">
+					<div class="overview-item"><strong><a href="#" class="text-dark" id="rate" data-type="text" data-pk="{{ freelancer_id }}">{{ rate }}</a></strong><span>Hourly Rate</span></div>
+					<div class="overview-item"><strong>53</strong><span>Jobs Done</span></div>
+				</div>
+				{% if customer_id != customer_profile_id %}
+				<button type="button" data-toggle="modal" data-target="#hireme"
+					class="button btn-block apply-now-button margin-bottom-50">{{ button_offer }}<i
+						class="icon-material-outline-arrow-right-alt"></i></button>
+				{% endif %}
+				<!-- Freelancer Indicators -->
+				<div class="sidebar-widget">
+					<div class="freelancer-indicators">
+						<!-- Indicator -->
+						<div class="indicator">
+							<strong>{{ recommended }}</strong>
+							<div class="indicator-bar" data-indicator-percentage="{{ recommended }}"><span></span></div>
+							<span>Recommendation</span>
+						</div>
+						<!-- Indicator -->
+						<div class="indicator">
+							<strong>{{ ontime }}%</strong>
+							<div class="indicator-bar" data-indicator-percentage="{{ ontime }}"><span></span></div>
+							<span>On Time</span>
+						</div>
+					</div>
+				</div>
+				{% if social %}
+				<div class="sidebar-widget">
+					<h3>{{ text_social }}</h3>
+					<div class="freelancer-socials margin-top-25">
+						<ul>
+							{% for row in social %}
+							<li><a href="{{ row.href }}" title="{{ row.name }}" data-placement="top" data-toggle="tooltip"><i
+										class="icon-brand-{{ row.name|lower }}"></i></a></li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		{# <!-- Boxed List --> #}
+		{% if reviews %}
+		<div class="col-sm-12 col-md-9 mb-4 shadow p-3 mb-5 bg-white rounded">
+			<div class="boxed-list-headline">
+				<h3><i class="icon-material-outline-thumb-up"></i> {{ text_history }}</h3>
+			</div>
+			<ul class="boxed-list-ul py-4">
+				{% for review in reviews %}
+				<li>
+					<div class="boxed-list-item">
+						<!-- Content -->
+						<div class="item-content">
+							<h4>{{ review.name }}<span>Rated as Freelancer</span></h4>
+							<div class="item-details margin-top-10">
+								<div class="detail-item"><i class="icon-material-outline-date-range"></i>
+									{{ review.date_added }}</div>
+								<div class="star-rating rating">
+									<ul>
+										{% for i in 1..5 %}
+										{% if rating < i %}
+										<li><span class="fa-stack"><i class="far fa-star fa-stack-1x"></i></span></li>
+										{% else %}
+										<li><span class="fa-stack">
+												<i class="fas fa-star fa-stack-1x"></i></span></li>
+										{% endif %}
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+							<div class="item-description">
+								<p>{{ review.comment }}</p>
+							</div>
+						</div>
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+			<!-- Pagination -->
+			<div class="clearfix"></div>
+			{{ pagination }}
+			<div class="clearfix"></div>
+		</div>
+		{% endif %}
+	</div>
+</div>
+<!-- Spacer -->
+<div class="margin-top-15"></div>
+<!-- Button trigger modal Hire Me -->
+<!-- Modal -->
+<div class="modal fade" id="hireme" tabindex="-1" aria-labelledby="hiremeModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="hiremeModal">{{ text_hire_me }}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form enctype="multipart/form-data" method="post" action="" id="form-hire" accept-charset="utf-8"> 
+					<input type="hidden" name="sender_id" value="{{ employer_id }}" />
+					<input type="hidden" name="receiver_id" value="{{ freelancer_id }}" />
+					<input type="hidden" name="thread_id" value="{{ thread_id }}" />
+					<div class="form-group">
+						<label for="exampleInputEmail1"><i class="fas fa-comment"></i> {{ text_message }}</label>
+						<textarea rows="3" class="form-control" name="message">{{ text_canned }}</textarea>
+					</div>
+					<div class="form-group row">
+						<div class="col">
+							<select class="form-control" name="type">
+								<option>{{ text_fixed_price }}</option>
+								<option>{{ text_per_hour }}</option>
+							</select>
+						</div>
+						<div class="col">
+							<input type="number" class="form-control" name="delivery_time" value="3" min="2" max="30">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">{{ text_budget_min }}</label>
+						<input type="number" value="{{ rate }}" class="form-control" name="budget_min" min="10">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="button btn-lg btn-block" id="button-hire-me">{{ button_hire }}</button>
+			</div>
+		</div>
+	</div>
+</div>
+<link href="catalog/default/vendor/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+<script src="catalog/default/vendor/bootstrap-editable/js/bootstrap-editable.js"></script>
+{# Live Inputs Edit #}
+<script>
+$('#tag_line, #rate, #about, #name').editable({
+	url: 'freelancer/freelancer/profileUpdate?customer_id={{ customer_id }}',
+	ajaxOptions: {
+		dataType: 'json',
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+	},   
+	title: 'Edit/Enter'
+});
+</script>
+
+
+<script type="text/javascript">
+$('#hireme').on('shown.bs.modal', function (e) {
+$('.fas, .alert').remove();
+ $('#button-hire-me').on('click', function () {
+	$.ajax({
+		url: 'account/message/hireMe?cid={{ employer_id }}',
+		headers: {
+          'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+          "X-Requested-With": "XMLHttpRequest"
+        },
+		dataType: 'json',
+		method: 'post',
+	    data:$("#form-hire").serialize(),
+		beforeSend: function() {
+			$('.fas, .alert').remove();
+			$(this).html('<button class="btn btn-primary" type="button" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...</button>');
+		},
+		complete: function() {
+			$(this).html('{{ button_hire }}');
+		},
+		success : function (json){
+			if (json['success']) {
+				$.notify({icon: 'fas fa-check-circle', message: json['success']},{type: 'success'});
+				$('#hireme').modal('hide')
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+		 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+});
+</script>
+{{ footer }}

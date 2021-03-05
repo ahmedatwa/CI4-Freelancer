@@ -1,15 +1,17 @@
-<?php namespace Catalog\Controllers\freelancer;
+<?php 
 
-use \Catalog\Models\Catalog\ProjectModel;
-use \Catalog\Models\Account\CustomerModel;
-use \Catalog\Models\Catalog\MileStoneModel;
-use \Catalog\Models\Extension\Bid\BidModel;
-use \Catalog\Models\Freelancer\BalanceModel;
-use \Catalog\Models\Freelancer\FreelancerModel;
-use \Catalog\Models\Freelancer\DisputeModel;
-use \Catalog\Models\Account\MessageModel;
+namespace Catalog\Controllers\freelancer;
 
-class Project extends \Catalog\Controllers\BaseController
+use Catalog\Controllers\BaseController;
+use Catalog\Models\Account\CustomerModel;
+use Catalog\Models\Catalog\MileStoneModel;
+use Catalog\Models\Extension\Bid\BidModel;
+use Catalog\Models\Account\BalanceModel;
+use Catalog\Models\Freelancer\FreelancerModel;
+use Catalog\Models\Account\DisputeModel;
+use Catalog\Models\Account\MessageModel;
+
+class Project extends BaseController
 {
     public function view()
     {
@@ -49,10 +51,10 @@ class Project extends \Catalog\Controllers\BaseController
             'href' => base_url('freelancer/project/view?pid=' . $project_id),
         ];
 
-        $projectModel = new ProjectModel();
+        $freelancerModel = new FreelancerModel();
 
         if ($project_id) {
-            $project_info = $projectModel->getProject($project_id);
+            $project_info = $freelancerModel->getFreelancerProject($project_id);
         } else {
             $project_info = [];
         }
@@ -83,11 +85,11 @@ class Project extends \Catalog\Controllers\BaseController
 
             $data['freelancer_profile'] = ($bid_info['freelancer_id']) ? route_to('freelancer_profile', $bid_info['freelancer_id'], $freelancer_info['username']) : '';
 
-            $data['status'] = $projectModel->getStatusByProjectId($project_info['project_id']);
+            $data['status'] = $freelancerModel->getStatusByProjectId($project_info['project_id']);
 
             // Project PMs Data
             $messageModel = new MessageModel();
-            $message_info = $messageModel->getMessageThread($this->customer->getCustomerID());
+            $message_info = $messageModel->getMessageThread($this->customer->getID());
             
             $data['thread_id'] = $message_info['thread_id'] ?? '';
             $data['receiver_id'] = $message_info['receiver_id'] ?? '';
@@ -100,9 +102,9 @@ class Project extends \Catalog\Controllers\BaseController
         $data['upload'] = base_url('tool/upload');
         $data['customer_id'] = $customer_id;
 
-        $data['initial_preview_data'] = $projectModel->getFilesByProjectId($project_id);
+        $data['initial_preview_data'] = $freelancerModel->getFilesByProjectId($project_id);
 
-        $data['initial_preview_config_data'] = $projectModel->getFilesPreviewConfig($project_id);
+        $data['initial_preview_config_data'] = $freelancerModel->getFilesPreviewConfig($project_id);
 
         // upload extensions allowed
         $file_ext_allowed = preg_replace('~\r?\n~', "\n", $this->registry->get('config_file_ext_allowed'));
@@ -123,8 +125,8 @@ class Project extends \Catalog\Controllers\BaseController
     {
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
-        } elseif ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
+        } elseif ($this->customer->getID()) {
+            $customer_id = $this->customer->getID();
         } else {
             $customer_id = 0;
         }
@@ -162,15 +164,14 @@ class Project extends \Catalog\Controllers\BaseController
          'start'      => ($page - 1) * $limit,
         ];
 
-        $data['progress_projects'] = [];
+        $data['projects'] = [];
 
-        $projectModel = new ProjectModel();
+        $freelancerModel = new FreelancerModel();
 
-        $results = $projectModel->getProjects($filter_data);
-        $total = $projectModel->getTotalProjects($filter_data);
+        $results = $freelancerModel->getFreelancerProjects($filter_data);
 
         foreach ($results as $result) {
-            $data['progress_projects'][] = [
+            $data['projects'][] = [
                 'project_id'    => $result['project_id'],
                 'freelancer_id' => $result['freelancer_id'],
                 'employer_id'   => $result['employer_id'],
@@ -183,20 +184,9 @@ class Project extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['column_name']       = lang('freelancer/project.column_name');
-        $data['column_project_id'] = lang('freelancer/project.column_project_id');
-        $data['column_budget']     = lang('freelancer/project.column_budget');
-        $data['column_type']       = lang('freelancer/project.column_type');
-        $data['column_bids']       = lang('freelancer/project.column_bids');
-        $data['column_avg_bids']   = lang('freelancer/project.column_avg_bids');
-        $data['column_expiry']     = lang('freelancer/project.column_expiry');
-        $data['column_status']     = lang('freelancer/project.column_status');
-        $data['column_action']     = lang('freelancer/project.column_action');
-
         $data['config_project_completed_status'] = $this->registry->get('config_project_completed_status');
-        // Pagination
-        $pager = \Config\Services::pager();
-        $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
+
+        $data['langData'] = lang('freelancer/project.list');
 
         return view('freelancer/progress_project_list', $data);
     }
@@ -205,8 +195,8 @@ class Project extends \Catalog\Controllers\BaseController
     {
         if ($this->request->getVar('customer_id')) {
             $customer_id = $this->request->getVar('customer_id');
-        } elseif ($this->customer->getCustomerId()) {
-            $customer_id = $this->customer->getCustomerId();
+        } elseif ($this->customer->getID()) {
+            $customer_id = $this->customer->getID();
         } else {
             $customer_id = 0;
         }
@@ -244,14 +234,13 @@ class Project extends \Catalog\Controllers\BaseController
          'start'       => ($page - 1) * $limit,
         ];
 
-        $data['past_projects'] = [];
+        $data['projects'] = [];
 
-        $projectModel = new ProjectModel();
+        $freelancerModel = new FreelancerModel();
         $bidModel = new BidModel();
         $disputeModel = new DisputeModel();
 
-        $results = $projectModel->getProjects($filter_data);
-        $total = $projectModel->getTotalProjects($filter_data);
+        $results = $freelancerModel->getFreelancerProjects($filter_data);
 
         foreach ($results as $result) {
             $paidStatus = $bidModel->where('project_id', $result['project_id'])->findColumn('status');
@@ -268,7 +257,7 @@ class Project extends \Catalog\Controllers\BaseController
 
             $inDispute =  $disputeModel->inDispute($result['project_id']);
 
-            $data['past_projects'][] = [
+            $data['projects'][] = [
                 'project_id'    => $result['project_id'],
                 'employer_id'   => $result['employer_id'],
                 'freelancer_id'   => $result['freelancer_id'],
@@ -295,24 +284,10 @@ class Project extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['column_name']       = lang('freelancer/project.column_name');
-        $data['column_project_id'] = lang('freelancer/project.column_project_id');
-        $data['column_budget']     = lang('freelancer/project.column_budget');
-        $data['column_type']       = lang('freelancer/project.column_type');
-        $data['column_bids']       = lang('freelancer/project.column_bids');
-        $data['column_avg_bids']   = lang('freelancer/project.column_avg_bids');
-        $data['column_status']     = lang('freelancer/project.column_status');
-        $data['column_status']     = lang('freelancer/project.column_status');
-        $data['column_amount']     = lang('freelancer/project.column_amount');
-        $data['column_paid']       = lang('freelancer/project.column_paid');
-        $data['column_action']     = lang('freelancer/project.column_action');
-
         $balanceModel = new BalanceModel();
-        $data['balance'] = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getCustomerId())['total']);
+        $data['balance'] = $this->currencyFormat($balanceModel->getBalanceByCustomerID($this->customer->getID())['total']);
 
-        // Pagination
-        $pager = \Config\Services::pager();
-        $data['pagination'] = ($total <= $limit) ? '' : $pager->makeLinks($page, $limit, $total);
+        $data['langData'] = lang('freelancer/project.list');
 
         return view('freelancer/past_project_list', $data);
     }
@@ -326,8 +301,8 @@ class Project extends \Catalog\Controllers\BaseController
 
         if ($this->request->getVar('customer_id')) {
             $freelancer_id = $this->request->getVar('customer_id');
-        } elseif ($this->customer->getCustomerId()) {
-            $freelancer_id = $this->customer->getCustomerId()   ;
+        } elseif ($this->customer->getID()) {
+            $freelancer_id = $this->customer->getID()   ;
         } else {
             $freelancer_id = 0;
         }
@@ -352,17 +327,55 @@ class Project extends \Catalog\Controllers\BaseController
             ];
         }
 
-        $data['customer_id'] = $this->customer->getCustomerId();
+        $data['customer_id'] = $this->customer->getID();
 
         return view('freelancer/bids_list', $data);
     }
 
+    public function acceptOffer()
+    {
+        $json = [];
+
+        if ($this->request->getVar('freelancer_id')) {
+            if ($this->request->getVar('freelancer_id')) {
+                $freelancer_id = $this->request->getVar('freelancer_id');
+            } else {
+                $freelancer_id = 0;
+            }
+
+            if ($this->request->getVar('project_id')) {
+                $project_id = $this->request->getVar('project_id');
+            } else {
+                $project_id = 0;
+            }
+
+            if ($this->request->getVar('bid_id')) {
+                $bid_id = $this->request->getVar('bid_id');
+            } else {
+                $bid_id = 0;
+            }
+
+            if ($this->request->getVar('employer_id')) {
+                $employer_id = $this->request->getVar('employer_id');
+            } else {
+                $employer_id = 0;
+            }
+
+            $freelancerModel = new FreelancerModel();
+
+            $freelancerModel->acceptOffer($freelancer_id, $project_id, $bid_id, $employer_id);
+
+            $json['success'] = lang('freelancer/freelancer.text_offer_accepted');
+        }
+
+        return $this->response->setJSON($json);
+    }
 
     public function completeProject()
     {
         $json = [];
 
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
             $freelancerModel = new FreelancerModel();
 
             $freelancerModel->updateProjectStatus($this->request->getVar('project_id'), $this->request->getPost());

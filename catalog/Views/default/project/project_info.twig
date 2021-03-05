@@ -79,12 +79,13 @@
 				{% endif %}
 			</div>
 			<!-- Atachments -->
-			{% if attachment %}
+			{% if attachments %}
 			<div class="single-page-section">
 				<h3>Attachments</h3>
 				<div class="attachments-container">
-					<a href="{{ download }}"
-						class="attachment-box ripple-effect"><span>{{ attachment }}</span><i>{{ attachment_ext }}</i></a>
+					{% for row in attachments %}
+					<a href="{{ row.href }}"class="attachment-box ripple-effect"><span>{{ row.code }}</span><i>{{ row.ext }} | {{ row.size }} kb</i></a>
+					{% endfor %}
 				</div>
 			</div>
 			{% endif %}
@@ -124,7 +125,7 @@
 									<label for="inputEmail4">{{ text_rate }}</label>
 									<div class="input-group">
 										<input class="form-control" type="text" id="input-quote" name="quote"
-											value="" />
+											value="{{ bidAVG }}" />
 										<div class="input-group-append">
 											<span class="input-group-text"
 												id="basic-addon2">{{ config_currency }}</span>
@@ -135,7 +136,7 @@
 									<label for="inputEmail4">{{ text_delivery }}</label>
 									<div class="input-group">
 										<input type="number" class="form-control" id="input-delivery" name="delivery"
-											min="1">
+											min="1" value="{{ deliveryTime }}">
 										<div class="input-group-prepend">
 											<span class="input-group-text">{{ text_days }}</span>
 										</div>
@@ -145,7 +146,7 @@
 							<div class="form-group">
 								<label for="exampleFormControlTextarea1">{{ text_describe }}</label>
 								<textarea class="form-control" id="input-description" name="description" rows="7"
-									cols="10"></textarea>
+									cols="10" placeholder="{{ help_proposal }}"></textarea>
 							</div>
 						</form>
 						<div class="margin-top-30">
@@ -196,7 +197,8 @@
 				<div class="col-sm-12 col-md-3">
 					<div class="sidebar-container pb-3 mb-5 bg-white">
 						<div class="card p-0 border-0">
-							<div class="badge badge-pill badge-light text-center mb-4 p-4"><i class="icon-material-outline-access-time "></i> <span style="font-size: 14px;" data-countdown="{{ final_date }}"></span></div>
+							<div class="badge badge-pill badge-light text-center mb-4 p-4"><i class="fas fa-hourglass-start"></i>
+								 <span class="font-weight-normal" data-countdown="{{ final_date }}"></span></div>
 					</div>
 						<div class="sidebar-widget">
 							<div class="bidding-widget text-white text-center">
@@ -224,7 +226,7 @@
 				</div>
 			</div>
 	</div>
-<script type="text/javascript" src="catalog/default/javascript/jquery.countdown.min.js"></script>
+<script type="text/javascript" src="catalog/default/javascript/jquery.countdown.min.js" defer></script>
 <script type="text/javascript">
 $('#button-place-bid').on('click', function() {
 bootbox.confirm({

@@ -66,126 +66,6 @@ class CustomerModel extends Model
         \CodeIgniter\Events\Events::trigger('mail_register', $data['email']);
     }
 
-    public function getCustomers(array $data = [])
-    {
-        $builder = $this->db->table('customer c');
-        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS name, c.about, c.tag_line, c.image, c.customer_id, c.rate, c.online, c.username');
-        $builder->join('customer_to_category c2c', 'c.customer_id = c2c.freelancer_id', 'left');
-
-        if (isset($data['filter_freelancer'])) {
-            $builder->where('c.profile_strength', $data['filter_freelancer']);
-        }
-
-        if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
-            $builder->whereIn('c2c.category_id', $data['filter_skills']);
-        }
-
-       
-        if (isset($data['filter_rate'])) {
-            switch ($data['filter_rate']) {
-                case '10':
-                   $builder->where('c.rate <=', 10);
-                   break;
-                case '10_20':
-                   $builder->where('c.rate >=', 10)->where('c.rate <=', 20);
-                   break;
-                case '20_30':
-                   $builder->where('c.rate >=', 20)->where('c.rate <=', 30);
-                   break;
-                case '30_40':
-                   $builder->where('c.rate >=', 30)->where('c.rate <=', 40);
-                   break;
-                case '40':
-                   $builder->where('c.rate >=', 40);
-                   break;
-            }
-        }
-
-        if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
-            $builder->orderBy('c.date_added', 'DESC');
-        } else {
-            $builder->orderBy('c.date_added', 'ASC');
-        }
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-            $builder->limit($data['limit'], $data['start']);
-        }
-
-        $builder->groupBy('c.customer_id');
-
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
-
-    public function getCustomer($customer_id)
-    {
-        $builder = $this->db->table($this->table);
-        $builder->where('customer_id', $customer_id);
-        $query = $builder->get();
-        return $query->getRowArray();
-    }
-
-    public function getTotalCustomers($data = [])
-    {
-        $builder = $this->db->table('customer c');
-        $builder->select('CONCAT(c.firstname, " ", c.lastname) AS name, c.about, c.tag_line, c.image, c.customer_id, c.rate, c.online, c.username');
-        $builder->join('customer_to_category c2c', 'c.customer_id = c2c.freelancer_id', 'left');
-
-        if (isset($data['filter_freelancer'])) {
-            $builder->where('c.profile_strength', $data['filter_freelancer']);
-        }
-
-        if (isset($data['filter_skills']) && !empty($data['filter_skills'])) {
-            $builder->whereIn('c2c.category_id', $data['filter_skills']);
-        }
-       
-        if (isset($data['filter_rate'])) {
-            switch ($data['filter_rate']) {
-                case '10':
-                   $builder->where('c.rate <=', 10);
-                   break;
-                case '10_20':
-                   $builder->where('c.rate >=', 10)->where('c.rate <=', 20);
-                   break;
-                case '20_30':
-                   $builder->where('c.rate >=', 20)->where('c.rate <=', 30);
-                   break;
-                case '30_40':
-                   $builder->where('c.rate >=', 30)->where('c.rate <=', 40);
-                   break;
-                case '40':
-                   $builder->where('c.rate >=', 40);
-                   break;
-            }
-        }
-
-        if (isset($data['order_by']) && $data['order_by'] == 'DESC') {
-            $builder->orderBy('c.date_added', 'DESC');
-        } else {
-            $builder->orderBy('c.date_added', 'ASC');
-        }
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-            $builder->limit($data['limit'], $data['start']);
-        }
-
-        $builder->groupBy('c.customer_id');
-
-        return $builder->countAllResults();
-    }
-
     // Login Attempts
     public function addLoginAttempt($email, $ipAddress)
     {
@@ -238,23 +118,6 @@ class CustomerModel extends Model
         $builder->insert($data);
     }
 
-    public function getCustomerCertificates($freelancer_id, $start = 0, $limit = 20)
-    {
-        $builder = $this->db->table('customer_to_certificate');
-        if ($start < 0) {
-            $start = 0;
-        }
-
-        if ($limit < 1) {
-            $limit = 20;
-        }
-        $builder->select();
-        $builder->where('freelancer_id', $freelancer_id);
-        $builder->orderBy('date_added', 'DESC');
-        $builder->limit($limit, $start);
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
 
     public function getTotalCertificatesByCustomerId($freelancer_id)
     {
@@ -286,26 +149,6 @@ class CustomerModel extends Model
         $builder->insert($data);
     }
 
-    public function getEducations($freelancer_id, $start = 0, $limit = 20)
-    {
-        $builder = $this->db->table('customer_to_education s2e');
-        if ($start < 0) {
-            $start = 0;
-        }
-
-        if ($limit < 1) {
-            $limit = 20;
-        }
-
-        $builder->select('um.text AS major, u.text AS university, s2e.freelancer_id, s2e.country, s2e.title, s2e.year, s2e.education_id');
-        $builder->join('university u', 'u.university_id = s2e.university_id', 'LEFT');
-        $builder->join('university_majors um', 'um.major_id = s2e.major_id', 'LEFT');
-        $builder->where('s2e.freelancer_id', $freelancer_id);
-        $builder->orderBy('s2e.date_added', 'DESC');
-        $builder->limit($limit, $start);
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
 
     public function getTotalEducationsByCustomerID($freelancer_id)
     {
@@ -381,27 +224,6 @@ class CustomerModel extends Model
         $builder->insert($data);
     }
 
-    public function getCustomerSkills($customer_id, $start = 0, $limit = 20)
-    {
-        $builder = $this->db->table('customer_to_category c2c');
-
-        if ($start < 0) {
-            $start = 0;
-        }
-
-        if ($limit < 1) {
-            $limit = 20;
-        }
-
-        $builder->select('cd.name, c2c.freelancer_id, c2c.category_id as skill_id');
-        $builder->join('category_description cd', 'c2c.category_id = cd.category_id', 'left');
-        $builder->where('c2c.freelancer_id', $customer_id);
-        $builder->where('cd.language_id', service('registry')->get('config_language_id'));
-        $builder->orderBy('cd.name', 'DESC');
-        $builder->limit($limit, $start);
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
 
     public function getTotalSkillsByCustomerID($freelancer_id)
     {
@@ -417,28 +239,6 @@ class CustomerModel extends Model
     }
     
     // ------ Languages ------ //
-    public function getLanguages($data = [])
-    {
-        $builder = $this->db->table('languages');
-        $builder->select();
-
-        if (isset($data['filter_language'])) {
-            $builder->like('text', $data['filter_language'], 'after');
-        }
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-            $builder->limit($data['limit'], $data['start']);
-        }
-
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
 
     public function addCustomerLanguage($data)
     {
@@ -453,25 +253,6 @@ class CustomerModel extends Model
         $builder->insert($data);
     }
 
-    public function getCustomerLanguages($freelancer_id, $start = 0, $limit = 20)
-    {
-        $builder = $this->db->table('customer_to_language s2l');
-        if ($start < 0) {
-            $start = 0;
-        }
-
-        if ($limit < 1) {
-            $limit = 20;
-        }
-
-        $builder->select('l.text as name, s2l.level, s2l.freelancer_id, s2l.language_id');
-        $builder->join('languages l', 'l.language_id = s2l.language_id', 'LEFT');
-        $builder->where('s2l.freelancer_id', $freelancer_id);
-        $builder->orderBy('l.text', 'DESC');
-        $builder->limit($limit, $start);
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
 
     public function getTotalLanguagesByCustomerId($freelancer_id)
     {
@@ -484,14 +265,6 @@ class CustomerModel extends Model
     {
         $builder = $this->db->table('customer_to_language');
         $builder->delete(['language_id' => $language_id]);
-    }
-
-    public function updateViewed(int $customer_id)
-    {
-        $builder = $this->db->table('customer');
-        $builder->where('customer_id', $customer_id);
-        $builder->set('viewed', 'viewed+1', false);
-        $builder->update();
     }
 
     public function getCustomerProfileView(int $customer_id)
@@ -545,13 +318,6 @@ class CustomerModel extends Model
         return $row['total'];
     }
 
-    public function setOnlineStatus(int $status)
-    {
-        $builder = $this->db->table($this->table);
-        $builder->set('online', $status);
-        $builder->update();
-    }
-    
     // for Dahsboard Widget
     public function getTotalProjectsByCustomerId($customer_id)
     {

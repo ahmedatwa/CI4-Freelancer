@@ -150,36 +150,6 @@ $(document).on('click', '.dropdown-menu', function (e) {
 /*--------------------------------------------------*/
 	/*  Notification Messages
 /*--------------------------------------------------*/
-	// refresh notification count
-	  function totalUnseen() {
-	   $.ajax({
-	      url: 'account/message/getTotalUnseenMessages',
-	      dataType: 'json',
-	      success: function(json) {
-	          if (json['total']) {
-	               $('#nav-user-main #message-count').html('<span>' + json['total'] + '</span>');
-	           } 
-	        }
-	    });
-	 }totalUnseen();
-	// get Live Notification Alerts
-	function totalNotifications() {
-	   $.ajax({
-	      url: 'account/notifications/getTotalNotifications',
-	      dataType: 'json',
-	      success: function(json) {
-	          if (json['total']) {
-	               $('#nav-user-main #notifications-count').html('<span>' + json['total'] + '</span>');
-	           } 
-	        }
-	    });
-	 }totalNotifications();
-
-	setInterval(function() {
-	   totalUnseen();
-	   totalNotifications();
-	}, 7000);
-
 	$('#nav-user-main #headerLoginDropdown').on('click', function() {
 		$.ajax({
 	      url: 'common/header/getCustomerBalance',
@@ -558,9 +528,9 @@ $(document).on('click', '.dropdown-menu', function (e) {
 
 	$('.logo-carousel').slick({
 		infinite: true,
-		slidesToShow: 5,
+		slidesToShow: 4,
 		slidesToScroll: 1,
-		dots: false,
+		dots: true,
 		arrows: true,
 		responsive: [
 			{
@@ -718,21 +688,21 @@ $(document).on('click', '.dropdown-menu', function (e) {
 		.on('update.countdown', function(event) {
 			var format = '%H:%M:%S';
 			if(event.offset.totalDays > 0) {
-			    format = '<span class="text-success">%-d day%!d ' + format + '</span>';
+			    format = '%-d day%!d ' + format;
 			} else {
-				format = '<span class="text-warning">%H:%M:%S</span>';
+				format = ' %H:%M:%S';
 			}
 			if(event.offset.weeks > 0) {
-			    format = '<span class="text-success">%-w week%!w ' + format + '</span>';
+			    format = '%-w week%!w ' + format;
 			}
 			if(event.offset.months > 0) {
-			    format = '<span class="text-success">%-m month%!m ' + format + '</span>';
+			    format = '%-m month%!m ' + format;
 			}
-			  $(this).html(event.strftime(format));
+			  $(this).html(event.strftime('<span class="text-success">Active:</span> <span class="text-danger">' + format + '</span>'));
 
 			})
 		.on('finish.countdown', function(event) {
-		       $(this).html('<span class="text-danger"> Project Expired!</span>').parent().addClass('disabled');
+		       $(this).html('<span class="text-danger">Expired</span>').parent().addClass('disabled');
 		    });
 		});  
 
@@ -743,6 +713,7 @@ $(document).on('click', '.dropdown-menu', function (e) {
     	   $($this).find('.modal-body #redirect-html').html(event.strftime('<span>%S</span>'));
 		})
        }); 
+
     /*----------------------------------------------------*/
 	/* Agree to Terms */
 	/*----------------------------------------------------*/

@@ -67,14 +67,14 @@ class MailEvent
     }
     
     // Catalog\Model\Catalog\ProjectModel\addProject
-    public static function addProject(int $employer_id, string $name)
+    public static function addProject(array $data)
     {
         $config = \Config\Services::email();
         $customerModel = new CustomerModel();
-        $customer_info = $customerModel->getCustomer($employer_id);
+        $customer_info = $customerModel->getCustomer($data['employer_id']);
 
         $data['text_new_subject'] = sprintf(lang('mail/project_alert.text_new_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
-        $data['text_new']         = sprintf(lang('mail/project_alert.text_new'), $name);
+        $data['text_new']         = sprintf(lang('mail/project_alert.text_new'), $data['name']);
         $data['text_thank']       = lang('mail/project_alert.text_thank');
         $data['text_signature']   = sprintf(lang('mail/project_alert.text_signature'), service('registry')->get('config_name'));
         

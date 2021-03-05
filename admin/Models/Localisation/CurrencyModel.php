@@ -1,4 +1,6 @@
-<?php namespace Admin\Models\Localisation;
+<?php 
+
+namespace Admin\Models\Localisation;
 
 use CodeIgniter\Model;
 
@@ -134,7 +136,7 @@ class CurrencyModel extends Model
         }
     }
 
-    public function refresh($default = 'EGP')
+    public function refresh(string $default = 'EGP')
     {
         $currency_data = [];
 
@@ -173,7 +175,7 @@ class CurrencyModel extends Model
         }
     }
 
-    public function editValueByCode($code, $value)
+    public function editValueByCode(string $code, $value)
     {
         $builder = $this->db->table('currency');
         $builder->set('value', $value);

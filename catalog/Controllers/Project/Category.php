@@ -129,8 +129,8 @@ class Category extends BaseController
 
             $filter_data = [
                 'filter_name' => $filter_name,
-                'start' => 0,
-                'limit' => 5,
+                'start'       => 0,
+                'limit'       => 5,
             ];
 
             $results = $categoryModel->getCategories($filter_data);

@@ -12,101 +12,125 @@
 						<h3><i class="icon-material-outline-account-circle"></i> {{ text_account }}</h3>
 					</div>
 					<div class="content with-padding padding-bottom-0">
-						<form id="profile-form">
-						<div class="row">
-							<div class="col-sm-4 text-center">
-								<div class="kv-avatar">
-									<div class="file-loading">
-										<input id="avatar-1" name="image" type="file">
-									</div>
+							<div class="row">
+								<div class="col-3">
+								  <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+									<a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a>
+									<a class="nav-link" id="v-pills-notification-tab" data-toggle="pill" href="#v-pills-notification" role="tab" aria-controls="v-pills-notification" aria-selected="false">Email & Notifications</a>
+									<a class="nav-link" id="v-pills-password-tab" data-toggle="pill" href="#v-pills-password" role="tab" aria-controls="v-pills-password" aria-selected="false">Password</a>
+									<a class="nav-link" id="v-pills-security-tab" data-toggle="pill" href="#v-pills-security" role="tab" aria-controls="v-pills-security" aria-selected="false">Account Security</a>
+								  </div>
 								</div>
-								<div class="kv-avatar-hint">
-									<small>Select file < 1500 KB | jpg,png,gif</small> </div> <div id="kv-avatar-errors"
-											class="center-block" style="width:100%;display:none">
+								<div class="col-9">
+								  <div class="tab-content" id="v-pills-tabContent">
+									<div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+										<form id="form-profile">
+										<div class="col">
+											<div class="kv-avatar">
+												<div class="file-loading">
+													<input id="avatar-1" name="image" type="file">
+												</div>
+											</div>
+											<div class="kv-avatar-hint">
+												<small>Select file < 1500 KB | jpg,png,gif</small> </div> <div id="kv-avatar-errors"
+														class="center-block" style="width:100%;display:none">
+											</div>
+										</div>
+										<div class="col">
+											<div class="row">
+												<div class="col-12">
+													<div class="submit-field required">
+														<h5>{{ entry_firstname }}</h5>
+														<input type="text" class="form-control" id="input-firstname"
+															name="firstname" value="{{ firstname }}">
+													</div>
+												</div>
+												<div class="col-12">
+													<div class="submit-field required">
+														<h5>{{ entry_lastname }}</h5>
+														<input type="text" class="form-control" id="input-lastname" name="lastname"
+															value="{{ lastname }}">
+													</div>
+												</div>
+												<div class="col-12">
+													<div class="submit-field">
+														<h5>{{ entry_username }}</h5>
+														<input type="text" class="form-control" value="{{ username }}" name="username">
+													</div>
+												</div>
+											</div>
+										</div>
+										<button type="button" id="button-form-profile" class="button ripple-effect big margin-top-30 float-right">Update</button>
+									</form>
+									</div> <!--../profile tab content-->
+									<div class="tab-pane fade" id="v-pills-notification" role="tabpanel" aria-labelledby="v-pills-notification-tab">
+										<form id="form-notification">
+										<div class="col-12">
+											<div class="form-group">
+												<label for="input-password">{{ entry_email }}</label>
+												<input type="text" class="form-control" value="{{ email }}">
+											</div>
+											<div class="form-group">
+												<label for="input-password">{{ entry_current_password }}</label>
+												<input type="password" class="form-control" id="input-password" name="password">
+											</div>	
+										</div>
+										<button type="button" id="button-form-notification" class="button ripple-effect big margin-top-30 float-right">Update</button>
+									</form>
+
+									</div><!--../notification tab content-->
+									<div class="tab-pane fade" id="v-pills-password" role="tabpanel" aria-labelledby="v-pills-password-tab">
+										<form id="form-password">
+											<div class="headline mb-4">
+												<h3><i class="icon-material-outline-lock"></i> {{ text_password_security }}</h3>
+											</div>
+											<div class="form-group">
+												<label for="input-current">{{ entry_current_password }}</label>
+												<input type="password" class="form-control" id="input-current" name="current">
+											</div>											
+											
+											<div class="form-group">
+												<label for="input-password">{{ entry_password }}</label>
+												<input type="password" class="form-control" id="input-password" name="password">
+											</div>	
+											<div class="form-group">
+												<label for="input-confirm">{{ entry_confirm }}</label>
+												<input type="password" class="form-control" id="input-confirm" name="confirm">
+											</div>
+											<button type="button" id="button-form-password" class="button ripple-effect big margin-top-30 float-right">Update</button>
+										</form>
+									</div><!--../password tab content-->
+									<div class="tab-pane fade" id="v-pills-security" role="tabpanel" aria-labelledby="v-pills-security-tab">
+										<div class="form-security">
+											<form class="form-group">
+												<label class="control-label"><span data-toggle="tooltip" title="{{ help_two_step }}"><i class="fas fa-info-circle"></i></span> {{ text_two_step }} </label>
+												<div class="">
+												  <label class="radio-inline"> {% if two_step %}
+													<input type="radio" name="two_step" value="1" checked="checked" /> {{ text_yes }}
+													{% else %}
+													<input type="radio" name="two_step" value="1" /> {{ text_yes }}
+													{% endif %} </label>
+												  <label class="radio-inline"> {% if not two_step %}
+													<input type="radio" name="two_step" value="0" checked="checked" /> {{ text_no }}
+													{% else %}
+													<input type="radio" name="two_step" value="0" /> {{ text_no }}
+													{% endif %} </label>
+												</div>
+											  </div>
+											  <button type="button" id="button-form-security" class="button ripple-effect big margin-top-30 float-right">Update</button>
+											</form>
+
+									</div><!--../security tab content-->
+								  </div>
 								</div>
-							</div>
-							<div class="col">
-								<div class="row">
-									<div class="col-12">
-										<div class="submit-field required">
-											<h5>{{ entry_firstname }}</h5>
-											<input type="text" class="form-control" id="input-firstname"
-												name="firstname" value="{{ firstname }}">
-										</div>
-									</div>
-									<div class="col-12">
-										<div class="submit-field required">
-											<h5>{{ entry_lastname }}</h5>
-											<input type="text" class="form-control" id="input-lastname" name="lastname"
-												value="{{ lastname }}">
-										</div>
-									</div>
-									<div class="col-12">
-										<div class="submit-field">
-											<h5>{{ entry_username }}</h5>
-											<input type="text" class="form-control" value="{{ username }}" name="username">
-										</div>
-									</div>
-									<div class="col-12">
-										<div class="submit-field">
-											<h5>{{ entry_email }}</h5>
-											<input type="text" class="form-control" value="{{ email }}" disabled>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-12 mt-4">
-								<hr />
-								<div class="headline mb-4">
-									<h3><i class="icon-material-outline-lock"></i> {{ text_password_security }}</h3>
-								</div>
-								<div class="row">
-									<div class="col-xs-12 col-md-4">
-										<div class="submit-field required">
-											<h5>{{ entry_current_password }}</h5>
-											<input type="password" class="form-control" id="input-current"
-												name="current">
-										</div>
-									</div>
-									<div class="col-xs-12 col-md-4">
-										<div class="submit-field required">
-											<h5>{{ entry_password }}</h5>
-											<input type="password" class="form-control" id="input-password"
-												name="password">
-										</div>
-									</div>
-									<div class="col-xs-12 col-md-4">
-										<div class="submit-field required">
-											<h5>{{ entry_confirm }}</h5>
-											<input type="password" class="form-control" id="input-confirm"
-												name="confirm">
-										</div>
-									</div>
-									<div class="col">
-									<div class="form-group row">
-										<label class="col-sm-3 control-label"><span data-toggle="tooltip" title="{{ help_two_step }}"><i class="fas fa-info-circle"></i></span> {{ text_two_step }} </label>
-										<div class="col-sm-6">
-										  <label class="radio-inline"> {% if two_step %}
-											<input type="radio" name="two_step" value="1" checked="checked" /> {{ text_yes }}
-											{% else %}
-											<input type="radio" name="two_step" value="1" /> {{ text_yes }}
-											{% endif %} </label>
-										  <label class="radio-inline"> {% if not two_step %}
-											<input type="radio" name="two_step" value="0" checked="checked" /> {{ text_no }}
-											{% else %}
-											<input type="radio" name="two_step" value="0" /> {{ text_no }}
-											{% endif %} </label>
-										</div>
-									  </div>
-									</div>
-								</div>
-							</div>
-							<div class="col-12">
-								<button type="button" id="profile-form-button"
-									class="button ripple-effect big margin-top-30 float-right">Update</button>
-							</div>
-						</div>
-					</form>
+							  </div>
+
+
+
+
+
+
+						
 					</div>
 				</div>
 			</div>
