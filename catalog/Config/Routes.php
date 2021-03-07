@@ -48,6 +48,11 @@ $routes->group('local', function ($routes) {
 // Freelancers
 $routes->get('freelancers', 'Freelancer\Freelancer::index', ['as' => 'freelancers']);
 $routes->get('f/(:segment)', 'Freelancer\Freelancer::profile/$1', ['as' => 'freelancer_profile']);
+// Freelancer Profile
+$routes->group('certificate', function ($routes) {
+    //$routes->add('delete/(:num)', 'Freelancer\Freelancer::deleteCertificate/$1', ['as' => 'certificate_delete']);
+    $routes->post('add', 'Freelancer\Freelancer::addCertificate', ['as' => 'certificate_add']);
+});
 // Account
 $routes->group('account/(:segment)', function ($routes) {
     $routes->add('dashboard', 'Account\Dashboard::index/$1', ['as' => 'account_dashboard']);

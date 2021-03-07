@@ -330,7 +330,6 @@ bootbox.confirm({
 <script type='text/javascript'>
 $('#bid-container').on('click', '.pagination a', function(e) {
 	e.preventDefault();
-
 	$('#bid-container').fadeOut('slow');
 	$('#bid-container').load(this.href);
 	$('#bid-container').fadeIn('slow');

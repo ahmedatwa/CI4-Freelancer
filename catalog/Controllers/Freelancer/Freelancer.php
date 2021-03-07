@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Catalog\Controllers\Freelancer;
 
@@ -150,7 +150,7 @@ class Freelancer extends BaseController
                 'category_id' => $category['category_id'],
                 'name'        => $category['name']
             ];
-        }   
+        }
 
         // Country
         $countryModel = new CountryModel();
@@ -166,7 +166,7 @@ class Freelancer extends BaseController
         $data['order_by']       = $order_by;
         $data['limit']          = $limit;
         $data['page']           = $page;
-
+        
         $data['langData'] = lang('freelancer/freelancer.list');
 
         // Pagination
@@ -219,7 +219,6 @@ class Freelancer extends BaseController
             $name                  = $freelancer_info['firstname'] . ' ' . $freelancer_info['lastname'];
             $data['name']          = (strlen($name) > 1) ? $name : '@'. $freelancer_info['username'];
             $data['freelancer_id'] = $freelancer_info['customer_id'];
-            $data['employer_id']   = $this->customer->getID();
             $data['about']         = $freelancer_info['about'];
             $data['rate']          = $freelancer_info['rate'];
             $data['tag_line']      = $freelancer_info['tag_line'];
@@ -240,19 +239,9 @@ class Freelancer extends BaseController
             $data['rating']        = $reviewModel->getAvgReviewByFreelancerId($freelancer_id);
             $data['recommended']   = $reviewModel->getRecommendedByFreelancerId($freelancer_id);
             $data['ontime']        = $reviewModel->getOntimeByFreelancerId($freelancer_id);
+            $data['total_jobs']    = $freelancerModel->getTotalFreelancerProjects(['freelancer_id' => $freelancer_id]);
             // Social
             $data['social']        = json_decode($freelancer_info['social'], true);
-            $data['skills']        = $freelancerModel->getFreelancerSkills($freelancer_id);
-            // Languages
-            $data['languages'] = [];
-            $languages  = $freelancerModel->getFreelancerLanguages(['freelancer_id' => $freelancer_id]);
-
-            foreach ($languages as $language) {
-                $data['languages'][] = $language['text'];
-            }
-
-            $data['educations']    = $freelancerModel->getFreelancerEducation($freelancer_id);
-            $data['certificates']  = $freelancerModel->getFreelancerCertificates($freelancer_id);
 
             // reviews
             $data['reviews'] = [];
@@ -268,11 +257,11 @@ class Freelancer extends BaseController
             }
 
        
-        $limit = 5;
-        $page = 1;
+            $limit = 5;
+            $page = 1;
 
-        $pager = \Config\Services::pager();
-        $data['pagination'] = ($reviews_total <= $limit) ? '' : $pager->makeLinks($page, $limit, $reviews_total, 'default_simple');
+            $pager = \Config\Services::pager();
+            $data['pagination'] = ($reviews_total <= $limit) ? '' : $pager->makeLinks($page, $limit, $reviews_total, 'default_simple');
 
             // Project PMs Data
             $inboxModel = new InboxModel();
@@ -285,15 +274,187 @@ class Freelancer extends BaseController
         // Update Profile Views
         $freelancerModel->updateViewed($freelancer_id);
 
+        // Education 
+        $education = $freelancerModel->getEducation($freelancer_id);
+        foreach ($education as $result) {
+            $data['educations'][] = [
+                'education_id' => $result['education_id'],
+                'university'   => $result['university'],
+                'major'        => $result['major'],
+                'year'         => $result['year'],
+                'title'        => $result['title'],
+                'country'      => $result['country'],
+            ];
+        }
+
+        // Skills
+        $skills = $freelancerModel->getSkills($freelancer_id);
+        foreach ($skills as $skill) {
+            $data['skills'][] = [
+                'skill_id' => $skill['skill_id'],
+                'name'     => $skill['name'],
+            ];
+        }
+
+        //  Education Title
+        $data['education_titles'][] = [
+            'value' => 'associate',
+            'text'  => lang('freelancer/freelancer.text_associate'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'certificate',
+            'text'  => lang('freelancer/freelancer.text_certificate'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'ba',
+            'text'  => lang('freelancer/freelancer.text_ba'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'brach',
+            'text'  => lang('freelancer/freelancer.text_barch'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'bm',
+            'text'  => lang('freelancer/freelancer.text_bm'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'bfa',
+            'text'  => lang('freelancer/freelancer.text_bfa'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'bsc',
+            'text'  => lang('freelancer/freelancer.text_bsc'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'ma',
+            'text'  => lang('freelancer/freelancer.text_ma'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'mba',
+            'text'  => lang('freelancer/freelancer.text_mba'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'mfa',
+            'text'  => lang('freelancer/freelancer.text_mfa'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'msc',
+            'text'  => lang('freelancer/freelancer.text_msc'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'jd',
+            'text'  => lang('freelancer/freelancer.text_jd'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'md',
+            'text'  => lang('freelancer/freelancer.text_md'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'phd',
+            'text'  => lang('freelancer/freelancer.text_phd'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'llb',
+            'text'  => lang('freelancer/freelancer.text_llb'),
+        ];
+        $data['education_titles'][] = [
+            'value' => 'llm',
+            'text'  => lang('freelancer/freelancer.text_llm'),
+        ];
+
+        // Country
+        $countryModel = new CountryModel();
+        $data['countries'] = $countryModel->where('status', 1)->findAll();
+
+        // Languages
+        $data['languages'] = [];
+        $languages  = $freelancerModel->getLanguages(['freelancer_id' => $freelancer_id]);
+
+        foreach ($languages as $language) {
+            switch ($language['level']) {
+                case '1':
+                $level = lang('account/setting.list.text_basic');
+                  break;
+                case '2':
+                $level = lang('account/setting.list.text_conversational');
+                 break;
+                case '3':
+                $level = lang('account/setting.list.text_fluent');
+                 break;
+                case '4':
+                $level = lang('account/setting.list.text_native_or_bilingual');
+                 break;
+            }
+
+            $data['languages'][] = [
+                'language_id' => $language['language_id'],
+                'name'        => $language['text'],
+                'level'       => $level,
+            ];
+        }
+
+        // certificates
+        $data['certificates'] = [];
+
+        $results = $freelancerModel->getCertificates($freelancer_id);
+
+        foreach ($results as $result) {
+            $data['certificates'][] = [
+                'certificate_id' => $result['certificate_id'],
+                'name'           => $result['name'],
+                'year'           => $result['year'],
+            ];
+        }
+
+        // Profile Progress Bar
+        if ($freelancer_info) {
+            $data['profile_strength'] = 0;
+
+            if ($freelancer_info['rate'] && $freelancer_info['tag_line'] && $freelancer_info['about']) {
+                $data['profile_strength'] = 10;
+            } 
+
+            if ($freelancer_info['social']) {
+                $data['profile_strength'] += 10;
+            } 
+
+            if ($freelancer_info['bg_image']) {
+                $data['profile_strength'] += 10;
+            } 
+            // Certs
+            if ($freelancerModel->getTotalCertificatesByID($freelancer_id)) {
+                $data['profile_strength'] += 10;
+            } 
+            // Edu
+            if ($freelancerModel->getTotalEducationByID($freelancer_id)) {
+                $data['profile_strength'] += 10;
+            } 
+            // Skills
+            if ($freelancerModel->getTotalSkillsByID($freelancer_id)) {
+                $data['profile_strength'] += 10;
+            } 
+            // Lang
+            if ($freelancerModel->getTotalLanguageByID($freelancer_id)) {
+                $data['profile_strength'] += 30;
+            } 
+
+            // Update the current value if not 100
+            if ($freelancer_info['profile_strength'] < 100) {
+                $freelancerModel->updateStrength($freelancer_id, $data['profile_strength']);
+            }
+        }
+
+        $data['customer_id'] = $this->customer->getID();
+
         $data['langData'] = lang('freelancer/freelancer.list');
         
         $this->template->output('freelancer/freelancer_info', $data);
     }
 
-   /**
-   *  overwrite any existing query variables.
-   *  add a value to the query variables collection without destroying the existing query variables
-   */
+    /**
+    *  overwrite any existing query variables.
+    *  add a value to the query variables collection without destroying the existing query variables
+    */
     public function filter()
     {
         $json = [];
@@ -327,7 +488,8 @@ class Freelancer extends BaseController
         } else {
             $freelancer_id = 0;
         }
-        var_dump( $this->request->getPost());die;
+        var_dump($this->request->getPost());
+        die;
         $freelancerModel = new FreelancerModel();
 
         if (! $this->validate([
@@ -351,9 +513,268 @@ class Freelancer extends BaseController
         return $this->response->setJSON($json);
     }
 
+    /*
+    * Additional Freelancer Profile Info
+    */
+    // ---- Education ---- //
+    public function addEducation()
+    {
+        $json = [];
 
+        if (! $this->validate([
+            'university_id' => [
+                'label' => 'University',
+                'rules' => 'required|numeric|is_unique[customer_to_education.university_id]',
+                'errors' => [
+                   'is_unique' => 'University Name already exists'
+                ]
+            ],
+            'major_title'   => [
+                'label' => 'Major Title',
+                'rules' => 'required|alpha_numeric_space'
+            ],
+            'major_id'      => [
+                'label' => 'Major',
+                'rules' => 'required|numeric'
+            ],
+            'education_country' => [
+                'label' => 'Country',
+                'rules' => 'required|alpha_numeric_space'
+            ]
+        ])) {
+            $json['error'] = $this->validator->getErrors();
+        }
 
+        if (! $json) {
+            $freelancerModel = new FreelancerModel();
 
+            $freelancerModel->addEducation($this->request->getVar('freelancer_id'), $this->request->getPost());
+            $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Education');
+        }
 
+        return $this->response->setJSON($json);
+    }
+
+    public function universitiesAutocomplete()
+    {
+        $json = [];
+
+        if ($this->request->getVar('filter_university')) {
+            $filter_data = [
+                'limit'             => 5,
+                'start'             => 0,
+                'filter_university' => $this->request->getVar('filter_university')
+            ];
+
+            $freelancerModel = new FreelancerModel();
+
+            $universities = $freelancerModel->getUniversities($filter_data);
+
+            foreach ($universities as $university) {
+                $json[] = [
+                    'university_id' => $university['university_id'],
+                    'university'    => $university['text'],
+                    'country'       => $university['country']
+                ];
+            }
+
+            return $this->response->setJSON($json);
+        }
+    }
+
+    // Major Autocomplete
+    public function majorsAutocomplete()
+    {
+        $json = [];
+
+        if ($this->request->getVar('filter_major')) {
+            $filter_data = [
+                'limit'             => 5,
+                'start'             => 0,
+                'filter_university' => $this->request->getVar('filter_major')
+            ];
+    
+            $freelancerModel = new FreelancerModel();
+    
+            $majors = $freelancerModel->getMajors($filter_data);
+    
+            foreach ($majors as $major) {
+                $json[] = [
+                    'major_id' => $major['major_id'],
+                    'text'     => $major['text'],
+                ];
+            }
+    
+            return $this->response->setJSON($json);
+        }
+    }
+
+    public function deleteEducation()
+    {
+        $json = [];
+        if ($this->customer->getID()) {
+            $freelancerModel = new FreelancerModel();
+            if ($this->request->getVar('education_id')) {
+                $freelancerModel->deleteEducation($this->request->getVar('education_id'));
+                $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Education');
+            }
+            return $this->response->setJSON($json);
+        }
+    }
+    // ---- Education End ---- //
+    // ---- Certificates Start ---- //
+    public function addCertificate()
+    {
+        $json = [];
+
+        if (! $this->validate([
+            'certificate' => [
+                'label' => 'Certificate Name',
+                'rules' => 'required|is_unique[customer_to_certificate.name]'
+            ],
+            'year' => [
+                'label' => 'Certificate Year',
+                'rules' => 'required|numeric'
+            ]
+        ])) {
+            $json['error'] = $this->validator->getErrors();
+        }
+
+        if (! $json) {
+            $freelancerModel = new FreelancerModel();
+
+            $freelancerModel->addCertificate($this->request->getVar('freelancer_id'), $this->request->getPost('name'), $this->request->getPost('year'));
+            $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Certificates');
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function deleteCertificate()
+    {
+        $json = [];
+
+        if ($this->request->isAJAX()) {
+            if ($this->request->getVar('certificate_id')) {
+                $certificate_id = (int) $this->request->getVar('certificate_id');
+            } else {
+                $certificate_id = 0;
+            }
+
+            if ($this->customer->isLogged() && ($this->request->getMethod() == 'post')) {
+                $freelancerModel = new FreelancerModel();
+                if ($certificate_id) {
+                    $freelancerModel->deleteCertificate($certificate_id);
+                    $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Certificates');
+                }
+            }
+        }
+        return $this->response->setJSON($json);
+    }
+    // ---- Certificates End ---- //
+    // ---- Language Start ---- //
+    public function languagesAutocomplete()
+    {
+        $json = [];
+
+        if ($this->request->getVar('filter_language')) {
+            $filter_data = [
+                'limit'             => 5,
+                'start'             => 0,
+                'filter_language'   => $this->request->getVar('filter_language')
+            ];
+
+            $freelancerModel = new FreelancerModel();
+
+            $languages = $freelancerModel->getLanguages($filter_data);
+
+            foreach ($languages as $language) {
+                $json[] = [
+                    'language_id' => $language['language_id'],
+                    'text'        => $language['text'],
+                ];
+            }
+
+            return $this->response->setJSON($json);
+        }
+    }
+
+    public function addLanguage()
+    {
+        $json = [];
+        
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
+
+            if (! $this->validate([
+                'language'  => [
+                    'label'  => 'Language Name',
+                    'rules'  => 'required',
+                ],
+                'level' => [
+                    'label'  => 'Language Level',
+                    'rules'  => 'required|numeric'
+                ],
+            ])) {
+                $json['error'] = $this->validator->getErrors();
+            }
+
+            if (! $json) {
+                $freelancerModel = new FreelancerModel();
+
+                $freelancerModel->addLanguage($this->request->getPost('language_id'), $this->request->getVar('freelancer_id'), $this->request->getPost('level'));
+                $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Languages');
+            }
+        }
+        return $this->response->setJSON($json);
+    }
+
+    public function deleteLanguage()
+    {
+        $json = [];
+
+        if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
+            $freelancerModel = new FreelancerModel();
+
+            if ($this->request->getVar('language_id')) {
+                $freelancerModel->deleteLanguage($this->request->getVar('language_id'));
+                $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Languages');
+            }
+        }
+
+        return $this->response->setJSON($json);
+    }
+    // ---- Language End ---- //
+    // ---- Skills Start ---- //
+    public function addSkill()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post') {
+            if (! $json) {
+                $freelancerModel = new FreelancerModel();
+
+                $freelancerModel->addSkill($this->request->getPost());
+                $json['success'] = sprintf(lang('account/setting.text_success_edu'), lang('account/setting.text_skills'));
+            }
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    // Delete skill
+    public function deleteSkill()
+    {
+        $json = [];
+
+        if ($this->request->getVar('category_id')) {
+            $freelancerModel = new FreelancerModel();
+            $freelancerModel->deleteSkill($this->request->getVar('category_id'), $this->request->getVar('freelancer_id'));
+            $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Skills');
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    // ---- Skills End ---- //
     //--------------------------------------------------------------------
 }

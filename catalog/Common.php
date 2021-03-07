@@ -21,10 +21,17 @@ use Twig\Extra\Intl\IntlExtension;
 if (! function_exists('view')) {
     function view(string $name, array $data = [], array $options = [])
     {
+        $primaryLang = lang(config('App')->defaultLocale . '.list');
         // merge the langData if sent from controller
-        if (isset($data['langData'])) {
-            $data = array_merge($data['langData'], $data);
+        if (isset($data['langData']) && is_array($data['langData'])) {
+            if (is_array($primaryLang)) {
+                $all = array_merge($data['langData'], $primaryLang);
+            }
+            $data = array_merge($all, $data);
         }
+        // } else {
+        //     throw new \Exception("Language Data isn't set in method, view name: {$name}");
+        // }
 
         if (config('Config')->templateEngine == 'twig') {
             // specify where to look for templates

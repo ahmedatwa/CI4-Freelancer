@@ -71,7 +71,7 @@ class MailEvent
     {
         $config = \Config\Services::email();
         $customerModel = new CustomerModel();
-        $customer_info = $customerModel->getCustomer($data['employer_id']);
+        $customer_info = $customerModel->find($data['employer_id']);
 
         $data['text_new_subject'] = sprintf(lang('mail/project_alert.text_new_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8'));
         $data['text_new']         = sprintf(lang('mail/project_alert.text_new'), $data['name']);
@@ -101,7 +101,7 @@ class MailEvent
         $customerModel = new CustomerModel();
         $seo_url = service('seo_url');
 
-        $customer_info = $customerModel->getCustomer($employer_id);
+        $customer_info = $customerModel->find($employer_id);
         
 
         $keyword = $seo_url->getKeywordByQuery('project_id=' . $project_id);
@@ -142,7 +142,7 @@ class MailEvent
 
         $config->setFrom(service('registry')->get('config_email'));
 
-        $config->setTo($customerModel->getCustomer($data['freelancer_id'])['email']);
+        $config->setTo($customerModel->find($data['freelancer_id'])['email']);
 
         $config->setSubject(html_entity_decode(sprintf(lang('mail/payment_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
         
@@ -167,7 +167,7 @@ class MailEvent
 
         $config->setFrom(service('registry')->get('config_email'));
 
-        $config->setTo($customerModel->getCustomer($data['freelancer_id'])['email']);
+        $config->setTo($customerModel->find($data['freelancer_id'])['email']);
 
         $config->setSubject(html_entity_decode(sprintf(lang('mail/bid_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
         
@@ -199,7 +199,7 @@ class MailEvent
 
         $config->setFrom(service('registry')->get('config_email'));
 
-        $config->setTo($customerModel->getCustomer($args['customer_id'])['email']);
+        $config->setTo($customerModel->find($args['customer_id'])['email']);
 
         $config->setSubject(html_entity_decode(sprintf(lang('mail/login_alert.text_subject'), html_entity_decode(service('registry')->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
         

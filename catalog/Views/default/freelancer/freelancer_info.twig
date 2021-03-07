@@ -48,9 +48,17 @@
 					{% endfor %}
 				</ul>
 			</nav>
+			{% if freelancer_id == customer_id %}
+			<div class="progress my-2">
+				<div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+					role="progressbar" style="width: {{ profile_strength }}%"
+					aria-valuenow="{{ profile_strength }}" aria-valuemin="0" aria-valuemax="100">
+					%{{ profile_strength }}</div>
+			</div>
+			{% endif %}
 		</div>
 		<!-- Content -->
-		<div class="col-sm-12 col-md-9">
+		<div class="col-sm-12 col-md-9" id="freelancer-info">
 		<div class="shadow-sm p-3 mb-3 bg-white rounded border">
 			<!-- Page Content -->
 			<div class="single-page-section mb-3">
@@ -58,58 +66,223 @@
 				<p><a href="#" id="about" class="text-dark" data-type="textarea" data-pk="{{ freelancer_id }}">{{ about }}</a></p>
 			</div>
 		</div>
-
-		<div class="shadow-sm p-3 mb-3 bg-white rounded border">
-			<div class="single-page-section mb-3">
-				<h3 class="mb-3">{{ text_education }}</h3>
-				{% for educations in education %}
-				<p>{{ education.title|upper }} in {{ education['major'] }} | {{ education.university }} |
-					{{ education.year }}| {{ education.country }}</p>
-				{% endfor %}
-			</div>
-		</div>
+		{# Certificates Start #}
 		<div class="shadow-sm p-3 mb-3 bg-white rounded border">	
-			<div class="single-page-section mb-3">
-				<h3 class="mb-3">{{ text_cert }}</h3>
-				{% for cert in certificates %}
-				<p>{{ cert.name }}| {{ cert.year }}</p>
-				{% endfor %}
+			<div class="single-page-section mb-3" id="certificate-wrapper">
+				<div class="d-flex bd-highlight">
+					<div class="mr-auto p-2 bd-highlight"><h3 class="mb-3">{{ text_cert }}</h3></div>
+					{% if freelancer_id == customer_id %}
+					<div class="p-2 bd-highlight"><button class="btn btn-light bg-transparent border-0 btn-sm" type="button" id="button-edit-1" data-id="certificate">
+						<i class="fas fa-plus-circle"></i></button>
+					</div>
+					{% endif %}
+				</div>
+				{% if freelancer_id == customer_id %}
+				<div id="certificate-form" class="d-none animate__animated">
+					<div class="card-body">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="input-certificate">{{ entry_certification }}</label>
+								<input type="text" class="form-control" id="input-certificate"
+									name="certificate" placeholder="Certificate or Award">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="input-year">{{ entry_year }}</label>
+								<select id="input-year" class="form-control"
+									name="year">
+									{% set start_year = date() | date('Y') %}
+									{% set end_year = start_year - 50 %}
+									{% for year in start_year..end_year %}
+									<option value="{{ year }}">
+										{{ year }}</option>
+									{% endfor %}
+								</select>
+								<span class="lnr lnr-chevron-down"></span>
+							</div>
+							<div class="col-md-12">
+								<div class="float-right">
+									<button class="btn btn-primary btn-sm" id="button-add"
+									type="button"><i class="icon-material-outline-add"></i>
+									{{ button_save }}</button>
+								</div>
+							</div>
+						</div>
+		         	</div>
+				</div>
+				{% endif %}
+				<div id="certificate-list">
+					{% if certificates %}
+					{% for certificate in certificates %}
+					<blockquote class="blockquote mb-2" id="blockquote-{{ certificate.certificate_id }}">
+						<p>{{ certificate.name }}</p>
+						<footer class="blockquote-footer">{{ certificate.year }}
+							{% if freelancer_id == customer_id %}
+							<a href="#" id="button-delete" data-id="{{ certificate.certificate_id }}">
+								<cite title="{{ button_delete }}">{{ button_delete }}</cite>
+							</a>
+							{% endif %}
+						</footer>
+					</blockquote>
+					{% endfor %}
+					{% endif %}
+				</div>
 			</div>
 		</div>	
+		{# Certificates End #}
+		{# education Start #}
 			<div class="shadow-sm p-3 mb-3 bg-white rounded border">
-			<div class="single-page-section mb-3">
-				<h3 class="mb-3">{{ text_skills }}</h3>
+			<div class="single-page-section mb-3" id="education-wrapper">
+				<div class="d-flex bd-highlight">
+					<div class="mr-auto p-2 bd-highlight"><h3 class="mb-3">{{ text_education }}</h3></div>
+					{% if freelancer_id == customer_id %}
+					<div class="p-2 bd-highlight"><button class="btn btn-light bg-transparent border-0 btn-sm" type="button" id="button-edit-2" data-id="education">
+						<i class="fas fa-plus-circle"></i></button>
+					</div>
+					{% endif %}
+				</div>
+				<div id="education-form" class="d-none animate__animated">
+					<div class="card-body">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+							<label for="filter_university">{{ entry_university }} <span data-toggle="tooltip" data-placement="top" title="Autocomplete">
+							<i class="fas fa-info-circle"></i></span></label>
+							<input type="text" class="form-control" id="filter_university" name="filter_university" placeholder="{{ entry_university }}">
+							<input name="university_id" id="input-university-id" type="hidden"> <small class="form-text text-muted" id="error_filter_university"></small>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="country">{{ entry_country }}</label>
+							<select class="custom-select" name="education_country"
+								id="input-education-country">
+								<option value="*">{{ text_select }}</option>
+								{% for country in countries %}
+								<option value="{{ country.name }}">{{ country.name }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group col-md-3">
+							<label for="major_title">{{ entry_uni_title }}</label>
+							<select id="input-major-title" class="custom-select" name="major_title">
+								<option value="">{{ text_select }}</option>
+								{% for title in education_titles %}
+								<option value="{{ title.value }}">
+									{{ title.text }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="filter_major">{{ entry_major }} <span data-toggle="tooltip" data-placement="top" title="Autocomplete">
+								<i class="fas fa-info-circle"></i></span></label>
+							<input type="text" class="form-control" id="filter_major" name="filter_major">
+							<input name="major_id" id="input-major-id" type="hidden">
+						</div>
+						<div class="form-group col-md-3">
+							<label for="major_year">{{ entry_year }}</label>
+							<select id="major_year" class="custom-select" name="major_year">
+								{% set start_year = date() | date('Y') %}
+								{% set end_year = start_year - 50 %}
+								{% for year in start_year..end_year %}
+								<option value="{{ year }}">
+									{{ year }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="col-md-12">
+							<button class="btn btn-primary btn-sm ripple-effect float-right" id="button-add" type="button">
+								<i class="icon-material-outline-add"></i> {{ button_add }}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="education-list">
 				<div class="task-tags">
-					{% for skill in skills %}
-					<span>{{ skill.name }}</span>
-					{% endfor %}
+					{% for education in educations %}
+					<div id="{{ education.education_id }}" class="row mb-2">
+						<div style="width: 2%;" class="mx-1">
+					    <a href="#" class="ml-1" id="button-delete{{ education.education_id }}" data-id="{{ education.education_id }}">
+							<i class="fas fa-times"></i></a>
+				</div>
+				<div class="col">
+				      <h3 class="mb-1">{{ education.title|upper }} in {{ education['major'] }}</h3>
+						<footer class="blockquote-footer"><cite title="{{ education.university }}">{{ education.university }}</cite></footer>
+						<footer class="blockquote-footer"><cite>{{ text_country }}: {{ education.country }}</cite></footer>
+						<footer class="blockquote-footer"><cite>{{ text_year }}: {{ education.year }}</cite></footer>
+				</div>		
+					</div>	
+				    {% endfor %}
+				</div>
 				</div>
 			</div>
 		</div>
+		{# Language Start #}
 			<div class="shadow-sm p-3 mb-3 bg-white rounded border">
-			<div class="single-page-section mb-3">
-				<h3 class="mb-3">{{ text_languages }}</h3>
+			<div class="single-page-section mb-3" id="language-wrapper">
+				<div class="d-flex bd-highlight">
+					<div class="mr-auto p-2 bd-highlight"><h3 class="mb-3">{{ text_languages }}</h3></div>
+					{% if freelancer_id == customer_id %}
+					<div class="p-2 bd-highlight"><button class="btn btn-light bg-transparent border-0 btn-sm" type="button" id="button-edit-3" data-id="language">
+						<i class="fas fa-plus-circle"></i></button>
+					</div>
+					{% endif %}
+				</div>
+				{% if freelancer_id == customer_id %}
+				<div id="language-form" class="d-none animate__animated">
+					<div class="card-body">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+							<label for="filter_language">{{ entry_language }} <span data-toggle="tooltip" data-placement="top" title="Autocomplete">
+								<i class="fas fa-info-circle"></i></span></label>
+								<input type="hidden" name="language_id" value="">
+								<input type="text" class="form-control" id="input-language" name="language" placeholder="{{ text_add_language }}">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="input-level">{{ entry_language_level }}</label>
+								<select id="input-level" class="custom-select" name="level">
+									<option value="">{{ text_select }}</option>
+									<option value="1">{{ text_basic }}</option>
+									<option value="2">{{ text_conversational }}</option>
+									<option value="3">{{ text_fluent }}</option>
+									<option value="4">{{ text_native_or_bilingual }}</option>
+								</select>
+							</div>
+							<div class="col-md-12">
+								<button class="btn btn-primary float-right btn-sm" id="button-add"
+									type="button"><i class="icon-material-outline-add"></i>
+									{{ button_add }}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				<div id="language-list">
 				<div class="task-tags mt-0">
 					{% for language in languages %}
-					<span>{{ language }}</span>
+					<span id="{{ language.language_id }}">{{ language.name }}
+						{% if customer_id == freelancer_id %}
+						<a href="#" class="ml-1" id="button-delete{{ language.language_id }}" data-id="{{ language.language_id }}"><i class="fas fa-times"></i></a>
+						{% endif %}
+					</span>
 					{% endfor %}
+				</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	{# language END #}
 		<!-- Sidebar -->
 		<div class="col">
 			<div class="sidebar-container">
-				<!-- Profile Overview -->
-				<div class="profile-overview">
-					<div class="overview-item"><strong><a href="#" class="text-dark" id="rate" data-type="text" data-pk="{{ freelancer_id }}">{{ rate }}</a></strong><span>Hourly Rate</span></div>
-					<div class="overview-item"><strong>53</strong><span>Jobs Done</span></div>
-				</div>
-				{% if customer_id != customer_profile_id %}
+				{% if freelancer_id == customer_id %}
+				<button type="button" class="btn btn-danger btn-block apply-now-button margin-bottom-50" disabled>{{ button_offer }}
+					<i class="icon-material-outline-arrow-right-alt"></i></button>
+				{% else %}
 				<button type="button" data-toggle="modal" data-target="#hireme"
 					class="button btn-block apply-now-button margin-bottom-50">{{ button_offer }}<i
 						class="icon-material-outline-arrow-right-alt"></i></button>
 				{% endif %}
+				<div class="profile-overview">
+					<div class="overview-item"><strong><a href="#" class="text-dark" id="rate" data-type="text" data-pk="{{ freelancer_id }}">{{ rate }}</a></strong><span>Hourly Rate</span></div>
+					<div class="overview-item"><strong>{{ total_jobs }}</strong><span>{{ text_jobs_done }}</span></div>
+				</div>
 				<!-- Freelancer Indicators -->
 				<div class="sidebar-widget">
 					<div class="freelancer-indicators">
@@ -121,7 +294,7 @@
 						</div>
 						<!-- Indicator -->
 						<div class="indicator">
-							<strong>{{ ontime }}%</strong>
+							<strong>{{ ontime }}</strong>
 							<div class="indicator-bar" data-indicator-percentage="{{ ontime }}"><span></span></div>
 							<span>On Time</span>
 						</div>
@@ -140,8 +313,27 @@
 					</div>
 				</div>
 				{% endif %}
+				<div class="sidebar-widget">
+					<div id="skills-list">
+						<ul class="list-group">
+							<li class="list-group-item">{{ text_skills }}
+								{% if freelancer_id == customer_id %}
+								<a href="#" role="button" class="btn btn-light border-0 bg-transparent float-right" id="button-add-skill">
+										<i class="fas fa-edit"></i></a>
+								{% endif %}		
+						</li>
+						{% for skill in skills %}
+						<li class="list-group-item d-flex justify-content-between align-items-center">
+							{{ skill.name }}
+							<span class="badge badge-primary badge-pill">14</span>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				</div>
 			</div>
 		</div>
+
 	</div>
 	<div class="row">
 		{# <!-- Boxed List --> #}
@@ -250,6 +442,466 @@ $('#tag_line, #rate, #about, #name').editable({
 	title: 'Edit/Enter'
 });
 </script>
+
+
+
+{# Certificate Start #}
+<script type="text/javascript">
+$('#certificate-wrapper').on('click', '#button-add', function (e) {
+	var node = this
+	e.preventDefault();
+	$.ajax({
+		url: 'freelancer/freelancer/addCertificate?freelancer_id={{ freelancer_id }}',
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			'X-Requested-With': 'XMLHttpRequest'
+		},
+		type: 'post',
+		dataType: 'json',
+		data: $('#certificate-form input[name=\'certificate\'], #certificate-form select[name=\'year\']'),
+		beforeSend: function () {
+			$('.alert, .text-danger, .invalid-feedback').remove();
+			$('#input-name, #input-year').removeClass('is-invalid');
+			$(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+			$('#certificate-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+		},
+		complete: function () {
+			$('#spinner').remove();
+			$(node).html('<i class="icon-material-outline-add"></i> {{ button_save }}');
+		},
+		success: function (json) {
+			if (json['error']) {
+				for (i in json['error']) {
+					var element = i.replace('_', '-');
+					$('#input-' + element).addClass('is-invalid')
+					$('#input-' + element).after('<div class="invalid-feedback">' + json['error'][i] + '</div>');
+				}
+			}
+			if (json['success']) {
+				$('#certificate-list input').val('');
+				$('#certificate-list').load(window.location.href + " #certificate-list");
+				$('#certificate-form').before('<div class="alert alert-success" id="auto-dismiss"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+{# //  Certificates Delete Delete  #}
+$('#certificate-wrapper').on('click', '#button-delete', function (e) {
+	e.preventDefault();
+	var node = this;
+	var dialog = bootbox.confirm({
+		message: "Are You Sure?",
+		size: 'small',
+		className: 'animate__animated animate__fadeInUpBig',
+		buttons: {
+			confirm: {
+				label: 'Yes',
+				className: 'btn-primary'
+			},
+			cancel: {
+				label: 'No',
+				className: 'btn-secondary'
+			}
+		},
+		onHide: function(e) {
+			dialog.addClass('animate__animated animate__fadeOutUpBig');
+		},
+		callback: function (result) {
+			if (result === true) {
+				$.ajax({
+					url: 'freelancer/freelancer/deleteCertificate?certificate_id=' + $(node).data('id'),
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+						'X-Requested-With': 'XMLHttpRequest',
+					},
+					method: 'post',
+					dataType: 'json',
+					beforeSend: function () {
+						$('.alert, .text-danger').remove();
+						$('#certificate-list').html('<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+					},
+					complete: function () {
+						$(this).html('{{ button_delete }}');
+					},
+					success: function (json) {
+						if (json['error']) {
+							$('#certificate-form').before('<div class="alert alert-danger" data-auto-dismiss><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+						}
+
+						if (json['success']) {
+				            $('#certificate-list').load(window.location.href + " #certificate-list");
+							$('#certificate-form').before('<div class="alert alert-success" data-auto-dismiss><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+						}
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				})
+			}
+		}
+	})
+});
+</script>
+{# <!--Certifications END  --> #}
+{# <!-- Languages Start --> #}
+<script type="text/javascript">
+$('input[name=\'language\']').autocomplete({
+	'source': function (request, response) {
+		$.ajax({
+			url: 'freelancer/freelancer/languagesAutocomplete?filter_language=' + encodeURIComponent(
+				request.term),
+			dataType: 'json',
+			success: function (json) {
+				response($.map(json, function (item) {
+					return {
+						label: item['text'],
+						value: item['language_id'],
+					}
+				}));
+			}
+		});
+	},
+	'select': function (event, ui) {
+		event.preventDefault();
+		$('input[name=\'language\']').val(ui.item.label);
+		$('input[name=\'language_id\']').val(ui.item.value);
+	}
+});
+
+$('#language-wrapper').on('click', 'button[id=\'button-add\']', function (e) {
+	var node = this
+	e.preventDefault();
+	$.ajax({
+		url: 'freelancer/freelancer/addLanguage?freelancer_id={{ freelancer_id }}',
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			'X-Requested-With': 'XMLHttpRequest',
+		},
+		type: 'post',
+		dataType: 'json',
+		data: $('#language-form select[name=\'level\'], #language-form input[name=\'language\'], #language-form input[name=\'language_id\']'),
+		beforeSend: function () {
+			$('.alert, .text-danger, .invalid-feedback').remove();
+			$('#input-name, #input-year').removeClass('is-invalid');
+			$(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+			$('#language-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+		},
+		complete: function () {
+			$('#spinner').remove();
+			$(node).html('<i class="icon-material-outline-add"></i> {{ button_save }}');
+		},
+	    success: function (json) {
+			if (json['error']) {
+				for (i in json['error']) {
+					var element = i.replace('_', '-');
+					$('#input-' + element).addClass('is-invalid')
+					$('#input-' + element).after('<div class="invalid-feedback">' + json['error'][i] + '</div>');
+				}
+			}
+
+			if (json['success']) {
+				$('#language-list').load(window.location.href + " #language-list .task-tags");
+				$('#language-form').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+{# //  Languages Delete Button #}
+$('#language-list').on('click', 'a[id^=\'button-delete\']', function (e) {
+	e.preventDefault();
+	var node = this
+	var dialog = bootbox.confirm({
+		message: "Are You Sure?",
+		size: 'small',
+		className: 'animate__animated animate__fadeInUpBig',
+		buttons: {
+			confirm: {
+				label: 'Yes',
+				className: 'btn-primary'
+			},
+			cancel: {
+				label: 'No',
+				className: 'btn-secondary'
+			}
+		},
+		onHide: function(e) {
+			dialog.addClass('animate__animated animate__fadeOutUpBig');
+		},
+		callback: function (result) {
+			if (result === true) {
+				$.ajax({
+					url: 'freelancer/freelancer/deleteLanguage?language_id=' + $(node).data('id'),
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+						'X-Requested-With': 'XMLHttpRequest',
+					},
+					method: 'post',
+					dataType: 'json',
+					beforeSend: function () {
+						$('.alert, .text-danger').remove();
+						$('#language-list').html('<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+					},
+					complete: function () {
+						$('#language-list').html('');
+					},
+					success: function (json) {
+						if (json['error']) {
+							$('#language-form').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						}
+
+						if (json['success']) {
+							$('#language-list').load(window.location.href + " #language-list .task-tags");
+							$('#language-form').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						}
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+			}
+		}
+	});
+});
+</script>
+{# <!-- languages End --> #}
+{# Education Start #}
+<script type="text/javascript">
+$('input[name=\'filter_university\']').autocomplete({
+	'source': function (request, response) {
+		$.ajax({
+			url: 'freelancer/freelancer/universitiesAutocomplete?filter_university=' +
+				encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function (json) {
+				response($.map(json, function (item) {
+					return {
+						label: item['university'],
+						value: item['university_id'],
+						country: item['country']
+					}
+				}));
+			}
+		});
+	},
+	'select': function (event, ui) {
+		event.preventDefault();
+		$('input[name=\'filter_university\']').val(ui.item.label);
+		$('input[name=\'university_id\']').val(ui.item.value);
+		$('input[name=\'education_country\']').val(ui.item.country);
+	}
+});
+{# Filter Major #}
+$('input[name=\'filter_major\']').autocomplete({
+	'source': function (request, response) {
+		$.ajax({
+			url: 'freelancer/freelancer/majorsAutocomplete?filter_major=' + encodeURIComponent(request
+				.term),
+			dataType: 'json',
+			success: function (json) {
+				response($.map(json, function (item) {
+					return {
+						label: item['text'],
+						value: item['major_id'],
+					}
+				}));
+			}
+		});
+	},
+	'select': function (event, ui) {
+		event.preventDefault();
+		$('input[name=\'filter_major\']').val(ui.item.label);
+		$('input[name=\'major_id\']').val(ui.item.value);
+	}
+});
+$('#education-form').on('click', 'button[id=\'button-add\']', function (e) {
+	e.preventDefault();
+	var node = this
+	$.ajax({
+		url: 'freelancer/freelancer/addEducation?freelancer_id={{ freelancer_id }}',
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			'X-Requested-With': 'XMLHttpRequest',
+		},
+		type: 'post',
+		dataType: 'json',
+		data: $('#education-form input[name=\'university_id\'], #education-form select[name=\'education_country\'], #education-form select[name=\'major_title\'], #education-form input[name=\'major_id\'], #education-form select[name=\'major_year\']'),
+		beforeSend: function () {
+			$('.alert, .text-danger, .invalid-feedback').remove();
+			$('#education-form input').removeClass('is-invalid');
+			$(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+			$('#education-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+		},
+		complete: function () {
+			$('#spinner').remove();
+			$(node).html('<i class="icon-material-outline-add"></i> {{ button_save }}');
+		},
+		success: function (json) {
+			if (json['error']) {
+				for (i in json['error']) {
+					var element = i.replace('_', '-');
+					$('#input-' + element).addClass('is-invalid')
+					$('#input-' + element).after('<div class="invalid-feedback">' + json['error'][i] + '</div>');
+				}
+			}
+
+			if (json['success']) {
+				$('#education-list').load(window.location.href + " #education-list .task-tags");
+				$('#education-form').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+{# //  Educations Delete Button #}
+$('#education-list').on('click', 'a[id^=\'button-delete\']', function (e) {
+	e.preventDefault();
+	var node = this;
+	var dialog = bootbox.confirm({
+		message: "Are You Sure?",
+		size: 'small',
+		className: 'animate__animated animate__fadeInUpBig',
+		buttons: {
+			confirm: {
+				label: 'Yes',
+				className: 'btn-primary'
+			},
+			cancel: {
+				label: 'No',
+				className: 'btn-secondary'
+			}
+		},
+		onHide: function(e) {
+			dialog.addClass('animate__animated animate__fadeOutUpBig');
+		},
+			callback: function (result) {
+			if (result === true) {
+				$.ajax({
+					url: 'freelancer/freelancer/deleteEducation?education_id=' + $(node).data('id'),
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					method: 'post',
+					dataType: 'json',
+					beforeSend: function () {
+						$('.alert, .text-danger').remove();
+						$('#education-list').html('<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+					},
+					complete: function () {
+						$('#education-list').html('');
+					},
+					success: function (json) {
+
+						if (json['error']) {
+							$('#educations-form').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						}
+
+						if (json['success']) {
+							$('#education-list').load(window.location.href + " #education-list .task-tags");
+							$('#education-form').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] +' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						}
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+			}
+		}
+	});
+});
+</script>
+{# Education END #}
+{# Skills Start #}
+<script type="text/javascript">
+$('#button-add-skill').on('click', function (e) {
+	e.preventDefault();
+	var dialog = bootbox.confirm({
+		message: '<form id="skills-form"><input type="hidden" value="{{ freelancer_id }}" name="freelancer_id" /><label for="input-filter_skill">{{ entry_skill }} <span data-toggle="tooltip" data-placement="top" title="Autocomplete"><i class="fas fa-info-circle"></i></span></label><div class="input-group"><select class="form-control" name="category[]" data-width="100%" multiple="multiple">{% for category in skills %}{% if category.category_id in filter_skills %}<option value="{{ category.skill_id }}" selected>{{ category.name }}</option>{% else %}<option value="{{ category.skill_id }}">{{ category.name }}</option>{% endif %}{% endfor %}</select></div></form>',
+		buttons: {
+			cancel: {
+				label: 'Cancel',
+				className: 'btn-secondary'
+			},
+			confirm: {
+				label: 'Add',
+				className: 'btn-primary'
+			},
+		},	
+		callback: function (result) {
+			if (result === true) {
+				$.ajax({
+					url: 'freelancer/freelancer/addSkill',
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					type: 'post',
+					dataType: 'json',
+					data: $('#skills-form').serialize(),
+					beforeSend: function () {
+						$('#skills-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+					},
+					complete: function () {
+						$('#spinner').remove();
+					},
+					success: function (json) {			
+						if (json['success']) {
+							$('#skills-list').load(window.location.href + " #skills-list");
+						}
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+			} // if 
+		}
+	}).on('shown.bs.modal', function() {
+		$('select[name^=\'category\']').select2({
+			ajax: {
+				url: 'project/category/autocomplete',
+				dataType: 'json',
+				delay: 250,
+				data: function (params) {
+					return {
+						filter_category: params.term,
+					};
+				},
+				processResults: function (data, params) {
+					var results = $.map(data, function (item) {
+						item.id = item.category_id;
+						item.text = item.name;
+						return item;
+					});
+					return {
+						results: results,
+					};
+				},
+				cache: true
+				},
+			minimumInputLength: 1,
+			placeholder: '{{ text_select }}',
+			allowClear: true,
+			minimumResultsForSearch: 5
+	    });
+	});	
+});
+</script>
+{# Skills End #}
+
+
+
+
+
+
+
 
 
 <script type="text/javascript">

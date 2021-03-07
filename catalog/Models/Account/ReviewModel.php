@@ -77,7 +77,7 @@ class ReviewModel extends Model
         return $query->getResultArray();
     }
 
-    public function getAvgReviewByFreelancerId($freelancer_id)
+    public function getAvgReviewByFreelancerId(int $freelancer_id)
     {
         $builder = $this->db->table($this->table);
         $builder->selectAvg('rating', 'total');
@@ -92,7 +92,12 @@ class ReviewModel extends Model
         $builder->selectCount('recommended', 'total');
         $builder->where('freelancer_id', $freelancer_id);
         $query = $builder->get()->getRowArray();
-        return $query['total'];
+        if ($query['total']) {
+            return $query['total'];
+        } else {
+            return 'N/A';
+        }
+        
     }
 
     public function getTotalJobsByFreelancerId($freelancer_id)
@@ -111,7 +116,11 @@ class ReviewModel extends Model
             'ontime' => 1
         ]);
         $query = $builder->get()->getRowArray();
-        return $query['total'];
+        if ($query['total']) {
+            return $query['total'];
+        } else {
+            return 'N/A';
+        }
     }
 
     public function getAvgReviewByEmployerId($employer_id)

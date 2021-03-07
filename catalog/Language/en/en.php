@@ -32,10 +32,14 @@ return [
         'text_yes'         => 'Yes',
         'text_no'          => 'No',
         'text_cancel'      => 'Cancel',
+        'text_fixed_price' => 'Fixed Price',
+        'text_per_hour'    => 'Per Hour',
         // Button
-        'button_add'       => 'Add a Project',
-        'button_edit'      => 'Edit Project',
+        'button_add'       => 'Add',
+        'button_edit'      => 'Edit',
         'button_delete'    => 'Delete',
+        'button_save'      => 'Save',
+        'button_cancel'    => 'Cancel',
         'button_hire'      => 'I want to Hire',
         'button_work'      => 'I want to Work',
         // Entry

@@ -1,10 +1,9 @@
 (function($) {
-"use strict";
+   "use strict";
 
 $(document).ready(function() {
 // Search 
 $('#search-container button').on('click', function() {
-
 	var url  = '/projects';
     
     var search = $('.intro-search-field input').val();
@@ -16,7 +15,6 @@ $('#search-container button').on('click', function() {
 });
 
 $('.intro-search-field input').on('keydown', function(e) {
-
 	if (e.keyCode == 13) {
 	    $('.intro-search-field button').trigger('click');
 	}
@@ -26,7 +24,6 @@ $('.intro-search-field input').on('keydown', function(e) {
 $('#form-currency #currency-list').on('change', function(e) {
 	e.preventDefault();
 	$('#form-currency input[name=\'code\']').val($(this).val());
-
 	$('#form-currency').submit();
 });
 
@@ -58,93 +55,125 @@ $(".btn-close, .screen-overlay").click(function(e){
 
 // Mobile Menu
 $("[data-trigger]").on("click", function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        $('#navbar_main').addClass("show");
-        $('body').addClass("offcanvas-active");
-        $(".screen-overlay").addClass("show");
-    }); 
+    e.preventDefault();
+    e.stopPropagation();
+    $('#navbar_main').addClass("show");
+    $('body').addClass("offcanvas-active");
+    $(".screen-overlay").addClass("show");
+}); 
 
-   	// Close menu when pressing ESC
-    $(document).on('keydown', function(event) {
-        if(event.keyCode === 27) {
-           $(".mobile-offcanvas").removeClass("show");
-           $("body").removeClass("overlay-active");
-        }
-    });
+// Close menu when pressing ESC
+$(document).on('keydown', function(event) {
+    if(event.keyCode === 27) {
+       $(".mobile-offcanvas").removeClass("show");
+       $("body").removeClass("overlay-active");
+    }
+});
 
-    $(".btn-close, .screen-overlay").click(function(e){
-    	$(".screen-overlay").removeClass("show");
-        $(".mobile-offcanvas").removeClass("show");
-        $("body").removeClass("offcanvas-active");
+$(".btn-close, .screen-overlay").click(function(e){
+	$(".screen-overlay").removeClass("show");
+    $(".mobile-offcanvas").removeClass("show");
+    $("body").removeClass("offcanvas-active");
 
 
-    }); 
+}); 
 
 // Prevent closing from click inside dropdown
 $(document).on('click', '.dropdown-menu', function (e) {
   e.stopPropagation();
 });
 	
-	/*----------------------------------------------------*/
-	/*  Back to Top
-	/*----------------------------------------------------*/
+/*----------------------------------------------------*/
+/*  Back to Top
+/*----------------------------------------------------*/
 
-	// Button
-	function backToTop() {
-		$('body').append('<div id="backtotop"><a href="#"></a></div>');
-	}
-	backToTop();
+// Button
+function backToTop() {
+	$('body').append('<div id="backtotop"><a href="#"></a></div>');
+}
+backToTop();
 
-	// Showing Button
-	var pxShow = 600; // height on which the button will show
-	var scrollSpeed = 500; // how slow / fast you want the button to scroll to top.
+// Showing Button
+var pxShow = 600; // height on which the button will show
+var scrollSpeed = 500; // how slow / fast you want the button to scroll to top.
 
-	$(window).scroll(function(){
-	 if($(window).scrollTop() >= pxShow){
-		$("#backtotop").addClass('visible');
-	 } else {
-		$("#backtotop").removeClass('visible');
-	 }
+$(window).scroll(function(){
+ if($(window).scrollTop() >= pxShow){
+	$("#backtotop").addClass('visible');
+ } else {
+	$("#backtotop").removeClass('visible');
+ }
+});
+
+$('#backtotop a').on('click', function(){
+ $('html, body').animate({scrollTop:0}, scrollSpeed);
+ return false;
+});
+
+// Makes tooltips work on ajax generated content
+$(document).ajaxStop(function() {
+    $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+});
+
+// tooltip remove
+$('[data-toggle=\'tooltip\']').on('remove', function() {
+    $(this).tooltip('dispose');
+});  
+
+// Dismiss Alerts
+//console.log($('#auto-dismiss'));
+document.getElementsByClassName('.alert');
+
+$(window).on('load', function() {
+	$('.alert').each(function (index, value) {
+	console.log(index);
+    var $value = $(value),
+        timeout  = $value.data('auto-dismiss') || 5000;
+
+        $value.alert('close');
+});
+
+
 	});
+$('#auto-dismiss').each(function (index, value) {
+	console.log(index)
+});
+$('.alert').each(function (index, value) {
+	console.log(index);
+    var $value = $(value),
+        timeout  = $value.data('auto-dismiss') || 5000;
 
-	$('#backtotop a').on('click', function(){
-	 $('html, body').animate({scrollTop:0}, scrollSpeed);
-	 return false;
-	});
-	
-    // Makes tooltips work on ajax generated content
-    $(document).ajaxStop(function() {
-        $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-    });
-    // tooltip remove
-    $('[data-toggle=\'tooltip\']').on('remove', function() {
-        $(this).tooltip('dispose');
-    });
+        $value.alert('close');
+});
+    // $('.alert[data-auto-dismiss]').each(function (index, element) {
+    //     var $element = $(element),
+    //         timeout  = $element.data('auto-dismiss') || 500;
 
-    // Dismiss Alerts
-    setTimeout(function() { 
-    	$('.alert-dismissible').alert('dispose');
-    }, 7000);
-	/*--------------------------------------------------*/
-	/*  Ripple Effect
-	/*--------------------------------------------------*/
-	$('.ripple-effect, .ripple-effect-dark').on('click', function(e) {
-		var rippleDiv = $('<span class="ripple-overlay">'),
-			rippleOffset = $(this).offset(),
-			rippleY = e.pageY - rippleOffset.top,
-			rippleX = e.pageX - rippleOffset.left;
+    //        $element.fadeTo(2000, timeout).slideUp(timeout, function () {
+    //        $element.slideUp(timeout);
+    //        $element.alert('close');
+    //    });
+    // });
+    
+/*--------------------------------------------------*/
+/*  Ripple Effect
+/*--------------------------------------------------*/
+$('.ripple-effect, .ripple-effect-dark').on('click', function(e) {
+	var rippleDiv = $('<span class="ripple-overlay">'),
+		rippleOffset = $(this).offset(),
+		rippleY = e.pageY - rippleOffset.top,
+		rippleX = e.pageX - rippleOffset.left;
 
-		rippleDiv.css({
-			top: rippleY - (rippleDiv.height() / 2),
-			left: rippleX - (rippleDiv.width() / 2),
-			// background: $(this).data("ripple-color");
-		}).appendTo($(this));
+	rippleDiv.css({
+		top: rippleY - (rippleDiv.height() / 2),
+		left: rippleX - (rippleDiv.width() / 2),
+		// background: $(this).data("ripple-color");
+	}).appendTo($(this));
 
-		window.setTimeout(function() {
-			rippleDiv.remove();
-		}, 800);
-	});
+	window.setTimeout(function() {
+		rippleDiv.remove();
+	}, 800);
+});
 
 
 /*--------------------------------------------------*/
@@ -682,7 +711,8 @@ $(document).on('click', '.dropdown-menu', function (e) {
 	// Project List Timer
 	/*----------------------------------------------------*/
 	$('span[data-countdown]').each(function() {
-		var $this = $(this), finalDate = $(this).data('countdown');
+		var $this = $(this), 
+			finalDate = $(this).data('countdown');
 
 		$this.countdown(finalDate)
 		.on('update.countdown', function(event) {
@@ -708,20 +738,33 @@ $(document).on('click', '.dropdown-menu', function (e) {
 
        // Redirect
        $(document).on('shown.bs.modal', '.bootbox', function (event) {
-	       var $this = $(this), seconds = $($this).find('.modal-body span').attr('data-redirect-countdown'), finalCount = new Date().getTime() + parseInt(seconds);
-       	   $($this).find('.modal-body #redirect-html').countdown(finalCount).on('update.countdown', function(event) {
-    	   $($this).find('.modal-body #redirect-html').html(event.strftime('<span>%S</span>'));
-		})
+	       	if ($(this).find('.modal-body span').attr('data-redirect-countdown')) {
+	       		var $this = $(this), 
+	       		    seconds = $($this).find('.modal-body span').attr('data-redirect-countdown'), 
+	       		    finalCount = new Date().getTime() + parseInt(seconds);
+
+	       	    $($this).find('.modal-body #redirect-html').countdown(finalCount).on('update.countdown', function(event) {
+	    	          $($this).find('.modal-body #redirect-html').html(event.strftime('<span>%S</span>'));
+			    })
+       	    }
        }); 
 
-    /*----------------------------------------------------*/
-	/* Agree to Terms */
-	/*----------------------------------------------------*/
-	// $('.agree').on('click', function(e) {
-	// 	e.preventDefault();
- //        bootbox.alert("This is the default alert!");
- //    });
-   // -----------------------
+    //*-------------------------
+    // Freelancer Info Page Edit
+    //*------------------------- 
+$('#freelancer-info button[id^=button-edit]').on('click', function() {
+	var button = $(this);
+	var formDiv = $('#' + button.data('id') + '-form');
+
+	button.removeClass('btn-primary').addClass('btn-danger');
+	button.html('<i class="fas fa-times-circle text-danger"></i>');
+	formDiv.toggleClass('d-block animate__zoomIn');
+	if (formDiv.css('display') === 'none') {
+		button.removeClass('btn-danger').addClass('btn-primary');
+	    button.html('<i class="fas fa-plus-circle"></i>');
+	}
 });
+   // -----------------------
+})
 })(this.jQuery);
 
