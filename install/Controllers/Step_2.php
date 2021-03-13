@@ -297,11 +297,11 @@ class Step_2 extends Controller
         }
 
         if (!is_writable(ROOTPATH . 'catalog/Config/App.php')) {
-            $this->error['warning'] = lang('step_2.error_config') . DIR_OPENCART . 'app.php!';
+            $this->error['warning'] = lang('step_2.error_config') . ROOTPATH . 'catalog/Config/App.php!';
         }
 
         if (!is_writable(ROOTPATH . 'admin/Config/App.php')) {
-            $this->error['warning'] = lang('step_2.error_config') . DIR_OPENCART . 'admin/config.php!';
+            $this->error['warning'] = lang('step_2.error_config') . ROOTPATH . 'admin/Config/App.php!';
         }
 
         return ! $this->error;

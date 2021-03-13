@@ -6,7 +6,7 @@ use Catalog\Controllers\BaseController;
 
 class Html extends BaseController
 {
-    public function index($setting) 
+    public function index(array $setting) 
     {
 		if (isset($setting['module_description'])) {
 			$data['heading_title'] = html_entity_decode($setting['module_description']['title'], ENT_QUOTES, 'UTF-8');

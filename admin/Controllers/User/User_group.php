@@ -1,8 +1,11 @@
-<?php namespace Admin\Controllers\User;
+<?php 
 
+namespace Admin\Controllers\User;
+
+use Admin\Controllers\BaseController;
 use \Admin\Models\User\UserGroupModel;
 
-class User_group extends \Admin\Controllers\BaseController
+class User_group extends BaseController
 {
     public function index()
     {
@@ -85,7 +88,7 @@ class User_group extends \Admin\Controllers\BaseController
             $data['user_groups'][] = [
                 'user_group_id' => $result['user_group_id'],
                 'name'          => $result['name'],
-                'date_added'    => DateShortFormat($result['date_added']),
+                'date_added'    => lang('en.medium_date', [$result['date_added']]),
                 'edit'          => base_url('index.php/user/user_group/edit?user_token=' . $this->request->getVar('user_token') . '&user_group_id=' . $result['user_group_id']),
                 'delete'        => base_url('index.php/user/user_group/delete?user_token=' . $this->request->getVar('user_token') . '&user_group_id=' . $result['user_group_id']),
             ];

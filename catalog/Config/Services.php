@@ -37,13 +37,13 @@ class Services extends BaseService
         return new \Catalog\Libraries\Registry();
     }
     // SEO
-    public static function seo_url($getShared = true)
-    {
-        if ($getShared) {
-            return static::getSharedInstance('seo_url');
-        }
-        return new \Catalog\Models\Design\SeoUrlModel;
-    }
+    // public static function seo_url($getShared = true)
+    // {
+    //     if ($getShared) {
+    //         return static::getSharedInstance('seo_url');
+    //     }
+    //     return new \Catalog\Models\Design\SeoUrlModel;
+    // }
 
     public static function customer($getShared = true)
     {

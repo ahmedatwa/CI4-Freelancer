@@ -1,6 +1,10 @@
-<?php namespace Admin\Controllers\Common;
+<?php 
 
-class Column_left extends \Admin\Controllers\BaseController
+namespace Admin\Controllers\Common;
+
+use Admin\Controllers\BaseController;
+
+class Column_left extends BaseController
 {
     public function index()
     {
@@ -39,6 +43,12 @@ class Column_left extends \Admin\Controllers\BaseController
             'id'       => 'menu-catalog',
             'name'     => lang('common/column_left.text_information'),
             'href'     => base_url('index.php/catalog/information?user_token=' . $this->request->getVar('user_token')),
+            'children' => [],
+        ];
+        $catalog[] = [
+            'id'       => 'menu-catalog',
+            'name'     => lang('common/column_left.text_skills'),
+            'href'     => base_url('index.php/catalog/skill?user_token=' . $this->request->getVar('user_token')),
             'children' => [],
         ];
         $data['menus'][] = [

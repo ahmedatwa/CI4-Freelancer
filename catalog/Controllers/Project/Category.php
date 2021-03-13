@@ -11,8 +11,6 @@ class Category extends BaseController
     {
         $categoryModel = new CategoryModel();
 
-        $seoUrl = service('seo_url');
-
         $this->template->setTitle(lang('project/category.heading_title'));
             
         $data['breadcrumbs'] = [];
@@ -61,29 +59,21 @@ class Category extends BaseController
         $data['categories'] = [];
         
         $results = $categoryModel->getCategories($filter_data);
-
         $total = $categoryModel->getTotalCategories();
 
         foreach ($results as $result) {
-            
-            $keyword = $seoUrl->getKeywordByQuery('category_id=' . $result['category_id']);
-
-            $children = $categoryModel->getCategories([
-                'category_id' => $result['category_id'],
-            ]);
-
             $children_data = [];
             
+            $children = $categoryModel->getCategories(['category_id' => $result['category_id']]);
+            
             foreach ($children as $child) {
-                $childKeyword = $seoUrl->getKeywordByQuery('category_id=' . $child['category_id']);
-
                 $children_data[] = [
                     'category_id' => $child['category_id'],
                     'parent_id'   => $child['parent_id'],
                     'name'        => $child['name'],
                     'icon'        => $child['icon'] ? $child['icon'] : 'fas fa-hockey-puck',
                     'description' => $child['description'],
-                    'href'        => ($childKeyword) ? route_to('projects') . '?skills=' . $result['category_id'] : base_url('project/project/list?skills=' . $child['category_id']),
+                    'href'        => ($child['keyword']) ? route_to('projects', $result['keyword']) : base_url('project/project/all?skills=' . $child['category_id']),
                 ];
             }
 
@@ -92,7 +82,7 @@ class Category extends BaseController
                 'name'        => $result['name'],
                 'icon'        => $result['icon'] ? $result['icon'] : 'fas fa-hockey-puck',
                 'description' => word_limiter(strip_tags($result['description']), 10),
-                'href'        => ($keyword) ? route_to('projects') . '?skills=' . $result['category_id'] : base_url('project/project/list?skills=' . $result['category_id']),
+                'href'        => ($result['keyword']) ? route_to('projects', $result['keyword']) : base_url('project/project/all?skills=' . $result['category_id']),
                 'children'    => $children_data,
             ];
         }

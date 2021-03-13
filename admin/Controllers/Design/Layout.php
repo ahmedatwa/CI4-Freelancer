@@ -155,14 +155,14 @@ class Layout extends \Admin\Controllers\BaseController
 
         if ($this->request->getPost('name')) {
             $data['name'] = $this->request->getPost('name');
-        } elseif (!empty($layout_info)) {
+        } elseif (!empty($layout_info['name'])) {
             $data['name'] = $layout_info['name'];
         } else {
             $data['name'] = '';
         }
 
         if ($this->request->getPost('layout_route')) {
-            $data['layout_route'] = $this->request->post['layout_route'];
+            $data['layout_route'] = $this->request->getPost('layout_route');
         } elseif ($this->request->getVar('layout_id')) {
             $data['layout_route'] = $layoutModel->getLayoutRoutes($this->request->getVar('layout_id'));
         } else {

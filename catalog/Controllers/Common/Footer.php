@@ -14,15 +14,13 @@ class Footer extends BaseController
         $data['informations'] = [];
         
         $informations = new InformationModel();
-        $seo_url = service('seo_url');
 
         foreach ($informations->getInformations() as $result) {
             if ($result['bottom']) {
-                $keyword = $seo_url->getKeywordByQuery('information_id=' . $result['information_id']);
                 $data['informations'][] = [
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
-                'href'           => ($keyword) ? route_to('information', $keyword) : base_url('information/information/view?fid=' . $result['information_id']),
+                'href'           => ($result['keyword']) ? route_to('information', $result['keyword']) : base_url('information/information/view?fid=' . $result['information_id']),
             ];
             }
         }
@@ -39,11 +37,10 @@ class Footer extends BaseController
 
         $results = $categoryModel->getCategories($filter_data);
         foreach ($results as $result) {
-            $keyword = $seo_url->getKeywordByQuery('category_id=' . $result['category_id']);
             $data['categories'][] = [
             'category_id' => $result['category_id'],
             'name'        => $result['name'],
-            'href'        => ($keyword) ? route_to('category', $result['category_id'], $keyword) : base_url('project/project/category?gid=' . $result['category_id']),
+            'href'        => ($result['keyword']) ? route_to('category', $result['category_id'], $result['keyword']) : base_url('project/project/category?gid=' . $result['category_id']),
          ];
         }
 
@@ -51,16 +48,17 @@ class Footer extends BaseController
         // Social
         $data['social_networks'] = json_decode($this->registry->get('config_social_networks'), true);
 
-        $data['contact']     = route_to('contact');
+        $data['contact']     = route_to('contact') ?? base_url('information/contact');
         $data['login']       = route_to('account_login');
         $data['register']    = route_to('account_register');
+
         if ($this->customer->isLogged()) {
-            $data['setting']     = route_to('account_setting', $this->customer->getUserName());
+            $data['setting'] = route_to('account_setting', $this->customer->getUserName());
         }
-        $data['blog']        = base_url('blog');
-        
+
+        $data['blog']        = route_to('blog');
         $data['freelancers'] = route_to('freelancers');
-        $data['projects']    = route_to('projects');
+        $data['projects']    = route_to('projects_all');
         $data['category']    = route_to('categories');
         $data['add_project'] = route_to('add-project');
 

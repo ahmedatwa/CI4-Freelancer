@@ -10,8 +10,8 @@ class Column_right extends BaseController
 {
     public function index()
     {
-        if ($this->request->uri->getPath()) {
-            $route = $this->request->uri->getPath();
+        if ($this->request->uri->getSegment(1)) {
+            $route = $this->request->uri->getSegment(1);
         } 
 
         if (! $route || $route == '/') {

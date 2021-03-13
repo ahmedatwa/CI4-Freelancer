@@ -77,20 +77,22 @@ class Login extends BaseController
                 */
                 $customer_info = $customerModel->find($this->session->get('customer_id'));
 
-                \CodeIgniter\Events\Events::trigger('customer_login', $customer_info['customer_id'], $customer_info['username']);
+                \CodeIgniter\Events\Events::trigger('admin_customer_login', $customer_info['customer_id'], $customer_info['username']);
 
                 $activityModel = new ActivityModel;
                 $customer_ip_info = $activityModel->getCustomerIP($this->session->get('customer_id'));
                 // Fire the Event if IP is not recognized
-                if ($customer_ip_info['ip'] && ($this->request->getIPAddress() != $customer_ip_info['ip'])) {
-                    $agent = $this->request->getUserAgent();
-                    $ip_data = [
-                        'customer_id' => $this->session->get('customer_id'),
-                        'browser'     => $agent->getBrowser() . ' ' . $agent->getVersion(),
-                        'platform'    => $agent->getPlatform(),
-                    ];
-                    // Trigger Customer E-Mail as IP is different than usual one..
-                    \CodeIgniter\Events\Events::trigger('customer_login_notify', $ip_data);
+                if ($customer_ip_info) {
+                    if ($customer_ip_info['ip'] && ($this->request->getIPAddress() != $customer_ip_info['ip'])) {
+                        $agent = $this->request->getUserAgent();
+                        $ip_data = [
+                            'customer_id' => $this->session->get('customer_id'),
+                            'browser'     => $agent->getBrowser() . ' ' . $agent->getVersion(),
+                            'platform'    => $agent->getPlatform(),
+                        ];
+                        // Trigger Customer E-Mail as IP is different than usual one..
+                        \CodeIgniter\Events\Events::trigger('mail_login_alert', $ip_data);
+                    }
                 }
 
                 // check for any saved redirect url

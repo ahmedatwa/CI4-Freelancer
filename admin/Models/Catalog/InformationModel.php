@@ -1,6 +1,11 @@
-<?php namespace Admin\Models\Catalog;
+<?php 
 
-class InformationModel extends \CodeIgniter\Model
+namespace Admin\Models\Catalog;
+
+use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
+
+class InformationModel extends Model
 {
     protected $table          = 'information';
     protected $primaryKey     = 'information_id';
@@ -12,6 +17,7 @@ class InformationModel extends \CodeIgniter\Model
     protected $afterInsert = ['afterInsertEvent'];
     protected $afterUpdate = ['afterUpdateEvent'];
     // should use for keep data record create timestamp
+    protected $dateFormat   = 'int';
     protected $createdField = 'date_added';
     protected $updatedField = 'date_modified';
 
@@ -105,9 +111,11 @@ class InformationModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table($this->table);
         $information_data = [
-            'sort_order' => $data['sort_order'],
-            'status'     => $data['status'],
-            'bottom'     => $data['bottom'],
+            'sort_order'    => $data['sort_order'],
+            'status'        => $data['status'],
+            'bottom'        => $data['bottom'],
+            'date_added'    => Time::now()->getTimestamp(),
+            'date_modified' => Time::now()->getTimestamp(),
         ];
 
         $builder->set('date_added', 'NOW()', false);
@@ -124,6 +132,7 @@ class InformationModel extends \CodeIgniter\Model
                     'information_id'   => $information_id,
                     'language_id'      => $language_id,
                     'title'            => $value['title'],
+                    'keyword'          => generateSeoUrl($value['title']),
                     'description'      => $value['description'],
                     'meta_title'       => $value['meta_title'],
                     'meta_description' => $value['meta_description'],
@@ -131,14 +140,6 @@ class InformationModel extends \CodeIgniter\Model
                 ];
 
                 $information_description_table->insert($information_description_data);
-                //  Seo Urls
-                $seo_url_data = [
-                        'site_id'     => 0,
-                        'language_id' => $language_id,
-                        'query'       => 'information_id=' . $information_id,
-                        'keyword'     => generateSeoUrl($value['title']),
-                    ];
-                $seo_url->insert($seo_url_data);
             }
         }
         // Event Call 
@@ -155,9 +156,11 @@ class InformationModel extends \CodeIgniter\Model
     {
         $builder = $this->db->table($this->table);
         $information_data = [
-            'sort_order' => $data['sort_order'],
-            'status'     => $data['status'],
-            'bottom'     => $data['bottom'],
+            'sort_order'    => $data['sort_order'],
+            'status'        => $data['status'],
+            'bottom'        => $data['bottom'],
+            'date_added'    => Time::now()->getTimestamp(),
+            'date_modified' => Time::now()->getTimestamp(),
         ];
         
         $builder->set('date_modified', 'NOW()', false);
@@ -168,27 +171,18 @@ class InformationModel extends \CodeIgniter\Model
         if (isset($data['information_description'])) {
             $information_description_table = $this->db->table('information_description');
             $information_description_table->delete(['information_id' => $information_id]);
-            $seo_url = $this->db->table('seo_url');
-            $seo_url->delete(['query=' => 'information_id=' . $information_id]);
             foreach ($data['information_description'] as $language_id => $value) {
                 $information_description_data = [
                     'information_id'   => $information_id,
                     'language_id'      => $language_id,
                     'title'            => $value['title'],
+                    'keyword'          => generateSeoUrl($value['title']),
                     'description'      => $value['description'],
                     'meta_title'       => $value['meta_title'],
                     'meta_description' => $value['meta_description'],
                     'meta_keyword'     => $value['meta_keyword'],
                 ];
                 $information_description_table->insert($information_description_data);
-                //  Seo Urls
-                $seo_url_data = [
-                        'site_id'     => 0,
-                        'language_id' => $language_id,
-                        'query'       => 'information_id=' . $information_id,
-                        'keyword'     => generateSeoUrl($value['title']),
-                    ];
-                $seo_url->insert($seo_url_data);
             }
         }
         // Event Call 

@@ -17,14 +17,6 @@ class Information extends BaseController
 
     public function index(string $keyword = '')
     {
-        $seo_url = service('seo_url');
-
-        if ($keyword) {
-            $query_id = substr($seo_url->getQueryByKeyword($keyword), -1);
-        } 
-
-        $informations = new InformationModel();
-
         $data['breadcrumbs'] = [];
 
         $data['breadcrumbs'][] = [
@@ -32,33 +24,37 @@ class Information extends BaseController
             'href' => base_url('/')
         ];
 
+        $informationModel = new InformationModel();
+
+        if ($keyword) {
+            $queryID = $informationModel->findID($keyword);
+        } 
+
         if ($this->request->getVar('fid')) {
             $information_id = $this->request->getVar('fid');
-        } elseif ($query_id) {
-            $information_id = $query_id;
-        } elseif ($this->request->getGet('information_id')) {
-            $information_id = $this->request->getGet('information_id');
+        } elseif ($queryID) {
+            $information_id = $queryID;
         } else {
             $information_id = 0;
         }
 
-        $information_info = $informations->getInformation($information_id);
+        $information_info = $informationModel->getInformation($information_id);
 
         if ($information_info) {
             $this->template->setTitle($information_info['meta_title']);
             $this->template->setDescription($information_info['meta_description']);
             $this->template->setKeywords($information_info['meta_keyword']);
 
-            $keyword = $seo_url->getKeywordByQuery('information_id=' . $information_id);
-
             $data['breadcrumbs'][] = [
                 'text' => $information_info['title'],
-                'href' => ($keyword) ? route_to('information', $keyword) : base_url('information/Information/view?fid=' . $information_id),
+                'href' => ($information_info['keyword']) ? route_to('information', $information_info['keyword']) : base_url('information/Information/view?fid=' . $information_id),
             ];
 
             $data['heading_title'] = $information_info['title'];
 
             $data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
+
+            $data['langData'] = lang('information/information.list');
 
             $this->template->output('information/information', $data);
         } else {

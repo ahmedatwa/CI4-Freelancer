@@ -12,6 +12,29 @@ use Catalog\Models\Localization\CountryModel;
 
 class Freelancer extends BaseController
 {
+    public function edit()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post') {
+            if (! $this->customer->isLogged()) {
+                $json['error'] = 'Log in';
+            }
+            if ($this->request->getPost('pk')) {
+                $freelancer_id = $this->request->getPost('pk');
+            } else {
+                $freelancer_id = $this->request->getVar('freelancer_id');
+            }
+
+            if (! $json) {
+               $freelancerModel = new FreelancerModel();
+               $freelancerModel->editFreelancer($freelancer_id, $this->request->getPost());
+               $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Certificates');
+            }
+        }
+        return $this->response->setJSON($json);
+    }
+
     public function view()
     {
         $this->template->setTitle(lang('freelancer/freelancer.text_profile'));
@@ -109,7 +132,8 @@ class Freelancer extends BaseController
                 'tag_line' => $result['tag_line'],
                 'rate'     => $this->currencyFormat($result['rate']),
                 'rating'   => $reviewModel->getAvgReviewByFreelancerId($result['customer_id']),
-                'href'     => route_to('freelancer_profile', $result['username']) ? route_to('freelancer_profile', $result['username']) : base_url('freelancer/freelancer/view?freelancer_id=' . $result['customer_id'])
+                'skills'   => $freelancerModel->getFreelancerSkills($result['customer_id']),
+                'href'     => route_to('freelancer_profile', $result['username']) ?? base_url('freelancer/freelancer/view?freelancer_id=' . $result['customer_id'])
             ];
         }
 
@@ -239,7 +263,7 @@ class Freelancer extends BaseController
             $data['rating']        = $reviewModel->getAvgReviewByFreelancerId($freelancer_id);
             $data['recommended']   = $reviewModel->getRecommendedByFreelancerId($freelancer_id);
             $data['ontime']        = $reviewModel->getOntimeByFreelancerId($freelancer_id);
-            $data['total_jobs']    = $freelancerModel->getTotalFreelancerProjects(['freelancer_id' => $freelancer_id]);
+            $data['total_jobs']    = $freelancerModel->getTotalFreelancerProjects($freelancer_id);
             // Social
             $data['social']        = json_decode($freelancer_info['social'], true);
 
@@ -263,6 +287,7 @@ class Freelancer extends BaseController
             $pager = \Config\Services::pager();
             $data['pagination'] = ($reviews_total <= $limit) ? '' : $pager->makeLinks($page, $limit, $reviews_total, 'default_simple');
 
+            $data['config_currency'] = $this->registry->get('config_currency');
             // Project PMs Data
             $inboxModel = new InboxModel();
             $message_info = $inboxModel->getMessageThread($freelancer_id);
@@ -274,7 +299,7 @@ class Freelancer extends BaseController
         // Update Profile Views
         $freelancerModel->updateViewed($freelancer_id);
 
-        // Education 
+        // Education
         $education = $freelancerModel->getEducation($freelancer_id);
         foreach ($education as $result) {
             $data['educations'][] = [
@@ -288,11 +313,12 @@ class Freelancer extends BaseController
         }
 
         // Skills
-        $skills = $freelancerModel->getSkills($freelancer_id);
+        $skills = $freelancerModel->getFreelancerSkills($freelancer_id);
         foreach ($skills as $skill) {
             $data['skills'][] = [
                 'skill_id' => $skill['skill_id'],
                 'name'     => $skill['name'],
+                'count'    => $freelancerModel->getJobsDoneBySkill($skill['skill_id']),
             ];
         }
 
@@ -410,33 +436,37 @@ class Freelancer extends BaseController
         if ($freelancer_info) {
             $data['profile_strength'] = 0;
 
-            if ($freelancer_info['rate'] && $freelancer_info['tag_line'] && $freelancer_info['about']) {
-                $data['profile_strength'] = 10;
-            } 
+            if ($freelancer_info['rate']) {
+                $data['profile_strength'] += 5;
+            }
+
+            if ($freelancer_info['tag_line'] && $freelancer_info['about']) {
+                $data['profile_strength'] += 5;
+            }
 
             if ($freelancer_info['social']) {
                 $data['profile_strength'] += 10;
-            } 
+            }
 
             if ($freelancer_info['bg_image']) {
                 $data['profile_strength'] += 10;
-            } 
+            }
             // Certs
             if ($freelancerModel->getTotalCertificatesByID($freelancer_id)) {
                 $data['profile_strength'] += 10;
-            } 
+            }
             // Edu
             if ($freelancerModel->getTotalEducationByID($freelancer_id)) {
                 $data['profile_strength'] += 10;
-            } 
+            }
             // Skills
             if ($freelancerModel->getTotalSkillsByID($freelancer_id)) {
                 $data['profile_strength'] += 10;
-            } 
+            }
             // Lang
             if ($freelancerModel->getTotalLanguageByID($freelancer_id)) {
                 $data['profile_strength'] += 30;
-            } 
+            }
 
             // Update the current value if not 100
             if ($freelancer_info['profile_strength'] < 100) {
@@ -445,6 +475,7 @@ class Freelancer extends BaseController
         }
 
         $data['customer_id'] = $this->customer->getID();
+        $data['isLogged'] = $this->customer->isLogged();
 
         $data['langData'] = lang('freelancer/freelancer.list');
         
@@ -478,38 +509,21 @@ class Freelancer extends BaseController
         
         return $this->response->setJSON($json);
     }
-    
-    public function profileUpdate()
+
+    public function avatarUpload()
     {
         $json = [];
-
-        if ($this->request->getPost('pk')) {
-            $freelancer_id = $this->request->getPost('pk');
-        } else {
-            $freelancer_id = 0;
+        if ($this->request->isAJAX()) {
+            if ($imagefile = $this->request->getFile('file')) {
+                $freelancerModel = new FreelancerModel();
+                if ($imagefile->isValid() && ! $imagefile->hasMoved()) {
+                    $newName = $imagefile->getRandomName();
+                    $imagefile->move(DIR_IMAGE . 'users/', $newName);
+                    $freelancerModel->editImage($this->request->getVar('field'), $this->customer->getID(), 'users/' . $newName); 
+                    $json['success'] = 'Uploaded!';
+                }
+            }
         }
-        var_dump($this->request->getPost());
-        die;
-        $freelancerModel = new FreelancerModel();
-
-        if (! $this->validate([
-            // 'certificate_name' => [
-            //     'label' => 'Certificate Name',
-            //     'rules' => 'required|alpha_numeric|is_unique[customer_to_certificate.name]'
-            // ],
-            // 'certificate_year' => [
-            //     'label' => 'Certificate Year',
-            //     'rules' => 'required|numeric'
-            // ]
-        ])) {
-            $json['error'] = $this->validator->getErrors();
-        }
-
-        if (! $json) {
-            $freelancerModel->edit($freelancer_id, $this->request->getPost());
-            $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Certificates');
-        }
-
         return $this->response->setJSON($json);
     }
 
@@ -643,7 +657,7 @@ class Freelancer extends BaseController
         if (! $json) {
             $freelancerModel = new FreelancerModel();
 
-            $freelancerModel->addCertificate($this->request->getVar('freelancer_id'), $this->request->getPost('name'), $this->request->getPost('year'));
+            $freelancerModel->addCertificate((int) $this->request->getVar('freelancer_id'), (string) $this->request->getPost('certificate'), (string) $this->request->getPost('year'));
             $json['success'] = sprintf(lang('account/setting.text_success_tab'), 'Certificates');
         }
 
@@ -704,7 +718,6 @@ class Freelancer extends BaseController
         $json = [];
         
         if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
-
             if (! $this->validate([
                 'language'  => [
                     'label'  => 'Language Name',
@@ -752,7 +765,6 @@ class Freelancer extends BaseController
         if ($this->request->getMethod() == 'post') {
             if (! $json) {
                 $freelancerModel = new FreelancerModel();
-
                 $freelancerModel->addSkill($this->request->getPost());
                 $json['success'] = sprintf(lang('account/setting.text_success_edu'), lang('account/setting.text_skills'));
             }
@@ -771,6 +783,39 @@ class Freelancer extends BaseController
             $freelancerModel->deleteSkill($this->request->getVar('category_id'), $this->request->getVar('freelancer_id'));
             $json['success'] = sprintf(lang('account/setting.text_success_edu'), 'Skills');
         }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function skillsAutocomplete()
+    {
+        $json = [];
+
+        if ($this->request->getVar('filter_skill')) {
+            $freelancerModel = new FreelancerModel();
+
+            if ($this->request->getVar('filter_skill')) {
+                $filter_name = html_entity_decode($this->request->getVar('filter_skill'), ENT_QUOTES, 'UTF-8');
+            } else {
+                $filter_name = null;
+            }
+
+            $filter_data = [
+                'filter_name' => $filter_name,
+                'start'       => 0,
+                'limit'       => 5,
+            ];
+
+            $results = $freelancerModel->getSkills($filter_data);
+
+            foreach ($results as $result) {
+                $json[] = [
+                    'skill_id'    => $result['skill_id'],
+                    'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+                ];
+            }
+       }
+
 
         return $this->response->setJSON($json);
     }

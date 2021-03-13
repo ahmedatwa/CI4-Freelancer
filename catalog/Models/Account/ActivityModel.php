@@ -86,7 +86,7 @@ class ActivityModel extends Model
         $builder->insert($activity_data);
     }
 
-    public function AddCustomerIP(array $data)
+    public function AddCustomerIP(array $data = null)
     {
         $builder = $this->db->table($this->table_2);
         $ip_data = [

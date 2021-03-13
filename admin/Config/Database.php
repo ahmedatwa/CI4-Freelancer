@@ -34,7 +34,7 @@ class Database extends Config
 		'DSN'      => '',
 		'hostname' => '127.0.0.1',
 		'username' => 'root',
-		'password' => '^%tE:yVsM447',
+		'password' => 'Stream123',
 		'database' => 'freelancer',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => 'ci_',

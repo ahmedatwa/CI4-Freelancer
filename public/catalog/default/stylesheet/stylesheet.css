@@ -4393,8 +4393,8 @@ span.blog-item-tag {
 
 .freelancers-list-layout .freelancer-overview {
 	text-align: left;
-	padding: 45px 40px;
-	flex-grow: 1;
+/*	padding: 45px 40px;
+*/	flex-grow: 1;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -14531,3 +14531,27 @@ body.offcanvas-active{
     margin-right: 10px;
     color: red;
 }
+
+/*BootBox onShow Select 2 issue */
+.select2-container--default .select2-search--inline .select2-search__field {
+    width: 100% !important;
+}
+
+.freelancer-header #bg_image {
+    position: absolute;
+    z-index: 1076;
+    right: 30px;
+    border-radius: 20rem;
+    text-align: center;
+    top: 40%;
+    margin: 10px;
+}
+
+.bg-cover {
+    background-attachment: static;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+

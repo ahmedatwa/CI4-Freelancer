@@ -121,39 +121,16 @@ $('[data-toggle=\'tooltip\']').on('remove', function() {
 });  
 
 // Dismiss Alerts
-//console.log($('#auto-dismiss'));
-document.getElementsByClassName('.alert');
-
-$(window).on('load', function() {
-	$('.alert').each(function (index, value) {
-	console.log(index);
-    var $value = $(value),
-        timeout  = $value.data('auto-dismiss') || 5000;
-
-        $value.alert('close');
-});
+var alert = $('.alert[auto-close]');
+alert.each(function(){
+	var el = $(this);
+	var timeout = el.attr('auto-close') || 2000;
+	setTimeout(function() {
+    el.alert('close');
+}, timeout);
+})
 
 
-	});
-$('#auto-dismiss').each(function (index, value) {
-	console.log(index)
-});
-$('.alert').each(function (index, value) {
-	console.log(index);
-    var $value = $(value),
-        timeout  = $value.data('auto-dismiss') || 5000;
-
-        $value.alert('close');
-});
-    // $('.alert[data-auto-dismiss]').each(function (index, element) {
-    //     var $element = $(element),
-    //         timeout  = $element.data('auto-dismiss') || 500;
-
-    //        $element.fadeTo(2000, timeout).slideUp(timeout, function () {
-    //        $element.slideUp(timeout);
-    //        $element.alert('close');
-    //    });
-    // });
     
 /*--------------------------------------------------*/
 /*  Ripple Effect
@@ -441,12 +418,13 @@ $('.ripple-effect, .ripple-effect-dark').on('click', function(e) {
 	function inlineBG() {
 
 		// Common Inline CSS
-		$(".single-page-header, .intro-banner").each(function() {
+		$(".single-page-header, .intro-banner, .jumbotron").each(function() {
 			var attrImageBG = $(this).attr('data-background-image');
 
-	        if(attrImageBG !== undefined) {
-	        	$(this).append('<div class="background-image-container"></div>');
-	            $('.background-image-container').css('background-image', 'url('+attrImageBG+')');
+	        if(typeof attrImageBG !== typeof undefined && attrImageBG !== false) {
+	        	$(this).css('background', 'url(' + attrImageBG + ') no-repeat center center');
+	        	//$(this).append('<div class="background-image-container"></div>');
+	            //$('.background-image-container').css('background-image', 'url('+attrImageBG+')');
 	        }
 		});
 
@@ -764,6 +742,75 @@ $('#freelancer-info button[id^=button-edit]').on('click', function() {
 	    button.html('<i class="fas fa-plus-circle"></i>');
 	}
 });
+
+
+
+
+// Freelancer Profile Image and Jumbotron
+$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
+    var $element = $(this);
+    e.preventDefault();
+
+    $('#form-upload').remove();
+    $('body').append(`<form enctype="multipart/form-data" id="form-upload" class="d-none">
+   							<input type="file" name="file" value="" />
+   					</form>`);
+    var input = $('#form-upload input[name=\'file\']');
+    input.trigger('click');
+	       
+    input.on('change', function() {
+
+	    if (input.val() != '' ) {
+            $.ajax({
+        		url: 'freelancer/freelancer/avatarUpload?field=' + $element.attr('id'),
+        		headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf_token_catalog"]').attr('content'),
+					'X-Requested-With': 'XMLHttpRequest'
+	            },
+				type: 'post',
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+				$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+				$('#button-upload').prop('disabled', true);
+				},
+				complete: function() {
+					$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
+					$('#button-upload').prop('disabled', false);
+				},
+				success: function(json) {
+				if (json['error']) {
+					alert(json['error']);
+				}
+
+				if (json['success']) {
+					console.log("#" + $element.data('id'));
+					$('#bg-image-wrapper').load(window.location.href + " #bg-image-wrapper");
+				}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+
+            })
+        }
+    });
+});
+
+
+
+
+$('#offCanvas').offcanvas({
+    modifiers: 'bottom,overlay', // default options
+    triggerButton: '#triggerButton' // btn to open offcanvas
+});
+
+
+
+
    // -----------------------
 })
 })(this.jQuery);

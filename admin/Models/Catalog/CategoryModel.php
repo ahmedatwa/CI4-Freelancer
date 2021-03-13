@@ -1,6 +1,9 @@
-<?php namespace Admin\Models\Catalog;
+<?php 
+
+namespace Admin\Models\Catalog;
 
 use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
 
 class CategoryModel extends Model
 {
@@ -47,11 +50,13 @@ class CategoryModel extends Model
         $builder = $this->db->table('category');
 
         $category_data = [
-           'parent_id'  => $data['parent_id'],
-           'top'        => $data['top'] ?? 0,
-           'sort_order' => $data['sort_order'],
-           'icon'       => $data['icon'],
-           'status'     => $data['status'],
+           'parent_id'     => $data['parent_id'],
+           'top'           => $data['top'] ?? 0,
+           'sort_order'    => $data['sort_order'],
+           'icon'          => $data['icon'],
+           'status'        => $data['status'],
+           'date_added'    => Time::now()->getTimestamp(),
+           'date_modified' => Time::now()->getTimestamp(),
         ];
         
         $builder->set('date_modified', 'NOW()', false);
@@ -64,14 +69,12 @@ class CategoryModel extends Model
 
             $builder_description = $this->db->table('category_description');
             $builder_description->delete(['category_id' => $category_id]);
-            $seo_url = $this->db->table('seo_url');
-            $seo_url->delete(['query' => 'category_id=' . $category_id]);
-
             foreach ($data['category_description'] as $language_id => $category_description) {
                 $category_description_data = [
                     'category_id'      => $category_id,
                     'language_id'      => $language_id,
                     'name'             => $category_description['name'],
+                    'keyword'          => generateSeoUrl($category_description['name']),
                     'description'      => $category_description['description'],
                     'meta_title'       => $category_description['meta_title'],
                     'meta_description' => $category_description['meta_description'],
@@ -79,14 +82,6 @@ class CategoryModel extends Model
                 ];
                 $builder_description->set($category_description_data);
                 $builder_description->insert($category_description_data);
-                 //  Seo Urls
-                $seo_url_data = [
-                        'site_id'     => 0,
-                        'language_id' => $language_id,
-                        'query'       => 'category_id=' . $category_id,
-                        'keyword'     => generateSeoUrl($category_description['name']),
-                    ];
-                $seo_url->insert($seo_url_data);
             }
         }
         // Event Call 
@@ -104,11 +99,13 @@ class CategoryModel extends Model
         $builder = $this->db->table('category');
 
         $category_data = [
-           'parent_id'  => $data['parent_id'],
-           'top'        => $data['top'] ?? 0,
-            'icon'      => $data['icon'],
-           'sort_order' => $data['sort_order'],
-           'status'     => $data['status'],
+           'parent_id'     => $data['parent_id'],
+           'top'           => $data['top'] ?? 0,
+           'icon'          => $data['icon'],
+           'sort_order'    => $data['sort_order'],
+           'status'        => $data['status'],
+           'date_added'    => Time::now()->getTimestamp(),
+           'date_modified' => Time::now()->getTimestamp(),
         ];
 
         $builder->set('date_added', 'NOW()', false);
@@ -127,6 +124,7 @@ class CategoryModel extends Model
                     'category_id'      => $category_id,
                     'language_id'      => $language_id,
                     'name'             => $category_description['name'],
+                    'keyword'          => generateSeoUrl($category_description['name']),
                     'description'      => $category_description['description'],
                     'meta_title'       => $category_description['meta_title'],
                     'meta_description' => $category_description['meta_description'],
@@ -134,14 +132,6 @@ class CategoryModel extends Model
                 ];
                 $builder_description->set($category_description_data);
                 $builder_description->insert($category_description_data);
-                //  Seo Urls
-                $seo_url_data = [
-                        'site_id'     => 0,
-                        'language_id' => $language_id,
-                        'query'       => 'category_id=' . $category_id,
-                        'keyword'     => generateSeoUrl($category_description['name']),
-                    ];
-                $seo_url->insert($seo_url_data);
             }
         }
         // Event Call 

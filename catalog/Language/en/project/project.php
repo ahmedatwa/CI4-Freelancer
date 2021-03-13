@@ -77,7 +77,6 @@ return [
         'help_budget'           => 'Freelancers can bid their proposals between this budget range.',
         'text_error_bid'        => 'Warning: the requested operation isn\'t allowed',
         'help_upload'           => 'Upload multiple files to support your project CMD on a MAC or CTRL on Windows',
-        'help_bid'              => '<p>Your best chance of winning this project is writing a great bid proposal here!</p><p>Great bids are ones that:</p><ul><li>Are engaging and well written without spelling or grammatical errors</li><li>Show a clear understanding of what is required for this specific project - personalize your response!</li><li>Explain how your skills & experience relate to the project and your approach to working on it</li><li>Ask questions to clarify any unclear details</li></ul><p>Most of all - don\'t spam or post cut-and-paste bids. You will be penalized or banned if you do so.</p>',
         'help_proposal'         => 'What makes you the best candidate for this project?'
     ],
     'text_success'          => 'Success: Bid has been placed successfully!',

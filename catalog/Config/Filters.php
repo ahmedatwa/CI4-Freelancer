@@ -24,7 +24,7 @@ class Filters extends BaseConfig
 		'csrf'         => CSRF::class,
 		'toolbar'      => DebugToolbar::class,
 		'honeypot'     => Honeypot::class,
-		'seo_url'      => SeoUrlFilter::class,
+		//'seo_url'      => SeoUrlFilter::class,
 		'localization' => LocalizationFilter::class,
 		'maintenance'  => MaintenanceFilter::class,
 		'throttle'     => ThrottleFilter::class,
@@ -40,14 +40,14 @@ class Filters extends BaseConfig
 	public $globals = [
 		'before' => [
             'localization',
-            'seo_url',
+            //'seo_url',
             'maintenance',
             'csrf',
 		],
 		'after'  => [
             'honeypot',
             'toolbar',
-            'encryption'
+            'encryption',
 		],
 	];
 

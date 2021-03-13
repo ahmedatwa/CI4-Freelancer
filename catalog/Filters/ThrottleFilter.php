@@ -1,4 +1,6 @@
-<?php namespace Catalog\Filters;
+<?php 
+
+namespace Catalog\Filters;
 
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;

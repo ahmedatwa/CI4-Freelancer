@@ -16,7 +16,7 @@ class CustomerModel extends Model
     protected $beforeInsert   = ['hashPassword'];
     protected $beforeUpdate   = ['hashPassword'];
     // User Activity Events
-    protected $afterUpdate    = ['afterUpdateEvent'];
+    protected $afterUpdate    = ['afterUpdate'];
     // should use for keep data record create timestamp
     protected $useTimestamps  = true;
     protected $dateFormat     = 'int';
@@ -40,7 +40,7 @@ class CustomerModel extends Model
         return $data;
     }
 
-    protected function afterUpdateEvent(array $data)
+    protected function afterUpdate(array $data)
     {
         if (isset($data['id'])) {
             \CodeIgniter\Events\Events::trigger('customer_update', $data['id'][0]);
@@ -48,7 +48,7 @@ class CustomerModel extends Model
         return $data;
     }
 
-    public function addCustomer($data)
+    public function addCustomer(array $data)
     {
         $builder = $this->db->table($this->table);
         $customer_data = [
@@ -67,7 +67,7 @@ class CustomerModel extends Model
     }
 
     // Login Attempts
-    public function addLoginAttempt($email, $ipAddress)
+    public function addLoginAttempt(string $email, $ipAddress)
     {
         $builder = $this->db->table('customer_login');
         
@@ -90,7 +90,7 @@ class CustomerModel extends Model
         }
     }
 
-    public function getLoginAttempts($email)
+    public function getLoginAttempts(string $email)
     {
         $builder = $this->db->table('customer_login');
         $builder->where('email', $email);
@@ -98,7 +98,7 @@ class CustomerModel extends Model
         return $query->getRowArray();
     }
 
-    public function deleteLoginAttempts($email)
+    public function deleteLoginAttempts(string $email)
     {
         $builder = $this->db->table('customer_login');
         $builder->delete(['email' => $email]);
@@ -125,7 +125,7 @@ class CustomerModel extends Model
         \CodeIgniter\Events\Events::trigger('mail_forgotten', $email, $code);
     }
 
-    public function editPassword($email, $password)
+    public function editPassword(string $email, $password)
     {
         $builder = $this->db->table($this->table);
         $builder->where('email', $email);
@@ -146,7 +146,7 @@ class CustomerModel extends Model
     }
 
 
-    public function getTotalCustomersByEmail($email)
+    public function getTotalCustomersByEmail(string $email)
     {
         $builder = $this->db->table($this->table);
         $builder->selectCount('*', 'total');
@@ -156,14 +156,14 @@ class CustomerModel extends Model
     }
 
     // for Dahsboard Widget
-    public function getTotalProjectsByCustomerId($customer_id)
+    public function getTotalProjectsByCustomerId(int $customer_id)
     {
         $builder = $this->db->table('project');
         $builder->where('employer_id', $customer_id);
         return $builder->countAllResults();
     }
 
-    public function getBalanceByMonth($customer_id)
+    public function getBalanceByMonth(int $customer_id)
     {
         $balance_data = [];
 

@@ -70,7 +70,7 @@ class Setting extends BaseController
         }
 
         if ($customer_id) {
-            $customer_info = $customerModel->getCustomer($customer_id);
+            $customer_info = $customerModel->find($customer_id);
         }
 
         if (isset($customer_info['firstname'])) {
@@ -89,37 +89,6 @@ class Setting extends BaseController
             $data['email'] = $customer_info['email'];
         } else {
             $data['email'] = '';
-        }
-        // Freelancer Profile
-        if ($this->request->getPost('about')) {
-            $data['about'] = $this->request->getPost('about');
-        } elseif ($customer_info['about']) {
-            $data['about'] = $customer_info['about'];
-        } else {
-            $data['about'] = '';
-        }
-        if ($this->request->getPost('tag_line')) {
-            $data['tag_line'] = $this->request->getPost('tag_line');
-        } elseif ($customer_info['tag_line']) {
-            $data['tag_line'] = ($customer_info['tag_line'] == 'NULL') ? '' : $customer_info['tag_line'];
-        } else {
-            $data['tag_line'] = '';
-        }
-
-        if ($this->request->getPost('rate')) {
-            $data['rate'] = $this->request->getPost('rate');
-        } elseif ($customer_info['rate']) {
-            $data['rate'] = $customer_info['rate'];
-        } else {
-            $data['rate'] = 0;
-        }
-
-        if ($this->request->getPost('social')) {
-            $data['social'] = $this->request->getPost('social');
-        } elseif ($customer_info['social']) {
-            $data['social'] = json_decode($customer_info['social'], true);
-        } else {
-            $data['social'] = '';
         }
 
         if ($customer_info['two_step']) {
@@ -169,35 +138,6 @@ class Setting extends BaseController
         $this->template->output('account/setting', $data);
     }
 
-    public function avatarUpload()
-    {
-        $json = [];
-        if ($this->request->isAJAX()) {
-            if ($imagefile = $this->request->getFile('image')) {
-                $customerModel = new CustomerModel();
-
-                if ($imagefile->isValid() && ! $imagefile->hasMoved()) {
-                    $newName = $imagefile->getRandomName();
-                    $imagefile->move('images/catalog', $newName);
-                    $customerModel->where('customer_id', $this->session->get('customer_id'))
-                              ->set('image', 'catalog/' . $newName)
-                              ->update();
-                    // return fileInput Config
-                    $json = [
-                        'initialPreview' => base_url('images/catalog/' . $newName),
-                        'initialPreviewConfig' => [
-                            'caption' => $imagefile->getClientName(),
-                            'url'     => '',
-                            'key'     => $this->session->get('customer_id'),
-                        ],
-                        'append' => true,
-                   ];
-                }
-            }
-        }
-        return $this->response->setJSON($json);
-    }
-
     public function backgroundImageUpload()
     {
         $json = [];
@@ -227,7 +167,7 @@ class Setting extends BaseController
         return $this->response->setJSON($json);
     }
 
-    public function profileUpdate()
+    public function password()
     {
         $json = [];
         if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
@@ -256,21 +196,7 @@ class Setting extends BaseController
                         $json['error']['old_password'] = lang('account/setting.error_old_password');
                     }
                 }
-                // 
-            } else {
-                if (! $this->validate([
-                        'firstname' => 'required|alpha_numeric',
-                        'lastname'  => 'required|alpha_numeric',
-                    ])) {
-                    $json['error'] = $this->validator->getErrors();
-                }
-
-                if (! $json) {
-                    $customerModel = new CustomerModel();
-                    $customerModel->update($this->customer->getID(), $this->request->getPost());
-                    $json['success'] = lang('account/setting.text_success');
-                }
-            }
+            } 
         }
         return $this->response->setJSON($json);
     }

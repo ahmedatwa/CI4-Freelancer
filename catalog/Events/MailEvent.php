@@ -9,6 +9,11 @@ use CodeIgniter\I18n\Time;
 class MailEvent
 {
 
+    // Catalog\Controllers\Account\Login::authLogin
+    public static mail_login_alert() {
+
+    }
+
     // Catalog\Model\Account\CustomerModel\editCode
     public static function forgottenMail(string $email, string $code)
     {

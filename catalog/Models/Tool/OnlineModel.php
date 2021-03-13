@@ -10,10 +10,10 @@ class OnlineModel extends Model
     protected $table          = 'customer_online';
     protected $primaryKey     = 'customer_online_id';
 
-    public function addOnline($ip, $customer_id, $url, $referer)
+    public function addOnline(string $ip, int $customer_id, string $url, string $referer)
     {
         $builder = $this->db->table($this->table);
-        $builder->where('date_added < ', date('Y-m-d H:i:s', strtotime('-1 hour')));
+        $builder->where('date_added < ', strtotime(date('Y-m-d H:i:s', strtotime('-1 hour'))));
         $builder->delete();
         $online_data = [
             'ip'          => $ip,

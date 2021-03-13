@@ -13,7 +13,7 @@ class CategoryModel extends Model
     public function getCategories(array $data = [])
     {
         $builder = $this->db->table('category c');
-        $builder->select('cd.category_id, cd.name, c.sort_order, c.status, cd.description, c.icon, c.parent_id');
+        $builder->select('cd.category_id, cd.name, c.sort_order, c.status, cd.description, c.icon, c.parent_id, cd.keyword, cd.keyword');
         $builder->join('category_description cd', 'c.category_id = cd.category_id', 'left');
         $builder->where('cd.language_id', service('registry')->get('config_language_id'));
         $builder->where('c.status !=', '0');
@@ -46,13 +46,13 @@ class CategoryModel extends Model
         return $query->getResultArray();
     }
 
-    public function getCategory($category_id)
+    public function getCategory(int $category_id)
     {
-        $builder = $this->db->table('category');
-        $builder->select('category.category_id, category_description.name, category_description.description, category.status, category.icon');
-        $builder->join('category_description', 'category.category_id = category_description.category_id', 'left');
+        $builder = $this->db->table('category c');
+        $builder->select('c.category_id, cd.name, cd.description, c.status, c.icon, cd.keyword');
+        $builder->join('category_description cd', 'c.category_id = cd.category_id', 'left');
         $builder->where([
-            'category.category_id' => $category_id,
+            'c.category_id' => $category_id,
             'language_id' => service('registry')->get('config_language_id'),
         ]);
         $query = $builder->get();
@@ -97,6 +97,18 @@ class CategoryModel extends Model
         $builder = $this->db->table('project_to_category');
         $builder->where('category_id', $category_id);
         return $builder->countAllResults();
+    }
+
+    public function findID(string $keyword)
+    {
+        $builder = $this->db->table('category_description');
+        $builder->where('keyword', $keyword);
+        $row = $builder->get()->getRowArray();
+        if ($row) {
+            return  $row[$this->primaryKey];
+        } else {
+            return 0;
+        }
     }
     // -----------------------------------------------------------------
 }

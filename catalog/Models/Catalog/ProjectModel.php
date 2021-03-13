@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Catalog\Models\Catalog;
 
@@ -15,6 +15,31 @@ class ProjectModel extends Model
     protected $dateFormat    = 'int';
     protected $createdField  = 'date_added';
     protected $updatedField  = 'date_modified';
+
+    protected static function afterInsertEvent(array $eventData)
+    {
+        if (isset($eventData)) {
+            \CodeIgniter\Events\Events::trigger('project_add', $eventData);
+            \CodeIgniter\Events\Events::trigger('mail_project_add', $eventData);
+            // Pusher
+            $options = [
+                'cluster' => PUSHER_CLUSTER,
+                'useTLS' => PUSHER_USETLS
+            ];
+
+            $pusher = new \Pusher\Pusher(
+                PUSHER_KEY,
+                PUSHER_SECRET,
+                PUSHER_APP_ID,
+                $options
+            );
+            $pusher->trigger('global-channel', 'new-project-event', $eventData);
+        }
+    }
+
+    protected function beforeUpdate(array $data)
+    {
+    }
 
     public function addProject(array $data)
     {
@@ -35,45 +60,28 @@ class ProjectModel extends Model
         // Get Last Inserted ID
         $project_id = $this->db->insertID();
 
-        // // project_description Query
+        // project_description Query
         if (isset($data['project_description'])) {
-            $seoUrl = service('seo_url');
             $project_description_table = $this->db->table('project_description');
-            $seo_url = $this->db->table('seo_url');
-
             foreach ($data['project_description'] as $language_id => $value) {
                 $project_description = [
                     'project_id'       => $project_id,
                     'language_id'      => $language_id,
                     'name'             => $value['name'],
+                    'keyword'          => url_title(convert_accented_characters($value['name']), '-', true),
                     'description'      => $value['description'],
                     'meta_title'       => $value['meta_title'] ?? '',
                     'meta_description' => $value['meta_description'] ?? '',
                     'meta_keyword'     => $value['meta_keyword'] ?? '',
                 ];
                 $project_description_table->insert($project_description);
-                // SEO URL
-                $seo_url->delete(['query' => 'project_id=' . $project_id]);
-                $seo_url_data = [
-                        'site_id'     => 0,
-                        'language_id' => $language_id,
-                        'query'       => 'project_id=' . $project_id,
-                        'keyword'     => url_title(convert_accented_characters($value['name']), '-', true),
-                    ];
-                $seo_url->insert($seo_url_data);
-                $keyword = $seoUrl->getKeywordByQuery('project_id=' . $project_id);
                 // Trigger Pusher Notification event
-                $pusher_data = [
+                $pusherData = [
                     'name'        => $value['name'],
                     'employer_id' => $data['employer_id'],
                     'budget'      => $data['budget_min'] . ' - ' . $data['budget_max'],
-                    'href'        => route_to('single_project', $project_id, $keyword)
+                    'href'        => route_to('single_project', $project_id, $project_description['keyword'])
                 ];
-                $options = ['cluster' => PUSHER_CLUSTER, 'useTLS' => PUSHER_USETLS];
-                $pusher = new \Pusher\Pusher(PUSHER_KEY, PUSHER_SECRET, PUSHER_APP_ID, $options);
-                $pusher->trigger('global-channel', 'new-project-event', $pusher_data);
-                // Mail Alert
-                \CodeIgniter\Events\Events::trigger('mail_project_add', $pusher_data);
             }
         }
         // project_categories
@@ -88,72 +96,23 @@ class ProjectModel extends Model
                 $project_category_table->insert($project_category_data);
             }
         }
-        return $project_id;
-    }
-    
-    public function editProject($project_id, $data)
-    {
-        $language_id = service('registry')->get('config_language_id');
-        $builder = $this->db->table($this->table);
-        $project_data = [
-            'status_id'     => $data['status'],
-            'type'          => $data['type'],
-            'upload'        => $data['upload'],
-            'employer_id'   => $data['employer_id'],
-            'budget_min'    => $data['budget_min'],
-            'budget_max'    => $data['budget_max'],
-            'date_modified' => $data['date_modified'],
-        ];
+        // Event Data
+        if ($pusherData) {
+            static::afterInsertEvent($pusherData);
+        }
         
-        $builder->update($project_data);
-
-        // project_description Query
-        if (isset($data['project_description'])) {
-            $project_description_table = $this->db->table('project_description');
-            $project_description_table->delete(['project_id' => $project_id]);
-            $seo_url = $this->db->table('seo_url');
-            foreach ($data['project_description'] as $language_id => $value) {
-                $project_description_data = [
-                    'project_id'       => $project_id,
-                    'language_id'      => $language_id,
-                    'name'             => $value['name'],
-                    'description'      => $value['description'],
-                    'meta_title'       => $value['meta_title'] ?? '',
-                    'meta_description' => $value['meta_description'] ?? '',
-                    'meta_keyword'     => $value['meta_keyword'] ?? '',
-                   // 'tags'             => $value['tags'],
-                ];
-                $project_description_table->insert($project_description_data);
-                //  Seo Urls
-                $seo_url->delete(['language_id' => $language_id, 'query' => 'project_id=' . $project_id]);
-                $seo_url_data = [
-                        'site_id'     => 0,
-                        'language_id' => $language_id,
-                        'query'       => 'project_id=' . $project_id,
-                        'keyword'     => url_title(convert_accented_characters($value['name']), '-', true),
-                    ];
-                $seo_url->insert($seo_url_data);
-            }
-        }
-        // project_categories
-        if (isset($data['category_id'])) {
-            $project_category_table = $this->db->table('project_to_category');
-            foreach ($data['category_id'] as $category_id) {
-                $project_category_data = [
-                    'project_id'       => $project_id,
-                    'category_id'      => $category_id,
-                ];
-                $project_category_table->insert($project_category_data);
-            }
-        }
+        return $project_id;
     }
 
     public function getProjects(array $data = [])
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status, p.employer_id, p.freelancer_id');
-        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
-        $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
+        $builder->select('p.project_id, pd.name, pd.description, p.status_id, p.budget_min, p.budget_max, p.type, p.date_added, pd.meta_keyword, p.delivery_time, p.runtime, ps.name AS status, p.employer_id, p.freelancer_id, pd.keyword, cd.keyword AS categoryKeyword')
+                ->join('project_description pd', 'p.project_id = pd.project_id', 'left')
+                ->join('project_status ps', 'p.status_id = ps.status_id', 'left')
+                ->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left')
+                ->join('category_description cd', 'cd.category_id = p2c.category_id', 'left')
+                ->groupBy('p.project_id');
 
         $builder->where([
             'pd.language_id' => service('registry')->get('config_language_id'),
@@ -161,10 +120,8 @@ class ProjectModel extends Model
         ]);
 
         if (isset($data['filter_skills'])) {
-            $builder->join('project_to_category p2c', 'p.project_id = p2c.project_id', 'left');
-            if (strpos($data['filter_skills'], '_')) {
-                $explode = explode('_', $data['filter_skills']);
-                $builder->whereIn('p2c.category_id', $explode);
+            if (is_array($data['filter_skills'])) {
+                $builder->whereIn('p2c.category_id', $data['filter_skills']);
             } else {
                 $builder->where('p2c.category_id', $data['filter_skills']);
             }
@@ -219,8 +176,6 @@ class ProjectModel extends Model
             $builder->whereIn('p.type', (array) $data['filter']);
             $builder->orWhereIn('p.status', str_replace('_', ',', $data['filter']));
         }
-
-        $builder->groupBy('p.project_id');
 
         $sortData = [
             'p.budget_min',
@@ -367,7 +322,7 @@ class ProjectModel extends Model
     public function getProject(int $project_id)
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, ps.name AS status, p.viewed, c.username, p.delivery_time');
+        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, ps.name AS status, p.viewed, c.username, p.delivery_time, pd.keyword');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
         $builder->join('customer c', 'p.employer_id = c.customer_id', 'left');
@@ -399,6 +354,17 @@ class ProjectModel extends Model
         $builder->update();
     }
 
+    public function findID(string $keyword)
+    {
+        $builder = $this->db->table('project_description');
+        $builder->where('keyword', $keyword);
+        $row = $builder->get()->getRowArray();
+        if ($row) {
+            return  $row[$this->primaryKey];
+        } else {
+            return 0;
+        }
+    }
 
     // public function getTotalBidsByProjectId($project_id)
     // {
@@ -456,7 +422,7 @@ class ProjectModel extends Model
     //         } else {
     //             return;
     //         }
-    //     } 
+    //     }
     // }
 
     // public function deleteProjectFiles(int $project_id, int $freelancer_id)

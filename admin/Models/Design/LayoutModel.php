@@ -1,4 +1,6 @@
-<?php namespace Admin\Models\Design;
+<?php 
+
+namespace Admin\Models\Design;
 
 use CodeIgniter\Model;
 
@@ -134,8 +136,12 @@ class LayoutModel extends Model
         $builder = $this->db->table('layout_route');
         $builder->select()->where('layout_id', (int) $layout_id);
         $query = $builder->get();
-        $row = $query->getRowArray();
-        return $row['route'];
+        $row = $query->getRow();
+        if ($row) {
+           return $row->route;
+        } else {
+           return ''; 
+        }
     }
 
     public function getLayoutModules(int $layout_id)

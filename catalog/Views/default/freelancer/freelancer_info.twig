@@ -1,44 +1,50 @@
-{{ header }}
-<div class="single-page-header freelancer-header margin-bottom-30" data-background-image="{{ bgImage }}">
-	
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="single-page-header-inner">
-					<div class="left-side">
-						<div class="header-image freelancer-avatar rounded-pill"><img src="{{ image }}" alt=""></div>
-						<div class="header-details">
-							<h3><a href="#" id="name" class="text-dark" data-type="text" data-pk="{{ freelancer_id }}">{{ name }}</a><span>
-								<a href="#" id="tag_line" class="text-dark" data-type="text" data-pk="{{ freelancer_id }}">{{ tag_line }}</a></span></h3>
-							<ul>
-								<li>
-									<div class="rating">
-										<ul>
-											{% for i in 1..5 %}
-											{% if rating < i %}
-											<li><span class="fa-stack"><i class="far fa-star fa-stack-2x"></i></span>
-											</li>
-											{% else %}
-											<li><span class="fa-stack">
-													<i class="fas fa-star fa-stack-2x"></i></span></li>
-											{% endif %}
-											{% endfor %}
-										</ul>
-									</div>
-								</li>
-								<li>
-									<div class="verified-badge-with-title">Verified</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+{{ header }}{{ menu }}
+<div class="freelancer-header p-0" id="bg-image-wrapper">
+	<div class="jumbotron jumbotron-fluid bg-cover" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.9) 100%), url('{{ bgImage }}')">
+		<div class="container">
+			<div id="image-wrapper">
+				{% if freelancer_id == customer_id %}
+			<a href="" id="image" data-toggle="image" data-id="image-wrapper">
+				<img src="{{ image }}" alt="" title="" data-placeholder="{{ image }}" class="rounded-pill" />
+			</a>
+			{% else %}
+			<img src="{{ image }}" alt="" title="" data-placeholder="{{ image }}" class="rounded-pill" />
+			{% endif %}
+		</div>
+			<h1 class="display-4">
+				{% if freelancer_id == customer_id %}
+				<a href="#" id="name" data-type="text" data-pk="{{ freelancer_id }}">{{ name }}</a>
+				{% else %}
+				<span>{{ name }}</span>
+				{% endif %}
+			</h1>
+			<p class="lead">
+				{% if freelancer_id == customer_id %}
+				<a href="#" id="tag_line" data-type="text" data-pk="{{ freelancer_id }}">{{ tag_line }}</a>
+				{% else %}
+				<span>{{ tag_line }}</span>
+				{% endif %}
+				<ul class="list-unstyled rating">
+					{% for i in 1..5 %}
+					{% if rating < i %}
+					<li class="float-left"><span class="fa-stack"><i class="far fa-star fa-stack-2x"></i></span></li>
+					{% else %}
+					<li class="float-left"><span class="fa-stack"><i class="fas fa-star fa-stack-2x"></i></span></li>
+					{% endif %}
+					{% endfor %}
+					<li class="float-left ml-4 mt-2">
+						<div class="verified-badge-with-title">Verified</div>
+					</li>
+				</ul>
+			</p>
+			{% if freelancer_id == customer_id %}
+	<a class="btn btn-light" id="bg_image" href="#" data-toggle="image" data-id="bg-image-wrapper"><i class="fas fa-edit"></i></a>
+	{% endif %}
 		</div>
 	</div>
 </div>
 <!-- Page Content -->
-<div class="container-fluid">
+<div class="container-fluid" id="freelancer-info">
 	<div class="row">
 		<div class="col-12">
 			<nav id="breadcrumbs">
@@ -49,21 +55,26 @@
 				</ul>
 			</nav>
 			{% if freelancer_id == customer_id %}
+			<div id="progressbar-wrapper">
 			<div class="progress my-2">
-				<div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-					role="progressbar" style="width: {{ profile_strength }}%"
-					aria-valuenow="{{ profile_strength }}" aria-valuemin="0" aria-valuemax="100">
-					%{{ profile_strength }}</div>
+				<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:{{ profile_strength }}%"
+					aria-valuenow="{{ profile_strength }}" aria-valuemin="0" aria-valuemax="100">%{{ profile_strength }}
+				</div>
+			  </div>
 			</div>
 			{% endif %}
 		</div>
-		<!-- Content -->
 		<div class="col-sm-12 col-md-9" id="freelancer-info">
 		<div class="shadow-sm p-3 mb-3 bg-white rounded border">
-			<!-- Page Content -->
 			<div class="single-page-section mb-3">
 				<h3 class="mb-4">{{ text_about }}</h3>
-				<p><a href="#" id="about" class="text-dark" data-type="textarea" data-pk="{{ freelancer_id }}">{{ about }}</a></p>
+				<p>
+				{% if freelancer_id == customer_id %}
+				<a href="#" id="about" class="text-dark" data-type="textarea" data-pk="{{ freelancer_id }}">{{ about }}</a>
+				{% else %}
+				{{ about }}
+				{% endif %}
+				</p>
 			</div>
 		</div>
 		{# Certificates Start #}
@@ -72,7 +83,8 @@
 				<div class="d-flex bd-highlight">
 					<div class="mr-auto p-2 bd-highlight"><h3 class="mb-3">{{ text_cert }}</h3></div>
 					{% if freelancer_id == customer_id %}
-					<div class="p-2 bd-highlight"><button class="btn btn-light bg-transparent border-0 btn-sm" type="button" id="button-edit-1" data-id="certificate">
+					<div class="p-2 bd-highlight">
+						<button class="btn btn-light bg-transparent border-0 btn-sm" type="button" id="button-edit-1" data-id="certificate">
 						<i class="fas fa-plus-circle"></i></button>
 					</div>
 					{% endif %}
@@ -88,8 +100,7 @@
 							</div>
 							<div class="form-group col-md-6">
 								<label for="input-year">{{ entry_year }}</label>
-								<select id="input-year" class="form-control"
-									name="year">
+								<select id="input-year" class="custom-select" name="year">
 									{% set start_year = date() | date('Y') %}
 									{% set end_year = start_year - 50 %}
 									{% for year in start_year..end_year %}
@@ -97,13 +108,12 @@
 										{{ year }}</option>
 									{% endfor %}
 								</select>
-								<span class="lnr lnr-chevron-down"></span>
 							</div>
 							<div class="col-md-12">
 								<div class="float-right">
 									<button class="btn btn-primary btn-sm" id="button-add"
 									type="button"><i class="icon-material-outline-add"></i>
-									{{ button_save }}</button>
+									{{ button_add }}</button>
 								</div>
 							</div>
 						</div>
@@ -197,10 +207,12 @@
 				<div class="task-tags">
 					{% for education in educations %}
 					<div id="{{ education.education_id }}" class="row mb-2">
+						{% if freelancer_id == customer_id %}
 						<div style="width: 2%;" class="mx-1">
 					    <a href="#" class="ml-1" id="button-delete{{ education.education_id }}" data-id="{{ education.education_id }}">
 							<i class="fas fa-times"></i></a>
-				</div>
+				        </div>
+						{% endif %}
 				<div class="col">
 				      <h3 class="mb-1">{{ education.title|upper }} in {{ education['major'] }}</h3>
 						<footer class="blockquote-footer"><cite title="{{ education.university }}">{{ education.university }}</cite></footer>
@@ -271,16 +283,21 @@
 		<!-- Sidebar -->
 		<div class="col">
 			<div class="sidebar-container">
-				{% if freelancer_id == customer_id %}
+				{% if freelancer_id == customer_id or not isLogged %}
 				<button type="button" class="btn btn-danger btn-block apply-now-button margin-bottom-50" disabled>{{ button_offer }}
 					<i class="icon-material-outline-arrow-right-alt"></i></button>
 				{% else %}
-				<button type="button" data-toggle="modal" data-target="#hireme"
-					class="button btn-block apply-now-button margin-bottom-50">{{ button_offer }}<i
-						class="icon-material-outline-arrow-right-alt"></i></button>
+				<button type="button" id="button-hire" class="btn btn-danger btn-block apply-now-button margin-bottom-50">{{ button_offer }}
+					<i class="icon-material-outline-arrow-right-alt"></i></button>
 				{% endif %}
 				<div class="profile-overview">
-					<div class="overview-item"><strong><a href="#" class="text-dark" id="rate" data-type="text" data-pk="{{ freelancer_id }}">{{ rate }}</a></strong><span>Hourly Rate</span></div>
+					<div class="overview-item"><strong>
+						{% if freelancer_id == customer_id %}
+						<a href="#" class="text-dark" id="rate" data-type="text" data-pk="{{ freelancer_id }}">{{ rate }}</a> {{ config_currency }}
+						{% else %}
+						{{ rate }} {{ config_currency }}
+						{% endif %}
+						</strong><span>Hourly Rate</span></div>
 					<div class="overview-item"><strong>{{ total_jobs }}</strong><span>{{ text_jobs_done }}</span></div>
 				</div>
 				<!-- Freelancer Indicators -->
@@ -300,19 +317,6 @@
 						</div>
 					</div>
 				</div>
-				{% if social %}
-				<div class="sidebar-widget">
-					<h3>{{ text_social }}</h3>
-					<div class="freelancer-socials margin-top-25">
-						<ul>
-							{% for row in social %}
-							<li><a href="{{ row.href }}" title="{{ row.name }}" data-placement="top" data-toggle="tooltip"><i
-										class="icon-brand-{{ row.name|lower }}"></i></a></li>
-							{% endfor %}
-						</ul>
-					</div>
-				</div>
-				{% endif %}
 				<div class="sidebar-widget">
 					<div id="skills-list">
 						<ul class="list-group">
@@ -325,10 +329,35 @@
 						{% for skill in skills %}
 						<li class="list-group-item d-flex justify-content-between align-items-center">
 							{{ skill.name }}
-							<span class="badge badge-primary badge-pill">14</span>
+							<span class="badge badge-primary badge-pill">{{ skill.count }}</span>
 						</li>
 						{% endfor %}
 					</ul>
+				</div>
+				</div>
+				<div class="sidebar-widget">
+					<div id="social-list">
+						<ul class="list-group">
+							<li class="list-group-item">{{ text_social }}
+								{% if freelancer_id == customer_id %}
+								<select name="social" class="custom-select">
+									<option>{{ text_select }}</option>
+									<option name="facebook">Facebook</option>
+									<option name="twitter">Twitter</option>
+								</select>
+								<div id="social-wrapper"></div>
+								<a href="#" role="button" class="btn btn-light border-0 bg-transparent float-right" id="button-add-row">
+										<i class="fas fa-edit"></i></a>
+								{% endif %}		
+						</li>
+						<div id="social-input-wrapper"></div>
+						{% for row in social %}
+						<li class="list-group-item d-flex justify-content-between align-items-center">
+							<a href="{{ row.href }}" target="_blank">{{ row.name }}</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
 				</div>
 				</div>
 			</div>
@@ -381,65 +410,23 @@
 		{% endif %}
 	</div>
 </div>
-<!-- Spacer -->
-<div class="margin-top-15"></div>
-<!-- Button trigger modal Hire Me -->
-<!-- Modal -->
-<div class="modal fade" id="hireme" tabindex="-1" aria-labelledby="hiremeModal" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="hiremeModal">{{ text_hire_me }}</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form enctype="multipart/form-data" method="post" action="" id="form-hire" accept-charset="utf-8"> 
-					<input type="hidden" name="sender_id" value="{{ employer_id }}" />
-					<input type="hidden" name="receiver_id" value="{{ freelancer_id }}" />
-					<input type="hidden" name="thread_id" value="{{ thread_id }}" />
-					<div class="form-group">
-						<label for="exampleInputEmail1"><i class="fas fa-comment"></i> {{ text_message }}</label>
-						<textarea rows="3" class="form-control" name="message">{{ text_canned }}</textarea>
-					</div>
-					<div class="form-group row">
-						<div class="col">
-							<select class="form-control" name="type">
-								<option>{{ text_fixed_price }}</option>
-								<option>{{ text_per_hour }}</option>
-							</select>
-						</div>
-						<div class="col">
-							<input type="number" class="form-control" name="delivery_time" value="3" min="2" max="30">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="exampleInputEmail1">{{ text_budget_min }}</label>
-						<input type="number" value="{{ rate }}" class="form-control" name="budget_min" min="10">
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="button btn-lg btn-block" id="button-hire-me">{{ button_hire }}</button>
-			</div>
-		</div>
-	</div>
+
+
 </div>
 <link href="catalog/default/vendor/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
 <script src="catalog/default/vendor/bootstrap-editable/js/bootstrap-editable.js"></script>
 {# Live Inputs Edit #}
 <script>
 $('#tag_line, #rate, #about, #name').editable({
-	url: 'freelancer/freelancer/profileUpdate?customer_id={{ customer_id }}',
+	title: 'Edit/Enter',
+	url: 'freelancer/freelancer/edit?freelancer_id={{ freelancer_id }}',
 	ajaxOptions: {
 		dataType: 'json',
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
 			"X-Requested-With": "XMLHttpRequest"
 		},
-	},   
-	title: 'Edit/Enter'
+	},
 });
 </script>
 
@@ -461,13 +448,13 @@ $('#certificate-wrapper').on('click', '#button-add', function (e) {
 		data: $('#certificate-form input[name=\'certificate\'], #certificate-form select[name=\'year\']'),
 		beforeSend: function () {
 			$('.alert, .text-danger, .invalid-feedback').remove();
-			$('#input-name, #input-year').removeClass('is-invalid');
+			$('#certificate-form input').removeClass('is-invalid');
 			$(node).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
 			$('#certificate-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 		},
 		complete: function () {
 			$('#spinner').remove();
-			$(node).html('<i class="icon-material-outline-add"></i> {{ button_save }}');
+			$(node).html('<i class="icon-material-outline-add">{{ button_add }}</i>')
 		},
 		success: function (json) {
 			if (json['error']) {
@@ -478,9 +465,10 @@ $('#certificate-wrapper').on('click', '#button-add', function (e) {
 				}
 			}
 			if (json['success']) {
-				$('#certificate-list input').val('');
+				$('#certificate-form input').val('');
 				$('#certificate-list').load(window.location.href + " #certificate-list");
-				$('#certificate-form').before('<div class="alert alert-success" id="auto-dismiss"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#progressbar-wrapper').load(window.location.href + " #progressbar-wrapper");
+				$('#freelancer-info').before('<div class="alert alert-success" auto-close="3000"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 			}
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
@@ -521,10 +509,11 @@ $('#certificate-wrapper').on('click', '#button-delete', function (e) {
 					dataType: 'json',
 					beforeSend: function () {
 						$('.alert, .text-danger').remove();
-						$('#certificate-list').html('<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+						$('#certificate-list').html('<div class="d-flex justify-content-center" id="spinner"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 					},
 					complete: function () {
-						$(this).html('{{ button_delete }}');
+						$('#spinner').remove();
+						$(node).html('<i class="icon-material-outline-add">{{ button_add }}</i>')
 					},
 					success: function (json) {
 						if (json['error']) {
@@ -604,6 +593,7 @@ $('#language-wrapper').on('click', 'button[id=\'button-add\']', function (e) {
 
 			if (json['success']) {
 				$('#language-list').load(window.location.href + " #language-list .task-tags");
+				$('#progressbar-wrapper').load(window.location.href + " #progressbar-wrapper");
 				$('#language-form').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
@@ -752,6 +742,7 @@ $('#education-form').on('click', 'button[id=\'button-add\']', function (e) {
 
 			if (json['success']) {
 				$('#education-list').load(window.location.href + " #education-list .task-tags");
+				$('#progressbar-wrapper').load(window.location.href + " #progressbar-wrapper");
 				$('#education-form').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
@@ -799,7 +790,6 @@ $('#education-list').on('click', 'a[id^=\'button-delete\']', function (e) {
 						$('#education-list').html('');
 					},
 					success: function (json) {
-
 						if (json['error']) {
 							$('#educations-form').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 						}
@@ -824,16 +814,45 @@ $('#education-list').on('click', 'a[id^=\'button-delete\']', function (e) {
 $('#button-add-skill').on('click', function (e) {
 	e.preventDefault();
 	var dialog = bootbox.confirm({
-		message: '<form id="skills-form"><input type="hidden" value="{{ freelancer_id }}" name="freelancer_id" /><label for="input-filter_skill">{{ entry_skill }} <span data-toggle="tooltip" data-placement="top" title="Autocomplete"><i class="fas fa-info-circle"></i></span></label><div class="input-group"><select class="form-control" name="category[]" data-width="100%" multiple="multiple">{% for category in skills %}{% if category.category_id in filter_skills %}<option value="{{ category.skill_id }}" selected>{{ category.name }}</option>{% else %}<option value="{{ category.skill_id }}">{{ category.name }}</option>{% endif %}{% endfor %}</select></div></form>',
+		message: '<form id="skills-form"><input type="hidden" value="{{ freelancer_id }}" name="freelancer_id" /><label for="input-filter_skill">{{ entry_skill }} <span data-toggle="tooltip" data-placement="top" title="Autocomplete"><i class="fas fa-info-circle"></i></span></label><div class="input-group"><select class="form-control" name="skills[]" data-width="100%" multiple="multiple"></select></div></form>',
 		buttons: {
 			cancel: {
 				label: 'Cancel',
 				className: 'btn-secondary'
 			},
 			confirm: {
-				label: 'Add',
+				label: 'Save',
 				className: 'btn-primary'
 			},
+		},
+		onShow: function(e){
+			$('.bootbox-body select[name^=\'skills\']').select2({
+				ajax: {
+					url: 'freelancer/freelancer/skillsAutocomplete',
+					dataType: 'json',
+					delay: 250,
+					data: function (params) {
+						return {
+							filter_skill: params.term,
+						};
+					},
+					processResults: function (data, params) {
+						var results = $.map(data, function (item) {
+							item.id = item.skill_id;
+							item.text = item.name;
+							return item;
+						});
+						return {
+							results: results,
+						};
+					},
+					cache: true
+					},
+				minimumInputLength: 1,
+				placeholder: '{{ text_select }}',
+				allowClear: true,
+				minimumResultsForSearch: 5
+			});
 		},	
 		callback: function (result) {
 			if (result === true) {
@@ -845,7 +864,7 @@ $('#button-add-skill').on('click', function (e) {
 					},
 					type: 'post',
 					dataType: 'json',
-					data: $('#skills-form').serialize(),
+					data: $('.bootbox-body #skills-form').serialize(),
 					beforeSend: function () {
 						$('#skills-list').html('<div id="spinner" class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 					},
@@ -855,6 +874,7 @@ $('#button-add-skill').on('click', function (e) {
 					success: function (json) {			
 						if (json['success']) {
 							$('#skills-list').load(window.location.href + " #skills-list");
+							$('#progressbar-wrapper').load(window.location.href + " #progressbar-wrapper");
 						}
 					},
 					error: function (xhr, ajaxOptions, thrownError) {
@@ -863,36 +883,51 @@ $('#button-add-skill').on('click', function (e) {
 				});
 			} // if 
 		}
-	}).on('shown.bs.modal', function() {
-		$('select[name^=\'category\']').select2({
-			ajax: {
-				url: 'project/category/autocomplete',
-				dataType: 'json',
-				delay: 250,
-				data: function (params) {
-					return {
-						filter_category: params.term,
-					};
-				},
-				processResults: function (data, params) {
-					var results = $.map(data, function (item) {
-						item.id = item.category_id;
-						item.text = item.name;
-						return item;
-					});
-					return {
-						results: results,
-					};
-				},
-				cache: true
-				},
-			minimumInputLength: 1,
-			placeholder: '{{ text_select }}',
-			allowClear: true,
-			minimumResultsForSearch: 5
-	    });
 	});	
 });
+</script>
+{# Skills End #}
+{# Social Start #}
+<script type="text/javascript">
+$('#social-list').on('click', '#button-add-row', function(e) { 
+	var social_row = 1;
+	e.preventDefault();
+		html = '<form id="form-social"><div class="input-group mt-2" id="social-row' + social_row + '">';
+		html += ' <input type="text" aria-label="name" name="social['+ social_row +'][name]" class="form-control col-4" placeholder="Name">';
+		html += '   <input type="text" aria-label="url" name="social['+ social_row +'][link]" class="form-control" placeholder="URL">';
+		html += ' <div class="input-group-append"><button id="button-save" class="btn btn-outline-secondary">Save</button></div>';
+		html += '</div></form>';
+		$("#social-list #social-input-wrapper").append(html);
+		social_row++;
+});
+$('select[name="social"]').on('change', function(){
+	html = '<form id="form-social"><div class="input-group mt-2">';
+	html += ' <input type="text" aria-label="name" name="social[][url]" class="form-control" />';
+	html += '</div></form>';
+	$("#social-wrapper").html(html);
+})
+$("#social-list").on("click","#button-save", function(e) {
+	e.preventDefault(); 
+	$.ajax({
+		url: 'freelancer/freelancer/edit?freelancer_id={{ freelancer_id }}',
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+			},
+			dataType: 'json',
+			method: 'post',
+			data:$("#form-social").serialize(),
+			success : function (json){
+			if (json['success']) {
+				$.notify({icon: 'fas fa-check-circle', message: json['success']},{type: 'success'});
+				$('#hireme').modal('hide')
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+})			
 </script>
 {# Skills End #}
 
@@ -902,14 +937,26 @@ $('#button-add-skill').on('click', function (e) {
 
 
 
-
-
 <script type="text/javascript">
-$('#hireme').on('shown.bs.modal', function (e) {
-$('.fas, .alert').remove();
- $('#button-hire-me').on('click', function () {
+ $('#button-hire').on('click', function () {
+	 console.log('test')
+	var dialog = bootbox.confirm({
+		title: '{{ text_hire_me }}',
+		message: '<form enctype="multipart/form-data" method="post" action="" id="form-hire" accept-charset="utf-8"><input type="hidden" name="sender_id" value="{{ customer_id }}" /><input type="hidden" name="receiver_id" value="{{ freelancer_id }}" /><input type="hidden" name="thread_id" value="{{ thread_id }}" /><div class="form-group"><label for="exampleInputEmail1"><i class="fas fa-comment"></i> {{ text_message }}</label><textarea rows="3" class="form-control" name="message">{{ text_canned }}</textarea></div><div class="form-group"><label for="exampleInputEmail1">{{ entry_type }}</label><select class="form-control" name="type"><option>{{ text_fixed_price }}</option><option>{{ text_per_hour }}</option></select></div><div class="form-group"><label for="exampleInputEmail1">{{ entry_delivery }}</label><input type="number" class="form-control" name="delivery_time" value="3" min="2" max="30"></div><div class="form-group"><label for="exampleInputEmail1">{{ text_budget_min }}</label><input type="number" value="{{ rate }}" class="form-control" name="budget_min" min="10"></div></form>',
+		buttons: {
+			cancel: {
+				label: 'Cancel',
+				className: 'btn-secondary'
+			},
+			confirm: {
+				label: 'Send',
+				className: 'btn-primary'
+			},
+		},
+	callback: function (result) {
+	if (result === true) {
 	$.ajax({
-		url: 'account/message/hireMe?cid={{ employer_id }}',
+		url: 'account/inbox/hireMe?cid={{ employer_id }}',
 		headers: {
           'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
           "X-Requested-With": "XMLHttpRequest"
@@ -927,13 +974,14 @@ $('.fas, .alert').remove();
 		success : function (json){
 			if (json['success']) {
 				$.notify({icon: 'fas fa-check-circle', message: json['success']},{type: 'success'});
-				$('#hireme').modal('hide')
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 		 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});
+	})
+ }
+}
 });
 });
 </script>

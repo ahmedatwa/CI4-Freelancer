@@ -7,15 +7,25 @@ use CodeIgniter\I18n\Time;
 
 class InboxModel extends Model
 {
-    protected $table          = 'project_to_message';
+    protected $table          = 'messages';
     protected $primaryKey     = 'message_id';
     protected $returnType     = 'array';
-    protected $allowedFields  = ['project_id', 'sender_id', 'receiver_id', 'message'];
+    protected $allowedFields  = ['project_id', 'thread_id', 'sender_id', 'receiver_id', 'message'];
+    protected $beforeInsert   = ['beforeInsert'];
     // should use for keep data record create timestamp
     protected $useTimestamps  = true;
     protected $dateFormat     = 'int';
     protected $createdField   = 'date_added';
     protected $updatedField   = 'date_modified';
+
+    protected function beforeInsert(array $data)
+    {
+        if (empty($data['data']['thread_id'])) 
+        {
+           $data['data']['thread_id'] = random_string('crypto', 10); 
+        } 
+        return $data;
+    }
 
     public function getMessages($thread_id)
     {
@@ -129,44 +139,7 @@ class InboxModel extends Model
         $builder->update();
     }
 
-    public function addProjectMessage(array $data)
-    {
-        $builder = $this->db->table($this->table);
-
-        if (isset($data['thread_id'])) {
-            $builder->select();
-            $builder->where([
-                'thread_id' => $data['thread_id'],
-            ]);
-            $query = $builder->get();
-            $row = $query->getRowArray();
-
-            if ($row) {
-                $thread_id = $row['thread_id'];
-                $project_id = $row['project_id'];
-            } else {
-                helper('text');
-                $thread_id = random_string('crypto', 10);
-                $project_id = 0;
-            }
-        } else {
-            helper('text');
-            $thread_id = random_string('crypto', 10);
-            $project_id = 0;
-        }
-
-        $message_data = [
-            'project_id'    => $data['project_id'] ?? $project_id,
-            'thread_id'     => $thread_id,
-            'sender_id'     => $data['sender_id'],
-            'receiver_id'   => $data['receiver_id'],
-            'message'       => $data['message'],
-            'date_added'    => Time::now()->getTimestamp(),
-            'date_modified' => Time::now()->getTimestamp()
-        ];
-
-        $builder->insert($message_data);
-    }
+    
     
     // -----------------------------------------------------------------
 }

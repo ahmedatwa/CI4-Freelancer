@@ -1,8 +1,9 @@
-<?php 
+<?php
 
 namespace Catalog\Models\Catalog;
 
 use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
 
 class InformationModel extends Model
 {
@@ -19,9 +20,9 @@ class InformationModel extends Model
     protected $updatedField  = 'date_modified';
 
 
-	public function getInformations(int $limit = null, int $start = 0)
+    public function getInformations(int $limit = null, int $start = 0)
     {
-		$builder = $this->db->table('information');
+        $builder = $this->db->table('information');
         $builder->select();
         $builder->join('information_description', 'information_description.information_id = information.information_id', 'left');
         $builder->where('information_description.language_id', service('registry')->get('config_language_id'));
@@ -36,7 +37,7 @@ class InformationModel extends Model
 
     public function getInformation(int $information_id)
     {
-		$builder = $this->db->table('information');
+        $builder = $this->db->table('information');
 
         $builder->select();
         $builder->join('information_description', 'information.information_id = information_description.information_id', 'left');
@@ -48,10 +49,10 @@ class InformationModel extends Model
     
     public function getInformationDescription($information_id)
     {
-		$builder = $this->db->table('information_description');
+        $builder = $this->db->table('information_description');
 
-		$information_description_data = [];
-		
+        $information_description_data = [];
+        
         $builder->select();
         $builder->where('information_id', $information_id);
         $query = $this->db->get();
@@ -65,7 +66,19 @@ class InformationModel extends Model
             ];
         }
         return $information_description_data;
-	}
-	
+    }
+
+    public function findID(string $keyword)
+    {
+        $builder = $this->db->table('information_description');
+        $builder->where('keyword', $keyword);
+        $row = $builder->get()->getRowArray();
+        if ($row) {
+            return  $row[$this->primaryKey];
+        } else {
+            return 0;
+        }
+    }
+    
     // -----------------------------------------------------------------
 }

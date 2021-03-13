@@ -15,55 +15,14 @@
 							<div class="row">
 								<div class="col-3">
 								  <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-									<a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a>
-									<a class="nav-link" id="v-pills-notification-tab" data-toggle="pill" href="#v-pills-notification" role="tab" aria-controls="v-pills-notification" aria-selected="false">Email & Notifications</a>
+									<a class="nav-link active" id="v-pills-notification-tab" data-toggle="pill" href="#v-pills-notification" role="tab" aria-controls="v-pills-notification" aria-selected="false">Email & Notifications</a>
 									<a class="nav-link" id="v-pills-password-tab" data-toggle="pill" href="#v-pills-password" role="tab" aria-controls="v-pills-password" aria-selected="false">Password</a>
 									<a class="nav-link" id="v-pills-security-tab" data-toggle="pill" href="#v-pills-security" role="tab" aria-controls="v-pills-security" aria-selected="false">Account Security</a>
 								  </div>
 								</div>
 								<div class="col-9">
 								  <div class="tab-content" id="v-pills-tabContent">
-									<div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-										<form id="form-profile">
-										<div class="col">
-											<div class="kv-avatar">
-												<div class="file-loading">
-													<input id="avatar-1" name="image" type="file">
-												</div>
-											</div>
-											<div class="kv-avatar-hint">
-												<small>Select file < 1500 KB | jpg,png,gif</small> </div> <div id="kv-avatar-errors"
-														class="center-block" style="width:100%;display:none">
-											</div>
-										</div>
-										<div class="col">
-											<div class="row">
-												<div class="col-12">
-													<div class="submit-field required">
-														<h5>{{ entry_firstname }}</h5>
-														<input type="text" class="form-control" id="input-firstname"
-															name="firstname" value="{{ firstname }}">
-													</div>
-												</div>
-												<div class="col-12">
-													<div class="submit-field required">
-														<h5>{{ entry_lastname }}</h5>
-														<input type="text" class="form-control" id="input-lastname" name="lastname"
-															value="{{ lastname }}">
-													</div>
-												</div>
-												<div class="col-12">
-													<div class="submit-field">
-														<h5>{{ entry_username }}</h5>
-														<input type="text" class="form-control" value="{{ username }}" name="username">
-													</div>
-												</div>
-											</div>
-										</div>
-										<button type="button" id="button-form-profile" class="button ripple-effect big margin-top-30 float-right">Update</button>
-									</form>
-									</div> <!--../profile tab content-->
-									<div class="tab-pane fade" id="v-pills-notification" role="tabpanel" aria-labelledby="v-pills-notification-tab">
+									<div class="tab-pane fade show active" id="v-pills-notification" role="tabpanel" aria-labelledby="v-pills-notification-tab">
 										<form id="form-notification">
 										<div class="col-12">
 											<div class="form-group">
@@ -134,175 +93,18 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-12">
-				<div class="shadow-sm p-3 mb-5 bg-white rounded border">
-					<div class="headline mb-4">
-						<h3><i class="icon-material-outline-face"></i> {{ text_profile }}
-							
-						</h3>
-						<small>Complete the information below for your profile to be considered as a Freelancer!</small>
-					</div>
-					<form enctype="multipart/form-data" method="post" action="{{ action }}" accept-charset="utf-8">
-						<input type="hidden" name="{{ csrf_token() }}" value="{{ csrf_hash() }}" />
-						<div class="content">
-							<ul class="fields-ul">
-								<li>
-									<div class="row">
-										<div class="col-xl-6">
-											<div class="submit-field">
-												<span class="bidding-detail">{{ text_hourly_rate }} :
-													{{ [rate, currency]|join(' ') }}</span>
-												<input class="range-slider" type="text" value="" data-provide="slider"
-													data-slider-currency="$" data-slider-min="0" data-slider-max="300"
-													data-slider-step="5" data-slider-value="{{ rate }}" name="rate" />
-											</div>
-										</div>
-									</div>
-								</li>
-								<li>
-									<div class="row">
-										<div class="col-xl-6">
-											<div class="submit-field">
-												<h5>{{ entry_tagline }}</h5>
-												<input type="text" class="form-control" name="tag_line"
-													value="{{ tag_line }}" placeholder="{{ help_tagline }}">
-											</div>
-										</div>
-										<div class="col-xl-12">
-											<div class="submit-field">
-												<h5>{{ text_about }}</h5>
-												<textarea cols="30" rows="5" name="about"
-													class="form-control">{{ about }}</textarea>
-											</div>
-										</div>
-										<fieldset class="w-100 mb-4 mt-3">
-										<legend>
-											<h4>{{ text_social }}
-												<a href="#" class="text-primary border-0" role="button" id="add_field_button" data-toggle="tooltip" data-placement="top" title="{{ button_add }}"><i class="fas fa-plus-circle"></i></a> 
-												</h4></legend>
-											<div class="col" id="social_wrapper">
-												{% set social_row = 0 %}
-												{% for row in social %}
-												<div class="input-group mt-2" id="social-row{{ social_row }}">
-												<input type="text" aria-label="name" name="social[{{ social_row }}][name]" value="{{ row.name }}" class="form-control col-4" placeholder="Social Network Name" id="social_row{{ social_row }}">
-												<input type="text" aria-label="url" name="social[{{ social_row }}][link]" value="{{ row.link }}" class="form-control" placeholder="Social Network URL" id="social_row{{ social_row }}">
-												<div class="input-group-append">
-												<button class="btn btn-outline-danger" type="button" id="button-remove" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fas fa-minus-circle"></i></button>
-												</div>
-											</div>
-											{% set social_row = social_row + 1 %}
-											{% endfor %}
-											</div>
-										</fieldset>
-										<div class="col-12">
-											<button type="submit"
-												class="button ripple-effect big margin-top-30 float-right">{{ button_submit }}</button>
-										</div>
 
-										<div class="col-12 mt-4">
-											<div class="dropdown-divider my-4"></div>
-											<h5 class="mb-4">Profile Background Image:</h5>
-											<div class="kv-avatar-2">
-												<div class="file-loading">
-													<input id="avatar-2" name="bg_image" type="file">
-												</div>
-											</div>
-											<div class="kv-avatar2-hint">
-												<small>Select file < 1500 KB | jpg,png,gif</small> </div> <div
-														id="kv-avatar2-errors" class="center-block"
-														style="width:100%;display:none">
-											</div>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</form>
-
-
-
-				</div>
-			</div>
 		</div>
 		<!--row-->
 	</div>
 </div>
 
-<link href="catalog/default/vendor/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet"ype="text/css">
-<script src="catalog/default/vendor/bootstrap-fileinput/js/fileinput.min.js"></script>
-<script src="catalog/default/vendor/bootstrap-fileinput/themes/fas/theme.min.js"></script>
-<script type="text/javascript">
-	$("#avatar-1").fileinput({
-		uploadUrl: 'account/setting/avatarUpload',
-		maxFileSize: 1500,
-		overwriteInitial: true,
-		initialPreviewAsData: true,
-		showClose: false,
-		showCaption: false,
-		showUpload: true,
-		showBrowse: false,
-		showRemove: true,
-		theme: 'fas',
-		browseOnZoneClick: true,
-		fileActionSettings: {
-			showZoom: false,
-			showDrag: false,
-			removeClass: 'd-none',
-			showUpload: false,
-		},
-		removeIcon: '<i class="far fa-window-close"></i>',
-		removeLabel: '',
-		removeTitle: 'Cancel or reset changes',
-		removeClass: 'btn btn-danger',
-		uploadExtraData: {
-			'csrf-token': $('meta[name="{{ csrf_token() }}"]').attr('content'),
-			'X-Requested-With': 'XMLHttpRequest'
-		},
-		elErrorContainer: '#kv-avatar-errors',
-		msgErrorClass: 'alert alert-block alert-danger',
-		defaultPreviewContent: '{{ thumb }}',
-		allowedFileExtensions: ["jpg", "png", "gif"]
-	});
-
-	// BG Image
-	$("#avatar-2").fileinput({
-		uploadUrl: 'account/setting/backgroundImageUpload',
-		maxFileSize: 1500,
-		overwriteInitial: true,
-		initialPreviewAsData: true,
-		showClose: false,
-		showCaption: true,
-		showUpload: true,
-		showBrowse: true,
-		showRemove: true,
-		theme: 'fas',
-		browseOnZoneClick: false,
-		fileActionSettings: {
-			showZoom: false,
-			showDrag: false,
-			removeClass: 'd-none',
-			showUpload: false,
-		},
-		removeIcon: '<i class="far fa-window-close"></i>',
-		removeLabel: 'Remove',
-		removeTitle: 'Cancel or reset changes',
-		removeClass: 'btn btn-danger',
-		uploadExtraData: {
-			'csrf-token': $('meta[name="{{ csrf_token() }}"]').attr('content'),
-			'X-Requested-With': 'XMLHttpRequest'
-		},
-		elErrorContainer: '#kv-avatar2-errors',
-		msgErrorClass: 'alert alert-block alert-danger',
-		defaultPreviewContent: '{{ bg_thumb }}',
-		allowedFileExtensions: ["jpg", "png", "gif"]
-	});
-</script>
 <!-- password change -->
 <script type="text/javascript">
-	$('#profile-form-button').on('click', function () {
+	$('#button-form-password').on('click', function () {
 		var node = this;
 		$.ajax({
-			url: 'account/setting/profileUpdate',
+			url: 'account/setting/password',
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
 				'X-Requested-With': 'XMLHttpRequest'
@@ -350,78 +152,4 @@
 		});
 	});
 </script>
-
-<!-- Social fields -->
-<script type="text/javascript">
-var social_row = {{ social_row }};
-	var x = 1;
-	$('#add_field_button').on('click', function(e) { 
-		$(this).tooltip('hide');
-		e.preventDefault();
-		if(x < 5) {
-			x++;
-			html = '<div class="input-group mt-2" id="social-row' + social_row + '">';
-			html += ' <input type="text" aria-label="name" name="social['+ social_row +'][name]" class="form-control col-4" placeholder="Social Network Name">';
-			html += '   <input type="text" aria-label="url" name="social['+ social_row +'][link]" class="form-control" placeholder="Social Network URL">';
-			html += '   <div class="input-group-append">';
-			html += ' <button class="btn btn-outline-danger" type="button" id="button-remove" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fas fa-minus-circle"></i></button>';
-			html += '</div></div>';
-			$("#social_wrapper").append(html);
-		}
-		social_row++;
-	});
-	
-	$("#social_wrapper").on("click","#button-remove", function(e) {
-		e.preventDefault(); 
-		$(this).parent().parent().remove(); 
-		x-- ;
-	})
-		
-</script>
-{% if error_warning %}
-<script type="text/javascript">
-	$.notify({
-		// options
-		icon: 'fas fa-exclamation-circle',
-		title: 'Warning:',
-		message: "{{ error_warning }}",
-	}, {
-		// settings
-		element: 'body',
-		type: "danger",
-		allow_dismiss: false,
-		placement: {
-			from: "bottom",
-			align: "left"
-		},
-		animate: {
-			enter: 'animate__animated animate__fadeInDown',
-			exit: 'animate__animated animate__fadeOutUp'
-		},
-	});
-</script>
-{% endif %}
-{% if success %}
-<script type="text/javascript">
-	$.notify({
-		// options
-		icon: 'fas fa-check-circle',
-		title: 'Success:',
-		message: "{{ success }}",
-	}, {
-		// settings
-		element: 'body',
-		type: "success",
-		allow_dismiss: false,
-		placement: {
-			from: "bottom",
-			align: "left"
-		},
-		animate: {
-			enter: 'animate__animated animate__fadeInDown',
-			exit: 'animate__animated animate__fadeOutUp'
-		},
-	});
-</script>
-{% endif %}
 {{ footer }}

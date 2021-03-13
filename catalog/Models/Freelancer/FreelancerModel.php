@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Catalog\Models\Freelancer;
 
@@ -142,7 +142,7 @@ class FreelancerModel extends Model
         if ($customer_id != 0) {
             $builder->where('customer_id', $customer_id);
         } else {
-            $builder->where('username', $username);       
+            $builder->where('username', $username);
         }
         $query = $builder->get();
         return $query->getRowArray();
@@ -196,101 +196,36 @@ class FreelancerModel extends Model
         return $query->getResultArray();
     }
 
-    public function getTotalFreelancerProjects(array $data = [])
-    {
-        $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.type, p.status, p.runtime');
-        $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
-        $builder->join('customer c', 'p.freelancer_id = c.customer_id', 'left');
-        $builder->where('pd.language_id', service('registry')->get('config_language_id'));
-
-        if (isset($data['freelancer_id'])) {
-            $builder->where('p.freelancer_id', $data['freelancer_id']);
-        }
-
-        if (isset($data['status_id'])) {
-            $builder->whereIn('p.status_id', explode('_', $data['status_id']));
-        }
-
-        if (isset($data['orderBy']) && $data['orderBy'] == 'DESC') {
-            $data['orderBy'] = 'DESC';
-        } else {
-            $data['orderBy'] = 'ASC';
-        }
-
-        $sortData = ['p.date_added'];
-
-        if (isset($data['sortBy']) && in_array($data['sortBy'], $sortData)) {
-            $builder->orderBy($data['sortBy'], 'DESC');
-        } else {
-            $builder->orderBy('p.date_added', 'ASC');
-        }
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-            $builder->limit($data['limit'], $data['start']);
-        }
-
-        return $builder->countAllResults();
-    }
-
-    public function getFreelancerBidsById($freelancer_id)
-    {
-        $builder = $this->db->table('project_bids pb');
-        $builder->select('pb.quote, pb.delivery, pb.date_added, pd.name, pb.project_id, pb.selected, pb.accepted, pb.bid_id, pb.employer_id');
-        $builder->join('project_description pd', 'pb.project_id = pd.project_id', 'left');
-        $builder->where('pb.freelancer_id', $freelancer_id);
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
-
-    // Accept the employer offer
-    public function acceptOffer(int $freelancer_id, int $project_id, int $bid_id, int $employer_id)
-    {
-        $builder = $this->db->table('project_bids');
-        $builder->where([
-            'freelancer_id' => $freelancer_id,
-            'project_id'    => $project_id,
-            'bid_id'        => $bid_id,
-        ]);
-
-        $builder->set('accepted', 1)->update();
-        // Notfication Event
-        \CodeIgniter\Events\Events::trigger('project_offer_accepted', $freelancer_id, $project_id, $bid_id, $employer_id);
-
-        // Update Project Status
-        $projects = $this->db->table('project');
-        $projects->where('project_id', $project_id);
-        $projects->set([
-            'status_id'     => 4,
-            'freelancer_id' => $freelancer_id
-        ]);
-        $projects->update();
-    }
-
-    public function updateProjectStatus(int $project_id, array $data)
+    public function getTotalFreelancerProjects(int $freelancer_id)
     {
         $builder = $this->db->table('project');
-        $builder->where('project_id', $project_id);
-        $builder->set('status_id', 2)->update(); 
-
-        \CodeIgniter\Events\Events::trigger('mail_project_status_update', $project_id, $data['freelancer_id'], $data['employer_id']);
-        \CodeIgniter\Events\Events::trigger('project_status_update', $project_id, $data['freelancer_id'], $data['employer_id']);
+        $builder->select();
+        $builder->where('freelancer_id', $freelancer_id);
+        if ($builder->countAllResults()) {
+            return $builder->countAllResults();
+        } else {
+            return 0;
+        }
     }
 
-    public function getTotalAwardsByFreelancerID(int $freelancer_id)
+    public function editFreelancer(int $freelancer_id, array $data)
     {
-        $builder = $this->db->table('project_award');
-        $builder->where([
-            'freelancer_id' => $freelancer_id, 
-            'status_id'     => service('registry')->get('config_project_completed_status')
-        ]);
-        return $builder->countAllResults();
+        $builder = $this->db->table('customer');
+        $builder->where('customer_id', $freelancer_id);
+        if (isset($data['social']) && is_array($data['social'])) {
+            $builder->set('social', json_encode($data['social']));
+        } else {
+            $builder->set($data['name'], $data['value']);
+        }
+        $builder->update();
+    }
+
+    public function editImage(string $field, int $freelancer_id, string $image)
+    {
+       $builder = $this->db->table('customer');
+       $builder->where('customer_id', $freelancer_id);
+       $builder->set($field, $image);
+       $builder->update();
     }
 
     public function updateViewed(int $freelancer_id)
@@ -302,7 +237,7 @@ class FreelancerModel extends Model
     }
 
     // -----------------------
-    // Profile Section Info 
+    // Profile Section Info
     // -----------------------
     public function updateStrength(int $customer_id, int $profile_strength)
     {
@@ -312,44 +247,61 @@ class FreelancerModel extends Model
                 ->update();
     }
     /**
-    * Skills 
+    * Skills
     */
-    public function getSkills(int $customer_id, int $start = 0, int $limit = 10)
+    public function getSkills(array $data = [])
     {
-        $builder = $this->db->table('customer_to_category c2c');
+        $builder = $this->db->table('skills');
+        $builder->select();
 
-        if ($start < 0) {
-            $start = 0;
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
+            $builder->limit($data['limit'], $data['start']);
         }
 
-        if ($limit < 1) {
-            $limit = 20;
+        if (isset($data['filter_name'])) {
+            $builder->like('name', $data['filter_name'], 'after');
         }
 
-        $builder->select('cd.name, c2c.freelancer_id, c2c.category_id as skill_id')
-                ->join('category_description cd', 'c2c.category_id = cd.category_id', 'left')
-                ->where([
-                    'c2c.freelancer_id' => $customer_id,
-                    'cd.language_id'    => service('registry')->get('config_language_id')
-                 ])
-                ->orderBy('cd.name', 'DESC')
-                ->limit($limit, $start);
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
+    public function getFreelancerSkills($freelancer_id)
+    {
+        $builder = $this->db->table('customer_to_skill c2s');
+        $builder->select('c2s.skill_id, c2s.freelancer_id, s.name')
+                ->join('skills s', 'c2s.skill_id = s.skill_id', 'left')
+                ->where('c2s.freelancer_id', $freelancer_id)
+                ->orderBy('c2s.skill_id', 'DESC');
+
         $query = $builder->get();
         return $query->getResultArray();
     }
 
     public function addSkill(array $data)
     {
-        $builder = $this->db->table('customer_to_category');
-        foreach ($data['category'] as $category) {
-            $builder->delete(['category_id' => $category]);
+        $builder = $this->db->table('customer_to_skill');
+        foreach ($data['skills'] as $skill) {
+            $builder->delete(['skill_id' => $skill]);
             $skill_data = [
-                'category_id'      => $category,
-                'freelancer_id'    => $data['freelancer_id'],
+                'skill_id'      => $skill,
+                'freelancer_id' => $data['freelancer_id'],
             ];
-        $builder->set('date_added', Time::now()->getTimestamp());
-        $builder->insert($skill_data);
+            $builder->set('date_added', Time::now()->getTimestamp());
+            $builder->insert($skill_data);
         }
+    }
+
+    public function getJobsDoneBySkill(int $skill_id)
+    {
+      $builder = $this->db->table('languages l'); 
+      return $builder->countAllResults(); 
     }
     /**
     * Languages
@@ -520,9 +472,8 @@ class FreelancerModel extends Model
           'freelancer_id' => $freelancer_id,
           'name'          => $name,
           'year'          => $year,
+          'date_added'    => Time::now()->getTimestamp()
         ];
-
-        $builder->set('date_added', Time::now()->getTimestamp());
         $builder->insert($data);
     }
 
@@ -544,19 +495,19 @@ class FreelancerModel extends Model
     {
         $builder = $this->db->table('customer_to_education');
         $builder->where('freelancer_id', $freelancer_id);
-        return $builder->countAllResults();  
+        return $builder->countAllResults();
     }
     public function getTotalSkillsByID(int $freelancer_id)
     {
         $builder = $this->db->table('customer_to_category');
         $builder->where('freelancer_id', $freelancer_id);
-        return $builder->countAllResults();   
+        return $builder->countAllResults();
     }
     public function getTotalLanguageByID(int $freelancer_id)
     {
         $builder = $this->db->table('customer_to_language');
         $builder->where('freelancer_id', $freelancer_id);
-        return $builder->countAllResults(); 
+        return $builder->countAllResults();
     }
 
     // -----------------------------------------------------------------

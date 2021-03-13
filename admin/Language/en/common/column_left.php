@@ -15,6 +15,7 @@ return [
     'text_utilities'       => 'Utilities',
     'text_catalog'         => 'Catalog',
     'text_information'     => 'Information',
+    'text_skills'          => 'Skills',
     'text_localisation'    => 'Localisation',
     'text_language'        => 'Language',
     'text_currency'        => 'Currencies',

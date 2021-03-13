@@ -20,7 +20,6 @@ class Header extends BaseController
         $data['styles']      = $this->template->getStyles();
         $data['scripts']     = $this->template->getScripts();
         $data['lang']        = $this->locale;
-        $data['direction']   = lang($this->locale . '.direction');
         
         $data['base'] = slash_item('baseURL');
 
@@ -91,7 +90,7 @@ class Header extends BaseController
         $data['home']        = base_url();
         $data['register']    = route_to('account_register');
         $data['login']       = route_to('account_login');
-        $data['projects']    = route_to('projects');
+        $data['projects']    = route_to('projects_all');
         $data['add_project'] = route_to('add-project');
         // finance menu
         $data['markread']    = base_url('account/notifications/markRead');

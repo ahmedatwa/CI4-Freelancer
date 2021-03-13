@@ -3,7 +3,7 @@
 namespace Catalog\Controllers\Account;
 
 use Catalog\Controllers\BaseController;
-use Catalog\Models\Account\MessageModel;
+use Catalog\Models\Account\InboxModel;
 use Catalog\Models\Account\CustomerModel;
 use Catalog\Models\Catalog\ProjectModel;
 
@@ -65,9 +65,9 @@ class Inbox extends BaseController
         $json = [];
 
         if ($this->request->getMethod() == 'post') {
-            $messageModel = new MessageModel();
+            $inboxModel = new InboxModel();
 
-            $messageModel->addProjectMessage($this->request->getPost());
+            $inboxModel->insert($this->request->getPost());
 
             $json['success'] = lang('freelancer/freelancer.text_success');
         }

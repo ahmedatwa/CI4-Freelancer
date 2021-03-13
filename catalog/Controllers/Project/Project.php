@@ -15,16 +15,15 @@ class Project extends BaseController
     * fallback function to override reversed routes for project list.
     * in case not found by SEO_URL service from DB
     */
-    public function list()
+    public function all()
     {
         $this->index();
     }
     // ----------------------
-    public function index()
+    public function index(string $keyword = '')
     {
         $projectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
-        $seoUrl = service('seo_url');
 
         $this->template->setTitle(lang('project/project.heading_title'));
             
@@ -36,27 +35,29 @@ class Project extends BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('project/project.list.text_projects'),
-            'href' => route_to('projects'),
+            'href' => route_to('projects_all'),
         ];
 
         if ($this->request->getVar('skills')) {
-            $filter_category_id = $this->request->getVar('skills');
+            $filter_skills = explode('_', $this->request->getVar('skills'));
+        } elseif($keyword) {
+            $category_id = $categoryModel->findID($keyword);
+            $filter_skills = explode('_', $category_id);
         } else {
-            $filter_category_id = null;
+            $filter_skills = null;
         }
 
         // for child Category lead info
-        if ($filter_category_id) {
-            $category_info = $categoryModel->getCategory($filter_category_id);
+        if ($keyword) {
             $data['breadcrumbs'][] = [
-                'text' => $category_info['name'],
-                'href' => route_to('category', $filter_category_id, $seoUrl->getKeywordByQuery('category_id=' . $filter_category_id)),
+                'text' => $keyword,
+                'href' => route_to('category', $keyword),
             ];
-
-            $data['lead']          = $category_info['description'];
-            $data['heading_title'] = $category_info['name'];
-            $data['icon']          = $category_info['icon'];
-            $data['category_name'] = $category_info['name'];
+            $category = $categoryModel->getCategory($category_id);
+            $data['lead']          = $category['description'];
+            $data['heading_title'] = $category['name'];
+            $data['icon']          = $category['icon'];
+            $data['category_name'] = $category['name'];
         } else {
             $data['heading_title'] = lang('project/project.list.text_projects');
             $data['lead']          = '';
@@ -73,12 +74,6 @@ class Project extends BaseController
             $filter_state = $this->request->getVar('state');
         } else {
             $filter_state = null;
-        }
-        
-        if ($this->request->getVar('skills')) {
-            $filter_skills = $this->request->getVar('skills');
-        } else {
-            $filter_skills = null;
         }
 
         if ($this->request->getVar('budget')) {
@@ -137,8 +132,6 @@ class Project extends BaseController
         $reviewModel = new ReviewModel();
 
         foreach ($results as $result) {
-            // SEO Query
-            $keyword = $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']);
             $days_left = $this->dateDifference($result['date_added'], $result['runtime']);
             $skills = $categoryModel->getCategoriesByProjectId($result['project_id']);
 
@@ -148,6 +141,12 @@ class Project extends BaseController
                 $status = lang('project/project.list.text_expired');
             } else {
                 $status = $result['status'];
+            }
+
+            if ($result['categoryKeyword'] && $result['keyword']) {
+                $href = route_to('single_project', $result['categoryKeyword'], $result['keyword']);
+            } else {
+                $href = base_url('project/project/view?pid=' . $result['project_id']);
             }
 
             $data['projects'][] = [
@@ -160,10 +159,11 @@ class Project extends BaseController
                 'date_added'  => $status,
                 'skills'      => $skills,
                 'final_date'  => getDateTimeString($result['date_added'], $result['runtime']),
-                'href'        => ($keyword) ? route_to('single_project', $keyword) : base_url('project/project/view?pid=' . $result['project_id']),
+                'href'        => $href,
             ];
         }
-            
+        
+
         $uri = $this->request->uri;
 
         $data['sorts'] = [];
@@ -257,29 +257,25 @@ class Project extends BaseController
         $this->info();
     }
 
-    public function info(string $keyword = '')
+    public function info(string $category = '', string $keyword = '')
     {
-        $seoUrl = service('seo_url');
-
-        if ($keyword) {
-            $query_id = substr($seoUrl->getQueryByKeyword($keyword), -1);
-        }
-
         $projectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
 
+        if ($keyword) {
+            $queryID = $projectModel->findID($keyword);
+        }
+
         if ($this->request->getVar('pid')) {
             $project_id = $this->request->getVar('pid');
-        } elseif ($query_id) {
-            $project_id = $query_id;
-        } elseif ($this->request->getGet('project_id')) {
-            $project_id = $this->request->getGet('project_id');
+        } elseif ($queryID) {
+            $project_id = $queryID;
         } else {
             $project_id = 0;
         }
 
-        if ($this->session->getFlashdata('success')) {
-            $data['success'] = $this->session->getFlashdata('success');
+        if ($this->session->getFlashdata('project_success')) {
+            $data['success'] = $this->session->getFlashdata('project_success');
         } else {
             $data['success'] = '';
         }
@@ -292,17 +288,17 @@ class Project extends BaseController
 
         $data['breadcrumbs'][] = [
             'text' => lang('project/project.list.text_projects'),
-            'href' => route_to('projects') ? route_to('projects') : base_url('project/category'),
+            'href' => route_to('projects_all') ? route_to('projects_all') : base_url('project/category'),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => $categoryModel->getCategoryByProjectId($project_id),
-            'href' => route_to('projects') ? route_to('projects') : base_url('project/project?pid=' . $project_id),
+            'href' => route_to('projects', $category) ?? base_url('project/project?pid=' . $project_id),
         ];
 
         // for pre-defined routes
-        if ($keyword) {
-            $this->template->setTitle($keyword);
+        if ($keyword) { 
+            $this->template->setTitle($category . '|' . $keyword);
             $data['breadcrumbs'][] = [
                 'text' => $keyword ?? lang('project/project.list.text_project'),
                 'href' => '',
@@ -326,7 +322,6 @@ class Project extends BaseController
         }
 
         $data['login']           = base_url('account/login');
-        $data['add_project']     = route_to('add-project') ? route_to('add-project') : base_url('project/project/add');
 
         if ($project_id) {
             $project_info = $projectModel->getProject($project_id);
@@ -394,12 +389,11 @@ class Project extends BaseController
             $other_projects = $projectModel->getProjects($filter_data);
 
             foreach ($other_projects as $result) {
-                $keyword = $seoUrl->getKeywordByQuery('project_id=' . $result['project_id']);
                     $data['other_projects'][] = [
                         'project_id'  => $result['project_id'],
                         'name'        => $result['name'],
                         'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                        'href'        => ($keyword) ? route_to('single_project', $result['project_id'], $keyword) : base_url('project/project/view?pid=' . $result['project_id']),
+                        'href'        => ($result['keyword']) ? route_to('single_project', $result['project_id'], $result['keyword']) : base_url('project/project/view?pid=' . $result['project_id']),
                     ];
             }
         } else {
@@ -420,6 +414,7 @@ class Project extends BaseController
         if ($url_query) {
             $url = '?' . $url_query;
         }
+
         $this->session->set('redirect_url', base_url(current_url() . $url));
 
         $projectModel->updateViewed($project_id);
@@ -471,11 +466,8 @@ class Project extends BaseController
             }
             
             if (! $json) {
-                $projectModel = new ProjectModel();
-                $seoUrl = service('seo_url');
-                
+                $projectModel = new ProjectModel();                
                 $project_id = $projectModel->addProject($this->request->getPost());
-                $keyword = $seoUrl->getKeywordByQuery('project_id=' . $project_id);
                 // Process uploaded attachments
                 if ($project_id) {
                     $uploadModel = new UploadModel();
@@ -509,12 +501,13 @@ class Project extends BaseController
                     }
                 }
 
-                $this->session->setFlashdata('success', lang('project/project.success_new_project'));
+                $this->session->setFlashdata('project_success', lang('project/project.success_new_project'));
+                $project_info = $projectModel->getProject($project_id);
 
-                if ($keyword) {
-                    $json['redirect'] = route_to('single_project', $keyword);
+                if ($project_info) {
+                    $json['redirect'] = route_to('single_project', $project_info['keyword']);
                 } else {
-                    $json['redirect'] = base_url('project/project/view?pid=' . $project_id);
+                    $json['redirect'] = base_url('project/project/view?pid=' . $project_info['keyword']);
                 }
             }
         }

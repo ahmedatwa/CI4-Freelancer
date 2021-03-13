@@ -62,6 +62,8 @@ return [
         'entry_major'              => 'Major',
         'entry_skill'              => 'Skills Name',
         'entry_skill_level'        => 'Skill Level',
+        'entry_delivery'           => 'Delivery Time',
+        'entry_type'               => 'Project Type',
         // Column
         'column_name'              => 'Name',
         'column_year'              => 'Year',

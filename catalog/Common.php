@@ -29,9 +29,6 @@ if (! function_exists('view')) {
             }
             $data = array_merge($all, $data);
         }
-        // } else {
-        //     throw new \Exception("Language Data isn't set in method, view name: {$name}");
-        // }
 
         if (config('Config')->templateEngine == 'twig') {
             // specify where to look for templates

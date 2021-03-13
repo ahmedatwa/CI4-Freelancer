@@ -170,9 +170,7 @@ class Template
                 $all = array_merge($data['langData'], $primaryLang);
             }
             $data = array_merge($all, $data);
-        } else {
-            throw new \Exception("Language Data are not set in method! {$name}");
-        }
+        } 
 
         if (config('Config')->templateEngine == 'twig') {
             // specify where to look for templates

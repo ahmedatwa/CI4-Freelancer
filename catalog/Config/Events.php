@@ -22,6 +22,10 @@ use Catalog\Models\Setting\EventsModel;
  *      Events::on('create', [$myInstance, 'myMethod']);
  */
 
+//Events::trigger('account/login/authLogin/after');
+
+    
+
 Events::on('pre_system', function () {
 	if (ENVIRONMENT !== 'testing')
 	{
@@ -39,18 +43,16 @@ Events::on('pre_system', function () {
 			return $buffer;
 		});
 	}
-
+    
     // Fetch Events from DB
 	$eventsModel = new EventsModel();
-	$results = $eventsModel->where('status', 1)->findAll();
+	$results = $eventsModel->where('status', 1)->like('action', 'Catalog\\', 'after')->findAll();
 	foreach ($results as $result) {
-	    if ((substr($result['action'], 0, 8) == 'Catalog\\')) {
-	        if ($result['priority'] > 0) {
-	            Events::on($result['code'], $result['action'], $result['priority']);
-	        } else {
-	            Events::on($result['code'], $result['action']);
-	        }
-	    }
+        if ($result['priority'] > 0) {
+            Events::on($result['code'], $result['action'], $result['priority']);
+        } else {
+            Events::on($result['code'], $result['action']);
+        }
 	}
 
 	/*

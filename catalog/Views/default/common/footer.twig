@@ -126,7 +126,7 @@
 
 	var channel = pusher.subscribe('global-channel');
 	channel.bind('new-project-event', function (data) {
-		{% if customer_id != data.employer_id %}
+	{% if customer_id != data.employer_id %}
 		$.notify({
 			// options
 			icon: 'fas fa-desktop',

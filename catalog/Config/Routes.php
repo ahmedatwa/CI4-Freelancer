@@ -35,6 +35,7 @@ $routes->set404Override(function () {
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Common/Home::index');
+$routes->get('contact', 'Information\Contact::index', ['as' => 'contact']);
 // Blog
 $routes->group('blog', function ($routes) {
     $routes->get('/', 'Extension\Blog\Blog::index', ['as' => 'blog']);
@@ -77,12 +78,15 @@ $routes->get('categories', 'Project\Category::index', ['as' => 'categories']);
 // Add Project
 $routes->get('add-project', 'Project\Project::getForm', ['as' => 'add-project']);
 // Project List
-$routes->get('projects', 'Project\Project::index', ['as' => 'projects']);
-// Single Project View
-$routes->get('service/(:any)', 'Project\Project::info/$1', ['as' => 'single_project']);
+$routes->group('projects', function ($routes) {
+    $routes->get('/', 'Project\Project::index', ['as' => 'projects_all']);
+    $routes->add('(:segment)', 'Project\Project::index/$1', ['as' => 'projects']);
+    // Single Project View
+    $routes->add('(:segment)/(:segment)', 'Project\Project::info/$1/$2', ['as' => 'single_project']);
+});
+
 // Information
 $routes->get('(:segment)', 'Information\Information::index/$1', ['as' => 'information']);
-$routes->get('contact', 'Information\Contact::index');
 // Hide the upload url
 $routes->get('upload/(:num)/(:num)', 'Tool\Upload::getUpload/$1/$2', ['as' => 'get_upload']);
 /*

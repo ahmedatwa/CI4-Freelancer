@@ -1,6 +1,10 @@
-<?php namespace Admin\Models\Catalog;
+<?php 
 
-class ProjectModel extends \CodeIgniter\Model
+namespace Admin\Models\Catalog;
+
+use CodeIgniter\Model;
+
+class ProjectModel extends Model
 {
     protected $table          = 'project';
     protected $primaryKey     = 'project_id';
