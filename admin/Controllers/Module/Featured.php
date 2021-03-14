@@ -1,8 +1,11 @@
-<?php namespace Admin\Controllers\Module;
+<?php 
 
-use \Admin\Models\Setting\SettingModel;
+namespace Admin\Controllers\Module;
 
-class Featured extends \Admin\Controllers\BaseController
+use Admin\Controllers\BaseController;
+use Admin\Models\Setting\SettingModel;
+
+class Featured extends BaseController
 {
     public function index()
     {

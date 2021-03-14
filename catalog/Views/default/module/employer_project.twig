@@ -1,0 +1,10 @@
+{% if more_projects %}
+<div class="sidebar-widget">
+	<ul class="list-group">
+		<li class="list-group-item list-group-item-secondary"><h3 class="mb-1">{{ text_similar }}</h3></li>
+	  {% for other in more_projects %}
+		<li class="list-group-item"><a class="text-secondary" href="{{ other.href }}"><i class="fas fa-arrow-alt-circle-right"></i> {{ other.name }}</a></li>
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}

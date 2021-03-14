@@ -1,46 +1,42 @@
 {{ header }}{{ menu }}
 <!-- Titlebar -->
-<div class="single-page-header" data-background-image="catalog/default/images/single-task.jpg">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="single-page-header-inner">
-					<div class="left-side">
-						<div class="header-details">
-							<h3 class="">{{ name }}</h3>
+<div class="single-page-header">
+	<div class="jumbotron jumbotron-fluid bg-cover"
+		style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.9) 100%), url('{{ image }}')">
+		<div class="container">
+			<h1 class="display-4">{{ name }}</h1>
+			<p class="lead">
+				<div class="header-details">
+					<ul>
+						<li><i class="icon-material-outline-business"></i> {{ employer }}</li>
+						<div class="rating">
 							<ul>
-								<li><i class="icon-material-outline-business"></i> {{ employer }}</li>
-								<li>
-									<div class="rating">
-										<ul>
-											{% for i in 1..5 %}
-											{% if rating < i %}
-											<li><span class="fa-stack"><i class="far fa-star fa-stack-2x"></i></span>
-											</li>
-											{% else %}
-											<li><span class="fa-stack">
-													<i class="fas fa-star fa-stack-2x"></i></span></li>
-											{% endif %}
-											{% endfor %}
-										</ul>
-									</div>
+								{% for i in 1..5 %}
+								{% if rating < i %}
+								<li><span class="fa-stack"><i class="far fa-star fa-stack-2x"></i></span>
 								</li>
-								{% if status != 'Expired' %}
-								<li>
-									<div class="verified-badge-with-title">{{ status }}</div>
-								</li>
+								{% else %}
+								<li><span class="fa-stack">
+										<i class="fas fa-star fa-stack-2x"></i></span></li>
 								{% endif %}
+								{% endfor %}
 							</ul>
 						</div>
-					</div>
-					<div class="right-side">
-						<div class="salary-box">
-							<div class="salary-type">{{ text_budget }}</div>
-							<div class="salary-amount">{{ budget }}</div>
-						</div>
+						{% if status != 'Expired' %}
+						<li>
+							<div class="verified-badge-with-title">{{ status }}</div>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+				<div class="float-right">
+					<div class="salary-box">
+						<div class="salary-type">{{ text_budget }}</div>
+						<div class="salary-amount">{{ budget }}</div>
 					</div>
 				</div>
-			</div>
+				<div class="clearfix"></div>
+			</p>
 		</div>
 	</div>
 </div>
@@ -65,6 +61,7 @@
 			</div>
 			<h4 class="mb-4">Viewed: <span class="badge badge-success">{{ viewed }}</span></h4>
 			<h4 class="mb-4">Project ID: {{ project_id }}</h4>
+			<h4 class="mb-4">Status: <span class="font-weight-normal" data-countdown="{{ final_date }}"></span></h4>
 			<div class="single-page-section">
 				<h3>{{ text_skills }}:</h3>
 				{% if categories %}
@@ -81,7 +78,9 @@
 				<h3>Attachments</h3>
 				<div class="attachments-container">
 					{% for row in attachments %}
-					<a href="{{ row.href }}"class="attachment-box ripple-effect"><span>{{ row.code }}</span><i>{{ row.ext }} | {{ row.size }} kb</i></a>
+					<a href="{{ row.href }}"
+						class="attachment-box ripple-effect"><span>{{ row.code }}</span><i>{{ row.ext }} |
+							{{ row.size }} kb</i></a>
 					{% endfor %}
 				</div>
 			</div>
@@ -145,55 +144,24 @@
 								<textarea class="form-control" id="input-description" name="description" rows="7"
 									cols="10" placeholder="{{ help_proposal }}"></textarea>
 							</div>
+								<!-- Button -->
+							<button id="button-place-bid" onclick=""
+							class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right">{{ button_bid }}</button>
 						</form>
-						<div class="margin-top-30">
-							<span>{{ text_optional_upgrade }}</span>
-							<table class="table table-hover" id="upgrade-options-table">
-								<thead>
-								</thead>
-								<tbody>
-									<tr>
-										<td width="11%">
-											<div class="form-check">
-												<input class="form-check-input" name="upgrade_checkbox" type="checkbox"
-													value="{{ config_upgrade_sponser|number_format(2) }}" id="sponsor">
-												<label class="form-check-label" for="input-sponser">
-													{{ config_upgrade_sponser|number_format(2) }} {{ config_currency }}
-												</label>
-											</div>
-										</td>
-										<td><span class="badge badge-warning">{{ text_sponsored }}</span></td>
-										<td>{{ text_sponsored_help }}</td>
-									</tr>
-									<tr>
-										<td width="11%">
-											<div class="form-check">
-												<input class="form-check-input" name="upgrade_checkbox" type="checkbox" value="{{ config_upgrade_highlight|number_format(2) }}" id="upgrade-fee">
-													<label class="form-check-label" for="input-highlight">
-														{{ config_upgrade_highlight|number_format(2) }} {{ config_currency }}
-													</label>
-												</div>
-											</td>
-											<td><span class="badge badge-info">{{ text_highlight }}</span></td>
-											<td>{{ text_highlight_help }}</td>
-										</tr>
-									</tbody>
-								</table> 
-						<!-- Button -->
-					<button id="button-place-bid" onclick="" class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right">{{ button_bid }}</button>
 					</div>
-				</div>
-				{% endif %}
-				</div>  <!-- ../bidding form tab-->
+					{% endif %}
+				</div> <!-- ../bidding form tab-->
 				<div class="tab-pane fade" id="bidders" role="tabpanel" aria-labelledby="bidders-tab">
-					<div id="bid-container" class="my-4"></div>	
+					<div id="bid-container" class="my-4"></div>
 				</div> <!-- ../ Bidders-->
-			  </div>			
 			</div>
-				<!-- Sidebar right -->
-				{{ column_right }}
-			</div>
+		</div>
+		{# <!-- Sidebar right --> #}
+			{{ column_right }}
+		{# <!-- Sidebar End --> #}
 	</div>
+	{{ content_bottom }}
+</div>
 	
 <script type="text/javascript" src="catalog/default/javascript/jquery.countdown.min.js" defer></script>
 <script type="text/javascript">
@@ -306,24 +274,7 @@ $('#bid-container').on('click', '.pagination a', function(e) {
 
 $('#bid-container').load("extension/bid/bid?pid={{ project_id }}");
 </script>
-<!-- Paid Upgrade -->
-<script type="text/javascript">
-$('#upgrade-options-table input[name=\'upgrade_checkbox\']').on('change', function() {
-	var values = [], total = 0;
-	$('#upgrade-options-table input[name=\'upgrade_checkbox\']').each(function() { 
-		if($(this).is(":checked")) {
-			values.push($(this).val());
-            total += isNaN(parseInt($(this).val())) ? 0 : parseInt($(this).val());
-	    }	
-    });  
-	if (total === 0 ) {
-		$('#button-place-bid').html('Place bid');
-	} else { 
-		$('#button-place-bid').html('Place bid and Pay ' + total + '.00 EGP');
-		$('input[name=\'fee\']').val(total);
-	}
-});
-</script>
+
 {% if success %}
 <script type="text/javascript">
 $.notify({

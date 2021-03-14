@@ -119,7 +119,7 @@ if (! function_exists('getDateTimeString')) {
     * @var int number
     * @return array
     */
-    function getDateTimeString(int $date, int $runtime): string
+    function getDateTimeString(string $date, int $runtime): string
     {
         $date_added = Time::createFromTimestamp($date);
         $date_string = $date_added->addDays($runtime);

@@ -322,7 +322,7 @@ class ProjectModel extends Model
     public function getProject(int $project_id)
     {
         $builder = $this->db->table('project p');
-        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, ps.name AS status, p.viewed, c.username, p.delivery_time, pd.keyword');
+        $builder->select('p.project_id, pd.name, p.budget_min, p.budget_max, pd.description, p.date_added, p.runtime, CONCAT(c.firstname, " ", c.lastname) AS employer, p.employer_id, p.type, ps.name AS status, p.viewed, c.username, p.delivery_time, pd.keyword, p.image');
         $builder->join('project_description pd', 'p.project_id = pd.project_id', 'left');
         $builder->join('project_status ps', 'p.status_id = ps.status_id', 'left');
         $builder->join('customer c', 'p.employer_id = c.customer_id', 'left');

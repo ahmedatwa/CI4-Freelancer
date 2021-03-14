@@ -1,0 +1,45 @@
+<div class="col-sm-12 col-md-9 shadow p-4 mb-4 bg-white rounded">
+	<span>{{ text_optional_upgrade }}</span>
+	<table class="table table-hover" id="upgrade-options-table">
+		<tbody>
+			{% for setting in module_setting %}
+			<tr>
+				<td width="12%">
+					<div class="form-check">
+						<input class="form-check-input" name="upgrade_checkbox" type="checkbox"
+							value="{{ setting.fee|number_format(2) }}" id="input-{{ setting.name|lower }}">
+						<label class="form-check-label" for="input-{{ setting.name|lower }}">
+							{{ setting.fee|number_format(2) }} {{ config_currency }}
+						</label>
+					</div>
+				</td>
+				<td>
+					{% set badges = {'1': 'primary', '2': 'warning', '3': 'info', '3': 'danger'} %}
+					{% if loop.index in badges|keys %}
+					<span class="badge badge-{{ badges[loop.index] }}">{{ setting.name }}</span>
+					{% endif %}
+				</td>
+				<td>{{ setting.description }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript">
+$('#upgrade-options-table input[name=\'upgrade_checkbox\']').on('change', function() {
+	var values = [], 
+		total = 0;
+	$('#upgrade-options-table input[name=\'upgrade_checkbox\']').each(function() { 
+		if($(this).is(":checked")) {
+			values.push($(this).val());
+			total += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
+		}	
+	});  
+	if (total === 0 ) {
+		$('#button-place-bid').html('Place bid');
+	} else { 
+		$('#button-place-bid').html('Place bid and Pay ' + total.toFixed(2) + ' EGP');
+		$('input[name=\'fee\']').val(total);
+	}
+});
+</script>

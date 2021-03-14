@@ -377,35 +377,22 @@ class Project extends BaseController
             $data['employer_id'] = $project_info['employer_id'];
             $data['status']      = $projectModel->getStatusByProjectId($project_info['project_id']);
 
-            // more Employer projects
-            $data['other_projects'] = [];
-            
-            $filter_data = [
-                'start' => 0,
-                'limit' => 5,
-                'current_project' => $project_info['project_id']
-            ];
-
-            $other_projects = $projectModel->getProjects($filter_data);
-
-            foreach ($other_projects as $result) {
-                    $data['other_projects'][] = [
-                        'project_id'  => $result['project_id'],
-                        'name'        => $result['name'],
-                        'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                        'href'        => ($result['keyword']) ? route_to('single_project', $result['project_id'], $result['keyword']) : base_url('project/project/view?pid=' . $result['project_id']),
-                    ];
+            if ($project_info['image'] && file_exists('images/' . $project_info['image'])) {
+                $data['image'] = $this->resize($project_info['image'], 1200, 1200);
+            } else {
+                $data['image'] = $this->resize('catalog/single-task.jpg', 1200, 1200);
             }
+
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
-        // optional upgrades
-        $data['config_upgrade_sponser'] = $this->registry->get('config_upgrade_sponser');
-        $data['config_upgrade_highlight'] = $this->registry->get('config_upgrade_highlight');
-
         $data['isLogged'] = $this->customer->isLogged();
         // Bids Total
+        $filter_data = [
+            'limit' => 8,
+            'start' => 0,
+        ];
         $bidModel = new BidModel();
         $data['total_bids'] = $bidModel->getTotalBids($filter_data);
         // save refereal Url in session

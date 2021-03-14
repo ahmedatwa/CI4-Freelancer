@@ -357,7 +357,6 @@
 										    </tr>
 										  </tfoot>
 										</table>
-
 									</div><!-- ./End tab_social -->
 									<!-- ./tab_server -->
 									<div role="tabpanel" class="tab-pane fade mt-3" id="nav-server" aria-labelledby="nav-server-tab">

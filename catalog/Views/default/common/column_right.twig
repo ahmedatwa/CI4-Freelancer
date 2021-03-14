@@ -2,40 +2,10 @@
 <div class="col-sm-12 col-md-3">
   <div class="sidebar-container pb-3 mb-5 bg-white">
     {% for module in modules %}
-    <div class="sidebar-widget">
+    <div class="sidebar-widget mb-3">
       {{ module }}
     </div>
     {% endfor %}
   </div>
 </div>
 {% endif %}
-<div class="card p-0 border-0">
-  <div class="badge badge-pill badge-light text-center mb-4 p-4">
-     <span class="font-weight-normal" data-countdown="{{ final_date }}"></span>
-  </div>
-</div>
-
-    {# <div class="card p-0 border-0">
-      <div class="badge badge-pill badge-light text-center mb-4 p-4">
-         <span class="font-weight-normal" data-countdown="{{ final_date }}"></span></div>
-  </div>
-    <div class="sidebar-widget">
-      <div class="bidding-widget text-white text-center">
-       <a href="{{ add_project }}" class="button ripple-effect button-sliding-icon">{{ button_post_project }} <i class="fas fa-long-arrow-alt-right"></i></a>
-      </div>
-    </div>
-  <div class="dropdown-divider"></div>
-  <!-- Sidebar Widget -->
-  {% if other_projects %}
-    <div class="dropdown-divider"></div>
-    <div class="sidebar-widget">
-      <h3 class="mb-1">{{ text_similar }}</h3>
-      <ul class="list-group list-group-flush">
-        {% for other in other_projects %}
-          <li class="list-group-item"><a class="text-primary" href="{{ other.href }}"><i class="fas fa-arrow-alt-circle-right"></i> {{ other.name }}</a></li>
-          {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
-  </div>
-</div> #}

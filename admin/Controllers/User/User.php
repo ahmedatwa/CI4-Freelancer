@@ -86,7 +86,7 @@ class User extends \Admin\Controllers\BaseController
             $data['users'][] = [
                 'user_id'    => $result['user_id'],
                 'email'      => $result['email'],
-                'date_added' => DateShortFormat($result['date_added']),
+                'date_added' => lang('en.medium_date', [$result['date_added']]),
                 'status'     => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'edit'       => base_url('index.php/user/user/edit?user_token=' . $this->request->getVar('user_token') . '&user_id=' . $result['user_id']),
                 'delete'     => base_url('index.php/user/user/delete?user_token=' . $this->request->getVar('user_token') . '&user_id=' . $result['user_id']),

@@ -7,7 +7,7 @@ use Catalog\Models\Catalog\ProjectModel;
 
 class Featured extends BaseController
 {
-    public function index($setting)
+    public function index(array $setting)
     {
         // featured block
         $data['featureds'] = [];
@@ -31,7 +31,7 @@ class Featured extends BaseController
 			];
         }
 
-		$data['projects_all']  = '';//route_to('projects') ? route_to('projects') : base_url('project/project');
+		$data['projects_all']  = route_to('projects_all') ? route_to('projects_all') : base_url('project/project');
         
         $data['langData'] = lang('module/featured.list');
 
