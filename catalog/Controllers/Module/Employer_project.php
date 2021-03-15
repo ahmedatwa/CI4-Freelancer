@@ -11,8 +11,19 @@ class Employer_project extends BaseController
 	{
 		$projectModel = new ProjectModel();
 
-		if ($keyword = $this->request->uri->getSegment(2)) {
+        $uri = new \CodeIgniter\HTTP\URI();
+        $uri->setSilent();
+
+        if ($uri->getSegment(2)) {
+            $keyword = $uri->getSegment(2);
+        } else {
+            $keyword = '';
+        }
+
+		if ($keyword) {
             $queryID = $projectModel->findID($keyword);
+        } else {
+           $queryID = 0; 
         }
 
         if ($this->request->getVar('pid')) {
@@ -40,11 +51,18 @@ class Employer_project extends BaseController
         $more_projects = $projectModel->getProjects($filter_data);
 
         foreach ($more_projects as $result) {
+
+            if ($result['categoryKeyword'] && $result['keyword']) {
+                $href = route_to('single_project', $result['categoryKeyword'], $result['keyword']);
+            } else {
+                $href = base_url('project/project/view?pid=' . $result['project_id']);
+            }
+
             $data['more_projects'][] = [
                 'project_id'  => $result['project_id'],
                 'name'        => $result['name'],
                 'budget'      => $this->currencyFormat($result['budget_min']) . '-' . $this->currencyFormat($result['budget_max']),
-                'href'        => ($result['keyword']) ? route_to('single_project', $result['project_id'], $result['keyword']) : base_url('project/project/view?pid=' . $result['project_id']),
+                'href'        => $href,
             ];
         }
 

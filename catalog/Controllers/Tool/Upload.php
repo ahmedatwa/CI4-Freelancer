@@ -11,7 +11,7 @@ class Upload extends BaseController
     public function index()
     {
         $json = [];
-
+        
         if ($this->request->getVar('cid')) {
             $customer_id = $this->request->getVar('cid');
         } elseif ($this->session->get('customer_id')) {

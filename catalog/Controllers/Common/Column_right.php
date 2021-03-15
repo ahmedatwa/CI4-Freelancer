@@ -10,12 +10,13 @@ class Column_right extends BaseController
 {
     public function index()
     {
-        if ($this->request->uri->getSegment(1)) {
-            $route = $this->request->uri->getSegment(1);
-        } 
+        $router = \CodeIgniter\Config\Services::router();
+        $route = str_replace('\\', '/', substr($router->controllerName(), strlen('\Catalog\Controllers\\')));
 
-        if (! $route || $route == '/') {
-             $route = 'common/home';
+        if ($route) {
+            $route = $route;
+        } else {
+            $route = 'common/home';
         }
 
         $layoutModel = new LayoutModel();

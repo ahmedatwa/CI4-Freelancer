@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '3e1749e69dc4dfbb9d3647b9529a20270ce695ff',
+    'reference' => '376fe3c2d58f1a86398f8eb2a8374b4e99b35b40',
     'name' => 'freelancer_app/framework',
   ),
   'versions' => 
@@ -52,6 +52,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'd56bf6102915de5702778fe20f2de3b2fe570b5b',
+    ),
+    'facebook/graph-sdk' => 
+    array (
+      'pretty_version' => '5.7.0',
+      'version' => '5.7.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2d8250638b33d73e7a87add65f47fabf91f8ad9b',
     ),
     'fakerphp/faker' => 
     array (
@@ -78,7 +87,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '3e1749e69dc4dfbb9d3647b9529a20270ce695ff',
+      'reference' => '376fe3c2d58f1a86398f8eb2a8374b4e99b35b40',
     ),
     'google/apiclient' => 
     array (
@@ -893,7 +902,6 @@ self::$canGetVendors = method_exists('Composer\Autoload\ClassLoader', 'getRegist
 $installed = array();
 
 if (self::$canGetVendors) {
-
 foreach (ClassLoader::getRegisteredLoaders() as $vendorDir => $loader) {
 if (isset(self::$installedByVendor[$vendorDir])) {
 $installed[] = self::$installedByVendor[$vendorDir];

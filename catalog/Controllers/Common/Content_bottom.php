@@ -11,12 +11,13 @@ class Content_bottom extends BaseController
     public function index()
     {
 
-        if ($this->request->uri->getSegment(1)) {
-            $route = $this->request->uri->getSegment(1);
-        } 
+        $router = \CodeIgniter\Config\Services::router();
+        $route = str_replace('\\', '/', substr($router->controllerName(), strlen('\Catalog\Controllers\\')));
 
-        if (! $route || $route == '/') {
-             $route = 'common/home';
+        if ($route) {
+            $route = $route;
+        } else {
+            $route = 'common/home';
         }
             
         $moduleModel = new ModulesModel();
@@ -25,7 +26,7 @@ class Content_bottom extends BaseController
         $data['modules'] = [];
 
         $layout_id = $layoutModel->getLayout($route);
-
+        
         $modules = $layoutModel->getLayoutModules($layout_id, 'content_bottom');
 
         foreach ($modules as $module) {

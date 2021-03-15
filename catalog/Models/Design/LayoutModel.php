@@ -12,12 +12,13 @@ class LayoutModel extends Model
     public function getLayout(string $route): int
     {
         $builder = $this->db->table($this->layoutRouteTable);
-        $builder->select()
+        $builder->select('layout_id')
                 ->like('route', $route)
-                ->orderBy('route', 'DESC', 'before')
+                ->orderBy('route', 'DESC')
                 ->limit(1);
         $query = $builder->get();
         
+
         if ($row = $query->getRow()) {
             return $row->layout_id;
         } else {

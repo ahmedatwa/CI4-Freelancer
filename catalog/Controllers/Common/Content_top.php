@@ -11,12 +11,13 @@ class Content_top extends BaseController
     public function index()
     {
 
-        if ($this->request->uri->getPath()) {
-            $route = $this->request->uri->getPath();
-        } 
+        $router = \CodeIgniter\Config\Services::router();
+        $route = str_replace('\\', '/', substr($router->controllerName(), strlen('\Catalog\Controllers\\')));
 
-        if (! $route || $route == '/') {
-             $route = 'common/home';
+        if ($route) {
+            $route = $route;
+        } else {
+            $route = 'common/home';
         }
             
         $moduleModel = new ModulesModel();

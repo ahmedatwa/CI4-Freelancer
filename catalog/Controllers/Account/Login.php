@@ -26,6 +26,8 @@ class Login extends BaseController
             'text' => lang('account/login.heading_title'),
             'href' => route_to('account_login') ? route_to('account_login') : base_url('account/login'),
         ];
+        
+        $data['facebookAppID'] = config('Config')->facebookAppID;
 
         $data['text_register']  = sprintf(lang('account/login.text_register'), route_to('acount_register') ? route_to('acount_register') : base_url('account/register'));
         $data['forgotton'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
@@ -63,8 +65,8 @@ class Login extends BaseController
                 }
 
                 if (! $this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password', FILTER_SANITIZE_STRING))) {
-                        $json['error_warning'] = lang('account/login.text_warning');
-                        $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
+                    $json['error_warning'] = lang('account/login.text_warning');
+                    $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
                 }
             }
 
@@ -174,6 +176,40 @@ class Login extends BaseController
         }
         
         return $this->response->setJSON($json);
+    }
+
+    public function facebookAuth()
+    {
+        $fb = new \Facebook\Facebook([
+            'app_id'                => config('Config')->facebookAppID,
+            'app_secret'            => config('Config')->facebookAppSecret,
+            'default_graph_version' => config('Config')->facebookVer,
+        ]);
+  
+        $helper = $fb->getJavaScriptHelper();
+  
+        try {
+            $accessToken = $helper->getAccessToken();
+        } catch (Facebook\Exception\ResponseException $e) {
+            // When Graph returns an error
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch (Facebook\Exception\SDKException $e) {
+            // When validation fails or other local issues
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
+        }
+  
+        if (! isset($accessToken)) {
+            echo 'No cookie set or no OAuth data could be obtained from cookie.';
+            exit;
+        }
+  
+        // Logged in
+        echo '<h3>Access Token</h3>';
+        var_dump($accessToken->getValue());
+  
+        $_SESSION['fb_access_token'] = (string) $accessToken;
     }
 
     //--------------------------------------------------------------------

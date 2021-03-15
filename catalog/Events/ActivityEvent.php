@@ -9,18 +9,19 @@ use Catalog\Models\Freelancer\MilestoneModel;
 
 class ActivityEvent
 {
+    /**
+     * @path \Catalog\Models\ProjectModel::afterInsertEvent
+     */
     public static function projectAdd(array $data = [])
     {
-        if ($data) {
-            $activityModel = new ActivityModel();
-            $activity_data = [
-                'customer_id' => $data['employer_id'],
-                'name'        => $data['name'],
-                'budget'      => $data['budget'],
-                'href'        => $data['href']
-            ];
-            $activityModel->addActivity('project_add', $activity_data);
-        }
+        $activityModel = new ActivityModel();
+        $activity_data = [
+            'customer_id' => $data['employer_id'],
+            'name'        => $data['name'],
+            'budget'      => $data['budget'],
+            'href'        => $data['href']
+        ];
+        $activityModel->addActivity('project_add', $activity_data);
     }
 
     // Catalog\Controllers\Account\Login::authLogin

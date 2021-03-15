@@ -53,17 +53,14 @@
 		</div>
 	</div>
 	<!-- Page Content-->
-	<div class="row align-items-start">
-		<div class="col-sm-12 col-md-9 mb-4 p-4 shadow-sm rounded border bg-white">
-			<div class="single-page-section">
+	<div class="row align-items-start mb-5">
+		<div class="col-sm-12 col-md-9 mb-2 p-4 shadow-sm rounded border bg-white ">
+			<div class="single-page-section mb-3">
 				<h3>{{ text_description }}</h3>
 				<p>{{ description }}</p>
 			</div>
-			<h4 class="mb-4">Viewed: <span class="badge badge-success">{{ viewed }}</span></h4>
-			<h4 class="mb-4">Project ID: {{ project_id }}</h4>
-			<h4 class="mb-4">Status: <span class="font-weight-normal" data-countdown="{{ final_date }}"></span></h4>
-			<div class="single-page-section">
-				<h3>{{ text_skills }}:</h3>
+			<div class="single-page-section m-1">
+				<h3 class="mb-1">{{ text_skills }}:</h3>
 				{% if categories %}
 				<div class="task-tags">
 					{% for category in categories %}
@@ -74,7 +71,7 @@
 			</div>
 			<!-- Atachments -->
 			{% if attachments %}
-			<div class="single-page-section">
+			<div class="single-page-section my-3">
 				<h3>Attachments</h3>
 				<div class="attachments-container">
 					{% for row in attachments %}
@@ -85,81 +82,91 @@
 				</div>
 			</div>
 			{% endif %}
-			<!-- Bidding Block -->
-			{% if days_left > 0 and total_bids > 0 %}
-			<ul class="nav nav-tabs" id="biddingBlock" role="tablist">
-				{% if days_left > 0 %}
-				<li class="nav-item" role="presentation">
-					<a class="nav-link active" id="bidder-form-tab" data-toggle="tab" href="#bidder-form" role="tab"
-						aria-controls="bidder-form" aria-selected="true">{{ tab_bid }}</a>
-				</li>
-				{% endif %}
-				{% if total_bids > 0 %}
-				<li class="nav-item" role="presentation">
-					<a class="nav-link" id="bidders-tab" data-toggle="tab" href="#bidders" role="tab"
-						aria-controls="bidders" aria-selected="false">{{ tab_freelancers }} {{ total_bids }}</a>
-				</li>
-				{% endif %}
-			</ul>
-			{% endif %}
-			<div class="tab-content">
-				<div class="tab-pane fade show active mt-4" id="bidder-form" role="tabpanel"
-					aria-labelledby="bidder-form-tab">
-					{% if freelancer_id != employer_id and days_left > 0 %}
-					<div class="single-page-section">
-						<div class="bidding-headline">
-							<h3>{{ text_bid }}</h3>
-							<p class="mb-4">{{ text_bid_detail }}</p>
-						</div>
-						<form action="" enctype="multipart/form-data" id="bidding-form" accept-charset="UTF-8">
-							<input type="hidden" name="project_id" value="{{ project_id }}" />
-							<input type="hidden" name="freelancer_id" value="{{ freelancer_id }}" />
-							<input type="hidden" name="employer_id" value="{{ employer_id }}" />
-							<input type="hidden" name="fee" value="" />
-							<div class="form-row">
-								<div class="form-group col-md-6">
-									<label for="inputEmail4">{{ text_rate }}</label>
-									<div class="input-group">
-										<input class="form-control" type="text" id="input-quote" name="quote"
-											value="{{ bidAVG }}" />
-										<div class="input-group-append">
-											<span class="input-group-text"
-												id="basic-addon2">{{ config_currency }}</span>
-										</div>
-									</div>
-								</div>
-								<div class="form-group col-md-6">
-									<label for="inputEmail4">{{ text_delivery }}</label>
-									<div class="input-group">
-										<input type="number" class="form-control" id="input-delivery" name="delivery"
-											min="1" value="{{ deliveryTime }}">
-										<div class="input-group-prepend">
-											<span class="input-group-text">{{ text_days }}</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="exampleFormControlTextarea1">{{ text_describe }}</label>
-								<textarea class="form-control" id="input-description" name="description" rows="7"
-									cols="10" placeholder="{{ help_proposal }}"></textarea>
-							</div>
-								<!-- Button -->
-							<button id="button-place-bid" onclick=""
-							class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right">{{ button_bid }}</button>
-						</form>
-					</div>
-					{% endif %}
-				</div> <!-- ../bidding form tab-->
-				<div class="tab-pane fade" id="bidders" role="tabpanel" aria-labelledby="bidders-tab">
-					<div id="bid-container" class="my-4"></div>
-				</div> <!-- ../ Bidders-->
-			</div>
+			<div class="single-page-section my-2">
+				<h3>Details:</h3>
+				<ul>
+					<li><h4 class="mb-4">Expire In: <span class="font-weight-normal" data-countdown="{{ final_date }}"></span></h4></li>
+					<li><h4 class="mb-4">Viewed: <span class="badge badge-success">{{ viewed }}</span></h4></li>
+					<li><h4 class="mb-4">Project ID: {{ project_id }}</h4></li>
+				</ul>
+				<br />
 		</div>
-		{# <!-- Sidebar right --> #}
-			{{ column_right }}
-		{# <!-- Sidebar End --> #}
+
+	<!-- Bidding Block -->
+	{% if days_left > 0 and total_bids > 0 %}<ul class="nav nav-tabs" id="biddingBlock" role="tablist">
+		{% if days_left > 0 %}<li class="nav-item" role="presentation">
+			<a class="nav-link active" id="bidder-form-tab" data-toggle="tab" href="#bidder-form" role="tab"
+				aria-controls="bidder-form" aria-selected="true">{{ tab_bid }}</a>
+		</li>{% endif %}
+		{% if total_bids > 0 %}<li class="nav-item" role="presentation">
+			<a class="nav-link" id="bidders-tab" data-toggle="tab" href="#bidders" role="tab"
+				aria-controls="bidders" aria-selected="false">{{ tab_freelancers }} {{ total_bids }}</a>
+		</li>{% endif %}
+	</ul>{% endif %}
+	<div class="tab-content">
+		<div class="tab-pane fade show active mt-4" id="bidder-form" role="tabpanel"
+			aria-labelledby="bidder-form-tab">
+			{% if freelancer_id != employer_id and days_left > 0 %}
+			<div class="single-page-section">
+				<div class="bidding-headline">
+					<h3>{{ text_bid }}</h3>
+					<p class="mb-4">{{ text_bid_detail }}</p>
+				</div>
+				<form action="" enctype="multipart/form-data" id="bidding-form" accept-charset="UTF-8">
+					<input type="hidden" name="project_id" value="{{ project_id }}" />
+					<input type="hidden" name="freelancer_id" value="{{ freelancer_id }}" />
+					<input type="hidden" name="employer_id" value="{{ employer_id }}" />
+					<input type="hidden" name="fee" value="" />
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="inputEmail4">{{ text_rate }}</label>
+							<div class="input-group">
+								<input class="form-control" type="text" id="input-quote" name="quote"
+									value="{{ bidAVG }}" />
+								<div class="input-group-append">
+									<span class="input-group-text"
+										id="basic-addon2">{{ config_currency }}</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="inputEmail4">{{ text_delivery }}</label>
+							<div class="input-group">
+								<input type="number" class="form-control" id="input-delivery" name="delivery"
+									min="1" value="{{ deliveryTime }}">
+								<div class="input-group-prepend">
+									<span class="input-group-text">{{ text_days }}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="exampleFormControlTextarea1">{{ text_describe }}</label>
+						<textarea class="form-control" id="input-description" name="description" rows="7"
+							cols="10" placeholder="{{ help_proposal }}"></textarea>
+					</div>
+					<!-- Paid Upgrade Block -->
+					{{ bid_upgrade_block }}
+					<button type="button" id="button-place-bid" class="button ripple-effect move-on-hover btn btn-lg margin-top-30 float-right">{{ button_bid }}</button>
+				</form>
+		</div> <!-- ../bidding form tab-->
+		{% endif %}
+		<div class="tab-pane fade" id="bidders" role="tabpanel" aria-labelledby="bidders-tab">
+			<div id="bid-container" class="my-4"></div>
+		</div> <!-- ../ Bidders-->
 	</div>
+	</div><!-- tab-content END -->
+
+
+
+
+
+
+
+    </div><!-- </div> col-9 -->
+	{# <!-- Sidebar right --> #}{{ column_right }}{# <!-- Sidebar End --> #}
+	</div><!-- </div> ./Row -->
+	
 	{{ content_bottom }}
 </div>
 	
@@ -181,14 +188,14 @@ bootbox.confirm({
         }
     },
     onShow: function(e) {
+		var fee = $('input[name=\'fee\']').val();
 		{% if not logged %}
-		 $(this).find('.modal-body').html('<p class="text-center">You are not logged in.</p><p class="text-center"><i class="fas fa-spinner fa-spin"></i> We will redirect you in <span id="redirect-html" data-redirect-countdown="5000"></span> seconds</p>');
+		 $(this).find('.modal-body').html('<p class="text-center">You are not logged in.</p><p class="text-center"><i class="fas fa-spinner fa-spin"></i> We will redirect you in <span id="redirect-html" data-redirect-countdown="3000"></span> seconds</p>');
 		 $(this).find('.modal-footer, .modal-header').remove();
 		 setTimeout(function() { 
 			 location = "{{ login }}";
 		  }, 5000);
 		{% else %}
-		var fee = $('input[name=\'fee\']').val();
 		if (fee !== '') {
 			$(this).find('.modal-body').before('<div class="modal-header"><h5 class="modal-title">Are you sure?</h5><button type="button" class="bootbox-close-button close" aria-hidden="true">×</button></div>')
 			$(this).find('.modal-body').text(fee + '.00 EGP will be deducted from your balance' )
@@ -257,10 +264,10 @@ bootbox.confirm({
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-		});
+		})
 	   } // if end
     } // callback end
-   });  // bootbox end
+   })  // bootbox end
 });	
 
 </script>

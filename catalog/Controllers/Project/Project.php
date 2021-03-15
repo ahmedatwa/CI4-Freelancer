@@ -293,7 +293,7 @@ class Project extends BaseController
 
         $data['breadcrumbs'][] = [
             'text' => $categoryModel->getCategoryByProjectId($project_id),
-            'href' => route_to('projects', $category) ?? base_url('project/project?pid=' . $project_id),
+            'href' => ($category) ? route_to('projects', $category) : base_url('project/project?pid=' . $project_id),
         ];
 
         // for pre-defined routes
@@ -395,6 +395,13 @@ class Project extends BaseController
         ];
         $bidModel = new BidModel();
         $data['total_bids'] = $bidModel->getTotalBids($filter_data);
+
+        // Bid Upgrade Option Block
+        if ($this->registry->get('module_bid_upgrade_setting')) {
+           $data['bid_upgrade_block'] = view_cell("Catalog\Controllers\Module\Bid_upgrade::index");
+        } else {
+           $data['bid_upgrade_block'] = '';
+        }
         // save refereal Url in session
         $url_query = $this->request->uri->getQuery();
         $url = '';
@@ -492,7 +499,7 @@ class Project extends BaseController
                 $project_info = $projectModel->getProject($project_id);
 
                 if ($project_info) {
-                    $json['redirect'] = route_to('single_project', $project_info['keyword']);
+                    $json['redirect'] = route_to('single_project', $project_info['categoryKeyword'], $project_info['keyword']);
                 } else {
                     $json['redirect'] = base_url('project/project/view?pid=' . $project_info['keyword']);
                 }

@@ -4,7 +4,7 @@ namespace Catalog\Controllers\Extension\Bid;
 
 use Catalog\Controllers\BaseController;
 use Catalog\Models\Extension\Bid\BidModel;
-use Catalog\Models\Freelancer\BalanceModel;
+use Catalog\Models\Account\BalanceModel;
 use Catalog\Models\Account\ReviewModel;
 
 class Bid extends BaseController
@@ -84,7 +84,7 @@ class Bid extends BaseController
 
         $balanceModel = new BalanceModel();
 
-        $balance = $balanceModel->getBalanceByCustomerID($this->customer->getCustomerId());
+        $balance = $balanceModel->getBalanceByCustomerID($this->customer->getID());
 
         // Employer Balance Validation
         if (!empty($this->request->getPost('fee'))) {
@@ -95,7 +95,7 @@ class Bid extends BaseController
 
         $bidModel = new BidModel();
 
-        $isUnique = $bidModel->uniqueBid($this->customer->getCustomerId(), $this->request->getPost('project_id'));
+        $isUnique = $bidModel->uniqueBid($this->customer->getID(), $this->request->getPost('project_id'));
 
         if ($isUnique) {
             $json['no_allawed'] = lang('freelancer/freelancer.error_unique');

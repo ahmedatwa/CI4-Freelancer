@@ -22,6 +22,7 @@ class ComposerStaticInit97b2817a12d20a68a355d6b21e841262
         '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
         'a8d3953fd9959404dd22d3dfcd0a79f0' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
         '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
+        'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -84,6 +85,7 @@ class ComposerStaticInit97b2817a12d20a68a355d6b21e841262
         array (
             'Firebase\\JWT\\' => 13,
             'Faker\\' => 6,
+            'Facebook\\' => 9,
         ),
         'D' => 
         array (
@@ -218,6 +220,10 @@ class ComposerStaticInit97b2817a12d20a68a355d6b21e841262
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
+        ),
+        'Facebook\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

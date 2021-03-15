@@ -706,7 +706,7 @@ $('.ripple-effect, .ripple-effect-dark').on('click', function(e) {
 			if(event.offset.months > 0) {
 			    format = '%-m month%!m ' + format;
 			}
-			  $(this).html(event.strftime('<span class="text-success">Active:</span> <span class="text-danger">' + format + '</span>'));
+			  $(this).html(event.strftime('<span class="text-danger">' + format + '</span>'));
 
 			})
 		.on('finish.countdown', function(event) {
