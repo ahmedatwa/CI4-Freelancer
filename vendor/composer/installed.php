@@ -6,20 +6,11 @@
     'aliases' => 
     array (
     ),
-    'reference' => '376fe3c2d58f1a86398f8eb2a8374b4e99b35b40',
+    'reference' => '5d94f7ae28d380f71a61ebb9432771c0a0876f55',
     'name' => 'freelancer_app/framework',
   ),
   'versions' => 
   array (
-    'codeigniter4/codeigniter4-standard' => 
-    array (
-      'pretty_version' => '1.0.1',
-      'version' => '1.0.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '4fd1f9c78803bc7f20126729cced63c7e623946d',
-    ),
     'doctrine/instantiator' => 
     array (
       'pretty_version' => '1.4.0',
@@ -63,7 +54,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '376fe3c2d58f1a86398f8eb2a8374b4e99b35b40',
+      'reference' => '5d94f7ae28d380f71a61ebb9432771c0a0876f55',
     ),
     'google/apiclient' => 
     array (
@@ -76,12 +67,12 @@
     ),
     'google/apiclient-services' => 
     array (
-      'pretty_version' => 'v0.161.0',
-      'version' => '0.161.0.0',
+      'pretty_version' => 'v0.164.0',
+      'version' => '0.164.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '776dcac9250497024c778c71c70bb39de5427223',
+      'reference' => '266557af3f595681eb9199853641f334a913d1bf',
     ),
     'google/auth' => 
     array (
@@ -103,12 +94,12 @@
     ),
     'guzzlehttp/promises' => 
     array (
-      'pretty_version' => '1.4.0',
-      'version' => '1.4.0.0',
+      'pretty_version' => '1.4.1',
+      'version' => '1.4.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '60d379c243457e073cff02bc323a2a86cb355631',
+      'reference' => '8e7d04f1f6450fef59366c399cfad4b9383aa30d',
     ),
     'guzzlehttp/psr7' => 
     array (
@@ -139,12 +130,12 @@
     ),
     'laminas/laminas-zendframework-bridge' => 
     array (
-      'pretty_version' => '1.1.1',
-      'version' => '1.1.1.0',
+      'pretty_version' => '1.2.0',
+      'version' => '1.2.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '6ede70583e101030bcace4dcddd648f760ddf642',
+      'reference' => '6cccbddfcfc742eb02158d6137ca5687d92cee32',
     ),
     'mikey179/vfsstream' => 
     array (
@@ -260,21 +251,21 @@
     ),
     'phpseclib/phpseclib' => 
     array (
-      'pretty_version' => '3.0.5',
-      'version' => '3.0.5.0',
+      'pretty_version' => '3.0.6',
+      'version' => '3.0.6.0',
       'aliases' => 
       array (
       ),
-      'reference' => '7c751ea006577e4c2e83326d90c8b1e8c11b8ede',
+      'reference' => '906a5fafabe5e6ba51ef3dc65b2722a677908837',
     ),
     'phpspec/prophecy' => 
     array (
-      'pretty_version' => '1.12.2',
-      'version' => '1.12.2.0',
+      'pretty_version' => '1.13.0',
+      'version' => '1.13.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '245710e971a030f42e08f4912863805570f23d39',
+      'reference' => 'be1996ed8adc35c3fd795488a653f4b518be70ea',
     ),
     'phpunit/php-code-coverage' => 
     array (
@@ -323,12 +314,12 @@
     ),
     'phpunit/phpunit' => 
     array (
-      'pretty_version' => '9.5.2',
-      'version' => '9.5.2.0',
+      'pretty_version' => '9.5.3',
+      'version' => '9.5.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f661659747f2f87f9e72095bb207bceb0f151cb4',
+      'reference' => '27241ac75fc37ecf862b6e002bf713b6566cbe41',
     ),
     'predis/predis' => 
     array (
@@ -569,12 +560,12 @@
     ),
     'symfony/intl' => 
     array (
-      'pretty_version' => 'v5.2.3',
-      'version' => '5.2.3.0',
+      'pretty_version' => 'v5.2.4',
+      'version' => '5.2.4.0',
       'aliases' => 
       array (
       ),
-      'reference' => '930f17689729cc47d2ce18be21ed403bcbeeb6a9',
+      'reference' => '11b4217e394c80a2e313d3a4a37262fbe65a7add',
     ),
     'symfony/polyfill-ctype' => 
     array (
@@ -641,12 +632,12 @@
     ),
     'webmozart/assert' => 
     array (
-      'pretty_version' => '1.9.1',
-      'version' => '1.9.1.0',
+      'pretty_version' => '1.10.0',
+      'version' => '1.10.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'bafc69caeb4d49c39fd0779086c03a3738cbb389',
+      'reference' => '6964c76c7804814a842473e0c8fd15bab0f18e25',
     ),
     'zendframework/zend-escaper' => 
     array (

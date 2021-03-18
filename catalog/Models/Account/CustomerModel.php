@@ -10,12 +10,10 @@ class CustomerModel extends Model
     protected $table          = 'customer';
     protected $primaryKey     = 'customer_id';
     protected $returnType     = 'array';
-    protected $allowedFields  = ['customer_group_id', 'email', 'password', 'firstname', 'lastname', 'image', 'bg_image', 'about', 'tag_line', 'rate', 'username', 'online', 'status', 'origin', 'social', 'profile_strength', 'two_step'];
-    protected $useSoftDeletes = false;
+    protected $allowedFields  = ['customer_group_id', 'email', 'password', 'firstname', 'lastname', 'image', 'bg_image', 'about', 'tag_line', 'rate', 'username', 'online', 'status', 'issuer', 'issuer_id', 'social', 'profile_strength', 'two_step'];
     // Password Hashing Events
     protected $beforeInsert   = ['hashPassword'];
     protected $beforeUpdate   = ['hashPassword'];
-    // User Activity Events
     protected $afterUpdate    = ['afterUpdate'];
     // should use for keep data record create timestamp
     protected $useTimestamps  = true;

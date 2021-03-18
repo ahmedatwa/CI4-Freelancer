@@ -102,7 +102,7 @@ class Customer
         }
     }
 
-    public function LoginAccessVerify(string $email, string $code)
+    public function LoginAccessVerify(string $email, string $code): bool
     {
         $builder = $this->db->table($this->db->prefixTable($this->table));
         $builder->where([
@@ -148,7 +148,7 @@ class Customer
         $builder->where('email', $email);
         $query = $builder->get();
         $row = $query->getRow();
-        if ($row->two_step == 1) {
+        if ($row && ($row->two_step == 1)) {
             return true;
         } else {
             return false;

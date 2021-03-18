@@ -197,8 +197,9 @@ class Project extends BaseController
         }
 
         $data['langData'] = lang('employer/project.list');
+        return $this->response->setJSON($data);
 
-        return view('employer/open_project_list', $data);
+       // return view('employer/open_project_list', $data);
     }
 
     public function getInProgressProjects()

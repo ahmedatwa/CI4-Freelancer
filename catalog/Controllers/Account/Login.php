@@ -28,6 +28,7 @@ class Login extends BaseController
         ];
         
         $data['facebookAppID'] = config('Config')->facebookAppID;
+        $data['facebookVer'] = config('Config')->facebookVer;
 
         $data['text_register']  = sprintf(lang('account/login.text_register'), route_to('acount_register') ? route_to('acount_register') : base_url('account/register'));
         $data['forgotton'] = route_to('account_forgotten') ? route_to('account_forgotten') : base_url('account/forgotten');
@@ -37,36 +38,37 @@ class Login extends BaseController
         $this->template->output('account/login', $data);
     }
 
-    public function authLogin()
+    public function authenticate()
     {
         $json = [];
 
         if ($this->request->isAJAX() && ($this->request->getMethod() == 'post')) {
-            $customerModel = new CustomerModel();
-
             if (! $this->validate([
                 'email'    => 'required|valid_email',
                 'password' => 'required|min_length[4]',
             ])) {
                 $json['error_warning'] = lang('account/login.text_warning');
-                $json['validator'] = $this->validator->getErrors() ?? 'false';
+                $json['error']['validator'] = $this->validator->getErrors() ?? 'false';
             }
 
-            // 2-step verification
-            if (! $json && $this->customer->checkTwoStepVerification($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
-                $this->customer->editAccessCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), random_string('numeric', 7));
-                $json['redirect'] = route_to('account_verify');
-            } else {
+            if (! $json) {
+                $customerModel = new CustomerModel();
                 // Check how many login attempts have been made.
                 $login_info = $customerModel->getLoginAttempts($this->request->getPost('email', FILTER_SANITIZE_EMAIL));
 
                 if ($login_info && ($login_info['total'] >= $this->registry->get('config_login_attempts')) && strtotime('-1 hour') < $login_info['date_modified']) {
-                    $json['error_attempts'] = lang('account/login.error_attempts');
+                    $json['error']['error_attempts'] = lang('account/login.error_attempts');
                 }
 
-                if (! $this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password', FILTER_SANITIZE_STRING))) {
-                    $json['error_warning'] = lang('account/login.text_warning');
-                    $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
+                // 2-step verification
+                if ($this->customer->checkTwoStepVerification($this->request->getPost('email', FILTER_SANITIZE_EMAIL))) {
+                    $this->customer->editAccessCode($this->request->getPost('email', FILTER_SANITIZE_EMAIL), random_string('numeric', 7));
+                    $json['redirect'] = route_to('account_verify');
+                } else {
+                    if (! $this->customer->login($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getPost('password', FILTER_SANITIZE_STRING))) {
+                        $json['error']['error_warning'] = lang('account/login.text_warning');
+                        $customerModel->addLoginAttempt($this->request->getPost('email', FILTER_SANITIZE_EMAIL), $this->request->getIPAddress());
+                    }
                 }
             }
 
@@ -107,7 +109,6 @@ class Login extends BaseController
                 }
             }
         }
-       
         return $this->response->setJSON($json);
     }
 
@@ -127,7 +128,7 @@ class Login extends BaseController
 
                 if ($payload) {
                     if (($payload['aud'] == $this->request->getPost('client_id')) && (in_array($payload['iss'], ['https://accounts.google.com', 'accounts.google.com']))) {
-                        $customer_info = $customerModel->where('email', $payload['email'])->first();
+                        $customer_info = $customerModel->where(['email' => $payload['email'], 'origin' => 'google'])->first();
                         // user doesn't exist create new one from Client Response
                         if (! $customer_info) {
                             $customerData = [
@@ -138,7 +139,7 @@ class Login extends BaseController
                                 'firstname'         => $payload['given_name'],
                                 'lastname'          => $payload['family_name'],
                                 'username'          => substr($payload['email'], 0, strpos($payload['email'], '@')),
-                                'origin'            => 'google',
+                                'issuer'            => 'google',
                             ];
 
                             $insertID = $customerModel->insert($customerData);
@@ -180,36 +181,80 @@ class Login extends BaseController
 
     public function facebookAuth()
     {
+        $json = [];
+
         $fb = new \Facebook\Facebook([
             'app_id'                => config('Config')->facebookAppID,
             'app_secret'            => config('Config')->facebookAppSecret,
             'default_graph_version' => config('Config')->facebookVer,
-        ]);
-  
+          ]);
+          
         $helper = $fb->getJavaScriptHelper();
-  
+
         try {
             $accessToken = $helper->getAccessToken();
+            $response = $fb->get('/me?fields=id,email,first_name,last_name,picture', $accessToken);
+            $user = $response->getGraphUser();
         } catch (Facebook\Exception\ResponseException $e) {
             // When Graph returns an error
-            echo 'Graph returned an error: ' . $e->getMessage();
-            exit;
+            $json['error']['graph'] = $e->getMessage();
         } catch (Facebook\Exception\SDKException $e) {
             // When validation fails or other local issues
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit;
+            $json['error']['fb'] = $e->getMessage();
         }
-  
         if (! isset($accessToken)) {
-            echo 'No cookie set or no OAuth data could be obtained from cookie.';
-            exit;
+            $json['error']['token']  = 'No cookie set or no OAuth data could be obtained from cookie.';
         }
-  
-        // Logged in
-        echo '<h3>Access Token</h3>';
-        var_dump($accessToken->getValue());
-  
-        $_SESSION['fb_access_token'] = (string) $accessToken;
+
+        $oAuth2Client = $fb->getOAuth2Client();
+        $tokenMetadata = $oAuth2Client->debugToken($accessToken);
+        $tokenMetadata->validateAppId(config('Config')->facebookAppID);
+        //$tokenMetadata->validateUserId('123');
+        $tokenMetadata->validateExpiration();
+        if (! $accessToken->isLongLived()) {
+            // Exchanges a short-lived access token for a long-lived one
+            try {
+                $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+            } catch (Facebook\Exceptions\FacebookSDKException $e) {
+                $json['error']['token'] =  "<p>Error getting long-lived access token: " . $e->getMessage() . "</p>\n\n";
+            }
+        }
+
+        if (! $json && $accessToken) {
+            $customerModel = new CustomerModel();
+            $customer_info = $customerModel->where(['issuer_id' => $user['id'], 'issuer' => 'facebook'])->first();
+            if (! $customer_info) {
+                $customerData = [
+                    'email'             => $user['email'] ?? '',
+                    'firstname'         => $user['first_name'],
+                    'lastname'          => $user['last_name'],
+                    'username'          => strtolower($user['first_name']) . '_' . strtolower($user['last_name']),
+                    'image'             => $user['picture']['url'],
+                    'issuer'            => 'facebook',
+                    'issuer_id'         => $user['id'],
+                    'customer_group_id' => 1,
+                    'online'            => 1,
+                    'status'            => 1,
+                ];
+                $customerModel->insert($customerData);
+            }
+
+            if ($customer_info) {
+                $sessionData = [
+                    'customer_id'     => $customer_info['customer_id'],
+                    'email'           => $customer_info['email'] ?? '',
+                    'first_name'      => $customer_info['firstname'],
+                    'last_name'       => $customer_info['lastname'],
+                    'username'        => $customer_info['username'],
+                    'image'           => $customer_info['image'],
+                    'fbtoken'         => (string) $accessToken,
+                    'isLogged'        => true,
+                ];
+                $this->session->set($sessionData);
+            }
+            $json['redirect'] = route_to('account_dashboard', $customer_info['username']);
+        }
+        return $this->response->setJSON($json);
     }
 
     //--------------------------------------------------------------------

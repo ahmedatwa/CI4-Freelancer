@@ -5,7 +5,7 @@ class CustomerModel extends \CodeIgniter\Model
     protected $table          = 'customer';
     protected $primaryKey     = 'customer_id';
     protected $returnType     = 'array';
-    protected $allowedFields  = ['firstname', 'lastname', 'email', 'password', 'status', 'customer_group_id', 'newsletter'];
+    protected $allowedFields  = ['firstname', 'lastname', 'email', 'password', 'status', 'customer_group_id'];
     protected $useTimestamps  = true;
     protected $useSoftDeletes = false;
     // Password Hashing Events

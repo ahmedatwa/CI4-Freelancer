@@ -811,7 +811,7 @@ CREATE TABLE `ci_customer_to_certificate` (
   `name` varchar(64) NOT NULL,
   `year` varchar(32) NOT NULL,
   `date_added` int UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ci_customer_to_certificate`
@@ -836,7 +836,7 @@ CREATE TABLE `ci_customer_to_education` (
   `year` varchar(32) NOT NULL,
   `country` varchar(32) NOT NULL,
   `date_added` int UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ci_customer_to_education`
@@ -1479,7 +1479,7 @@ CREATE TABLE `ci_project_award` (
   `status_id` tinyint NOT NULL,
   `date_added` int UNSIGNED NOT NULL DEFAULT '0',
   `date_modified` int UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1515,7 +1515,7 @@ CREATE TABLE `ci_project_bids_upgrade` (
   `project_id` int NOT NULL,
   `payer_id` int NOT NULL,
   `amount` decimal(15,4) NOT NULL,
-  `reason` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `reason` varchar(50) NOT NULL,
   `date_added` int UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1576,7 +1576,7 @@ CREATE TABLE `ci_project_proposal` (
   `status` tinyint(1) NOT NULL,
   `date_added` int UNSIGNED NOT NULL DEFAULT '0',
   `date_modified` int UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1696,7 +1696,7 @@ CREATE TABLE `ci_revenue` (
   `payer_id` int NOT NULL,
   `payer` varchar(50) NOT NULL,
   `amount` decimal(15,4) NOT NULL,
-  `reason` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `reason` varchar(50) NOT NULL,
   `date_added` int UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1756,7 +1756,7 @@ CREATE TABLE `ci_sessions` (
   `ip_address` varchar(45) NOT NULL,
   `timestamp` int UNSIGNED NOT NULL DEFAULT '0',
   `data` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ci_sessions`
@@ -2600,7 +2600,7 @@ CREATE TABLE `ci_withdraw_status` (
   `withdraw_status_id` int NOT NULL,
   `language_id` int NOT NULL,
   `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ci_withdraw_status`

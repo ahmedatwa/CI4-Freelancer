@@ -94,7 +94,7 @@ class Customer extends \Admin\Controllers\BaseController
                 'email'          => $result['email'],
                 'customer_group' => $result['customer_group'],
                 'ip'             => $result['ip'],
-                'date_added'     => DateShortFormat($result['date_added']),
+                'date_added'     => lang('en.medium_date', [$result['date_added']]),
                 'status'         => ($result['status']) ? lang('en.list.text_enabled') : lang('en.list.text_disabled'),
                 'edit'           => base_url('index.php/customer/customer/edit?user_token=' . $this->request->getVar('user_token') . '&customer_id=' . $result['customer_id']),
                 'delete'         => base_url('index.php/customer/customer/delete?user_token=' . $this->request->getVar('user_token') . '&customer_id=' . $result['customer_id']),

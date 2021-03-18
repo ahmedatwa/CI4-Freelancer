@@ -23,8 +23,8 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-    public $baseURL = 'http://freelancer.localhost/admin/';
-    public $httpCatalog = 'http://freelancer.localhost/';
+    public $baseURL = 'https://freelancer.localhost/admin/';
+    public $httpCatalog = 'https://freelancer.localhost/';
 
 	/**
 	 * --------------------------------------------------------------------------

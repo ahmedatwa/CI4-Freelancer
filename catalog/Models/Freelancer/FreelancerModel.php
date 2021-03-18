@@ -272,13 +272,13 @@ class FreelancerModel extends Model
         return $query->getResultArray();
     }
 
-    public function getFreelancerSkills($freelancer_id)
+    public function getFreelancerSkills(int $freelancer_id)
     {
-        $builder = $this->db->table('customer_to_skill c2s');
-        $builder->select('c2s.skill_id, c2s.freelancer_id, s.name')
-                ->join('skills s', 'c2s.skill_id = s.skill_id', 'left')
-                ->where('c2s.freelancer_id', $freelancer_id)
-                ->orderBy('c2s.skill_id', 'DESC');
+        $builder = $this->db->table('customer_to_category c2c');
+        $builder->select('c2c.category_id, c2c.freelancer_id, cd.name')
+                ->join('category_description cd', 'c2c.category_id = cd.category_id', 'left')
+                ->where('c2c.freelancer_id', $freelancer_id)
+                ->orderBy('c2c.category_id', 'DESC');
 
         $query = $builder->get();
         return $query->getResultArray();

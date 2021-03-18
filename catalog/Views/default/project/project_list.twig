@@ -24,7 +24,7 @@
 			</nav>
 		</div>
 	</div>
-	<div class="section mb-5 bg-white margin-top-30">
+	<div class="section mb-5 bg-white margin-top-30" id="project-list">
 		<div class="row">
 			<div class="col">
 				<div class="sidebar-container">
@@ -182,192 +182,195 @@
 <script src="catalog/default/vendor/select2/customSelectionAdapter/js/select2.customSelectionAdapter.min.js"></script>
 <script type="text/javascript" src="catalog/default/javascript/jquery.countdown.min.js" defer></script>
 <script type="text/javascript">
-	var uri = document.URL;
-	// Skills
-	var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
-	$('select[name^=\'filter_category\']').select2({
-		ajax: {
-			url: "project/category/autocomplete",
-			dataType: 'json',
-			delay: 250,
-			data: function (params) {
-				return {
-					filter_category: params.term,
-				};
-			},
-			processResults: function (data, params) {
-				var results = $.map(data, function (item) {
-					item.id = item.category_id;
-					item.text = item.name;
-					return item;
-				});
-				return {
-					results: results,
-				};
-			},
-			cache: true
+var uri = document.URL;
+// Skills
+var CustomSelectionAdapter = $.fn.select2.amd.require("select2/selection/customSelectionAdapter");
+$('select[name^=\'filter_category\']').select2({
+	ajax: {
+		url: "project/category/autocomplete",
+		dataType: 'json',
+		delay: 250,
+		data: function (params) {
+			return {
+				filter_category: params.term,
+			};
 		},
-		theme: 'bootstrap4',
-		placeholder: '{{ text_select }}',
-		allowClear: false,
-		minimumResultsForSearch: 5,
-		selectionAdapter: CustomSelectionAdapter,
-		selectionContainer: $('.keywords-list'),
+		processResults: function (data, params) {
+			var results = $.map(data, function (item) {
+				item.id = item.category_id;
+				item.text = item.name;
+				return item;
+			});
+			return {
+				results: results,
+			};
+		},
+		cache: true
+	},
+	theme: 'bootstrap4',
+	placeholder: '{{ text_select }}',
+	allowClear: false,
+	minimumResultsForSearch: 5,
+	selectionAdapter: CustomSelectionAdapter,
+	selectionContainer: $('.keywords-list'),
 
-	}).on("select2:select", function (e) {
-		var select_val = $(e.currentTarget).val();
+}).on("select2:select", function (e) {
+	var select_val = $(e.currentTarget).val();
 
-		$.ajax({
-			url: 'project/project/filter?url=' + encodeURIComponent(uri),
-			headers: {
-				"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
-				"X-Requested-With": "XMLHttpRequest"
-			},
-			dataType: 'json',
-			method: 'post',
-			data: {
-				skills: select_val.join('_')
-			},
-			beforeSend: function () {
-				$('#overlay').fadeIn().delay(2000);
-			},
-			complete: function () {
-				$('#overlay').fadeOut();
-			},
-			success: function (json) {
-				location = json['uri'];
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-
-	}).on('select2:unselect', function (e) {
-		var select_val = $(e.currentTarget).val();
-
-		$.ajax({
-			url: 'project/project/filter?url=' + encodeURIComponent(uri),
-			headers: {
-				"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
-				"X-Requested-With": "XMLHttpRequest"
-			},
-			dataType: 'json',
-			method: 'post',
-			data: {
-				clear: 'skills'
-			},
-			beforeSend: function () {
-				$('#overlay').fadeIn().delay(2000);
-			},
-			complete: function () {
-				$('#overlay').fadeOut();
-			},
-			success: function (json) {
-				location = json['uri'];
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
+	$.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+		dataType: 'json',
+		method: 'post',
+		data: {
+			skills: select_val.join('_')
+		},
+		beforeSend: function () {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function () {
+			$('#overlay').fadeOut();
+		},
+		success: function (json) {
+			location = json['uri'];
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
 	});
 
-	// <!-- // Filters -->
-	$('input[name^=\'filter_state\']').on('click', function () {
+}).on('select2:unselect', function (e) {
+	var select_val = $(e.currentTarget).val();
 
-		var filter = [];
+	$.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+		dataType: 'json',
+		method: 'post',
+		data: {
+			clear: 'skills'
+		},
+		beforeSend: function () {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function () {
+			$('#overlay').fadeOut();
+		},
+		success: function (json) {
+			location = json['uri'];
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 
-		$('input[name^=\'filter_state\']:checked').each(function (element) {
-			filter.push(this.value);
-		});
+// <!-- // Filters -->
+$('input[name^=\'filter_state\']').on('click', function () {
 
-		$.ajax({
-			url: 'project/project/filter?url=' + encodeURIComponent(uri),
-			headers: {
-				"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
-				"X-Requested-With": "XMLHttpRequest"
-			},
-			dataType: 'json',
-			method: 'post',
-			data: {
-				state: filter.join('_')
-			},
-			beforeSend: function () {
-				$('#overlay').fadeIn().delay(2000);
-			},
-			complete: function () {
-				$('#overlay').fadeOut();
-			},
-			success: function (json) {
-				location = json['uri'];
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
+	var filter = [];
+
+	$('input[name^=\'filter_state\']:checked').each(function (element) {
+		filter.push(this.value);
 	});
 
-	$('input[name^=\'filter_type\']').on('click', function () {
+	$.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+		dataType: 'json',
+		method: 'post',
+		data: {
+			state: filter.join('_')
+		},
+		beforeSend: function () {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function () {
+			$('#overlay').fadeOut();
+		},
+		success: function (json) {
+			location = json['uri'];
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 
-		var filter = [];
+$('input[name^=\'filter_type\']').on('click', function () {
 
-		$('input[name^=\'filter_type\']:checked').each(function (element) {
-			filter.push(this.value);
-		});
+	var filter = [];
 
-		$.ajax({
-			url: 'project/project/filter?url=' + encodeURIComponent(uri),
-			headers: {
-				"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
-				"X-Requested-With": "XMLHttpRequest"
-			},
-			dataType: 'json',
-			method: 'post',
-			data: {
-				type: filter.join('_')
-			},
-			beforeSend: function () {
-				$('#overlay').fadeIn().delay(2000);
-			},
-			complete: function () {
-				$('#overlay').fadeOut();
-			},
-			success: function (json) {
-				location = json['uri'];
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		})
+	$('input[name^=\'filter_type\']:checked').each(function (element) {
+		filter.push(this.value);
 	});
 
-	// <!-- // Filter Budget -->
-	var mySlider = $("input[name=\'filter_budget\']").slider();
-	mySlider.on('slideStop', function (e) {
-		var filter = e.value;
-		$.ajax({
-			url: 'project/project/filter?url=' + encodeURIComponent(uri),
-			headers: {
-				"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
-				"X-Requested-With": "XMLHttpRequest"
-			},
-			dataType: 'json',
-			method: 'post',
-			data: {
-				budget: filter.join('_')
-			},
-			beforeSend: function () {
-				$('#overlay').fadeIn().delay(2000);
-			},
-			complete: function () {
-				$('#overlay').fadeOut();
-			},
-			success: function (json) {
-				location = json['uri'];
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
+	$.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+		dataType: 'json',
+		method: 'post',
+		data: {
+			type: filter.join('_')
+		},
+		beforeSend: function () {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function () {
+			$('#overlay').fadeOut();
+		},
+		success: function (json) {
+			location = json['uri'];
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	})
+});
+
+// <!-- // Filter Budget -->
+var mySlider = $("input[name=\'filter_budget\']").slider();
+mySlider.on('slideStop', function (e) {
+	var filter = e.value;
+	$.ajax({
+		url: 'project/project/filter?url=' + encodeURIComponent(uri),
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="{{ csrf_token() }}"]').attr('content'),
+			"X-Requested-With": "XMLHttpRequest"
+		},
+		dataType: 'json',
+		method: 'post',
+		data: {
+			budget: filter.join('_')
+		},
+		beforeSend: function () {
+			$('#overlay').fadeIn().delay(2000);
+		},
+		complete: function () {
+			$('#overlay').fadeOut();
+		},
+		success: function (json) {
+			location = json['uri'];
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
 	});
+});
+
+
+
 </script>
 {{ footer }}

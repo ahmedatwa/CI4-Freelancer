@@ -41,14 +41,7 @@
 						<div id="my-signin2" class="mt-auto my-auto"></div>
 					</div>
 					<div class="social-login-buttons d-flex justify-content-center mt-4">
-						<div
-    class="fb-login-button"
-    data-max-rows="1"
-    data-size="<medium, large>"
-    data-button-type="continue_with"
-    data-width="<100% or px>"
-    data-scope="<comma separated list of permissions, e.g. public_profile, email>"
-></div>
+					<button type="button" class="btn btn-primary btn-lg" onClick="logInWithFacebook()"><i class="fab fa-facebook"></i> Log In with Facebook</button>
 					</div>
 				</div>
 			</div>
@@ -58,11 +51,10 @@
 <script type="text/javascript">
 $('#button-form-login').on('click', function () {
 	$.ajax({
-		url: 'account/login/authLogin',
+		url: 'account/login/authenticate',
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="{{ csrf_token() }}"]').attr('content'),
 			'X-Requested-With': 'XMLHttpRequest',
-			'Content-Type': 'application/x-www-form-urlencoded',
 		},
 		type: 'post',
 		dataType: 'json',
@@ -73,20 +65,18 @@ $('#button-form-login').on('click', function () {
 			$('.alert, .invalid-feedback').remove();
 		},
 		success: function (json) {
-			if (json['error_warning']) {
-				if (json['validator']) {
-					for (i in json['validator']) {
-						$('#input-' + i).after('<div class="invalid-feedback">' + json['validator'][i] + '</div>');
+			if (json['error']) {
+				if (json['error']['validator']) {
+					for (i in json['error']['validator']) {
+						$('#input-' + i).after('<div class="invalid-feedback">' + json['error']['validator'][i] + '</div>');
 						$('#input-' + i).addClass('is-invalid');
 					}
+					$('.welcome-text').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error_warning'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				    $('#login-wrapper').addClass('animate__animated animate__shakeX');
 				}
-
-				$('.welcome-text').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error_warning'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-				$('#login-wrapper').addClass('animate__animated animate__shakeX');
-			}
-
-			if (json['error_attempts']) {
-				$('.welcome-text').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error_attempts'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				if (json['error']['error_attempts']) {
+					$('.welcome-text').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error_attempts'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+			    }
 			}
 
 			if (json['redirect']) {
@@ -148,8 +138,8 @@ function onFailure(error) {
 function renderButton() {
 	gapi.signin2.render('my-signin2', {
 		'scope': 'profile email',
-		'width': 300,
-		'height': 50,
+		'width': 220,
+		'height': 45,
 		'longtitle': true,
 		'theme': 'dark',
 		'onsuccess': onSuccess,
@@ -158,58 +148,62 @@ function renderButton() {
 }
 </script>
 {# Facebook #}
-<script type="text/javascript">
-	window.fbAsyncInit = function() {
-		FB.init({
-		  appId      : '{your-app-id}',
-		  cookie     : true,
-		  xfbml      : true,
-		  version    : '{api-version}'
+<script>
+  logInWithFacebook = function() {
+    FB.login(function(response) {
+      if (response.authResponse) {
+		$.ajax({
+			url: 'account/login/facebookAuth',
+			dataType: 'json',
+			method: 'get',
+			onSuccess: function() {
+
+			},
+			complete: function()
+			{
+
+			},
+			success: function(json) {
+				if (json['error']) {
+					for (i in json['error']) {
+					if (json['error'][i]) {
+						$('.welcome-text').before('<div class="alert alert-danger fade show" role="alert"><i class="fas fa-exclamation-circle"></i> ' + json['error'][i] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					}
+					}
+			}
+
+			if (json['redirect']) {
+				$('#login-wrapper').html(`
+				<h2 class="text-center"><i class="fas fa-thumbs-up text-danger"></i> Login Success</h2>
+				<p class="text-center">Please wait we will redirect you.</p>
+				<div class="d-flex justify-content-center">
+					<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>
+				</div>`);
+				setTimeout(function () {
+					location = json['redirect'];
+				}, 2000);
+			}
+			},
 		});
-		FB.AppEvents.logPageView();   
-	  };
-	
-	  (function(d, s, id){
-		 var js, fjs = d.getElementsByTagName(s)[0];
-		 if (d.getElementById(id)) {return;}
-		 js = d.createElement(s); js.id = id;
-		 js.src = "https://connect.facebook.net/en_US/sdk.js";
-		 fjs.parentNode.insertBefore(js, fjs);
-	   }(document, 'script', 'facebook-jssdk'));
+      } 
+    });
+    return false;
+  };
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: '{{ facebookAppID }}',
+      cookie: true, // This is important, it's not enabled by default
+      version: 'v2.10'
+    });
+  };
 
-function checkLoginState() {
-	FB.getLoginStatus(function(response) {
-		statusChangeCallback(response);
-  	});
-}
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
 
-
-	logInWithFacebook = function() {
-	  FB.login(function(response) {
-		if (response.authResponse) {
-		  alert('You are logged in & cookie set!');
-		  // Now you can redirect the user or do an AJAX request to
-		  // a PHP script that grabs the signed request from the cookie.
-		} else {
-		  alert('User cancelled login or did not fully authorize.');
-		}
-	  });
-	  return false;
-	};
-	window.fbAsyncInit = function() {
-	  FB.init({
-		appId: '{{ facebookAppID }}',
-		cookie: true, // This is important, it's not enabled by default
-		version: 'v2.10'
-	  });
-	};
-  
-	(function(d, s, id){
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) {return;}
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/sdk.js";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
-  </script>
 {{ footer }}

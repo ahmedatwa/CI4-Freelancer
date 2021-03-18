@@ -10,6 +10,8 @@ class Projects extends BaseController
 {
     public function index()
     {
+        $this->template->addScript("catalog/default/javascript/axios.min.js");
+
         if (! $this->session->get('customer_id') && ! $this->customer->isLogged()) {
             return redirect('account_login');
         }
